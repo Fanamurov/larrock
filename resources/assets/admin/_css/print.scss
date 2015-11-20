@@ -1,0 +1,152 @@
+$font-size-default: 14;
+$line-height-default: 18;
+
+//Default font-size
+@mixin font-size($custom){
+  font-size: $font-size-default + $custom + px;
+}
+@mixin line-height($custom){
+  line-height: $line-height-default + $custom + px;
+}
+
+*{
+  color: #000000;
+}
+
+html, table tr td, table tr th, input{
+  font-family: Arial, sans-serif;
+  @include font-size(0);
+  font-weight: 500;
+  line-height: 18px;
+  color: #000000;
+}
+table{
+  border: none;
+}
+table input, table textarea{
+  width: 98%;
+}
+table tr td, table tr th{
+  border: 1px solid #d3d3d3;
+  padding: 5px;
+}
+input, textarea{
+  @include font-size(0);
+  padding: 5px;
+  width: 100%;
+  border: none;
+}
+h1, h1 input{
+  @include font-size(+9);
+  line-height: 30px;
+  font-weight: 600;
+}
+.date_0{
+  display: inline-block;
+  width: 300px;
+}
+.date_1{
+  display: inline-block;
+  width: 140px;
+}
+.border_bottom{
+  border-bottom: 1px solid #000000;
+  display: inline-block;
+  position: relative;
+}
+.border_bottom small{
+  border-bottom: none;
+  position: absolute;
+  top: 2px;
+  display: block;
+  width: 100%;
+}
+h1 .border_bottom{
+  border-bottom: 2px solid #000000;
+}
+.all_width{
+  display: block;
+  width: 100%;
+}
+small{
+  font-size: 11px;
+  text-align: center;
+}
+.padding_bottom_null{
+  margin-bottom: 5px;
+}
+span.white_bg{
+  background: #ffffff;
+  position: relative;
+  height: 30px;
+  display: block;
+  width: 199px;
+  bottom: -9px;
+  z-index: 2;
+}
+.span_rub{
+  background: #ffffff;
+  position: absolute;
+  height: 30px;
+  display: block;
+  width: 63px;
+  bottom: -9px;
+  z-index: 2;
+  padding-left: 17px;
+  right: 130px;
+}
+.span_kop{
+  background: #ffffff;
+  position: absolute;
+  height: 30px;
+  display: block;
+  width: 63px;
+  bottom: -9px;
+  z-index: 2;
+  padding-left: 17px;
+  right: 0;
+}
+.span_kop_value{
+  position: absolute;
+  right: 80px;
+  top: 9px;
+  @include font-size(+2);
+}
+.span_rub_value{
+  position: absolute;
+  left: 220px;
+  top: 9px;
+  @include font-size(+2);
+}
+.span_rub_value input,
+.span_kop_value input{
+  position: relative;
+  top: -7px;
+}
+.top_line small{
+  top: 28px;
+}
+.btn-print{
+  margin-top: 40px;
+  background-color: #1ab394;
+  border: none;
+  color: #FFFFFF;
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  border-radius: 4px;
+}
+p{
+  margin: 6px 4px;
+}
+.span_rub_value p, .span_kop_value p{
+  font-size: 14px;
+  margin-top: 0;
+}

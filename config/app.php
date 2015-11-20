@@ -146,7 +146,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         /* http://image.intervention.io/getting_started/installation */
-        Intervention\Image\ImageServiceProvider::class,
+        //Intervention\Image\ImageServiceProvider::class,
 
         /* https://cartalyst.com/manual/sentinel/2.0#installation :: ACL, Oauth, register etc. */
         Cartalyst\Sentinel\Laravel\SentinelServiceProvider::class,
@@ -158,19 +158,19 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
 
         /* https://packagist.org/packages/rap2hpoutre/laravel-log-viewer */
-        Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
+        //Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
 
         /* http://laravel-breadcrumbs.davejamesmiller.com/en/latest/start.html#define-your-breadcrumbs */
-        DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
+        //DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
 
         /* https://packagist.org/packages/mccool/laravel-auto-presenter :: A system for auto-decorating models with presenter objects. */
-        McCool\LaravelAutoPresenter\AutoPresenterServiceProvider::class,
+        //McCool\LaravelAutoPresenter\AutoPresenterServiceProvider::class,
 
         /* https://packagist.org/packages/proengsoft/laravel-jsvalidation */
-        Proengsoft\JsValidation\JsValidationServiceProvider::class,
+        //Proengsoft\JsValidation\JsValidationServiceProvider::class,
 
         /* https://packagist.org/packages/roumen/sitemap :: Generate sitenap.xml */
-        Roumen\Sitemap\SitemapServiceProvider::class,
+        //Roumen\Sitemap\SitemapServiceProvider::class,
 
     ],
 

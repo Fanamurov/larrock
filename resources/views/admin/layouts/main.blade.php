@@ -31,12 +31,12 @@
                 <div class="col-lg-3 col-md-4 hidden-sm col-lg-offset-0">
                     <div class="wrapper wrapper-content animated fadeInUp">
                         <div class="ibox">
-                            @section('sidebar')
-                            @endsection
+                            @section('sidebar')@endsection
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-8 col-sm-12 col-lg-offset-0">
+                    @include('admin.blocks.title')
                     @yield('content')
                 </div>
             @else

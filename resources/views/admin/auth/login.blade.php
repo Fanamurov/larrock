@@ -21,7 +21,7 @@
                 @foreach($errors->all() as $error)
                     <div class="alert alert-danger alert-dismissable">
                         <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-                        <i class="icon-bug"></i> {{ $error }}
+                        <i class="icon-bug"></i> {{{ $error }}}
                     </div>
                 @endforeach
             @endif

@@ -15,7 +15,8 @@
         "davejamesmiller/laravel-breadcrumbs": "~3.0",
         "mccool/laravel-auto-presenter": "~4.2",
         "proengsoft/laravel-jsvalidation": "~1.2",
-        "roumen/sitemap": "~2.5"
+        "roumen/sitemap": "~2.5",
+        "doctrine/dbal": "~2.3"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

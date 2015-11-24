@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="Mart Larrock CMS" />
-    <title>Larrock Admin - @yield('title')</title>
+    <title>@yield('title') - Larrock Admin</title>
     <link href="{{asset('ico.png?6v')}}" rel="shortcut icon" />
     <link rel="stylesheet" href="{{asset('_admin/_css/bootstrap.min.css')}}"/>
     <link rel="stylesheet" href="{{asset('_admin/_css/admin.min.css')}}"/>
@@ -36,6 +36,33 @@
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-8 col-sm-12 col-lg-offset-0">
+                    <!-- Сообщение об успешной операции через \View::share('messages', []); -->
+                    @if(isset($messages))
+                        @foreach($messages as $message)
+                            <div class="alert alert-info alert-dismissable">
+                                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                                <i class="icon-plus"></i> {{ $message }}
+                            </div>
+                        @endforeach
+                    @endif
+
+                    <!-- Сообщение об успешной операции через ->with -->
+                    @if(Session::has('message'))
+                        <div class="alert alert-success alert-dismissable">
+                            <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                            <i class="icon-plus"></i> {{ Session::get('message') }}
+                        </div>
+                    @endif
+
+                    @if($errors->has())
+                        @foreach($errors->all() as $error)
+                            <div class="alert alert-danger alert-dismissable">
+                                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                                <i class="icon-bug"></i> {{ $error }}
+                            </div>
+                        @endforeach
+                    @endif
+
                     @include('admin.blocks.title')
                     @yield('content')
                 </div>

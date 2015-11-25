@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Roles;
-use App\Models\Users;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Lang;
+use App\Models\Roles;
 use Validator;
 use Sentinel;
-use Input;
 use Session;
+use Lang;
 use Redirect;
+use App\Models\RoleUsers;
 
-class UsersController extends Controller
+class RolesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -24,8 +23,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-		$users = Users::where('id', '>', 0)->paginate(15);
-		return view('admin.users.usersIndex', array('data' => $users));
+		return view('admin.roles.rolesIndex', array('data' => Roles::all()));
     }
 
     /**
@@ -35,7 +33,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-		return view('admin.users.usersCreate', array('roles' => Roles::all()));
+		return view('admin.roles.rolesCreate');
     }
 
     /**
@@ -47,37 +45,24 @@ class UsersController extends Controller
     public function store(Request $request)
     {
 		$validator = Validator::make(
-			Input::all(),
+			$request->all(),
 			[
-				'email' => 'email|min:4|required|unique:users,email',
-				'password' => 'min:5|required',
-				'first_name' => 'max:40',
-				'last_name' => 'max:40',
+				'slug' => 'min:4|required|unique:roles',
+				'name' => 'min:4|required'
 			]
 		);
 
 		if($validator->fails()){
-			return back()->withInput(Input::except('password'))->withErrors($validator);
+			return back()->withInput()->withErrors($validator);
 		}
 
-
-		// Register a new user
-		Sentinel::register([
-			'email'    => $request->input('email'),
-			'password' => $request->input('password'),
-			'first_name' => $request->input('first_name'),
-			'last_name' => $request->input('last_name'),
-		]);
-
-		$user = Users::whereEmail($request->input('email'))->first();
-
-		$role = Sentinel::findRoleByName($request->input('role'));
-
-		if($role->users()->attach($user)){
+		if(Sentinel::getRoleRepository()->createModel()->create($request->all())){
 			Session::flash('message', Lang::get('apps.change.success'));
+		}else{
+			Session::flash('error', Lang::get('apps.change.error'));
 		}
 
-		return Redirect::to('/admin/users');
+		return Redirect::to('/admin/roles');
     }
 
     /**
@@ -88,7 +73,7 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        return $id;
+        //
     }
 
     /**
@@ -99,9 +84,8 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-		$data['roles'] = Roles::all();
-		$data['users'] = Users::whereId($id)->get();
-		return view('admin.users.usersEdit', $data);
+		$data['roles'] = Sentinel::findRoleById($id);
+		return view('admin.roles.rolesEdit', $data);
     }
 
     /**
@@ -114,17 +98,20 @@ class UsersController extends Controller
     public function update(Request $request, $id)
     {
 		$validator = Validator::make(
-			['email' => $request->get('email')],
-			['email' => 'email|min:4|required']
+			$request->all(),
+			[
+				'slug' => 'min:4|required',
+				'name' => 'min:4|required'
+			]
 		);
 
 		if($validator->fails()){
 			return back()->withInput()->withErrors($validator);
 		}
 
-		$user = Sentinel::findById($id);
+		$role = Sentinel::findRoleById($id);
 
-		if(Sentinel::update($user, $request->all())){
+		if($role->update($request->all())){
 			return back()->withInput()->with('message', Lang::get('apps.change.success'));
 		}else{
 			return back()->withInput()->withErrors(array('messages' => Lang::get('users.change_failed')));
@@ -139,10 +126,16 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        $user = Sentinel::findById($id);
-        $user->delete();
+		//Find users by destroy role
+		if(RoleUsers::whereRoleId($id)){
+			Session::flash('error', 'У роли есть назначенные пользователи');
+			return back()->withInput();
+		}
 
-        Session::flash('message', Lang::get('apps.delete.success'));
-        return Redirect::to('/admin/users');
+		$role = Sentinel::findRoleById($id);
+		$role->delete();
+
+		Session::flash('message', Lang::get('apps.delete.success'));
+		return Redirect::to('/admin/roles');
     }
 }

@@ -29,8 +29,11 @@ Route::post('admin/auth/login', 'Admin\AuthController@postLogin');
 Route::get('admin/auth/logout', 'Admin\AuthController@getLogout');
 
 
-Route::resource('admin/users', 'Admin\UsersController');
-
 Route::group(['prefix'=>'admin','middleware'=>'AuthAdmin'], function(){
 	Route::get('/', 'Admin\PageController@getIndex');
+});
+
+Route::group(['middleware'=>'AuthAdmin'], function(){
+	Route::resource('admin/users', 'Admin\UsersController');
+	Route::resource('admin/roles', 'Admin\RolesController');
 });

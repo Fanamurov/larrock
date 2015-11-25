@@ -1133,48 +1133,4 @@ $(document).ready(function(){
         $(this).addClass('checked');
         $('input[name^=delete]:visible').attr('checked', 'checked');
     });
-
-    /**
-     * Пагинация для таблиц
-     * Сработает для все table:not(.not-pagination)
-     * @reference function paginator
-     */
-    var table = $('table.table:not(.not-pagination)');
-    $(table).each(function(){
-        paginator(table, 100);
-    });
-
-    /**
-     * Метод пагинации для таблиц
-     * object   @param table    таблица
-     * string   @param on_page  количество элементов на страницу
-     */
-    function paginator(table, on_page){
-        var row_content = $(table).find('tbody > tr');
-        var count_rows = $(row_content).length;
-        var total = Math.ceil(count_rows / on_page);
-
-        if (total > 1) {
-            $(table).find('tbody > tr').hide();
-            $(table).find('tbody > tr:lt(' + on_page + ')').fadeIn('slow');
-
-            $('.pagination').bootpag({
-                total: total,
-                maxVisible: 100,
-                page: 1,
-                href: "#pro-page-{{number}}",
-                leaps: false,
-                next: 'далее',
-                prev: 'назад'
-            }).on("page", function (event, /* page number here */ num) {
-                var visible_start = num * on_page - on_page;
-                var visible_end = num * on_page - 1;
-                $(table).find('tbody > tr').hide();
-                $(table).find('tbody > tr:gt(' + visible_start + '):lt(' + visible_end + ')').show('slow');
-                $(table).find('tbody > tr:eq(' + visible_start + ')').show('slow');
-            });
-        }else{
-            $('.pagination').remove();
-        }
-    }
 });

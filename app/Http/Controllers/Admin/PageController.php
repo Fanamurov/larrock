@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Apps;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class PageController extends Controller
+class PageController extends Apps
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -84,4 +86,9 @@ class PageController extends Controller
     {
         //
     }
+
+	public function config()
+	{
+
+	}
 }

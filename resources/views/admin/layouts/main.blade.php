@@ -23,63 +23,107 @@
 </head>
 <body>
 
-<div id="wrapper">
-    <nav id="navbar-static-side" class="navbar-default navbar-static-side" role="navigation"></nav>
-    <div id="page-wrapper" class="gray-bg">
-        <div class="row">
-            @if(App::environment() === 'local')
-                <div class="col-lg-3 col-md-4 hidden-sm col-lg-offset-0">
-                    <div class="wrapper wrapper-content animated fadeInUp">
-                        <div class="ibox">
-                            @section('sidebar')@endsection
+<div id="wrapper" class="top-navigation">
+    <div id="wrapper">
+        <div id="page-wrapper" class="gray-bg">
+            <div class="row border-bottom white-bg">
+                <nav class="navbar navbar-static-top" role="navigation">
+                    <div class="navbar-header">
+                        <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
+                            <i class="fa fa-reorder"></i>
+                        </button>
+                        <a href="/admin" class="navbar-brand">Larrock</a>
+                    </div>
+                    <div class="navbar-collapse collapse" id="navbar">
+                        <ul class="nav navbar-nav">
+                            <li class="active">
+                                <a aria-expanded="false" role="button" href="/"> Вернуться на сайт</a>
+                            </li>
+                            <li class="dropdown active">
+                                <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Пользователи <span class="caret"></span></a>
+                                <ul role="menu" class="dropdown-menu">
+                                    <li><a href="{{ action('Admin\UsersController@index') }}"><i class="fa fa-list"></i> Список пользователей</a></li>
+                                    <li><a href="{{ action('Admin\UsersController@create') }}"><i class="fa fa-plus"></i> Добавить пользователя</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="{{ action('Admin\RolesController@index') }}"><i class="fa fa-list"></i> Список ролей</a></li>
+                                    <li><a href="{{ action('Admin\RolesController@create') }}"><i class="fa fa-plus"></i> Добавить роль</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-top-links navbar-right">
+                            <li>
+                                <a href="{{ action('Admin\AuthController@getLogout') }}">
+                                    <i class="fa fa-sign-out"></i> Выйти
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+
+            <div class="wrapper wrapper-content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <!-- Сообщение об успешной операции через \View::share('messages', []); -->
+                            @if(isset($messages))
+                                @foreach($messages as $message)
+                                    <div class="alert alert-info alert-dismissable">
+                                        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                                        <i class="icon-plus"></i> {{ $message }}
+                                    </div>
+                                @endforeach
+                            @endif
+
+                            <!-- Сообщение об успешной операции через ->with -->
+                            @if(Session::has('message'))
+                                <div class="alert alert-success alert-dismissable">
+                                    <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                                    <i class="icon-plus"></i> {{ Session::get('message') }}
+                                </div>
+                            @endif
+
+                            @if(Session::has('error'))
+                                <div class="alert alert-danger alert-dismissable">
+                                    <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                                    <i class="icon-bug"></i> {{ Session::get('error') }}
+                                </div>
+                            @endif
+
+                            @if($errors->has())
+                                @foreach($errors->all() as $error)
+                                    <div class="alert alert-danger alert-dismissable">
+                                        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                                        <i class="icon-bug"></i> {{ $error }}
+                                    </div>
+                                @endforeach
+                            @endif
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    @include('admin.blocks.title')
+                                </div>
+                                <div class="ibox-content">
+                                    @yield('content')
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-9 col-md-8 col-sm-12 col-lg-offset-0">
-                    <!-- Сообщение об успешной операции через \View::share('messages', []); -->
-                    @if(isset($messages))
-                        @foreach($messages as $message)
-                            <div class="alert alert-info alert-dismissable">
-                                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-                                <i class="icon-plus"></i> {{ $message }}
-                            </div>
-                        @endforeach
-                    @endif
+            </div>
 
-                    <!-- Сообщение об успешной операции через ->with -->
-                    @if(Session::has('message'))
-                        <div class="alert alert-success alert-dismissable">
-                            <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-                            <i class="icon-plus"></i> {{ Session::get('message') }}
-                        </div>
-                    @endif
-
-                    @if($errors->has())
-                        @foreach($errors->all() as $error)
-                            <div class="alert alert-danger alert-dismissable">
-                                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-                                <i class="icon-bug"></i> {{ $error }}
-                            </div>
-                        @endforeach
-                    @endif
-
-                    @include('admin.blocks.title')
-                    @yield('content')
+            <div class="footer">
+                <div class="pull-right">
+                    Проект <a href="http://test.ru">test.ru</a>
                 </div>
-            @else
-                <div class="col-lg-12">
-                    @yield('content')
+                <div>
+                    <strong>Copyright</strong> LarRock v.1 © 2015-2015
                 </div>
-            @endif
+            </div>
         </div>
-        <footer class="footer">
-            <div class="pull-right">
-                Проект: PROJECT <a href="SITE_URL">SITE_URL</a>
-            </div>
-            <div>
-                <p><strong>ROCKET_VERSION</strong> :: LARAVEL_VERSION</p>
-            </div>
-        </footer>
     </div>
 </div>
 

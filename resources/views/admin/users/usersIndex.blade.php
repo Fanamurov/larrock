@@ -6,7 +6,7 @@
 @section('app_title', 'Пользователи')
 
 @section('content')
-    <table class="table">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>ID</th>
@@ -46,4 +46,5 @@
         @endforeach
         </tbody>
     </table>
+    <?=$data->render()?>
 @endsection

@@ -25,8 +25,13 @@ var imagemin = require('gulp-imagemin');
 var pngquant = require('imagemin-pngquant');
 
 gulp.task('default', function() {
-    gulp.start('sass_admin', 'javascript_admin');
+    gulp.start('sass_admin', 'javascript_admin', 'watch');
     //gulp.start('sass', 'sass_admin', 'javascript', 'javascript_admin', 'watch');
+});
+
+gulp.task('watch', function () {
+    gulp.watch('./resources/assets/admin/_css/**/*.scss', ['sass_admin']);
+    gulp.watch(['./resources/assets/admin/_js/**/*.js', '!./resources/assets/admin/_js/min/*'], ['javascript_admin']);
 });
 
 gulp.task('sass_admin', function () {

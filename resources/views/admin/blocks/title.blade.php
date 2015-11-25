@@ -3,4 +3,3 @@
     <a class="btn btn-default btn-outline pull-right add-panel" href="/admin/@yield('app_name')/create"><i class="fa fa-plus"></i> Создание @yield('page_h1_new')</a>
     @section('title_panel')@endsection
 </div>
-<hr/>

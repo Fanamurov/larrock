@@ -7,4 +7,8 @@ return [
 		'error' => 'Data not updated'
 	),
 
+    'delete' => array(
+        'success' => 'Data successfully deleted',
+        'error' => 'Data not deleted'
+    )
 ];

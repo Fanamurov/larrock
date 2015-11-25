@@ -1,11 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
     "hash": "19e4087c196d1fe0891c3d0a997203a6",
-    "content-hash": "4db9bcc2e0da87bfc53117814991b997",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",

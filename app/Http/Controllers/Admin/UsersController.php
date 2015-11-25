@@ -87,7 +87,7 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        //
+        return $id;
     }
 
     /**
@@ -139,11 +139,9 @@ class UsersController extends Controller
     public function destroy($id)
     {
         $user = Sentinel::findById($id);
-		if( !$user->delete()){
-			return back()->withInput()->withErrors(array('messages' => Lang::get('users.change_failed')));
-		}
+        $user->delete();
 
-        Session::flash('message', 'Successfully deleted the nerd!');
+        Session::flash('message', Lang::get('apps.delete.success'));
         return Redirect::to('/admin/users');
     }
 }

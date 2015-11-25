@@ -16,6 +16,7 @@
                 <th>Роль</th>
                 <th>Изменено</th>
                 <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -33,6 +34,13 @@
                 <td>{{ $data_value->updated_at }}</td>
                 <td>
                     <a href="/admin/users/{{ $data_value->id }}/edit" class="btn btn-block btn-primary btn-xs"><i class="fa fa-pencil"></i> Изменить</a>
+                </td>
+                <td>
+                    <form action="/admin/users/{{ $data_value->id }}" method="post">
+                        <input name="_method" type="hidden" value="DELETE">
+                        <input type="hidden" name="_token" value="{{csrf_token()}}">
+                        <button type="submit" class="btn btn-block btn-danger btn-xs"><i class="fa fa-trash"></i></button>
+                    </form>
                 </td>
             </tr>
         @endforeach

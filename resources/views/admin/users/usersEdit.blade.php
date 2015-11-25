@@ -7,7 +7,7 @@
 
 @section('content')
     @foreach($users as $data_value)
-        <form action="/admin/users" method="POST">
+        <form action="/admin/users/{{ $data_value->id }}" method="post">
             <input name="_method" type="hidden" value="PUT">
             <div class="form-group">
                 <label for="email">Email</label>

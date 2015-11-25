@@ -17,6 +17,8 @@ CREATE TABLE `activations` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+INSERT INTO `activations` (`id`, `user_id`, `code`, `completed`, `completed_at`, `created_at`, `updated_at`) VALUES
+(1,	1,	'XVpuqeRvcVbrmr3YqUcLmRtbDlCi0KN5',	1,	NULL,	'2015-11-19 15:47:17',	'2015-11-19 15:47:17');
 
 DROP TABLE IF EXISTS `apps`;
 CREATE TABLE `apps` (
@@ -65,8 +67,8 @@ CREATE TABLE `migrations` (
 
 INSERT INTO `migrations` (`migration`, `batch`) VALUES
 ('2014_07_02_230147_migration_cartalyst_sentinel',	1),
-('2015_11_25_151848_create_apps_table',	1),
-('2015_11_25_173945_create_feed_table',	1);
+('2015_11_25_151848_create_apps_table',	2),
+('2015_11_25_173945_create_feed_table',	2);
 
 DROP TABLE IF EXISTS `persistences`;
 CREATE TABLE `persistences` (
@@ -79,6 +81,11 @@ CREATE TABLE `persistences` (
   UNIQUE KEY `persistences_code_unique` (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+INSERT INTO `persistences` (`id`, `user_id`, `code`, `created_at`, `updated_at`) VALUES
+(1,	1,	'zARaeN5AuMYX4VKW40tMUBosYHjoF9fh',	'2015-11-19 15:48:26',	'2015-11-19 15:48:26'),
+(2,	1,	'qso47HyXEoN5bxZqSBvb3KsCD8NkHdml',	'2015-11-19 15:48:57',	'2015-11-19 15:48:57'),
+(7,	1,	'lno7hBMsryB4PpLnJ6fpRRe3OUGhvaYg',	'2015-11-19 21:33:35',	'2015-11-19 21:33:35'),
+(9,	1,	'4f1jLnmRK7kpNWEIOy8MAWP9IMQjAwb1',	'2015-11-23 13:44:27',	'2015-11-23 13:44:27');
 
 DROP TABLE IF EXISTS `reminders`;
 CREATE TABLE `reminders` (
@@ -105,6 +112,8 @@ CREATE TABLE `roles` (
   UNIQUE KEY `roles_slug_unique` (`slug`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+INSERT INTO `roles` (`id`, `slug`, `name`, `permissions`, `created_at`, `updated_at`) VALUES
+(1,	'admin',	'admin',	NULL,	'2015-11-19 15:35:42',	'2015-11-19 15:35:42');
 
 DROP TABLE IF EXISTS `role_users`;
 CREATE TABLE `role_users` (
@@ -115,6 +124,8 @@ CREATE TABLE `role_users` (
   PRIMARY KEY (`user_id`,`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+INSERT INTO `role_users` (`user_id`, `role_id`, `created_at`, `updated_at`) VALUES
+(1,	1,	'2015-11-19 15:41:49',	'2015-11-19 15:41:49');
 
 DROP TABLE IF EXISTS `throttle`;
 CREATE TABLE `throttle` (
@@ -128,6 +139,21 @@ CREATE TABLE `throttle` (
   KEY `throttle_user_id_index` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+INSERT INTO `throttle` (`id`, `user_id`, `type`, `ip`, `created_at`, `updated_at`) VALUES
+(13,	NULL,	'global',	NULL,	'2015-11-19 19:48:59',	'2015-11-19 19:48:59'),
+(14,	NULL,	'ip',	'::1',	'2015-11-19 19:48:59',	'2015-11-19 19:48:59'),
+(15,	NULL,	'global',	NULL,	'2015-11-19 19:58:57',	'2015-11-19 19:58:57'),
+(16,	NULL,	'ip',	'::1',	'2015-11-19 19:58:57',	'2015-11-19 19:58:57'),
+(17,	NULL,	'global',	NULL,	'2015-11-19 19:59:23',	'2015-11-19 19:59:23'),
+(18,	NULL,	'ip',	'::1',	'2015-11-19 19:59:24',	'2015-11-19 19:59:24'),
+(19,	NULL,	'global',	NULL,	'2015-11-19 20:01:29',	'2015-11-19 20:01:29'),
+(20,	NULL,	'ip',	'::1',	'2015-11-19 20:01:29',	'2015-11-19 20:01:29'),
+(21,	NULL,	'global',	NULL,	'2015-11-19 21:32:07',	'2015-11-19 21:32:07'),
+(22,	NULL,	'ip',	'::1',	'2015-11-19 21:32:07',	'2015-11-19 21:32:07'),
+(23,	1,	'user',	NULL,	'2015-11-19 21:32:07',	'2015-11-19 21:32:07'),
+(24,	NULL,	'global',	NULL,	'2015-11-19 21:32:39',	'2015-11-19 21:32:39'),
+(25,	NULL,	'ip',	'::1',	'2015-11-19 21:32:39',	'2015-11-19 21:32:39'),
+(26,	1,	'user',	NULL,	'2015-11-19 21:32:39',	'2015-11-19 21:32:39');
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
@@ -144,5 +170,7 @@ CREATE TABLE `users` (
   UNIQUE KEY `users_email_unique` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+INSERT INTO `users` (`id`, `email`, `password`, `permissions`, `last_login`, `first_name`, `last_name`, `created_at`, `updated_at`) VALUES
+(1,	'fanamurov@ya.ru',	'$2y$10$SJzDIVLhyCdzOMxfnqAADOCoyzVgjwjmBlYaVWQlikchTd67mWPRa',	NULL,	'2015-11-23 13:44:27',	'4234',	'',	'2015-11-19 15:41:49',	'2015-11-24 13:05:32');
 
--- 2015-11-25 08:05:54
+-- 2015-11-25 14:50:22

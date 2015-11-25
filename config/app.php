@@ -172,6 +172,12 @@ return [
         /* https://packagist.org/packages/roumen/sitemap :: Generate sitenap.xml */
         //Roumen\Sitemap\SitemapServiceProvider::class,
 
+        /* https://packagist.org/packages/gloudemans/shoppingcart :: Корзина для каталога */
+        //'Gloudemans\Shoppingcart\ShoppingcartServiceProvider'
+
+        /* https://packagist.org/packages/greggilbert/recaptcha :: Каптча */
+        //Greggilbert\Recaptcha\RecaptchaServiceProvider::class,
+
     ],
 
     /*
@@ -221,15 +227,17 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
 
-        'Image'     => Intervention\Image\Facades\Image::class,
+        //'Image'     => Intervention\Image\Facades\Image::class,
 
         'Activation' => Cartalyst\Sentinel\Laravel\Facades\Activation::class,
         'Reminder'   => Cartalyst\Sentinel\Laravel\Facades\Reminder::class,
         'Sentinel'   => Cartalyst\Sentinel\Laravel\Facades\Sentinel::class,
 
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
-        'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facade::class,
-        'JsValidator' => Proengsoft\JsValidation\Facades\JsValidatorFacade::class,
+        //'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facade::class,
+        //'JsValidator' => Proengsoft\JsValidation\Facades\JsValidatorFacade::class,
+        //'Cart'        => Gloudemans\Shoppingcart\Facades\Cart::class,
+        //'Recaptcha' => Greggilbert\Recaptcha\Facades\Recaptcha::class,
 
     ],
 

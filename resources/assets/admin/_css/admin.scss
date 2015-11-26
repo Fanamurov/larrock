@@ -194,7 +194,8 @@ label{
 
 .date,
 input[name=date]{
-  background: url("/application/views/admin_rocket/_images/1412932708_calendar-16.png") no-repeat right center transparent;
+  background: url("/_admin/_images/icons/1412932708_calendar-16.png") no-repeat 10px center;
+  padding-left: 34px;
 }
 
 .add-panel{

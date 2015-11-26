@@ -132,10 +132,9 @@
 <script src="{{asset('_admin/_js/bootstrap.min.js')}}"></script>
 <script src="{{asset('_admin/_js/plugins/pace/pace.min.js')}}"></script>
 <script src="{{asset('_admin/_js/back_core.js')}}"></script>
-@if (2 === 1)
-    <script src="{{asset('_admin/_js/tinymce/jquery.tinymce.min.js')}}"></script>
-    <script src="{{asset('_admin/_js/tinymce/tinymce.min.js')}}"></script>
-    <script src="{{asset('_admin/_js/tinymce/tinymce-settings.js')}}"></script>
-@endif
+
+<script src="{{asset('_admin/_js/tinymce/jquery.tinymce.min.js')}}"></script>
+<script src="{{asset('_admin/_js/tinymce/tinymce.min.js')}}"></script>
+<script src="{{asset('_admin/_js/tinymce/tinymce-settings.js')}}"></script>
 </body>
 </html>

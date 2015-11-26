@@ -1,10 +1,11 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
     "hash": "32171c2d0065676f184306078213f827",
+    "content-hash": "890c23d524545100fbad4e07d23a83c2",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -125,16 +126,16 @@
         },
         {
             "name": "cartalyst/sentinel",
-            "version": "v2.0.7",
+            "version": "v2.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cartalyst/sentinel.git",
-                "reference": "ff4a3c0100474dd135e7732b379962715f6d6b03"
+                "reference": "b0b6445a7b6af5938396e2ccf8185f4b6dd41526"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cartalyst/sentinel/zipball/ff4a3c0100474dd135e7732b379962715f6d6b03",
-                "reference": "ff4a3c0100474dd135e7732b379962715f6d6b03",
+                "url": "https://api.github.com/repos/cartalyst/sentinel/zipball/b0b6445a7b6af5938396e2ccf8185f4b6dd41526",
+                "reference": "b0b6445a7b6af5938396e2ccf8185f4b6dd41526",
                 "shasum": ""
             },
             "require": {
@@ -209,7 +210,7 @@
                 "php",
                 "security"
             ],
-            "time": "2015-08-26 18:31:52"
+            "time": "2015-11-26 00:03:11"
         },
         {
             "name": "cartalyst/support",

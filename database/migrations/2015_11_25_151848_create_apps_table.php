@@ -21,12 +21,12 @@ class CreateAppsTable extends Migration
 			$table->string('title', 255);
 			$table->string('name', 255)->unique();
 			$table->string('description', 255);
-			$table->string('table', 255);
+			$table->string('table_content', 255);
 			$table->text('rows');
 			$table->text('settings');
 			$table->text('plugins_backend');
 			$table->text('plugins_front');
-			$table->string('menu_category', 255);
+			$table->string('menu_category', 255)->nullable();
 			$table->char('sitemap', 1)->default(1);
 			$table->integer('version')->default(1);
 			$table->integer('active')->default(1);

@@ -25,7 +25,7 @@ class CreateFeedTable extends Migration
 			$table->string('url', 155);
 			$table->dateTime('date');
 			$table->char('position', 10)->default(0);
-			$table->integer('active')->default(1);
+			$table->integer('active', 1)->default(1);
 
 			$table->timestamps();
 		});

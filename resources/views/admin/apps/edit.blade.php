@@ -33,7 +33,7 @@
                                         <div class="form-group">
                                             <label for="{{ $rows_key }}">{{ $rows_value['title'] }}</label>
                                             <input type="checkbox" name="{{ $rows_key }}" class="form-control" id="{{ $rows_key }}"
-                                                   @if(Input::old($rows_key, $data_value->$rows_key) === 1 OR array_key_exists('checked', $rows_value)) checked @endif
+                                                   @if(Input::old($rows_key, $data_value->$rows_key) === 1) checked @endif
                                                    value="1">
                                         </div>
                                     @elseif($rows_value['type'] === 'select')

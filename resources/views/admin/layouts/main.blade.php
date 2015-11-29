@@ -8,6 +8,7 @@
     <link href="{{asset('ico.png?6v')}}" rel="shortcut icon" />
     <link rel="stylesheet" href="{{asset('_admin/_css/bootstrap.min.css')}}"/>
     <link rel="stylesheet" href="{{asset('_admin/_css/admin.min.css')}}"/>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,400italic,500,500italic,600,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -36,8 +37,11 @@
                     </div>
                     <div class="navbar-collapse collapse" id="navbar">
                         <ul class="nav navbar-nav">
-                            <li class="active">
-                                <a aria-expanded="false" role="button" href="/"> Вернуться на сайт</a>
+                            <li>
+                                <a aria-expanded="false" role="button" href="/"><i class="fa fa-mail-reply"></i> К сайту</a>
+                            </li>
+                            <li>
+                                <a href="{{ action('Admin\PageController@index') }}">Статичные страницы</a>
                             </li>
                             <li class="dropdown active">
                                 <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Пользователи <span class="caret"></span></a>
@@ -51,6 +55,12 @@
                             </li>
                         </ul>
                         <ul class="nav navbar-top-links navbar-right">
+                            <li>
+                                <input type="text" class="form-control" placeholder="Поиск...">
+                            </li>
+                            <li>
+                                <a href="#" id="clear_cache"><i class="fa fa-trash-o"></i> Кэш</a>
+                            </li>
                             <li>
                                 <a href="{{ action('Admin\AuthController@getLogout') }}">
                                     <i class="fa fa-sign-out"></i> Выйти

@@ -10,17 +10,17 @@
     <table class="table table-striped">
         <thead>
         <tr>
-            <th>ID</th>
+            <th width="50">ID</th>
             @foreach($apps->rows as $rows_name)
                 @if(isset($rows_name['in_table_admin']))
                     <th>{{ $rows_name['title'] }}</th>
                 @endif
             @endforeach
-            <th>Изменено</th>
-            <th>Вес</th>
-            <th>Активность</th>
-            <th></th>
-            <th></th>
+            <th width="141">Изменено</th>
+            <th width="90">Вес</th>
+            <th width="93" class="pull-right">Активность</th>
+            <th width="130"></th>
+            <th width="76"></th>
         </tr>
         </thead>
         <tbody>
@@ -29,13 +29,27 @@
                 <td class="row-id">{{ $data_value->id }}</td>
                 @foreach($apps->rows as $rows_key => $rows_name)
                     @if(isset($rows_name['in_table_admin']))
-                        <td class="row-{{ $rows_key }}">{{ $data_value->$rows_key }}</td>
+                        <td class="row-{{ $rows_key }}">
+                            @if($rows_key === 'title')
+                                <a href="/admin/{{ $apps->name }}/{{ $data_value->id }}/edit">{{ $data_value->$rows_key }}</a>
+                            @else
+                                {{ $data_value->$rows_key }}
+                            @endif
+                        </td>
                     @endif
                 @endforeach
                 <td class="row-updated_at">{{ $data_value->updated_at }}</td>
-                <td class="row-position">Изменение веса</td>
-                <td class="row-active">Изменение активности</td>
-                <td class="row-edit">
+                <td class="row-position">
+                    <input type="text" name="position" value="{{ $data_value->position }}" class="ajax_edit_row form-control"
+                           data-row_where="id" data-value_where="{{ $data_value->id }}" data-table="{{ $apps->table_content }}">
+                </td>
+                <td class="row-active">
+                    <div class="btn-group pull-right" role="group">
+                        <button type="button" class="btn btn-xs btn-primary @if($data_value->active === 0) btn-outline @endif">вкл.</button>
+                        <button type="button" class="btn btn-xs btn-warning @if($data_value->active === 1) btn-outline @endif">откл.</button>
+                    </div>
+                </td>
+                <td class="row-edit" title="Чем больше, тем выше в списках">
                     <a href="/admin/{{ $apps->name }}/{{ $data_value->id }}/edit" class="btn btn-block btn-primary btn-xs"><i class="fa fa-pencil"></i> Изменить</a>
                 </td>
                 <td class="row-delete">

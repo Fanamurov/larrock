@@ -101,6 +101,9 @@ abstract class Apps extends BaseController
 			$data->$rows_key = $request->input($rows_key);
 		}
 
+        $data->active = $request->input('active', 0);
+
+        $data->setTable($this->table_content);
 		if($data->save()){
 			Session::flash('message', 'Материал '. $request->input('title') .' добавлен');
 			return back()->withInput();
@@ -132,9 +135,12 @@ abstract class Apps extends BaseController
 			$data->$rows_key = $request->input($rows_key);
 		}
 
+        $data->active = $request->input('active', 0);
+
+        $data->setTable($this->table_content);
 		if($data->save()){
 			Session::flash('message', 'Материал '. $request->input('title') .' изменен');
-			return back()->withInput();
+			return back();
 		}
 
 		Session::flash('error', 'Материал '. $request->input('title') .' не изменен');

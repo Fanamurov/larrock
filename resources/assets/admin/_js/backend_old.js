@@ -19,6 +19,11 @@ $(document).ready(function(){
         format: 'yyyy-mm-dd'
     });
 
+    $('#r-row-user_name').change(function(){
+        $('input[name=user_phone]').removeClass('notEmpty').parent().parent().parent().removeClass('has-error');
+        valid_forms();
+    });
+
     var config = {
         '.chosen-select'           : {},
         '.chosen-select-deselect'  : {allow_single_deselect:true},
@@ -29,6 +34,141 @@ $(document).ready(function(){
     for (var selector in config) {
         $(selector).chosen(config[selector]);
     }
+
+    /* Импорт ImportCSV4 */
+    $('.start_import_category').click(function(){
+        var row_success = 0;
+        var row_error = 0;
+        var count_import = 0;
+        var count_import_complete = 0;
+
+        Pace.restart();
+        notify_show('message', 'Импорт запущен');
+
+        $('.import_js_category').each(function(){
+            var row_table = $(this);
+            row_table.removeClass('alert-success').removeClass('alert-danger').addClass('alert-info');
+            var type = $(this).attr('data-type');
+            var row = $(this).attr('data-row');
+
+            //console.log('Start import row: ' +count_row +'/'+ count_all);
+            if(type === 'category'){
+                ++count_import;
+                var request = $.ajax({
+                    data: {row: row},
+                    type: "POST",
+                    dataType: "json",
+                    async: false,
+                    url: '/api/catalog/'+type +'/add?key=446dgkv4G4v990'
+                });
+                request.done(function (message) {
+                    //console.log(message);
+                    if(message.code == 'success'){
+                        row_success = row_success +1;
+                        row_table.addClass('alert-success');
+                        //notify_show('message', message.header)
+                    }else{
+                        row_error = row_error +1;
+                        console.error(message);
+                        row_table.addClass('alert-danger');
+                        //notify_show('error', message.header)
+                    }
+                });
+                request.fail(function(message){
+                    row_error = row_error +1;
+                    console.error(message);
+                    row_table.addClass('alert-danger');
+                    //notify_show('error', 'Запрос к API провалился')
+                });
+                request.complete(function(){
+                    ++count_import_complete;
+                    if(count_import_complete === count_import){
+                        if(count_import !== row_success){
+                            notify_show('error', 'Импорт раздела прошел с ошибками: '+ row_error +'/'+ count_import)
+                        }else{
+                            //notify_show('message', 'Импорт раздела завершен: '+ count_import +'/'+ count_import)
+                        }
+                    }
+                })
+            }
+        });
+        notify_show('message', 'Импорт раздела завершен:')
+    });
+
+    $('.start_import_tovar').click(function(){
+        var row_success = 0;
+        var row_error = 0;
+        var count_import = 0;
+        var count_import_complete = 0;
+
+        Pace.restart();
+        notify_show('message', 'Импорт запущен');
+
+        $('.import_js').each(function(){
+            var row_table = $(this);
+            var type = $(this).attr('data-type');
+            var row = $(this).attr('data-row');
+            row_table.removeClass('hidden').removeClass('alert-success').removeClass('alert-danger');
+            //console.log('Start import row: ' +count_row +'/'+ count_all);
+            if(type === 'tovar'){
+                ++count_import;
+                var request = $.ajax({
+                    data: {row: row},
+                    type: "POST",
+                    //async: false,
+                    dataType: "json",
+                    url: '/api/catalog/'+type +'/add?key=446dgkv4G4v990'
+                });
+                request.done(function (message) {
+                    //console.log(message);
+                    if(message.code == 'success'){
+                        row_success = row_success +1;
+                        row_table.addClass('alert-success');
+                        //notify_show('message', message.header)
+                    }
+                    if(message.code == 'error'){
+                        row_table.removeClass('hidden');
+                        row_error = row_error +1;
+                        console.error(message);
+                        row_table.addClass('alert-danger');
+                        //notify_show('error', message.header)
+                        row_table.show();
+                    }
+                });
+                request.fail(function(message){
+                    row_error = row_error +1;
+                    console.error(message);
+                    row_table.addClass('alert-danger');
+                    //notify_show('error', 'Запрос к API провалился');
+                    row_table.show();
+                });
+                request.complete(function(){
+                    ++count_import_complete;
+                    if(count_import_complete === count_import){
+                        if(count_import !== row_success){
+                            notify_show('error', 'Импорт товаров раздела прошел с ошибками: '+ row_error +'/'+ count_import)
+                        }else{
+                            notify_show('message', 'Импорт товаров раздела завершен: '+ count_import +'/'+ count_import)
+                        }
+                    }
+                })
+            }
+        });
+    });
+
+    $('pre.accordion').each(function(){
+        $(this).css('height', '100px');
+        $(this).css('opacity', '.4');
+        $(this).click(function(){
+            $(this).css('height', 'auto');
+            $(this).css('opacity', '1');
+        });
+    });
+
+    $('.show-rows').hide();
+    $('.show-rows-settings').click(function(){
+        $('.show-rows').show();
+    });
 
     /*
      * Универсальный обработчик для выделения блока как ссылки
@@ -41,6 +181,200 @@ $(document).ready(function(){
         var target = $(this).attr('data-target');
         $('.'+ target).removeClass('hidden');
         $(this).remove();
+    });
+
+    /** TREE */
+    $('.catalog_tree').find('.active')
+        .parent('ul').prev('li').addClass('active')
+        .parent('ul').prev('li').addClass('active');
+
+    /** Сохранение настроек меню в админке */
+    $('.navbar-minimalize').click(function(){
+        var request = $.ajax({
+            data: {settings_key: 'sidebar', settings_value: 'mini'},
+            type: "POST",
+            url: '/adminmodule/moduleadminmenu/settings'
+        });
+        request.done(function () {
+            $('body').removeClass('gorizont-navbar');
+            notify_show('message', 'Настройки обновлены')
+        });
+    });
+
+    $('.navbar-max').click(function(){
+        var request = $.ajax({
+            data: {settings_key: 'sidebar', settings_value: 'full'},
+            type: "POST",
+            url: '/adminmodule/moduleadminmenu/settings'
+        });
+        request.done(function () {
+            $('body').removeClass('mini-navbar').removeClass('gorizont-navbar');
+            notify_show('message', 'Настройки обновлены')
+        });
+    });
+
+    $('.navbar-gorizont').click(function(){
+        var request = $.ajax({
+            data: {settings_key: 'sidebar', settings_value: 'gorizont'},
+            type: "POST",
+            url: '/adminmodule/moduleadminmenu/settings'
+        });
+        request.done(function () {
+            $('body').removeClass('mini-navbar').addClass('gorizont-navbar');
+            notify_show('message', 'Настройки обновлены')
+        });
+    });
+    $('.gorizont-navbar').find('.nav-second-level.collapse.in').removeClass('in');
+
+    //Показ/скрытие полей в корзине в админке
+    $('.show-hidden-rows').click(function(){
+        $(this).hide();
+        var id = $(this).attr('data-id');
+        $('.hidden-full').toggleClass('hidden-full');
+        $('.small-full').removeClass('small-full');
+        $('.rows-'+id).removeClass('hidden-full');
+        $('.project-list').find('.collapse').show();
+    });
+    $('.show_full').click(function(){
+        var target = $(this).attr('data-id');
+        $('.order-id-'+target).find('.hidden-full').toggleClass('show');
+        $('.order-id-'+target).find('.collapse').toggleClass('show');
+    });
+
+    //Подгрузка выбранных товаров (добавление товара в корзине в админке)
+    $('.row-items').find('.chosen-drop').click(function(){
+        var tovars_chosen = [];
+        $(this).parent().find('.search-choice').find('span').each(function(){
+            if($(this).find('span').html() === undefined){
+                tovars_chosen.push($(this).html());
+            }
+        });
+        var request = $.ajax({
+            data: {tovars: tovars_chosen},
+            type: "POST",
+            url: '/admin/ajax/getTovars'
+        });
+        request.done(function (msg) {
+            $('.data-ajax').html(msg);
+            delete_tovar_ajax();
+        });
+    });
+
+    delete_tovar_ajax();
+    function delete_tovar_ajax(){
+        $('.row-items').find('.search-choice-close').click(function(){
+            var tovars_chosen = [];
+            $('.search-choice').each(function(){
+                tovars_chosen.push($(this).find('span').html());
+            });
+            console.log(tovars_chosen);
+            var request = $.ajax({
+                data: {tovars: tovars_chosen},
+                type: "POST",
+                url: '/admin/ajax/getTovars'
+            });
+            request.done(function (msg) {
+                $('.data-ajax').html(msg);
+            });
+        });
+    }
+
+    $('select.tovars-choosen').each(function(){
+        var tovars_chosen =[];
+        var id = $(this).attr('data-id');
+        $(this).find('option:selected').each(function(){
+            tovars_chosen.push($(this).val());
+        });
+        var request = $.ajax({
+            data: {tovars: tovars_chosen, id: id},
+            type: "POST",
+            url: '/admin/ajax/getTovars'
+        });
+        request.done(function (msg) {
+            $('.data-ajax').html(msg);
+        });
+    });
+
+    //Подгрузка данных покупателя по базе зареганных пользователей
+    $('select#r-row-user_name').change(function(){
+        var username = $(this).find('option:selected').val();
+        if(username.length > 0){
+            var request = $.ajax({
+                data: {username: username},
+                type: "POST",
+                url: '/admin/ajax/getUser'
+            });
+            request.done(function (msg){
+                console.log(msg);
+            });
+        }
+    });
+
+    $('.change_rule').change(function(){
+        var rule_id = $(this).attr('data-rule');
+        var value = 'allow';
+        if($(this).prop("checked")){
+        }else{
+            value = 'deny';
+        }
+        var data = { value_where: rule_id, row_where: 'id', value: value, row: 'type', event: 'edit', table: 'rules' };
+        hidden_action('/admin/ajax/changeRow', data, 'Изменено', false, false, true);
+    });
+
+    /** Редактирование полей в админке каталога */
+    $('.table-admin-catalog').find('input').click(function(){
+        $(this).parent().parent().find('.edit-row-admin-catalog').removeClass('hidden');
+        $(this).focusout(function(){
+            var value_where = $(this).attr('data-tovar-id');
+            var row_where = 'id';
+            var value = $(this).val();
+            var row = $(this).attr('name');
+            var table = 'catalog';
+            var event = 'edit';
+            var data = { value_where: value_where, row_where: row_where, value: value, row: row, event: event, table: table };
+            hidden_action('/admin/ajax/changeRow', data, 'Изменено', false, false, true);
+            $(this).parent().parent().find('.edit-row-admin-catalog').addClass('hidden');
+        })
+    });
+
+    $('.update-cost-row').change(function(){
+        var kolvo = $(this).val();
+        var cost = $(this).attr('data-cost');
+        var row = $(this).attr('data-row');
+        $('#'+row).find('.row-cost-data').html(parseInt(kolvo)*parseInt(cost) +' рублей');
+    });
+
+    /** Добавление нового поля с модификацией */
+    $('.btn-new-modify').click(function(){
+        var name = $(this).attr('data-name');
+        $(this).before('<div class="clearfix"></div><div class="row">' +
+            '<div class="col-md-4"><input class="form-control" type="text" placeholder="Имя модификации" name="'+ name +'[]"></div>' +
+            '<div class="col-md-4"><input class="form-control" type="text" placeholder="Цена (опционально)" name="modifycost'+ name +'[]"></div></div>');
+    });
+    /** Удаление модификации товара */
+    $('.remove-modify').click(function(){
+        $(this).parent().parent().empty();
+    });
+
+    /**
+     * Универсальный обработчик для выделения блока как ссылки
+     * Ищет внутри блока ссылку и присваивает ее всему блоку
+     */
+    $('.link_block').click(function(){window.location = $(this).find('a').attr('href');});
+    $('.link_block_this')
+        .click(function(){window.location = $(this).attr('data-href');})
+        .hover(function(){
+            $(this).toggleClass('active');
+        });
+
+    //Wizard/step2/Ручное создание новых полей
+    $('.btn-new-row-wizard').click(function(){
+        var tr = '<tr>'+ $('.table-custom-rows').find('tbody').find('tr:first').html() +'</tr>';
+        $('.table-custom-rows').find('tbody').find('tr:last').after(tr);
+        $('.table-custom-rows').find('tbody').find('tr:last').find('.btn-new-row-wizard-remove').removeClass('hidden');
+        $('.btn-new-row-wizard-remove').on('click', function(){
+            $(this).parentsUntil('tr').parent().remove();
+        });
     });
 
     /** Автоподсказчик для поиска разделов */
@@ -233,6 +567,87 @@ $(document).ready(function(){
         });
     }
 
+    $('.switch_active').find('.switch_on').click(function(){
+        var value_where = $(this).attr('data-value_where');
+        var row_where = 'id';
+        var value = '1';
+        var row = 'active';
+        var table = $(this).attr('data-table');
+        var event = 'edit';
+        var data = { value_where: value_where, row_where: row_where, value: value, row: row, event: event, table: table };
+        //hidden_action(url, send_data, good_message, button, redirect_url, clearcache)
+        hidden_action('/admin/ajax/changeRow', data, 'Элемент включен', false, false, true);
+        $(this).removeClass('ajax').removeClass('label-transparent').addClass('label-success');
+        $(this).parent().find('.switch_off').removeClass('label-warning').addClass('ajax');
+    });
+    $('.switch_active').find('.switch_off').click(function(){
+        var value_where = $(this).attr('data-value_where');
+        var row_where = 'id';
+        var value = '0';
+        var row = 'active';
+        var table = $(this).attr('data-table');
+        var event = 'edit';
+        var data = { value_where: value_where, row_where: row_where, value: value, row: row, event: event, table: table };
+        //hidden_action(url, send_data, good_message, button, redirect_url, clearcache)
+        hidden_action('/admin/ajax/changeRow', data, 'Элемент выключен', false, false, true);
+        $(this).removeClass('ajax').removeClass('label-transparent').addClass('label-warning');
+        $(this).parent().find('.switch_on').removeClass('label-success').addClass('ajax');
+    });
+
+    $('.switch_status').find('.switch_on').click(function(){
+        var value_where = $(this).attr('data-value_where');
+        var row_where = 'id';
+        var value = 'new';
+        var row = 'status';
+        var table = $(this).attr('data-table');
+        var event = 'edit';
+        var data = { value_where: value_where, row_where: row_where, value: value, row: row, event: event, table: table };
+        //hidden_action(url, send_data, good_message, button, redirect_url, clearcache)
+        hidden_action('/admin/ajax/changeRow', data, 'Элемент объявлен непрочитанным', false, false, true);
+        $(this).removeClass('ajax').addClass('label').addClass('label-success');
+        $(this).parent().find('.switch_off').removeClass('label-warning').removeClass('label').addClass('ajax');
+    });
+    $('.switch_status').find('.switch_off').click(function(){
+        var value_where = $(this).attr('data-value_where');
+        var row_where = 'id';
+        var value = 'archive';
+        var row = 'status';
+        var table = $(this).attr('data-table');
+        var event = 'edit';
+        var data = { value_where: value_where, row_where: row_where, value: value, row: row, event: event, table: table };
+        //hidden_action(url, send_data, good_message, button, redirect_url, clearcache)
+        hidden_action('/admin/ajax/changeRow', data, 'Элемент помещен в архив', false, false, true);
+        $(this).removeClass('ajax').addClass('label').addClass('label-warning');
+        $(this).parent().find('.switch_on').removeClass('label-success').removeClass('label').addClass('ajax');
+    });
+
+    $('.switch_role').find('.switch_on').click(function(){
+        var value_where = $(this).attr('data-value_where');
+        var row_where = 'id';
+        var value = 'allow';
+        var row = 'type';
+        var table = $(this).attr('data-table');
+        var event = 'edit';
+        var data = { value_where: value_where, row_where: row_where, value: value, row: row, event: event, table: table };
+        //hidden_action(url, send_data, good_message, button, redirect_url, clearcache)
+        hidden_action('/admin/ajax/changeRow', data, 'Элемент включен', false, false, true);
+        $(this).removeClass('ajax').addClass('label').addClass('label-success');
+        $(this).parent().find('.switch_off').removeClass('label-warning').removeClass('label').addClass('ajax');
+    });
+    $('.switch_role').find('.switch_off').click(function(){
+        var value_where = $(this).attr('data-value_where');
+        var row_where = 'id';
+        var value = 'deny';
+        var row = 'type';
+        var table = $(this).attr('data-table');
+        var event = 'edit';
+        var data = { value_where: value_where, row_where: row_where, value: value, row: row, event: event, table: table };
+        //hidden_action(url, send_data, good_message, button, redirect_url, clearcache)
+        hidden_action('/admin/ajax/changeRow', data, 'Элемент выключен', false, false, true);
+        $(this).removeClass('ajax').addClass('label').addClass('label-warning');
+        $(this).parent().find('.switch_on').removeClass('label-success').removeClass('label').addClass('ajax');
+    });
+
     /**
      * Уведомления в сплывающих окнах от процессов
      * string @param type  Тип события (good, error)
@@ -256,30 +671,72 @@ $(document).ready(function(){
         }
     }
 
+    /** Переключение двух дивов с классами switch_true и switch_false */
+    $('.switch_true').click(function(){
+        $(this).hide().parent().find('.switch_false').show();
+    });
+    $('.switch_false').click(function(){
+        $(this).hide().parent().find('.switch_true').show();
+    });
+
+    /** APP. Включение/отключение */
+    $('.app_off').click(function(){
+        var value_where = $(this).attr('data-app');
+        var row_where = 'id';
+        var value = '0';
+        var row = 'active';
+        var table = 'apps';
+        var event = 'edit';
+        var active_app = $('.active-'+value_where);
+        var data = { value_where: value_where, row_where: row_where, value: value, row: row, event: event, table: table };
+        //hidden_action(url, send_data, good_message, button, redirect_url, clearcache)
+        hidden_action('/admin/ajax/changeRow', data, 'Компонент отключен', false, false, true);
+
+        active_app.find('.app_on_switch').hide().find('.app_off_switch').show('slow');
+        active_app.find('.app_off_switch').show('slow');
+    });
+    $('.app_on').click(function(){
+        var value_where = $(this).attr('data-app');
+        var row_where = 'id';
+        var value = '1';
+        var row = 'active';
+        var table = 'apps';
+        var event = 'edit';
+        var active_app = $('.active-'+value_where);
+        var data = { value_where: value_where, row_where: row_where, value: value, row: row, event: event, table: table };
+        //hidden_action(url, send_data, good_message, button, redirect_url, clearcache)
+        hidden_action('/admin/ajax/changeRow', data, 'Компонент включен', false, false, true);
+
+        active_app.find('.app_off_switch').hide().find('.app_on_switch').show('slow');
+        active_app.find('.app_on_switch').show('slow');
+    });
+    $('.app_settings_show').click(function(){
+        var app = $(this).attr('data-app');
+        $('.settings-'+app).slideToggle('fast');
+    });
+
+    /** РЕДАКТИРОВАНИЕ SEO по URL(актуально для каталога) */
+    $('input.seo_edit_url').on('focusout', function () {
+        var url_connect = $(this).attr('data-url_connect');
+        var type_connect = $(this).attr('data-type_connect');
+        var value = $(this).val();
+        var data = { url_connect: url_connect, type_connect: type_connect, title: value };
+        hidden_action('/admin/ajax/updateSeoTitleUrl', data, 'Успешно сохранено', false, false, true);
+    });
+
+    $('select[name=csv_row]').change(function () {
+        var text = $(this).val();
+        var data_id = $(this).attr('data-id');
+        $('input.lang'+data_id+'').val(text);
+    });
+
     /** Purge site cache function */
     function clear_cache() {
-        //hidden_action('/admin/ajax/clearCache/true', false, false, false, false, false);
+        hidden_action('/admin/ajax/clearCache/true', false, false, false, false, false);
     }
     $('#clear_cache').bind('click', function () {
         clear_cache();
     });
-
-    /** Input для редактирования поля */
-    $('.ajax_edit_row').on('focusout', function(){
-        var value_where = $(this).attr('data-value_where');
-        var row_where = $(this).attr('data-row_where');
-        var value = $(this).val();
-        var row = $(this).attr('name');
-        var table = $(this).attr('data-table');
-        var event = 'edit';
-        var data = { value_where: value_where, row_where: row_where, value: value, row: row, event: event, table: table };
-        //hidden_action(url, send_data, good_message, button, redirect_url, clearcache)
-        hidden_action('/admin/ajax/edit_row', data, 'Изменено', false, false, true);
-    });
-
-
-
-    /* ---  Прошло проверку  ---*/
 
     /** Удаление контента */
     $('.delete_data').on('click', function () {
@@ -447,57 +904,57 @@ $(document).ready(function(){
     });
 
     $('.fileUpload').liteUploader({
-        script: '/admin/ajax/uploadFile',
-        rules: {
-            //allowedFileTypes: 'image/jpeg,image/png,image/gif',
-            maxSize: 250000
-        }
-    })
-    .on('lu:errors', function (e, errors) {
-        var isErrors = false;
-        $('#display').html('');
-        $.each(errors, function (i, error) {
-            if (error.errors.length > 0) {
-                isErrors = true;
-                $.each(error.errors, function (i, errorInfo) {
-                    $('#display').append('<br />ERROR! File: ' + error.name + ' - Info: ' + JSON.stringify(errorInfo));
-                    //notify_show('error', 'Файл не загружен '+ errorInfo);
-                });
+            script: '/admin/ajax/uploadFile',
+            rules: {
+                //allowedFileTypes: 'image/jpeg,image/png,image/gif',
+                maxSize: 250000
             }
-        });
-    })
-    .on('lu:before', function (e, files) {
-        $('#display').append('<br />Uploading ' + files.length + ' file(s)...');
-    })
-    .on('lu:progress', function (e, percentage) {
-        console.log(percentage);
-    })
-    .on('lu:cancelled', function () {
-        alert('upload aborted!')
-    })
-    .on('lu:success', function (e, response) {
-        var response = $.parseJSON(response);
-        $('#previews').html('');
-        $.each(response.urls, function(i, url) {
-            notify_show('success', 'Файл '+ url +' загружен');
-        });
-        //$('#display').append(response.message);
+        })
+        .on('lu:errors', function (e, errors) {
+            var isErrors = false;
+            $('#display').html('');
+            $.each(errors, function (i, error) {
+                if (error.errors.length > 0) {
+                    isErrors = true;
+                    $.each(error.errors, function (i, errorInfo) {
+                        $('#display').append('<br />ERROR! File: ' + error.name + ' - Info: ' + JSON.stringify(errorInfo));
+                        //notify_show('error', 'Файл не загружен '+ errorInfo);
+                    });
+                }
+            });
+        })
+        .on('lu:before', function (e, files) {
+            $('#display').append('<br />Uploading ' + files.length + ' file(s)...');
+        })
+        .on('lu:progress', function (e, percentage) {
+            console.log(percentage);
+        })
+        .on('lu:cancelled', function () {
+            alert('upload aborted!')
+        })
+        .on('lu:success', function (e, response) {
+            var response = $.parseJSON(response);
+            $('#previews').html('');
+            $.each(response.urls, function(i, url) {
+                notify_show('success', 'Файл '+ url +' загружен');
+            });
+            //$('#display').append(response.message);
 
-        var form = $('.fileUpload');
-        var id_connect = form.attr('data-id_connect');
-        var type = form.attr('data-type');
-        var request = $.ajax({
-            data: {id_connect: id_connect, type: type},
-            type: "POST",
-            dataType: "html",
-            url: '/admin/ajax/uploadFileShow'
+            var form = $('.fileUpload');
+            var id_connect = form.attr('data-id_connect');
+            var type = form.attr('data-type');
+            var request = $.ajax({
+                data: {id_connect: id_connect, type: type},
+                type: "POST",
+                dataType: "html",
+                url: '/admin/ajax/uploadFileShow'
+            });
+            request.done(function (msg) {
+                $('#file-uploader').html(msg);
+                notify_show('success', 'Все загрузки завершены');
+                addTriggerFile();
+            });
         });
-        request.done(function (msg) {
-            $('#file-uploader').html(msg);
-            notify_show('success', 'Все загрузки завершены');
-            addTriggerFile();
-        });
-    });
 
     /** Метод для связывания данных загруженных по ajax(загрузка файлов) и событий на изменения данных о них */
     function addTriggerFile(){

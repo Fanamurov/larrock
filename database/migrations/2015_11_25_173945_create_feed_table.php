@@ -22,7 +22,7 @@ class CreateFeedTable extends Migration
 			$table->string('category', 255);
 			$table->text('short');
 			$table->text('description');
-			$table->string('url', 155);
+			$table->string('url', 155)->unique();
 			$table->dateTime('date');
 			$table->char('position', 10)->default(0);
 			$table->integer('active', 1)->default(1);

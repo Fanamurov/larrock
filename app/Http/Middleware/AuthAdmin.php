@@ -39,6 +39,13 @@ class AuthAdmin
 			return $next($request);
 		}
 
-		return redirect()->intended('admin/auth/login');
+		if ($request->ajax())
+		{
+			return response('Access forbidden', 403);
+		}
+		else
+		{
+			return redirect()->intended('admin/auth/login');
+		}
 	}
 }

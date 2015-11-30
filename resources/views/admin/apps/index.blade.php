@@ -2,7 +2,7 @@
 
 @section('title') {{ $apps->name }} admin @endsection
 @section('page_h1', 'Список')
-@section('page_h1_new', 'материала')
+@section('page_h1_new', 'страницы')
 @section('app_name'){{ $apps->name }}@endsection
 @section('app_title') {{ $apps->title }} @endsection
 
@@ -16,6 +16,7 @@
                     <th>{{ $rows_name['title'] }}</th>
                 @endif
             @endforeach
+            <th>URL</th>
             <th width="141">Изменено</th>
             <th width="90">Вес</th>
             <th width="93" class="pull-right">Активность</th>
@@ -38,15 +39,24 @@
                         </td>
                     @endif
                 @endforeach
+                <td>
+                    <a href="{{ action('Page\PageController@getIndex') }}/{{ $data_value->url }}">
+                        {{ action('Page\PageController@getIndex', [], FALSE) }}/{{ $data_value->url }}
+                    </a>
+                </td>
                 <td class="row-updated_at">{{ $data_value->updated_at }}</td>
                 <td class="row-position">
                     <input type="text" name="position" value="{{ $data_value->position }}" class="ajax_edit_row form-control"
                            data-row_where="id" data-value_where="{{ $data_value->id }}" data-table="{{ $apps->table_content }}">
                 </td>
                 <td class="row-active">
-                    <div class="btn-group pull-right" role="group">
-                        <button type="button" class="btn btn-xs btn-primary @if($data_value->active === 0) btn-outline @endif">вкл.</button>
-                        <button type="button" class="btn btn-xs btn-warning @if($data_value->active === 1) btn-outline @endif">откл.</button>
+                    <div class="btn-group pull-right btn-group_switch_ajax" role="group">
+                        <button type="button" class="btn btn-xs btn-primary @if($data_value->active === 0) btn-outline @endif"
+                                data-row_where="id" data-value_where="{{ $data_value->id }}" data-table="{{ $apps->table_content }}"
+                                data-row="active" data-value="1">on</button>
+                        <button type="button" class="btn btn-xs btn-warning @if($data_value->active === 1) btn-outline @endif"
+                                data-row_where="id" data-value_where="{{ $data_value->id }}" data-table="{{ $apps->table_content }}"
+                                data-row="active" data-value="0">off</button>
                     </div>
                 </td>
                 <td class="row-edit" title="Чем больше, тем выше в списках">

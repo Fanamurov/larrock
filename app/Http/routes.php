@@ -34,7 +34,8 @@ Route::group(['middleware'=>'AuthAdmin'], function(){
 	Route::resource('admin/roles', 'Admin\RolesController');
 	Route::resource('admin/page', 'Admin\PageController');
 
-    Route::get('admin/ajax/edit_row/{table}/{event}', function($table, $event){
-        return action('Admin\Ajax');
-    })->where(['event' => 'update']);
+	Route::post('admin/ajax/EditRow', 'Admin\Ajax@EditRow');
+	Route::post('admin/ajax/ClearCache', 'Admin\Ajax@ClearCache');
+
+	Route::get('admin', 'Admin\PageController@index');
 });

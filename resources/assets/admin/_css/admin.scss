@@ -4,6 +4,11 @@
 @import "plugins/chosen/chosen";
 //@import "plugins/dropzone/dropzone";
 
+.help-block{
+  font-style: italic;
+  color: grey;
+}
+
 textarea::-webkit-input-placeholder {
   /* WebKit browsers */
   color: #a9a9a9 !important;
@@ -215,9 +220,6 @@ input[name=date]{
 }
 .active-bold, .active-bold a{
   font-weight: 600;
-}
-.nav.navbar-top-links > li > a:hover, .nav.navbar-top-links > li > a:focus{
-  background-color: #293846;
 }
 
 .table-mail .mail-date {

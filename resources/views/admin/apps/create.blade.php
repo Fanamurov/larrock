@@ -1,8 +1,8 @@
 @extends('admin.layouts.main')
 
 @section('title') {{ $apps->name }} admin @endsection
-@section('page_h1', 'Создание материала')
-@section('page_h1_new', 'материала')
+@section('page_h1', 'Создание страницы')
+@section('page_h1_new', 'страницы')
 @section('app_name'){{ $apps->name }}@endsection
 @section('app_title') {{ $apps->title }} @endsection
 

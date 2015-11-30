@@ -17,7 +17,7 @@ class PageController extends Apps
 	public function __construct()
 	{
 		$this->name = 'page';
-		$this->title = 'Статичные страницы';
+		$this->title = 'Cтраницы';
 		$this->description = 'Страницы без привязки к определенному разделу';
 		$this->table_content = 'feed';
 		$this->rows = [
@@ -25,45 +25,46 @@ class PageController extends Apps
 				'title' => 'Заголовок',
 				'in_table_admin' => 'TRUE',
 				'type' => 'text',
-				'in_admin_tab' => 'main',
-				'valid' => 'max:255|required'
+				'in_admin_tab' => ['main' => 'Заголовок, описание'],
+				'valid' => 'max:255|required',
+				'typo' => 'true'
 			],
 			'description' => [
 				'title' => 'Текст новости',
 				'type' => 'textarea',
-				'in_admin_tab' => 'main'
+				'in_admin_tab' => ['main' => 'Заголовок, описание']
 			],
 			'url' => [
 				'title' => 'URL материала',
 				'type' => 'text',
-				'in_admin_tab' => 'seo',
+				'in_admin_tab' => ['seo' => 'Seo'],
 				'valid' => 'max:155|required'
 			],
 			'date' => [
 				'title' => 'Дата материала',
 				'type' => 'date',
-				'in_admin_tab' => 'other',
+				'in_admin_tab' => ['other' => 'Дата, вес, активность'],
 				'valid' => 'date'
 			],
 			'position' => [
 				'title' => 'Вес материала',
 				'type' => 'input',
-				'in_admin_tab' => 'other',
+				'in_admin_tab' => ['other' => 'Дата, вес, активность'],
 				'valid' => 'integer'
 			],
 			'active' => [
 				'title' => 'Опубликован',
 				'type' => 'checkbox',
 				'checked' => 'TRUE',
-				'in_admin_tab' => 'other',
+				'in_admin_tab' => ['other' => 'Дата, вес, активность'],
 				'valid' => 'integer|max:1',
 				'default' => 1
 			],
 		];
 		$this->settings = '';
-		$this->plugins_backend = '';
+		$this->plugins_backend = ['seo'];
 		$this->plugins_front = '';
-		$this->version = 12;
+		$this->version = 16;
 		$this->check_app();
 	}
 
@@ -99,9 +100,42 @@ class PageController extends Apps
      */
     public function edit($id)
     {
-		$data['apps'] = $this->get_app();
-		$data['tabs'] = ['main', 'seo', 'other'];
 		$data['data'] = DB::table($this->table_content)->where('id', '=', $id)->get();
+
+		$data['apps'] = $this->get_app();
+
+		if(in_array('seo', $this->plugins_backend, TRUE)){
+			$this->rows['seo_title'] = [
+				'title' => 'Title материала',
+				'type' => 'input',
+				'in_admin_tab' => ['seo' => 'Seo'],
+				'valid' => 'max:255',
+				'help' => 'По-умолчанию равно заголовку материала',
+			];
+			$data['data']['0']->seo_title = '';
+
+			$this->rows['seo_description'] = [
+				'title' => 'Description материала',
+				'type' => 'input',
+				'in_admin_tab' => ['seo' => 'Seo'],
+				'valid' => 'max:255',
+				'help' => 'По-умолчанию равно заголовку материала',
+			];
+			$data['data']['0']->seo_description = '';
+
+			$this->rows['seo_keywords'] = [
+				'title' => 'Keywords материала',
+				'type' => 'input',
+				'in_admin_tab' => ['seo' => 'Seo'],
+				'valid' => 'max:255'
+			];
+			$data['data']['0']->seo_keywords = '';
+		}
+		$data['apps']->rows = $this->rows;
+
+		$data['tabs'] = $this->get_tabs_names_admin();
+
+
 		return view('admin.apps.edit', $data);
     }
 }

@@ -176,4 +176,19 @@ abstract class Apps extends BaseController
 		}
 		return $rules;
 	}
+
+	/**
+	 * Возвращает ключ таба и его название из массива параметров поля компонента
+	 * @return array
+	 */
+	public function get_tabs_names_admin()
+	{
+		$tabs = array();
+		foreach($this->rows as $row_value){
+			if(array_key_exists('in_admin_tab', $row_value)){
+				$tabs = array_add($tabs, key($row_value['in_admin_tab']), $row_value['in_admin_tab'][key($row_value['in_admin_tab'])]);
+			}
+		}
+		return $tabs;
+	}
 }

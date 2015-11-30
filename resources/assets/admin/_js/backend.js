@@ -1,4 +1,10 @@
 $(document).ready(function(){
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
     paceOptions = {
         restartOnPushState: true,
         restartOnRequestAfter: true,
@@ -192,22 +198,23 @@ $(document).ready(function(){
             url: url
         });
         request.done(function (msg) {
-            if(msg.blank){
+            if(msg.status === 'blank'){
                 return false;
             }
-            if(msg.good){
+
+            if(msg.status === 'error'){
+                notify_show('error', msg.message);
+                return false;
+            }
+
+            if(msg.status === 'success'){
                 if ((good_message !== false) && (good_message !== undefined)) {
                     notify_show('success', good_message);
                 }else{
-                    notify_show('success', msg.good);
+                    notify_show('success', msg.message);
                 }
             }
-            if(good_message !== false){
-                if(msg.error){
-                    notify_show('error', msg.error);
-                    return false;
-                }
-            }
+
             if (clearcache === true) {
                 clear_cache();
             }
@@ -220,10 +227,6 @@ $(document).ready(function(){
             return true;
         });
         request.fail(function (jqXHR, status, statusText) {
-            if(status == 'parsererror'){
-                notify_show('success', 'Ничего не произошло');
-                return false;
-            }
             notify_show('error', statusText);
             if ((button !== false) && (redirect_url !== undefined)) {
                 $(button).removeClass('action_button').removeAttr('disabled');
@@ -258,11 +261,13 @@ $(document).ready(function(){
 
     /** Purge site cache function */
     function clear_cache() {
-        //hidden_action('/admin/ajax/clearCache/true', false, false, false, false, false);
+        hidden_action('/admin/ajax/ClearCache', false, false, false, false, false);
     }
     $('#clear_cache').bind('click', function () {
         clear_cache();
     });
+
+
 
     /** Input для редактирования поля */
     $('.ajax_edit_row').on('focusout', function(){
@@ -274,8 +279,77 @@ $(document).ready(function(){
         var event = 'edit';
         var data = { value_where: value_where, row_where: row_where, value: value, row: row, event: event, table: table };
         //hidden_action(url, send_data, good_message, button, redirect_url, clearcache)
-        hidden_action('/admin/ajax/edit_row', data, 'Изменено', false, false, true);
+        hidden_action('/admin/ajax/EditRow', data, false, false, false, true);
     });
+
+    $('.btn-group_switch_ajax').find('button').click(function(){
+        $(this).parent().find('button').toggleClass('btn-outline');
+        var value_where = $(this).attr('data-value_where');
+        var row_where = $(this).attr('data-row_where');
+        var value = $(this).attr('data-value');
+        var row = $(this).attr('data-row');
+        var table = $(this).attr('data-table');
+        var data = { value_where: value_where, row_where: row_where, value: value, row: row, table: table };
+        //hidden_action(url, send_data, good_message, button, redirect_url, clearcache)
+        hidden_action('/admin/ajax/EditRow', data, false, false, false, true);
+    });
+
+
+    /** Conform alert. Уверены что хотите сделать это?) */
+    $('.please_conform, .btn-danger').on('click', function () {
+        var href = $(this).attr('href');
+        return confirm('Уверены?');
+    });
+
+    /**
+     * Создание URL для страниц
+     * @reference function change_url
+     */
+    $('input[name=title]').focusout(function(){
+        var title = $(this).val();
+        var form = $(this).closest('form');
+        var url_input = $(form).find('input[name=url]').val();
+        if(url_input !== undefined){
+            if(url_input.length < 1){
+                var table = $(this).attr('data-table');
+                change_url(title, table, form);
+            }
+        }
+    });
+    $('.refresh-url').click(function () {
+        var input = $('input[name=title]');
+        var title = input.val();
+        var form = $(this).closest('form');
+        var table = input.attr('data-table');
+        change_url(title, table, form);
+    });
+
+    /**
+     * Создание url для страницы и вставка значения в input[name=url]
+     * string @param title  Текст для транслитерации (обычно input[name=title])
+     * string @param table  Имя таблицы для проверки уникальности url (опционально, можно передать пустое значение)
+     * string @param form   Форма в которой проводятся операции
+     */
+    function change_url(title, table, form){
+        $.ajax({
+            type: "POST",
+            data: { words: title, table: table},
+            dataType: 'json',
+            url: "/admin/ajax/translit",
+            success: function (data) {
+                var url_input = $(form).find('input[name=url]');
+                if (data.good) {
+                    url_input.val(data.good);
+                    notify_show('info', 'Материалу будет присвоен url: '+data.good);
+                    valid_forms();
+                }else{
+                    url_input.val(data.error);
+                    notify_show('info', 'Материалу присвоен url: '+data.error +' с солью');
+                    valid_forms();
+                }
+            }
+        });
+    }
 
 
 
@@ -440,12 +514,6 @@ $(document).ready(function(){
         }
     });
 
-    /** Conform alert. Уверены что хотите сделать это?) */
-    $('.please_conform, .btn-danger').on('click', function () {
-        var href = $(this).attr('href');
-        return confirm('Уверены?');
-    });
-
     $('.fileUpload').liteUploader({
         script: '/admin/ajax/uploadFile',
         rules: {
@@ -573,55 +641,7 @@ $(document).ready(function(){
     }
     addTriggerFile();
 
-    /**
-     * Создание URL для страниц
-     * @reference function change_url
-     */
-    $('input[name=title]').focusout(function(){
-        var title = $(this).val();
-        var form = $(this).closest('form');
-        var url_input = $(form).find('input[name=url]').val();
-        if(url_input !== undefined){
-            if(url_input.length < 1){
-                var table = $(this).attr('data-table');
-                change_url(title, table, form);
-            }
-        }
-    });
-    $('.refresh-url').click(function () {
-        var input = $('input[name=title]');
-        var title = input.val();
-        var form = $(this).closest('form');
-        var table = input.attr('data-table');
-        change_url(title, table, form);
-    });
 
-    /**
-     * Создание url для страницы и вставка значения в input[name=url]
-     * string @param title  Текст для транслитерации (обычно input[name=title])
-     * string @param table  Имя таблицы для проверки уникальности url (опционально, можно передать пустое значение)
-     * string @param form   Форма в которой проводятся операции
-     */
-    function change_url(title, table, form){
-        $.ajax({
-            type: "POST",
-            data: { words: title, table: table},
-            dataType: 'json',
-            url: "/admin/ajax/translit",
-            success: function (data) {
-                var url_input = $(form).find('input[name=url]');
-                if (data.good) {
-                    url_input.val(data.good);
-                    notify_show('info', 'Материалу будет присвоен url: '+data.good);
-                    valid_forms();
-                }else{
-                    url_input.val(data.error);
-                    notify_show('info', 'Материалу присвоен url: '+data.error +' с солью');
-                    valid_forms();
-                }
-            }
-        });
-    }
 
     /** Alert Подтверждение удаления */
     $('.conform').click(function () {

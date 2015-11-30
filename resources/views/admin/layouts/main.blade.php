@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="Mart Larrock CMS" />
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>@yield('title') - Larrock Admin</title>
     <link href="{{asset('ico.png?6v')}}" rel="shortcut icon" />
     <link rel="stylesheet" href="{{asset('_admin/_css/bootstrap.min.css')}}"/>
@@ -37,13 +38,39 @@
                     </div>
                     <div class="navbar-collapse collapse" id="navbar">
                         <ul class="nav navbar-nav">
-                            <li>
-                                <a aria-expanded="false" role="button" href="/"><i class="fa fa-mail-reply"></i> К сайту</a>
+                            <li class="dropdown">
+                                <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Каталог <span class="caret"></span></a>
+                                <ul role="menu" class="dropdown-menu">
+                                    <li><a href="#">Разделы и товары</a></li>
+                                    <li><a href="#">Тех. описания</a></li>
+                                    <li><a href="#">Wizard</a></li>
+                                    <li><a href="#">Фильтры, поля</a></li>
+                                    <li><a href="#">Настройки каталога</a></li>
+                                </ul>
                             </li>
                             <li>
-                                <a href="{{ action('Admin\PageController@index') }}">Статичные страницы</a>
+                                <a href="{{ action('Admin\PageController@index') }}">Cтраницы</a>
                             </li>
-                            <li class="dropdown active">
+                            <li>
+                                <a href="#">Ленты</a>
+                            </li>
+                            <li>
+                                <a href="#">Баннеры</a>
+                            </li>
+                            <li>
+                                <a href="#">Блоки</a>
+                            </li>
+                            <li class="dropdown">
+                                <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Корзина <span class="caret"></span></a>
+                                <ul role="menu" class="dropdown-menu">
+                                    <li><a href="#">Заказы</a></li>
+                                    <li><a href="#">Скидки и купоны</a></li>
+                                    <li><a href="#">Способы доставки</a></li>
+                                    <li><a href="#">Способы оплаты</a></li>
+                                    <li><a href="#">Статистика</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
                                 <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Пользователи <span class="caret"></span></a>
                                 <ul role="menu" class="dropdown-menu">
                                     <li><a href="{{ action('Admin\UsersController@index') }}"><i class="fa fa-list"></i> Список пользователей</a></li>
@@ -53,13 +80,31 @@
                                     <li><a href="{{ action('Admin\RolesController@create') }}"><i class="fa fa-plus"></i> Добавить роль</a></li>
                                 </ul>
                             </li>
+                            <li class="dropdown">
+                                <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Администрирование <span class="caret"></span></a>
+                                <ul role="menu" class="dropdown-menu">
+                                    <li><a href="#">Seo</a></li>
+                                    <li><a href="#">Меню сайта</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#">Глобальные настройки</a></li>
+                                    <li><a href="#">Компоненты</a></li>
+                                    <li><a href="#">Модули</a></li>
+                                    <li><a href="#">Блоки шаблона</a></li>
+                                    <li><a href="#">Картинки</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li>
+                                        <a href="#" id="clear_cache"><i class="fa fa-trash-o"></i> Кэш</a>
+                                    </li>
+                                </ul>
+                            </li>
                         </ul>
                         <ul class="nav navbar-top-links navbar-right">
                             <li>
-                                <input type="text" class="form-control" placeholder="Поиск...">
+                                <button type="button" class="btn btn-outline show-please" data-target="search-form" title="Поиск по сайту"><i class="fa fa-search"></i></button>
+                                <input type="text" class="form-control search-form hidden" placeholder="Поиск...">
                             </li>
                             <li>
-                                <a href="#" id="clear_cache"><i class="fa fa-trash-o"></i> Кэш</a>
+                                <a aria-expanded="false" role="button" href="/" target="_blank">К сайту</a>
                             </li>
                             <li>
                                 <a href="{{ action('Admin\AuthController@getLogout') }}">

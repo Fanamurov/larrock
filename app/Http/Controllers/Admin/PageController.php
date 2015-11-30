@@ -62,9 +62,9 @@ class PageController extends Apps
 			],
 		];
 		$this->settings = '';
-		$this->plugins_backend = ['seo'];
+		$this->plugins_backend = ['seo', 'images'];
 		$this->plugins_front = '';
-		$this->version = 16;
+		$this->version = 17;
 		$this->check_app();
 	}
 

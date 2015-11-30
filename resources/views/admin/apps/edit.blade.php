@@ -19,6 +19,9 @@
                     @foreach($tabs as $tabs_key => $tabs_value)
                         <li @if($tabs_key === 'main') class="active" @endif><a href="#tab{{ $tabs_key }}" data-toggle="tab"><i class="fa fa-cogs"></i> {{ $tabs_value }}</a></li>
                     @endforeach
+                    <li>
+                        <a href="#tabimages" data-toggle="tab">Фото</a>
+                    </li>
                 </ul>
                 <div class="clearfix"></div><br/><br/>
                 <div class="tab-content">
@@ -81,6 +84,16 @@
                             @endforeach
                         </div>
                     @endforeach
+
+                    <div class="tab-pane" id="tabimages">
+                        <div class="form-group">
+                            <form action="{{ action('Admin\Ajax@UploadImage') }}" method="post" enctype="multipart/form-data">
+                                <input type="hidden" name="folder" value="{{ $apps->name }}">
+                                <input type="file" name="images[]" id="filer_input" multiple="multiple">
+                                <input type="submit" value="Submit">
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
 

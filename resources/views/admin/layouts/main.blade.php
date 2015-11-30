@@ -182,6 +182,11 @@
     </div>
 </div>
 
+<link href="/_admin/_js/plugins/jQuery.filer-master/css/jquery.filer.css" type="text/css" rel="stylesheet" />
+<link href="/_admin/_js/plugins/jQuery.filer-master/css/themes/jquery.filer-dragdropbox-theme.css" type="text/css" rel="stylesheet" />
+
+<script src="/_admin/_js/plugins/jQuery.filer-master/js/jquery.filer.min.js"></script>
+
 
 <!-- Mainly scripts -->
 <script src="{{asset('_admin/_js/bootstrap.min.js')}}"></script>

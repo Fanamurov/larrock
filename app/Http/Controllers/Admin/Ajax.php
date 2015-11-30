@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use DB;
+use Input;
+use Image;
 
 class Ajax extends Controller
 {
@@ -36,5 +38,36 @@ class Ajax extends Controller
 	{
 		return response()->json(['status' => 'success', 'message' => 'Кеш очищен']);
 	}
+
+    public function UploadImage()
+    {
+        $images = Input::file('images');
+        $folder = Input::get('folder');
+
+        if ( !file_exists('images')) {
+            mkdir('images/', 0755);
+        }
+
+        if ( !file_exists('images/'. $folder)) {
+            mkdir('images/'. $folder, 0755);
+        }
+
+        if ( !file_exists('images/'. $folder .'/big')) {
+            mkdir('images/'. $folder .'/big', 0755);
+        }
+
+        foreach($images as $images_value){
+            Image::make($images_value->getRealPath())
+                ->resize(300, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })
+                ->save('images/'. $folder .'/big/foo.jpg');
+        }
+
+        return response()->json(['status' => 'success', 'message' => 'Фото успешно загружены']);
+
+        // resizing an uploaded file
+        //Image::make(Input::file('images'))->resize(300, 200)->save('foo.jpg');
+    }
 
 }

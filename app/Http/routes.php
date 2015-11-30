@@ -36,6 +36,7 @@ Route::group(['middleware'=>'AuthAdmin'], function(){
 
 	Route::post('admin/ajax/EditRow', 'Admin\Ajax@EditRow');
 	Route::post('admin/ajax/ClearCache', 'Admin\Ajax@ClearCache');
+    Route::post('admin/ajax/UploadImage', 'Admin\Ajax@UploadImage');
 
 	Route::get('admin', 'Admin\PageController@index');
 });

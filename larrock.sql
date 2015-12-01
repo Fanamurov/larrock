@@ -42,7 +42,7 @@ CREATE TABLE `apps` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `apps` (`id`, `title`, `name`, `description`, `table_content`, `rows`, `settings`, `plugins_backend`, `plugins_front`, `menu_category`, `sitemap`, `version`, `active`, `created_at`, `updated_at`) VALUES
-(4,	'Статичные страницы',	'page',	'Страницы без привязки к определенному разделу',	'feed',	'a:6:{s:5:\"title\";a:5:{s:5:\"title\";s:18:\"Заголовок\";s:14:\"in_table_admin\";s:4:\"TRUE\";s:4:\"type\";s:4:\"text\";s:12:\"in_admin_tab\";s:4:\"main\";s:5:\"valid\";s:16:\"max:255|required\";}s:11:\"description\";a:3:{s:5:\"title\";s:25:\"Текст новости\";s:4:\"type\";s:8:\"textarea\";s:12:\"in_admin_tab\";s:4:\"main\";}s:3:\"url\";a:4:{s:5:\"title\";s:22:\"URL материала\";s:4:\"type\";s:4:\"text\";s:12:\"in_admin_tab\";s:3:\"seo\";s:5:\"valid\";s:16:\"max:155|required\";}s:4:\"date\";a:4:{s:5:\"title\";s:27:\"Дата материала\";s:4:\"type\";s:4:\"date\";s:12:\"in_admin_tab\";s:5:\"other\";s:5:\"valid\";s:4:\"date\";}s:8:\"position\";a:4:{s:5:\"title\";s:25:\"Вес материала\";s:4:\"type\";s:5:\"input\";s:12:\"in_admin_tab\";s:5:\"other\";s:5:\"valid\";s:7:\"integer\";}s:6:\"active\";a:6:{s:5:\"title\";s:22:\"Опубликован\";s:4:\"type\";s:8:\"checkbox\";s:7:\"checked\";s:4:\"TRUE\";s:12:\"in_admin_tab\";s:5:\"other\";s:5:\"valid\";s:13:\"integer|max:1\";s:7:\"default\";i:1;}}',	's:0:\"\";',	's:0:\"\";',	's:0:\"\";',	NULL,	'1',	12,	1,	'2015-11-26 07:04:03',	'2015-11-26 07:04:03');
+(4,	'Cтраницы',	'page',	'Страницы без привязки к определенному разделу',	'feed',	'a:6:{s:5:\"title\";a:6:{s:5:\"title\";s:18:\"Заголовок\";s:14:\"in_table_admin\";s:4:\"TRUE\";s:4:\"type\";s:4:\"text\";s:12:\"in_admin_tab\";a:1:{s:4:\"main\";s:36:\"Заголовок, описание\";}s:5:\"valid\";s:16:\"max:255|required\";s:4:\"typo\";s:4:\"true\";}s:11:\"description\";a:3:{s:5:\"title\";s:25:\"Текст новости\";s:4:\"type\";s:8:\"textarea\";s:12:\"in_admin_tab\";a:1:{s:4:\"main\";s:36:\"Заголовок, описание\";}}s:3:\"url\";a:4:{s:5:\"title\";s:22:\"URL материала\";s:4:\"type\";s:4:\"text\";s:12:\"in_admin_tab\";a:1:{s:3:\"seo\";s:3:\"Seo\";}s:5:\"valid\";s:16:\"max:155|required\";}s:4:\"date\";a:4:{s:5:\"title\";s:27:\"Дата материала\";s:4:\"type\";s:4:\"date\";s:12:\"in_admin_tab\";a:1:{s:5:\"other\";s:38:\"Дата, вес, активность\";}s:5:\"valid\";s:4:\"date\";}s:8:\"position\";a:4:{s:5:\"title\";s:25:\"Вес материала\";s:4:\"type\";s:5:\"input\";s:12:\"in_admin_tab\";a:1:{s:5:\"other\";s:38:\"Дата, вес, активность\";}s:5:\"valid\";s:7:\"integer\";}s:6:\"active\";a:6:{s:5:\"title\";s:22:\"Опубликован\";s:4:\"type\";s:8:\"checkbox\";s:7:\"checked\";s:4:\"TRUE\";s:12:\"in_admin_tab\";a:1:{s:5:\"other\";s:38:\"Дата, вес, активность\";}s:5:\"valid\";s:13:\"integer|max:1\";s:7:\"default\";i:1;}}',	's:0:\"\";',	'a:4:{i:0;s:3:\"seo\";i:1;s:6:\"images\";i:2;s:5:\"files\";i:3;s:9:\"templates\";}',	's:0:\"\";',	NULL,	'1',	19,	1,	'2015-11-26 07:04:03',	'2015-12-01 07:05:21');
 
 DROP TABLE IF EXISTS `feed`;
 CREATE TABLE `feed` (
@@ -52,7 +52,7 @@ CREATE TABLE `feed` (
   `short` text COLLATE utf8_unicode_ci NOT NULL,
   `description` text COLLATE utf8_unicode_ci NOT NULL,
   `url` varchar(155) COLLATE utf8_unicode_ci NOT NULL,
-  `date` datetime NOT NULL,
+  `date` date NOT NULL,
   `position` char(10) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
   `active` int(11) NOT NULL DEFAULT '1',
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -61,8 +61,26 @@ CREATE TABLE `feed` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `feed` (`id`, `title`, `category`, `short`, `description`, `url`, `date`, `position`, `active`, `created_at`, `updated_at`) VALUES
-(1,	'SEO-тексты',	NULL,	'',	'<p>4324324</p>',	'ttrtr',	'2015-11-11 00:00:00',	'23',	1,	'2015-11-26 05:47:36',	'2015-11-26 05:47:36'),
-(2,	'SEO-тексты33',	NULL,	'',	'<p>4324324</p>',	'ttrtr',	'2015-11-11 00:00:00',	'23',	1,	'2015-11-26 06:10:16',	'2015-11-26 06:10:16');
+(1,	'Статья о валенках',	NULL,	'',	'<p>4324324</p>',	'ttrtr',	'2015-11-11',	'20',	0,	'2015-11-26 05:47:36',	'2015-11-30 06:02:55'),
+(2,	'Новость об акции',	NULL,	'',	'<p>4324324</p>',	'ttrtr',	'2015-11-11',	'23',	1,	'2015-11-26 06:10:16',	'2015-11-30 06:03:16');
+
+DROP TABLE IF EXISTS `images`;
+CREATE TABLE `images` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `id_connect` int(11) NOT NULL,
+  `param` text COLLATE utf8_unicode_ci NOT NULL,
+  `position` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `images` (`id`, `name`, `description`, `type`, `id_connect`, `param`, `position`, `created_at`, `updated_at`) VALUES
+(1,	'Name',	'',	'page',	1,	'ttrtr',	0,	'2015-12-01 03:19:56',	'2015-12-01 03:19:56'),
+(2,	'Name',	'',	'page',	1,	'ttrtr',	0,	'2015-12-01 06:33:05',	'2015-12-01 06:33:05');
 
 DROP TABLE IF EXISTS `migrations`;
 CREATE TABLE `migrations` (
@@ -73,7 +91,10 @@ CREATE TABLE `migrations` (
 INSERT INTO `migrations` (`migration`, `batch`) VALUES
 ('2014_07_02_230147_migration_cartalyst_sentinel',	1),
 ('2015_11_25_151848_create_apps_table',	2),
-('2015_11_25_173945_create_feed_table',	2);
+('2015_11_25_173945_create_feed_table',	2),
+('2015_12_01_120218_create_images_table',	3),
+('2015_12_01_145645_create_seo_table',	4),
+('2015_12_01_163857_create_templates_table',	5);
 
 DROP TABLE IF EXISTS `persistences`;
 CREATE TABLE `persistences` (
@@ -91,7 +112,8 @@ INSERT INTO `persistences` (`id`, `user_id`, `code`, `created_at`, `updated_at`)
 (2,	1,	'qso47HyXEoN5bxZqSBvb3KsCD8NkHdml',	'2015-11-19 15:48:57',	'2015-11-19 15:48:57'),
 (7,	1,	'lno7hBMsryB4PpLnJ6fpRRe3OUGhvaYg',	'2015-11-19 21:33:35',	'2015-11-19 21:33:35'),
 (9,	1,	'4f1jLnmRK7kpNWEIOy8MAWP9IMQjAwb1',	'2015-11-23 13:44:27',	'2015-11-23 13:44:27'),
-(10,	1,	'oVHzuPrC3wQhDXKLgFvbGRdsFelILlvV',	'2015-11-26 01:27:48',	'2015-11-26 01:27:48');
+(10,	1,	'oVHzuPrC3wQhDXKLgFvbGRdsFelILlvV',	'2015-11-26 01:27:48',	'2015-11-26 01:27:48'),
+(11,	1,	'jp05qAtmuta0D5Qk6KvJhtpnPeldpFpB',	'2015-11-30 07:21:48',	'2015-11-30 07:21:48');
 
 DROP TABLE IF EXISTS `reminders`;
 CREATE TABLE `reminders` (
@@ -133,6 +155,36 @@ CREATE TABLE `role_users` (
 INSERT INTO `role_users` (`user_id`, `role_id`, `created_at`, `updated_at`) VALUES
 (1,	1,	'2015-11-19 15:41:49',	'2015-11-19 15:41:49');
 
+DROP TABLE IF EXISTS `seo`;
+CREATE TABLE `seo` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `keywords` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `id_connect` int(11) DEFAULT NULL,
+  `url_connect` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `type_connect` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `position` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `seo` (`id`, `title`, `description`, `keywords`, `id_connect`, `url_connect`, `type_connect`, `position`, `created_at`, `updated_at`) VALUES
+(1,	'1',	'2',	'3',	1,	NULL,	'page',	0,	'2015-12-01 05:07:30',	'2015-12-01 05:07:30');
+
+DROP TABLE IF EXISTS `templates`;
+CREATE TABLE `templates` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `type_connect` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `id_connect` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
 DROP TABLE IF EXISTS `throttle`;
 CREATE TABLE `throttle` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -159,7 +211,9 @@ INSERT INTO `throttle` (`id`, `user_id`, `type`, `ip`, `created_at`, `updated_at
 (23,	1,	'user',	NULL,	'2015-11-19 21:32:07',	'2015-11-19 21:32:07'),
 (24,	NULL,	'global',	NULL,	'2015-11-19 21:32:39',	'2015-11-19 21:32:39'),
 (25,	NULL,	'ip',	'::1',	'2015-11-19 21:32:39',	'2015-11-19 21:32:39'),
-(26,	1,	'user',	NULL,	'2015-11-19 21:32:39',	'2015-11-19 21:32:39');
+(26,	1,	'user',	NULL,	'2015-11-19 21:32:39',	'2015-11-19 21:32:39'),
+(27,	NULL,	'global',	NULL,	'2015-12-01 03:27:35',	'2015-12-01 03:27:35'),
+(28,	NULL,	'ip',	'192.168.0.2',	'2015-12-01 03:27:35',	'2015-12-01 03:27:35');
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
@@ -177,6 +231,6 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `users` (`id`, `email`, `password`, `permissions`, `last_login`, `first_name`, `last_name`, `created_at`, `updated_at`) VALUES
-(1,	'fanamurov@ya.ru',	'$2y$10$SJzDIVLhyCdzOMxfnqAADOCoyzVgjwjmBlYaVWQlikchTd67mWPRa',	NULL,	'2015-11-26 01:27:48',	'4234',	'',	'2015-11-19 15:41:49',	'2015-11-26 01:27:48');
+(1,	'fanamurov@ya.ru',	'$2y$10$SJzDIVLhyCdzOMxfnqAADOCoyzVgjwjmBlYaVWQlikchTd67mWPRa',	NULL,	'2015-11-30 07:21:48',	'4234',	'',	'2015-11-19 15:41:49',	'2015-11-30 07:21:48');
 
--- 2015-11-26 07:08:57
+-- 2015-12-01 07:57:05

@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 use DB;
 use Input;
 use Image;
+use App\Models\Images as Model_Image;
+use Roumen\Sitemap\Model;
 
 class Ajax extends Controller
 {
@@ -43,25 +45,37 @@ class Ajax extends Controller
     {
         $images = Input::file('images');
         $folder = Input::get('folder');
+        $id_connect = Input::get('id_connect');
+        $param = Input::get('param');
 
-        if ( !file_exists('images')) {
+        if( !file_exists('images')){
             mkdir('images/', 0755);
         }
 
-        if ( !file_exists('images/'. $folder)) {
+        if( !file_exists('images/'. $folder)){
             mkdir('images/'. $folder, 0755);
         }
 
-        if ( !file_exists('images/'. $folder .'/big')) {
+        if( !file_exists('images/'. $folder .'/big')){
             mkdir('images/'. $folder .'/big', 0755);
         }
 
         foreach($images as $images_value){
-            Image::make($images_value->getRealPath())
+            if(Image::make($images_value->getRealPath())
                 ->resize(300, null, function ($constraint) {
                 $constraint->aspectRatio();
-            })
-                ->save('images/'. $folder .'/big/foo.jpg');
+            })->save('images/'. $folder .'/big/foo.jpg')){
+
+				//Загрузка информации о фото в БД
+				$inset_image = new Model_Image();
+				$inset_image->name = 'Name';
+				$inset_image->description = '';
+				$inset_image->type = $folder;
+				$inset_image->id_connect = $id_connect;
+				$inset_image->param = $param;
+				$inset_image->position = 0;
+				$inset_image->save();
+			}
         }
 
         return response()->json(['status' => 'success', 'message' => 'Фото успешно загружены']);
@@ -69,5 +83,23 @@ class Ajax extends Controller
         // resizing an uploaded file
         //Image::make(Input::file('images'))->resize(300, 200)->save('foo.jpg');
     }
+
+	public function getLoadedImages()
+	{
+		$type = Input::get('type', 'page');
+		$id_connect = Input::get('id_connect', 1);
+		$images = DB::table('images')->whereType($type)->whereId_connect($id_connect)->orderBy('position', 'desc')->get();
+		foreach($images as $images_key => $images_value){
+			$images[$images_key]->type = 'image/jpg';
+			$images[$images_key]->file = '/images/' . $type .'/big/'. $images_value->name;
+			$images[$images_key]->size = 456;
+		}
+		return $images;
+	}
+
+	public function UploadFile()
+	{
+
+	}
 
 }

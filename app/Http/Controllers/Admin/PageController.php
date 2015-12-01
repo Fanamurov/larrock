@@ -62,80 +62,9 @@ class PageController extends Apps
 			],
 		];
 		$this->settings = '';
-		$this->plugins_backend = ['seo', 'images'];
+		$this->plugins_backend = ['seo', 'images', 'files', 'templates'];
 		$this->plugins_front = '';
-		$this->version = 17;
+		$this->version = 19;
 		$this->check_app();
 	}
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-		$data['apps'] = $this->get_app();
-		$data['data'] = DB::table($this->table_content)->get();
-		return view('admin.apps.index', $data);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-		$data['apps'] = $this->get_app();
-		$data['tabs'] = ['main', 'seo', 'other'];
-		return view('admin.apps.create', $data);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-		$data['data'] = DB::table($this->table_content)->where('id', '=', $id)->get();
-
-		$data['apps'] = $this->get_app();
-
-		if(in_array('seo', $this->plugins_backend, TRUE)){
-			$this->rows['seo_title'] = [
-				'title' => 'Title материала',
-				'type' => 'input',
-				'in_admin_tab' => ['seo' => 'Seo'],
-				'valid' => 'max:255',
-				'help' => 'По-умолчанию равно заголовку материала',
-			];
-			$data['data']['0']->seo_title = '';
-
-			$this->rows['seo_description'] = [
-				'title' => 'Description материала',
-				'type' => 'input',
-				'in_admin_tab' => ['seo' => 'Seo'],
-				'valid' => 'max:255',
-				'help' => 'По-умолчанию равно заголовку материала',
-			];
-			$data['data']['0']->seo_description = '';
-
-			$this->rows['seo_keywords'] = [
-				'title' => 'Keywords материала',
-				'type' => 'input',
-				'in_admin_tab' => ['seo' => 'Seo'],
-				'valid' => 'max:255'
-			];
-			$data['data']['0']->seo_keywords = '';
-		}
-		$data['apps']->rows = $this->rows;
-
-		$data['tabs'] = $this->get_tabs_names_admin();
-
-
-		return view('admin.apps.edit', $data);
-    }
 }

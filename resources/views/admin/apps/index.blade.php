@@ -76,5 +76,5 @@
     @if(count($data) === 0)
         <div class="alert alert-warning">Данных еще нет</div>
     @endif
-    <?//=$data->render()?>
+    <?=$data->render()?>
 @endsection

@@ -8,7 +8,9 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 use App\Models\Apps as Model_Apps;
+use App\Models\Seo as Model_Seo;
 use DB;
+use Illuminate\Support\Facades\Input;
 use Session;
 use Validator;
 use Illuminate\Http\Request;
@@ -82,6 +84,72 @@ abstract class Apps extends BaseController
 	}
 
 	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function index()
+	{
+		/*$gold = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ,13 ,14, 15 ,16, 17];
+		$win = 0;
+		$for = 1000000;
+		for($i = 0; $i< $for; $i++){
+			$all_card = 25;
+			if(in_array(mt_rand(1, --$all_card), $gold)){
+				++$win;
+			}else{
+				if(in_array(mt_rand(1, --$all_card), $gold)){
+					++$win;
+				}else{
+					if(in_array(mt_rand(1, --$all_card), $gold)){
+						++$win;
+					}else{
+						if(in_array(mt_rand(1, --$all_card), $gold)){
+							++$win;
+						}
+					}
+				}
+			}
+		}
+		return ($win/$for) * 100 .'%';*/
+
+		$data['apps'] = $this->get_app();
+		$data['data'] = DB::table($this->table_content)->paginate(30);
+		return view('admin.apps.index', $data);
+	}
+
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function create()
+	{
+		$data['apps'] = $this->get_app();
+		$this->plugin_seo($data);
+		$this->plugin_templates($data);
+		$data['tabs'] = $this->get_tabs_names_admin();
+		$data['next_id'] = DB::table($this->table_content)->max('id') + 1;
+		return view('admin.apps.create', $data);
+	}
+
+	/**
+	 * Show the form for editing the specified resource.
+	 *
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function edit($id)
+	{
+		$data['data'] = DB::table($this->table_content)->whereId($id)->get();
+		$data['apps'] = $this->get_app();
+		$this->plugin_seo($data);
+		$this->plugin_templates($data);
+		$data['tabs'] = $this->get_tabs_names_admin();
+		return view('admin.apps.edit', $data);
+	}
+
+	/**
 	 * Store a newly created resource in storage.
 	 *
 	 * @param  \Illuminate\Http\Request  $request
@@ -140,6 +208,17 @@ abstract class Apps extends BaseController
         $data->setTable($this->table_content);
 		if($data->save()){
 			Session::flash('message', 'Материал '. $request->input('title') .' изменен');
+
+			if(in_array('seo', $this->plugins_backend, TRUE)){
+				$seo = new Model_Seo();
+				$seo->title = $request->get('seo_title');
+				$seo->description = $request->get('seo_description');
+				$seo->keywords = $request->get('seo_keywords');
+				$seo->id_connect = $id;
+				$seo->type_connect = $this->name;
+				$seo->save();
+			}
+
 			return back();
 		}
 
@@ -190,5 +269,86 @@ abstract class Apps extends BaseController
 			}
 		}
 		return $tabs;
+	}
+
+	public function plugin_seo($data)
+	{
+		if(in_array('seo', $this->plugins_backend, TRUE)){
+			if(array_key_exists('data', $data)){
+				$get_seo = DB::table('seo')->whereId_connect($data['data'][0]->id)->whereType_connect($this->name)->first();
+			}
+
+			$this->rows['seo_title'] = [
+				'title' => 'Title материала',
+				'type' => 'input',
+				'in_admin_tab' => ['seo' => 'Seo'],
+				'valid' => 'max:255',
+				'help' => 'По-умолчанию равно заголовку материала',
+			];
+
+			$this->rows['seo_description'] = [
+				'title' => 'Description материала',
+				'type' => 'input',
+				'in_admin_tab' => ['seo' => 'Seo'],
+				'valid' => 'max:255',
+				'help' => 'По-умолчанию равно заголовку материала',
+			];
+
+			$this->rows['seo_keywords'] = [
+				'title' => 'Keywords материала',
+				'type' => 'input',
+				'in_admin_tab' => ['seo' => 'Seo'],
+				'valid' => 'max:255'
+			];
+
+			if(isset($get_seo)){
+				$data['data']['0']->seo_title = $get_seo->title;
+				$data['data']['0']->seo_description = $get_seo->description;
+				$data['data']['0']->seo_keywords = $get_seo->keywords;
+			}else{
+				$data['data']['0']->seo_title = '';
+				$data['data']['0']->seo_description = '';
+				$data['data']['0']->seo_keywords = '';
+			}
+		}
+		$data['apps']->rows = $this->rows;
+		return $data;
+	}
+
+	public function plugin_templates($data)
+	{
+		if(in_array('templates', $this->plugins_backend, TRUE)){
+			if(array_key_exists('data', $data)){
+				$get_template = DB::table('templates')->whereId_connect($data['data'][0]->id)->whereType_connect($this->name)->first();
+			}
+
+			$this->rows['template'] = [
+				'title' => 'Шаблон материала',
+				'type' => 'select',
+				'options' => ['Template1', 'Template2'],
+				'in_admin_tab' => ['templates' => 'Шаблоны'],
+				'valid' => 'max:255',
+				'form-group_class' => 'col-sm-6 col-sm-offset-3'
+			];
+
+			$this->rows['template_global'] = [
+				'title' => 'Глобальный шаблон',
+				'type' => 'select',
+				'options' => ['Template1', 'Template2'],
+				'in_admin_tab' => ['templates' => 'Шаблоны'],
+				'valid' => 'max:255',
+				'form-group_class' => 'col-sm-6 col-sm-offset-3'
+			];
+
+			if(isset($get_template)){
+				$data['data']['0']->template = $get_template->name;
+				$data['data']['0']->template_global = 'test';
+			}else{
+				$data['data']['0']->template = '';
+				$data['data']['0']->template_global = '';
+			}
+		}
+		$data['apps']->rows = $this->rows;
+		return $data;
 	}
 }

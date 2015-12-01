@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFeedTable extends Migration
+class CreateSeoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,23 +12,18 @@ class CreateFeedTable extends Migration
      */
     public function up()
     {
-		Schema::create('feed', function(Blueprint $table)
-		{
+        Schema::create('seo', function (Blueprint $table) {
 			$table->engine = 'InnoDB';
-
 			$table->increments('id');
-
 			$table->string('title', 255);
-			$table->string('category', 255);
-			$table->text('short');
-			$table->text('description');
-			$table->string('url', 155)->unique();
-			$table->date('date');
-			$table->char('position', 10)->default(0);
-			$table->integer('active', 1)->default(1);
-
+			$table->string('description', 255);
+			$table->string('keywords', 255);
+			$table->integer('id_connect')->nullable();
+			$table->string('url_connect', 255)->nullable();
+			$table->string('type_connect', 255)->nullable();
+			$table->integer('position')->default(0);
 			$table->timestamps();
-		});
+        });
     }
 
     /**
@@ -38,6 +33,6 @@ class CreateFeedTable extends Migration
      */
     public function down()
     {
-		Schema::drop('feed');
+		Schema::drop('seo');
     }
 }

@@ -83,7 +83,7 @@
                             <li class="dropdown">
                                 <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Администрирование <span class="caret"></span></a>
                                 <ul role="menu" class="dropdown-menu">
-                                    <li><a href="#">Seo</a></li>
+                                    <li><a href="{{ action('Admin\SeoController@index') }}">Seo</a></li>
                                     <li><a href="#">Меню сайта</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="#">Глобальные настройки</a></li>
@@ -102,6 +102,14 @@
                             <li>
                                 <button type="button" class="btn btn-outline show-please" data-target="search-form" title="Поиск по сайту"><i class="fa fa-search"></i></button>
                                 <input type="text" class="form-control search-form hidden" placeholder="Поиск...">
+                            </li>
+                            <li class="dropdown">
+                                <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Логи <span class="label label-warning">5</span></a>
+                                <ul role="menu" class="dropdown-menu">
+                                    <li><a href="#">Не найдено</a></li>
+                                    <li><a href="#">Ошибка ядра</a></li>
+                                    <li><a href="#">Письма</a></li>
+                                </ul>
                             </li>
                             <li>
                                 <a aria-expanded="false" role="button" href="/" target="_blank">К сайту</a>

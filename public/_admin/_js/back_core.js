@@ -3772,8 +3772,39 @@ $(document).ready(function(){
         }
     });
 
+    $('.nav-tabs').find('li.tabimages').click(function(){
+        $('.main-tabbable').find('.tab-pane').removeClass('active');
+    });
+
+    $('.nav-tabs').find('li:not(.tabimages)').click(function(){
+        $('#tabimages').removeClass('active');
+    });
+
+    $('.nav-tabs').find('li.tabfiles').click(function(){
+        $('.main-tabbable').find('.tab-pane').removeClass('active');
+    });
+
+    $('.nav-tabs').find('li:not(.tabfiles)').click(function(){
+        $('#tabfiles').removeClass('active');
+    });
+
+    function get_loaded_images(id_connect, type)
+    {
+        $.ajax({
+            data: {id_connect: id_connect, type: type},
+            type: "POST",
+            dataType: "json",
+            url: "/admin/ajax/getLoadedImages",
+            success: function (data) {
+                return data
+            }
+        });
+    }
+
+    test = get_loaded_images($('input[name=id_connect]').val(), $('input[name=folder]').val());
+
     /* Image upload http://filer.grandesign.md/#download */
-    $('#filer_input').filer({
+    $('#upload_image_filer').filer({
         changeInput: '<div class="jFiler-input-dragDrop">' +
         '<div class="jFiler-input-inner">' +
         '<div class="jFiler-input-icon"><i class="icon-jfi-cloud-up-o"></i></div>' +
@@ -3783,6 +3814,7 @@ $(document).ready(function(){
         showThumbs: true,
         theme: "dragdropbox",
         addMore: true,
+        files: test,
         templates: {
             box: '<ul class="jFiler-items-list jFiler-items-grid"></ul>',
             item: '<li class="jFiler-item">\
@@ -3848,7 +3880,8 @@ $(document).ready(function(){
             url: "/admin/ajax/UploadImage",
             data: {
                 folder: $('input[name=folder]').val(),
-                test: '3423',
+                id_connect: $('input[name=id_connect]').val(),
+                param: $('input[name=param]').val(),
             },
             type: 'POST',
             enctype: 'multipart/form-data',
@@ -3895,17 +3928,6 @@ $(document).ready(function(){
         format: 'yyyy-mm-dd'
     });
 
-    var config = {
-        '.chosen-select'           : {},
-        '.chosen-select-deselect'  : {allow_single_deselect:true},
-        '.chosen-select-no-single' : {disable_search_threshold:10},
-        '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
-        '.chosen-select-width'     : {width:"95%"}
-    };
-    for (var selector in config) {
-        $(selector).chosen(config[selector]);
-    }
-
     /*
      * Универсальный обработчик для выделения блока как ссылки
      * Ищет внутри блока ссылку и присваивает ее всему блоку
@@ -3919,120 +3941,6 @@ $(document).ready(function(){
         $(this).remove();
     });
 
-    /** Автоподсказчик для поиска разделов */
-    function typehead_category() {
-        $('#typehead_category').attr('disabled', 'disabled').attr('placeholder', 'Подгрузка списка разделов');
-        $.getJSON("/ajax/fastsearch/1/true", function () {})
-            .done(function (data) {
-                var items = [];
-                $.each(data, function (key, val) {
-                    items.push(val);
-                });
-                $('#typehead_category').removeAttr('disabled').attr('placeholder', 'Автоподсказчик разделов').typeahead({
-                    source: items,
-                    updater: function (obj) {
-                        /* Для тех.описаний в каталоге */
-                        var select_contains = $("select[name=connect] :contains(" + obj + ")");
-                        $('select[name=connect] option:selected').each(function () {
-                            this.selected = false;
-                            $(this).removeAttr('selected');
-                            $("select[name=connect]").val('212');
-                        });
-                        if (select_contains.is(':disabled') == false) {
-                            select_contains.attr("selected", "selected");
-                        }
-                        else {
-                            notify_show('error', 'Раздел не доступен для выбора');
-                        }
-
-                        /* Для обычных разделов */
-                        $('select[name=catagory] option:selected').each(function () {
-                            this.selected = false;
-                            $(this).removeAttr('selected');
-                            $("select[name=catagory]").val('212');
-                        });
-                        if (select_contains.is(':disabled') == false) {
-                            select_contains.attr("selected", "selected");
-                        }
-                        else {
-                            notify_show('error', 'Раздел не доступен для выбора');
-                        }
-                    }
-                });
-            })
-            .fail(function () {
-                
-                $('#typehead_category').attr('placeholder', 'Автоподсказчик не работает');
-            })
-    }
-    $('#typehead_category').on('click', function(){
-        typehead_category();
-    });
-
-    /** Автоподсказчик для поиска контента */
-    function typehead_content(){
-        var table = $('#typehead_content').attr('data-table');
-        var row = $('#typehead_content').attr('data-row');
-        $.getJSON("/ajax/fastsearchContent/"+table+"/"+row, function () {})
-            .done(function (data) {
-                var items = [];
-                $.each(data, function (key, val) {
-                    items.push(val);
-                });
-                $('#typehead_content').removeAttr('disabled').attr('placeholder', 'Автоподсказчик заголовков').typeahead({
-                    source: items,
-                    updater: function (obj) {
-                        window.location = '/admin/'+table+'/?search_word='+obj+'&search_row='+ row +'&search_table='+ table;
-                    }
-                });
-            })
-            .fail(function () {
-                
-                $('#typehead_content').attr('placeholder', 'Автоподсказчик не работает');
-            })
-    }
-    $('#typehead_content').one('click', function(){
-        typehead_content();
-    });
-
-    /** Автоподсказчик в модуле списка материалов */
-    function typehead_module_list_search(){
-        var element = $('#typehead_module_list_search');
-        var table = element.attr('data-table');
-        var row = element.attr('data-row');
-        var app = element.attr('data-app');
-        $.getJSON("/ajax/fastsearchContent/"+table+"/"+row+"", function () {})
-            .done(function (data) {
-                var items = [];
-                $.each(data, function (key, val) {
-                    items.push(val);
-                });
-                $('#typehead_module_list_search').removeAttr('disabled').attr('placeholder', 'Автоподсказчик заголовков').typeahead({
-                    source: items,
-                    updater: function (obj) {
-                        $.getJSON("/ajax/getData/"+table+"/"+obj+"/id/"+row+"", function () {})
-                            .done(function (result) {
-                                $('#module_list_search_result').removeClass('hidden');
-                                var items_result = [];
-                                $.each(result, function (key_result, val_result) {
-                                    items_result.push(val_result);
-                                    $('#module_list_search_result').find('li')
-                                        .after('<li><a href="/admin/'+app+'/edit?id='+val_result+'">'+obj+'</a> <small class="muted">/admin/'+app+'/edit?id='+val_result+'</small></li>');
-                                });
-                            });
-                    }
-                });
-            })
-            .fail(function () {
-                
-                $('#typehead_content').attr('placeholder', 'Автоподсказчик не работает');
-            })
-    }
-
-    $('#typehead_module_list_search').one('click', function(){
-        typehead_module_list_search();
-    });
-
     /** Если присвоить класс change-form селекту в форме, то при клике будет происходить сабмит формы */
     $('select.change-form, input[type=checkbox].change-form').change(function(){
         $(this).parents('form').submit();
@@ -4040,13 +3948,6 @@ $(document).ready(function(){
 
     $('input[type=text].change-form').focusout(function(){
         $(this).parents('form').submit();
-    });
-
-    /** Пропуск определенных полей в визарде */
-    $('.not-import').click(function () {
-        $(this).parents('tr').slideUp('slow').html('');
-        var row = $(this).attr('data-row');
-        $('tr[data-row=' + row + ']').slideUp('slow').html('');
     });
 
 
@@ -4220,315 +4121,6 @@ $(document).ready(function(){
             }
         });
     }
-
-
-
-    /* ---  Прошло проверку  ---*/
-
-    /** Удаление контента */
-    $('.delete_data').on('click', function () {
-        var row = $(this).parents('tr');
-        var id = $(this).attr('data-id');
-        var table = $(this).attr('data-table');
-        var app = $(this).attr('data-app');
-        var send_data = { id: id, table: table, app: app};
-        if (confirm('Точно удалить?')) {
-            //hidden_action(url, send_data, good_message, button, redirect_url, clearcache)
-            hidden_action('/admin/ajax/delete', send_data, 'Успешно удалено', false, false, true);
-            row.fadeOut('slow').next('tr.edit_tr').fadeOut('slow');
-            $('tr[data-id='+id+']').fadeOut();
-        }
-    });
-
-    /** Изменение веса контента */
-    $('td.edit_position_new').find('input').on('focusout', function () {
-        var value_where = $(this).parent().attr('data-id');
-        var row_where = 'id';
-        var value = $(this).val();
-        var row = 'position';
-        var table = $(this).parent().attr('data-table');
-        var event = 'edit';
-        var data = { value_where: value_where, row_where: row_where, value: value, row: row, event: event, table: table };
-        //hidden_action(url, send_data, good_message, button, redirect_url, clearcache)
-        hidden_action('/admin/ajax/changeRow', data, 'Вес изменен', false, false, true);
-    });
-
-    /** Изменение веса контента ONLY ASIABUS */
-    $('td.edit_position_index').find('input').on('focusout', function () {
-        var value_where = $(this).attr('data-id');
-        var table       = $(this).attr('data-table');
-        var row_where   = 'id';
-        var value       = $(this).val();
-        var row         = 'position_index';
-        var event       = 'edit';
-        var data        = { value_where: value_where, row_where: row_where, value: value, row: row, event: event, table: table };
-        //hidden_action(url, send_data, good_message, button, redirect_url, clearcache)
-        hidden_action('/admin/ajax/changeRow', data, 'Вес изменен', false, false, true);
-    });
-
-    $('.image_position').focusout(function () {
-        var value_where = $(this).attr('data-id');
-        var row_where = 'id';
-        var value = $(this).val();
-        var row = 'position';
-        var table = 'images';
-        var event = 'edit';
-        var data = { value_where: value_where, row_where: row_where, value: value, row: row, event: event, table: table };
-        //hidden_action(url, send_data, good_message, button, redirect_url, clearcache)
-        hidden_action('/admin/ajax/changeRow', data, 'Вес изменен', false, false, false);
-    });
-
-    /** Изменение описания картинки */
-    $('.image_description').focusout(function () {
-        var value_where = $(this).attr('data-id');
-        var row_where = 'id';
-        var value = $(this).val();
-        var row = 'description';
-        var table = 'images';
-        var event = 'edit';
-        var data = { value_where: value_where, row_where: row_where, value: value, row: row, event: event, table: table };
-        //hidden_action(url, send_data, good_message, button, redirect_url, clearcache)
-        hidden_action('/admin/ajax/changeRow', data, 'Описание картинки изменено', false, false, false);
-    });
-
-    /** Изменение группы картинки */
-    $('.image_group').focusout(function () {
-        var value_where = $(this).attr('data-id');
-        var row_where = 'id';
-        var value = $(this).val();
-        var row = 'param';
-        var table = 'images';
-        var event = 'edit';
-        var data = { value_where: value_where, row_where: row_where, value: value, row: row, event: event, table: table };
-        //hidden_action(url, send_data, good_message, button, redirect_url, clearcache)
-        hidden_action('/admin/ajax/changeRow', data, 'Группа картинки изменена', false, false, false);
-    });
-
-    /** Песборка sitemap */
-    $('.generate_sitemap').click(function () {
-        var data = { showStatus: true };
-        //hidden_action(url, send_data, good_message, button, redirect_url, clearcache)
-        hidden_action('/admin/ajax/sitemapUpdate', data, 'Sitemap перезаписан', false, false, false);
-    });
-
-    /** WIZARD :: Переразбор xls в csv */
-    $('.reload-csv').click(function () {
-        //hidden_action(url, send_data, good_message, button, redirect_url, clearcache)
-        clear_cache();
-        hidden_action('/phpExcelReader/exportXLS.php', false, 'Прайс успешно разобран. Обновляем страницу', false, '/admin/wizard/step1', true);
-    });
-
-    /** Удаление документа */
-    $('.delete').click(function () {
-        if (confirm('Точно удалить?')) {
-            var id = this.id;
-            var table = $(this).parent().find('input[name=table]').val();
-            var data = {id: id, table: table };
-            //hidden_action(url, send_data, good_message, button, redirect_url, clearcache)
-            hidden_action('/admin/ajax/delete', data, 'Удалено', false, false, true);
-            $(this).parent().parent().hide('slow');
-            $(this).parent().parent().next('tr.edit_tr').html();
-        }
-    });
-
-    /** WIZARD :: Изменение сопоставления поля импорта */
-    $('select.csv_row').change(function () {
-        var label = $(this).parent().parent().find('.label-important').hide('slow');
-        var id = $(this).attr('data-id');
-        var csv_row = $(this).val();
-        var data = {id: id, csv_row: csv_row };
-        //hidden_action(url, send_data, good_message, button, redirect_url, clearcache)
-        hidden_action('/admin/ajax/importChangeConfig', data, 'Сопоставление изменено', false, false, true);
-    });
-
-    /** WIZARD :: Изменение типа вывода поля в админке */
-    $('input[name=lang], .changeconfigrow').change(function () {
-        var config_key = $(this).attr('data-config_key');
-        var lang = $(this).parent().parent().find('input.lang').val();
-        var type_row = $(this).parent().parent().find('select.type_row').val();
-        var filters = $(this).parent().parent().find('select.filters').val();
-        var template_output = $(this).parent().parent().find('select.template_output').val();
-        var parser = $(this).parent().parent().find('select.parser').val();
-        var category_synch = false;
-        if ($(this).parent().parent().find('input.category_synch').is(":checked")) {
-            category_synch = $(this).parent().parent().find('input.category_synch').val();
-        }
-
-        var data = {config_key: config_key, type_row: type_row, filters: filters, template_output: template_output, lang: lang, parser: parser, category_synch: category_synch};
-        //hidden_action(url, send_data, good_message, button, redirect_url, clearcache)
-        hidden_action('/admin/ajax/changerowconfig', data, 'Конфиг полей изменен', false, false, true);
-    });
-
-
-    /** Удаление загруженной картинки */
-    $('.delete_image').on('click', function () {
-        if (confirm('Точно удалить из материала?')) {
-            var clear = 'false';
-            if (confirm('Удалить с сервера?')) {
-                clear = 'true';
-            }
-            var id = $(this).attr('data-imageid');
-            var table = $(this).attr('data-table');
-            var name = $(this).attr('alt');
-            var id_content = $(this).attr('data-id_content');
-            var row = $(this).parent().parent();
-            var row_desc = $(row).next('.uploaded_image_desc');
-            var data = {id: id, clear: clear, table: table, id_content: id_content, name: name};
-            //hidden_action(url, send_data, good_message, button, redirect_url, clearcache)
-            hidden_action('/admin/ajax/deletePicture', data, 'Фото удалено', false, false, true);
-
-            $(row).fadeOut('slow');
-            $(row).parents('.upload_images_trumbs_item').fadeOut('slow');
-            $(row).parents('.upload_images_trumbs_item').next().next().fadeOut('slow');
-            $(row_desc).fadeOut('slow');
-        }
-    });
-
-    $('.fileUpload').liteUploader({
-        script: '/admin/ajax/uploadFile',
-        rules: {
-            //allowedFileTypes: 'image/jpeg,image/png,image/gif',
-            maxSize: 250000
-        }
-    })
-    .on('lu:errors', function (e, errors) {
-        var isErrors = false;
-        $('#display').html('');
-        $.each(errors, function (i, error) {
-            if (error.errors.length > 0) {
-                isErrors = true;
-                $.each(error.errors, function (i, errorInfo) {
-                    $('#display').append('<br />ERROR! File: ' + error.name + ' - Info: ' + JSON.stringify(errorInfo));
-                    //notify_show('error', 'Файл не загружен '+ errorInfo);
-                });
-            }
-        });
-    })
-    .on('lu:before', function (e, files) {
-        $('#display').append('<br />Uploading ' + files.length + ' file(s)...');
-    })
-    .on('lu:progress', function (e, percentage) {
-        
-    })
-    .on('lu:cancelled', function () {
-        alert('upload aborted!')
-    })
-    .on('lu:success', function (e, response) {
-        var response = $.parseJSON(response);
-        $('#previews').html('');
-        $.each(response.urls, function(i, url) {
-            notify_show('success', 'Файл '+ url +' загружен');
-        });
-        //$('#display').append(response.message);
-
-        var form = $('.fileUpload');
-        var id_connect = form.attr('data-id_connect');
-        var type = form.attr('data-type');
-        var request = $.ajax({
-            data: {id_connect: id_connect, type: type},
-            type: "POST",
-            dataType: "html",
-            url: '/admin/ajax/uploadFileShow'
-        });
-        request.done(function (msg) {
-            $('#file-uploader').html(msg);
-            notify_show('success', 'Все загрузки завершены');
-            addTriggerFile();
-        });
-    });
-
-    /** Метод для связывания данных загруженных по ajax(загрузка файлов) и событий на изменения данных о них */
-    function addTriggerFile(){
-        /** Изменение группы файла */
-        $('.file_group').focusout(function () {
-            var value_where = $(this).attr('data-id');
-            var row_where = 'id';
-            var value = $(this).val();
-            var row = 'param';
-            var table = 'files';
-            var event = 'edit';
-            var data = { value_where: value_where, row_where: row_where, value: value, row: row, event: event, table: table };
-            //hidden_action(url, send_data, good_message, button, redirect_url, clearcache)
-            hidden_action('/admin/ajax/changeRow', data, 'Группа файла изменена', false, false, false);
-        });
-
-        /** Изменение описания файла */
-        $('.file_description').focusout(function () {
-            var value_where = $(this).attr('data-id');
-            var row_where = 'id';
-            var value = $(this).val();
-            var row = 'description';
-            var table = 'files';
-            var event = 'edit';
-            var data = { value_where: value_where, row_where: row_where, value: value, row: row, event: event, table: table };
-            //hidden_action(url, send_data, good_message, button, redirect_url, clearcache)
-            hidden_action('/admin/ajax/changeRow', data, 'Описание файла изменена', false, false, false);
-        });
-
-        /** Изменение описания файла */
-        $('.file_photo').focusout(function () {
-            var value_where = $(this).attr('data-id');
-            var row_where = 'id';
-            var value = $(this).val();
-            var row = 'param_photo';
-            var table = 'files';
-            var event = 'edit';
-            var data = { value_where: value_where, row_where: row_where, value: value, row: row, event: event, table: table };
-            //hidden_action(url, send_data, good_message, button, redirect_url, clearcache)
-            hidden_action('/admin/ajax/changeRow', data, 'Прикрепленное фото изменено', false, false, false);
-        });
-
-        /** Изменение веса файла */
-        $('.file_position').focusout(function () {
-            var value_where = $(this).attr('data-id');
-            var row_where = 'id';
-            var value = $(this).val();
-            var row = 'position';
-            var table = 'files';
-            var event = 'edit';
-            var data = { value_where: value_where, row_where: row_where, value: value, row: row, event: event, table: table };
-            //hidden_action(url, send_data, good_message, button, redirect_url, clearcache)
-            hidden_action('/admin/ajax/changeRow', data, 'Вес файла изменен', false, false, false);
-        });
-
-        /** Удаление загруженного файла */
-        $('.remove_file').on('click', function () {
-            var clear = 'false';
-            if (confirm('Удалить с сервера?')) {
-                clear = 'true';
-            }
-            var id = $(this).attr('data-id');
-            var type = $(this).attr('data-type');
-            var folder = $(this).attr('data-folder');
-            var filename = $(this).attr('data-filename');
-            var id_content = $(this).attr('data-id_content');
-            var row = $(this).parents('tr');
-            var data = {id: id, clear: clear, type: type, filename: filename, id_content: id_content, folder: folder};
-            //hidden_action(url, send_data, good_message, button, redirect_url, clearcache)
-            hidden_action('/admin/ajax/deleteFile', data, 'Успешно удалено', false, false, true);
-            $(row).fadeOut('slow');
-        });
-    }
-    addTriggerFile();
-
-
-
-    /** Alert Подтверждение удаления */
-    $('.conform').click(function () {
-        if (confirm('Точно удалить?')) {
-            window.location = $(this).attr('data-event');
-        }else{
-            window.location = $(this).attr('data-back');
-        }
-    });
-
-    /** Открытие строки таблицы */
-    $('tr.open_tr').click(function(){
-        $(this).next('tr').fadeToggle();
-    });
-    $('td.open_td, td:has(.icon-edit), td:has(.show-edit)').click(function () {
-        $(this).parents('tr').next('tr').show();
-    });
 
     /**
      * По нажатию на кнопку .new_list будет создан input с name= data-row-name кнопки

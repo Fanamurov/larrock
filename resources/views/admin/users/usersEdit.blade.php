@@ -1,6 +1,6 @@
 @extends('admin.layouts.main')
-@section('title', 'Users admin')
-@section('page_h1', 'User edit')
+@section('title', 'Управление пользователями')
+@section('page_h1', 'Изменение пользователя')
 @section('page_h1_new', 'пользователя')
 @section('app_name', 'users')
 @section('app_title', 'Пользователи')
@@ -10,15 +10,15 @@
         <form action="/admin/users/{{ $data_value->id }}" method="post">
             <input name="_method" type="hidden" value="PUT">
             <div class="form-group">
-                <label for="email">Email</label>
+                <label for="email">Email/login</label>
                 <input type="text" name="email" value="{{ Input::old('email', $data_value->email) }}" class="form-control" id="email">
             </div>
             <div class="form-group">
-                <label for="first_name">first_name</label>
+                <label for="first_name">First name</label>
                 <input type="text" name="first_name" value="{{ Input::old('first_name', $data_value->first_name) }}" class="form-control" id="first_name">
             </div>
             <div class="form-group">
-                <label for="last_name">last_name</label>
+                <label for="last_name">Last name</label>
                 <input type="text" name="last_name" value="{{ Input::old('last_name', $data_value->last_name) }}" class="form-control" id="last_name">
             </div>
             <div class="form-group">

@@ -1,6 +1,6 @@
 @extends('admin.layouts.main')
-@section('title', 'Users admin')
-@section('page_h1', 'User list')
+@section('title', 'Управление пользователями')
+@section('page_h1', 'Список')
 @section('page_h1_new', 'пользователя')
 @section('app_name', 'users')
 @section('app_title', 'Пользователи')
@@ -10,7 +10,7 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Email</th>
+                <th>Email/login</th>
                 <th>First name</th>
                 <th>Last name</th>
                 <th>Роль</th>

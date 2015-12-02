@@ -158,8 +158,6 @@
                                     </div>
                                 @endforeach
                             @endif
-
-                                    {!! $validator !!}
                         </div>
                     </div>
                     <div class="row">
@@ -206,5 +204,6 @@
 
 <!-- Laravel Javascript Validation -->
 <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
+@if(isset($validator)) {!! $validator !!} @endif
 </body>
 </html>

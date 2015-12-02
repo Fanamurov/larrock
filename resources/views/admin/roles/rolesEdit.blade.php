@@ -1,7 +1,7 @@
 @extends('admin.layouts.main')
-@section('title', 'Roles admin')
-@section('page_h1', 'Role edit')
-@section('page_h1_new', 'роль')
+@section('title', 'Управление ролями пользователей')
+@section('page_h1', 'Изменение роли')
+@section('page_h1_new', 'роли')
 @section('app_name', 'roles')
 @section('app_title', 'Роли')
 
@@ -9,11 +9,11 @@
     <form action="/admin/roles/{{ $roles->id }}" method="post">
         <input name="_method" type="hidden" value="PUT">
         <div class="form-group">
-            <label for="slug">slug</label>
+            <label for="slug">Название роли</label>
             <input type="text" name="slug" value="{{ Input::old('email', $roles->slug) }}" class="form-control" id="slug">
         </div>
         <div class="form-group">
-            <label for="name">name</label>
+            <label for="name">Name (машинное)</label>
             <input type="text" name="name" value="{{ Input::old('name', $roles->name) }}" class="form-control" id="name">
         </div>
         <div class="form-group text-right">

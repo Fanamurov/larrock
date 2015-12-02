@@ -1,6 +1,6 @@
 @extends('admin.layouts.main')
-@section('title', 'Roles admin')
-@section('page_h1', 'Roles list')
+@section('title', 'Управление ролями пользователей')
+@section('page_h1', 'Список')
 @section('page_h1_new', 'роли')
 @section('app_name', 'roles')
 @section('app_title', 'Роли')
@@ -10,10 +10,9 @@
         <thead>
         <tr>
             <th>ID</th>
-            <th>Slug</th>
+            <th>Название</th>
             <th>Name</th>
-            <th>Permissions</th>
-            <th></th>
+            <th>Права доступа</th>
             <th>Изменено</th>
             <th></th>
             <th></th>
@@ -26,12 +25,9 @@
                 <td>{{ $data_value->slug }}</td>
                 <td>{{ $data_value->name }}</td>
                 <td>{{ $data_value->permissions or 'n/a' }}</td>
-                <td>
-
-                </td>
                 <td>{{ $data_value->updated_at }}</td>
                 <td>
-                    <a href="/admin/roles/{{ $data_value->id }}/edit" class="btn btn-block btn-primary btn-xs"><i class="fa fa-pencil"></i> Изменить</a>
+                    <a href="/admin/roles/{{ $data_value->id }}/edit" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i> Изменить</a>
                 </td>
                 <td>
                     <form action="/admin/roles/{{ $data_value->id }}" method="post">

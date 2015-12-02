@@ -9,6 +9,12 @@
   color: grey;
 }
 
+.nav-tabs{
+  .has-error a{
+	border: 2px solid #ed5565!important;
+  }
+}
+
 textarea::-webkit-input-placeholder {
   /* WebKit browsers */
   color: #a9a9a9 !important;

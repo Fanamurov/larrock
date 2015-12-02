@@ -42,7 +42,7 @@ CREATE TABLE `apps` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `apps` (`id`, `title`, `name`, `description`, `table_content`, `rows`, `settings`, `plugins_backend`, `plugins_front`, `menu_category`, `sitemap`, `version`, `active`, `created_at`, `updated_at`) VALUES
-(4,	'Cтраницы',	'page',	'Страницы без привязки к определенному разделу',	'feed',	'a:6:{s:5:\"title\";a:6:{s:5:\"title\";s:18:\"Заголовок\";s:14:\"in_table_admin\";s:4:\"TRUE\";s:4:\"type\";s:4:\"text\";s:12:\"in_admin_tab\";a:1:{s:4:\"main\";s:36:\"Заголовок, описание\";}s:5:\"valid\";s:16:\"max:255|required\";s:4:\"typo\";s:4:\"true\";}s:11:\"description\";a:3:{s:5:\"title\";s:25:\"Текст новости\";s:4:\"type\";s:8:\"textarea\";s:12:\"in_admin_tab\";a:1:{s:4:\"main\";s:36:\"Заголовок, описание\";}}s:3:\"url\";a:4:{s:5:\"title\";s:22:\"URL материала\";s:4:\"type\";s:4:\"text\";s:12:\"in_admin_tab\";a:1:{s:3:\"seo\";s:3:\"Seo\";}s:5:\"valid\";s:16:\"max:155|required\";}s:4:\"date\";a:4:{s:5:\"title\";s:27:\"Дата материала\";s:4:\"type\";s:4:\"date\";s:12:\"in_admin_tab\";a:1:{s:5:\"other\";s:38:\"Дата, вес, активность\";}s:5:\"valid\";s:4:\"date\";}s:8:\"position\";a:4:{s:5:\"title\";s:25:\"Вес материала\";s:4:\"type\";s:5:\"input\";s:12:\"in_admin_tab\";a:1:{s:5:\"other\";s:38:\"Дата, вес, активность\";}s:5:\"valid\";s:7:\"integer\";}s:6:\"active\";a:6:{s:5:\"title\";s:22:\"Опубликован\";s:4:\"type\";s:8:\"checkbox\";s:7:\"checked\";s:4:\"TRUE\";s:12:\"in_admin_tab\";a:1:{s:5:\"other\";s:38:\"Дата, вес, активность\";}s:5:\"valid\";s:13:\"integer|max:1\";s:7:\"default\";i:1;}}',	's:0:\"\";',	'a:4:{i:0;s:3:\"seo\";i:1;s:6:\"images\";i:2;s:5:\"files\";i:3;s:9:\"templates\";}',	's:0:\"\";',	NULL,	'1',	19,	1,	'2015-11-26 07:04:03',	'2015-12-01 07:05:21');
+(4,	'Cтраницы',	'page',	'Страницы без привязки к определенному разделу',	'feed',	'a:6:{s:5:\"title\";a:6:{s:5:\"title\";s:18:\"Заголовок\";s:14:\"in_table_admin\";s:4:\"TRUE\";s:4:\"type\";s:4:\"text\";s:3:\"tab\";a:1:{s:4:\"main\";s:36:\"Заголовок, описание\";}s:5:\"valid\";s:16:\"max:255|required\";s:4:\"typo\";s:4:\"true\";}s:11:\"description\";a:3:{s:5:\"title\";s:25:\"Текст новости\";s:4:\"type\";s:8:\"textarea\";s:3:\"tab\";a:1:{s:4:\"main\";s:36:\"Заголовок, описание\";}}s:3:\"url\";a:4:{s:5:\"title\";s:22:\"URL материала\";s:4:\"type\";s:4:\"text\";s:3:\"tab\";a:1:{s:3:\"seo\";s:3:\"Seo\";}s:5:\"valid\";s:16:\"max:155|required\";}s:4:\"date\";a:4:{s:5:\"title\";s:27:\"Дата материала\";s:4:\"type\";s:4:\"date\";s:3:\"tab\";a:1:{s:5:\"other\";s:38:\"Дата, вес, активность\";}s:5:\"valid\";s:4:\"date\";}s:8:\"position\";a:5:{s:5:\"title\";s:25:\"Вес материала\";s:4:\"type\";s:4:\"text\";s:3:\"tab\";a:1:{s:5:\"other\";s:38:\"Дата, вес, активность\";}s:5:\"valid\";s:7:\"integer\";s:7:\"default\";i:0;}s:6:\"active\";a:6:{s:5:\"title\";s:22:\"Опубликован\";s:4:\"type\";s:8:\"checkbox\";s:7:\"checked\";s:4:\"TRUE\";s:3:\"tab\";a:1:{s:5:\"other\";s:38:\"Дата, вес, активность\";}s:5:\"valid\";s:13:\"integer|max:1\";s:7:\"default\";i:1;}}',	's:0:\"\";',	'a:4:{i:0;s:3:\"seo\";i:1;s:6:\"images\";i:2;s:5:\"files\";i:3;s:9:\"templates\";}',	's:0:\"\";',	NULL,	'1',	22,	1,	'2015-11-26 07:04:03',	'2015-12-02 06:33:09');
 
 DROP TABLE IF EXISTS `feed`;
 CREATE TABLE `feed` (
@@ -62,7 +62,10 @@ CREATE TABLE `feed` (
 
 INSERT INTO `feed` (`id`, `title`, `category`, `short`, `description`, `url`, `date`, `position`, `active`, `created_at`, `updated_at`) VALUES
 (1,	'Статья о валенках',	NULL,	'',	'<p>4324324</p>',	'ttrtr',	'2015-11-11',	'20',	0,	'2015-11-26 05:47:36',	'2015-11-30 06:02:55'),
-(2,	'Новость об акции',	NULL,	'',	'<p>4324324</p>',	'ttrtr',	'2015-11-11',	'23',	1,	'2015-11-26 06:10:16',	'2015-11-30 06:03:16');
+(2,	'Новость об акции',	NULL,	'',	'<p>4324324</p>',	'ttrtr',	'2015-11-11',	'23',	1,	'2015-11-26 06:10:16',	'2015-11-30 06:03:16'),
+(3,	'Новый материал',	NULL,	'',	'<p>Текст новости</p>',	'URL',	'0000-00-00',	'0',	0,	'2015-12-02 06:27:28',	'2015-12-02 06:27:28'),
+(4,	'Еще материал',	NULL,	'',	'<p>234234</p>',	'4234234',	'0000-00-00',	'1',	0,	'2015-12-02 06:31:15',	'2015-12-02 06:31:15'),
+(5,	'4234',	NULL,	'',	'',	'353312',	'0000-00-00',	'0',	0,	'2015-12-02 07:23:13',	'2015-12-02 07:23:13');
 
 DROP TABLE IF EXISTS `images`;
 CREATE TABLE `images` (
@@ -171,7 +174,10 @@ CREATE TABLE `seo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `seo` (`id`, `title`, `description`, `keywords`, `id_connect`, `url_connect`, `type_connect`, `position`, `created_at`, `updated_at`) VALUES
-(1,	'1',	'2',	'3',	1,	NULL,	'page',	0,	'2015-12-01 05:07:30',	'2015-12-01 05:07:30');
+(5,	'123423423',	'2333',	'3',	1,	NULL,	'page',	0,	'2015-12-02 05:58:07',	'2015-12-02 06:18:34'),
+(6,	'Title material',	'',	'',	3,	NULL,	'page',	0,	'2015-12-02 06:27:28',	'2015-12-02 06:27:28'),
+(7,	'',	'',	'',	4,	NULL,	'page',	0,	'2015-12-02 06:31:15',	'2015-12-02 06:31:15'),
+(8,	'',	'',	'',	5,	NULL,	'page',	0,	'2015-12-02 07:23:13',	'2015-12-02 07:23:13');
 
 DROP TABLE IF EXISTS `templates`;
 CREATE TABLE `templates` (
@@ -233,4 +239,4 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `email`, `password`, `permissions`, `last_login`, `first_name`, `last_name`, `created_at`, `updated_at`) VALUES
 (1,	'fanamurov@ya.ru',	'$2y$10$SJzDIVLhyCdzOMxfnqAADOCoyzVgjwjmBlYaVWQlikchTd67mWPRa',	NULL,	'2015-11-30 07:21:48',	'4234',	'',	'2015-11-19 15:41:49',	'2015-11-30 07:21:48');
 
--- 2015-12-01 07:57:05
+-- 2015-12-02 07:56:04

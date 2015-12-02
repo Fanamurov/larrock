@@ -16,6 +16,10 @@
             },
             highlight: function(element) {
                 $(element).closest('.form-group').addClass('has-error'); // add the Bootstrap error class to the control group
+
+				//Add has error to tab
+				var tab_name = $(element).closest('.tab-pane').attr('id');
+				$('li.'+tab_name).addClass('has-error');
             },
 
             /*
@@ -26,6 +30,10 @@
              */
             success: function(element) {
                 $(element).closest('.form-group').removeClass('has-error').addClass('has-success'); // remove the Boostrap error class from the control group
+
+				//Delete has error to tab
+				var tab_name = $(element).closest('.tab-pane').attr('id');
+				$('li.'+tab_name).removeClass('has-error');
             },
 
             focusInvalid: false, // do not focus the last invalid input
@@ -43,7 +51,9 @@
             },
             <?php endif; ?>
 
-            rules: <?php echo json_encode($validator['rules']); ?>
+            rules: <?php echo json_encode($validator['rules']); ?>,
+
+			ignore: ""  // validate all fields including form hidden input
         })
     })
 </script>

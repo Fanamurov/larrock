@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\FormBuilder;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -9,6 +10,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 use App\Models\Apps as Model_Apps;
 use App\Models\Seo as Model_Seo;
+use App\Models\Templates as Model_Templates;
 use DB;
 use Illuminate\Support\Facades\Input;
 use Session;
@@ -16,6 +18,7 @@ use Validator;
 use Illuminate\Http\Request;
 use Lang;
 use Redirect;
+use JsValidator;
 
 abstract class Apps extends BaseController
 {
@@ -90,46 +93,33 @@ abstract class Apps extends BaseController
 	 */
 	public function index()
 	{
-		/*$gold = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ,13 ,14, 15 ,16, 17];
-		$win = 0;
-		$for = 1000000;
-		for($i = 0; $i< $for; $i++){
-			$all_card = 25;
-			if(in_array(mt_rand(1, --$all_card), $gold)){
-				++$win;
-			}else{
-				if(in_array(mt_rand(1, --$all_card), $gold)){
-					++$win;
-				}else{
-					if(in_array(mt_rand(1, --$all_card), $gold)){
-						++$win;
-					}else{
-						if(in_array(mt_rand(1, --$all_card), $gold)){
-							++$win;
-						}
-					}
-				}
-			}
-		}
-		return ($win/$for) * 100 .'%';*/
-
 		$data['apps'] = $this->get_app();
 		$data['data'] = DB::table($this->table_content)->paginate(30);
+		\View::share('validator', '');
 		return view('admin.apps.index', $data);
 	}
 
 	/**
 	 * Show the form for creating a new resource.
 	 *
+	 * @param  \App\Helpers\FormBuilder $formBuilder
 	 * @return \Illuminate\Http\Response
 	 */
-	public function create()
+	public function create(FormBuilder $formBuilder)
 	{
 		$data['apps'] = $this->get_app();
 		$this->plugin_seo($data);
 		$this->plugin_templates($data);
 		$data['tabs'] = $this->get_tabs_names_admin();
 		$data['next_id'] = DB::table($this->table_content)->max('id') + 1;
+
+		foreach($data['tabs'] as $tab_key => $tab_value){
+			$data['form'][$tab_key] = $formBuilder->render($data['apps'], [], $tab_key);
+		}
+
+		$validator = JsValidator::make($this->_valid_construct());
+		\View::share('validator', $validator);
+
 		return view('admin.apps.create', $data);
 	}
 
@@ -137,15 +127,25 @@ abstract class Apps extends BaseController
 	 * Show the form for editing the specified resource.
 	 *
 	 * @param  int  $id
+	 * @param  \App\Helpers\FormBuilder $formBuilder
 	 * @return \Illuminate\Http\Response
 	 */
-	public function edit($id)
+	public function edit($id, FormBuilder $formBuilder)
 	{
 		$data['data'] = DB::table($this->table_content)->whereId($id)->get();
 		$data['apps'] = $this->get_app();
+
 		$this->plugin_seo($data);
 		$this->plugin_templates($data);
 		$data['tabs'] = $this->get_tabs_names_admin();
+
+		foreach($data['tabs'] as $tab_key => $tab_value){
+			$data['form'][$tab_key] = $formBuilder->render($data['apps'], $data['data'], $tab_key);
+		}
+
+		$validator = JsValidator::make($this->_valid_construct());
+		\View::share('validator', $validator);
+
 		return view('admin.apps.edit', $data);
 	}
 
@@ -170,11 +170,34 @@ abstract class Apps extends BaseController
 		}
 
         $data->active = $request->input('active', 0);
+        $data->active = $request->input('position', 0);
 
         $data->setTable($this->table_content);
+		$next_id = DB::table($this->table_content)->max('id') + 1;
+
 		if($data->save()){
 			Session::flash('message', 'Материал '. $request->input('title') .' добавлен');
-			return back()->withInput();
+
+			if(in_array('seo', $this->plugins_backend, TRUE)){
+				$seo = new Model_Seo();
+				$seo->title = $request->get('seo_title');
+				$seo->description = $request->get('seo_description');
+				$seo->keywords = $request->get('seo_keywords');
+				$seo->id_connect = $next_id;
+				$seo->type_connect = $this->name;
+				$seo->save();
+			}
+
+			if(in_array('template', $this->plugins_backend, TRUE)){
+				$template = new Model_Templates();
+				$template->template = $request->get('template');
+				$template->template_global = $request->get('template_global');
+				$template->id_connect = $next_id;
+				$template->type_connect = $this->name;
+				$template->save();
+			}
+
+			return \Redirect::to('/admin/'. $this->name .'/'. $next_id .'/edit')->withInput();
 		}
 
 		Session::flash('error', 'Материал '. $request->input('title') .' не добавлен');
@@ -210,13 +233,28 @@ abstract class Apps extends BaseController
 			Session::flash('message', 'Материал '. $request->input('title') .' изменен');
 
 			if(in_array('seo', $this->plugins_backend, TRUE)){
-				$seo = new Model_Seo();
+				$seo = Model_Seo::where(['id_connect' => $id, 'type_connect' => $this->name])->first();
+				if( !$seo){
+					$seo = new Model_Seo();
+				}
 				$seo->title = $request->get('seo_title');
 				$seo->description = $request->get('seo_description');
 				$seo->keywords = $request->get('seo_keywords');
 				$seo->id_connect = $id;
 				$seo->type_connect = $this->name;
 				$seo->save();
+			}
+
+			if(in_array('template', $this->plugins_backend, TRUE)){
+				$template = Model_Templates::where(['id_connect' => $id, 'type_connect' => $this->name])->first();
+				if( !$template){
+					$template = new Model_Templates();
+				}
+				$template->template = $request->get('template');
+				$template->template_global = $request->get('template_global');
+				$template->id_connect = $id;
+				$template->type_connect = $this->name;
+				$template->save();
 			}
 
 			return back();
@@ -264,8 +302,8 @@ abstract class Apps extends BaseController
 	{
 		$tabs = array();
 		foreach($this->rows as $row_value){
-			if(array_key_exists('in_admin_tab', $row_value)){
-				$tabs = array_add($tabs, key($row_value['in_admin_tab']), $row_value['in_admin_tab'][key($row_value['in_admin_tab'])]);
+			if(array_key_exists('tab', $row_value)){
+				$tabs = array_add($tabs, key($row_value['tab']), $row_value['tab'][key($row_value['tab'])]);
 			}
 		}
 		return $tabs;
@@ -280,24 +318,24 @@ abstract class Apps extends BaseController
 
 			$this->rows['seo_title'] = [
 				'title' => 'Title материала',
-				'type' => 'input',
-				'in_admin_tab' => ['seo' => 'Seo'],
+				'type' => 'text',
+				'tab' => ['seo' => 'Seo'],
 				'valid' => 'max:255',
 				'help' => 'По-умолчанию равно заголовку материала',
 			];
 
 			$this->rows['seo_description'] = [
 				'title' => 'Description материала',
-				'type' => 'input',
-				'in_admin_tab' => ['seo' => 'Seo'],
+				'type' => 'text',
+				'tab' => ['seo' => 'Seo'],
 				'valid' => 'max:255',
 				'help' => 'По-умолчанию равно заголовку материала',
 			];
 
 			$this->rows['seo_keywords'] = [
 				'title' => 'Keywords материала',
-				'type' => 'input',
-				'in_admin_tab' => ['seo' => 'Seo'],
+				'type' => 'text',
+				'tab' => ['seo' => 'Seo'],
 				'valid' => 'max:255'
 			];
 
@@ -305,10 +343,6 @@ abstract class Apps extends BaseController
 				$data['data']['0']->seo_title = $get_seo->title;
 				$data['data']['0']->seo_description = $get_seo->description;
 				$data['data']['0']->seo_keywords = $get_seo->keywords;
-			}else{
-				$data['data']['0']->seo_title = '';
-				$data['data']['0']->seo_description = '';
-				$data['data']['0']->seo_keywords = '';
 			}
 		}
 		$data['apps']->rows = $this->rows;
@@ -326,7 +360,7 @@ abstract class Apps extends BaseController
 				'title' => 'Шаблон материала',
 				'type' => 'select',
 				'options' => ['Template1', 'Template2'],
-				'in_admin_tab' => ['templates' => 'Шаблоны'],
+				'tab' => ['templates' => 'Шаблоны'],
 				'valid' => 'max:255',
 				'form-group_class' => 'col-sm-6 col-sm-offset-3'
 			];
@@ -335,7 +369,7 @@ abstract class Apps extends BaseController
 				'title' => 'Глобальный шаблон',
 				'type' => 'select',
 				'options' => ['Template1', 'Template2'],
-				'in_admin_tab' => ['templates' => 'Шаблоны'],
+				'tab' => ['templates' => 'Шаблоны'],
 				'valid' => 'max:255',
 				'form-group_class' => 'col-sm-6 col-sm-offset-3'
 			];
@@ -343,9 +377,6 @@ abstract class Apps extends BaseController
 			if(isset($get_template)){
 				$data['data']['0']->template = $get_template->name;
 				$data['data']['0']->template_global = 'test';
-			}else{
-				$data['data']['0']->template = '';
-				$data['data']['0']->template_global = '';
 			}
 		}
 		$data['apps']->rows = $this->rows;

@@ -25,38 +25,39 @@ class PageController extends Apps
 				'title' => 'Заголовок',
 				'in_table_admin' => 'TRUE',
 				'type' => 'text',
-				'in_admin_tab' => ['main' => 'Заголовок, описание'],
+				'tab' => ['main' => 'Заголовок, описание'],
 				'valid' => 'max:255|required',
 				'typo' => 'true'
 			],
 			'description' => [
 				'title' => 'Текст новости',
 				'type' => 'textarea',
-				'in_admin_tab' => ['main' => 'Заголовок, описание']
+				'tab' => ['main' => 'Заголовок, описание']
 			],
 			'url' => [
 				'title' => 'URL материала',
 				'type' => 'text',
-				'in_admin_tab' => ['seo' => 'Seo'],
+				'tab' => ['seo' => 'Seo'],
 				'valid' => 'max:155|required'
 			],
 			'date' => [
 				'title' => 'Дата материала',
 				'type' => 'date',
-				'in_admin_tab' => ['other' => 'Дата, вес, активность'],
+				'tab' => ['other' => 'Дата, вес, активность'],
 				'valid' => 'date'
 			],
 			'position' => [
 				'title' => 'Вес материала',
-				'type' => 'input',
-				'in_admin_tab' => ['other' => 'Дата, вес, активность'],
-				'valid' => 'integer'
+				'type' => 'text',
+				'tab' => ['other' => 'Дата, вес, активность'],
+				'valid' => 'integer',
+				'default' => 0
 			],
 			'active' => [
 				'title' => 'Опубликован',
 				'type' => 'checkbox',
 				'checked' => 'TRUE',
-				'in_admin_tab' => ['other' => 'Дата, вес, активность'],
+				'tab' => ['other' => 'Дата, вес, активность'],
 				'valid' => 'integer|max:1',
 				'default' => 1
 			],
@@ -64,7 +65,7 @@ class PageController extends Apps
 		$this->settings = '';
 		$this->plugins_backend = ['seo', 'images', 'files', 'templates'];
 		$this->plugins_front = '';
-		$this->version = 19;
+		$this->version = 22;
 		$this->check_app();
 	}
 }

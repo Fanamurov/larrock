@@ -145,6 +145,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+		App\Providers\FormBuilderServiceProvider::class,
+
         /* http://image.intervention.io/getting_started/installation */
         Intervention\Image\ImageServiceProvider::class,
 
@@ -167,7 +169,7 @@ return [
         //McCool\LaravelAutoPresenter\AutoPresenterServiceProvider::class,
 
         /* https://packagist.org/packages/proengsoft/laravel-jsvalidation */
-        //Proengsoft\JsValidation\JsValidationServiceProvider::class,
+        Proengsoft\JsValidation\JsValidationServiceProvider::class,
 
         /* https://packagist.org/packages/roumen/sitemap :: Generate sitenap.xml */
         //Roumen\Sitemap\SitemapServiceProvider::class,
@@ -227,6 +229,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
 
+		'FormBuilder' => App\Providers\FormBuilderServiceProvider::class,
+
         'Image'     => Intervention\Image\Facades\Image::class,
 
         'Activation' => Cartalyst\Sentinel\Laravel\Facades\Activation::class,
@@ -235,7 +239,7 @@ return [
 
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         //'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facade::class,
-        //'JsValidator' => Proengsoft\JsValidation\Facades\JsValidatorFacade::class,
+        'JsValidator' => Proengsoft\JsValidation\Facades\JsValidatorFacade::class,
         //'Cart'        => Gloudemans\Shoppingcart\Facades\Cart::class,
         //'Recaptcha' => Greggilbert\Recaptcha\Facades\Recaptcha::class,
 

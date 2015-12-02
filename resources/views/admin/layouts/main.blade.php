@@ -19,9 +19,6 @@
     @else
         <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
     @endif
-
-    <script src="{{asset('_admin/_js/plugins/morris/raphael-2.1.0.min.js')}}"></script>
-    <script src="{{asset('_admin/_js/plugins/morris/morris.js')}}"></script>
 </head>
 <body>
 
@@ -161,6 +158,8 @@
                                     </div>
                                 @endforeach
                             @endif
+
+                                    {!! $validator !!}
                         </div>
                     </div>
                     <div class="row">
@@ -204,5 +203,8 @@
 <script src="{{asset('_admin/_js/tinymce/jquery.tinymce.min.js')}}"></script>
 <script src="{{asset('_admin/_js/tinymce/tinymce.min.js')}}"></script>
 <script src="{{asset('_admin/_js/tinymce/tinymce-settings.js')}}"></script>
+
+<!-- Laravel Javascript Validation -->
+<script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
 </body>
 </html>

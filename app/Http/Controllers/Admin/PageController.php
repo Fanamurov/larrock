@@ -7,10 +7,11 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\Apps as Model_Apps;
-use DB;
 use Session;
 use Validator;
+use App\Models\Page as Model_Page;
+use App\Models\Seo as Model_Seo;
+use App\Models\Templates as Model_Templates;
 
 class PageController extends Apps
 {
@@ -68,4 +69,43 @@ class PageController extends Apps
 		$this->version = 22;
 		$this->check_app();
 	}
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), $this->_valid_construct());
+        if($validator->fails()){
+            return back()->withInput($request->except('password'))->withErrors($validator);
+        }
+
+        $data = Model_Page::find($id);
+        if($data->fill($request->all())->save()){
+            Session::flash('message', 'Материал '. $request->input('title') .' изменен');
+
+            if(in_array('seo', $this->plugins_backend, TRUE)){
+                if( !$seo = Model_Seo::where(['id_connect' => $id, 'type_connect' => $this->name])->first()){
+                    $seo = new Model_Seo();
+                }
+                $seo->fill($request->all())->save();
+            }
+
+            if(in_array('templates', $this->plugins_backend, TRUE)){
+                if( !$template = Model_Templates::where(['id_connect' => $id, 'type_connect' => $this->name])->first()){
+                    $template = new Model_Templates();
+                }
+                $template->fill($request->all())->save();
+            }
+
+            return back();
+        }
+
+        Session::flash('error', 'Материал '. $request->input('title') .' не изменен');
+        return back()->withInput();
+    }
 }

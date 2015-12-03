@@ -8,6 +8,8 @@
 
 @section('content')
     <form action="/admin/{{ $apps->name }}" method="POST">
+        <input name="type_connect" type="hidden" value="{{ $apps->name }}">
+        <input name="id_connect" type="hidden" value="{{ $next_id }}">
         <div class="tabbable main-tabbable">
             <ul class="nav nav-tabs">
                 @foreach($tabs as $tabs_key => $tabs_value)

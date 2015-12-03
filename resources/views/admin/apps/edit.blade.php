@@ -12,6 +12,8 @@
     @foreach($data as $data_value)
         <form action="/admin/{{ $apps->name }}/{{ $data_value->id }}" method="POST">
             <input name="_method" type="hidden" value="PUT">
+            <input name="type_connect" type="hidden" value="{{ $apps->name }}">
+            <input name="id_connect" type="hidden" value="{{ $id }}">
             <div class="tabbable main-tabbable">
                 <ul class="nav nav-tabs">
                     @foreach($tabs as $tabs_key => $tabs_value)

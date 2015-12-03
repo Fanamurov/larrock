@@ -15,7 +15,8 @@ class CreateTemplatesTable extends Migration
         Schema::create('templates', function (Blueprint $table) {
 			$table->engine = 'InnoDB';
 			$table->increments('id');
-			$table->string('name', 255);
+			$table->string('template', 255);
+			$table->string('template_global', 255);
 			$table->string('type_connect', 255);
 			$table->integer('id_connect');
 			$table->timestamps();

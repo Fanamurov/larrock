@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.1.24 (LTS) on 2015-12-02.
+ * Generated for Laravel 5.1.24 (LTS) on 2015-12-04.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -12371,7 +12371,7 @@ namespace {
         /**
          * Checks if we are currently a guest.
          *
-         * @return bool 
+         * @return \Cartalyst\Sentinel\Users\UserInterface|bool 
          * @static 
          */
         public static function guest(){

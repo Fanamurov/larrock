@@ -54,19 +54,17 @@ CREATE TABLE `feed` (
   `url` varchar(155) COLLATE utf8_unicode_ci NOT NULL,
   `date` date NOT NULL,
   `position` char(10) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
-  `active` int(11) NOT NULL DEFAULT '1',
+  `active` int(1) DEFAULT '1',
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `feed` (`id`, `title`, `category`, `short`, `description`, `url`, `date`, `position`, `active`, `created_at`, `updated_at`) VALUES
-(1,	'Статья о валенках',	NULL,	'',	'<p>4324324</p>',	'ttrtr',	'2015-11-11',	'20',	0,	'2015-11-26 05:47:36',	'2015-11-30 06:02:55'),
+(1,	'Статья о валенках9',	NULL,	'',	'<p>4324324</p>',	'ttrtr',	'2015-11-11',	'20',	0,	'2015-11-26 05:47:36',	'2015-12-03 17:18:22'),
 (2,	'Новость об акции',	NULL,	'',	'<p>4324324</p>',	'ttrtr',	'2015-11-11',	'23',	1,	'2015-11-26 06:10:16',	'2015-11-30 06:03:16'),
 (3,	'Новый материал',	NULL,	'',	'<p>Текст новости</p>',	'URL',	'0000-00-00',	'0',	0,	'2015-12-02 06:27:28',	'2015-12-02 06:27:28'),
-(4,	'Еще материал',	NULL,	'',	'<p>234234</p>',	'4234234',	'0000-00-00',	'1',	0,	'2015-12-02 06:31:15',	'2015-12-02 06:31:15'),
-(5,	'4234',	NULL,	'',	'',	'353312',	'0000-00-00',	'0',	0,	'2015-12-02 07:23:13',	'2015-12-02 07:23:13'),
-(6,	'Хуй',	NULL,	'',	'',	'hui',	'0000-00-00',	'0',	0,	'2015-12-02 07:59:03',	'2015-12-02 07:59:03');
+(4,	'Еще материал',	NULL,	'',	'<p>234234</p>',	'4234234',	'0000-00-00',	'1',	0,	'2015-12-02 06:31:15',	'2015-12-02 06:31:15');
 
 DROP TABLE IF EXISTS `images`;
 CREATE TABLE `images` (
@@ -164,29 +162,29 @@ INSERT INTO `role_users` (`user_id`, `role_id`, `created_at`, `updated_at`) VALU
 DROP TABLE IF EXISTS `seo`;
 CREATE TABLE `seo` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `keywords` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `seo_title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `seo_description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `seo_keywords` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `id_connect` int(11) DEFAULT NULL,
   `url_connect` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `type_connect` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `position` int(11) NOT NULL DEFAULT '0',
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `seo` (`id`, `title`, `description`, `keywords`, `id_connect`, `url_connect`, `type_connect`, `position`, `created_at`, `updated_at`) VALUES
-(5,	'123423423',	'2333',	'3',	1,	NULL,	'page',	0,	'2015-12-02 05:58:07',	'2015-12-02 06:18:34'),
-(6,	'Title material',	'',	'',	3,	NULL,	'page',	0,	'2015-12-02 06:27:28',	'2015-12-02 06:27:28'),
-(7,	'',	'',	'',	4,	NULL,	'page',	0,	'2015-12-02 06:31:15',	'2015-12-02 06:31:15'),
-(8,	'',	'',	'',	5,	NULL,	'page',	0,	'2015-12-02 07:23:13',	'2015-12-02 07:23:13'),
-(9,	'',	'',	'',	6,	NULL,	'page',	0,	'2015-12-02 07:59:03',	'2015-12-02 07:59:03');
+INSERT INTO `seo` (`id`, `seo_title`, `seo_description`, `seo_keywords`, `id_connect`, `url_connect`, `type_connect`, `created_at`, `updated_at`) VALUES
+(5,	'123423423',	'2333',	'3',	1,	NULL,	'page',	'2015-12-02 05:58:07',	'2015-12-02 06:18:34'),
+(6,	'Title material',	'',	'',	3,	NULL,	'page',	'2015-12-02 06:27:28',	'2015-12-02 06:27:28'),
+(7,	'',	'',	'',	4,	NULL,	'page',	'2015-12-02 06:31:15',	'2015-12-02 06:31:15'),
+(8,	'',	'',	'',	5,	NULL,	'page',	'2015-12-02 07:23:13',	'2015-12-02 07:23:13'),
+(9,	'',	'',	'',	6,	NULL,	'page',	'2015-12-02 07:59:03',	'2015-12-02 07:59:03');
 
 DROP TABLE IF EXISTS `templates`;
 CREATE TABLE `templates` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `template` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `template_global` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `type_connect` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `id_connect` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -194,6 +192,8 @@ CREATE TABLE `templates` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+INSERT INTO `templates` (`id`, `template`, `template_global`, `type_connect`, `id_connect`, `created_at`, `updated_at`) VALUES
+(1,	'Template2',	'Template1',	'page',	1,	'2015-12-03 17:27:58',	'2015-12-03 17:27:58');
 
 DROP TABLE IF EXISTS `throttle`;
 CREATE TABLE `throttle` (
@@ -243,4 +243,4 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `email`, `password`, `permissions`, `last_login`, `first_name`, `last_name`, `created_at`, `updated_at`) VALUES
 (1,	'fanamurov@ya.ru',	'$2y$10$SJzDIVLhyCdzOMxfnqAADOCoyzVgjwjmBlYaVWQlikchTd67mWPRa',	NULL,	'2015-12-02 07:58:20',	'4234',	'',	'2015-11-19 15:41:49',	'2015-12-02 07:58:20');
 
--- 2015-12-03 05:02:29
+-- 2015-12-03 18:20:12

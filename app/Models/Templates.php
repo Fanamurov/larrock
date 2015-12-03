@@ -4,19 +4,29 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Models\Templates
+ *
+ * @property integer $id
+ * @property string $template
+ * @property string $template_global
+ * @property string $type_connect
+ * @property integer $id_connect
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Templates whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Templates whereTemplate($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Templates whereTemplateGlobal($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Templates whereTypeConnect($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Templates whereIdConnect($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Templates whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Templates whereUpdatedAt($value)
+ */
 class Templates extends Model
 {
     protected $table = 'templates';
 
-	/**
-	 * Scope a query to only include popular users.
-	 *
-	 * @return \Illuminate\Database\Eloquent\Builder
-	 */
-	public function scopePopular($query)
-	{
-		return $query->where('id_connect', '=', $id_connect);
-	}
+    protected $fillable = ['template', 'template_global', 'type_connect', 'id_connect'];
 
 	public function get_template($id_connect, $type_connect)
 	{

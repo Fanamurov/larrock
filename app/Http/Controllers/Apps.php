@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\FormBuilder;
+use App\Models\Page;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -134,6 +135,7 @@ abstract class Apps extends BaseController
 	{
 		$data['data'] = DB::table($this->table_content)->whereId($id)->get();
 		$data['apps'] = $this->get_app();
+        $data['id'] = $id;
 
 		$this->plugin_seo($data);
 		$this->plugin_templates($data);
@@ -229,6 +231,8 @@ abstract class Apps extends BaseController
         $data->active = $request->input('active', 0);
 
         $data->setTable($this->table_content);
+        $data->save();
+
 		if($data->save()){
 			Session::flash('message', 'Материал '. $request->input('title') .' изменен');
 
@@ -245,7 +249,7 @@ abstract class Apps extends BaseController
 				$seo->save();
 			}
 
-			if(in_array('template', $this->plugins_backend, TRUE)){
+			if(in_array('templates', $this->plugins_backend, TRUE)){
 				$template = Model_Templates::where(['id_connect' => $id, 'type_connect' => $this->name])->first();
 				if( !$template){
 					$template = new Model_Templates();
@@ -275,8 +279,22 @@ abstract class Apps extends BaseController
 		$data = new Model_Apps();
 		$data->setTable($this->table_content);
 		$data = $data->find($id);
+        $data->setTable($this->table_content);
 		if($data->delete()){
 			Session::flash('message', 'Материал успешно удален');
+
+            if(in_array('seo', $this->plugins_backend, TRUE)){
+                if($seo = Model_Seo::where(['id_connect' => $id, 'type_connect' => $this->name])->first()){
+                    $seo->delete();
+                }
+            }
+
+            if(in_array('templates', $this->plugins_backend, TRUE)){
+                if($template = Model_Templates::where(['id_connect' => $id, 'type_connect' => $this->name])->first()){
+                    $template->delete();
+                }
+            }
+
 		}else{
 			Session::flash('error', 'Материал не удален');
 		}
@@ -340,9 +358,9 @@ abstract class Apps extends BaseController
 			];
 
 			if(isset($get_seo)){
-				$data['data']['0']->seo_title = $get_seo->title;
-				$data['data']['0']->seo_description = $get_seo->description;
-				$data['data']['0']->seo_keywords = $get_seo->keywords;
+				$data['data']['0']->seo_title = $get_seo->seo_title;
+				$data['data']['0']->seo_description = $get_seo->seo_description;
+				$data['data']['0']->seo_keywords = $get_seo->seo_keywords;
 			}
 		}
 		$data['apps']->rows = $this->rows;
@@ -353,7 +371,10 @@ abstract class Apps extends BaseController
 	{
 		if(in_array('templates', $this->plugins_backend, TRUE)){
 			if(array_key_exists('data', $data)){
-				$get_template = DB::table('templates')->whereId_connect($data['data'][0]->id)->whereType_connect($this->name)->first();
+				if($get_template = DB::table('templates')->whereId_connect($data['data'][0]->id)->whereType_connect($this->name)->first()){
+                    $data['data']['0']->template = $get_template->template;
+                    $data['data']['0']->template_global = $get_template->template_global;
+                }
 			}
 
 			$this->rows['template'] = [
@@ -373,11 +394,6 @@ abstract class Apps extends BaseController
 				'valid' => 'max:255',
 				'form-group_class' => 'col-sm-6 col-sm-offset-3'
 			];
-
-			if(isset($get_template)){
-				$data['data']['0']->template = $get_template->name;
-				$data['data']['0']->template_global = 'test';
-			}
 		}
 		$data['apps']->rows = $this->rows;
 		return $data;

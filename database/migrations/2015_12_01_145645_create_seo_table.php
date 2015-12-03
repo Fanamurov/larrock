@@ -15,13 +15,12 @@ class CreateSeoTable extends Migration
         Schema::create('seo', function (Blueprint $table) {
 			$table->engine = 'InnoDB';
 			$table->increments('id');
-			$table->string('title', 255);
-			$table->string('description', 255);
-			$table->string('keywords', 255);
+			$table->string('seo_title', 255);
+			$table->string('seo_description', 255);
+			$table->string('seo_keywords', 255);
 			$table->integer('id_connect')->nullable();
 			$table->string('url_connect', 255)->nullable();
 			$table->string('type_connect', 255)->nullable();
-			$table->integer('position')->default(0);
 			$table->timestamps();
         });
     }

@@ -62,13 +62,14 @@ class Ajax extends Controller
 
         foreach($images as $images_value){
             if(Image::make($images_value->getRealPath())
-                ->resize(300, null, function ($constraint) {
+                ->resize(800, null, function ($constraint) {
                 $constraint->aspectRatio();
-            })->save('images/'. $folder .'/big/foo.jpg')){
+            })->save('images/'. $folder .'/big/'. $images_value->getClientOriginalName())){
 
 				//Загрузка информации о фото в БД
 				$inset_image = new Model_Image();
-				$inset_image->name = 'Name';
+				$inset_image->name = $images_value->getClientOriginalName();
+				$inset_image->mime = $images_value->getClientMimeType();
 				$inset_image->description = '';
 				$inset_image->type = $folder;
 				$inset_image->id_connect = $id_connect;
@@ -79,9 +80,6 @@ class Ajax extends Controller
         }
 
         return response()->json(['status' => 'success', 'message' => 'Фото успешно загружены']);
-
-        // resizing an uploaded file
-        //Image::make(Input::file('images'))->resize(300, 200)->save('foo.jpg');
     }
 
 	public function getLoadedImages()
@@ -90,7 +88,7 @@ class Ajax extends Controller
 		$id_connect = Input::get('id_connect', 1);
 		$images = DB::table('images')->whereType($type)->whereId_connect($id_connect)->orderBy('position', 'desc')->get();
 		foreach($images as $images_key => $images_value){
-			$images[$images_key]->type = 'image/jpg';
+			$images[$images_key]->type = $images_value->mime;
 			$images[$images_key]->file = '/images/' . $type .'/big/'. $images_value->name;
 			$images[$images_key]->size = 456;
 		}

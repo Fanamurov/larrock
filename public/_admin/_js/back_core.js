@@ -3796,28 +3796,38 @@ $(document).ready(function(){
             dataType: "json",
             url: "/admin/ajax/getLoadedImages",
             success: function (data) {
-                return data
+                load_image_plugin(data);
             }
         });
     }
 
-    test = get_loaded_images($('input[name=id_connect]').val(), $('input[name=folder]').val());
+    get_loaded_images($('input[name=id_connect]').val(), $('input[name=folder]').val());
 
-    /* Image upload http://filer.grandesign.md/#download */
-    $('#upload_image_filer').filer({
-        changeInput: '<div class="jFiler-input-dragDrop">' +
-        '<div class="jFiler-input-inner">' +
-        '<div class="jFiler-input-icon"><i class="icon-jfi-cloud-up-o"></i></div>' +
-        '<div class="jFiler-input-text"><h3>Перетащите фото сюда</h3> ' +
-        '<span style="display:inline-block; margin: 15px 0">или</span></div>' +
-        '<a class="jFiler-input-choose-btn blue">Выберите фото из проводника</a></div></div>',
-        showThumbs: true,
-        theme: "dragdropbox",
-        addMore: true,
-        files: test,
-        templates: {
-            box: '<ul class="jFiler-items-list jFiler-items-grid"></ul>',
-            item: '<li class="jFiler-item">\
+    function load_image_plugin(uploaded_files)
+    {
+        var params_list;
+        $.each(uploaded_files, function (key, val) {
+            //items.push(val);
+        });
+
+        /* Image upload http://filer.grandesign.md/#download */
+        $('#upload_image_filer').filer({
+            changeInput: '<div class="jFiler-input-dragDrop">' +
+            '<div class="jFiler-input-inner">' +
+            '<div class="jFiler-input-icon"><i class="icon-jfi-cloud-up-o"></i></div>' +
+            '<div class="jFiler-input-text"><h3>Перетащите фото сюда</h3> ' +
+            '<span style="display:inline-block; margin: 15px 0">или</span></div>' +
+            '<a class="jFiler-input-choose-btn blue">Выберите фото из проводника</a></div></div>',
+            showThumbs: true,
+            theme: "dragdropbox",
+            addMore: true,
+            files: uploaded_files,
+            options: {
+                param: ["ttrtr", "242342"]
+            },
+            templates: {
+                box: '<ul class="jFiler-items-list jFiler-items-grid"></ul>',
+                item: '<li class="jFiler-item">\
                     <div class="jFiler-item-container">\
                         <div class="jFiler-item-inner">\
                             <div class="jFiler-item-thumb">\
@@ -3827,6 +3837,7 @@ $(document).ready(function(){
                                     <span class="jFiler-item-others">{{fi-size2}}</span>\
                                 </div>\
                                 {{fi-image}}\
+                                2{{fi-type}}\
                             </div>\
                             <div class="jFiler-item-assets jFiler-row">\
                                 <ul class="list-inline pull-left">\
@@ -3839,7 +3850,7 @@ $(document).ready(function(){
                         </div>\
                     </div>\
                 </li>',
-            itemAppend: '<li class="jFiler-item">\
+                itemAppend: '<li class="jFiler-item">\
                         <div class="jFiler-item-container">\
                             <div class="jFiler-item-inner">\
                                 <div class="jFiler-item-thumb">\
@@ -3849,10 +3860,11 @@ $(document).ready(function(){
                                         <span class="jFiler-item-others">{{fi-size2}}</span>\
                                     </div>\
                                     {{fi-image}}\
+                                    {{fi-param}}\
                                 </div>\
                                 <div class="jFiler-item-assets jFiler-row">\
                                     <ul class="list-inline pull-left">\
-                                        <li><span class="jFiler-item-others">{{fi-icon}}</span></li>\
+                                        <li><span class="jFiler-item-others">{{fi-param}}{{fi-icon}}</span></li>\
                                     </ul>\
                                     <ul class="list-inline pull-right">\
                                         <li><a class="icon-jfi-trash jFiler-item-trash-action"></a></li>\
@@ -3861,52 +3873,68 @@ $(document).ready(function(){
                             </div>\
                         </div>\
                     </li>',
-            progressBar: '<div class="bar"></div>',
-            itemAppendToEnd: false,
-            removeConfirmation: true,
-            _selectors: {
-                list: '.jFiler-items-list',
-                item: '.jFiler-item',
-                progressBar: '.bar',
-                remove: '.jFiler-item-trash-action'
+                progressBar: '<div class="bar"></div>',
+                itemAppendToEnd: false,
+                removeConfirmation: true,
+                _selectors: {
+                    list: '.jFiler-items-list',
+                    item: '.jFiler-item',
+                    progressBar: '.bar',
+                    remove: '.jFiler-item-trash-action'
+                }
+            },
+            dragDrop: {
+                dragEnter: null,
+                dragLeave: null,
+                drop: null,
+            },
+            uploadFile: {
+                url: "/admin/ajax/UploadImage",
+                data: {
+                    folder: $('input[name=folder]').val(),
+                    id_connect: $('input[name=id_connect]').val(),
+                    param: $('input[name=param]').val(),
+                },
+                type: 'POST',
+                enctype: 'multipart/form-data',
+                beforeSend: function(){},
+                success: function(data, el){
+                    var parent = el.find(".jFiler-jProgressBar").parent();
+                    el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
+                        $("<div class=\"jFiler-item-others text-success\"><i class=\"icon-jfi-check-circle\"></i> Загружено</div>").hide().appendTo(parent).fadeIn("slow");
+                    });
+                },
+                error: function(el){
+                    var parent = el.find(".jFiler-jProgressBar").parent();
+                    el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
+                        $("<div class=\"jFiler-item-others text-error\"><i class=\"icon-jfi-minus-circle\"></i> Ошибка</div>").hide().appendTo(parent).fadeIn("slow");
+                    });
+                },
+                statusCode: null,
+                onProgress: null,
+                onComplete: null
+            },
+            onRemove: function(itemEl, file){
+                var file = file.name;
+                $.post('./php/remove_file.php', {file: file});
+            },
+            captions: {
+                button: "Choose Files",
+                feedback: "Choose files To Upload",
+                feedback2: "files were chosen",
+                drop: "Drop file here to Upload",
+                removeConfirmation: "Are you sure you want to remove this file?",
+                errors: {
+                    filesLimit: "Only {{fi-limit}} files are allowed to be uploaded.",
+                    filesType: "Only Images are allowed to be uploaded.",
+                    filesSize: "{{fi-name}} is too large! Please upload file up to {{fi-maxSize}} MB.",
+                    filesSizeAll: "Files you've choosed are too large! Please upload files up to {{fi-maxSize}} MB."
+                }
             }
-        },
-        dragDrop: {
-            dragEnter: null,
-            dragLeave: null,
-            drop: null,
-        },
-        uploadFile: {
-            url: "/admin/ajax/UploadImage",
-            data: {
-                folder: $('input[name=folder]').val(),
-                id_connect: $('input[name=id_connect]').val(),
-                param: $('input[name=param]').val(),
-            },
-            type: 'POST',
-            enctype: 'multipart/form-data',
-            beforeSend: function(){},
-            success: function(data, el){
-                var parent = el.find(".jFiler-jProgressBar").parent();
-                el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
-                    $("<div class=\"jFiler-item-others text-success\"><i class=\"icon-jfi-check-circle\"></i> Загружено</div>").hide().appendTo(parent).fadeIn("slow");
-                });
-            },
-            error: function(el){
-                var parent = el.find(".jFiler-jProgressBar").parent();
-                el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
-                    $("<div class=\"jFiler-item-others text-error\"><i class=\"icon-jfi-minus-circle\"></i> Ошибка</div>").hide().appendTo(parent).fadeIn("slow");
-                });
-            },
-            statusCode: null,
-            onProgress: null,
-            onComplete: null
-        },
-        onRemove: function(itemEl, file){
-            var file = file.name;
-            $.post('./php/remove_file.php', {file: file});
-        }
-    });
+        });
+    }
+
+
     /* End image upload */
 
     paceOptions = {

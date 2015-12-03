@@ -65,12 +65,14 @@ INSERT INTO `feed` (`id`, `title`, `category`, `short`, `description`, `url`, `d
 (2,	'Новость об акции',	NULL,	'',	'<p>4324324</p>',	'ttrtr',	'2015-11-11',	'23',	1,	'2015-11-26 06:10:16',	'2015-11-30 06:03:16'),
 (3,	'Новый материал',	NULL,	'',	'<p>Текст новости</p>',	'URL',	'0000-00-00',	'0',	0,	'2015-12-02 06:27:28',	'2015-12-02 06:27:28'),
 (4,	'Еще материал',	NULL,	'',	'<p>234234</p>',	'4234234',	'0000-00-00',	'1',	0,	'2015-12-02 06:31:15',	'2015-12-02 06:31:15'),
-(5,	'4234',	NULL,	'',	'',	'353312',	'0000-00-00',	'0',	0,	'2015-12-02 07:23:13',	'2015-12-02 07:23:13');
+(5,	'4234',	NULL,	'',	'',	'353312',	'0000-00-00',	'0',	0,	'2015-12-02 07:23:13',	'2015-12-02 07:23:13'),
+(6,	'Хуй',	NULL,	'',	'',	'hui',	'0000-00-00',	'0',	0,	'2015-12-02 07:59:03',	'2015-12-02 07:59:03');
 
 DROP TABLE IF EXISTS `images`;
 CREATE TABLE `images` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `mime` char(10) COLLATE utf8_unicode_ci NOT NULL,
   `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `id_connect` int(11) NOT NULL,
@@ -81,9 +83,9 @@ CREATE TABLE `images` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `images` (`id`, `name`, `description`, `type`, `id_connect`, `param`, `position`, `created_at`, `updated_at`) VALUES
-(1,	'Name',	'',	'page',	1,	'ttrtr',	0,	'2015-12-01 03:19:56',	'2015-12-01 03:19:56'),
-(2,	'Name',	'',	'page',	1,	'ttrtr',	0,	'2015-12-01 06:33:05',	'2015-12-01 06:33:05');
+INSERT INTO `images` (`id`, `name`, `mime`, `description`, `type`, `id_connect`, `param`, `position`, `created_at`, `updated_at`) VALUES
+(5,	'foo.jpg',	'image/jpg',	'',	'page',	1,	'ttrtr',	0,	'2015-12-03 02:13:09',	'2015-12-03 02:13:09'),
+(7,	'bg_header_center.png',	'image/png',	'',	'page',	1,	'ttrtr',	0,	'2015-12-03 03:40:31',	'2015-12-03 03:40:31');
 
 DROP TABLE IF EXISTS `migrations`;
 CREATE TABLE `migrations` (
@@ -115,8 +117,9 @@ INSERT INTO `persistences` (`id`, `user_id`, `code`, `created_at`, `updated_at`)
 (2,	1,	'qso47HyXEoN5bxZqSBvb3KsCD8NkHdml',	'2015-11-19 15:48:57',	'2015-11-19 15:48:57'),
 (7,	1,	'lno7hBMsryB4PpLnJ6fpRRe3OUGhvaYg',	'2015-11-19 21:33:35',	'2015-11-19 21:33:35'),
 (9,	1,	'4f1jLnmRK7kpNWEIOy8MAWP9IMQjAwb1',	'2015-11-23 13:44:27',	'2015-11-23 13:44:27'),
-(10,	1,	'oVHzuPrC3wQhDXKLgFvbGRdsFelILlvV',	'2015-11-26 01:27:48',	'2015-11-26 01:27:48'),
-(11,	1,	'jp05qAtmuta0D5Qk6KvJhtpnPeldpFpB',	'2015-11-30 07:21:48',	'2015-11-30 07:21:48');
+(11,	1,	'jp05qAtmuta0D5Qk6KvJhtpnPeldpFpB',	'2015-11-30 07:21:48',	'2015-11-30 07:21:48'),
+(12,	1,	'udSUb7m4mJpUZEEpYyI6RIYPnfuNvrkx',	'2015-12-02 07:57:39',	'2015-12-02 07:57:39'),
+(13,	1,	'zlSDU4K06BvazeEDsWW0ySdmtykMNJJR',	'2015-12-02 07:58:20',	'2015-12-02 07:58:20');
 
 DROP TABLE IF EXISTS `reminders`;
 CREATE TABLE `reminders` (
@@ -177,7 +180,8 @@ INSERT INTO `seo` (`id`, `title`, `description`, `keywords`, `id_connect`, `url_
 (5,	'123423423',	'2333',	'3',	1,	NULL,	'page',	0,	'2015-12-02 05:58:07',	'2015-12-02 06:18:34'),
 (6,	'Title material',	'',	'',	3,	NULL,	'page',	0,	'2015-12-02 06:27:28',	'2015-12-02 06:27:28'),
 (7,	'',	'',	'',	4,	NULL,	'page',	0,	'2015-12-02 06:31:15',	'2015-12-02 06:31:15'),
-(8,	'',	'',	'',	5,	NULL,	'page',	0,	'2015-12-02 07:23:13',	'2015-12-02 07:23:13');
+(8,	'',	'',	'',	5,	NULL,	'page',	0,	'2015-12-02 07:23:13',	'2015-12-02 07:23:13'),
+(9,	'',	'',	'',	6,	NULL,	'page',	0,	'2015-12-02 07:59:03',	'2015-12-02 07:59:03');
 
 DROP TABLE IF EXISTS `templates`;
 CREATE TABLE `templates` (
@@ -237,6 +241,6 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `users` (`id`, `email`, `password`, `permissions`, `last_login`, `first_name`, `last_name`, `created_at`, `updated_at`) VALUES
-(1,	'fanamurov@ya.ru',	'$2y$10$SJzDIVLhyCdzOMxfnqAADOCoyzVgjwjmBlYaVWQlikchTd67mWPRa',	NULL,	'2015-11-30 07:21:48',	'4234',	'',	'2015-11-19 15:41:49',	'2015-11-30 07:21:48');
+(1,	'fanamurov@ya.ru',	'$2y$10$SJzDIVLhyCdzOMxfnqAADOCoyzVgjwjmBlYaVWQlikchTd67mWPRa',	NULL,	'2015-12-02 07:58:20',	'4234',	'',	'2015-11-19 15:41:49',	'2015-12-02 07:58:20');
 
--- 2015-12-02 07:56:04
+-- 2015-12-03 05:02:29

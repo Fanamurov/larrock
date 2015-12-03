@@ -50,6 +50,14 @@ input:-ms-input-placeholder {
   display: block !important;
 }
 
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus{
+
+}
+.top-navigation .nav>li.active>a{
+  color: #FFFFFF;
+  background: #1AB394;
+}
+
 
 .pace {
   -webkit-pointer-events: none;

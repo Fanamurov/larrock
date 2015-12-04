@@ -1,14 +1,14 @@
 @extends('admin.layouts.main')
 
-@section('title') {{ $apps->name }} admin @endsection
+@section('title') {{ $app->name }} admin @endsection
 @section('page_h1', 'Создание страницы')
 @section('page_h1_new', 'страницы')
-@section('app_name'){{ $apps->name }}@endsection
-@section('app_title') {{ $apps->title }} @endsection
+@section('app_name'){{ $app->name }}@endsection
+@section('app_title') {{ $app->title }} @endsection
 
 @section('content')
-    <form action="/admin/{{ $apps->name }}" method="POST">
-        <input name="type_connect" type="hidden" value="{{ $apps->name }}">
+    <form action="/admin/{{ $app->name }}" method="POST">
+        <input name="type_connect" type="hidden" value="{{ $app->name }}">
         <input name="id_connect" type="hidden" value="{{ $next_id }}">
         <div class="tabbable main-tabbable">
             <ul class="nav nav-tabs">
@@ -44,7 +44,7 @@
         <div class="tab-pane" id="tabimages">
             <div class="form-group">
                 <form action="{{ action('Admin\Ajax@UploadImage') }}" method="post" enctype="multipart/form-data" id="plugin_image">
-                    <input type="hidden" name="folder" value="{{ $apps->name }}">
+                    <input type="hidden" name="folder" value="{{ $app->name }}">
                     <input type="hidden" name="id_connect" value="{{ $next_id }}">
                     <input type="hidden" name="param" value="">
                     <input type="file" name="images[]" id="upload_image_filer" multiple="multiple">
@@ -58,7 +58,7 @@
         <div class="tab-pane" id="tabfiles">
             <div class="form-group">
                 <form action="{{ action('Admin\Ajax@UploadFile') }}" method="post" enctype="multipart/form-data" id="plugin_files">
-                    <input type="hidden" name="folder" value="{{ $apps->name }}">
+                    <input type="hidden" name="folder" value="{{ $app->name }}">
                     <input type="hidden" name="id_connect" value="{{ $next_id }}">
                     <input type="hidden" name="param" value="">
                     <input type="file" name="files[]" id="upload_file_filer" multiple="multiple">

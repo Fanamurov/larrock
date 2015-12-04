@@ -146,6 +146,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
 		App\Providers\FormBuilderServiceProvider::class,
+		App\Providers\ContentPluginsServiceProvider::class,
 
         /* http://image.intervention.io/getting_started/installation */
         Intervention\Image\ImageServiceProvider::class,

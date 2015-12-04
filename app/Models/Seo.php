@@ -30,5 +30,5 @@ class Seo extends Model
 {
 	protected $table = 'seo';
 
-    protected $fillable = ['seo_title', 'seo_description', 'seo_keywords'];
+    protected $fillable = ['seo_title', 'seo_description', 'seo_keywords', 'id_connect', 'type_connect'];
 }

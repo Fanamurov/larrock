@@ -27,7 +27,7 @@ class CreateAppsTable extends Migration
 			$table->text('plugins_backend');
 			$table->text('plugins_front');
 			$table->string('menu_category', 255)->nullable();
-			$table->char('sitemap', 1)->default(1);
+			$table->integer('sitemap')->default(1);
 			$table->integer('version')->default(1);
 			$table->integer('active')->default(1);
 

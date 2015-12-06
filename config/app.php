@@ -160,6 +160,8 @@ return [
         /* https://packagist.org/packages/barryvdh/laravel-debugbar */
         Barryvdh\Debugbar\ServiceProvider::class,
 
+        Prologue\Alerts\AlertsServiceProvider::class,
+
         /* https://packagist.org/packages/rap2hpoutre/laravel-log-viewer */
         //Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
 
@@ -233,6 +235,7 @@ return [
 		'FormBuilder' => App\Providers\FormBuilderServiceProvider::class,
 
         'Image'     => Intervention\Image\Facades\Image::class,
+        'Alert'     => Prologue\Alerts\Facades\Alert::class,
 
         'Activation' => Cartalyst\Sentinel\Laravel\Facades\Activation::class,
         'Reminder'   => Cartalyst\Sentinel\Laravel\Facades\Reminder::class,

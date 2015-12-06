@@ -5,6 +5,7 @@ namespace app\Helpers;
 use App\Helpers\ContentPlugins\ContentPluginsInterface;
 use App\Models\Seo;
 use App\Models\Templates;
+use App\Models\Images as Model_Images;
 use Request;
 
 class ContentPlugins implements ContentPluginsInterface
@@ -81,17 +82,42 @@ class ContentPlugins implements ContentPluginsInterface
 		return $app;
 	}
 
-	public function attach_data($plugins_backend, array $data)
+    /**
+     * Присоединение полей для заполнения/данных плагинов прикрепленных к материалу
+     *
+     * @param $plugins_backend
+     * @param $data
+     * @return mixed
+     */
+	public function attach_data($plugins_backend, $data)
 	{
 		if(in_array('seo', $plugins_backend, TRUE)){
-			if(array_key_exists('data', $data)){
-				if($get_seo = Seo::whereIdConnect($data['data']->id_connect)->whereTypeConnect('page')->first()){
-					$data['data']->seo_title = $get_seo->seo_title;
-					$data['data']->seo_description = $get_seo->seo_description;
-					$data['data']->seo_keywords = $get_seo->seo_keywords;
-				}
-			}
+            if(isset($data->id)){
+                if($get_seo = Seo::whereIdConnect($data->id)->whereTypeConnect('page')->first()){
+                    $data->seo_title = $get_seo->seo_title;
+                    $data->seo_description = $get_seo->seo_description;
+                    $data->seo_keywords = $get_seo->seo_keywords;
+                }
+            }else{
+                $data->seo_title = '';
+                $data->seo_description = '';
+                $data->seo_keywords = '';
+            }
+
 		}
+
+        if(in_array('templates', $plugins_backend, TRUE)){
+            if(isset($data->id)){
+                if($get_template = Templates::whereIdConnect($data->id)->whereTypeConnect('page')->first()){
+                    $data->template = $get_template->template;
+                    $data->template_global = $get_template->template_global;
+                }
+            }else{
+                $data->template = '';
+                $data->template_global = '';
+            }
+        }
+
 		return $data;
 	}
 
@@ -109,7 +135,7 @@ class ContentPlugins implements ContentPluginsInterface
 
 	protected function update_seo()
 	{
-		if( !$seo = Seo::where(['id_connect' => Request::input('id_connect'), 'type_connect' => Request::input('type_connect')])->first()){
+		if( !$seo = Seo::whereIdConnect(Request::input('id_connect'))->whereTypeConnect(Request::input('type_connect'))->first()){
 			$seo = new Seo();
 		}
 		$seo->fill(Request::all())->save();
@@ -117,7 +143,7 @@ class ContentPlugins implements ContentPluginsInterface
 
 	protected function update_templates()
 	{
-		if( !$template = Templates::where(['id_connect' => Request::input('id_connect'), 'type_connect' => Request::input('type_connect')])->first()){
+		if( !$template = Templates::whereIdConnect(Request::input('id_connect'))->whereTypeConnect(Request::input('type_connect'))->first()){
 			$template = new Templates();
 		}
 		$template->fill(Request::all())->save();
@@ -133,20 +159,41 @@ class ContentPlugins implements ContentPluginsInterface
 			if($plugins_load_value === 'templates'){
 				$this->destroy_templates();
 			}
+            if($plugins_load_value === 'images'){
+                $this->destroy_images();
+            }
+            if($plugins_load_value === 'files'){
+                $this->destroy_files();
+            }
 		}
 	}
 
 	protected function destroy_seo()
 	{
-		if($seo = Seo::where(['id_connect' => Request::input('id_connect'), 'type_connect' => Request::input('type_connect')])->first()){
+		if($seo = Seo::whereIdConnect(Request::input('id_connect'))->whereTypeConnect(Request::input('type_connect'))->first()){
 			$seo->delete();
 		}
 	}
 
 	protected function destroy_templates()
 	{
-		if($template = Templates::where(['id_connect' => Request::input('id_connect'), 'type_connect' => Request::input('type_connect')])->first()){
+		if($template = Templates::whereIdConnect(Request::input('id_connect'))->whereTypeConnect(Request::input('type_connect'))->first()){
 			$template->delete();
 		}
 	}
+
+    protected function destroy_images()
+    {
+        if($images = Model_Images::whereIdConnect(Request::input('id_connect'))->whereType(Request::input('type_connect'))->get()){
+            foreach($images as $images_value){
+                $images_value->delete();
+                @unlink('images/page/big/'. $images_value->name);
+            }
+        }
+    }
+
+    protected function destroy_files()
+    {
+        //TODO:удаление файлов
+    }
 }

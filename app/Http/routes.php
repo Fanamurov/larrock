@@ -34,11 +34,18 @@ Route::group(['middleware'=>'AuthAdmin'], function(){
 	Route::resource('admin/roles', 'Admin\RolesController');
 	Route::resource('admin/page', 'Admin\PageController');
 	Route::resource('admin/seo', 'Admin\SeoController');
+	Route::resource('admin/menu', 'Admin\MenuController');
 
 	Route::post('admin/ajax/EditRow', 'Admin\Ajax@EditRow');
 	Route::post('admin/ajax/ClearCache', 'Admin\Ajax@ClearCache');
     Route::post('admin/ajax/UploadImage', 'Admin\Ajax@UploadImage');
     Route::post('admin/ajax/getLoadedImages', 'Admin\Ajax@getLoadedImages');
+    Route::post('admin/ajax/getImageParams', 'Admin\Ajax@getImageParams');
+    Route::post('admin/ajax/destroyImage', 'Admin\Ajax@destroyImage');
+
+    Route::post('admin/ajax/Typograph', 'Admin\Ajax@Typograph');
+    Route::post('admin/ajax/TypographLight', 'Admin\Ajax@TypographLight');
+    Route::post('admin/ajax/Translit', 'Admin\Ajax@Translit');
 
 	Route::post('admin/ajax/UploadFile', 'Admin\Ajax@UploadFile');
 

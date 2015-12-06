@@ -89,9 +89,9 @@ $(document).ready(function () {
             type: "POST",
             data: { text: text},
             dataType: 'json',
-            url: "/admin/ajax/typo",
+            url: "/admin/ajax/TypographLight",
             success: function (data) {
-                tinyMCE.activeEditor.execCommand('mceReplaceContent',false, ''+data.good);
+                tinyMCE.activeEditor.execCommand('mceReplaceContent',false, ''+data.text);
             }
         });
     });
@@ -104,9 +104,9 @@ $(document).ready(function () {
             type: "POST",
             data: { text: text},
             dataType: 'json',
-            url: "/admin/ajax/typoCut",
+            url: "/admin/ajax/TypographLight",
             success: function (data) {
-                input.val(data.good);
+                input.val(data.text);
             }
         });
     });
@@ -118,9 +118,9 @@ $(document).ready(function () {
             type: "POST",
             data: { text: text},
             dataType: 'json',
-            url: "/admin/ajax/typoCut",
+            url: "/admin/ajax/TypographLight",
             success: function (data) {
-                input.val(data.good);
+                input.val(data.text);
             }
         });
     })

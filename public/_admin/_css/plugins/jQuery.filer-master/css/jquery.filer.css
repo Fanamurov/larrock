@@ -340,7 +340,7 @@ span.jFiler-icon-file.f-audio:after {
 
 .jFiler-items-grid .jFiler-item .jFiler-item-container .jFiler-item-thumb {
     position: relative;
-    width: 400px;
+    //width: 400px;
     height: 115px;
     min-height: 115px;
     border: 1px solid #e1e1e1;

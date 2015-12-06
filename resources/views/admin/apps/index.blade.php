@@ -2,7 +2,7 @@
 
 @section('title') {{ $apps->name }} admin @endsection
 @section('page_h1', 'Список')
-@section('page_h1_new', 'страницы')
+@section('page_h1_new', 'материала')
 @section('app_name'){{ $apps->name }}@endsection
 @section('app_title') {{ $apps->title }} @endsection
 

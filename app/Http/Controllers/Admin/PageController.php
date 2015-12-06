@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Apps;
 use Illuminate\Http\Request;
 use App\Http\Requests;
-use Session;
 use Validator;
 use App\Models\Page;
 use Redirect;
@@ -13,6 +12,7 @@ use DB;
 use App\Helpers\ContentPlugins as ContentPlugins;
 use App\Helpers\FormBuilder;
 use JsValidator;
+use Alert;
 
 class PageController extends Apps
 {
@@ -74,24 +74,18 @@ class PageController extends Apps
 	/**
 	 * Show the form for creating a new resource.
 	 *
-	 *
-	 * @param  \App\Helpers\FormBuilder $formBuilder
+     * @param  \App\Helpers\ContentPlugins $plugins
 	 * @return \Illuminate\Http\Response
 	 */
-	public function create(FormBuilder $formBuilder)
+	public function create(ContentPlugins $plugins)
 	{
 		$data['data'] = new Page;
+        $data['data'] = $plugins->attach_data($this->plugins_backend, $data['data']);
 		$data['app'] = $this->get_app();
 
-		$data = $this->plugin_seo($data);
-		$data = $this->plugin_templates($data);
-		$data['tabs'] = $this->get_tabs_names_admin();
-		$data['next_id'] = DB::table($this->table_content)->max('id') + 1;
-		$data['app']->rows = $this->rows;
+        $data = $this->tabbable($data);
 
-		foreach($data['tabs'] as $tab_key => $tab_value){
-			$data['form'][$tab_key] = $formBuilder->render($data['app'], $data['data'], $tab_key);
-		}
+		$data['next_id'] = DB::table($this->table_content)->max('id') + 1;
 
 		$validator = JsValidator::make($this->_valid_construct());
 		\View::share('validator', $validator);
@@ -103,26 +97,17 @@ class PageController extends Apps
 	 * Show the form for editing the specified resource.
 	 *
 	 * @param  int  $id
-	 * @param  \App\Helpers\FormBuilder $formBuilder
+	 * @param  \App\Helpers\ContentPlugins $plugins
 	 * @return \Illuminate\Http\Response
 	 */
-	public function edit($id, FormBuilder $formBuilder)
+	public function edit($id, ContentPlugins $plugins)
 	{
 		$data['data'] = Page::find($id);
-		//Подключаем данные от плагинов
-		$data = $this->plugin_seo($data);
-		$data = $this->plugin_templates($data);
+        $data['data'] = $plugins->attach_data($this->plugins_backend, $data['data']);
+        $data['app'] = $this->get_app();
+
+        $data = $this->tabbable($data);
 		$data['id'] = $id;
-
-		$data['tabs'] = $this->get_tabs_names_admin();
-		//Получаем конфиг компонента
-		$data['app'] = $this->get_app();
-		//Обновляем данные о полях: включаем плагины
-		$data['app']->rows = $this->rows;
-
-		foreach($data['tabs'] as $tab_key => $tab_value){
-			$data['form'][$tab_key] = $formBuilder->render($data['app'], $data['data'], $tab_key);
-		}
 
 		$validator = JsValidator::make($this->_valid_construct());
 		\View::share('validator', $validator);
@@ -147,13 +132,13 @@ class PageController extends Apps
 
         $data = Page::find($id);
         if($data->fill($request->all())->save()){
-            Session::flash('message', 'Материал '. $request->input('title') .' изменен');
+            Alert::add('success', 'Материал '. $request->input('title') .' изменен')->flash();
 
 			$plugins->update($this->plugins_backend);
             return back();
         }
 
-        Session::flash('error', 'Материал '. $request->input('title') .' не изменен');
+        Alert::add('error', 'Материал '. $request->input('title') .' не изменен')->flash();
         return back()->withInput();
     }
 
@@ -175,16 +160,18 @@ class PageController extends Apps
 		$data->fill($request->all());
 		$data->active = $request->input('active', 0);
 		$data->position = $request->input('position', 0);
+        $today = getdate();
+		$data->date = $request->input('position', $today['year'] .'-'. $today['mon'] .'-'. $today['mday']);
 
 		if($data->save()){
-			Session::flash('message', 'Материал '. $request->input('title') .' добавлен');
+            Alert::add('success', 'Материал '. $request->input('title') .' добавлен')->flash();
 			\Input::input('connect_id', $data->id);
 			$plugins->update($this->plugins_backend);
 
 			return Redirect::to('/admin/'. $this->name .'/'. $data->id .'/edit')->withInput();
 		}
 
-		Session::flash('error', 'Материал '. $request->input('title') .' не добавлен');
+        Alert::add('error', 'Материал '. $request->input('title') .' не добавлен')->flash();
 		return back()->withInput();
 	}
 
@@ -192,17 +179,19 @@ class PageController extends Apps
 	 * Remove the specified resource from storage.
 	 *
 	 * @param  int  $id
+     * @param  \App\Helpers\ContentPlugins $plugins
 	 * @return \Illuminate\Http\Response
 	 */
 	public function destroy($id, ContentPlugins $plugins)
 	{
 		$data = Page::find($id);
 		if($data->delete()){
-			Session::flash('message', 'Материал успешно удален');
+            Alert::add('success', 'Материал успешно удален')->flash();
 
+            //TODO: уничтожение данные от плагинов фото, файлы
 			$plugins->destroy($this->plugins_backend);
 		}else{
-			Session::flash('error', 'Материал не удален');
+            Alert::add('error', 'Материал не удален')->flash();
 		}
 		return Redirect::to('/admin/'. $this->name);
 	}

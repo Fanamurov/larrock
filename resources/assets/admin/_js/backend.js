@@ -34,15 +34,26 @@ $(document).ready(function(){
         });
     }
 
+    function view_loaded_images_params(uploaded_files)
+    {
+        $.each(uploaded_files, function (key, val) {
+            $.ajax({
+                data: {name: val.name},
+                type: "POST",
+                dataType: "html",
+                url: "/admin/ajax/getImageParams",
+                success: function (data) {
+                    $('.jFiler-item-params[data-image="'+val.name +'"]').html(data);
+                    ajax_edit_row();
+                }
+            });
+        });
+    }
+
     get_loaded_images($('input[name=id_connect]').val(), $('input[name=folder]').val());
 
     function load_image_plugin(uploaded_files)
     {
-        var params_list;
-        $.each(uploaded_files, function (key, val) {
-            //items.push(val);
-        });
-
         /* Image upload http://filer.grandesign.md/#download */
         $('#upload_image_filer').filer({
             changeInput: '<div class="jFiler-input-dragDrop">' +
@@ -55,9 +66,6 @@ $(document).ready(function(){
             theme: "dragdropbox",
             addMore: true,
             files: uploaded_files,
-            options: {
-                param: ["ttrtr", "242342"]
-            },
             templates: {
                 box: '<ul class="jFiler-items-list jFiler-items-grid"></ul>',
                 item: '<li class="jFiler-item">\
@@ -70,8 +78,8 @@ $(document).ready(function(){
                                     <span class="jFiler-item-others">{{fi-size2}}</span>\
                                 </div>\
                                 {{fi-image}}\
-                                2{{fi-type}}\
                             </div>\
+                            <div class="jFiler-item-params" data-image="{{fi-name}}"></div>\
                             <div class="jFiler-item-assets jFiler-row">\
                                 <ul class="list-inline pull-left">\
                                     <li>{{fi-progressBar}}</li>\
@@ -93,11 +101,11 @@ $(document).ready(function(){
                                         <span class="jFiler-item-others">{{fi-size2}}</span>\
                                     </div>\
                                     {{fi-image}}\
-                                    {{fi-param}}\
                                 </div>\
+                                <div class="jFiler-item-params" data-image="{{fi-name}}"></div>\
                                 <div class="jFiler-item-assets jFiler-row">\
                                     <ul class="list-inline pull-left">\
-                                        <li><span class="jFiler-item-others">{{fi-param}}{{fi-icon}}</span></li>\
+                                        <li><span class="jFiler-item-others">{{fi-icon}}</span></li>\
                                     </ul>\
                                     <ul class="list-inline pull-right">\
                                         <li><a class="icon-jfi-trash jFiler-item-trash-action"></a></li>\
@@ -119,14 +127,14 @@ $(document).ready(function(){
             dragDrop: {
                 dragEnter: null,
                 dragLeave: null,
-                drop: null,
+                drop: null
             },
             uploadFile: {
                 url: "/admin/ajax/UploadImage",
                 data: {
                     folder: $('input[name=folder]').val(),
                     id_connect: $('input[name=id_connect]').val(),
-                    param: $('input[name=param]').val(),
+                    param: $('input[name=param]').val()
                 },
                 type: 'POST',
                 enctype: 'multipart/form-data',
@@ -148,8 +156,7 @@ $(document).ready(function(){
                 onComplete: null
             },
             onRemove: function(itemEl, file){
-                var file = file.name;
-                $.post('./php/remove_file.php', {file: file});
+                $.post("/admin/ajax/destroyImage", {name: file.name});
             },
             captions: {
                 button: "Choose Files",
@@ -163,7 +170,8 @@ $(document).ready(function(){
                     filesSize: "{{fi-name}} is too large! Please upload file up to {{fi-maxSize}} MB.",
                     filesSizeAll: "Files you've choosed are too large! Please upload files up to {{fi-maxSize}} MB."
                 }
-            }
+            },
+            afterShow: view_loaded_images_params(uploaded_files)
         });
     }
 
@@ -211,108 +219,12 @@ $(document).ready(function(){
         $(this).parents('form').submit();
     });
 
-
-    /**
-     * Метод для выполнения ajax-операций
-     * string       @param url              URL для вызова
-     * array        @param send_data        Пересылаемые данные /false
-     * bool/string  @param good_message     Кастомное сообщение об успехе операции /false
-     * object       @param button           объект с кнопкой, на которую нажали /false
-     * bool/string  @param redirect_url     Если передан string с адресом страницы, то будет выполнен редирект /false
-     * bool         @param clearcache       Если true, то очистит кеш сайта /false
-     */
-    function hidden_action(url, send_data, good_message, button, redirect_url, clearcache) {
-        Pace.restart();
-        var request = $.ajax({
-            data: send_data,
-            type: "POST",
-            dataType: "json",
-            url: url
-        });
-        request.done(function (msg) {
-            if(msg.status === 'blank'){
-                return false;
-            }
-
-            if(msg.status === 'error'){
-                notify_show('error', msg.message);
-                return false;
-            }
-
-            if(msg.status === 'success'){
-                if ((good_message !== false) && (good_message !== undefined)) {
-                    notify_show('success', good_message);
-                }else{
-                    notify_show('success', msg.message);
-                }
-            }
-
-            if (clearcache === true) {
-                clear_cache();
-            }
-            if ((button !== false) && (redirect_url !== undefined)) {
-                $(button).removeClass('action_button').removeAttr('disabled');
-            }
-            if ((redirect_url !== false) && (redirect_url !== undefined)) {
-                window.location = redirect_url;
-            }
-            return true;
-        });
-        request.fail(function (jqXHR, status, statusText) {
-            notify_show('error', statusText);
-            if ((button !== false) && (redirect_url !== undefined)) {
-                $(button).removeClass('action_button').removeAttr('disabled');
-            }
-            Pace.stop();
-            return false;
-        });
-    }
-
-    /**
-     * Уведомления в сплывающих окнах от процессов
-     * string @param type  Тип события (good, error)
-     * string @param message   Сообщение на вывод
-     */
-    function notify_show(type, message) {
-        // http://ned.im/noty/#installation
-        if(type == 'error'){
-            noty({
-                text: message,
-                type: type,
-                layout: 'top'
-            });
-        }else{
-            noty({
-                text: message,
-                type: type,
-                layout: 'topRight',
-                timeout: 2000
-            });
-        }
-    }
-
-    /** Purge site cache function */
-    function clear_cache() {
-        hidden_action('/admin/ajax/ClearCache', false, false, false, false, false);
-    }
     $('#clear_cache').bind('click', function () {
         clear_cache();
     });
 
-
-
     /** Input для редактирования поля */
-    $('.ajax_edit_row').on('focusout', function(){
-        var value_where = $(this).attr('data-value_where');
-        var row_where = $(this).attr('data-row_where');
-        var value = $(this).val();
-        var row = $(this).attr('name');
-        var table = $(this).attr('data-table');
-        var event = 'edit';
-        var data = { value_where: value_where, row_where: row_where, value: value, row: row, event: event, table: table };
-        //hidden_action(url, send_data, good_message, button, redirect_url, clearcache)
-        hidden_action('/admin/ajax/EditRow', data, false, false, false, true);
-    });
+    ajax_edit_row();
 
     $('.btn-group_switch_ajax').find('button').click(function(){
         $(this).parent().find('button').toggleClass('btn-outline');
@@ -357,33 +269,6 @@ $(document).ready(function(){
     });
 
     /**
-     * Создание url для страницы и вставка значения в input[name=url]
-     * string @param title  Текст для транслитерации (обычно input[name=title])
-     * string @param table  Имя таблицы для проверки уникальности url (опционально, можно передать пустое значение)
-     * string @param form   Форма в которой проводятся операции
-     */
-    function change_url(title, table, form){
-        $.ajax({
-            type: "POST",
-            data: { words: title, table: table},
-            dataType: 'json',
-            url: "/admin/ajax/translit",
-            success: function (data) {
-                var url_input = $(form).find('input[name=url]');
-                if (data.good) {
-                    url_input.val(data.good);
-                    notify_show('info', 'Материалу будет присвоен url: '+data.good);
-                    valid_forms();
-                }else{
-                    url_input.val(data.error);
-                    notify_show('info', 'Материалу присвоен url: '+data.error +' с солью');
-                    valid_forms();
-                }
-            }
-        });
-    }
-
-    /**
      * По нажатию на кнопку .new_list будет создан input с name= data-row-name кнопки
      * Позволяет вносить в списки кастомные значения
      * */
@@ -419,4 +304,158 @@ $(document).ready(function(){
         $(this).addClass('checked');
         $('input[name^=delete]:visible').attr('checked', 'checked');
     });
+
+    /** Типограф на кнопке */
+    $('.btn-typo').click(function(){
+        var input = $(this).parentsUntil('.form-group').find('input');
+        var text = input.val();
+        typographLight(text, input);
+    });
 });
+
+function ajax_edit_row()
+{
+    /** Input для редактирования поля */
+    $('.ajax_edit_row').on('focusout', function(){
+        var value_where = $(this).attr('data-value_where');
+        var row_where = $(this).attr('data-row_where');
+        var value = $(this).val();
+        var row = $(this).attr('name');
+        if(row == undefined){
+            row = $(this).attr('data-row');
+        }
+        var table = $(this).attr('data-table');
+        var event = 'edit';
+        var data = { value_where: value_where, row_where: row_where, value: value, row: row, event: event, table: table };
+        //hidden_action(url, send_data, good_message, button, redirect_url, clearcache)
+        hidden_action('/admin/ajax/EditRow', data, false, false, false, true);
+    });
+}
+
+/**
+ * Метод для выполнения ajax-операций
+ * string       @param url              URL для вызова
+ * array        @param send_data        Пересылаемые данные /false
+ * bool/string  @param good_message     Кастомное сообщение об успехе операции /false
+ * object       @param button           объект с кнопкой, на которую нажали /false
+ * bool/string  @param redirect_url     Если передан string с адресом страницы, то будет выполнен редирект /false
+ * bool         @param clearcache       Если true, то очистит кеш сайта /false
+ */
+function hidden_action(url, send_data, good_message, button, redirect_url, clearcache) {
+    Pace.restart();
+    var request = $.ajax({
+        data: send_data,
+        type: "POST",
+        dataType: "json",
+        url: url
+    });
+    request.done(function (msg) {
+        if(msg.status === 'blank'){
+            return false;
+        }
+
+        if(msg.status === 'error'){
+            notify_show('error', msg.message);
+            return false;
+        }
+
+        if(msg.status === 'success'){
+            if ((good_message !== false) && (good_message !== undefined)) {
+                notify_show('success', good_message);
+            }else{
+                notify_show('success', msg.message);
+            }
+        }
+
+        if (clearcache === true) {
+            clear_cache();
+        }
+        if ((button !== false) && (redirect_url !== undefined)) {
+            $(button).removeClass('action_button').removeAttr('disabled');
+        }
+        if ((redirect_url !== false) && (redirect_url !== undefined)) {
+            window.location = redirect_url;
+        }
+        return true;
+    });
+    request.fail(function (jqXHR, status, statusText) {
+        notify_show('error', statusText);
+        if ((button !== false) && (redirect_url !== undefined)) {
+            $(button).removeClass('action_button').removeAttr('disabled');
+        }
+        Pace.stop();
+        return false;
+    });
+}
+
+function typographLight(text, input)
+{
+    $.ajax({
+        type: "POST",
+        data: { text: text },
+        dataType: 'json',
+        url: "/admin/ajax/TypographLight",
+        success: function (data) {
+            if (data.text) {
+                input.val(data.text);
+            }
+        }
+    });
+}
+
+function typograph(text)
+{
+    var data = {text: text};
+    hidden_action('/admin/ajax/typograph', data, false, false, false, false);
+}
+
+/**
+ * Уведомления в сплывающих окнах от процессов
+ * string @param type  Тип события (good, error)
+ * string @param message   Сообщение на вывод
+ */
+function notify_show(type, message) {
+    // http://ned.im/noty/#installation
+    if(type == 'error'){
+        noty({
+            text: message,
+            type: type,
+            layout: 'top'
+        });
+    }else{
+        noty({
+            text: message,
+            type: type,
+            layout: 'topRight',
+            timeout: 2000
+        });
+    }
+}
+
+/** Purge site cache function */
+function clear_cache() {
+    hidden_action('/admin/ajax/ClearCache', false, false, false, false, false);
+}
+
+/**
+ * Создание url для страницы и вставка значения в input[name=url]
+ * string @param title  Текст для транслитерации (обычно input[name=title])
+ * string @param table  Имя таблицы для проверки уникальности url (опционально, можно передать пустое значение)
+ * string @param form   Форма в которой проводятся операции
+ */
+function change_url(title, table, form){
+    $.ajax({
+        type: "POST",
+        data: { text: title, table: table},
+        dataType: 'json',
+        url: "/admin/ajax/Translit",
+        success: function (data) {
+            var url_input = $(form).find('input[name=url]');
+            if (data.message) {
+                url_input.val(data.message);
+                notify_show('info', 'Материалу будет присвоен url: '+data.good);
+                valid_forms();
+            }
+        }
+    });
+}

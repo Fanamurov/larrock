@@ -27,6 +27,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Images wherePosition($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Images whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Images whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Images find($value)
  */
 class Images extends Model
 {

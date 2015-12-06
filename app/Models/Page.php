@@ -30,6 +30,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Page whereActive($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Page whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Page whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Page find($value)
  */
 class Page extends Model
 {

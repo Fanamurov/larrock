@@ -10,9 +10,8 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 use App\Models\Apps as Model_Apps;
 use DB;
-use Session;
-use JsValidator;
 use App\Helpers\ContentPlugins;
+use Alert;
 
 abstract class Apps extends BaseController
 {
@@ -32,6 +31,10 @@ abstract class Apps extends BaseController
 	protected $version = 1;
 	protected $active = 1;
 
+    /**
+     * Возвращает конфиг компонента с его настройками, полями
+     * @return bool|mixed|static
+     */
 	public function get_app()
 	{
 		if($app = Model_Apps::whereName($this->name)->first()){
@@ -43,6 +46,9 @@ abstract class Apps extends BaseController
 		return FALSE;
 	}
 
+    /**
+     * Проверка установлен ли компонент, нужно ли обновление или установка
+     */
 	public function check_app()
 	{
 		if($test = Model_Apps::whereName($this->name)->first()){
@@ -54,6 +60,12 @@ abstract class Apps extends BaseController
 		}
 	}
 
+    /**
+     * Обновление компонента (конфига в бд)
+     *
+     * @param $action
+     * @param null $app_exists
+     */
 	protected function update_app($action, $app_exists = NULL)
 	{
 		$app = $app_exists;
@@ -74,10 +86,10 @@ abstract class Apps extends BaseController
 		$app->active = $this->active;
 
 		if($action === 'install' && $app->save()){
-			Session::flash('message', 'Компонент '. $app->title .' установлен. Версия '. $this->version);
+            Alert::add('info', 'Компонент '. $app->title .' установлен. Версия '. $this->version)->flash();
 		}
 		if($action === 'update' && $app->update()){
-			Session::flash('message', 'Компонент '. $app->title .' обновлен до версии '. $this->version);
+			Alert::add('info', 'Компонент '. $app->title .' обновлен до версии '. $this->version)->flash();
 		}
 	}
 
@@ -94,6 +106,11 @@ abstract class Apps extends BaseController
 		return view('admin.apps.index', $data);
 	}
 
+    /**
+     * Вспомогательный метод построения правил валидации из конфига полей компонента
+     *
+     * @return array
+     */
 	public function _valid_construct()
 	{
 		$rules = array();
@@ -105,14 +122,34 @@ abstract class Apps extends BaseController
 		return $rules;
 	}
 
-	/**
-	 * Возвращает ключ таба и его название из массива параметров поля компонента
-	 * @return array
-	 */
-	public function get_tabs_names_admin()
+    /**
+     * Разбиение полей формы по табам
+     *
+     * @param array $data
+     * @return mixed
+     */
+    public function tabbable(array $data)
+    {
+        $formBuilder = new FormBuilder();
+        $data['tabs'] = $this->get_tabs_names_admin($data['app']->rows);
+        foreach($data['tabs'] as $tab_key => $tab_value){
+            $data['form'][$tab_key] = $formBuilder->render($data['app'], $data['data'], $tab_key);
+        }
+        if(count($data['tabs']) < 2){
+            $data['form'] = $formBuilder->render($data['app'], $data['data']);
+        }
+        return $data;
+    }
+
+    /**
+     * Возвращает массив с именами табов для вывода полей формы
+     * @param array $rows
+     * @return array
+     */
+	public function get_tabs_names_admin(array $rows)
 	{
 		$tabs = array();
-		foreach($this->rows as $row_value){
+		foreach($rows as $row_value){
 			if(array_key_exists('tab', $row_value)){
 				$tabs = array_add($tabs, key($row_value['tab']), $row_value['tab'][key($row_value['tab'])]);
 			}
@@ -120,71 +157,43 @@ abstract class Apps extends BaseController
 		return $tabs;
 	}
 
-	public function plugin_seo($data)
-	{
-		if(in_array('seo', $this->plugins_backend, TRUE)){
-			if(array_key_exists('data', $data)){
-				if($get_seo = DB::table('seo')->whereId_connect($data['data']->id)->whereType_connect($this->name)->first()){
-					$data['data']->seo_title = $get_seo->seo_title;
-					$data['data']->seo_description = $get_seo->seo_description;
-					$data['data']->seo_keywords = $get_seo->seo_keywords;
-				}
-			}
+    /**
+     * Построение дерева объектов по определенному полю(по-умолчанию parent)
+     *
+     * @link http://stackoverflow.com/a/10332361/2748662
+     * @param $data
+     * @param string $row_level     по какому полю ищем детей
+     * @return array
+     */
+    public function build_tree($data, $row_level = 'parent')
+    {
+        $new = array();
+        foreach ($data as $a){
+            $new[$a->$row_level][] = $a;
+        }
+        $tree = $this->createTree($new, $new[0]);
+        return $tree;
+    }
 
-			$this->rows['seo_title'] = [
-				'title' => 'Title материала',
-				'type' => 'text',
-				'tab' => ['seo' => 'Seo'],
-				'valid' => 'max:255',
-				'help' => 'По-умолчанию равно заголовку материала',
-			];
-
-			$this->rows['seo_description'] = [
-				'title' => 'Description материала',
-				'type' => 'text',
-				'tab' => ['seo' => 'Seo'],
-				'valid' => 'max:255',
-				'help' => 'По-умолчанию равно заголовку материала',
-			];
-
-			$this->rows['seo_keywords'] = [
-				'title' => 'Keywords материала',
-				'type' => 'text',
-				'tab' => ['seo' => 'Seo'],
-				'valid' => 'max:255'
-			];
-		}
-		return $data;
-	}
-
-	public function plugin_templates($data)
-	{
-		if(in_array('templates', $this->plugins_backend, TRUE)){
-			if(array_key_exists('data', $data)){
-				if($get_template = DB::table('templates')->whereId_connect($data['data']->id)->whereType_connect($this->name)->first()){
-                    $data['data']->template = $get_template->template;
-                    $data['data']->template_global = $get_template->template_global;
-                }
-			}
-
-			$this->rows['template'] = [
-				'title' => 'Шаблон материала',
-				'type' => 'select',
-				'options' => ['Template1', 'Template2'],
-				'tab' => ['templates' => 'Шаблоны'],
-				'valid' => 'max:255',
-				'form-group_class' => 'col-sm-6 col-sm-offset-3'
-			];
-
-			$this->rows['template_global'] = [
-				'title' => 'Глобальный шаблон',
-				'type' => 'select',
-				'options' => ['Template1', 'Template2'],
-				'tab' => ['templates' => 'Шаблоны'],
-				'valid' => 'max:255',
-				'form-group_class' => 'col-sm-6 col-sm-offset-3'
-			];
-		}
-		return $data;
-	}
+    /**
+     * Вспомогательный метод для построения дерева
+     * Прикрпепляем информацию о вложенности элемента ->level
+     *
+     * @param $list
+     * @param array $parent
+     * @param int $level
+     * @return array
+     */
+    public function createTree(&$list, $parent, $level = 1){
+        $tree = array();
+        foreach ($parent as $k=>$l){
+            $l->level = $level;
+            if(isset($list[$l->id])){
+                $l->children = $this->createTree($list, $list[$l->id], ++$level);
+                --$level;
+            }
+            $tree[] = $l;
+        }
+        return $tree;
+    }
 }

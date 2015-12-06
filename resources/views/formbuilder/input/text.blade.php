@@ -7,7 +7,7 @@
                        value="{{ Input::old($row_key, $data->$row_key) }}" class="form-control" id="{{ $row_key }}">
             </div>
             <div class="col-xs-2">
-                <button type="button" class="btn btn-primary btn-outline">Типограф</button>
+                <button type="button" class="btn btn-primary btn-outline btn-typo">Типограф</button>
             </div>
         </div>
     @else

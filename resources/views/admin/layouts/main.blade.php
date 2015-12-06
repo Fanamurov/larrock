@@ -81,7 +81,7 @@
                                 <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Администрирование <span class="caret"></span></a>
                                 <ul role="menu" class="dropdown-menu">
                                     <li><a href="{{ action('Admin\SeoController@index') }}">Seo</a></li>
-                                    <li><a href="#">Меню сайта</a></li>
+                                    <li><a href="{{ action('Admin\MenuController@index') }}">Меню сайта</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="#">Глобальные настройки</a></li>
                                     <li><a href="#">Компоненты</a></li>
@@ -125,39 +125,14 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-12">
-                            <!-- Сообщение об успешной операции через \View::share('messages', []); -->
-                            @if(isset($messages))
-                                @foreach($messages as $message)
-                                    <div class="alert alert-info alert-dismissable">
+                            @foreach (Alert::getMessages() as $type => $messages)
+                                @foreach ($messages as $message)
+                                    <div class="alert alert-{{ $type }} alert-dismissable">
                                         <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
                                         <i class="icon-plus"></i> {{ $message }}
                                     </div>
                                 @endforeach
-                            @endif
-
-                            <!-- Сообщение об успешной операции через ->with -->
-                            @if(Session::has('message'))
-                                <div class="alert alert-success alert-dismissable">
-                                    <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-                                    <i class="icon-plus"></i> {{ Session::get('message') }}
-                                </div>
-                            @endif
-
-                            @if(Session::has('error'))
-                                <div class="alert alert-danger alert-dismissable">
-                                    <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-                                    <i class="icon-bug"></i> {{ Session::get('error') }}
-                                </div>
-                            @endif
-
-                            @if($errors->has())
-                                @foreach($errors->all() as $error)
-                                    <div class="alert alert-danger alert-dismissable">
-                                        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-                                        <i class="icon-bug"></i> {{ $error }}
-                                    </div>
-                                @endforeach
-                            @endif
+                            @endforeach
                         </div>
                     </div>
                     <div class="row">

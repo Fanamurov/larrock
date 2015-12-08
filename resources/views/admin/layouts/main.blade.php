@@ -48,8 +48,12 @@
                             <li>
                                 <a href="{{ action('Admin\PageController@index') }}">Cтраницы</a>
                             </li>
-                            <li>
-                                <a href="{{ action('Admin\FeedController@index') }}">Ленты</a>
+                            <li class="dropdown">
+                                <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Ленты <span class="caret"></span></a>
+                                <ul role="menu" class="dropdown-menu">
+                                    <li><a href="{{ action('Admin\FeedController@index') }}">Новая категория</a></li>
+                                    <li><a href="{{ action('Admin\FeedController@index') }}">Тестовая категория</a></li>
+                                </ul>
                             </li>
                             <li>
                                 <a href="#">Баннеры</a>

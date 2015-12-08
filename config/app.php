@@ -162,6 +162,8 @@ return [
 
         Prologue\Alerts\AlertsServiceProvider::class,
 
+		App\Providers\ComponentServiceProvider::class,
+
         /* https://packagist.org/packages/rap2hpoutre/laravel-log-viewer */
         //Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
 
@@ -233,6 +235,7 @@ return [
         'View'      => Illuminate\Support\Facades\View::class,
 
 		'FormBuilder' => App\Providers\FormBuilderServiceProvider::class,
+		'Component' => \App\Helpers\Component::class,
 
         'Image'     => Intervention\Image\Facades\Image::class,
         'Alert'     => Prologue\Alerts\Facades\Alert::class,

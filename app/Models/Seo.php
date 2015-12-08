@@ -25,6 +25,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Seo whereTypeConnect($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Seo whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Seo whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Seo find($value)
  */
 class Seo extends Model
 {

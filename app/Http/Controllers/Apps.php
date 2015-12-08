@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Component;
 use App\Helpers\FormBuilder;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
@@ -12,6 +13,7 @@ use App\Models\Apps as Model_Apps;
 use DB;
 use App\Helpers\ContentPlugins;
 use Alert;
+use Config;
 
 abstract class Apps extends BaseController
 {
@@ -31,26 +33,29 @@ abstract class Apps extends BaseController
 	protected $version = 1;
 	protected $active = 1;
 
-    /**
-     * Возвращает конфиг компонента с его настройками, полями
-     * @return bool|mixed|static
-     */
-	public function get_app()
+	/**
+	 * Проверка установлен ли компонент, требуется ли установка или обновление
+	 *
+	 * @param string	$app_name	Название компонента
+	 */
+	public function check_app($app_name)
 	{
-		if($app = Model_Apps::whereName($this->name)->first()){
-			$app->rows = unserialize($app->rows);
-			$ContentPlugins = new ContentPlugins();
-			$app = $ContentPlugins->attach_rows($app, $this->plugins_backend);
-			return $app;
-		}
-		return FALSE;
-	}
 
-    /**
-     * Проверка установлен ли компонент, нужно ли обновление или установка
-     */
-	public function check_app()
-	{
+		$this->config = Config::get('components.'. $app_name);
+		$this->name = $this->config['name'];
+		$this->title = $this->config['title'];
+		$this->description = \Funct\Collection\get($this->config, 'description', '');
+		$this->table_content = $this->config['table_content'];
+		$this->rows = $this->config['rows'];
+		$this->settings = \Funct\Collection\get($this->config, 'settings', []);
+		$this->plugins_backend =\Funct\Collection\get($this->config, 'plugins_backend', []);
+		$this->plugins_front = \Funct\Collection\get($this->config, 'plugins_front', []);
+		$this->menu_category = \Funct\Collection\get($this->config, 'menu_category', '');
+		$this->sitemap = \Funct\Collection\get($this->config, 'sitemap', 1);
+		$this->version = \Funct\Collection\get($this->config, 'version', 1);
+		$this->active = \Funct\Collection\get($this->config, 'active', 1);
+
+
 		if($test = Model_Apps::whereName($this->name)->first()){
 			if($test->version < $this->version){
 				$this->update_app('update', $test);
@@ -60,12 +65,11 @@ abstract class Apps extends BaseController
 		}
 	}
 
-    /**
-     * Обновление компонента (конфига в бд)
-     *
-     * @param $action
-     * @param null $app_exists
-     */
+	/**
+	 * Обновление или установка компонента
+	 * @param string    $action			install|update
+	 * @param null 		$app_exists
+	 */
 	protected function update_app($action, $app_exists = NULL)
 	{
 		$app = $app_exists;
@@ -86,75 +90,11 @@ abstract class Apps extends BaseController
 		$app->active = $this->active;
 
 		if($action === 'install' && $app->save()){
-            Alert::add('info', 'Компонент '. $app->title .' установлен. Версия '. $this->version)->flash();
+			Alert::add('info', 'Компонент '. $app->title .' установлен. Версия '. $this->version)->flash();
 		}
 		if($action === 'update' && $app->update()){
 			Alert::add('info', 'Компонент '. $app->title .' обновлен до версии '. $this->version)->flash();
 		}
-	}
-
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	public function index()
-	{
-		$data['apps'] = $this->get_app();
-		$data['data'] = DB::table($this->table_content)->paginate(30);
-		\View::share('validator', '');
-		return view('admin.apps.index', $data);
-	}
-
-    /**
-     * Вспомогательный метод построения правил валидации из конфига полей компонента
-     *
-     * @return array
-     */
-	public function _valid_construct()
-	{
-		$rules = array();
-		foreach($this->rows as $rows_key => $rows_value){
-			if(array_key_exists('valid', $rows_value)){
-				$rules[$rows_key] = $rows_value['valid'];
-			}
-		}
-		return $rules;
-	}
-
-    /**
-     * Разбиение полей формы по табам
-     *
-     * @param array $data
-     * @return mixed
-     */
-    public function tabbable(array $data)
-    {
-        $formBuilder = new FormBuilder();
-        $data['tabs'] = $this->get_tabs_names_admin($data['app']->rows);
-        foreach($data['tabs'] as $tab_key => $tab_value){
-            $data['form'][$tab_key] = $formBuilder->render($data['app'], $data['data'], $tab_key);
-        }
-        if(count($data['tabs']) < 2){
-            $data['form'] = $formBuilder->render($data['app'], $data['data']);
-        }
-        return $data;
-    }
-
-    /**
-     * Возвращает массив с именами табов для вывода полей формы
-     * @param array $rows
-     * @return array
-     */
-	public function get_tabs_names_admin(array $rows)
-	{
-		$tabs = array();
-		foreach($rows as $row_value){
-			if(array_key_exists('tab', $row_value)){
-				$tabs = array_add($tabs, key($row_value['tab']), $row_value['tab'][key($row_value['tab'])]);
-			}
-		}
-		return $tabs;
 	}
 
     /**
@@ -179,6 +119,7 @@ abstract class Apps extends BaseController
      * Вспомогательный метод для построения дерева
      * Прикрпепляем информацию о вложенности элемента ->level
      *
+	 * @link http://stackoverflow.com/a/10332361/2748662
      * @param $list
      * @param array $parent
      * @param int $level

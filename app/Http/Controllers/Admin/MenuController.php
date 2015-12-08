@@ -13,77 +13,24 @@ use JsValidator;
 use Validator;
 use Alert;
 use Redirect;
+use App\Helpers\Component;
 
 class MenuController extends Apps
 {
     public function __construct()
     {
-        $this->name = 'menu';
-        $this->title = 'Меню сайта';
-        $this->description = '';
-        $this->table_content = 'menu';
-        $this->rows = [
-            'title' => [
-                'title' => 'Название пункта',
-                'in_table_admin' => 'TRUE',
-                'type' => 'text',
-                'valid' => 'max:255|required',
-                'typo' => 'true'
-            ],
-            'category' => [
-                'title' => 'Вид меню',
-                'type' => 'select',
-                'default' => 'top'
-            ],
-            'type' => [
-                'title' => 'Тип',
-                'type' => 'text',
-            ],
-            'parent' => [
-                'title' => 'Родитель',
-                'type' => 'select_row',
-                'default' => 'Это главный уровень',
-                'options_connect' => ['row' => 'title', 'table' => 'menu']
-            ],
-            'connect' => [
-                'title' => 'Связь',
-                'type' => 'text',
-            ],
-            'url' => [
-                'title' => 'URL пункта',
-                'in_table_admin' => 'TRUE',
-                'type' => 'text',
-                'valid' => 'max:155|required'
-            ],
-            'position' => [
-                'title' => 'Вес',
-                'type' => 'text',
-                'valid' => 'integer',
-                'default' => 0
-            ],
-            'active' => [
-                'title' => 'Опубликован',
-                'type' => 'checkbox',
-                'checked' => 'TRUE',
-                'valid' => 'integer|max:1',
-                'default' => 1
-            ],
-        ];
-        $this->settings = '';
-        $this->plugins_backend = [];
-        $this->plugins_front = [];
-        $this->version = 8;
-        $this->check_app();
+        $this->check_app('menu');
     }
 
     /**
      * Display a listing of the resource.
      *
+	 * @param \App\Helpers\Component $component
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Component $component)
     {
-        $data['apps'] = $this->get_app();
+        $data['apps'] = Component::get_app($this->name);
         $data['data'] = DB::table($this->table_content)->paginate(30);
         $data['data'] = $this->build_tree($data['data']);
         \View::share('validator', '');
@@ -98,13 +45,13 @@ class MenuController extends Apps
     public function create()
     {
         $data['data'] = new Menu;
-        $data['app'] = $this->get_app();
+        $data['app'] = Component::get_app($this->name);
 
-        $data = $this->tabbable($data);
+        $data = Component::tabbable($data);
 
         $data['next_id'] = DB::table($this->table_content)->max('id') + 1;
 
-        $validator = JsValidator::make($this->_valid_construct());
+        $validator = JsValidator::make(Component::_valid_construct($this->rows));
         \View::share('validator', $validator);
 
         return view('admin.menu.create', $data);
@@ -119,7 +66,7 @@ class MenuController extends Apps
      */
     public function store(Request $request, ContentPlugins $plugins)
     {
-        $validator = Validator::make($request->all(), $this->_valid_construct());
+        $validator = Validator::make($request->all(), Component::_valid_construct($this->rows));
         if($validator->fails()){
             return back()->withInput($request->except('password'))->withErrors($validator);
         }
@@ -150,11 +97,11 @@ class MenuController extends Apps
     public function edit($id)
     {
         $data['data'] = Menu::find($id);
-        $data['app'] = $this->get_app();
+        $data['app'] = Component::get_app($this->name);
         $data['id'] = $id;
-        $data = $this->tabbable($data);
+        $data = Component::tabbable($data);
 
-        $validator = JsValidator::make($this->_valid_construct());
+        $validator = JsValidator::make(Component::_valid_construct($this->rows));
         \View::share('validator', $validator);
 
         return view('admin.menu.edit', $data);
@@ -169,7 +116,7 @@ class MenuController extends Apps
      */
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), $this->_valid_construct());
+        $validator = Validator::make($request->all(), Component::_valid_construct($this->rows));
         if($validator->fails()){
             return back()->withInput($request->except('password'))->withErrors($validator);
         }

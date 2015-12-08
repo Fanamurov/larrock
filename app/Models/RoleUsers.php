@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\RoleUsers whereRoleId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\RoleUsers whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\RoleUsers whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\RoleUsers find($value)
  */
 class RoleUsers extends Model
 {

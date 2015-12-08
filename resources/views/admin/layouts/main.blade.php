@@ -49,7 +49,7 @@
                                 <a href="{{ action('Admin\PageController@index') }}">Cтраницы</a>
                             </li>
                             <li>
-                                <a href="#">Ленты</a>
+                                <a href="{{ action('Admin\FeedController@index') }}">Ленты</a>
                             </li>
                             <li>
                                 <a href="#">Баннеры</a>
@@ -87,7 +87,7 @@
                                     <li><a href="#">Компоненты</a></li>
                                     <li><a href="#">Модули</a></li>
                                     <li><a href="#">Блоки шаблона</a></li>
-                                    <li><a href="#">Картинки</a></li>
+                                    <li><a href="{{ action('Admin\Settings\Image@index') }}">Картинки</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li>
                                         <a href="#" id="clear_cache"><i class="fa fa-trash-o"></i> Кэш</a>

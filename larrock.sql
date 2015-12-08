@@ -42,14 +42,36 @@ CREATE TABLE `apps` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `apps` (`id`, `title`, `name`, `description`, `table_content`, `rows`, `settings`, `plugins_backend`, `plugins_front`, `menu_category`, `sitemap`, `version`, `active`, `created_at`, `updated_at`) VALUES
-(4,	'Cтраницы',	'page',	'Страницы без привязки к определенному разделу',	'feed',	'a:6:{s:5:\"title\";a:6:{s:5:\"title\";s:18:\"Заголовок\";s:14:\"in_table_admin\";s:4:\"TRUE\";s:4:\"type\";s:4:\"text\";s:3:\"tab\";a:1:{s:4:\"main\";s:36:\"Заголовок, описание\";}s:5:\"valid\";s:16:\"max:255|required\";s:4:\"typo\";s:4:\"true\";}s:11:\"description\";a:3:{s:5:\"title\";s:25:\"Текст новости\";s:4:\"type\";s:8:\"textarea\";s:3:\"tab\";a:1:{s:4:\"main\";s:36:\"Заголовок, описание\";}}s:3:\"url\";a:4:{s:5:\"title\";s:22:\"URL материала\";s:4:\"type\";s:4:\"text\";s:3:\"tab\";a:1:{s:3:\"seo\";s:3:\"Seo\";}s:5:\"valid\";s:16:\"max:155|required\";}s:4:\"date\";a:4:{s:5:\"title\";s:27:\"Дата материала\";s:4:\"type\";s:4:\"date\";s:3:\"tab\";a:1:{s:5:\"other\";s:38:\"Дата, вес, активность\";}s:5:\"valid\";s:17:\"date_format:Y-m-d\";}s:8:\"position\";a:5:{s:5:\"title\";s:25:\"Вес материала\";s:4:\"type\";s:4:\"text\";s:3:\"tab\";a:1:{s:5:\"other\";s:38:\"Дата, вес, активность\";}s:5:\"valid\";s:7:\"integer\";s:7:\"default\";i:0;}s:6:\"active\";a:6:{s:5:\"title\";s:22:\"Опубликован\";s:4:\"type\";s:8:\"checkbox\";s:7:\"checked\";s:4:\"TRUE\";s:3:\"tab\";a:1:{s:5:\"other\";s:38:\"Дата, вес, активность\";}s:5:\"valid\";s:13:\"integer|max:1\";s:7:\"default\";i:1;}}',	's:0:\"\";',	'a:4:{i:0;s:3:\"seo\";i:1;s:6:\"images\";i:2;s:5:\"files\";i:3;s:9:\"templates\";}',	's:0:\"\";',	NULL,	1,	24,	1,	'2015-11-26 07:04:03',	'2015-12-04 03:16:49'),
-(5,	'Меню сайта',	'menu',	'',	'menu',	'a:8:{s:5:\"title\";a:5:{s:5:\"title\";s:29:\"Название пункта\";s:14:\"in_table_admin\";s:4:\"TRUE\";s:4:\"type\";s:4:\"text\";s:5:\"valid\";s:16:\"max:255|required\";s:4:\"typo\";s:4:\"true\";}s:8:\"category\";a:3:{s:5:\"title\";s:15:\"Вид меню\";s:4:\"type\";s:6:\"select\";s:7:\"default\";s:3:\"top\";}s:4:\"type\";a:2:{s:5:\"title\";s:6:\"Тип\";s:4:\"type\";s:4:\"text\";}s:6:\"parent\";a:4:{s:5:\"title\";s:16:\"Родитель\";s:4:\"type\";s:10:\"select_row\";s:7:\"default\";s:36:\"Это главный уровень\";s:15:\"options_connect\";a:2:{s:3:\"row\";s:5:\"title\";s:5:\"table\";s:4:\"menu\";}}s:7:\"connect\";a:2:{s:5:\"title\";s:10:\"Связь\";s:4:\"type\";s:4:\"text\";}s:3:\"url\";a:4:{s:5:\"title\";s:16:\"URL пункта\";s:14:\"in_table_admin\";s:4:\"TRUE\";s:4:\"type\";s:4:\"text\";s:5:\"valid\";s:16:\"max:155|required\";}s:8:\"position\";a:4:{s:5:\"title\";s:6:\"Вес\";s:4:\"type\";s:4:\"text\";s:5:\"valid\";s:7:\"integer\";s:7:\"default\";i:0;}s:6:\"active\";a:5:{s:5:\"title\";s:22:\"Опубликован\";s:4:\"type\";s:8:\"checkbox\";s:7:\"checked\";s:4:\"TRUE\";s:5:\"valid\";s:13:\"integer|max:1\";s:7:\"default\";i:1;}}',	's:0:\"\";',	'a:0:{}',	'a:0:{}',	NULL,	1,	8,	1,	'2015-12-05 14:58:18',	'2015-12-06 15:05:39');
+(4,	'Cтраницы',	'page',	'Страницы без привязки к определенному разделу',	'feed',	'a:6:{s:5:\"title\";a:6:{s:5:\"title\";s:18:\"Заголовок\";s:14:\"in_table_admin\";s:4:\"TRUE\";s:4:\"type\";s:4:\"text\";s:3:\"tab\";a:1:{s:4:\"main\";s:36:\"Заголовок, описание\";}s:5:\"valid\";s:16:\"max:255|required\";s:4:\"typo\";s:4:\"true\";}s:11:\"description\";a:3:{s:5:\"title\";s:25:\"Текст новости\";s:4:\"type\";s:8:\"textarea\";s:3:\"tab\";a:1:{s:4:\"main\";s:36:\"Заголовок, описание\";}}s:3:\"url\";a:4:{s:5:\"title\";s:22:\"URL материала\";s:4:\"type\";s:4:\"text\";s:3:\"tab\";a:1:{s:3:\"seo\";s:3:\"Seo\";}s:5:\"valid\";s:16:\"max:155|required\";}s:4:\"date\";a:4:{s:5:\"title\";s:27:\"Дата материала\";s:4:\"type\";s:4:\"date\";s:3:\"tab\";a:1:{s:5:\"other\";s:38:\"Дата, вес, активность\";}s:5:\"valid\";s:17:\"date_format:Y-m-d\";}s:8:\"position\";a:5:{s:5:\"title\";s:25:\"Вес материала\";s:4:\"type\";s:4:\"text\";s:3:\"tab\";a:1:{s:5:\"other\";s:38:\"Дата, вес, активность\";}s:5:\"valid\";s:7:\"integer\";s:7:\"default\";i:0;}s:6:\"active\";a:6:{s:5:\"title\";s:22:\"Опубликован\";s:4:\"type\";s:8:\"checkbox\";s:7:\"checked\";s:4:\"TRUE\";s:3:\"tab\";a:1:{s:5:\"other\";s:38:\"Дата, вес, активность\";}s:5:\"valid\";s:13:\"integer|max:1\";s:7:\"default\";i:1;}}',	's:0:\"\";',	'a:4:{i:0;s:3:\"seo\";i:1;s:6:\"images\";i:2;s:5:\"files\";i:3;s:9:\"templates\";}',	's:0:\"\";',	NULL,	1,	25,	1,	'2015-11-26 07:04:03',	'2015-12-07 07:25:29'),
+(5,	'Меню сайта',	'menu',	'',	'menu',	'a:8:{s:5:\"title\";a:5:{s:5:\"title\";s:29:\"Название пункта\";s:14:\"in_table_admin\";s:4:\"TRUE\";s:4:\"type\";s:4:\"text\";s:5:\"valid\";s:16:\"max:255|required\";s:4:\"typo\";s:4:\"true\";}s:8:\"category\";a:3:{s:5:\"title\";s:15:\"Вид меню\";s:4:\"type\";s:6:\"select\";s:7:\"default\";s:3:\"top\";}s:4:\"type\";a:2:{s:5:\"title\";s:6:\"Тип\";s:4:\"type\";s:4:\"text\";}s:6:\"parent\";a:4:{s:5:\"title\";s:16:\"Родитель\";s:4:\"type\";s:10:\"select_row\";s:7:\"default\";s:36:\"Это главный уровень\";s:15:\"options_connect\";a:2:{s:3:\"row\";s:5:\"title\";s:5:\"table\";s:4:\"menu\";}}s:7:\"connect\";a:2:{s:5:\"title\";s:10:\"Связь\";s:4:\"type\";s:4:\"text\";}s:3:\"url\";a:4:{s:5:\"title\";s:16:\"URL пункта\";s:14:\"in_table_admin\";s:4:\"TRUE\";s:4:\"type\";s:4:\"text\";s:5:\"valid\";s:16:\"max:155|required\";}s:8:\"position\";a:4:{s:5:\"title\";s:6:\"Вес\";s:4:\"type\";s:4:\"text\";s:5:\"valid\";s:7:\"integer\";s:7:\"default\";i:0;}s:6:\"active\";a:5:{s:5:\"title\";s:22:\"Опубликован\";s:4:\"type\";s:8:\"checkbox\";s:7:\"checked\";s:4:\"TRUE\";s:5:\"valid\";s:13:\"integer|max:1\";s:7:\"default\";i:1;}}',	'a:0:{}',	'a:0:{}',	'a:0:{}',	'',	1,	10,	1,	'2015-12-05 14:58:18',	'2015-12-08 04:04:46'),
+(6,	'Ленты',	'feed',	'Страницы с привязкой к определенным разделам',	'feed',	'a:7:{s:5:\"title\";a:6:{s:5:\"title\";s:18:\"Заголовок\";s:14:\"in_table_admin\";s:4:\"TRUE\";s:4:\"type\";s:4:\"text\";s:3:\"tab\";a:1:{s:4:\"main\";s:36:\"Заголовок, описание\";}s:5:\"valid\";s:16:\"max:255|required\";s:4:\"typo\";s:4:\"true\";}s:8:\"category\";a:6:{s:5:\"title\";s:12:\"Раздел\";s:14:\"in_table_admin\";s:4:\"TRUE\";s:4:\"type\";s:10:\"select_row\";s:3:\"tab\";a:1:{s:4:\"main\";s:36:\"Заголовок, описание\";}s:5:\"valid\";s:16:\"max:255|required\";s:15:\"options_connect\";a:2:{s:3:\"row\";s:5:\"title\";s:5:\"table\";s:4:\"feed\";}}s:11:\"description\";a:3:{s:5:\"title\";s:25:\"Текст новости\";s:4:\"type\";s:8:\"textarea\";s:3:\"tab\";a:1:{s:4:\"main\";s:36:\"Заголовок, описание\";}}s:3:\"url\";a:4:{s:5:\"title\";s:22:\"URL материала\";s:4:\"type\";s:4:\"text\";s:3:\"tab\";a:1:{s:3:\"seo\";s:3:\"Seo\";}s:5:\"valid\";s:16:\"max:155|required\";}s:4:\"date\";a:4:{s:5:\"title\";s:27:\"Дата материала\";s:4:\"type\";s:4:\"date\";s:3:\"tab\";a:1:{s:5:\"other\";s:38:\"Дата, вес, активность\";}s:5:\"valid\";s:17:\"date_format:Y-m-d\";}s:8:\"position\";a:5:{s:5:\"title\";s:25:\"Вес материала\";s:4:\"type\";s:4:\"text\";s:3:\"tab\";a:1:{s:5:\"other\";s:38:\"Дата, вес, активность\";}s:5:\"valid\";s:7:\"integer\";s:7:\"default\";i:0;}s:6:\"active\";a:6:{s:5:\"title\";s:22:\"Опубликован\";s:4:\"type\";s:8:\"checkbox\";s:7:\"checked\";s:4:\"TRUE\";s:3:\"tab\";a:1:{s:5:\"other\";s:38:\"Дата, вес, активность\";}s:5:\"valid\";s:13:\"integer|max:1\";s:7:\"default\";i:1;}}',	's:0:\"\";',	'a:4:{i:0;s:3:\"seo\";i:1;s:6:\"images\";i:2;s:5:\"files\";i:3;s:9:\"templates\";}',	's:0:\"\";',	'feed',	1,	1,	1,	'2015-12-08 05:33:40',	'2015-12-08 05:33:40');
+
+DROP TABLE IF EXISTS `category`;
+CREATE TABLE `category` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `description` text COLLATE utf8_unicode_ci NOT NULL,
+  `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `parent` int(11) NOT NULL,
+  `level` int(11) NOT NULL DEFAULT '1',
+  `url` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `sitemap` int(11) NOT NULL DEFAULT '1',
+  `position` int(11) NOT NULL DEFAULT '0',
+  `active` int(11) NOT NULL DEFAULT '1',
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `category` (`id`, `title`, `description`, `type`, `parent`, `level`, `url`, `sitemap`, `position`, `active`, `created_at`, `updated_at`) VALUES
+(1,	'Test category',	'',	'feed',	0,	1,	'test_category',	1,	0,	1,	'0000-00-00 00:00:00',	'0000-00-00 00:00:00'),
+(2,	'Each category',	'',	'feed',	0,	1,	'tester',	1,	0,	1,	'2015-12-08 07:25:12',	'2015-12-08 07:25:12');
 
 DROP TABLE IF EXISTS `feed`;
 CREATE TABLE `feed` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `category` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `category` int(10) unsigned DEFAULT NULL,
   `short` text COLLATE utf8_unicode_ci NOT NULL,
   `description` text COLLATE utf8_unicode_ci NOT NULL,
   `url` varchar(155) COLLATE utf8_unicode_ci NOT NULL,
@@ -58,13 +80,15 @@ CREATE TABLE `feed` (
   `active` int(1) DEFAULT '1',
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `feed_category_foreign` (`category`),
+  CONSTRAINT `feed_category_foreign` FOREIGN KEY (`category`) REFERENCES `category` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `feed` (`id`, `title`, `category`, `short`, `description`, `url`, `date`, `position`, `active`, `created_at`, `updated_at`) VALUES
 (1,	'Пример заголовка',	NULL,	'',	'<p>&laquo;Эдиториум.ру&raquo;&nbsp;&mdash; сайт, созданный по&nbsp;материалам сборника &laquo;О&nbsp;редактировании и&nbsp;редакторах&raquo; Аркадия Эммануиловича Мильчина, который с&nbsp;1944 года коллекционировал выдержки из&nbsp;статей, рассказов, фельетонов, пародий, писем и&nbsp;книг, где так или иначе затрагивается тема редакторской работы. Эта коллекция легла в&nbsp;основу обширной антологии, представляющей историю и&nbsp;природу редактирования в&nbsp;первоисточниках.</p>',	'primer-zagolovka',	'2015-11-11',	20,	1,	'2015-11-26 05:47:36',	'2015-12-05 13:26:13'),
-(2,	'Новость об акции',	NULL,	'',	'<p>4324324</p>',	'ttrtr',	'2015-11-11',	23,	1,	'2015-11-26 06:10:16',	'2015-11-30 06:03:16'),
-(3,	'Новый материал',	NULL,	'',	'<p>Текст новости</p>',	'URL',	'0000-00-00',	0,	0,	'2015-12-02 06:27:28',	'2015-12-02 06:27:28');
+(2,	'Новость об акции',	2,	'',	'<p>4324324</p>',	'ttrtr',	'2015-11-11',	23,	1,	'2015-11-26 06:10:16',	'2015-11-30 06:03:16'),
+(3,	'Новый материал',	1,	'',	'<p>Текст новости</p>',	'URL',	'0000-00-00',	0,	0,	'2015-12-02 06:27:28',	'2015-12-02 06:27:28');
 
 DROP TABLE IF EXISTS `images`;
 CREATE TABLE `images` (
@@ -123,7 +147,28 @@ INSERT INTO `migrations` (`migration`, `batch`) VALUES
 ('2015_12_01_120218_create_images_table',	3),
 ('2015_12_01_145645_create_seo_table',	4),
 ('2015_12_01_163857_create_templates_table',	5),
-('2015_12_06_004411_create_menu_table',	6);
+('2015_12_06_004411_create_menu_table',	6),
+('2015_12_08_152322_create_category_table',	7),
+('2015_12_08_155118_update_feed_table',	8),
+('2015_12_08_173518_create_page_table',	9);
+
+DROP TABLE IF EXISTS `page`;
+CREATE TABLE `page` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `description` text COLLATE utf8_unicode_ci NOT NULL,
+  `url` varchar(155) COLLATE utf8_unicode_ci NOT NULL,
+  `date` date NOT NULL,
+  `position` int(11) NOT NULL DEFAULT '0',
+  `active` int(11) NOT NULL DEFAULT '1',
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `page_url_unique` (`url`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `page` (`id`, `title`, `description`, `url`, `date`, `position`, `active`, `created_at`, `updated_at`) VALUES
+(1,	'Тестовая страница',	'<p>Пример текста</p>',	'testovaya-stranica',	'0000-00-00',	0,	1,	'2015-12-08 07:49:25',	'2015-12-08 07:49:25');
 
 DROP TABLE IF EXISTS `persistences`;
 CREATE TABLE `persistences` (
@@ -200,7 +245,7 @@ CREATE TABLE `seo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `seo` (`id`, `seo_title`, `seo_description`, `seo_keywords`, `id_connect`, `url_connect`, `type_connect`, `created_at`, `updated_at`) VALUES
-(5,	'tesr',	'2333',	'3',	1,	NULL,	'page',	'2015-12-02 05:58:07',	'2015-12-04 03:05:23'),
+(5,	'',	'',	'',	1,	NULL,	'page',	'2015-12-02 05:58:07',	'2015-12-08 07:49:25'),
 (6,	'Title material',	'',	'',	3,	NULL,	'page',	'2015-12-02 06:27:28',	'2015-12-02 06:27:28'),
 (11,	'',	'',	'',	10,	NULL,	'page',	'2015-12-04 04:45:08',	'2015-12-04 04:45:08'),
 (12,	'',	'',	'',	9,	NULL,	'page',	'2015-12-04 16:10:40',	'2015-12-04 16:10:40');
@@ -218,7 +263,7 @@ CREATE TABLE `templates` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `templates` (`id`, `template`, `template_global`, `type_connect`, `id_connect`, `created_at`, `updated_at`) VALUES
-(1,	'Template2',	'Template1',	'page',	1,	'2015-12-03 17:27:58',	'2015-12-04 10:19:44'),
+(1,	'0',	'0',	'page',	1,	'2015-12-03 17:27:58',	'2015-12-08 07:49:25'),
 (2,	'Template1',	'Template1',	'page',	4,	'2015-12-04 03:20:21',	'2015-12-04 03:20:21'),
 (3,	'Template1',	'Template1',	'page',	6,	'2015-12-04 03:36:36',	'2015-12-04 03:36:36'),
 (4,	'Template1',	'Template1',	'page',	10,	'2015-12-04 04:45:08',	'2015-12-04 04:45:08'),
@@ -272,4 +317,4 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `email`, `password`, `permissions`, `last_login`, `first_name`, `last_name`, `created_at`, `updated_at`) VALUES
 (1,	'fanamurov@ya.ru',	'$2y$10$SJzDIVLhyCdzOMxfnqAADOCoyzVgjwjmBlYaVWQlikchTd67mWPRa',	NULL,	'2015-12-02 07:58:20',	'4234',	'',	'2015-11-19 15:41:49',	'2015-12-02 07:58:20');
 
--- 2015-12-06 16:48:43
+-- 2015-12-08 07:58:30

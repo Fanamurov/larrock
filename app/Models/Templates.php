@@ -21,6 +21,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Templates whereIdConnect($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Templates whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Templates whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Templates find($value)
  */
 class Templates extends Model
 {

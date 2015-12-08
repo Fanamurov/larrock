@@ -13,62 +13,27 @@ use App\Helpers\ContentPlugins as ContentPlugins;
 use App\Helpers\FormBuilder;
 use JsValidator;
 use Alert;
+use App\Helpers\Component;
 
 class PageController extends Apps
 {
 	public function __construct()
 	{
-		$this->name = 'page';
-		$this->title = 'Cтраницы';
-		$this->description = 'Страницы без привязки к определенному разделу';
-		$this->table_content = 'feed';
-		$this->rows = [
-			'title' => [
-				'title' => 'Заголовок',
-				'in_table_admin' => 'TRUE',
-				'type' => 'text',
-				'tab' => ['main' => 'Заголовок, описание'],
-				'valid' => 'max:255|required',
-				'typo' => 'true'
-			],
-			'description' => [
-				'title' => 'Текст новости',
-				'type' => 'textarea',
-				'tab' => ['main' => 'Заголовок, описание']
-			],
-			'url' => [
-				'title' => 'URL материала',
-				'type' => 'text',
-				'tab' => ['seo' => 'Seo'],
-				'valid' => 'max:155|required'
-			],
-			'date' => [
-				'title' => 'Дата материала',
-				'type' => 'date',
-				'tab' => ['other' => 'Дата, вес, активность'],
-				'valid' => 'date_format:Y-m-d'
-			],
-			'position' => [
-				'title' => 'Вес материала',
-				'type' => 'text',
-				'tab' => ['other' => 'Дата, вес, активность'],
-				'valid' => 'integer',
-				'default' => 0
-			],
-			'active' => [
-				'title' => 'Опубликован',
-				'type' => 'checkbox',
-				'checked' => 'TRUE',
-				'tab' => ['other' => 'Дата, вес, активность'],
-				'valid' => 'integer|max:1',
-				'default' => 1
-			],
-		];
-		$this->settings = '';
-		$this->plugins_backend = ['seo', 'images', 'files', 'templates'];
-		$this->plugins_front = '';
-		$this->version = 24;
-		$this->check_app();
+		$this->check_app('page');
+	}
+
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @param \App\Helpers\Component $component
+	 * @return \Illuminate\Http\Response
+	 */
+	public function index(Component $component)
+	{
+		$data['apps'] = $component->get_app($this->name, TRUE);
+		$data['data'] = DB::table($this->table_content)->orderBy('position', 'DESC')->paginate(30);
+		\View::share('validator', '');
+		return view('admin.apps.index', $data);
 	}
 
 	/**
@@ -81,13 +46,13 @@ class PageController extends Apps
 	{
 		$data['data'] = new Page;
         $data['data'] = $plugins->attach_data($this->plugins_backend, $data['data']);
-		$data['app'] = $this->get_app();
+		$data['app'] = Component::get_app($this->name);
 
-        $data = $this->tabbable($data);
+        $data = Component::tabbable($data);
 
 		$data['next_id'] = DB::table($this->table_content)->max('id') + 1;
 
-		$validator = JsValidator::make($this->_valid_construct());
+		$validator = JsValidator::make(Component::_valid_construct($this->rows));
 		\View::share('validator', $validator);
 
 		return view('admin.apps.create', $data);
@@ -104,12 +69,12 @@ class PageController extends Apps
 	{
 		$data['data'] = Page::find($id);
         $data['data'] = $plugins->attach_data($this->plugins_backend, $data['data']);
-        $data['app'] = $this->get_app();
+        $data['app'] = Component::get_app($this->name);
 
-        $data = $this->tabbable($data);
+        $data = Component::tabbable($data);
 		$data['id'] = $id;
 
-		$validator = JsValidator::make($this->_valid_construct());
+		$validator = JsValidator::make(Component::_valid_construct($this->rows));
 		\View::share('validator', $validator);
 
 		return view('admin.apps.edit', $data);
@@ -125,7 +90,7 @@ class PageController extends Apps
      */
     public function update(Request $request, $id, ContentPlugins $plugins)
     {
-        $validator = Validator::make($request->all(), $this->_valid_construct());
+        $validator = Validator::make($request->all(), Component::_valid_construct($this->rows));
         if($validator->fails()){
             return back()->withInput($request->except('password'))->withErrors($validator);
         }
@@ -151,7 +116,7 @@ class PageController extends Apps
 	 */
 	public function store(Request $request, ContentPlugins $plugins)
 	{
-		$validator = Validator::make($request->all(), $this->_valid_construct());
+		$validator = Validator::make($request->all(), Component::_valid_construct($this->rows));
 		if($validator->fails()){
 			return back()->withInput($request->except('password'))->withErrors($validator);
 		}

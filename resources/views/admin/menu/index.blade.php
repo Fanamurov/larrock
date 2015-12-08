@@ -35,7 +35,7 @@
                             <td class="row-{{ $rows_key }}">
                                 @if($rows_key === 'title')
                                     @if($data_value->level > 1)
-                                        <span style="padding-left: {{ $data_value->level*15 }}px"></span><img src="{{asset('_admin/_images/icons/1449439778_down_right.png')}}" alt="level arrow">
+                                        <span style="padding-left: {{ $data_value->level*15 }}px"></span>
                                     @endif
                                     <a href="/admin/{{ $apps->name }}/{{ $data_value->id }}/edit">{{ $data_value->$rows_key }}</a>
                                 @else

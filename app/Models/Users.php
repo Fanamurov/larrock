@@ -27,6 +27,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Users whereLastName($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Users whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Users whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Users find($value)
  */
 class Users extends Model
 {

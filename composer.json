@@ -22,7 +22,9 @@
         "maatwebsite/excel": "~2.0",
         "intervention/image": "^2.3",
         "prologue/alerts": "^0.4.0",
-        "kix/mdash": "^0.5.4"
+        "kix/mdash": "^0.5.4",
+        "funct/funct": "^1.0",
+        "spatie/laravel-paginateroute": "^2.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

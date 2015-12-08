@@ -35,6 +35,7 @@ Route::group(['middleware'=>'AuthAdmin'], function(){
 	Route::resource('admin/page', 'Admin\PageController');
 	Route::resource('admin/seo', 'Admin\SeoController');
 	Route::resource('admin/menu', 'Admin\MenuController');
+	Route::resource('admin/feed', 'Admin\FeedController');
 
 	Route::post('admin/ajax/EditRow', 'Admin\Ajax@EditRow');
 	Route::post('admin/ajax/ClearCache', 'Admin\Ajax@ClearCache');
@@ -49,5 +50,8 @@ Route::group(['middleware'=>'AuthAdmin'], function(){
 
 	Route::post('admin/ajax/UploadFile', 'Admin\Ajax@UploadFile');
 
-	Route::get('admin', 'Admin\PageController@index');
+	Route::get('admin', 'Admin\PageController@index'); //Роут главной страницы админки
+
+	Route::get('/admin/settings/image', 'Admin\Settings\Image@index');
+	Route::post('/admin/settings/image', 'Admin\Settings\Image@store');
 });

@@ -37,6 +37,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Apps whereActive($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Apps whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Apps whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Apps find($value)
  */
 class Apps extends Model
 {

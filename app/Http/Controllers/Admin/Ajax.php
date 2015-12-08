@@ -12,6 +12,8 @@ use Input;
 use Image;
 use App\Models\Images as Model_Images;
 use Roumen\Sitemap\Model;
+use Cache;
+use App\Models\Apps;
 
 class Ajax extends Controller
 {
@@ -39,7 +41,7 @@ class Ajax extends Controller
 
 	public function ClearCache()
 	{
-        //TODO: удаление кеша
+		Cache::flush();
 		return response()->json(['status' => 'success', 'message' => 'Кеш очищен']);
 	}
 
@@ -49,6 +51,9 @@ class Ajax extends Controller
         $folder = Input::get('folder');
         $id_connect = Input::get('id_connect');
         $param = Input::get('param');
+
+		//Достаем конфиг пресетов компонента
+		$get_app = Apps::whereName($folder)->get(['plugins_backend', 'settings']);
 
         if( !file_exists('images')){
             mkdir('images/', 0755);

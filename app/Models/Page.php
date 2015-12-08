@@ -34,7 +34,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Page extends Model
 {
-    protected $table = 'feed';
+    protected $table = 'page';
 
     protected $fillable = ['title', 'short', 'description', 'url', 'date', 'position', 'active'];
 

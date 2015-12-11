@@ -4007,7 +4007,7 @@ $(document).ready(function(){
 
 
     /** Conform alert. Уверены что хотите сделать это?) */
-    $('.please_conform, .btn-danger').on('click', function () {
+    $('.please_conform').on('click', function () {
         var href = $(this).attr('href');
         return confirm('Уверены?');
     });

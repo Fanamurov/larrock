@@ -4,9 +4,107 @@
 @import "plugins/chosen/chosen";
 //@import "plugins/dropzone/dropzone";
 
+.top-navigation .wrapper.wrapper-content{
+  padding-top: 15px;
+  .col-lg-12 .ibox{
+	margin-bottom: 5px;
+	&:last-of-type{
+	  margin-bottom: 25px;
+	}
+  }
+}
+
+.wrapper .ibox{
+  label{
+	font-style: italic;
+  }
+  /* Табы в контенте */
+  .nav-tabs{
+	border-bottom: none;
+	> li{
+	  a{
+		background: #428bca;
+		color: white;
+		margin-left: 2px;
+	  }
+	  &.active{
+		background: none;
+		a{
+		  background: #fff0a9;
+		  color: black;
+		}
+	  }
+	  &:hover,
+	  &:focus{
+		color: black;
+		a{
+		  background: #fff0a9;
+		  color: black;
+		}
+	  }
+	}
+  }
+}
+
+.top-navigation .nav>li.active>a {
+  color: #FFF;
+  background: #428bca;
+}
+.top-navigation .nav>li a:hover, .top-navigation .nav>li a:focus {
+  background: #fff;
+  color: #428bca;
+}
+
+.top-navigation .navbar-brand{
+  background: #428bca;
+}
+
+.table>thead>tr>th{
+  font-weight: 300;
+  font-style: italic;
+}
+
+.label.label-outline{
+  background: transparent;
+  &.label-warning{
+	color: #f8ac59;
+	border: 1px solid #f8ac59;
+  }
+  &.label-danger{
+	color: #ed5565;
+	border: 1px solid #ed5565;
+  }
+  &.label-info{
+	color: #428bca;
+	border: 1px solid #428bca;
+  }
+}
+
 .help-block{
   font-style: italic;
   color: grey;
+}
+
+.add-panel{
+  float: right;
+  > div, a, form, span{
+
+	display: inline-block;
+	float: right;
+	margin-right: 8px;
+  }
+  input{
+	padding: 3px 6px;
+	height: 23px;
+  }
+}
+
+.ibox-title.background-transparent{
+  border-top: none;
+}
+
+.background-transparent{
+  background: transparent !important;
 }
 
 .nav-tabs{
@@ -14,6 +112,7 @@
 	border: 2px solid #ed5565!important;
   }
 }
+
 
 textarea::-webkit-input-placeholder {
   /* WebKit browsers */
@@ -52,10 +151,6 @@ input:-ms-input-placeholder {
 
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus{
 
-}
-.top-navigation .nav>li.active>a{
-  color: #FFFFFF;
-  background: #1AB394;
 }
 
 
@@ -215,10 +310,6 @@ label{
 input[name=date]{
   background: url("/_admin/_images/icons/1412932708_calendar-16.png") no-repeat 10px center;
   padding-left: 34px;
-}
-
-.add-panel{
-  margin-top: 15px;
 }
 
 .project-title small{

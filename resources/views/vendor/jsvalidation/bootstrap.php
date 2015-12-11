@@ -32,8 +32,9 @@
                 $(element).closest('.form-group').removeClass('has-error').addClass('has-success'); // remove the Boostrap error class from the control group
 
 				//Delete has error to tab
-				var tab_name = $(element).closest('.tab-pane').attr('id');
-				$('li.'+tab_name).removeClass('has-error');
+				//Ищем, нет ли ошибки в любом другом поле этого таба
+				//var tab_name = $(element).closest('.tab-pane').attr('id');
+				//$('li.'+tab_name).removeClass('has-error');
             },
 
             focusInvalid: false, // do not focus the last invalid input

@@ -10,25 +10,25 @@ h3,
 h4,
 h5,
 h6 {
-  font-weight: 100;
+  font-weight: 400;
 }
 h1 {
-  font-size: 30px;
-}
-h2 {
   font-size: 24px;
 }
-h3 {
+h2 {
   font-size: 16px;
 }
-h4 {
+h3 {
   font-size: 14px;
 }
-h5 {
+h4 {
   font-size: 12px;
 }
-h6 {
+h5 {
   font-size: 10px;
+}
+h6 {
+  font-size: 8px;
 }
 h3,
 h4,
@@ -583,7 +583,7 @@ body.canvas-menu.mini-navbar nav.navbar-static-side {
   color: #1c84c6;
 }
 .btn-info.btn-outline {
-  color: #23c6c8;
+  color: #428bca;
 }
 .btn-warning.btn-outline {
   color: #f8ac59;
@@ -681,8 +681,8 @@ fieldset[disabled] .btn-success.active {
   border-color: #1f90d8;
 }
 .btn-info {
-  background-color: #23c6c8;
-  border-color: #23c6c8;
+  background-color: #428bca;
+  border-color: #428bca;
   color: #FFFFFF;
 }
 .btn-info:hover,
@@ -694,8 +694,8 @@ fieldset[disabled] .btn-success.active {
 .btn-info:active:hover,
 .btn-info.active:hover,
 .btn-info.active:focus {
-  background-color: #21b9bb;
-  border-color: #21b9bb;
+  background-color: #2a6496;
+  border-color: #2a6496;
   color: #FFFFFF;
 }
 .btn-info:active,
@@ -718,8 +718,8 @@ fieldset[disabled] .btn-info:hover,
 fieldset[disabled] .btn-info:focus,
 fieldset[disabled] .btn-info:active,
 fieldset[disabled] .btn-info.active {
-  background-color: #26d7d9;
-  border-color: #26d7d9;
+  background-color: #2a6496;
+  border-color: #2a6496;
 }
 .btn-default {
   background-color: #c2c2c2;

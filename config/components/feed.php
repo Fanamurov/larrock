@@ -16,7 +16,6 @@ return [
 		],
 		'category' => [
 			'title' => 'Раздел',
-			'in_table_admin' => 'TRUE',
 			'type' => 'select_row',
 			'tab' => ['main' => 'Заголовок, описание'],
 			'valid' => 'max:255|required',
@@ -59,5 +58,5 @@ return [
 	'settings' => '',
 	'plugins_backend' => ['seo', 'images', 'files', 'templates'],
 	'plugins_front' => '',
-	'version' => 1
+	'version' => 2
 ];

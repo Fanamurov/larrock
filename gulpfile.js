@@ -50,7 +50,7 @@ gulp.task('sass_admin', function () {
         //.pipe(sourcemaps.write('./maps'))
         .pipe(rename({suffix: '.min'} ))
         .pipe(size({showFiles : true}))
-        .pipe(gulp.dest('./public/_admin/_css'))
+        .pipe(gulp.dest('./public_html/_admin/_css'))
         .pipe(removeLogs())
         .pipe(notify("Scss reload: <%= file.relative %>! "+ project));
 });
@@ -79,6 +79,6 @@ gulp.task('javascript_admin', function() {
         .pipe(removeLogs())
         .pipe(notify("Js reload: <%= file.relative %>! "+ project))
         .pipe(size({showFiles : true}))
-        .pipe(gulp.dest('./public/_admin/_js'));
+        .pipe(gulp.dest('./public_html/_admin/_js'));
     //.pipe(livereload());
 });

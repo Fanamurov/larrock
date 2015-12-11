@@ -51,8 +51,10 @@
                             <li class="dropdown">
                                 <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Ленты <span class="caret"></span></a>
                                 <ul role="menu" class="dropdown-menu">
-                                    <li><a href="{{ action('Admin\FeedController@index') }}">Новая категория</a></li>
-                                    <li><a href="{{ action('Admin\FeedController@index') }}">Тестовая категория</a></li>
+                                    <li><a href="{{ action('Admin\FeedController@index') }}/1">Новости</a></li>
+                                    <li><a href="{{ action('Admin\FeedController@index') }}/2">Акции</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="{{ action('Admin\FeedController@index') }}">Доюавить новый раздел</a></li>
                                 </ul>
                             </li>
                             <li>
@@ -105,11 +107,11 @@
                                 <input type="text" class="form-control search-form hidden" placeholder="Поиск...">
                             </li>
                             <li class="dropdown">
-                                <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Логи <span class="label label-warning">5</span></a>
+                                <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Логи <span class="label label-warning label-outline">5</span></a>
                                 <ul role="menu" class="dropdown-menu">
-                                    <li><a href="#">Не найдено</a></li>
-                                    <li><a href="#">Ошибка ядра</a></li>
-                                    <li><a href="#">Письма</a></li>
+                                    <li><a href="#">Не найдено <span class="label label-warning label-outline">5</span></a></li>
+                                    <li><a href="#">Ошибка ядра <span class="label label-warning label-outline">5</span></a></li>
+                                    <li><a href="#">Письма <span class="label label-warning label-outline">5</span></a></li>
                                 </ul>
                             </li>
                             <li>
@@ -141,14 +143,7 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
-                            <div class="ibox float-e-margins">
-                                <div class="ibox-title">
-                                    @include('admin.blocks.title')
-                                </div>
-                                <div class="ibox-content">
-                                    @yield('content')
-                                </div>
-                            </div>
+                            @yield('content')
                         </div>
                     </div>
                 </div>

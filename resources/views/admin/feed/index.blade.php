@@ -107,7 +107,7 @@
                     </div>
                 </td>
                 <td class="row-edit" title="Чем больше, тем выше в списках">
-                    <a href="/admin/{{ $apps->name }}/{{ $data_value->id }}/edit" class="btn btn-block btn-primary btn-xs"><i class="fa fa-pencil"></i> Изменить</a>
+                    <a href="/admin/{{ $apps->name }}/{{ $data_value->id }}/edit" class="btn btn-block btn-primary btn-xs">Изменить</a>
                 </td>
                 <td class="row-delete">
                     <form action="/admin/{{ $apps->name }}/{{ $data_value->id }}" method="post">

@@ -26,15 +26,13 @@ class ContentPlugins implements ContentPluginsInterface
 	/**
 	 * Прикрепляем к объекту полей компонента поля от плагинов
 	 * @param $app
-	 * @param $plugins_backend
 	 *
 	 * @return mixed
 	 */
-	public function attach_rows($app, $plugins_backend)
+	public function attach_rows($app)
 	{
-		$this->rows = $app->rows;
-		if(in_array('seo', $plugins_backend, TRUE)){
-			$this->rows['seo_title'] = [
+		if(in_array('seo', $app['plugins_backend'], TRUE)){
+			$app['rows']['seo_title'] = [
 				'title' => 'Title материала',
 				'type' => 'text',
 				'tab' => ['seo' => 'Seo'],
@@ -42,7 +40,7 @@ class ContentPlugins implements ContentPluginsInterface
 				'help' => 'По-умолчанию равно заголовку материала',
 			];
 
-			$this->rows['seo_description'] = [
+            $app['rows']['seo_description'] = [
 				'title' => 'Description материала',
 				'type' => 'text',
 				'tab' => ['seo' => 'Seo'],
@@ -50,7 +48,7 @@ class ContentPlugins implements ContentPluginsInterface
 				'help' => 'По-умолчанию равно заголовку материала',
 			];
 
-			$this->rows['seo_keywords'] = [
+            $app['rows']['seo_keywords'] = [
 				'title' => 'Keywords материала',
 				'type' => 'text',
 				'tab' => ['seo' => 'Seo'],
@@ -58,8 +56,8 @@ class ContentPlugins implements ContentPluginsInterface
 			];
 		}
 
-		if(in_array('templates', $plugins_backend, TRUE)){
-			$this->rows['template'] = [
+		if(in_array('templates', $app['plugins_backend'], TRUE)){
+            $app['rows']['template'] = [
 				'title' => 'Шаблон материала',
 				'type' => 'select',
 				'options' => ['Template1', 'Template2'],
@@ -68,7 +66,7 @@ class ContentPlugins implements ContentPluginsInterface
 				'form-group_class' => 'col-sm-6 col-sm-offset-3'
 			];
 
-			$this->rows['template_global'] = [
+            $app['rows']['template_global'] = [
 				'title' => 'Глобальный шаблон',
 				'type' => 'select',
 				'options' => ['Template1', 'Template2'],
@@ -77,8 +75,6 @@ class ContentPlugins implements ContentPluginsInterface
 				'form-group_class' => 'col-sm-6 col-sm-offset-3'
 			];
 		}
-
-		$app->rows = $this->rows;
 		return $app;
 	}
 

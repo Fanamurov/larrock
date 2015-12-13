@@ -116,7 +116,7 @@ class Component implements ComponentInterface
 	public static function tabbable(array $data)
 	{
 		$formBuilder = new FormBuilder();
-		$data['tabs'] = Component::get_tabs_names_admin($data['app']->rows);
+		$data['tabs'] = Component::get_tabs_names_admin($data['app']['rows']);
 		foreach($data['tabs'] as $tab_key => $tab_value){
 			$data['form'][$tab_key] = $formBuilder->render($data['app'], $data['data'], $tab_key);
 		}

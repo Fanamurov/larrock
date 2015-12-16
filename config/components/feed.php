@@ -19,7 +19,7 @@ return [
 			'type' => 'select_row',
 			'tab' => ['main' => 'Заголовок, описание'],
 			'valid' => 'max:255|required',
-			'options_connect' => ['row' => 'title', 'table' => 'feed']
+			'options_connect' => ['row' => 'title', 'table' => 'category']
 		],
 		'description' => [
 			'title' => 'Текст новости',
@@ -58,5 +58,5 @@ return [
 	'settings' => '',
 	'plugins_backend' => ['seo', 'images', 'files', 'templates'],
 	'plugins_front' => '',
-	'version' => 2
+	'version' => 3
 ];

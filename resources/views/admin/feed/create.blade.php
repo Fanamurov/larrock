@@ -11,8 +11,8 @@
 @section('content')
     <div class="ibox float-e-margins">
         <div class="ibox-title background-transparent">
-            <h1 class="inline"><span class="text-muted">Ленты/</span>{{ $category->title }}/{{ $data->title }}</h1>
-            <a href="/feed/{{ $category->url}}">/feed/{{ $category->url}}/{{ $data->url }}</a>
+            <h1 class="inline"><span class="text-muted">Ленты/</span>{{ $category->title }}/Новый материал</h1>
+            <a href="/feed/{{ $category->url}}">/feed/{{ $category->url}}</a>
         </div>
 
         <div>
@@ -36,8 +36,7 @@
         </div>
 
         <div class="ibox-content">
-            <form action="/admin/{{ $app['name'] }}/{{ $data->id }}" method="POST">
-                <input name="_method" type="hidden" value="PUT">
+            <form action="/admin/{{ $app['name'] }}" method="POST">
                 <input name="type_connect" type="hidden" value="{{ $app['name'] }}">
                 <input name="id_connect" type="hidden" value="{{ $id }}">
                 <div class="tabbable main-tabbable">
@@ -61,7 +60,7 @@
                     <div class="form-group">
                         <form action="{{ action('Admin\Ajax@UploadImage') }}" method="post" enctype="multipart/form-data" id="plugin_image">
                             <input type="hidden" name="folder" value="{{ $app['name'] }}">
-                            <input type="hidden" name="id_connect" value="{{ $data->id }}">
+                            <input type="hidden" name="id_connect" value="{{ $id }}">
                             <input type="hidden" name="param" value="{{ $data->url }}">
                             <input type="file" name="images[]" id="upload_image_filer" multiple="multiple">
                             <input type="submit" value="Submit" class="btn btn-info hidden">
@@ -75,7 +74,7 @@
                     <div class="form-group">
                         <form action="{{ action('Admin\Ajax@UploadFile') }}" method="post" enctype="multipart/form-data" id="plugin_files">
                             <input type="hidden" name="folder" value="{{ $app['name'] }}">
-                            <input type="hidden" name="id_connect" value="{{ $data->id }}">
+                            <input type="hidden" name="id_connect" value="{{ $id }}">
                             <input type="hidden" name="param" value="{{ $data->url }}">
                             <input type="file" name="files[]" id="upload_file_filer" multiple="multiple">
                             <input type="submit" value="Submit" class="btn btn-info hidden">

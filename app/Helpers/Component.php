@@ -12,33 +12,24 @@ class Component implements ComponentInterface
 	/**
 	 * Возвращает конфиг компонента с его настройками, полями
 	 *
-	 * @param string|int	$app_nameOrId		Название или ID компонента
+	 * @param string|int	$app_name		Название компонента
 	 * @param bool|NULL 	$attach_plugins		Присоединять ли поля от плагинов
 	 * @return bool|mixed|static
 	 */
-	public static function get_app($app_nameOrId, $attach_plugins = TRUE)
+	public static function get_app($app_name, $attach_plugins = TRUE)
 	{
-		$cache_key = sha1('get_app'. $app_nameOrId . $attach_plugins);
+		$cache_key = sha1('get_app'. $app_name . $attach_plugins);
 		if(Cache::has($cache_key)){
 			return Cache::get($cache_key);
 		}else{
-			if(is_int($app_nameOrId)){
-				$app = Apps::whereId($app_nameOrId)->first();
-			}else{
-				$app = Apps::whereName($app_nameOrId)->first();
-			}
-			if($app){
-				$app->rows = unserialize($app->rows);
-				$app->plugins_backend = unserialize($app->plugins_backend);
-				$app->plugins_front = unserialize($app->plugins_front);
-				$app->settings = unserialize($app->settings);
+			if($app = \Config::get('components.'. $app_name)){
 				if($attach_plugins){
 					$ContentPlugins = new ContentPlugins();
-					$app = $ContentPlugins->attach_rows($app, $app->plugins_backend);
+					$app = $ContentPlugins->attach_rows($app, $app['plugins_backend']);
 				}
 			}
 
-			Cache::forever($cache_key, $app);
+			//Cache::forever($cache_key, $app);
 			return $app;
 		}
 	}
@@ -116,7 +107,7 @@ class Component implements ComponentInterface
 	public static function tabbable(array $data)
 	{
 		$formBuilder = new FormBuilder();
-		$data['tabs'] = Component::get_tabs_names_admin($data['app']->rows);
+		$data['tabs'] = Component::get_tabs_names_admin($data['app']['rows']);
 		foreach($data['tabs'] as $tab_key => $tab_value){
 			$data['form'][$tab_key] = $formBuilder->render($data['app'], $data['data'], $tab_key);
 		}

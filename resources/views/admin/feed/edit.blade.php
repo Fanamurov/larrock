@@ -4,7 +4,11 @@
 @section('content')
     <div class="ibox float-e-margins">
         <div class="ibox-title background-transparent">
-            <h1 class="inline"><span class="text-muted">Ленты/</span>{{ $data->categoryInfo->title }}/{{ $data->title }}</h1>
+            <h1 class="inline">
+                <a href="/admin/feed">Ленты</a>/
+                <a href="/admin/feed/{{ $data->categoryInfo->id }}">{{ $data->categoryInfo->title }}</a>
+                /{{ $data->title }}
+            </h1>
             <a href="/feed/{{ $data->categoryInfo->url}}/{{ $data->url }}">/feed/{{ $data->categoryInfo->url}}/{{ $data->url }}</a>
         </div>
 

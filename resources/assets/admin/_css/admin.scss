@@ -14,6 +14,54 @@
   }
 }
 
+.ibox-content .jFiler{
+  font-family: "open sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 13px;
+}
+.ibox-content .jFiler-items-grid .jFiler-item .jFiler-item-container{
+  border: none;
+}
+.jFiler-item-thumb-image{
+  img{
+	max-width: 100%;
+  }
+}
+.jFiler-items ul li{
+  padding-bottom: 30px;
+}
+.jFiler{
+  .input-group-addon{
+	border: none;
+	padding-left: 0;
+	width: 158px;
+	text-align: right;
+	font-style: italic;
+  }
+  .input-group{
+	width: 90%;
+  }
+  .url_link{
+	padding-left: 126px;
+	font-size: 14px;
+	span{
+	  font-style: italic;
+	}
+  }
+}
+.ibox-content{
+  .jFiler-items-grid .jFiler-item .jFiler-item-container .jFiler-item-thumb {
+	border: none;
+  }
+  .jFiler-items-grid .jFiler-item .jFiler-item-container .jFiler-item-info{
+	background: none;
+	position: relative;
+	display: none;
+  }
+  .jFiler-item .jFiler-item-container .jFiler-item-thumb img{
+	max-width: 100%;
+  }
+}
+
 .wrapper .ibox{
   label{
 	font-style: italic;

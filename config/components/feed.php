@@ -36,7 +36,7 @@ return [
 			'title' => 'Дата материала',
 			'type' => 'date',
 			'tab' => ['other' => 'Дата, вес, активность'],
-			'valid' => 'date_format:Y-m-d'
+			'valid' => 'date_format:Y-m-d H:i:s'
 		],
 		'position' => [
 			'title' => 'Вес материала',

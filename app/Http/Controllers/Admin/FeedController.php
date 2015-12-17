@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Apps;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -18,12 +17,15 @@ use Validator;
 use Redirect;
 use Config;
 use View;
+use Input;
 
-class FeedController extends Apps
+class FeedController extends Controller
 {
+	protected $config;
+
 	public function __construct()
 	{
-		$this->check_app('feed');
+		$this->config = Config::get('components.feed');
 	}
 
 	/**
@@ -34,8 +36,7 @@ class FeedController extends Apps
 	 */
 	public function index(ContentPlugins $ContentPlugins)
 	{
-        $get_config = Config::get('components.feed');
-        $data['app'] = $ContentPlugins->attach_rows($get_config);
+        $data['app'] = $ContentPlugins->attach_rows($this->config);
         $data['data'] = Feed::with('categoryInfo')->get();
 		View::share('validator', '');
 		return view('admin.feed.index', $data);
@@ -51,15 +52,13 @@ class FeedController extends Apps
     public function create(Component $component, ContentPlugins $plugins)
     {
 		$data['data'] = new Feed;
-		$data['data'] = $plugins->attach_data($this->plugins_backend, $data['data']);
-		$data['app'] = $component->get_app($this->name, TRUE);
+		$data['data'] = $plugins->attach_data($this->config['plugins_backend'], $data['data']);
+		$data['app'] = $component->get_app($this->config['name'], TRUE);
 		$data['category'] = Category::findOrFail(\Input::get('category_id'));
-
+		$data['id'] = DB::table($this->config['table_content'])->max('id') + 1;
 		$data = Component::tabbable($data);
 
-		$data['id'] = DB::table($this->table_content)->max('id') + 1;
-
-		$validator = JsValidator::make(Component::_valid_construct($this->rows));
+		$validator = JsValidator::make(Component::_valid_construct($this->config['rows']));
 		View::share('validator', $validator);
 
 		return view('admin.feed.create', $data);
@@ -74,7 +73,7 @@ class FeedController extends Apps
      */
     public function store(Request $request, ContentPlugins $plugins)
     {
-		$validator = Validator::make($request->all(), Component::_valid_construct($this->rows));
+		$validator = Validator::make($request->all(), Component::_valid_construct($this->config['rows']));
 		if($validator->fails()){
 			return back()->withInput($request->except('password'))->withErrors($validator);
 		}
@@ -84,14 +83,17 @@ class FeedController extends Apps
 		$data->active = $request->input('active', 0);
 		$data->position = $request->input('position', 0);
 		$today = getdate();
-		$data->date = $request->input('position', $today['year'] .'-'. $today['mon'] .'-'. $today['mday']);
+		$data->date = $request->input('position');
+		if(empty($data->date)){
+			$data->date = $today['year'] .'-'. $today['mon'] .'-'. $today['mday'];
+		}
 
 		if($data->save()){
 			Alert::add('success', 'Материал '. $request->input('title') .' добавлен')->flash();
-			\Input::input('connect_id', $data->id);
-			$plugins->update($this->plugins_backend);
+			Input::input('connect_id', $data->id);
+			$plugins->update($this->config['plugins_backend']);
 
-			return Redirect::to('/admin/'. $this->name .'/'. $data->id .'/edit')->withInput();
+			return Redirect::to('/admin/'. $this->config['name'] .'/'. $data->id .'/edit')->withInput();
 		}
 
 		Alert::add('error', 'Материал '. $request->input('title') .' не добавлен')->flash();
@@ -107,8 +109,8 @@ class FeedController extends Apps
      */
     public function show($id, Component $component)
     {
-		$data['app'] = $component->get_app($this->name, TRUE);
-		$data['category'] = Category::whereId($id)->first();
+		$data['app'] = $component->get_app($this->config['name'], TRUE);
+		$data['category'] = Category::findOrFail($id)->first();
 		$data['data'] = Feed::whereCategory($id)->paginate(30);
 		View::share('validator', '');
 		return view('admin.feed.category', $data);
@@ -124,14 +126,14 @@ class FeedController extends Apps
 	public function edit($id, ContentPlugins $ContentPlugins)
 	{
 		$data['data'] = Feed::with('categoryInfo')->find($id);
-		$data['data'] = $ContentPlugins->attach_data($this->plugins_backend, $data['data']);
+		$data['data'] = $ContentPlugins->attach_data($this->config['plugins_backend'], $data['data']);
         $get_config = Config::get('components.feed');
         $data['app'] = $ContentPlugins->attach_rows($get_config);
 
 		$data = Component::tabbable($data);
 		$data['id'] = $id;
 
-		$validator = JsValidator::make(Component::_valid_construct($this->rows));
+		$validator = JsValidator::make(Component::_valid_construct($this->config['rows']));
 		View::share('validator', $validator);
 
 		return view('admin.feed.edit', $data);
@@ -147,7 +149,7 @@ class FeedController extends Apps
      */
     public function update(Request $request, $id, ContentPlugins $plugins)
     {
-		$validator = Validator::make($request->all(), Component::_valid_construct($this->rows));
+		$validator = Validator::make($request->all(), Component::_valid_construct($this->config['rows']));
 		if($validator->fails()){
 			return back()->withInput($request->except('password'))->withErrors($validator);
 		}
@@ -155,8 +157,7 @@ class FeedController extends Apps
 		$data = Feed::find($id);
 		if($data->fill($request->all())->save()){
 			Alert::add('success', 'Материал '. $request->input('title') .' изменен')->flash();
-
-			$plugins->update($this->plugins_backend);
+			$plugins->update($this->config['plugins_backend']);
 			return back();
 		}
 
@@ -174,14 +175,15 @@ class FeedController extends Apps
     public function destroy($id, ContentPlugins $plugins)
     {
 		$data = Feed::find($id);
+		$category = $data->category;
 		if($data->delete()){
 			Alert::add('success', 'Материал успешно удален')->flash();
 
 			//TODO: уничтожение данные от плагинов фото, файлы
-			$plugins->destroy($this->plugins_backend);
+			$plugins->destroy($this->config['plugins_backend']);
 		}else{
 			Alert::add('error', 'Материал не удален')->flash();
 		}
-		return Redirect::to('/admin/'. $this->name);
+		return Redirect::to('/admin/'. $this->config['name'] .'/'. $category);
     }
 }

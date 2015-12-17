@@ -91,7 +91,7 @@ class Ajax extends Controller
 
 	public function getLoadedImages()
 	{
-        $images = Model_Images::whereIdConnect(Input::get('id_connect'))->whereType(Input::get('type'))->orderBy('position', 'desc')->get();
+        $images = Model_Images::whereIdConnect(Input::get('id_connect'))->whereType(Input::get('type'))->orderBy('position', 'asc')->get();
 		foreach($images as $images_key => $images_value){
 			$images[$images_key]->type = $images_value->mime;
 			$images[$images_key]->file = '/images/'. Input::get('type') .'/big/'. $images_value->name;

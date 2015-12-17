@@ -75,7 +75,7 @@ CREATE TABLE `feed` (
   `short` text COLLATE utf8_unicode_ci NOT NULL,
   `description` text COLLATE utf8_unicode_ci NOT NULL,
   `url` varchar(155) COLLATE utf8_unicode_ci NOT NULL,
-  `date` date NOT NULL,
+  `date` datetime NOT NULL,
   `position` int(11) NOT NULL DEFAULT '0',
   `active` int(1) DEFAULT '1',
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -86,9 +86,9 @@ CREATE TABLE `feed` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `feed` (`id`, `title`, `category`, `short`, `description`, `url`, `date`, `position`, `active`, `created_at`, `updated_at`) VALUES
-(1,	'Пример заголовка',	NULL,	'',	'<p>&laquo;Эдиториум.ру&raquo;&nbsp;&mdash; сайт, созданный по&nbsp;материалам сборника &laquo;О&nbsp;редактировании и&nbsp;редакторах&raquo; Аркадия Эммануиловича Мильчина, который с&nbsp;1944 года коллекционировал выдержки из&nbsp;статей, рассказов, фельетонов, пародий, писем и&nbsp;книг, где так или иначе затрагивается тема редакторской работы. Эта коллекция легла в&nbsp;основу обширной антологии, представляющей историю и&nbsp;природу редактирования в&nbsp;первоисточниках.</p>',	'primer-zagolovka',	'2015-11-11',	20,	1,	'2015-11-26 05:47:36',	'2015-12-05 13:26:13'),
-(2,	'Новость об акции',	2,	'',	'<p>4324324</p>',	'ttrtr',	'2015-11-11',	23,	1,	'2015-11-26 06:10:16',	'2015-11-30 06:03:16'),
-(3,	'Новый материал',	1,	'',	'<p>Текст новости</p>',	'URL',	'0000-00-00',	0,	0,	'2015-12-02 06:27:28',	'2015-12-02 06:27:28');
+(1,	'Пример заголовка',	2,	'',	'<p>&laquo;Эдиториум.ру&raquo;&nbsp;&mdash; сайт, созданный по&nbsp;материалам сборника &laquo;О&nbsp;редактировании и&nbsp;редакторах&raquo; Аркадия Эммануиловича Мильчина, который с&nbsp;1944 года коллекционировал выдержки из&nbsp;статей, рассказов, фельетонов, пародий, писем и&nbsp;книг, где так или иначе затрагивается тема редакторской работы. Эта коллекция легла в&nbsp;основу обширной антологии, представляющей историю и&nbsp;природу редактирования в&nbsp;первоисточниках.</p>',	'primer-zagolovka',	'2015-11-11 00:00:00',	20,	1,	'2015-11-26 05:47:36',	'2015-12-05 13:26:13'),
+(2,	'Новость об акции',	2,	'',	'<p>4324324</p>',	'ttrtr',	'2015-11-11 00:00:00',	23,	1,	'2015-11-26 06:10:16',	'2015-11-30 06:03:16'),
+(4,	'Новость о новом годе',	1,	'',	'<p>Текст новости</p>',	'novost-o-novom-gode',	'2015-12-17 00:00:00',	0,	1,	'2015-12-17 06:09:43',	'2015-12-17 06:09:43');
 
 DROP TABLE IF EXISTS `images`;
 CREATE TABLE `images` (
@@ -109,7 +109,8 @@ INSERT INTO `images` (`id`, `name`, `mime`, `description`, `type`, `id_connect`,
 (5,	'foo.jpg',	'image/jpg',	'',	'page',	1,	'89ttrtr',	3,	'2015-12-03 02:13:09',	'2015-12-03 02:13:09'),
 (9,	'MORNING_EROFEY_on_Vimeo.png',	'image/png',	'',	'page',	9,	'333',	0,	'2015-12-04 16:08:49',	'2015-12-04 16:08:49'),
 (10,	'baner_ng.png',	'image/png',	'',	'feed',	3,	'URL',	0,	'2015-12-11 06:57:18',	'2015-12-11 06:57:18'),
-(11,	'bg_footer_right.png',	'image/png',	'',	'feed',	2,	'ttrtr',	10,	'2015-12-16 07:24:37',	'2015-12-16 07:24:37');
+(23,	'bg_header_right.png',	'image/png',	'',	'feed',	4,	'novost-o-novom-gode',	0,	'2015-12-17 07:31:45',	'2015-12-17 07:31:45'),
+(24,	'bg_footer_right.png',	'image/png',	'',	'feed',	4,	'novost-o-novom-gode',	0,	'2015-12-17 07:31:55',	'2015-12-17 07:31:55');
 
 DROP TABLE IF EXISTS `menu`;
 CREATE TABLE `menu` (
@@ -252,7 +253,9 @@ INSERT INTO `seo` (`id`, `seo_title`, `seo_description`, `seo_keywords`, `id_con
 (6,	'Title material',	'',	'',	3,	NULL,	'page',	'2015-12-02 06:27:28',	'2015-12-02 06:27:28'),
 (11,	'',	'',	'',	10,	NULL,	'page',	'2015-12-04 04:45:08',	'2015-12-04 04:45:08'),
 (12,	'',	'',	'',	9,	NULL,	'page',	'2015-12-04 16:10:40',	'2015-12-04 16:10:40'),
-(13,	'',	'',	'',	2,	NULL,	'feed',	'2015-12-16 07:28:44',	'2015-12-16 07:28:44');
+(13,	'',	'',	'',	2,	NULL,	'feed',	'2015-12-16 07:28:44',	'2015-12-16 07:28:44'),
+(14,	'',	'',	'',	4,	NULL,	'feed',	'2015-12-17 06:09:43',	'2015-12-17 06:09:43'),
+(15,	'',	'',	'',	5,	NULL,	'feed',	'2015-12-17 06:14:58',	'2015-12-17 06:14:58');
 
 DROP TABLE IF EXISTS `templates`;
 CREATE TABLE `templates` (
@@ -272,7 +275,9 @@ INSERT INTO `templates` (`id`, `template`, `template_global`, `type_connect`, `i
 (3,	'Template1',	'Template1',	'page',	6,	'2015-12-04 03:36:36',	'2015-12-04 03:36:36'),
 (4,	'Template1',	'Template1',	'page',	10,	'2015-12-04 04:45:08',	'2015-12-04 04:45:08'),
 (5,	'Template1',	'Template1',	'page',	9,	'2015-12-04 16:10:40',	'2015-12-04 16:10:40'),
-(6,	'0',	'0',	'feed',	2,	'2015-12-16 07:28:44',	'2015-12-16 07:28:44');
+(6,	'0',	'0',	'feed',	2,	'2015-12-16 07:28:44',	'2015-12-16 07:28:44'),
+(7,	'0',	'0',	'feed',	4,	'2015-12-17 06:09:43',	'2015-12-17 06:09:43'),
+(8,	'0',	'0',	'feed',	5,	'2015-12-17 06:14:58',	'2015-12-17 06:14:58');
 
 DROP TABLE IF EXISTS `throttle`;
 CREATE TABLE `throttle` (
@@ -324,4 +329,4 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `email`, `password`, `permissions`, `last_login`, `first_name`, `last_name`, `created_at`, `updated_at`) VALUES
 (1,	'fanamurov@ya.ru',	'$2y$10$SJzDIVLhyCdzOMxfnqAADOCoyzVgjwjmBlYaVWQlikchTd67mWPRa',	NULL,	'2015-12-11 06:02:37',	'4234',	'',	'2015-11-19 15:41:49',	'2015-12-11 06:02:37');
 
--- 2015-12-16 08:03:17
+-- 2015-12-17 07:53:23

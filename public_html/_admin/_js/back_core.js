@@ -3835,10 +3835,10 @@ $(document).ready(function(){
             files: uploaded_files,
             templates: {
                 box: '<ul class="jFiler-items-list jFiler-items-grid"></ul>',
-                item: '<li class="jFiler-item">\
+                item: '<li class="jFiler-item col-xs-12">\
                     <div class="jFiler-item-container">\
                         <div class="jFiler-item-inner">\
-                            <div class="jFiler-item-thumb">\
+                            <div class="jFiler-item-thumb col-xs-2">\
                                 <div class="jFiler-item-status"></div>\
                                 <div class="jFiler-item-info">\
                                     <span class="jFiler-item-title"><b title="{{fi-name}}">{{fi-name | limitTo: 25}}</b></span>\
@@ -3846,8 +3846,8 @@ $(document).ready(function(){
                                 </div>\
                                 {{fi-image}}\
                             </div>\
-                            <div class="jFiler-item-params" data-image="{{fi-name}}"></div>\
-                            <div class="jFiler-item-assets jFiler-row">\
+                            <div class="jFiler-item-params hidden" data-image="{{fi-name}}"></div>\
+                            <div class="jFiler-item-assets jFiler-row col-xs-10">\
                                 <ul class="list-inline pull-left">\
                                     <li>{{fi-progressBar}}</li>\
                                 </ul>\
@@ -3858,24 +3858,21 @@ $(document).ready(function(){
                         </div>\
                     </div>\
                 </li>',
-                itemAppend: '<li class="jFiler-item">\
+                itemAppend: '<li class="col-xs-12 jFiler-item">\
                         <div class="jFiler-item-container">\
                             <div class="jFiler-item-inner">\
-                                <div class="jFiler-item-thumb">\
+                                <div class="jFiler-item-thumb col-xs-2">\
                                     <div class="jFiler-item-status"></div>\
                                     <div class="jFiler-item-info">\
-                                        <span class="jFiler-item-title"><b title="{{fi-name}}">{{fi-name | limitTo: 25}}</b></span>\
-                                        <span class="jFiler-item-others">{{fi-size2}}</span>\
+                                        <span class="jFiler-item-title hidden"><b title="{{fi-name}}">{{fi-name | limitTo: 25}}</b></span>\
+                                        <span class="jFiler-item-others hidden">{{fi-size2}}</span>\
                                     </div>\
                                     {{fi-image}}\
                                 </div>\
-                                <div class="jFiler-item-params" data-image="{{fi-name}}"></div>\
-                                <div class="jFiler-item-assets jFiler-row">\
-                                    <ul class="list-inline pull-left">\
-                                        <li><span class="jFiler-item-others">{{fi-icon}}</span></li>\
-                                    </ul>\
+                                <div class="jFiler-item-params col-xs-9" data-image="{{fi-name}}"></div>\
+                                <div class="jFiler-item-assets jFiler-row col-xs-1">\
                                     <ul class="list-inline pull-right">\
-                                        <li><a class="icon-jfi-trash jFiler-item-trash-action"></a></li>\
+                                        <li><a class="btn btn-danger jFiler-item-trash-action">Удалить</a></li>\
                                     </ul>\
                                 </div>\
                             </div>\
@@ -3910,6 +3907,8 @@ $(document).ready(function(){
                     var parent = el.find(".jFiler-jProgressBar").parent();
                     el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
                         $("<div class=\"jFiler-item-others text-success\"><i class=\"icon-jfi-check-circle\"></i> Загружено</div>").hide().appendTo(parent).fadeIn("slow");
+                        var image_name = el.find('.jFiler-item-params').attr('data-image');
+                        view_loaded_images_params({loaded: {name: image_name}});
                     });
                 },
                 error: function(el){
@@ -3961,7 +3960,7 @@ $(document).ready(function(){
         firstDay: 1,
         monthsFull: [ 'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь' ],
         weekdaysShort: [ 'Вск', 'Пон', 'Вт', 'Ср', 'Чт', 'Пт', 'Суб' ],
-        format: 'yyyy-mm-dd'
+        format: 'yyyy-mm-dd 00:00:00'
     });
 
     /*

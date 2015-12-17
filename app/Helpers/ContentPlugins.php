@@ -26,13 +26,12 @@ class ContentPlugins implements ContentPluginsInterface
 	/**
 	 * Прикрепляем к объекту полей компонента поля от плагинов
 	 * @param $app
-	 * @param $plugins_backend
 	 *
 	 * @return mixed
 	 */
-	public function attach_rows($app, $plugins_backend)
+	public function attach_rows($app)
 	{
-		if(in_array('seo', $plugins_backend, TRUE)){
+		if(in_array('seo', $app['plugins_backend'], TRUE)){
 			$app['rows']['seo_title'] = [
 				'title' => 'Title материала',
 				'type' => 'text',
@@ -57,8 +56,8 @@ class ContentPlugins implements ContentPluginsInterface
 			];
 		}
 
-		if(in_array('templates', $plugins_backend, TRUE)){
-			$app['rows']['template'] = [
+		if(in_array('templates', $app['plugins_backend'], TRUE)){
+            $app['rows']['template'] = [
 				'title' => 'Шаблон материала',
 				'type' => 'select',
 				'options' => ['Template1', 'Template2'],
@@ -67,7 +66,7 @@ class ContentPlugins implements ContentPluginsInterface
 				'form-group_class' => 'col-sm-6 col-sm-offset-3'
 			];
 
-			$app['rows']['template_global'] = [
+            $app['rows']['template_global'] = [
 				'title' => 'Глобальный шаблон',
 				'type' => 'select',
 				'options' => ['Template1', 'Template2'],
@@ -76,7 +75,6 @@ class ContentPlugins implements ContentPluginsInterface
 				'form-group_class' => 'col-sm-6 col-sm-offset-3'
 			];
 		}
-
 		return $app;
 	}
 

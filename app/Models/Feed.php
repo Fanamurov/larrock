@@ -38,6 +38,8 @@ class Feed extends Model
 
 	protected $fillable = ['title', 'short', 'description', 'category', 'url', 'date', 'position', 'active'];
 
+    protected $dates = ['created_at', 'updated_at', 'date'];
+
 	public function scopeCategoryInfo()
 	{
 		return DB::table('feed')
@@ -45,7 +47,7 @@ class Feed extends Model
 			->get();
 	}
 
-	public function get_category()
+	public function categoryInfo()
 	{
 		return $this->hasOne('App\Models\Category', 'id', 'category');
 	}

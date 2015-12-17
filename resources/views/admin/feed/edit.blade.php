@@ -1,18 +1,11 @@
 @extends('admin.layouts.main')
-
 @section('title') {{ $app['name'] }} admin @endsection
-@section('page_h1')
-    {{ $data['title'] }}
-@endsection
-@section('page_h1_new', 'страницы')
-@section('app_name'){{ $app['name'] }}@endsection
-@section('app_title') {{ $app['title'] }} @endsection
 
 @section('content')
     <div class="ibox float-e-margins">
         <div class="ibox-title background-transparent">
-            <h1 class="inline"><span class="text-muted">Ленты/</span>{{ $category->title }}/{{ $data->title }}</h1>
-            <a href="/feed/{{ $category->url}}">/feed/{{ $category->url}}/{{ $data->url }}</a>
+            <h1 class="inline"><span class="text-muted">Ленты/</span>{{ $data->categoryInfo->title }}/{{ $data->title }}</h1>
+            <a href="/feed/{{ $data->categoryInfo->url}}/{{ $data->url }}">/feed/{{ $data->categoryInfo->url}}/{{ $data->url }}</a>
         </div>
 
         <div>

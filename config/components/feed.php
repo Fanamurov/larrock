@@ -21,6 +21,11 @@ return [
 			'valid' => 'max:255|required',
 			'options_connect' => ['row' => 'title', 'table' => 'category']
 		],
+		'short' => [
+			'title' => 'Анонс новости',
+			'type' => 'textarea',
+			'tab' => ['main' => 'Заголовок, описание']
+		],
 		'description' => [
 			'title' => 'Текст новости',
 			'type' => 'textarea',

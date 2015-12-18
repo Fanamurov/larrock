@@ -1,4 +1,4 @@
-@extends('admin.layouts.main')
+@extends('admin.main')
 @section('title') {{ $app['name'] }} admin @endsection
 
 @section('content')

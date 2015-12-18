@@ -1,12 +1,5 @@
-@extends('admin.layouts.main')
-
+@extends('admin.main')
 @section('title') {{ $app['name'] }} admin @endsection
-@section('page_h1')
-    {{ $data['title'] }}
-@endsection
-@section('page_h1_new', 'страницы')
-@section('app_name'){{ $app['name'] }}@endsection
-@section('app_title') {{ $app['title'] }} @endsection
 
 @section('content')
     <div class="ibox float-e-margins">

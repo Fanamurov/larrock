@@ -4,6 +4,10 @@
 @import "plugins/chosen/chosen";
 //@import "plugins/dropzone/dropzone";
 
+input[name=position]{
+  width: 60px;
+}
+
 .top-navigation .wrapper.wrapper-content{
   padding-top: 15px;
   .col-lg-12 .ibox{
@@ -20,6 +24,7 @@
 }
 .ibox-content .jFiler-items-grid .jFiler-item .jFiler-item-container{
   border: none;
+  box-shadow: none;
 }
 .jFiler-item-thumb-image{
   img{
@@ -47,6 +52,14 @@
 	  font-style: italic;
 	}
   }
+  .jFiler-input-choose-btn.blue{
+	color: #428bca;
+	&:hover,
+	&:focus{
+	  background: #428bca;
+	  color: white;
+	}
+  }
 }
 .ibox-content{
   .jFiler-items-grid .jFiler-item .jFiler-item-container .jFiler-item-thumb {
@@ -59,6 +72,9 @@
   }
   .jFiler-item .jFiler-item-container .jFiler-item-thumb img{
 	max-width: 100%;
+  }
+  .jFiler-items-grid .jFiler-item-trash-action:hover{
+	color: white;
   }
 }
 

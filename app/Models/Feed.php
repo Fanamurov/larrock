@@ -51,4 +51,24 @@ class Feed extends Model
 	{
 		return $this->hasOne('App\Models\Category', 'id', 'category');
 	}
+
+	public function images()
+	{
+		return $this->hasMany('App\Models\Images', 'id_connect', 'id');
+	}
+
+	public function files()
+	{
+		return $this->hasMany('App\Models\Files', 'id_connect', 'id');
+	}
+
+	public function templates()
+	{
+		return $this->hasMany('App\Models\Templates', 'id_connect', 'id');
+	}
+
+	public function seo()
+	{
+		return $this->hasMany('App\Models\Seo', 'id_connect', 'id');
+	}
 }

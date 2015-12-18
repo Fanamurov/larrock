@@ -88,7 +88,27 @@ CREATE TABLE `feed` (
 INSERT INTO `feed` (`id`, `title`, `category`, `short`, `description`, `url`, `date`, `position`, `active`, `created_at`, `updated_at`) VALUES
 (1,	'Пример заголовка',	2,	'',	'<p>&laquo;Эдиториум.ру&raquo;&nbsp;&mdash; сайт, созданный по&nbsp;материалам сборника &laquo;О&nbsp;редактировании и&nbsp;редакторах&raquo; Аркадия Эммануиловича Мильчина, который с&nbsp;1944 года коллекционировал выдержки из&nbsp;статей, рассказов, фельетонов, пародий, писем и&nbsp;книг, где так или иначе затрагивается тема редакторской работы. Эта коллекция легла в&nbsp;основу обширной антологии, представляющей историю и&nbsp;природу редактирования в&nbsp;первоисточниках.</p>',	'primer-zagolovka',	'2015-11-11 00:00:00',	20,	1,	'2015-11-26 05:47:36',	'2015-12-05 13:26:13'),
 (2,	'Новость об акции',	2,	'',	'<p>4324324</p>',	'ttrtr',	'2015-11-11 00:00:00',	23,	1,	'2015-11-26 06:10:16',	'2015-11-30 06:03:16'),
-(4,	'Новость о новом годе',	1,	'',	'<p>Текст новости</p>',	'novost-o-novom-gode',	'2015-12-17 00:00:00',	0,	1,	'2015-12-17 06:09:43',	'2015-12-17 06:09:43');
+(4,	'Новость о «новом годе»',	1,	'<p>Текст анонса</p>',	'<p>Текст новости</p>',	'novost-o-novom-gode',	'2015-12-17 00:00:00',	0,	1,	'2015-12-17 06:09:43',	'2015-12-18 06:40:14');
+
+DROP TABLE IF EXISTS `files`;
+CREATE TABLE `files` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `mime` char(10) COLLATE utf8_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `id_connect` int(11) NOT NULL,
+  `param` text COLLATE utf8_unicode_ci NOT NULL,
+  `position` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `files` (`id`, `name`, `mime`, `description`, `type`, `id_connect`, `param`, `position`, `created_at`, `updated_at`) VALUES
+(1,	'bg_header.jpg',	'image/jpeg',	'',	'feed',	4,	'novost-o-novom-gode',	0,	'2015-12-18 05:28:15',	'2015-12-18 05:28:15'),
+(2,	'план финансово-хозяйственной деятельности на 2015 год.rar',	'applicatio',	'',	'feed',	1,	'primer-zagolovka',	0,	'2015-12-18 06:43:20',	'2015-12-18 06:43:20'),
+(3,	'муниципальное задание на 2015 год.rar',	'applicatio',	'',	'feed',	1,	'primer-zagolovka',	0,	'2015-12-18 06:43:20',	'2015-12-18 06:43:20');
 
 DROP TABLE IF EXISTS `images`;
 CREATE TABLE `images` (
@@ -109,8 +129,9 @@ INSERT INTO `images` (`id`, `name`, `mime`, `description`, `type`, `id_connect`,
 (5,	'foo.jpg',	'image/jpg',	'',	'page',	1,	'89ttrtr',	3,	'2015-12-03 02:13:09',	'2015-12-03 02:13:09'),
 (9,	'MORNING_EROFEY_on_Vimeo.png',	'image/png',	'',	'page',	9,	'333',	0,	'2015-12-04 16:08:49',	'2015-12-04 16:08:49'),
 (10,	'baner_ng.png',	'image/png',	'',	'feed',	3,	'URL',	0,	'2015-12-11 06:57:18',	'2015-12-11 06:57:18'),
-(23,	'bg_header_right.png',	'image/png',	'',	'feed',	4,	'novost-o-novom-gode',	0,	'2015-12-17 07:31:45',	'2015-12-17 07:31:45'),
-(24,	'bg_footer_right.png',	'image/png',	'',	'feed',	4,	'novost-o-novom-gode',	0,	'2015-12-17 07:31:55',	'2015-12-17 07:31:55');
+(11,	'33665ue.jpg',	'image/jpeg',	'',	'feed',	4,	'novost-o-novom-gode',	0,	'2015-12-18 04:30:57',	'2015-12-18 04:30:57'),
+(13,	'nhk733b5ue.jpg',	'image/jpeg',	'',	'test',	4,	'novost-o-novom-gode',	0,	'2015-12-18 04:30:57',	'2015-12-18 04:30:57'),
+(14,	'652525ue.jpg',	'image/jpeg',	'',	'feed',	4,	'novost-o-novom-gode',	0,	'2015-12-18 04:30:57',	'2015-12-18 04:30:57');
 
 DROP TABLE IF EXISTS `menu`;
 CREATE TABLE `menu` (
@@ -153,7 +174,8 @@ INSERT INTO `migrations` (`migration`, `batch`) VALUES
 ('2015_12_06_004411_create_menu_table',	6),
 ('2015_12_08_152322_create_category_table',	7),
 ('2015_12_08_155118_update_feed_table',	8),
-('2015_12_08_173518_create_page_table',	9);
+('2015_12_08_173518_create_page_table',	9),
+('2015_12_18_151456_create_files_table',	10);
 
 DROP TABLE IF EXISTS `page`;
 CREATE TABLE `page` (
@@ -192,7 +214,8 @@ INSERT INTO `persistences` (`id`, `user_id`, `code`, `created_at`, `updated_at`)
 (11,	1,	'jp05qAtmuta0D5Qk6KvJhtpnPeldpFpB',	'2015-11-30 07:21:48',	'2015-11-30 07:21:48'),
 (12,	1,	'udSUb7m4mJpUZEEpYyI6RIYPnfuNvrkx',	'2015-12-02 07:57:39',	'2015-12-02 07:57:39'),
 (13,	1,	'zlSDU4K06BvazeEDsWW0ySdmtykMNJJR',	'2015-12-02 07:58:20',	'2015-12-02 07:58:20'),
-(14,	1,	'lWKl1mWZhuE7cNRmAaYjNkPQs4ZFpZbA',	'2015-12-11 06:02:37',	'2015-12-11 06:02:37');
+(14,	1,	'lWKl1mWZhuE7cNRmAaYjNkPQs4ZFpZbA',	'2015-12-11 06:02:37',	'2015-12-11 06:02:37'),
+(15,	1,	'ZwCwP7oqg2PXJ8cOQRGEghqQVuAU3WVI',	'2015-12-17 07:57:59',	'2015-12-17 07:57:59');
 
 DROP TABLE IF EXISTS `reminders`;
 CREATE TABLE `reminders` (
@@ -254,7 +277,7 @@ INSERT INTO `seo` (`id`, `seo_title`, `seo_description`, `seo_keywords`, `id_con
 (11,	'',	'',	'',	10,	NULL,	'page',	'2015-12-04 04:45:08',	'2015-12-04 04:45:08'),
 (12,	'',	'',	'',	9,	NULL,	'page',	'2015-12-04 16:10:40',	'2015-12-04 16:10:40'),
 (13,	'',	'',	'',	2,	NULL,	'feed',	'2015-12-16 07:28:44',	'2015-12-16 07:28:44'),
-(14,	'',	'',	'',	4,	NULL,	'feed',	'2015-12-17 06:09:43',	'2015-12-17 06:09:43'),
+(14,	'',	'',	'',	4,	NULL,	'test',	'2015-12-17 06:09:43',	'2015-12-17 06:09:43'),
 (15,	'',	'',	'',	5,	NULL,	'feed',	'2015-12-17 06:14:58',	'2015-12-17 06:14:58');
 
 DROP TABLE IF EXISTS `templates`;
@@ -270,14 +293,7 @@ CREATE TABLE `templates` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `templates` (`id`, `template`, `template_global`, `type_connect`, `id_connect`, `created_at`, `updated_at`) VALUES
-(1,	'0',	'0',	'page',	1,	'2015-12-03 17:27:58',	'2015-12-08 07:49:25'),
-(2,	'Template1',	'Template1',	'page',	4,	'2015-12-04 03:20:21',	'2015-12-04 03:20:21'),
-(3,	'Template1',	'Template1',	'page',	6,	'2015-12-04 03:36:36',	'2015-12-04 03:36:36'),
-(4,	'Template1',	'Template1',	'page',	10,	'2015-12-04 04:45:08',	'2015-12-04 04:45:08'),
-(5,	'Template1',	'Template1',	'page',	9,	'2015-12-04 16:10:40',	'2015-12-04 16:10:40'),
-(6,	'0',	'0',	'feed',	2,	'2015-12-16 07:28:44',	'2015-12-16 07:28:44'),
-(7,	'0',	'0',	'feed',	4,	'2015-12-17 06:09:43',	'2015-12-17 06:09:43'),
-(8,	'0',	'0',	'feed',	5,	'2015-12-17 06:14:58',	'2015-12-17 06:14:58');
+(9,	'Template2',	'Template2',	'feed',	4,	'2015-12-18 06:40:38',	'2015-12-18 06:44:30');
 
 DROP TABLE IF EXISTS `throttle`;
 CREATE TABLE `throttle` (
@@ -327,6 +343,6 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `users` (`id`, `email`, `password`, `permissions`, `last_login`, `first_name`, `last_name`, `created_at`, `updated_at`) VALUES
-(1,	'fanamurov@ya.ru',	'$2y$10$SJzDIVLhyCdzOMxfnqAADOCoyzVgjwjmBlYaVWQlikchTd67mWPRa',	NULL,	'2015-12-11 06:02:37',	'4234',	'',	'2015-11-19 15:41:49',	'2015-12-11 06:02:37');
+(1,	'fanamurov@ya.ru',	'$2y$10$SJzDIVLhyCdzOMxfnqAADOCoyzVgjwjmBlYaVWQlikchTd67mWPRa',	NULL,	'2015-12-17 07:57:59',	'4234',	'',	'2015-11-19 15:41:49',	'2015-12-17 07:57:59');
 
--- 2015-12-17 07:53:23
+-- 2015-12-18 07:50:11

@@ -1,5 +1,4 @@
-@extends('admin.layouts.main')
-
+@extends('admin.main')
 @section('title') {{ $app['name'] }} admin @endsection
 
 @section('content')
@@ -92,7 +91,7 @@
             @if(count($data) === 0)
                 <div class="alert alert-warning">Данных еще нет</div>
             @endif
-            <?//=$data->render()?>
+           {!! $data->render() !!}
         </div>
     </div>
 @endsection

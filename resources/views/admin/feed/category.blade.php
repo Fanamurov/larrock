@@ -1,12 +1,11 @@
-@extends('admin.layouts.main')
-
+@extends('admin.main')
 @section('title') {{ $app['name'] }} admin @endsection
 
 @section('content')
     <div class="ibox float-e-margins">
         <div class="ibox-title background-transparent">
             <div>
-                <h1 class="inline"><span class="text-muted">Ленты/</span>{{ $category->title }}</h1>
+                <h1 class="inline"><a href="/admin/feed">Ленты</a>/{{ $category->title }}</h1>
                 <a href="/feed/{{ $category->url}}">/feed/{{ $category->url}}</a>
                 <div class="add-panel">
                     <div>
@@ -115,7 +114,7 @@
             @if(count($data) === 0)
                 <div class="alert alert-warning">Данных еще нет</div>
             @endif
-            <?//=$data->render()?>
+            {!! $data->render() !!}
         </div>
     </div>
 @endsection

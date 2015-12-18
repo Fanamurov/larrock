@@ -63,5 +63,5 @@ return [
 	'settings' => '',
 	'plugins_backend' => ['seo', 'images', 'files', 'templates'],
 	'plugins_front' => '',
-	'version' => 3
+	'version' => 1
 ];

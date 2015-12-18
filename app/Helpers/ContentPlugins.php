@@ -6,23 +6,11 @@ use App\Helpers\ContentPlugins\ContentPluginsInterface;
 use App\Models\Seo;
 use App\Models\Templates;
 use App\Models\Images as Model_Images;
+use App\Models\Files as Model_Files;
 use Request;
 
 class ContentPlugins implements ContentPluginsInterface
 {
-	protected $rows;
-
-	public function __construct(){
-		$this->rows = [];
-	}
-
-	public function __set($name, $value) {
-		$this->rows[$name] = $value;
-	}
-	public function __get($name) {
-		return $this->rows[$name];
-	}
-
 	/**
 	 * Прикрепляем к объекту полей компонента поля от плагинов
 	 * @param $app
@@ -60,7 +48,7 @@ class ContentPlugins implements ContentPluginsInterface
             $app['rows']['template'] = [
 				'title' => 'Шаблон материала',
 				'type' => 'select',
-				'options' => ['Template1', 'Template2'],
+				'options' => ['Template1' => 'Template1', 'Template2' => 'Template2'],
 				'tab' => ['templates' => 'Шаблоны'],
 				'valid' => 'max:255',
 				'form-group_class' => 'col-sm-6 col-sm-offset-3'
@@ -69,7 +57,7 @@ class ContentPlugins implements ContentPluginsInterface
             $app['rows']['template_global'] = [
 				'title' => 'Глобальный шаблон',
 				'type' => 'select',
-				'options' => ['Template1', 'Template2'],
+				'options' => ['Template1' => 'Template1', 'Template2' => 'Template2'],
 				'tab' => ['templates' => 'Шаблоны'],
 				'valid' => 'max:255',
 				'form-group_class' => 'col-sm-6 col-sm-offset-3'
@@ -81,15 +69,15 @@ class ContentPlugins implements ContentPluginsInterface
     /**
      * Присоединение полей для заполнения/данных плагинов прикрепленных к материалу
      *
-     * @param $plugins_backend
-     * @param $data
+     * @param array	$app_config
+     * @param mixed	$data
      * @return mixed
      */
-	public function attach_data($plugins_backend, $data)
+	public function attach_data($app_config, $data)
 	{
-		if(in_array('seo', $plugins_backend, TRUE)){
+		if(in_array('seo', $app_config['plugins_backend'], TRUE)){
             if(isset($data->id)){
-                if($get_seo = Seo::whereIdConnect($data->id)->whereTypeConnect('page')->first()){
+                if($get_seo = Seo::whereIdConnect($data->id)->whereTypeConnect($app_config['name'])->first()){
                     $data->seo_title = $get_seo->seo_title;
                     $data->seo_description = $get_seo->seo_description;
                     $data->seo_keywords = $get_seo->seo_keywords;
@@ -102,9 +90,9 @@ class ContentPlugins implements ContentPluginsInterface
 
 		}
 
-        if(in_array('templates', $plugins_backend, TRUE)){
+        if(in_array('templates', $app_config['plugins_backend'], TRUE)){
             if(isset($data->id)){
-                if($get_template = Templates::whereIdConnect($data->id)->whereTypeConnect('page')->first()){
+                if($get_template = Templates::whereIdConnect($data->id)->whereTypeConnect($app_config['name'])->first()){
                     $data->template = $get_template->template;
                     $data->template_global = $get_template->template_global;
                 }
@@ -183,13 +171,18 @@ class ContentPlugins implements ContentPluginsInterface
         if($images = Model_Images::whereIdConnect(Request::input('id_connect'))->whereType(Request::input('type_connect'))->get()){
             foreach($images as $images_value){
                 $images_value->delete();
-                @unlink('images/page/big/'. $images_value->name);
+                @unlink('images/'. Request::input('type_connect') .'/big/'. $images_value->name);
             }
         }
     }
 
     protected function destroy_files()
     {
-        //TODO:удаление файлов
+		if($files = Model_Files::whereIdConnect(Request::input('id_connect'))->whereType(Request::input('type_connect'))->get()){
+			foreach($files as $files_value){
+				$files_value->delete();
+				@unlink('files/'. Request::input('type_connect') .'/'. $files_value->name);
+			}
+		}
     }
 }

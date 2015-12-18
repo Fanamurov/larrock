@@ -11,9 +11,8 @@ use DB;
 use Input;
 use Image;
 use App\Models\Images as Model_Images;
-use Roumen\Sitemap\Model;
+use App\Models\Files as Model_Files;
 use Cache;
-use App\Models\Apps;
 
 class Ajax extends Controller
 {
@@ -53,7 +52,7 @@ class Ajax extends Controller
         $param = Input::get('param');
 
 		//Достаем конфиг пресетов компонента
-		$get_app = Apps::whereName($folder)->get(['plugins_backend', 'settings']);
+		//$get_app = Apps::whereName($folder)->get(['plugins_backend', 'settings']);
 
         if( !file_exists('images')){
             mkdir('images/', 0755);
@@ -69,7 +68,7 @@ class Ajax extends Controller
 
         foreach($images as $images_value){
             if(Image::make($images_value->getRealPath())
-                ->resize(800, null, function ($constraint) {
+                ->resize(1200, null, function ($constraint) {
                 $constraint->aspectRatio();
             })->save('images/'. $folder .'/big/'. $images_value->getClientOriginalName())){
 
@@ -112,12 +111,14 @@ class Ajax extends Controller
 
     public function destroyImage()
     {
-        //TODO:Физическое удаление
-        @unlink('images/page/big/'. Input::get('name'));
-
         $image_delete = Model_Images::whereName(Input::get('name'))->first();
+		$type = $image_delete->type;
         if($image_delete->delete()){
-            return response()->json(['status' => 'good', 'message' => 'Изображение '. Input::get('name') .' удалено']);
+			if(unlink('images/'. $type .'/big/'. Input::get('name'))){
+				return response()->json(['status' => 'good', 'message' => 'Изображение '. Input::get('name') .' удалено']);
+			}else{
+				return response()->json(['status' => 'good', 'message' => 'Изображение '. Input::get('name') .' удалено из БД, но не физически']);
+			}
         }else{
             return response()->json(['status' => 'error', 'message' => 'Изображение '. Input::get('name') .' не удалено']);
         }
@@ -125,7 +126,53 @@ class Ajax extends Controller
 
 	public function UploadFile()
 	{
+		$files = Input::file('files');
+		$folder = Input::get('folder');
+		$id_connect = Input::get('id_connect');
+		$param = Input::get('param');
 
+		if( !file_exists('files')){
+			mkdir('files/', 0755);
+		}
+
+		if( !file_exists('files/'. $folder)){
+			mkdir('files/'. $folder, 0755);
+		}
+
+		foreach($files as $files_value){
+			$files_value->move('files/'. $folder, $files_value->getClientOriginalName());
+			//Загрузка информации о фото в БД
+			$inset_file = new Model_Files();
+			$inset_file->name = $files_value->getClientOriginalName();
+			$inset_file->mime = $files_value->getClientMimeType();
+			$inset_file->description = '';
+			$inset_file->type = $folder;
+			$inset_file->id_connect = $id_connect;
+			$inset_file->param = $param;
+			$inset_file->position = 0;
+			$inset_file->save();
+		}
+	}
+
+	public function getLoadedFiles()
+	{
+		$images = Model_Files::whereIdConnect(Input::get('id_connect'))->whereType(Input::get('type'))->orderBy('position', 'asc')->get();
+		foreach($images as $images_key => $images_value){
+			$images[$images_key]->type = $images_value->mime;
+			$images[$images_key]->file = '/files/'. Input::get('type') .'/big/'. $images_value->name;
+			$images[$images_key]->size = 456;
+		}
+		return $images;
+	}
+
+	public function getFileParams()
+	{
+		$data = Model_Files::whereName(Input::get('name'))->first();
+		if(isset($data->id)){
+			return view('admin.plugins.files', ['file' => $data]);
+		}else{
+			return response('');
+		}
 	}
 
     public function Translit()

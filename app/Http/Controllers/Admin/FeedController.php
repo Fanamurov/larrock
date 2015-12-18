@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Helpers\ContentPlugins as ContentPlugins;
+use App\Helpers\ContentPlugins;
 use App\Helpers\Component;
 use App\Models\Feed;
 use App\Models\Category;
@@ -37,7 +37,7 @@ class FeedController extends Controller
 	public function index(ContentPlugins $ContentPlugins)
 	{
         $data['app'] = $ContentPlugins->attach_rows($this->config);
-        $data['data'] = Feed::with('categoryInfo')->get();
+        $data['data'] = Feed::with('categoryInfo')->paginate(30);
 		View::share('validator', '');
 		return view('admin.feed.index', $data);
 	}
@@ -52,7 +52,7 @@ class FeedController extends Controller
     public function create(Component $component, ContentPlugins $plugins)
     {
 		$data['data'] = new Feed;
-		$data['data'] = $plugins->attach_data($this->config['plugins_backend'], $data['data']);
+		$data['data'] = $plugins->attach_data($this->config, $data['data']);
 		$data['app'] = $component->get_app($this->config['name'], TRUE);
 		$data['category'] = Category::findOrFail(\Input::get('category_id'));
 		$data['id'] = DB::table($this->config['table_content'])->max('id') + 1;
@@ -110,7 +110,7 @@ class FeedController extends Controller
     public function show($id, Component $component)
     {
 		$data['app'] = $component->get_app($this->config['name'], TRUE);
-		$data['category'] = Category::findOrFail($id)->first();
+		$data['category'] = Category::findOrFail($id);
 		$data['data'] = Feed::whereCategory($id)->paginate(30);
 		View::share('validator', '');
 		return view('admin.feed.category', $data);
@@ -125,8 +125,20 @@ class FeedController extends Controller
 	 */
 	public function edit($id, ContentPlugins $ContentPlugins)
 	{
-		$data['data'] = Feed::with('categoryInfo')->find($id);
-		$data['data'] = $ContentPlugins->attach_data($this->config['plugins_backend'], $data['data']);
+		$data['data'] = Feed::with([
+			'categoryInfo',
+			'seo' => function($query){
+			$query->whereTypeConnect('feed');
+			},
+			'images' => function($query){
+				$query->whereType('feed');
+			},
+			'files'=> function($query){
+				$query->whereType('feed');
+			}]
+		)->findOrFail($id);
+		dd($data['data']);
+
         $get_config = Config::get('components.feed');
         $data['app'] = $ContentPlugins->attach_rows($get_config);
 
@@ -174,12 +186,12 @@ class FeedController extends Controller
      */
     public function destroy($id, ContentPlugins $plugins)
     {
+		$id = (int) $id;
 		$data = Feed::find($id);
 		$category = $data->category;
 		if($data->delete()){
 			Alert::add('success', 'Материал успешно удален')->flash();
-
-			//TODO: уничтожение данные от плагинов фото, файлы
+			//уничтожение данные от плагинов фото, файлы
 			$plugins->destroy($this->config['plugins_backend']);
 		}else{
 			Alert::add('error', 'Материал не удален')->flash();

@@ -55,5 +55,5 @@ return [
 	'settings' => [],
 	'plugins_backend' => [],
 	'plugins_front' => [],
-	'version' => 10
+	'version' => 1
 ];

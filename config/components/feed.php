@@ -60,8 +60,9 @@ return [
 		],
 	],
 	'menu_category' => 'feed',
-	'settings' => '',
+	'admin_menu' => ['type' => 'category_list'],
+	'settings' => [],
 	'plugins_backend' => ['seo', 'images', 'files', 'templates'],
-	'plugins_front' => '',
+	'plugins_front' => [],
 	'version' => 1
 ];

@@ -4,8 +4,12 @@
 @section('content')
     <div class="ibox float-e-margins">
         <div class="ibox-title background-transparent">
-            <h1 class="inline"><span class="text-muted">Ленты/</span>{{ $category->title }}/Новый материал</h1>
-            <a href="/feed/{{ $category->url}}">/feed/{{ $category->url}}</a>
+            <h1 class="inline">
+                <a href="/admin/{{ $app['name'] }}">{{ $app['title'] }}</a>/
+                <a href="/admin/{{ $app['name'] }}/{{ $data->categoryInfo->id }}">{{ $data->categoryInfo->title }}</a>
+                /Новый материал
+            </h1>
+            <a href="/{{ $app['name'] }}/{{ $data->categoryInfo->url}}">/{{ $app['name'] }}/{{ $data->categoryInfo->url}}</a>
         </div>
 
         <div>
@@ -41,7 +45,6 @@
                         @endforeach
                     </div>
                 </div>
-
                 <div class="form-group text-right">
                     <input type="hidden" name="_token" value="{{csrf_token()}}">
                     <button type="submit" class="btn btn-info">Сохранить</button>

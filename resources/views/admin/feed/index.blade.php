@@ -5,8 +5,8 @@
     <div class="ibox float-e-margins">
         <div class="ibox-title background-transparent">
             <div>
-                <h1 class="inline"><span class="text-muted">Ленты</h1>
-                <a href="/feed/">/feed/</a>
+                <h1 class="inline">{{ $app['title'] }}</h1>
+                <a href="/{{ $app['name'] }}/">/{{ $app['name'] }}/</a>
             </div>
         </div>
     </div>
@@ -52,10 +52,10 @@
                                 </td>
                             @endif
                         @endforeach
-                        <td>{{ $data_value->categoryInfo->title }}</td>
+                        <td>{{ $data_value->get_category->title }}</td>
                         <td>
-                            <a href="{{ action('Admin\FeedController@index') }}/{{ $data_value->categoryInfo->url}}/{{ $data_value->url }}">
-                                {{ action('Admin\FeedController@index', [], FALSE) }}/{{ $data_value->categoryInfo->url}}/{{ $data_value->url }}
+                            <a href="{{ action('Admin\FeedController@index') }}/{{ $data_value->get_category->url}}/{{ $data_value->url }}">
+                                {{ action('Admin\FeedController@index', [], FALSE) }}/{{ $data_value->get_category->url}}/{{ $data_value->url }}
                             </a>
                         </td>
                         <td class="row-updated_at">{{ $data_value->updated_at }}</td>

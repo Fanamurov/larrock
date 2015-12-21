@@ -25,7 +25,7 @@
 <div id="wrapper" class="top-navigation">
     <div id="wrapper">
         <div id="page-wrapper" class="gray-bg">
-            @include('admin.menu')
+            @if(isset($menu)) {!! $menu !!} @endif
             <div class="wrapper wrapper-content">
                 <div class="container">
                     <div class="row">

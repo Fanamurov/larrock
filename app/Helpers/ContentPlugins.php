@@ -8,6 +8,7 @@ use App\Models\Templates;
 use App\Models\Images as Model_Images;
 use App\Models\Files as Model_Files;
 use Request;
+use Illuminate\Support\Arr;
 
 class ContentPlugins implements ContentPluginsInterface
 {
@@ -76,32 +77,15 @@ class ContentPlugins implements ContentPluginsInterface
 	public function attach_data($app_config, $data)
 	{
 		if(in_array('seo', $app_config['plugins_backend'], TRUE)){
-            if(isset($data->id)){
-                if($get_seo = Seo::whereIdConnect($data->id)->whereTypeConnect($app_config['name'])->first()){
-                    $data->seo_title = $get_seo->seo_title;
-                    $data->seo_description = $get_seo->seo_description;
-                    $data->seo_keywords = $get_seo->seo_keywords;
-                }
-            }else{
-                $data->seo_title = '';
-                $data->seo_description = '';
-                $data->seo_keywords = '';
-            }
-
+			$data->seo_title = Arr::get($data->get_seo, 'seo_title', '');
+			$data->seo_description = Arr::get($data->get_seo, 'seo_description', '');
+			$data->seo_keywords = Arr::get($data->get_seo, 'seo_keywords', '');
 		}
 
         if(in_array('templates', $app_config['plugins_backend'], TRUE)){
-            if(isset($data->id)){
-                if($get_template = Templates::whereIdConnect($data->id)->whereTypeConnect($app_config['name'])->first()){
-                    $data->template = $get_template->template;
-                    $data->template_global = $get_template->template_global;
-                }
-            }else{
-                $data->template = '';
-                $data->template_global = '';
-            }
+			$data->template = Arr::get($data->get_templates, 'template', '');
+			$data->template_global = Arr::get($data->get_templates, 'template_global', '');
         }
-
 		return $data;
 	}
 
@@ -132,7 +116,6 @@ class ContentPlugins implements ContentPluginsInterface
 		}
 		$template->fill(Request::all())->save();
 	}
-
 
 	public function destroy(array $plugins_load)
 	{

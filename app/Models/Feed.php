@@ -47,28 +47,28 @@ class Feed extends Model
 			->get();
 	}
 
-	public function categoryInfo()
+	public function get_category()
 	{
 		return $this->hasOne('App\Models\Category', 'id', 'category');
 	}
 
-	public function images()
+	public function get_images()
 	{
 		return $this->hasMany('App\Models\Images', 'id_connect', 'id');
 	}
 
-	public function files()
+	public function get_files()
 	{
 		return $this->hasMany('App\Models\Files', 'id_connect', 'id');
 	}
 
-	public function templates()
+	public function get_templates()
 	{
-		return $this->hasMany('App\Models\Templates', 'id_connect', 'id');
+		return $this->hasOne('App\Models\Templates', 'id_connect', 'id');
 	}
 
-	public function seo()
+	public function get_seo()
 	{
-		return $this->hasMany('App\Models\Seo', 'id_connect', 'id');
+		return $this->hasOne('App\Models\Seo', 'id_connect', 'id');
 	}
 }

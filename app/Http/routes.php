@@ -60,4 +60,6 @@ Route::group(['middleware'=>'AuthAdmin'], function(){
 
 	Route::get('/admin/settings/image', 'Admin\Settings\Image@index');
 	Route::post('/admin/settings/image', 'Admin\Settings\Image@store');
+
+	Route::get('/admin/blocks/MenuBlock', 'Admin\Blocks\MenuBlock@index');
 });

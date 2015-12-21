@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Admin\Blocks\MenuBlock;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -23,9 +24,10 @@ class FeedController extends Controller
 {
 	protected $config;
 
-	public function __construct()
+	public function __construct(MenuBlock $menu)
 	{
 		$this->config = Config::get('components.feed');
+		View::share('menu', $menu->index(\Route::current()->getName())->render());
 	}
 
 	/**
@@ -36,43 +38,41 @@ class FeedController extends Controller
 	 */
 	public function index(ContentPlugins $ContentPlugins)
 	{
-        $data['app'] = $ContentPlugins->attach_rows($this->config);
-        $data['data'] = Feed::with('categoryInfo')->paginate(30);
+		$data['app'] = $ContentPlugins->attach_rows($this->config);
+		$data['data'] = Feed::with('get_category')->paginate(30);
 		View::share('validator', '');
 		return view('admin.feed.index', $data);
 	}
 
-    /**
-     * Show the form for creating a new resource.
-     *
-	 * @param \App\Helpers\Component $component
-	 * @param  \App\Helpers\ContentPlugins $plugins
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Component $component, ContentPlugins $plugins)
-    {
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @param \App\Helpers\ContentPlugins $ContentPlugins
+	 * @return \Illuminate\Http\Response
+	 */
+	public function create(ContentPlugins $ContentPlugins)
+	{
 		$data['data'] = new Feed;
-		$data['data'] = $plugins->attach_data($this->config, $data['data']);
-		$data['app'] = $component->get_app($this->config['name'], TRUE);
-		$data['category'] = Category::findOrFail(\Input::get('category_id'));
+		$data['app'] = $this->config;
+		$data['app'] = $ContentPlugins->attach_rows($this->config);
+		$data['data']->get_category = Category::findOrFail(\Input::get('category_id'));
 		$data['id'] = DB::table($this->config['table_content'])->max('id') + 1;
 		$data = Component::tabbable($data);
 
 		$validator = JsValidator::make(Component::_valid_construct($this->config['rows']));
 		View::share('validator', $validator);
-
 		return view('admin.feed.create', $data);
-    }
+	}
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
+	/**
+	 * Store a newly created resource in storage.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
 	 * @param  \App\Helpers\ContentPlugins $plugins
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request, ContentPlugins $plugins)
-    {
+	 * @return \Illuminate\Http\Response
+	 */
+	public function store(Request $request, ContentPlugins $plugins)
+	{
 		$validator = Validator::make($request->all(), Component::_valid_construct($this->config['rows']));
 		if($validator->fails()){
 			return back()->withInput($request->except('password'))->withErrors($validator);
@@ -98,23 +98,23 @@ class FeedController extends Controller
 
 		Alert::add('error', 'Материал '. $request->input('title') .' не добавлен')->flash();
 		return back()->withInput();
-    }
+	}
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
+	/**
+	 * Display the specified resource.
+	 *
+	 * @param  int  $id
 	 * @param \App\Helpers\Component $component
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id, Component $component)
-    {
+	 * @return \Illuminate\Http\Response
+	 */
+	public function show($id, Component $component)
+	{
 		$data['app'] = $component->get_app($this->config['name'], TRUE);
 		$data['category'] = Category::findOrFail($id);
 		$data['data'] = Feed::whereCategory($id)->paginate(30);
 		View::share('validator', '');
 		return view('admin.feed.category', $data);
-    }
+	}
 
 	/**
 	 * Show the form for editing the specified resource.
@@ -126,41 +126,36 @@ class FeedController extends Controller
 	public function edit($id, ContentPlugins $ContentPlugins)
 	{
 		$data['data'] = Feed::with([
-			'categoryInfo',
-			'seo' => function($query){
-			$query->whereTypeConnect('feed');
-			},
-			'images' => function($query){
-				$query->whereType('feed');
-			},
-			'files'=> function($query){
-				$query->whereType('feed');
-			}]
+				'get_category',
+				'get_seo' => function($query){
+					$query->whereTypeConnect($this->config['name']);
+				},
+				'get_templates'=> function($query){
+					$query->whereTypeConnect($this->config['name']);
+				}]
 		)->findOrFail($id);
-		dd($data['data']);
 
-        $get_config = Config::get('components.feed');
-        $data['app'] = $ContentPlugins->attach_rows($get_config);
+		$data['id'] = $id;
+		$data['app'] = $ContentPlugins->attach_rows($this->config);
+		$data['data'] = $ContentPlugins->attach_data($this->config, $data['data']);
 
 		$data = Component::tabbable($data);
-		$data['id'] = $id;
 
 		$validator = JsValidator::make(Component::_valid_construct($this->config['rows']));
 		View::share('validator', $validator);
-
 		return view('admin.feed.edit', $data);
 	}
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+	/**
+	 * Update the specified resource in storage.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @param  int  $id
 	 * @param  \App\Helpers\ContentPlugins $plugins
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id, ContentPlugins $plugins)
-    {
+	 * @return \Illuminate\Http\Response
+	 */
+	public function update(Request $request, $id, ContentPlugins $plugins)
+	{
 		$validator = Validator::make($request->all(), Component::_valid_construct($this->config['rows']));
 		if($validator->fails()){
 			return back()->withInput($request->except('password'))->withErrors($validator);
@@ -175,18 +170,17 @@ class FeedController extends Controller
 
 		Alert::add('error', 'Материал '. $request->input('title') .' не изменен')->flash();
 		return back()->withInput();
-    }
+	}
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
+	/**
+	 * Remove the specified resource from storage.
+	 *
+	 * @param  int  $id
 	 * @param  \App\Helpers\ContentPlugins $plugins
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id, ContentPlugins $plugins)
-    {
-		$id = (int) $id;
+	 * @return \Illuminate\Http\Response
+	 */
+	public function destroy($id, ContentPlugins $plugins)
+	{
 		$data = Feed::find($id);
 		$category = $data->category;
 		if($data->delete()){
@@ -197,5 +191,5 @@ class FeedController extends Controller
 			Alert::add('error', 'Материал не удален')->flash();
 		}
 		return Redirect::to('/admin/'. $this->config['name'] .'/'. $category);
-    }
+	}
 }

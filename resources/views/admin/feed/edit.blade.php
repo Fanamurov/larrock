@@ -5,11 +5,11 @@
     <div class="ibox float-e-margins">
         <div class="ibox-title background-transparent">
             <h1 class="inline">
-                <a href="/admin/feed">Ленты</a>/
-                <a href="/admin/feed/{{ $data->categoryInfo->id }}">{{ $data->categoryInfo->title }}</a>
+                <a href="/admin/{{ $app['name'] }}">{{ $app['title'] }}</a>/
+                <a href="/admin/{{ $app['name'] }}/{{ $data->get_category->id }}">{{ $data->get_category->title }}</a>
                 /{{ $data->title }}
             </h1>
-            <a href="/feed/{{ $data->categoryInfo->url}}/{{ $data->url }}">/feed/{{ $data->categoryInfo->url}}/{{ $data->url }}</a>
+            <a href="/{{ $app['name'] }}/{{ $data->get_category->url}}/{{ $data->url }}">/{{ $app['name'] }}/{{ $data->get_category->url}}/{{ $data->url }}</a>
         </div>
 
         <div>

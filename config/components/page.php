@@ -47,8 +47,8 @@ return [
 			'default' => 1
 		],
 	],
-	'settings' => '',
+	'settings' => [],
 	'plugins_backend' => ['seo', 'images', 'files', 'templates'],
-	'plugins_front' => '',
-	'version' => 25
+	'plugins_front' => [],
+	'version' => 1
 ];

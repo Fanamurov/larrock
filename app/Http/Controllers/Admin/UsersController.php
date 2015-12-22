@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\Component;
 use App\Http\Controllers\Admin\Blocks\MenuBlock;
 use App\Models\Roles;
 use App\Models\Users;
@@ -9,12 +10,14 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use JsValidator;
 use Lang;
 use Validator;
 use Sentinel;
 use Input;
 use Session;
 use Redirect;
+use View;
 
 class UsersController extends Controller
 {
@@ -22,7 +25,7 @@ class UsersController extends Controller
 
 	public function __construct(MenuBlock $menu)
 	{
-		$this->config = \Config::get('components.feed');
+		$this->config = \Config::get('components.users');
 		\View::share('menu', $menu->index(\Route::current()->getName())->render());
 	}
 
@@ -33,10 +36,8 @@ class UsersController extends Controller
      */
     public function index()
     {
-		$users = Users::with('role')->get()->toArray();
-		//$users = Users::with('role')->paginate(15);
-		dd($users);
-		return view('admin.users.usersIndex', array('data' => $users));
+		$users = Users::paginate(15);
+		return view('admin.users.index', array('data' => $users));
     }
 
     /**
@@ -46,7 +47,9 @@ class UsersController extends Controller
      */
     public function create()
     {
-		return view('admin.users.usersCreate', array('roles' => Roles::all()));
+        $validator = JsValidator::make(Component::_valid_construct($this->config['rows']));
+        View::share('validator', $validator);
+		return view('admin.users.create', array('roles' => Roles::all()));
     }
 
     /**
@@ -60,7 +63,7 @@ class UsersController extends Controller
 		$validator = Validator::make(
 			Input::all(),
 			[
-				'email' => 'email|min:4|required|unique:users,email',
+				'email' => 'email|min:4|required|unique:users.email',
 				'password' => 'min:5|required',
 				'first_name' => 'max:40',
 				'last_name' => 'max:40',
@@ -71,6 +74,7 @@ class UsersController extends Controller
 			return back()->withInput(Input::except('password'))->withErrors($validator);
 		}
 
+        dd($request);
 
 		// Register a new user
 		Sentinel::register([
@@ -85,7 +89,7 @@ class UsersController extends Controller
 		$role = Sentinel::findRoleByName($request->input('role'));
 
 		if($role->users()->attach($user)){
-			Session::flash('message', Lang::get('apps.change.success'));
+			Session::flash('error', Lang::get('apps.change.success'));
 		}
 
 		return Redirect::to('/admin/users');
@@ -111,8 +115,10 @@ class UsersController extends Controller
     public function edit($id)
     {
 		$data['roles'] = Roles::all();
-		$data['users'] = Users::whereId($id)->get();
-		return view('admin.users.usersEdit', $data);
+		$data['user'] = Users::find($id)->with('role')->first();
+        $validator = JsValidator::make(Component::_valid_construct($this->config['rows']));
+        View::share('validator', $validator);
+		return view('admin.users.edit', $data);
     }
 
     /**
@@ -136,9 +142,10 @@ class UsersController extends Controller
 		$user = Sentinel::findById($id);
 
 		if(Sentinel::update($user, $request->all())){
-			return back()->withInput()->with('message', Lang::get('apps.change.success'));
+			return back()->withInput()->with('success', Lang::get('apps.change.success'));
 		}else{
-			return back()->withInput()->withErrors(array('messages' => Lang::get('users.change_failed')));
+            Session::flash('error', Lang::get('users.change_failed'));
+			return back()->withInput();
 		}
     }
 
@@ -150,10 +157,11 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        $user = Sentinel::findById($id);
-        $user->delete();
-
-        Session::flash('message', Lang::get('apps.delete.success'));
+        if(Sentinel::findById($id)->delete()){
+            Session::flash('success', Lang::get('apps.delete.success'));
+        }else{
+            Session::flash('error', Lang::get('apps.delete.success'));
+        }
         return Redirect::to('/admin/users');
     }
 }

@@ -31,18 +31,18 @@
                 <tbody>
                 @foreach($data as $data_value)
                     <tr>
-                        <td>{{ $data_value->id }}</td>
-                        <td>{{ $data_value->email }}</td>
+                        <td class="row-id">{{ $data_value->id }}</td>
+                        <td><a href="/admin/users/{{ $data_value->id }}/edit">{{ $data_value->email }}</a></td>
                         <td>{{ $data_value->first_name or 'n/a' }}</td>
                         <td>{{ $data_value->last_name or 'n/a' }}</td>
                         <td>
                             @foreach($data_value->role as $role)
-                                {{ $role->name }}
+                                {{ $role->slug }}
                             @endforeach
                         </td>
                         <td>{{ $data_value->updated_at }}</td>
                         <td>
-                            <a href="/admin/users/{{ $data_value->id }}/edit" class="btn btn-block btn-primary btn-xs"><i class="fa fa-pencil"></i> Изменить</a>
+                            <a href="/admin/users/{{ $data_value->id }}/edit" class="btn btn-info btn-xs">Свойства</a>
                         </td>
                         <td>
                             <form action="/admin/users/{{ $data_value->id }}" method="post">

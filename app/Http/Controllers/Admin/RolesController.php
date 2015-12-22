@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Admin\Blocks\MenuBlock;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -16,6 +17,14 @@ use App\Models\RoleUsers;
 
 class RolesController extends Controller
 {
+    protected $config;
+
+    public function __construct(MenuBlock $menu)
+    {
+        $this->config = \Config::get('components.users');
+        \View::share('menu', $menu->index(\Route::current()->getName())->render());
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -23,7 +32,7 @@ class RolesController extends Controller
      */
     public function index()
     {
-		return view('admin.roles.rolesIndex', array('data' => Roles::all()));
+		return view('admin.roles.index', array('data' => Roles::all()));
     }
 
     /**
@@ -33,7 +42,7 @@ class RolesController extends Controller
      */
     public function create()
     {
-		return view('admin.roles.rolesCreate');
+		return view('admin.roles.create');
     }
 
     /**
@@ -57,7 +66,7 @@ class RolesController extends Controller
 		}
 
 		if(Sentinel::getRoleRepository()->createModel()->create($request->all())){
-			Session::flash('message', Lang::get('apps.change.success'));
+			Session::flash('success', Lang::get('apps.change.success'));
 		}else{
 			Session::flash('error', Lang::get('apps.change.error'));
 		}
@@ -74,7 +83,7 @@ class RolesController extends Controller
     public function edit($id)
     {
 		$data['roles'] = Sentinel::findRoleById($id);
-		return view('admin.roles.rolesEdit', $data);
+		return view('admin.roles.edit', $data);
     }
 
     /**
@@ -101,7 +110,7 @@ class RolesController extends Controller
 		$role = Sentinel::findRoleById($id);
 
 		if($role->update($request->all())){
-			return back()->withInput()->with('message', Lang::get('apps.change.success'));
+			return back()->withInput()->with('success', Lang::get('apps.change.success'));
 		}else{
 			return back()->withInput()->withErrors(array('messages' => Lang::get('users.change_failed')));
 		}
@@ -124,7 +133,7 @@ class RolesController extends Controller
 		$role = Sentinel::findRoleById($id);
 		$role->delete();
 
-		Session::flash('message', Lang::get('apps.delete.success'));
+		Session::flash('success', Lang::get('apps.delete.success'));
 		return Redirect::to('/admin/roles');
     }
 }

@@ -24,8 +24,8 @@
                         <th>Last name</th>
                         <th>Роль</th>
                         <th>Изменено</th>
-                        <th></th>
-                        <th></th>
+                        <th width="90"></th>
+                        <th width="90"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -48,7 +48,7 @@
                             <form action="/admin/users/{{ $data_value->id }}" method="post">
                                 <input name="_method" type="hidden" value="DELETE">
                                 <input type="hidden" name="_token" value="{{csrf_token()}}">
-                                <button type="submit" class="btn btn-block btn-danger btn-xs"><i class="fa fa-trash"></i></button>
+                                <button type="submit" class="btn btn-block btn-danger btn-xs">Удалить</button>
                             </form>
                         </td>
                     </tr>

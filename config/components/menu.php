@@ -52,6 +52,7 @@ return [
 			'default' => 1
 		],
 	],
+    'admin_menu' => ['type' => 'hidden'],
 	'settings' => [],
 	'plugins_backend' => [],
 	'plugins_front' => [],

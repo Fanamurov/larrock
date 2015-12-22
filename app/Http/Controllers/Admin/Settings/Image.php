@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin\Settings;
 
+use App\Http\Controllers\Admin\Blocks\MenuBlock;
+use Config;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -15,6 +17,14 @@ use App\Helpers\Component;
 
 class Image extends Controller
 {
+    protected $config;
+
+    public function __construct(MenuBlock $menu)
+    {
+        $this->config = Config::get('components.feed');
+        View::share('menu', $menu->index(\Route::current()->getUri())->render());
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -22,25 +32,25 @@ class Image extends Controller
      */
     public function index()
     {
-		$data['apps'] = Component::list_apps(1, ['id', 'name', 'title', 'settings', 'plugins_backend']);
+        $data['apps'] = Config::get('components');
 		foreach($data['apps'] as $app_key => $app_value){
-			if(Component::search_plugin_apply($app_value->name, 'images', 'plugins_backend')){
-				$settings = unserialize($data['apps'][$app_key]['settings']);
-				if(isset($settings['image_original'])){
-					$settings['image_original'] = implode(',', $settings['image_original']);
-				}else{
-					$settings['image_original'] = '';
-				}
-				if(isset($settings['image_generate'])){
-					$settings['image_generate'] = implode(',', $settings['image_generate']);
-				}else{
-					$settings['image_generate'] = '';
-				}
-				$data['apps'][$app_key]['settings'] = $settings;
-			}else{
+            if(in_array('images', $app_value['plugins_backend'], TRUE)){
+                if(isset($settings['image_original'])){
+                    $settings['image_original'] = implode(',', $settings['image_original']);
+                }else{
+                    $settings['image_original'] = '';
+                }
+                if(isset($settings['image_generate'])){
+                    $settings['image_generate'] = implode(',', $settings['image_generate']);
+                }else{
+                    $settings['image_generate'] = '';
+                }
+                $data['apps'][$app_key]['settings'] = $settings;
+            }else{
 				unset($data['apps'][$app_key]);
 			}
 		}
+        dd($data['apps']);
         return View::make('admin.settings.image.index', $data)->render();
     }
 

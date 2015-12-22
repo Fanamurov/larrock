@@ -27,18 +27,17 @@ class FeedController extends Controller
 	public function __construct(MenuBlock $menu)
 	{
 		$this->config = Config::get('components.feed');
-		View::share('menu', $menu->index(\Route::current()->getName())->render());
+        View::share('menu', $menu->index(\Route::current()->getUri())->render());
 	}
 
 	/**
 	 * Display a listing of the resource.
 	 *
-	 * @param \App\Helpers\ContentPlugins $ContentPlugins
 	 * @return \Illuminate\Http\Response
 	 */
-	public function index(ContentPlugins $ContentPlugins)
+	public function index()
 	{
-		$data['app'] = $ContentPlugins->attach_rows($this->config);
+		$data['app'] = $this->config;
 		$data['data'] = Feed::with('get_category')->paginate(30);
 		View::share('validator', '');
 		return view('admin.feed.index', $data);
@@ -104,12 +103,11 @@ class FeedController extends Controller
 	 * Display the specified resource.
 	 *
 	 * @param  int  $id
-	 * @param \App\Helpers\Component $component
 	 * @return \Illuminate\Http\Response
 	 */
-	public function show($id, Component $component)
+	public function show($id)
 	{
-		$data['app'] = $component->get_app($this->config['name'], TRUE);
+		$data['app'] = $this->config;
 		$data['category'] = Category::findOrFail($id);
 		$data['data'] = Feed::whereCategory($id)->paginate(30);
 		View::share('validator', '');

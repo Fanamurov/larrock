@@ -16,6 +16,7 @@ class MenuBlock extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param string $current_uri
      * @return \Illuminate\Http\Response
      */
     public function index($current_uri = '/')
@@ -31,20 +32,13 @@ class MenuBlock extends Controller
 				if($component['admin_menu']['type'] === 'category_list'){
 					$components[$key]['admin_menu_items'] = Category::whereType($component['menu_category'])->get();
 				}
+                if($component['admin_menu']['type'] === 'hidden'){
+                    unset($components[$key]);
+                }
 			}
 		}
 		$data['components'] = $components;
+        $data['current_uri'] = $explode_uri;
 		return view('admin.blocks.menu', $data);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 }

@@ -35,7 +35,7 @@ class MenuController extends Controller
 	public function __construct(MenuBlock $menu)
 	{
 		$this->config = \Config::get('components.menu');
-		View::share('menu', $menu->index(\Route::current()->getUri())->render());
+        View::share('menu', $menu->index(\Route::current()->getUri())->render());
 	}
 
 	/**
@@ -91,6 +91,8 @@ class MenuController extends Controller
         $data->fill($request->all());
         $data->active = $request->input('active', 1);
         $data->position = $request->input('position', 0);
+
+        dd($data);
 
         if($data->save()){
             Alert::add('success', 'Пункт меню '. $request->input('title') .' добавлен')->flash();

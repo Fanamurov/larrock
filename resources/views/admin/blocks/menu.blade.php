@@ -24,7 +24,7 @@
                         </li>
                     @endif
                 @endforeach
-                <li class="dropdown">
+                <li class="dropdown @if(in_array('users', $current_uri)) active @endif">
                     <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Пользователи <span class="caret"></span></a>
                     <ul role="menu" class="dropdown-menu">
                         <li><a href="{{ action('Admin\UsersController@index') }}"><i class="fa fa-list"></i> Список пользователей</a></li>

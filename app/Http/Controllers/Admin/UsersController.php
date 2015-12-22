@@ -26,7 +26,7 @@ class UsersController extends Controller
 	public function __construct(MenuBlock $menu)
 	{
 		$this->config = \Config::get('components.users');
-		\View::share('menu', $menu->index(\Route::current()->getName())->render());
+        View::share('menu', $menu->index(\Route::current()->getUri())->render());
 	}
 
     /**

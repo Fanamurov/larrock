@@ -67,6 +67,18 @@ INSERT INTO `category` (`id`, `title`, `description`, `type`, `parent`, `level`,
 (1,	'Новости',	'',	'feed',	0,	1,	'test_category',	1,	0,	0,	'0000-00-00 00:00:00',	'0000-00-00 00:00:00'),
 (2,	'Акции',	'',	'feed',	0,	1,	'tester',	1,	0,	1,	'2015-12-08 07:25:12',	'2015-12-08 07:25:12');
 
+DROP TABLE IF EXISTS `config`;
+CREATE TABLE `config` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `key` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `value` text COLLATE utf8_unicode_ci NOT NULL,
+  `type` varchar(155) COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
 DROP TABLE IF EXISTS `feed`;
 CREATE TABLE `feed` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -175,7 +187,8 @@ INSERT INTO `migrations` (`migration`, `batch`) VALUES
 ('2015_12_08_152322_create_category_table',	7),
 ('2015_12_08_155118_update_feed_table',	8),
 ('2015_12_08_173518_create_page_table',	9),
-('2015_12_18_151456_create_files_table',	10);
+('2015_12_18_151456_create_files_table',	10),
+('2015_12_22_224121_create_config_table',	11);
 
 DROP TABLE IF EXISTS `page`;
 CREATE TABLE `page` (
@@ -216,7 +229,8 @@ INSERT INTO `persistences` (`id`, `user_id`, `code`, `created_at`, `updated_at`)
 (12,	1,	'udSUb7m4mJpUZEEpYyI6RIYPnfuNvrkx',	'2015-12-02 07:57:39',	'2015-12-02 07:57:39'),
 (13,	1,	'zlSDU4K06BvazeEDsWW0ySdmtykMNJJR',	'2015-12-02 07:58:20',	'2015-12-02 07:58:20'),
 (14,	1,	'lWKl1mWZhuE7cNRmAaYjNkPQs4ZFpZbA',	'2015-12-11 06:02:37',	'2015-12-11 06:02:37'),
-(15,	1,	'ZwCwP7oqg2PXJ8cOQRGEghqQVuAU3WVI',	'2015-12-17 07:57:59',	'2015-12-17 07:57:59');
+(15,	1,	'ZwCwP7oqg2PXJ8cOQRGEghqQVuAU3WVI',	'2015-12-17 07:57:59',	'2015-12-17 07:57:59'),
+(19,	1,	'lVjOgloO0j8pSCQLXakd24jZ9m6WMyVI',	'2015-12-22 10:33:42',	'2015-12-22 10:33:42');
 
 DROP TABLE IF EXISTS `reminders`;
 CREATE TABLE `reminders` (
@@ -244,7 +258,7 @@ CREATE TABLE `roles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `roles` (`id`, `slug`, `name`, `permissions`, `created_at`, `updated_at`) VALUES
-(1,	'admin',	'admin',	NULL,	'2015-11-19 15:35:42',	'2015-11-19 15:35:42');
+(1,	'admin',	'Admin',	NULL,	'2015-11-19 15:35:42',	'2015-11-19 15:35:42');
 
 DROP TABLE IF EXISTS `role_users`;
 CREATE TABLE `role_users` (
@@ -256,7 +270,8 @@ CREATE TABLE `role_users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `role_users` (`user_id`, `role_id`, `created_at`, `updated_at`) VALUES
-(1,	1,	'2015-11-19 15:41:49',	'2015-11-19 15:41:49');
+(1,	1,	'2015-11-19 15:41:49',	'2015-11-19 15:41:49'),
+(2,	1,	'2015-12-22 09:50:31',	'2015-12-22 09:50:31');
 
 DROP TABLE IF EXISTS `seo`;
 CREATE TABLE `seo` (
@@ -279,7 +294,6 @@ INSERT INTO `seo` (`id`, `seo_title`, `seo_description`, `seo_keywords`, `id_con
 (12,	'',	'',	'',	9,	NULL,	'page',	'2015-12-04 16:10:40',	'2015-12-04 16:10:40'),
 (13,	'',	'',	'',	2,	NULL,	'feed',	'2015-12-16 07:28:44',	'2015-12-16 07:28:44'),
 (14,	'',	'',	'',	4,	NULL,	'test',	'2015-12-17 06:09:43',	'2015-12-17 06:09:43'),
-(15,	'',	'',	'',	5,	NULL,	'feed',	'2015-12-17 06:14:58',	'2015-12-17 06:14:58'),
 (16,	'Titlw 21',	'',	'',	2,	NULL,	'page',	'2015-12-21 00:44:01',	'2015-12-21 00:52:12'),
 (17,	'Новый тестовый',	'234234324',	'',	0,	NULL,	'',	'2015-12-22 06:07:04',	'2015-12-22 06:07:04'),
 (18,	'1111',	'222',	'',	0,	NULL,	'custom',	'2015-12-22 06:08:52',	'2015-12-22 06:08:52'),
@@ -349,6 +363,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `users` (`id`, `email`, `password`, `permissions`, `last_login`, `first_name`, `last_name`, `created_at`, `updated_at`) VALUES
-(1,	'fanamurov@ya.ru',	'$2y$10$SJzDIVLhyCdzOMxfnqAADOCoyzVgjwjmBlYaVWQlikchTd67mWPRa',	NULL,	'2015-12-17 07:57:59',	'4234',	'',	'2015-11-19 15:41:49',	'2015-12-17 07:57:59');
+(1,	'fanamurov@ya.ru',	'$2y$10$SJzDIVLhyCdzOMxfnqAADOCoyzVgjwjmBlYaVWQlikchTd67mWPRa',	NULL,	'2015-12-22 10:33:42',	'4234',	'',	'2015-11-19 15:41:49',	'2015-12-22 10:33:42'),
+(2,	'4234234@fa.ru',	'$2y$10$7xxex.8N0z6VSgHKACE1/e.RuIUzPN3IDnErUIG5Kiq/Jm1.5/QzG',	NULL,	NULL,	'',	'',	'2015-12-22 09:47:43',	'2015-12-22 09:47:43');
 
--- 2015-12-22 07:54:48
+-- 2015-12-22 13:43:01

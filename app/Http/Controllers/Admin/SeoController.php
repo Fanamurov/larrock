@@ -23,7 +23,7 @@ class SeoController extends Controller
 	public function __construct(MenuBlock $menu)
 	{
 		$this->config = \Config::get('components.seo');
-		\View::share('menu', $menu->index(\Route::current()->getUri())->render());
+        View::share('menu', $menu->index(\Route::current()->getUri())->render());
 	}
 
     /**

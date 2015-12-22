@@ -68,10 +68,9 @@ class SeoController extends Controller
 	 * Store a newly created resource in storage.
 	 *
 	 * @param  \Illuminate\Http\Request  $request
-	 * @param  \App\Helpers\ContentPlugins $plugins
 	 * @return \Illuminate\Http\Response
 	 */
-	public function store(Request $request, ContentPlugins $plugins)
+	public function store(Request $request)
 	{
 		$validator = Validator::make($request->all(), Component::_valid_construct($this->config['rows']));
 		if($validator->fails()){

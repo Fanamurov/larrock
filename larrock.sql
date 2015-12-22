@@ -193,7 +193,8 @@ CREATE TABLE `page` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `page` (`id`, `title`, `description`, `url`, `date`, `position`, `active`, `created_at`, `updated_at`) VALUES
-(1,	'Тестовая страница',	'<p>Пример текста</p>',	'testovaya-stranica',	'0000-00-00',	0,	1,	'2015-12-08 07:49:25',	'2015-12-08 07:49:25');
+(1,	'Тестовая страница',	'<p>Пример текста</p>',	'testovaya-stranica',	'0000-00-00',	0,	1,	'2015-12-08 07:49:25',	'2015-12-08 07:49:25'),
+(2,	'Статичная страница',	'<p>4234324</p>',	'statichnaya-stranica',	'2015-12-21',	0,	1,	'2015-12-21 00:44:01',	'2015-12-21 00:44:01');
 
 DROP TABLE IF EXISTS `persistences`;
 CREATE TABLE `persistences` (
@@ -278,7 +279,11 @@ INSERT INTO `seo` (`id`, `seo_title`, `seo_description`, `seo_keywords`, `id_con
 (12,	'',	'',	'',	9,	NULL,	'page',	'2015-12-04 16:10:40',	'2015-12-04 16:10:40'),
 (13,	'',	'',	'',	2,	NULL,	'feed',	'2015-12-16 07:28:44',	'2015-12-16 07:28:44'),
 (14,	'',	'',	'',	4,	NULL,	'test',	'2015-12-17 06:09:43',	'2015-12-17 06:09:43'),
-(15,	'',	'',	'',	5,	NULL,	'feed',	'2015-12-17 06:14:58',	'2015-12-17 06:14:58');
+(15,	'',	'',	'',	5,	NULL,	'feed',	'2015-12-17 06:14:58',	'2015-12-17 06:14:58'),
+(16,	'Titlw 21',	'',	'',	2,	NULL,	'page',	'2015-12-21 00:44:01',	'2015-12-21 00:52:12'),
+(17,	'Новый тестовый',	'234234324',	'',	0,	NULL,	'',	'2015-12-22 06:07:04',	'2015-12-22 06:07:04'),
+(18,	'1111',	'222',	'',	0,	NULL,	'custom',	'2015-12-22 06:08:52',	'2015-12-22 06:08:52'),
+(19,	'4234',	'4234',	'',	23,	NULL,	'custom',	'2015-12-22 06:12:22',	'2015-12-22 06:12:22');
 
 DROP TABLE IF EXISTS `templates`;
 CREATE TABLE `templates` (
@@ -293,7 +298,8 @@ CREATE TABLE `templates` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `templates` (`id`, `template`, `template_global`, `type_connect`, `id_connect`, `created_at`, `updated_at`) VALUES
-(9,	'Template2',	'Template2',	'feed',	4,	'2015-12-18 06:40:38',	'2015-12-18 06:44:30');
+(9,	'Template2',	'Template2',	'feed',	4,	'2015-12-18 06:40:38',	'2015-12-18 06:44:30'),
+(10,	'Template2',	'Template2',	'page',	2,	'2015-12-21 00:44:01',	'2015-12-21 01:16:23');
 
 DROP TABLE IF EXISTS `throttle`;
 CREATE TABLE `throttle` (
@@ -345,4 +351,4 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `email`, `password`, `permissions`, `last_login`, `first_name`, `last_name`, `created_at`, `updated_at`) VALUES
 (1,	'fanamurov@ya.ru',	'$2y$10$SJzDIVLhyCdzOMxfnqAADOCoyzVgjwjmBlYaVWQlikchTd67mWPRa',	NULL,	'2015-12-17 07:57:59',	'4234',	'',	'2015-11-19 15:41:49',	'2015-12-17 07:57:59');
 
--- 2015-12-18 07:50:11
+-- 2015-12-22 07:54:48

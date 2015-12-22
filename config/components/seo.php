@@ -31,22 +31,20 @@ return [
 			'title' => 'id_connect',
 			'in_table_admin' => 'TRUE',
 			'type' => 'text',
-			'valid' => 'integer',
-			'typo' => 'true'
+			'valid' => 'integer|required_without:url_connect',
 		],
 		'url_connect' => [
 			'title' => 'url_connect',
 			'in_table_admin' => 'TRUE',
 			'type' => 'text',
-			'valid' => 'max:255',
-			'typo' => 'true'
+			'valid' => 'max:255|required_without:id_connect',
 		],
 		'type_connect' => [
 			'title' => 'type_connect',
 			'in_table_admin' => 'TRUE',
 			'type' => 'text',
-			'valid' => 'max:255',
-			'typo' => 'true'
+			'valid' => 'max:255|required',
+			'default' => 'custom'
 		]
 	],
 	'settings' => [],

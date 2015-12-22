@@ -45,13 +45,14 @@ class Users extends Model
 	 */
 	protected $hidden = ['password'];
 
-	public function role_id()
+	public function roleId()
 	{
-		return $this->hasOne('App\Models\RoleUsers', 'user_id');
+		return $this->hasOne('App\Models\RoleUsers', 'user_id', 'id');
 	}
 
 	public function role()
 	{
-		return $this->belongsToMany('App\Models\Roles', 'role_users', 'user_id', 'role_id');
+		return $this->roleId->belongsTo('App\Models\Roles');
+		//return $this->hasManyThrough('App\Models\Roles', 'App\Models\RoleUsers', 'role_id', 'user_id', 'user_id3');
 	}
 }

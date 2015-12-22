@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Admin\Blocks\MenuBlock;
 use App\Models\Roles;
 use App\Models\Users;
 use Illuminate\Http\Request;
@@ -17,6 +18,14 @@ use Redirect;
 
 class UsersController extends Controller
 {
+	protected $config;
+
+	public function __construct(MenuBlock $menu)
+	{
+		$this->config = \Config::get('components.feed');
+		\View::share('menu', $menu->index(\Route::current()->getName())->render());
+	}
+
     /**
      * Display a listing of the resource.
      *
@@ -24,7 +33,9 @@ class UsersController extends Controller
      */
     public function index()
     {
-		$users = Users::where('id', '>', 0)->paginate(15);
+		$users = Users::with('role')->get()->toArray();
+		//$users = Users::with('role')->paginate(15);
+		dd($users);
 		return view('admin.users.usersIndex', array('data' => $users));
     }
 

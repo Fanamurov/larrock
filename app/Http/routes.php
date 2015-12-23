@@ -36,6 +36,8 @@ Route::group(['middleware'=>'AuthAdmin'], function(){
 	Route::resource('admin/seo', 'Admin\SeoController');
 	Route::resource('admin/menu', 'Admin\MenuController');
 	Route::resource('admin/feed', 'Admin\FeedController');
+	Route::resource('admin/catalog', 'Admin\CatalogController');
+	Route::resource('admin/category', 'Admin\CategoryController');
 
 	Route::post('admin/ajax/EditRow', 'Admin\Ajax@EditRow');
 	Route::post('admin/ajax/ClearCache', 'Admin\Ajax@ClearCache');

@@ -7,8 +7,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>@yield('title') - Larrock Admin</title>
     <link href="{{asset('ico.png?6v')}}" rel="shortcut icon" />
-    <link rel="stylesheet" href="{{asset('_admin/_css/bootstrap.min.css')}}"/>
-    <link rel="stylesheet" href="{{asset('_admin/_css/admin.min.css')}}"/>
+    <link rel="stylesheet" href="{{asset('_admin/_css/min/bootstrap.min.css')}}"/>
+    <link rel="stylesheet" href="{{asset('_admin/_css/min/admin.min.css')}}"/>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,400italic,500,500italic,600,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -70,7 +70,6 @@
 <link href="/_admin/_css/plugins/jQuery.filer-master/css/themes/jquery.filer-dragdropbox-theme.css" type="text/css" rel="stylesheet" />
 
 <script src="/_admin/_js/plugins/jQuery.filer-master/js/jquery.filer.min.js"></script>
-
 
 <!-- Mainly scripts -->
 <script src="{{asset('_admin/_js/bootstrap.min.js')}}"></script>

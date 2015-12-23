@@ -49,10 +49,31 @@ gulp.task('sass_admin', function () {
         .pipe(csso())
         //.pipe(sourcemaps.write('./maps'))
         .pipe(rename({suffix: '.min'} ))
+        .pipe(concat('admin.min.css'))
         .pipe(size({showFiles : true}))
-        .pipe(gulp.dest('./public_html/_admin/_css'))
+        .pipe(gulp.dest('./public_html/_admin/_css/min'))
         .pipe(removeLogs())
         .pipe(notify("Scss reload: <%= file.relative %>! "+ project));
+});
+
+gulp.task('sass_admin_bootstrap', function () {
+    gulp.src(['./public_html/bower_components/bootstrap-sass/assets/stylesheets/_bootstrap-sprockets.scss',
+            './public_html/bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss',
+            '!./public_html/bower_components/bootstrap-sass/assets/stylesheets/_bootstrap-compass.scss',
+            '!./public_html/bower_components/bootstrap-sass/assets/stylesheets/_bootstrap-mincer.scss'
+    ])
+        .pipe(changed('./public_html/bower_components/bootstrap-sass/assets/stylesheets/**/*.scss'))
+        .pipe(sass.sync().on('error', sass.logError))
+        .pipe(notify("Load"))
+        //.pipe(bless())
+        .pipe(csso())
+        //.pipe(sourcemaps.write('./maps'))
+        .pipe(rename({suffix: '.min'} ))
+        //.pipe(concat('bootstrap.min.css'))
+        .pipe(size({showFiles : true}))
+        .pipe(gulp.dest('./public_html/_admin/_css/min'))
+        .pipe(removeLogs());
+        //.pipe(notify("Scss reload: <%= file.relative %>! "+ project));
 });
 
 gulp.task('javascript_admin', function() {
@@ -61,15 +82,13 @@ gulp.task('javascript_admin', function() {
             './resources/assets/admin/_js/plugins/bootstrap.file-input.js',
             './resources/assets/admin/_js/core/inspinia.js',
             './resources/assets/admin/_js/core/jquery.bootpag.min.js',
-            './resources/assets/admin/_js/plugins/datapicker/pickadate.min.js',
-            './resources/assets/admin/_js/plugins/chosen/chosen.jquery.js',
+            './public_html/bower_components/pickadate/lib/compressed/picker.js',
+            './public_html/bower_components/pickadate/lib/compressed/picker.date.js',
+            './public_html/bower_components/chosen/chosen.jquery.min.js',
             './resources/assets/admin/_js/plugins/noty/jquery.noty.packaged.min.js',
             './resources/assets/admin/_js/core/bootstrap3-typeahead.js',
             './resources/assets/admin/_js/core/validation',
             './resources/assets/admin/_js/plugins/cookie/jquery.cookie.js',
-            './resources/assets/admin/_js/core/jquery.liteuploader.js',
-            './resources/assets/admin/_js/core/upload_image.js',
-            './resources/assets/admin/_js/core/upload_image2.js',
             './resources/assets/admin/_js/backend.js'
         ])
         //.pipe(uglify())

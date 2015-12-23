@@ -16,11 +16,12 @@ class CreateCategoryTable extends Migration
 			$table->engine = 'InnoDB';
 			$table->increments('id');
 			$table->string('title', 255);
+			$table->text('short');
 			$table->text('description');
 			$table->string('type', 255);
 			$table->integer('parent');
-			$table->integer('level')->default(1);
-			$table->string('url', 255);
+			$table->unsignedInteger('level')->default(1);
+			$table->string('url', 255)->unique();
 			$table->integer('sitemap')->default(1);
 			$table->integer('position')->default(0);
 			$table->integer('active')->default(1);

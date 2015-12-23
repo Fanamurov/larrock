@@ -1,11 +1,17 @@
 @import "font-awesome/font-awesame";
 @import "style";
-@import "plugins/datapicker/pickadate";
-@import "plugins/chosen/chosen";
-//@import "plugins/dropzone/dropzone";
+@import "/bower_components/chosen/chosen.min.css";
+@import "/bower_components/pickadate/lib/compressed/themes/classic.css";
+@import "/bower_components/pickadate/lib/compressed/themes/classic.date.css";
+@import "/bower_components/pickadate/lib/compressed/themes/classic.time.css";
 
 input[name=position]{
   width: 60px;
+}
+
+.picker--opened .picker__holder{
+  overflow: hidden;
+  height: 310px;
 }
 
 .top-navigation .wrapper.wrapper-content{

@@ -5,6 +5,8 @@ $(document).ready(function(){
         }
     });
 
+    $('.chosen-select').chosen();
+
     $('.nav-tabs').find('li.tabimages').click(function(){
         $('.main-tabbable').find('.tab-pane').removeClass('active');
     });

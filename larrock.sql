@@ -46,10 +46,37 @@ INSERT INTO `apps` (`id`, `title`, `name`, `description`, `table_content`, `rows
 (5,	'Меню сайта',	'menu',	'',	'menu',	'a:8:{s:5:\"title\";a:5:{s:5:\"title\";s:29:\"Название пункта\";s:14:\"in_table_admin\";s:4:\"TRUE\";s:4:\"type\";s:4:\"text\";s:5:\"valid\";s:16:\"max:255|required\";s:4:\"typo\";s:4:\"true\";}s:8:\"category\";a:3:{s:5:\"title\";s:15:\"Вид меню\";s:4:\"type\";s:6:\"select\";s:7:\"default\";s:3:\"top\";}s:4:\"type\";a:2:{s:5:\"title\";s:6:\"Тип\";s:4:\"type\";s:4:\"text\";}s:6:\"parent\";a:4:{s:5:\"title\";s:16:\"Родитель\";s:4:\"type\";s:10:\"select_row\";s:7:\"default\";s:36:\"Это главный уровень\";s:15:\"options_connect\";a:2:{s:3:\"row\";s:5:\"title\";s:5:\"table\";s:4:\"menu\";}}s:7:\"connect\";a:2:{s:5:\"title\";s:10:\"Связь\";s:4:\"type\";s:4:\"text\";}s:3:\"url\";a:4:{s:5:\"title\";s:16:\"URL пункта\";s:14:\"in_table_admin\";s:4:\"TRUE\";s:4:\"type\";s:4:\"text\";s:5:\"valid\";s:16:\"max:155|required\";}s:8:\"position\";a:4:{s:5:\"title\";s:6:\"Вес\";s:4:\"type\";s:4:\"text\";s:5:\"valid\";s:7:\"integer\";s:7:\"default\";i:0;}s:6:\"active\";a:5:{s:5:\"title\";s:22:\"Опубликован\";s:4:\"type\";s:8:\"checkbox\";s:7:\"checked\";s:4:\"TRUE\";s:5:\"valid\";s:13:\"integer|max:1\";s:7:\"default\";i:1;}}',	'a:0:{}',	'a:0:{}',	'a:0:{}',	'',	1,	10,	1,	'2015-12-05 14:58:18',	'2015-12-08 04:04:46'),
 (6,	'Ленты',	'feed',	'Страницы с привязкой к определенным разделам',	'feed',	'a:7:{s:5:\"title\";a:6:{s:5:\"title\";s:18:\"Заголовок\";s:14:\"in_table_admin\";s:4:\"TRUE\";s:4:\"type\";s:4:\"text\";s:3:\"tab\";a:1:{s:4:\"main\";s:36:\"Заголовок, описание\";}s:5:\"valid\";s:16:\"max:255|required\";s:4:\"typo\";s:4:\"true\";}s:8:\"category\";a:5:{s:5:\"title\";s:12:\"Раздел\";s:4:\"type\";s:10:\"select_row\";s:3:\"tab\";a:1:{s:4:\"main\";s:36:\"Заголовок, описание\";}s:5:\"valid\";s:16:\"max:255|required\";s:15:\"options_connect\";a:2:{s:3:\"row\";s:5:\"title\";s:5:\"table\";s:8:\"category\";}}s:11:\"description\";a:3:{s:5:\"title\";s:25:\"Текст новости\";s:4:\"type\";s:8:\"textarea\";s:3:\"tab\";a:1:{s:4:\"main\";s:36:\"Заголовок, описание\";}}s:3:\"url\";a:4:{s:5:\"title\";s:22:\"URL материала\";s:4:\"type\";s:4:\"text\";s:3:\"tab\";a:1:{s:3:\"seo\";s:3:\"Seo\";}s:5:\"valid\";s:16:\"max:155|required\";}s:4:\"date\";a:4:{s:5:\"title\";s:27:\"Дата материала\";s:4:\"type\";s:4:\"date\";s:3:\"tab\";a:1:{s:5:\"other\";s:38:\"Дата, вес, активность\";}s:5:\"valid\";s:17:\"date_format:Y-m-d\";}s:8:\"position\";a:5:{s:5:\"title\";s:25:\"Вес материала\";s:4:\"type\";s:4:\"text\";s:3:\"tab\";a:1:{s:5:\"other\";s:38:\"Дата, вес, активность\";}s:5:\"valid\";s:7:\"integer\";s:7:\"default\";i:0;}s:6:\"active\";a:6:{s:5:\"title\";s:22:\"Опубликован\";s:4:\"type\";s:8:\"checkbox\";s:7:\"checked\";s:4:\"TRUE\";s:3:\"tab\";a:1:{s:5:\"other\";s:38:\"Дата, вес, активность\";}s:5:\"valid\";s:13:\"integer|max:1\";s:7:\"default\";i:1;}}',	's:0:\"\";',	'a:4:{i:0;s:3:\"seo\";i:1;s:6:\"images\";i:2;s:5:\"files\";i:3;s:9:\"templates\";}',	's:0:\"\";',	'feed',	1,	3,	1,	'2015-12-08 05:33:40',	'2015-12-16 07:41:18');
 
+DROP TABLE IF EXISTS `catalog`;
+CREATE TABLE `catalog` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `group` int(10) unsigned NOT NULL,
+  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `short` text COLLATE utf8_unicode_ci NOT NULL,
+  `description` text COLLATE utf8_unicode_ci NOT NULL,
+  `category` int(10) unsigned NOT NULL,
+  `url` varchar(155) COLLATE utf8_unicode_ci NOT NULL,
+  `what` varchar(55) COLLATE utf8_unicode_ci NOT NULL,
+  `cost` double(10,2) NOT NULL DEFAULT '0.00',
+  `cost_old` double(10,2) DEFAULT NULL,
+  `manufacture` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `position` int(11) NOT NULL DEFAULT '0',
+  `articul` varchar(55) COLLATE utf8_unicode_ci NOT NULL,
+  `active` int(11) NOT NULL DEFAULT '1',
+  `nalichie` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `catalog_url_unique` (`url`),
+  KEY `catalog_group_index` (`group`),
+  KEY `catalog_category_index` (`category`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
 DROP TABLE IF EXISTS `category`;
 CREATE TABLE `category` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `short` text COLLATE utf8_unicode_ci NOT NULL,
   `description` text COLLATE utf8_unicode_ci NOT NULL,
   `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `parent` int(11) NOT NULL,
@@ -63,9 +90,11 @@ CREATE TABLE `category` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `category` (`id`, `title`, `description`, `type`, `parent`, `level`, `url`, `sitemap`, `position`, `active`, `created_at`, `updated_at`) VALUES
-(1,	'Новости',	'',	'feed',	0,	1,	'test_category',	1,	0,	0,	'0000-00-00 00:00:00',	'0000-00-00 00:00:00'),
-(2,	'Акции',	'',	'feed',	0,	1,	'tester',	1,	0,	1,	'2015-12-08 07:25:12',	'2015-12-08 07:25:12');
+INSERT INTO `category` (`id`, `title`, `short`, `description`, `type`, `parent`, `level`, `url`, `sitemap`, `position`, `active`, `created_at`, `updated_at`) VALUES
+(1,	'Новости',	'',	'',	'feed',	0,	1,	'test_category',	1,	0,	0,	'0000-00-00 00:00:00',	'0000-00-00 00:00:00'),
+(2,	'Акции',	'',	'',	'feed',	0,	1,	'tester',	1,	0,	1,	'2015-12-08 07:25:12',	'2015-12-08 07:25:12'),
+(3,	'Test',	'Test',	'',	'catalog',	0,	1,	'',	1,	0,	1,	'0000-00-00 00:00:00',	'0000-00-00 00:00:00'),
+(4,	'test2',	'',	'',	'catalog',	3,	2,	'',	1,	0,	1,	'0000-00-00 00:00:00',	'0000-00-00 00:00:00');
 
 DROP TABLE IF EXISTS `config`;
 CREATE TABLE `config` (
@@ -188,7 +217,8 @@ INSERT INTO `migrations` (`migration`, `batch`) VALUES
 ('2015_12_08_155118_update_feed_table',	8),
 ('2015_12_08_173518_create_page_table',	9),
 ('2015_12_18_151456_create_files_table',	10),
-('2015_12_22_224121_create_config_table',	11);
+('2015_12_22_224121_create_config_table',	11),
+('2015_12_23_115811_create_catalog_table',	12);
 
 DROP TABLE IF EXISTS `page`;
 CREATE TABLE `page` (
@@ -366,4 +396,4 @@ INSERT INTO `users` (`id`, `email`, `password`, `permissions`, `last_login`, `fi
 (1,	'fanamurov@ya.ru',	'$2y$10$SJzDIVLhyCdzOMxfnqAADOCoyzVgjwjmBlYaVWQlikchTd67mWPRa',	NULL,	'2015-12-22 10:33:42',	'4234',	'',	'2015-11-19 15:41:49',	'2015-12-22 10:33:42'),
 (2,	'4234234@fa.ru',	'$2y$10$7xxex.8N0z6VSgHKACE1/e.RuIUzPN3IDnErUIG5Kiq/Jm1.5/QzG',	NULL,	NULL,	'',	'',	'2015-12-22 09:47:43',	'2015-12-22 09:47:43');
 
--- 2015-12-22 13:43:01
+-- 2015-12-23 07:44:47

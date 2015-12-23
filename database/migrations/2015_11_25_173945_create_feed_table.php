@@ -17,15 +17,16 @@ class CreateFeedTable extends Migration
 			$table->engine = 'InnoDB';
 			$table->increments('id');
 			$table->string('title', 255);
-			$table->integer('category')->nullable();
+			$table->integer('category');
 			$table->text('short');
 			$table->text('description');
 			$table->string('url', 155)->unique();
 			$table->date('date');
 			$table->integer('position')->default(0);
 			$table->integer('active')->default(1);
-
 			$table->timestamps();
+
+			$table->foreign('category')->references('id')->on('category')->onDelete('cascade');
 		});
     }
 

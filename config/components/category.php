@@ -7,7 +7,7 @@ return [
 	'table_content' => 'category',
 	'rows' => [
 		'parent' => [
-			'title' => 'Родительская категория',
+			'title' => 'Родительский раздел',
 			'type' => 'select_category',
 			'tab' => ['main' => 'Заголовок, описание'],
 			'options_connect' => ['row' => 'title', 'table' => 'category', 'where' => ['type' => 'catalog']],

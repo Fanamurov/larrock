@@ -1,4 +1,4 @@
-<div class="form-group">
+<div class="form-group form-group-{{ $row_key }}">
     <label for="{{ $row_key }}" class="control-label">{{ $row_settings['title'] }}</label>
     @if(array_key_exists('typo', $row_settings))
         <div class="row">
@@ -19,4 +19,3 @@
         <p class="help-block">{{ $row_settings['help'] }}</p>
     @endif
 </div>
-<div class="clearfix"></div>

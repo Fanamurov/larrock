@@ -30,15 +30,14 @@ gulp.task('default', function() {
 });
 
 gulp.task('watch', function () {
-    gulp.watch('./resources/assets/admin/_css/**/*.scss', ['sass_admin']);
+    gulp.watch('./public_html/_assets/_admin/_css/**/*.scss', ['sass_admin']);
     gulp.watch(['./resources/assets/admin/_js/**/*.js', '!./resources/assets/admin/_js/min/*'], ['javascript_admin']);
 });
 
 gulp.task('sass_admin', function () {
-    gulp.src(['./resources/assets/admin/_css/*.scss',
-            '!./resources/assets/admin/_css/print.scss',
-            '!./resources/assets/admin/_css/style.scss'])
-        .pipe(changed('./resources/assets/admin/_css/**/*.scss'))
+    gulp.src(['./public_html/_assets/_admin/_css/*.scss',
+            '!./public_html/_assets/_admin/_css/inspinia.scss'])
+        .pipe(changed('./public_html/_assets/_admin/_css/**/*.scss'))
         .pipe(sass.sync().on('error', sass.logError))
         //.pipe(sourcemaps.init())
         .pipe(autoprefixer({
@@ -51,53 +50,28 @@ gulp.task('sass_admin', function () {
         .pipe(rename({suffix: '.min'} ))
         .pipe(concat('admin.min.css'))
         .pipe(size({showFiles : true}))
-        .pipe(gulp.dest('./public_html/_admin/_css/min'))
+        .pipe(gulp.dest('./public_html/_assets/_admin/_css/min'))
         .pipe(removeLogs())
         .pipe(notify("Scss reload: <%= file.relative %>! "+ project));
 });
 
-gulp.task('sass_admin_bootstrap', function () {
-    gulp.src(['./public_html/bower_components/bootstrap-sass/assets/stylesheets/_bootstrap-sprockets.scss',
-            './public_html/bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss',
-            '!./public_html/bower_components/bootstrap-sass/assets/stylesheets/_bootstrap-compass.scss',
-            '!./public_html/bower_components/bootstrap-sass/assets/stylesheets/_bootstrap-mincer.scss'
-    ])
-        .pipe(changed('./public_html/bower_components/bootstrap-sass/assets/stylesheets/**/*.scss'))
-        .pipe(sass.sync().on('error', sass.logError))
-        .pipe(notify("Load"))
-        //.pipe(bless())
-        .pipe(csso())
-        //.pipe(sourcemaps.write('./maps'))
-        .pipe(rename({suffix: '.min'} ))
-        //.pipe(concat('bootstrap.min.css'))
-        .pipe(size({showFiles : true}))
-        .pipe(gulp.dest('./public_html/_admin/_css/min'))
-        .pipe(removeLogs());
-        //.pipe(notify("Scss reload: <%= file.relative %>! "+ project));
-});
-
 gulp.task('javascript_admin', function() {
     return gulp.src([
-            './resources/assets/admin/_js/plugins/metisMenu/jquery.metisMenu.js',
-            './resources/assets/admin/_js/plugins/bootstrap.file-input.js',
-            './resources/assets/admin/_js/core/inspinia.js',
-            './resources/assets/admin/_js/core/jquery.bootpag.min.js',
-            './public_html/bower_components/pickadate/lib/compressed/picker.js',
-            './public_html/bower_components/pickadate/lib/compressed/picker.date.js',
-            './public_html/bower_components/chosen/chosen.jquery.min.js',
-            './resources/assets/admin/_js/plugins/noty/jquery.noty.packaged.min.js',
-            './resources/assets/admin/_js/core/bootstrap3-typeahead.js',
-            './resources/assets/admin/_js/core/validation',
-            './resources/assets/admin/_js/plugins/cookie/jquery.cookie.js',
+            './public_html/_assets/bower_components/pickadate/lib/compressed/picker.js',
+            './public_html/_assets/bower_components/pickadate/lib/compressed/picker.date.js',
+            './public_html/_assets/bower_components/chosen/chosen.jquery.min.js',
+            './public_html/_assets/bower_components/noty/js/noty/packaged/jquery.noty.packaged.min.js',
+            './public_html/_assets/bower_components/bootstrap3-typeahead/bootstrap3-typeahead.min.js',
+            './public_html/_assets/bower_components/jquery.cookie/jquery.cookie.js',
             './resources/assets/admin/_js/backend.js'
         ])
         //.pipe(uglify())
         //.pipe(sourcemaps.init())
-        .pipe(concat('back_core.js'))
+        .pipe(concat('back_core.min.js'))
         //.pipe(sourcemaps.write())
         .pipe(removeLogs())
         .pipe(notify("Js reload: <%= file.relative %>! "+ project))
         .pipe(size({showFiles : true}))
-        .pipe(gulp.dest('./public_html/_admin/_js'));
+        .pipe(gulp.dest('./public_html/_assets/_admin/_js'));
     //.pipe(livereload());
 });

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\Tree;
 use App\Http\Controllers\Admin\Blocks\MenuBlock;
 use Illuminate\Http\Request;
 
@@ -42,13 +43,15 @@ class MenuController extends Controller
 	 * Display a listing of the resource.
 	 *
 	 * @param \App\Helpers\ContentPlugins $ContentPlugins
+	 * @param Tree                        $tree
+	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function index(ContentPlugins $ContentPlugins)
+	public function index(ContentPlugins $ContentPlugins, Tree $tree)
 	{
 		$data['app'] = $ContentPlugins->attach_rows($this->config);
-		$data['data'] = Menu::orderBy('position', 'DESC')->paginate(30);
-		$data['data'] = $this->build_tree($data['data']);
+		$data['data'] = Menu::orderBy('position', 'DESC')->get();
+		$data['data'] = $tree->build_tree($data['data']);
 		View::share('validator', '');
 		return view('admin.menu.index', $data);
     }
@@ -165,44 +168,4 @@ class MenuController extends Controller
         }
         return Redirect::to('/admin/'. $this->config['name']);
     }
-
-	/**
-	 * Построение дерева объектов по определенному полю(по-умолчанию parent)
-	 *
-	 * @link http://stackoverflow.com/a/10332361/2748662
-	 * @param $data
-	 * @param string $row_level     по какому полю ищем детей
-	 * @return array
-	 */
-	public function build_tree($data, $row_level = 'parent')
-	{
-		$new = array();
-		foreach ($data as $a){
-			$new[$a->$row_level][] = $a;
-		}
-		return $this->createTree($new, $new[0]);
-	}
-
-	/**
-	 * Вспомогательный метод для построения дерева
-	 * Прикрпепляем информацию о вложенности элемента ->level
-	 *
-	 * @link http://stackoverflow.com/a/10332361/2748662
-	 * @param $list
-	 * @param array $parent
-	 * @param int $level
-	 * @return array
-	 */
-	public function createTree(&$list, $parent, $level = 1){
-		$tree = array();
-		foreach ($parent as $k=>$l){
-			$l->level = $level;
-			if(isset($list[$l->id])){
-				$l->children = $this->createTree($list, $list[$l->id], ++$level);
-				--$level;
-			}
-			$tree[] = $l;
-		}
-		return $tree;
-	}
 }

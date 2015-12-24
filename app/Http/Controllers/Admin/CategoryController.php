@@ -40,16 +40,19 @@ class CategoryController extends Controller
 	/**
 	 * Show the form for creating a new resource.
 	 *
+	 * @param Request                     $request
 	 * @param \App\Helpers\ContentPlugins $ContentPlugins
+	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function create(ContentPlugins $ContentPlugins)
+	public function create(Request $request, ContentPlugins $ContentPlugins)
     {
 		$data['data'] = new Category();
 		$data['app'] = $this->config;
 		$data['app'] = $ContentPlugins->attach_rows($this->config);
 		$data['data']->get_category = Category::find(\Input::get('category_id'));
 		$data['id'] = \DB::table($this->config['table_content'])->max('id') + 1;
+		$data['app']['rows']['type']['default'] = $request->get('type');
 		$data = Component::tabbable($data);
 		$validator = JsValidator::make(Component::_valid_construct($this->config['rows']));
 		View::share('validator', $validator);
@@ -76,7 +79,9 @@ class CategoryController extends Controller
 		$data->active = $request->input('active', 0);
 		$data->position = $request->input('position', 0);
 
-		dd($data);
+		if($get_parent = Category::find($request->input('parent'))->first()){
+			$data->level = (int) $get_parent->level +1;
+		}
 
 		if($data->save()){
 			Alert::add('success', 'Материал '. $request->input('title') .' добавлен')->flash();
@@ -101,15 +106,34 @@ class CategoryController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+	/**
+	 * Show the form for editing the specified resource.
+	 *
+	 * @param  int           $id
+	 * @param ContentPlugins $ContentPlugins
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+    public function edit($id, ContentPlugins $ContentPlugins)
     {
-        //
+		$data['data'] = Category::with([
+				'get_seo' => function($query){
+					$query->whereTypeConnect($this->config['name']);
+				},
+				'get_templates'=> function($query){
+					$query->whereTypeConnect($this->config['name']);
+				}]
+		)->findOrFail($id);
+
+		$data['id'] = $id;
+		$data['app'] = $ContentPlugins->attach_rows($this->config);
+		$data['data'] = $ContentPlugins->attach_data($this->config, $data['data']);
+
+		$data = Component::tabbable($data);
+
+		$validator = JsValidator::make(Component::_valid_construct($this->config['rows']));
+		View::share('validator', $validator);
+		return view('admin.category.edit', $data);
     }
 
     /**

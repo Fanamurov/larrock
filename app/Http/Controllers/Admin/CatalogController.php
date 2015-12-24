@@ -37,7 +37,7 @@ class CatalogController extends Controller
 	public function index()
 	{
 		$data['app'] = $this->config;
-		$data['data'] = Catalog::with('get_category')->paginate(30);
+		$data['data'] = Category::type('catalog')->level(1)->orderBy('position', 'DESC')->get();
 		View::share('validator', '');
 		return view('admin.catalog.index', $data);
 	}
@@ -99,7 +99,7 @@ class CatalogController extends Controller
 	}
 
 	/**
-	 * Display the specified resource.
+	 * Display the list resource of category.
 	 *
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
@@ -108,9 +108,8 @@ class CatalogController extends Controller
 	{
 		$data['app'] = $this->config;
 		$data['category'] = Category::findOrFail($id);
-		$data['data'] = Feed::whereCategory($id)->paginate(30);
-		View::share('validator', '');
-		return view('admin.feed.category', $data);
+		$data['data'] = Catalog::whereCategory($id)->paginate(30);
+		return view('admin.catalog.category', $data);
 	}
 
 	/**

@@ -1,4 +1,4 @@
-<div class="form-group @if(isset($row_settings['form-group_class'])) {{ $row_settings['form-group_class'] }} @endif">
+<div class="form-group form-group-{{ $row_key }} @if(isset($row_settings['form-group_class'])) {{ $row_settings['form-group_class'] }} @endif">
     <label for="{{ $row_key }}" class="control-label">{{ $row_settings['title'] }}</label>
     {{ $data->$row_key }}
     <select name="{{ $row_key }}" class="form-control" id="{{ $row_key }}">
@@ -9,8 +9,7 @@
             </option>
         @endforeach
     </select>
+    @if(array_key_exists('help', $row_settings))
+        <p class="help-block">{{ $row_settings['help'] }}</p>
+    @endif
 </div>
-@if(array_key_exists('help', $row_settings))
-    <p class="help-block">{{ $row_settings['help'] }}</p>
-@endif
-<div class="clearfix"></div>

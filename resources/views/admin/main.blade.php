@@ -7,15 +7,15 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>@yield('title') - Larrock Admin</title>
     <link href="{{asset('ico.png?6v')}}" rel="shortcut icon" />
-    <link rel="stylesheet" href="{{asset('_admin/_css/min/bootstrap.min.css')}}"/>
-    <link rel="stylesheet" href="{{asset('_admin/_css/min/admin.min.css')}}"/>
+    <link rel="stylesheet" href="{{asset('_assets/_admin/_css/min/bootstrap.min.css')}}"/>
+    <link rel="stylesheet" href="{{asset('_assets/_admin/_css/min/admin.min.css')}}"/>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,400italic,500,500italic,600,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     @if(App::environment() === 'local')
-        <script src="{{asset('_admin/_js/jquery-1.11.1.min.js')}}"></script>
+        <script src="{{asset('_assets/_admin/_js/jquery-1.11.1.min.js')}}"></script>
     @else
         <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
     @endif
@@ -66,19 +66,16 @@
     </div>
 </div>
 
-<link href="/_admin/_css/plugins/jQuery.filer-master/css/jquery.filer.css" type="text/css" rel="stylesheet" />
-<link href="/_admin/_css/plugins/jQuery.filer-master/css/themes/jquery.filer-dragdropbox-theme.css" type="text/css" rel="stylesheet" />
+<link href="/_assets/bower_components/jquery.filer/css/jquery.filer.css" type="text/css" rel="stylesheet" />
+<link href="/_assets/bower_components/jquery.filer/css/themes/jquery.filer-dragdropbox-theme.css" type="text/css" rel="stylesheet" />
 
-<script src="/_admin/_js/plugins/jQuery.filer-master/js/jquery.filer.min.js"></script>
+<script src="/_assets/bower_components/jquery.filer/js/jquery.filer.min.js"></script>
 
 <!-- Mainly scripts -->
-<script src="{{asset('_admin/_js/bootstrap.min.js')}}"></script>
-<script src="{{asset('_admin/_js/plugins/pace/pace.min.js')}}"></script>
-<script src="{{asset('_admin/_js/back_core.js')}}"></script>
+<script src="{{asset('_assets/_admin/_js/bootstrap.min.js')}}"></script>
+<script src="{{asset('_assets/_admin/_js/back_core.min.js')}}"></script>
 
-<script src="{{asset('_admin/_js/tinymce/jquery.tinymce.min.js')}}"></script>
-<script src="{{asset('_admin/_js/tinymce/tinymce.min.js')}}"></script>
-<script src="{{asset('_admin/_js/tinymce/tinymce-settings.js')}}"></script>
+<script src="/_assets/bower_components/tinymce/tinymce.jquery.min.js"></script>
 
 <!-- Laravel Javascript Validation -->
 <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>

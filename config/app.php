@@ -236,6 +236,7 @@ return [
 
 		'FormBuilder' => App\Providers\FormBuilderServiceProvider::class,
 		'Component' => \App\Helpers\Component::class,
+		'Tree' => \App\Helpers\Tree::class,
 
         'Image'     => Intervention\Image\Facades\Image::class,
         'Alert'     => Prologue\Alerts\Facades\Alert::class,

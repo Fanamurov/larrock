@@ -7,34 +7,24 @@
             <div>
                 <h1 class="inline">{{ $app['title'] }}</h1>
                 <a href="/{{ $app['name'] }}/">/{{ $app['name'] }}/</a>
+                <div class="add-panel">
+                    <a class="btn btn-info pull-right" href="/admin/{{ $app['name'] }}/create">Добавить товар</a>
+                    <a class="btn btn-info" href="/admin/category/create?type=catalog">Добавить раздел</a>
+                </div>
             </div>
         </div>
     </div>
 
     <div class="ibox float-e-margins">
-        <div class="ibox-title background-transparent">
-            <h2 class="inline">Материалы разделов:</h2>
-            <div class="add-panel">
-                <a class="btn btn-info pull-right" href="/admin/{{ $app['name'] }}/create">Добавить товар</a>
-                <a class="btn btn-info" href="/admin/category/create">Добавить раздел</a>
-            </div>
-        </div>
         <div class="ibox-content">
             @if(count($data) === 0)
-                <div class="alert alert-warning">Данных еще нет</div>
+                <div class="alert alert-warning">Разделов еще нет</div>
             @else
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th width="50">ID</th>
-                        @foreach($app['rows'] as $rows_name)
-                            @if(isset($rows_name['in_table_admin']))
-                                <th>{{ $rows_name['title'] }}</th>
-                            @endif
-                        @endforeach
-                        <th>Раздел</th>
+                        <th>Название</th>
                         <th>URL</th>
-                        <th width="141">Изменено</th>
                         <th width="90" data-toggle="tooltip" data-placement="bottom" title="Вес. Чем больше, тем выше в списках">Вес</th>
                         <th width="93" class="pull-right">Активность</th>
                         <th width="90"></th>
@@ -44,37 +34,24 @@
                     <tbody>
                     @foreach($data as $data_value)
                         <tr>
-                            <td class="row-id">{{ $data_value->id }}</td>
-                            @foreach($app['rows'] as $rows_key => $rows_name)
-                                @if(isset($rows_name['in_table_admin']))
-                                    <td class="row-{{ $rows_key }}">
-                                        @if($rows_key === 'title')
-                                            <a href="/admin/{{ $app['name'] }}/{{ $data_value->id }}/edit">{{ $data_value->$rows_key }}</a>
-                                        @else
-                                            {{ $data_value->$rows_key }}
-                                        @endif
-                                    </td>
-                                @endif
-                            @endforeach
-                            <td>{{ $data_value->get_category->title }}</td>
+                            <td class="expand_tovars pointer" data-category="{{ $data_value->id }}"><i class="icon-padding icon-color glyphicon glyphicon-folder-close"></i> {{ $data_value->title }}</td>
                             <td>
-                                <a href="{{ action('Admin\FeedController@index') }}/{{ $data_value->get_category->url}}/{{ $data_value->url }}">
-                                    {{ action('Admin\FeedController@index', [], FALSE) }}/{{ $data_value->get_category->url}}/{{ $data_value->url }}
+                                <a href="{{ action('Admin\FeedController@index') }}/{{ $data_value->url }}">
+                                    /catalog/{{ $data_value->url }}
                                 </a>
                             </td>
-                            <td class="row-updated_at">{{ $data_value->updated_at }}</td>
                             <td class="row-position">
                                 <input type="text" name="position" value="{{ $data_value->position }}" class="ajax_edit_row form-control"
-                                       data-row_where="id" data-value_where="{{ $data_value->id }}" data-table="{{ $app['table_content'] }}"
+                                       data-row_where="id" data-value_where="{{ $data_value->id }}" data-table="category"
                                        data-toggle="tooltip" data-placement="bottom" title="Вес. Чем больше, тем выше в списках">
                             </td>
                             <td class="row-active">
                                 <div class="btn-group pull-right btn-group_switch_ajax" role="group">
                                     <button type="button" class="btn btn-xs btn-info @if($data_value->active === 0) btn-outline @endif"
-                                            data-row_where="id" data-value_where="{{ $data_value->id }}" data-table="{{ $app['table_content'] }}"
+                                            data-row_where="id" data-value_where="{{ $data_value->id }}" data-table="category"
                                             data-row="active" data-value="1">on</button>
                                     <button type="button" class="btn btn-xs btn-danger @if($data_value->active === 1) btn-outline @endif"
-                                            data-row_where="id" data-value_where="{{ $data_value->id }}" data-table="{{ $app['table_content'] }}"
+                                            data-row_where="id" data-value_where="{{ $data_value->id }}" data-table="category"
                                             data-row="active" data-value="0">off</button>
                                 </div>
                             </td>
@@ -89,10 +66,12 @@
                                 </form>
                             </td>
                         </tr>
+                        <tr>
+                            <td colspan="7" class="expanded_tovars{{ $data_value->id }}"></td>
+                        </tr>
                     @endforeach
                     </tbody>
                 </table>
-                {!! $data->render() !!}
             @endif
         </div>
     </div>

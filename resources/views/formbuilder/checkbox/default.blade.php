@@ -1,4 +1,4 @@
-<div class="form-group">
+<div class="form-group form-group-{{ $row_key }}">
     <div class="checkbox">
         <label>
             <input type="checkbox" name="{{ $row_key }}" id="{{ $row_key }}"
@@ -10,4 +10,3 @@
         <p class="help-block">{{ $row_settings['help'] }}</p>
     @endif
 </div>
-<div class="clearfix"></div>

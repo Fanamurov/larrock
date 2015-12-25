@@ -31,6 +31,7 @@ use DB;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Feed whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Feed whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Feed find($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Feed categoryInfo()
  */
 class Feed extends Model
 {

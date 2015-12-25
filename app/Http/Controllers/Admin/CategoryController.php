@@ -14,6 +14,7 @@ use App\Http\Controllers\Controller;
 use Input;
 use JsValidator;
 use Redirect;
+use Route;
 use Validator;
 use View;
 
@@ -24,7 +25,9 @@ class CategoryController extends Controller
 	public function __construct(MenuBlock $menu)
 	{
 		$this->config = \Config::get('components.category');
-		View::share('menu', $menu->index(\Route::current()->getUri())->render());
+		if(Route::current()){
+			View::share('menu', $menu->index(Route::current()->getUri())->render());
+		}
 	}
 
     /**

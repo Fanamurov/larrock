@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Roles whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Roles whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Roles find($value)
+ * @property-read \App\Models\Users $user
  */
 class Roles extends Model
 {

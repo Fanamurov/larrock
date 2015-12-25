@@ -185,6 +185,9 @@ return [
         /* https://packagist.org/packages/greggilbert/recaptcha :: Каптча */
         //Greggilbert\Recaptcha\RecaptchaServiceProvider::class,
 
+		/* http://laravel-breadcrumbs.davejamesmiller.com/ */
+		DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
+
     ],
 
     /*
@@ -246,7 +249,7 @@ return [
         'Sentinel'   => Cartalyst\Sentinel\Laravel\Facades\Sentinel::class,
 
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
-        //'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facade::class,
+        'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facade::class,
         'JsValidator' => Proengsoft\JsValidation\Facades\JsValidatorFacade::class,
         //'Cart'        => Gloudemans\Shoppingcart\Facades\Cart::class,
         //'Recaptcha' => Greggilbert\Recaptcha\Facades\Recaptcha::class,

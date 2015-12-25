@@ -14,6 +14,7 @@ use App\Models\Category;
 use DB;
 use JsValidator;
 use Alert;
+use Route;
 use Validator;
 use Redirect;
 use Config;
@@ -27,7 +28,9 @@ class FeedController extends Controller
 	public function __construct(MenuBlock $menu)
 	{
 		$this->config = Config::get('components.feed');
-        View::share('menu', $menu->index(\Route::current()->getUri())->render());
+		if(Route::current()){
+			View::share('menu', $menu->index(Route::current()->getUri())->render());
+		}
 	}
 
 	/**

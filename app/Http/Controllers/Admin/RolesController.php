@@ -8,12 +8,14 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Roles;
+use Route;
 use Validator;
 use Sentinel;
 use Session;
 use Lang;
 use Redirect;
 use App\Models\RoleUsers;
+use View;
 
 class RolesController extends Controller
 {
@@ -22,7 +24,9 @@ class RolesController extends Controller
     public function __construct(MenuBlock $menu)
     {
         $this->config = \Config::get('components.users');
-        \View::share('menu', $menu->index(\Route::current()->getName())->render());
+		if(Route::current()){
+			View::share('menu', $menu->index(Route::current()->getName())->render());
+		}
     }
 
     /**

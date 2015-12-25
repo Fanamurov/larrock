@@ -2,6 +2,6 @@
 
 return [
 
-	'view' => 'breadcrumb',
+	'view' => 'breadcrumbs::bootstrap3',
 
 ];

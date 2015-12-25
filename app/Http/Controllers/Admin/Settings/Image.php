@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Route;
 use View;
 use App\Models\Apps;
 use App\Helpers\FormBuilder;
@@ -22,7 +23,9 @@ class Image extends Controller
     public function __construct(MenuBlock $menu)
     {
         $this->config = Config::get('components.feed');
-        View::share('menu', $menu->index(\Route::current()->getUri())->render());
+		if(Route::current()){
+			View::share('menu', $menu->index(Route::current()->getUri())->render());
+		}
     }
 
     /**

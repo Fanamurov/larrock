@@ -12,6 +12,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use JsValidator;
 use Lang;
+use Route;
 use Validator;
 use Sentinel;
 use Input;
@@ -26,7 +27,9 @@ class UsersController extends Controller
 	public function __construct(MenuBlock $menu)
 	{
 		$this->config = \Config::get('components.users');
-        View::share('menu', $menu->index(\Route::current()->getUri())->render());
+		if(Route::current()){
+			View::share('menu', $menu->index(Route::current()->getUri())->render());
+		}
 	}
 
     /**

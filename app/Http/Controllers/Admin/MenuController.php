@@ -14,6 +14,7 @@ use App\Models\Menu;
 use DB;
 use JsValidator;
 use Alert;
+use Route;
 use Validator;
 use Redirect;
 use Config;
@@ -36,7 +37,9 @@ class MenuController extends Controller
 	public function __construct(MenuBlock $menu)
 	{
 		$this->config = \Config::get('components.menu');
-        View::share('menu', $menu->index(\Route::current()->getUri())->render());
+		if(Route::current()){
+			View::share('menu', $menu->index(Route::current()->getUri())->render());
+		}
 	}
 
 	/**

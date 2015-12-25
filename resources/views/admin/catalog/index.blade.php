@@ -20,7 +20,7 @@
             @if(count($data) === 0)
                 <div class="alert alert-warning">Разделов еще нет</div>
             @else
-                <table class="table table-striped">
+                <table class="table">
                     <thead>
                     <tr>
                         <th>Название</th>
@@ -34,7 +34,7 @@
                     <tbody>
                     @foreach($data as $data_value)
                         <tr>
-                            <td class="expand_tovars pointer" data-category="{{ $data_value->id }}"><i class="icon-padding icon-color glyphicon glyphicon-folder-close"></i> {{ $data_value->title }}</td>
+                            <td><a href="/admin/catalog/{{ $data_value->id }}"><i class="icon-padding icon-color glyphicon glyphicon-folder-close"></i> {{ $data_value->title }}</a></td>
                             <td>
                                 <a href="{{ action('Admin\FeedController@index') }}/{{ $data_value->url }}">
                                     /catalog/{{ $data_value->url }}
@@ -65,9 +65,6 @@
                                     <button type="submit" class="btn btn-danger btn-xs please_conform">Удалить</button>
                                 </form>
                             </td>
-                        </tr>
-                        <tr>
-                            <td colspan="7" class="expanded_tovars{{ $data_value->id }}"></td>
                         </tr>
                     @endforeach
                     </tbody>

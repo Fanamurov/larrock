@@ -12,6 +12,7 @@ use App\Helpers\Component;
 use App\Models\Page;
 use JsValidator;
 use Alert;
+use Route;
 use Validator;
 use Redirect;
 use View;
@@ -24,7 +25,9 @@ class PageController extends Controller
 	public function __construct(MenuBlock $menu)
 	{
 		$this->config = \Config::get('components.page');
-		View::share('menu', $menu->index(\Route::current()->getUri())->render());
+		if(Route::current()){
+			View::share('menu', $menu->index(Route::current()->getUri())->render());
+		}
 	}
 
 	/**

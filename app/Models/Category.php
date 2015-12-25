@@ -4,6 +4,38 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Models\Category
+ *
+ * @property integer $id
+ * @property string $title
+ * @property string $short
+ * @property string $description
+ * @property string $type
+ * @property integer $parent
+ * @property integer $level
+ * @property string $url
+ * @property integer $sitemap
+ * @property integer $position
+ * @property integer $active
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Category whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Category whereTitle($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Category whereShort($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Category whereDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Category whereType($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Category whereParent($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Category whereLevel($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Category whereUrl($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Category whereSitemap($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Category wherePosition($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Category whereActive($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Category whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Category whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Category type($type)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Category level($level)
+ */
 class Category extends Model
 {
     protected $table = 'category';
@@ -28,6 +60,16 @@ class Category extends Model
 	public function get_seo()
 	{
 		return $this->hasOne('App\Models\Seo', 'id_connect', 'id');
+	}
+
+	public function get_tovars()
+	{
+		return $this->hasMany('App\Models\Catalog', 'category', 'id');
+	}
+
+	public function get_child()
+	{
+		return $this->hasMany('App\Models\Category', 'parent', 'id');
 	}
 
 	public function scopeType($query, $type)

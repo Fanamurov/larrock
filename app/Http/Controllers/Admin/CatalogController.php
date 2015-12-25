@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Admin\Blocks\MenuBlock;
 use App\Models\Catalog;
+use Breadcrumbs;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -14,6 +15,7 @@ use App\Models\Category;
 use DB;
 use JsValidator;
 use Alert;
+use Route;
 use Validator;
 use Redirect;
 use View;
@@ -26,7 +28,13 @@ class CatalogController extends Controller
 	public function __construct(MenuBlock $menu)
 	{
 		$this->config = \Config::get('components.catalog');
-		View::share('menu', $menu->index(\Route::current()->getUri())->render());
+		if(Route::current()){
+			View::share('menu', $menu->index(Route::current()->getUri())->render());
+		}
+		Breadcrumbs::register('admin.catalog.index', function($breadcrumbs)
+		{
+			$breadcrumbs->push('Каталог', route('admin.catalog.index'));
+		});
 	}
 
 	/**
@@ -107,8 +115,24 @@ class CatalogController extends Controller
 	public function show($id)
 	{
 		$data['app'] = $this->config;
-		$data['category'] = Category::findOrFail($id);
-		$data['data'] = Catalog::whereCategory($id)->paginate(30);
+		$data['data'] = $test = Category::whereId($id)->with('get_tovars')->with('get_child')->first();
+		View::share('validator', '');
+
+		Breadcrumbs::register('admin.catalog.category', function($breadcrumbs, $data)
+		{
+			$breadcrumbs->parent('admin.catalog.index');
+			if($find_parent = Category::find($data->parent)){
+				$breadcrumbs->push($find_parent->title, route('admin.catalog.show', $find_parent->id));
+				if($find_parent = Category::find($find_parent->parent)){
+					$breadcrumbs->push($find_parent->title, route('admin.catalog.show', $find_parent->id));
+					if($find_parent = Category::find($find_parent->parent)){
+						$breadcrumbs->push($find_parent->title, route('admin.catalog.show', $find_parent->id));
+					}
+				}
+			}
+			$breadcrumbs->push($data->title, route('admin.catalog.show', $data->id));
+		});
+
 		return view('admin.catalog.category', $data);
 	}
 

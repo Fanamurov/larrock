@@ -72,7 +72,7 @@ CREATE TABLE `catalog` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `catalog` (`id`, `group`, `title`, `short`, `description`, `category`, `url`, `what`, `cost`, `cost_old`, `manufacture`, `position`, `articul`, `active`, `nalichie`, `created_at`, `updated_at`) VALUES
-(1,	2,	'Первый товар с ахрененно длинным названием ПТТВА',	'',	'',	4,	'42423',	'test',	30.00,	NULL,	'',	0,	'32423',	1,	0,	'0000-00-00 00:00:00',	'0000-00-00 00:00:00');
+(1,	2,	'Первый товар с ахрененно длинным названием ПТТВА',	'',	'',	6,	'42423',	'test',	30.00,	NULL,	'',	0,	'32423',	1,	0,	'0000-00-00 00:00:00',	'0000-00-00 00:00:00');
 
 DROP TABLE IF EXISTS `category`;
 CREATE TABLE `category` (
@@ -95,10 +95,10 @@ CREATE TABLE `category` (
 INSERT INTO `category` (`id`, `title`, `short`, `description`, `type`, `parent`, `level`, `url`, `sitemap`, `position`, `active`, `created_at`, `updated_at`) VALUES
 (1,	'Новости',	'',	'',	'feed',	0,	1,	'test_category',	1,	0,	0,	'0000-00-00 00:00:00',	'0000-00-00 00:00:00'),
 (2,	'Акции',	'',	'',	'feed',	0,	1,	'tester',	1,	0,	1,	'2015-12-08 07:25:12',	'2015-12-08 07:25:12'),
-(3,	'Test',	'Test',	'',	'catalog',	0,	1,	'tester2213',	1,	0,	1,	'0000-00-00 00:00:00',	'0000-00-00 00:00:00'),
-(4,	'test2',	'',	'',	'catalog',	0,	1,	'342234',	1,	2,	1,	'0000-00-00 00:00:00',	'0000-00-00 00:00:00'),
-(6,	'TEster221',	'',	'',	'catalog',	4,	2,	'tester221',	1,	0,	1,	'2015-12-24 05:32:48',	'2015-12-24 05:32:48'),
-(7,	'Вот так вот',	'',	'',	'catalog',	3,	2,	'vot-tak-vot',	1,	0,	1,	'2015-12-24 05:38:38',	'2015-12-24 05:38:38');
+(3,	'Первый уровень',	'Test',	'',	'catalog',	0,	1,	'tester2213',	1,	0,	1,	'0000-00-00 00:00:00',	'0000-00-00 00:00:00'),
+(4,	'Еще первый уровень',	'',	'',	'catalog',	0,	1,	'342234',	1,	2,	1,	'0000-00-00 00:00:00',	'0000-00-00 00:00:00'),
+(6,	'Второй уровень',	'',	'',	'catalog',	4,	2,	'tester221',	1,	0,	1,	'2015-12-24 05:32:48',	'2015-12-24 05:32:48'),
+(7,	'Еще второй уровень',	'',	'',	'catalog',	3,	2,	'vot-tak-vot',	1,	0,	1,	'2015-12-24 05:38:38',	'2015-12-24 05:38:38');
 
 DROP TABLE IF EXISTS `config`;
 CREATE TABLE `config` (
@@ -265,7 +265,8 @@ INSERT INTO `persistences` (`id`, `user_id`, `code`, `created_at`, `updated_at`)
 (14,	1,	'lWKl1mWZhuE7cNRmAaYjNkPQs4ZFpZbA',	'2015-12-11 06:02:37',	'2015-12-11 06:02:37'),
 (15,	1,	'ZwCwP7oqg2PXJ8cOQRGEghqQVuAU3WVI',	'2015-12-17 07:57:59',	'2015-12-17 07:57:59'),
 (19,	1,	'lVjOgloO0j8pSCQLXakd24jZ9m6WMyVI',	'2015-12-22 10:33:42',	'2015-12-22 10:33:42'),
-(20,	1,	'61MuFref301oRpqwcZHdcD8EZHurK0HS',	'2015-12-24 05:46:40',	'2015-12-24 05:46:40');
+(20,	1,	'61MuFref301oRpqwcZHdcD8EZHurK0HS',	'2015-12-24 05:46:40',	'2015-12-24 05:46:40'),
+(23,	1,	'fJvvvkP3cBqosLhEH9YRDTcGXv6goFtF',	'2015-12-25 07:18:00',	'2015-12-25 07:18:00');
 
 DROP TABLE IF EXISTS `reminders`;
 CREATE TABLE `reminders` (
@@ -405,7 +406,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `users` (`id`, `email`, `password`, `permissions`, `last_login`, `first_name`, `last_name`, `created_at`, `updated_at`) VALUES
-(1,	'fanamurov@ya.ru',	'$2y$10$SJzDIVLhyCdzOMxfnqAADOCoyzVgjwjmBlYaVWQlikchTd67mWPRa',	NULL,	'2015-12-24 05:46:40',	'4234',	'',	'2015-11-19 15:41:49',	'2015-12-24 05:46:40'),
+(1,	'fanamurov@ya.ru',	'$2y$10$SJzDIVLhyCdzOMxfnqAADOCoyzVgjwjmBlYaVWQlikchTd67mWPRa',	NULL,	'2015-12-25 07:18:00',	'4234',	'',	'2015-11-19 15:41:49',	'2015-12-25 07:18:00'),
 (2,	'4234234@fa.ru',	'$2y$10$7xxex.8N0z6VSgHKACE1/e.RuIUzPN3IDnErUIG5Kiq/Jm1.5/QzG',	NULL,	NULL,	'',	'',	'2015-12-22 09:47:43',	'2015-12-22 09:47:43');
 
--- 2015-12-24 08:01:14
+-- 2015-12-25 07:18:17

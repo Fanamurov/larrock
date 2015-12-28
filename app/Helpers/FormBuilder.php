@@ -86,6 +86,10 @@ class FormBuilder implements FormBuilderInterface
             $row_settings['options'][''] = $row_settings['default'];
         }
 
+		if(\Request::input($row_key)){
+			$data->$row_key = \Request::input($row_key);
+		}
+
 		if(isset($row_settings['options_connect']['where'])){
 			foreach($row_settings['options_connect']['where'] as $where_key => $where_value){
 				if($get_options = DB::table($row_settings['options_connect']['table'])->where($where_key, '=', $where_value)->get([$row_settings['options_connect']['row'], 'id'])){
@@ -113,6 +117,9 @@ class FormBuilder implements FormBuilderInterface
 
 		if(array_key_exists('default', $row_settings)){
 			$row_settings['options'][''] = $row_settings['default'];
+		}
+		if(\Request::input($row_key)){
+			$data->$row_key = (int) \Request::input($row_key);
 		}
 		$list_categories = [];
 

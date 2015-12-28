@@ -9,6 +9,47 @@
   color: white;
 }
 
+.breadcrumb{
+  display: inline;
+  padding-left: 8px;
+  background: none;
+  font-size: 21px;
+  >li+li:before {
+	padding: 0;
+  }
+}
+
+.btn-danger{
+  &:hover,
+  &:focus{
+	background-color: #C54351;
+	border-color: #C54351;
+  }
+}
+
+.table .form-group.create-category-title_div{
+  position: relative;
+  &:after{
+	content: "\e117";
+	font-family: "Glyphicons Halflings";
+	line-height: 1;
+	margin: 10px;
+	display: inline-block;
+	position: absolute;
+	top: -4px;
+	color: #acacac;
+  }
+  input{
+	padding-left: 30px;
+  }
+}
+
+.table.table-striped{
+  tr.table-row-up{
+	background: inherit;
+  }
+}
+
 i.icon-padding{
   display: inline-block;
   padding-right: 5px;
@@ -230,6 +271,7 @@ input[name=position]{
 .nav-tabs{
   .has-error a{
 	border: 2px solid #ed5565!important;
+	background: #ed5565!important;
   }
 }
 

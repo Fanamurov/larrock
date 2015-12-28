@@ -45,7 +45,7 @@ class CatalogController extends Controller
 	public function index()
 	{
 		$data['app'] = $this->config;
-		$data['data'] = Category::type('catalog')->level(1)->orderBy('position', 'DESC')->get();
+		$data['data'] = Category::type('catalog')->level(1)->orderBy('position', 'DESC')->with('get_tovars')->with('get_child')->with('get_parent')->get();
 		View::share('validator', '');
 		return view('admin.catalog.index', $data);
 	}
@@ -58,16 +58,16 @@ class CatalogController extends Controller
 	 */
 	public function create(ContentPlugins $ContentPlugins)
 	{
-		$data['data'] = new Feed;
+		$data['data'] = new Catalog();
 		$data['app'] = $this->config;
 		$data['app'] = $ContentPlugins->attach_rows($this->config);
-		$data['data']->get_category = Category::findOrFail(\Input::get('category_id'));
+		$data['data']->get_category = Category::findOrFail(\Input::get('category'));
 		$data['id'] = DB::table($this->config['table_content'])->max('id') + 1;
 		$data = Component::tabbable($data);
 
 		$validator = JsValidator::make(Component::_valid_construct($this->config['rows']));
 		View::share('validator', $validator);
-		return view('admin.feed.create', $data);
+		return view('admin.catalog.create', $data);
 	}
 
 	/**
@@ -115,7 +115,7 @@ class CatalogController extends Controller
 	public function show($id)
 	{
 		$data['app'] = $this->config;
-		$data['data'] = $test = Category::whereId($id)->with('get_tovars')->with('get_child')->first();
+		$data['data'] = Category::whereId($id)->with('get_tovars')->with('get_child')->with('get_parent')->first();
 		View::share('validator', '');
 
 		Breadcrumbs::register('admin.catalog.category', function($breadcrumbs, $data)

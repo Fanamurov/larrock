@@ -49,12 +49,11 @@ return [
 			'valid' => 'integer',
 			'default' => 1
 		],
-
 		'url' => [
 			'title' => 'URL материала',
 			'type' => 'text',
 			'tab' => ['seo' => 'Seo'],
-			'valid' => 'max:155|required'
+			'valid' => 'max:155|required|unique:category,url'
 		],
 		'position' => [
 			'title' => 'Вес материала',

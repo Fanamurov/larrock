@@ -82,8 +82,12 @@ class CategoryController extends Controller
 		$data->active = $request->input('active', 0);
 		$data->position = $request->input('position', 0);
 
-		if($get_parent = Category::find($request->input('parent'))->first()){
-			$data->level = (int) $get_parent->level +1;
+		if($request->input('parent') !== 0){
+			if($get_parent = Category::find($request->input('parent'))->first()){
+				$data->level = (int) $get_parent->level +1;
+			}
+		}else{
+			$data->level = 0;
 		}
 
 		if($data->save()){
@@ -97,6 +101,45 @@ class CategoryController extends Controller
 		Alert::add('error', 'Материал '. $request->input('title') .' не добавлен')->flash();
 		return back()->withInput();
     }
+
+	/**
+	 * Light store a newly created resource in storage.
+	 *
+	 * @param Request        $request
+	 *
+	 * @param ContentPlugins $contentPlugins
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function storeEasy(Request $request, ContentPlugins $contentPlugins)
+	{
+		$validator = Validator::make($request->all(), Component::_valid_construct($this->config['rows']));
+		if($validator->fails()){
+			return back()->withInput($request->except('password'))->withErrors($validator);
+		}
+
+		$data = new Category();
+		$data->fill($request->all());
+		$data->active = $request->input('active', 1);
+		$data->position = $request->input('position', 0);
+		$data->url = $contentPlugins->translit($request->input('title'));
+
+		if((int)$request->input('parent') !== 0){
+			if($get_parent = Category::find($request->input('parent'))->first()){
+				$data->level = (int) $get_parent->level +1;
+			}
+		}else{
+			$data->level = 1;
+		}
+
+		if($data->save()){
+			Alert::add('success', 'Раздел '. $request->input('title') .' добавлен')->flash();
+			return back()->withInput();
+		}
+
+		Alert::add('error', 'Раздел '. $request->input('title') .' не добавлен')->flash();
+		return back()->withInput();
+	}
 
     /**
      * Display the specified resource.
@@ -151,14 +194,24 @@ class CategoryController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+	/**
+	 * Remove the specified resource from storage.
+	 *
+	 * @param  int  $id
+	 * @param  \App\Helpers\ContentPlugins $plugins
+	 * @return \Illuminate\Http\Response
+	 */
+	public function destroy($id, ContentPlugins $plugins)
+	{
+		$data = Category::find($id);
+		if($data->delete()){
+			Alert::add('success', 'Раздел успешно удален')->flash();
+			//уничтожение данные от плагинов фото, файлы
+			$plugins->destroy($this->config['plugins_backend']);
+		}else{
+			Alert::add('error', 'Раздел не удален')->flash();
+			return back()->withInput();
+		}
+		return back();
+	}
 }

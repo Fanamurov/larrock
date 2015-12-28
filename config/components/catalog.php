@@ -21,10 +21,10 @@ return [
 		],
 		'category' => [
 			'title' => 'Раздел',
-			'type' => 'select_row',
+			'type' => 'select_category',
 			'tab' => ['main' => 'Заголовок, описание'],
 			'valid' => 'max:255|required',
-			'options_connect' => ['row' => 'title', 'table' => 'category']
+			'options_connect' => ['row' => 'title', 'table' => 'category', 'where' => ['type' => 'catalog']]
 		],
 		'short' => [
 			'title' => 'Анонс новости',
@@ -40,7 +40,7 @@ return [
 			'title' => 'URL материала',
 			'type' => 'text',
 			'tab' => ['seo' => 'Seo'],
-			'valid' => 'max:155|required|unique:catalog.url'
+			'valid' => 'max:155|required|unique:catalog,url'
 		],
 		'what' => [
 			'title' => 'Мера измерений',
@@ -76,9 +76,9 @@ return [
 			'title' => 'В наличии',
 			'type' => 'text',
 			'tab' => ['cost' => 'Цена'],
-			'valid' => 'max:11|required|integer'
+			'valid' => 'required|integer',
+			'default' => 999999
 		],
-
 		'position' => [
 			'title' => 'Вес материала',
 			'type' => 'text',
@@ -91,7 +91,7 @@ return [
 			'type' => 'checkbox',
 			'checked' => 'TRUE',
 			'tab' => ['other' => 'Дата, вес, активность'],
-			'valid' => 'integer|max:1',
+			'valid' => 'integer',
 			'default' => 1
 		],
 	],

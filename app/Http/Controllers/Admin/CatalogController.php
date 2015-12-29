@@ -61,9 +61,30 @@ class CatalogController extends Controller
 		$data['data'] = new Catalog();
 		$data['app'] = $this->config;
 		$data['app'] = $ContentPlugins->attach_rows($this->config);
-		$data['data']->get_category = Category::findOrFail(\Input::get('category'));
+		$data['data']->get_category = Category::find(\Input::get('category'));
 		$data['id'] = DB::table($this->config['table_content'])->max('id') + 1;
 		$data = Component::tabbable($data);
+
+		Breadcrumbs::register('admin.catalog.tovar', function($breadcrumbs, $data)
+		{
+			$breadcrumbs->parent('admin.catalog.index');
+			if($find_parent = Category::find($data->category)){
+				if($find_parent_2 = Category::find($find_parent->parent)){
+					$find_parent_3 = Category::find($find_parent_2->parent);
+				}
+			}
+
+			if(isset($find_parent_3->title)){
+				$breadcrumbs->push($find_parent_3->title, route('admin.catalog.show', $find_parent_3->id));
+			}
+			if(isset($find_parent_2->title)){
+				$breadcrumbs->push($find_parent_2->title, route('admin.catalog.show', $find_parent_2->id));
+			}
+			if(isset($find_parent->title)){
+				$breadcrumbs->push($find_parent->title, route('admin.catalog.show', $find_parent->id));
+			}
+			$breadcrumbs->push('Новый товар');
+		});
 
 		$validator = JsValidator::make(Component::_valid_construct($this->config['rows']));
 		View::share('validator', $validator);
@@ -84,25 +105,25 @@ class CatalogController extends Controller
 			return back()->withInput($request->except('password'))->withErrors($validator);
 		}
 
-		$data = new Feed();
+		$data = new Catalog();
 		$data->fill($request->all());
 		$data->active = $request->input('active', 0);
 		$data->position = $request->input('position', 0);
-		$today = getdate();
-		$data->date = $request->input('position');
-		if(empty($data->date)){
-			$data->date = $today['year'] .'-'. $today['mon'] .'-'. $today['mday'];
-		}
+		$data->articul = 'AR'. $request->input('id');
 
 		if($data->save()){
-			Alert::add('success', 'Материал '. $request->input('title') .' добавлен')->flash();
+			//Присоединяем разделы
+			foreach($request->input('category') as $category){
+				$data->get_category()->attach($category, ['catalog_id' => $data->id]);
+			}
+			Alert::add('success', 'Товар '. $request->input('title') .' добавлен')->flash();
 			Input::input('connect_id', $data->id);
 			$plugins->update($this->config['plugins_backend']);
 
 			return Redirect::to('/admin/'. $this->config['name'] .'/'. $data->id .'/edit')->withInput();
 		}
 
-		Alert::add('error', 'Материал '. $request->input('title') .' не добавлен')->flash();
+		Alert::add('error', 'Товар '. $request->input('title') .' не добавлен')->flash();
 		return back()->withInput();
 	}
 
@@ -145,7 +166,7 @@ class CatalogController extends Controller
 	 */
 	public function edit($id, ContentPlugins $ContentPlugins)
 	{
-		$data['data'] = Feed::with([
+		$data['data'] = Catalog::with([
 				'get_category',
 				'get_seo' => function($query){
 					$query->whereTypeConnect($this->config['name']);
@@ -161,9 +182,32 @@ class CatalogController extends Controller
 
 		$data = Component::tabbable($data);
 
+		Breadcrumbs::register('admin.catalog.tovar', function($breadcrumbs, $data)
+		{
+			$breadcrumbs->parent('admin.catalog.index');
+			//dd($data);
+			if($find_parent = Category::find($data->get_category[0]->id)){
+				if($find_parent_2 = Category::find($find_parent->parent)){
+					$find_parent_3 = Category::find($find_parent_2->parent);
+				}
+			}
+
+			if(isset($find_parent_3->title)){
+				$breadcrumbs->push($find_parent_3->title, route('admin.catalog.show', $find_parent_3->id));
+			}
+			if(isset($find_parent_2->title)){
+				$breadcrumbs->push($find_parent_2->title, route('admin.catalog.show', $find_parent_2->id));
+			}
+			if(isset($find_parent->title)){
+				$breadcrumbs->push($find_parent->title, route('admin.catalog.show', $find_parent->id));
+			}
+
+			$breadcrumbs->push($data->title, route('admin.catalog.show', $data->id));
+		});
+
 		$validator = JsValidator::make(Component::_valid_construct($this->config['rows']));
 		View::share('validator', $validator);
-		return view('admin.feed.edit', $data);
+		return view('admin.catalog.edit', $data);
 	}
 
 	/**

@@ -4,11 +4,12 @@
 @section('content')
     <div class="ibox float-e-margins">
         <div class="ibox-title background-transparent">
-            <h1 class="inline">
-                <a href="/admin/{{ $app['name'] }}">{{ $app['title'] }}</a>/
-                Новый товар
-            </h1>
-            <a href="/{{ $app['name'] }}/">/catalog/</a>
+            {!! Breadcrumbs::render('admin.catalog.tovar', $data) !!}
+            @if(isset($data->get_category->url))
+                <a href="/{{ $app['name'] }}/{{ $data->get_category->url }}">/catalog/{{ $data->get_category->url }}/</a>
+            @else
+                <a href="/{{ $app['name'] }}">/catalog</a>
+            @endif
         </div>
 
         <div>

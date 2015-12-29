@@ -6,11 +6,6 @@ return [
 	'description' => 'Каталог товаров',
 	'table_content' => 'catalog',
 	'rows' => [
-		'group' => [
-			'title' => 'Группа товаров',
-			'type' => 'hidden',
-			'tab' => ['main' => 'Заголовок описание'],
-		],
 		'title' => [
 			'title' => 'Заголовок',
 			'in_table_admin' => 'TRUE',
@@ -27,12 +22,13 @@ return [
 			'options_connect' => ['row' => 'title', 'table' => 'category', 'where' => ['type' => 'catalog']]
 		],
 		'short' => [
-			'title' => 'Анонс новости',
+			'title' => 'Короткое описание',
 			'type' => 'textarea',
-			'tab' => ['main' => 'Заголовок, описание']
+			'tab' => ['main' => 'Заголовок, описание'],
+			'css_class' => 'not-editor'
 		],
 		'description' => [
-			'title' => 'Текст новости',
+			'title' => 'Полное описание',
 			'type' => 'textarea',
 			'tab' => ['main' => 'Заголовок, описание']
 		],
@@ -51,26 +47,23 @@ return [
 		'cost' => [
 			'title' => 'Цена',
 			'type' => 'text',
-			'tab' => ['cost' => 'Цена'],
-			'valid' => 'double'
+			'tab' => ['cost' => 'Цена']
 		],
 		'cost_old' => [
 			'title' => 'Старая цена',
 			'type' => 'text',
 			'tab' => ['cost' => 'Цена'],
-			'valid' => 'double'
 		],
 		'manufacture' => [
 			'title' => 'Производитель',
 			'type' => 'text',
 			'tab' => ['cost' => 'Цена'],
-			'valid' => 'double'
 		],
 		'articul' => [
 			'title' => 'Артикул',
 			'type' => 'text',
 			'tab' => ['cost' => 'Цена'],
-			'valid' => 'max:255|required'
+			'valid' => 'max:255'
 		],
 		'nalichie' => [
 			'title' => 'В наличии',

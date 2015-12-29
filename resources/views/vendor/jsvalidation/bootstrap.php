@@ -37,7 +37,7 @@
 				//$('li.'+tab_name).removeClass('has-error');
             },
 
-            focusInvalid: false, // do not focus the last invalid input
+            focusInvalid: true, // do not focus the last invalid input
             <?php if (Config::get('jsvalidation.focus_on_error')): ?>
             invalidHandler: function(form, validator) {
 

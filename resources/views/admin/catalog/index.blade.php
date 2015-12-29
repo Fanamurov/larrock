@@ -5,7 +5,7 @@
     <div class="ibox float-e-margins">
         <div class="ibox-title background-transparent">
             <div>
-                <h1 class="inline">{{ $app['title'] }}</h1>
+                {!! Breadcrumbs::render('admin.catalog.index') !!}
                 <a href="/{{ $app['name'] }}/">/{{ $app['name'] }}/</a>
                 <div class="add-panel">
                     <a class="btn btn-info pull-right" href="/admin/{{ $app['name'] }}/create?category=0">Добавить товар</a>

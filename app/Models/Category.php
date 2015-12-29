@@ -64,7 +64,7 @@ class Category extends Model
 
 	public function get_tovars()
 	{
-		return $this->hasMany('App\Models\Catalog', 'category', 'id')->orderBy('position', 'DESC');
+		return $this->belongsToMany('App\Models\Catalog', 'category_catalog', 'category_id', 'catalog_id');
 	}
 
 	public function get_child()

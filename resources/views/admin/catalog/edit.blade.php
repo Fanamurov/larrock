@@ -4,12 +4,13 @@
 @section('content')
     <div class="ibox float-e-margins">
         <div class="ibox-title background-transparent">
-            <h1 class="inline">
-                <a href="/admin/{{ $app['name'] }}">{{ $app['title'] }}</a>/
-                <a href="/admin/{{ $app['name'] }}/{{ $data->get_category->id }}">{{ $data->get_category->title }}</a>
-                /Новый материал
-            </h1>
-            <a href="/{{ $app['name'] }}/{{ $data->get_category->url}}">/{{ $app['name'] }}/{{ $data->get_category->url}}</a>
+            {!! Breadcrumbs::render('admin.catalog.tovar', $data) !!}
+            <div>Так же в разделах:</div>
+            @foreach($data->get_category as $category)
+                <ul>
+                    <li>{{ $category->title }}: <a href="/{{ $app['name'] }}/{{ $category->url }}/{{ $data->url }}">/{{ $app['name'] }}/{{ $category->url }}/{{ $data->url }}</a></li>
+                </ul>
+            @endforeach
         </div>
 
         <div>
@@ -33,7 +34,8 @@
         </div>
 
         <div class="ibox-content">
-            <form action="/admin/{{ $app['name'] }}" method="POST">
+            <form action="/admin/{{ $app['name'] }}/{{ $data->id }}" method="POST">
+                <input name="_method" type="hidden" value="PUT">
                 <input name="type_connect" type="hidden" value="{{ $app['name'] }}">
                 <input name="id_connect" type="hidden" value="{{ $id }}">
                 <div class="tabbable main-tabbable">
@@ -45,6 +47,7 @@
                         @endforeach
                     </div>
                 </div>
+
                 <div class="form-group text-right">
                     <input type="hidden" name="_token" value="{{csrf_token()}}">
                     <button type="submit" class="btn btn-info">Сохранить</button>
@@ -56,7 +59,7 @@
                     <div class="form-group">
                         <form action="{{ action('Admin\Ajax@UploadImage') }}" method="post" enctype="multipart/form-data" id="plugin_image">
                             <input type="hidden" name="folder" value="{{ $app['name'] }}">
-                            <input type="hidden" name="id_connect" value="{{ $id }}">
+                            <input type="hidden" name="id_connect" value="{{ $data->id }}">
                             <input type="hidden" name="param" value="{{ $data->url }}">
                             <input type="file" name="images[]" id="upload_image_filer" multiple="multiple">
                             <input type="submit" value="Submit" class="btn btn-info hidden">
@@ -70,7 +73,7 @@
                     <div class="form-group">
                         <form action="{{ action('Admin\Ajax@UploadFile') }}" method="post" enctype="multipart/form-data" id="plugin_files">
                             <input type="hidden" name="folder" value="{{ $app['name'] }}">
-                            <input type="hidden" name="id_connect" value="{{ $id }}">
+                            <input type="hidden" name="id_connect" value="{{ $data->id }}">
                             <input type="hidden" name="param" value="{{ $data->url }}">
                             <input type="file" name="files[]" id="upload_file_filer" multiple="multiple">
                             <input type="submit" value="Submit" class="btn btn-info hidden">

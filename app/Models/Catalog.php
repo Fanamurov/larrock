@@ -46,9 +46,11 @@ class Catalog extends Model
 {
     protected $table = 'catalog';
 
+	protected $fillable = ['title', 'short', 'description', 'url', 'position', 'active', 'what', 'cost', 'cost_old', 'manufacture', 'articul', 'nalicie'];
+
 	public function get_category()
 	{
-		return $this->hasOne('App\Models\Category', 'id', 'category');
+		return $this->belongsToMany('App\Models\Category', 'category_catalog', 'catalog_id', 'category_id');
 	}
 
 	public function get_images()

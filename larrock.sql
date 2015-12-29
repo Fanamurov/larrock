@@ -49,11 +49,9 @@ INSERT INTO `apps` (`id`, `title`, `name`, `description`, `table_content`, `rows
 DROP TABLE IF EXISTS `catalog`;
 CREATE TABLE `catalog` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `group` int(10) unsigned NOT NULL,
   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `short` text COLLATE utf8_unicode_ci NOT NULL,
   `description` text COLLATE utf8_unicode_ci NOT NULL,
-  `category` int(10) unsigned NOT NULL,
   `url` varchar(155) COLLATE utf8_unicode_ci NOT NULL,
   `what` varchar(55) COLLATE utf8_unicode_ci NOT NULL,
   `cost` double(10,2) NOT NULL DEFAULT '0.00',
@@ -63,16 +61,16 @@ CREATE TABLE `catalog` (
   `articul` varchar(55) COLLATE utf8_unicode_ci NOT NULL,
   `active` int(11) NOT NULL DEFAULT '1',
   `nalichie` int(11) NOT NULL DEFAULT '0',
-  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `catalog_url_unique` (`url`),
-  KEY `catalog_group_index` (`group`),
-  KEY `catalog_category_index` (`category`)
+  UNIQUE KEY `catalog_url_unique` (`url`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `catalog` (`id`, `group`, `title`, `short`, `description`, `category`, `url`, `what`, `cost`, `cost_old`, `manufacture`, `position`, `articul`, `active`, `nalichie`, `created_at`, `updated_at`) VALUES
-(1,	2,	'Первый товар с ахрененно длинным названием ПТТВА',	'',	'',	6,	'42423',	'test',	30.00,	NULL,	'',	0,	'32423',	1,	0,	'0000-00-00 00:00:00',	'0000-00-00 00:00:00');
+INSERT INTO `catalog` (`id`, `title`, `short`, `description`, `url`, `what`, `cost`, `cost_old`, `manufacture`, `position`, `articul`, `active`, `nalichie`, `created_at`, `updated_at`) VALUES
+(1,	'test',	'',	'',	'',	'',	0.00,	NULL,	'',	0,	'',	1,	0,	'2015-12-29 05:53:59',	'0000-00-00 00:00:00'),
+(2,	'Новый товар',	'',	'',	'novyy-tovar',	'23423',	423432.00,	0.00,	'',	0,	'AR',	1,	0,	'2015-12-29 06:20:19',	'2015-12-29 06:20:19'),
+(3,	'Новый товар',	'',	'',	'novyy-tovar35345',	'456',	456.00,	0.00,	'',	0,	'AR',	0,	0,	'2015-12-29 06:48:09',	'2015-12-29 06:48:09');
 
 DROP TABLE IF EXISTS `category`;
 CREATE TABLE `category` (
@@ -98,7 +96,25 @@ INSERT INTO `category` (`id`, `title`, `short`, `description`, `type`, `parent`,
 (3,	'Первый уровень',	'Test',	'',	'catalog',	0,	1,	'tester2213',	1,	0,	1,	'0000-00-00 00:00:00',	'0000-00-00 00:00:00'),
 (4,	'Еще первый уровень',	'',	'',	'catalog',	0,	1,	'342234',	1,	2,	1,	'0000-00-00 00:00:00',	'0000-00-00 00:00:00'),
 (6,	'Второй уровень',	'',	'',	'catalog',	4,	2,	'tester221',	1,	0,	1,	'2015-12-24 05:32:48',	'2015-12-24 05:32:48'),
-(7,	'Еще второй уровень',	'',	'',	'catalog',	3,	2,	'vot-tak-vot',	1,	0,	1,	'2015-12-24 05:38:38',	'2015-12-24 05:38:38');
+(7,	'Еще второй уровень',	'',	'',	'catalog',	3,	2,	'vot-tak-vot',	1,	0,	1,	'2015-12-24 05:38:38',	'2015-12-24 05:38:38'),
+(16,	'ннн',	'',	'',	'catalog',	3,	2,	'nnn',	1,	0,	1,	'2015-12-28 05:59:55',	'2015-12-28 05:59:55');
+
+DROP TABLE IF EXISTS `category_catalog`;
+CREATE TABLE `category_catalog` (
+  `category_id` int(10) unsigned NOT NULL,
+  `catalog_id` int(10) unsigned NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  KEY `category_catalog_category_id_foreign` (`category_id`),
+  KEY `category_catalog_catalog_id_foreign` (`catalog_id`),
+  CONSTRAINT `category_catalog_catalog_id_foreign` FOREIGN KEY (`catalog_id`) REFERENCES `catalog` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `category_catalog_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `category_catalog` (`category_id`, `catalog_id`, `created_at`, `updated_at`) VALUES
+(3,	1,	'2015-12-29 06:43:39',	'0000-00-00 00:00:00'),
+(3,	3,	'2015-12-29 06:48:09',	'0000-00-00 00:00:00'),
+(4,	3,	'2015-12-29 06:48:09',	'0000-00-00 00:00:00');
 
 DROP TABLE IF EXISTS `config`;
 CREATE TABLE `config` (
@@ -133,7 +149,8 @@ CREATE TABLE `feed` (
 INSERT INTO `feed` (`id`, `title`, `category`, `short`, `description`, `url`, `date`, `position`, `active`, `created_at`, `updated_at`) VALUES
 (1,	'Пример заголовка',	2,	'',	'<p>&laquo;Эдиториум.ру&raquo;&nbsp;&mdash; сайт, созданный по&nbsp;материалам сборника &laquo;О&nbsp;редактировании и&nbsp;редакторах&raquo; Аркадия Эммануиловича Мильчина, который с&nbsp;1944 года коллекционировал выдержки из&nbsp;статей, рассказов, фельетонов, пародий, писем и&nbsp;книг, где так или иначе затрагивается тема редакторской работы. Эта коллекция легла в&nbsp;основу обширной антологии, представляющей историю и&nbsp;природу редактирования в&nbsp;первоисточниках.</p>',	'primer-zagolovka',	'2015-11-11 00:00:00',	20,	1,	'2015-11-26 05:47:36',	'2015-12-05 13:26:13'),
 (2,	'Новость об акции',	2,	'',	'<p>4324324</p>',	'ttrtr',	'2015-11-11 00:00:00',	23,	1,	'2015-11-26 06:10:16',	'2015-11-30 06:03:16'),
-(4,	'Новость о «новом годе»',	1,	'<h1>Test</h1>\r\n<h2>32234</h2>\r\n<p>Вот так вот</p>',	'<p>Текст новости</p>',	'novost-o-novom-gode',	'2015-12-17 00:00:00',	0,	1,	'2015-12-17 06:09:43',	'2015-12-24 03:51:45');
+(4,	'Новость о «новом годе»',	1,	'<h1>Test</h1>\r\n<h2>32234</h2>\r\n<p>Вот так вот</p>',	'<p>Текст новости</p>',	'novost-o-novom-gode',	'2015-12-17 00:00:00',	0,	1,	'2015-12-17 06:09:43',	'2015-12-24 03:51:45'),
+(5,	'32423423',	1,	'',	'',	'32423423',	'0000-00-00 00:00:00',	0,	1,	'2015-12-29 04:01:52',	'2015-12-29 04:01:52');
 
 DROP TABLE IF EXISTS `files`;
 CREATE TABLE `files` (
@@ -222,7 +239,8 @@ INSERT INTO `migrations` (`migration`, `batch`) VALUES
 ('2015_12_08_173518_create_page_table',	9),
 ('2015_12_18_151456_create_files_table',	10),
 ('2015_12_22_224121_create_config_table',	11),
-('2015_12_23_115811_create_catalog_table',	12);
+('2015_12_23_115811_create_catalog_table',	12),
+('2015_12_29_144628_create_category_catalog_table',	12);
 
 DROP TABLE IF EXISTS `page`;
 CREATE TABLE `page` (
@@ -337,7 +355,11 @@ INSERT INTO `seo` (`id`, `seo_title`, `seo_description`, `seo_keywords`, `id_con
 (20,	'',	'',	'',	4,	NULL,	'feed',	'2015-12-24 03:43:09',	'2015-12-24 03:43:09'),
 (21,	'',	'',	'',	5,	NULL,	'category',	'2015-12-24 05:22:04',	'2015-12-24 05:22:04'),
 (22,	'',	'',	'',	6,	NULL,	'category',	'2015-12-24 05:32:48',	'2015-12-24 05:32:48'),
-(23,	'',	'',	'',	7,	NULL,	'category',	'2015-12-24 05:38:38',	'2015-12-24 05:38:38');
+(23,	'',	'',	'',	7,	NULL,	'category',	'2015-12-24 05:38:38',	'2015-12-24 05:38:38'),
+(24,	'',	'',	'',	2,	NULL,	'catalog',	'2015-12-29 02:00:38',	'2015-12-29 02:00:38'),
+(25,	'',	'',	'',	3,	NULL,	'catalog',	'2015-12-29 03:16:28',	'2015-12-29 03:16:28'),
+(26,	'',	'',	'',	5,	NULL,	'feed',	'2015-12-29 04:01:52',	'2015-12-29 04:01:52'),
+(27,	'',	'',	'',	4,	NULL,	'catalog',	'2015-12-29 04:34:57',	'2015-12-29 04:34:57');
 
 DROP TABLE IF EXISTS `templates`;
 CREATE TABLE `templates` (
@@ -356,7 +378,11 @@ INSERT INTO `templates` (`id`, `template`, `template_global`, `type_connect`, `i
 (10,	'Template2',	'Template2',	'page',	2,	'2015-12-21 00:44:01',	'2015-12-21 01:16:23'),
 (11,	'Template1',	'Template1',	'category',	5,	'2015-12-24 05:22:04',	'2015-12-24 05:22:04'),
 (12,	'Template1',	'Template1',	'category',	6,	'2015-12-24 05:32:48',	'2015-12-24 05:32:48'),
-(13,	'Template1',	'Template1',	'category',	7,	'2015-12-24 05:38:38',	'2015-12-24 05:38:38');
+(13,	'Template1',	'Template1',	'category',	7,	'2015-12-24 05:38:38',	'2015-12-24 05:38:38'),
+(14,	'Template1',	'Template1',	'catalog',	2,	'2015-12-29 02:00:38',	'2015-12-29 02:00:38'),
+(15,	'Template1',	'Template1',	'catalog',	3,	'2015-12-29 03:16:28',	'2015-12-29 03:16:28'),
+(16,	'Template1',	'Template1',	'feed',	5,	'2015-12-29 04:01:52',	'2015-12-29 04:01:52'),
+(17,	'Template1',	'Template1',	'catalog',	4,	'2015-12-29 04:34:57',	'2015-12-29 04:34:57');
 
 DROP TABLE IF EXISTS `throttle`;
 CREATE TABLE `throttle` (
@@ -409,4 +435,4 @@ INSERT INTO `users` (`id`, `email`, `password`, `permissions`, `last_login`, `fi
 (1,	'fanamurov@ya.ru',	'$2y$10$SJzDIVLhyCdzOMxfnqAADOCoyzVgjwjmBlYaVWQlikchTd67mWPRa',	NULL,	'2015-12-25 07:18:00',	'4234',	'',	'2015-11-19 15:41:49',	'2015-12-25 07:18:00'),
 (2,	'4234234@fa.ru',	'$2y$10$7xxex.8N0z6VSgHKACE1/e.RuIUzPN3IDnErUIG5Kiq/Jm1.5/QzG',	NULL,	NULL,	'',	'',	'2015-12-22 09:47:43',	'2015-12-22 09:47:43');
 
--- 2015-12-25 07:18:17
+-- 2015-12-29 07:53:26

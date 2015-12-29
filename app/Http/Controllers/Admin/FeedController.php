@@ -57,7 +57,7 @@ class FeedController extends Controller
 		$data['data'] = new Feed;
 		$data['app'] = $this->config;
 		$data['app'] = $ContentPlugins->attach_rows($this->config);
-		$data['data']->get_category = Category::findOrFail(\Input::get('category_id'));
+		$data['data']->get_category = Category::findOrFail(\Input::get('category'));
 		$data['id'] = DB::table($this->config['table_content'])->max('id') + 1;
 		$data = Component::tabbable($data);
 

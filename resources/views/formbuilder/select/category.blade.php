@@ -1,6 +1,6 @@
 <div class="form-group form-group-{{ $row_key }} @if(isset($row_settings['form-group_class'])) {{ $row_settings['form-group_class'] }} @endif">
     <label for="{{ $row_key }}" class="control-label">{{ $row_settings['title'] }}</label>
-    <select name="{{ $row_key }}" id="{{ $row_key }}" data-placeholder="Выберите раздел..." style="width: 100%" class="chosen-select" multiple>
+    <select name="{{ $row_key }}[]" id="{{ $row_key }}" data-placeholder="Выберите раздел..." style="width: 100%" class="chosen-select" multiple>
         @foreach($row_settings['options'] as  $options_value)
             <option value="{{ $options_value->id }}"
                     @if ($data->id === $options_value->id) disabled @endif

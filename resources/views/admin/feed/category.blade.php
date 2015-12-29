@@ -40,7 +40,7 @@
         <div class="ibox-title background-transparent">
             <h2 class="inline">Материалы раздела:</h2>
             <div class="add-panel">
-                <a class="btn btn-info pull-right" href="/admin/{{ $app['name'] }}/create?category_id={{ $category->id }}">Добавить материал</a>
+                <a class="btn btn-info pull-right" href="/admin/{{ $app['name'] }}/create?category={{ $category->id }}">Добавить материал</a>
             </div>
         </div>
         <div class="ibox-content">

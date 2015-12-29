@@ -1,7 +1,7 @@
 <?php
 
 // Home
-Breadcrumbs::register('home', function($breadcrumbs)
+/*Breadcrumbs::register('home', function($breadcrumbs)
 {
     $breadcrumbs->push('Home', 'rer');
 });
@@ -32,4 +32,4 @@ Breadcrumbs::register('page', function($breadcrumbs, $page)
 {
     $breadcrumbs->parent('category', $page->category);
     $breadcrumbs->push($page->title, route('page', $page->id));
-});
+});*/

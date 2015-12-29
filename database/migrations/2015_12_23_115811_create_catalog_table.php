@@ -15,11 +15,9 @@ class CreateCatalogTable extends Migration
         Schema::create('catalog', function (Blueprint $table) {
 			$table->engine = 'InnoDB';
             $table->increments('id');
-			$table->unsignedInteger('group')->index();
 			$table->string('title', 255);
 			$table->text('short');
 			$table->text('description');
-			$table->unsignedInteger('category')->index();
 			$table->string('url', 155)->unique()->index();
 			$table->string('what', 55);
 			$table->double('cost', 10, 2)->default(0.00);

@@ -3,9 +3,9 @@
 namespace App\Helpers;
 
 use App\Helpers\FormBuilder\FormBuilderInterface;
-use Carbon\Carbon;
 use DB;
 use View;
+use App\Helpers\Tree;
 
 class FormBuilder implements FormBuilderInterface
 {
@@ -119,9 +119,16 @@ class FormBuilder implements FormBuilderInterface
 			$row_settings['options'][''] = $row_settings['default'];
 		}
 		if(\Request::input($row_key)){
-			$data->$row_key = (int) \Request::input($row_key);
+			$data->$row_key = [(int) \Request::input($row_key)];
+		}else{
+			//TODO: Внесение массива выбранных разделов у созданного товара
+			foreach($data->get_category as $category){
+				$data->$row_key = $category->id;
+			}
 		}
 		$list_categories = [];
+
+		dd($data->$row_key);
 
 		if(isset($row_settings['options_connect']['where'])){
 			foreach($row_settings['options_connect']['where'] as $where_key => $where_value){
@@ -140,50 +147,9 @@ class FormBuilder implements FormBuilderInterface
 			}
 		}
 
-		$row_settings['options'] = $this->build_tree($list_categories, 'parent');
+		$tree = new Tree;
+		$row_settings['options'] = $tree->build_tree($list_categories, 'parent');
 
 		return View::make('formbuilder.select.category', ['row_key' => $row_key, 'row_settings' => $row_settings, 'data' => $data])->render();
 	}
-
-	/** TODO: Дублирование MenuController, вынести функции в один хелпер */
-	/**
-	 * Построение дерева объектов по определенному полю(по-умолчанию parent)
-	 *
-	 * @link http://stackoverflow.com/a/10332361/2748662
-	 * @param $data
-	 * @param string $row_level     по какому полю ищем детей
-	 * @return array
-	 */
-	public function build_tree($data, $row_level = 'parent')
-	{
-		$new = array();
-		foreach ($data as $a){
-			$new[$a->$row_level][] = $a;
-		}
-		return $this->createTree($new, $new[0]);
-	}
-
-	/**
-	 * Вспомогательный метод для построения дерева
-	 * Прикрпепляем информацию о вложенности элемента ->level
-	 *
-	 * @link http://stackoverflow.com/a/10332361/2748662
-	 * @param $list
-	 * @param array $parent
-	 * @param int $level
-	 * @return array
-	 */
-	public function createTree(&$list, $parent, $level = 1){
-		$tree = array();
-		foreach ($parent as $k=>$l){
-			$l->level = $level;
-			if(isset($list[$l->id])){
-				$l->children = $this->createTree($list, $list[$l->id], ++$level);
-				--$level;
-			}
-			$tree[] = $l;
-		}
-		return $tree;
-	}
-
 }

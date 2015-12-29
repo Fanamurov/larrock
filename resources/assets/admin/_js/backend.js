@@ -5,20 +5,6 @@ $(document).ready(function(){
         }
     });
 
-    $('.expand_tovars').click(function(){
-        var category = $(this).attr('data-category');
-        $('.expanded_tovars'+ category).html('Загрузка...');
-        $(this).find('i').toggleClass('glyphicon-folder-open').toggleClass('glyphicon-folder-close');
-        $.ajax({
-            type: "GET",
-            dataType: 'html',
-            url: "/admin/catalog/"+ category,
-            success: function (data) {
-                $('.expanded_tovars'+ category).html(data);
-            }
-        });
-    });
-
     var editor_height = 300;
     tinymce.init({
         selector: "textarea:not(.not-editor)",

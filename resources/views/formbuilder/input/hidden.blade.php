@@ -1,4 +1,4 @@
-<div class="form-group hidden form-group-{{ $row_key }}">
+<div class="form-group hidden form-group-{{ $row_key }} {{ \Illuminate\Support\Arr::get($row_settings, 'css_class_group') }}">
     <label for="{{ $row_key }}" class="control-label">{{ $row_settings['title'] }}</label>
     @if(array_key_exists('typo', $row_settings))
         <div class="row">

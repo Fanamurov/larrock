@@ -30,7 +30,7 @@ class MenuBlock extends Controller
 			$components[$key]['admin_menu'] = Arr::get($component, 'admin_menu', ['default']);
 			if(array_key_exists('type', Arr::get($component, 'admin_menu', []))){
 				if($component['admin_menu']['type'] === 'category_list'){
-					$components[$key]['admin_menu_items'] = Category::whereType($component['menu_category'])->get();
+					$components[$key]['admin_menu_items'] = Category::whereType($component['menu_category'])->whereLevel(1)->get();
 					$components[$key]['admin_menu_items']->push(['title' => 'Общий список', 'id' => '']);
 				}
                 if($component['admin_menu']['type'] === 'hidden'){

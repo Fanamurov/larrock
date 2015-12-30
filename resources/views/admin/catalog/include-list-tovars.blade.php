@@ -1,7 +1,7 @@
 {{-- Список товаров --}}
 @foreach($data as $data_value)
     <tr>
-        <td><a href="/admin/catalog/{{ $data_value->id }}">
+        <td><a href="/admin/catalog/{{ $data_value->id }}/edit">
                 <i class="icon-padding icon-color glyphicon glyphicon-file"></i> {{ $data_value->title }}</a>
         </td>
         <td>

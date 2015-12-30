@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property integer $active
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Category find($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Category whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Category whereTitle($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Category whereShort($value)

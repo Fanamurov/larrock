@@ -31,6 +31,7 @@ class CatalogController extends Controller
 		if(Route::current()){
 			View::share('menu', $menu->index(Route::current()->getUri())->render());
 		}
+
 		Breadcrumbs::register('admin.catalog.index', function($breadcrumbs)
 		{
 			$breadcrumbs->push('Каталог', route('admin.catalog.index'));
@@ -65,10 +66,10 @@ class CatalogController extends Controller
 		$data['id'] = DB::table($this->config['table_content'])->max('id') + 1;
 		$data = Component::tabbable($data);
 
-		Breadcrumbs::register('admin.catalog.tovar', function($breadcrumbs, $data)
+		Breadcrumbs::register('admin.catalog.create', function($breadcrumbs, $data)
 		{
 			$breadcrumbs->parent('admin.catalog.index');
-			if($find_parent = Category::find($data->category)){
+			if($find_parent = Category::find($data->get_category->id)){
 				if($find_parent_2 = Category::find($find_parent->parent)){
 					$find_parent_3 = Category::find($find_parent_2->parent);
 				}
@@ -154,7 +155,7 @@ class CatalogController extends Controller
 			$breadcrumbs->push($data->title, route('admin.catalog.show', $data->id));
 		});
 
-		return view('admin.catalog.category', $data);
+		return view('admin.catalog.show', $data);
 	}
 
 	/**
@@ -182,7 +183,7 @@ class CatalogController extends Controller
 
 		$data = Component::tabbable($data);
 
-		Breadcrumbs::register('admin.catalog.tovar', function($breadcrumbs, $data)
+		Breadcrumbs::register('admin.catalog.edit', function($breadcrumbs, $data)
 		{
 			$breadcrumbs->parent('admin.catalog.index');
 			//dd($data);
@@ -220,13 +221,18 @@ class CatalogController extends Controller
 	 */
 	public function update(Request $request, $id, ContentPlugins $plugins)
 	{
-		$validator = Validator::make($request->all(), Component::_valid_construct($this->config['rows']));
+		$validator = Validator::make($request->all(), Component::_valid_construct($this->config['rows'], 'update', $id));
 		if($validator->fails()){
 			return back()->withInput($request->except('password'))->withErrors($validator);
 		}
 
-		$data = Feed::find($id);
+		$data = Catalog::find($id);
 		if($data->fill($request->all())->save()){
+			//Присоединяем разделы
+			foreach($request->input('category') as $category){
+				$data->get_category()->detach($category, ['catalog_id' => $data->id]);
+				$data->get_category()->attach($category, ['catalog_id' => $data->id]);
+			}
 			Alert::add('success', 'Материал '. $request->input('title') .' изменен')->flash();
 			$plugins->update($this->config['plugins_backend']);
 			return back();
@@ -245,15 +251,19 @@ class CatalogController extends Controller
 	 */
 	public function destroy($id, ContentPlugins $plugins)
 	{
-		$data = Feed::find($id);
-		$category = $data->category;
+		$data = Catalog::find($id);
+		$category = $data->get_category()->get();
 		if($data->delete()){
+			//Отсоединяем разделы
+			foreach($category as $category_value){
+				$data->get_category()->detach($category_value->id, ['catalog_id' => $data->id]);
+			}
 			Alert::add('success', 'Материал успешно удален')->flash();
 			//уничтожение данные от плагинов фото, файлы
 			$plugins->destroy($this->config['plugins_backend']);
 		}else{
 			Alert::add('error', 'Материал не удален')->flash();
 		}
-		return Redirect::to('/admin/'. $this->config['name'] .'/'. $category);
+		return back();
 	}
 }

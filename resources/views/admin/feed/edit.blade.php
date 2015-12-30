@@ -4,11 +4,7 @@
 @section('content')
     <div class="ibox float-e-margins">
         <div class="ibox-title background-transparent">
-            <h1 class="inline">
-                <a href="/admin/{{ $app['name'] }}">{{ $app['title'] }}</a>/
-                <a href="/admin/{{ $app['name'] }}/{{ $data->get_category->id }}">{{ $data->get_category->title }}</a>
-                /{{ $data->title }}
-            </h1>
+            {!! Breadcrumbs::render('admin.feed.edit', $data) !!}
             <a href="/{{ $app['name'] }}/{{ $data->get_category->url}}/{{ $data->url }}">/{{ $app['name'] }}/{{ $data->get_category->url}}/{{ $data->url }}</a>
         </div>
 

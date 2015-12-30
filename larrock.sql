@@ -68,9 +68,8 @@ CREATE TABLE `catalog` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `catalog` (`id`, `title`, `short`, `description`, `url`, `what`, `cost`, `cost_old`, `manufacture`, `position`, `articul`, `active`, `nalichie`, `created_at`, `updated_at`) VALUES
-(1,	'test',	'',	'',	'',	'',	0.00,	NULL,	'',	0,	'',	1,	0,	'2015-12-29 05:53:59',	'0000-00-00 00:00:00'),
 (2,	'Новый товар',	'',	'',	'novyy-tovar',	'23423',	423432.00,	0.00,	'',	0,	'AR',	1,	0,	'2015-12-29 06:20:19',	'2015-12-29 06:20:19'),
-(3,	'Новый товар',	'',	'',	'novyy-tovar35345',	'456',	456.00,	0.00,	'',	0,	'AR',	0,	0,	'2015-12-29 06:48:09',	'2015-12-29 06:48:09');
+(4,	'Товар во втором уровне',	'        Краткое описание\r\n    ',	'',	'tovar-vo-vtorom-urovne',	'2',	310.00,	400.00,	'',	0,	'AR',	1,	0,	'2015-12-30 07:09:43',	'2015-12-30 07:09:43');
 
 DROP TABLE IF EXISTS `category`;
 CREATE TABLE `category` (
@@ -112,9 +111,8 @@ CREATE TABLE `category_catalog` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `category_catalog` (`category_id`, `catalog_id`, `created_at`, `updated_at`) VALUES
-(3,	1,	'2015-12-29 06:43:39',	'0000-00-00 00:00:00'),
-(3,	3,	'2015-12-29 06:48:09',	'0000-00-00 00:00:00'),
-(4,	3,	'2015-12-29 06:48:09',	'0000-00-00 00:00:00');
+(7,	4,	'2015-12-30 07:09:43',	'0000-00-00 00:00:00'),
+(6,	4,	'2015-12-30 07:09:43',	'0000-00-00 00:00:00');
 
 DROP TABLE IF EXISTS `config`;
 CREATE TABLE `config` (
@@ -435,4 +433,4 @@ INSERT INTO `users` (`id`, `email`, `password`, `permissions`, `last_login`, `fi
 (1,	'fanamurov@ya.ru',	'$2y$10$SJzDIVLhyCdzOMxfnqAADOCoyzVgjwjmBlYaVWQlikchTd67mWPRa',	NULL,	'2015-12-25 07:18:00',	'4234',	'',	'2015-11-19 15:41:49',	'2015-12-25 07:18:00'),
 (2,	'4234234@fa.ru',	'$2y$10$7xxex.8N0z6VSgHKACE1/e.RuIUzPN3IDnErUIG5Kiq/Jm1.5/QzG',	NULL,	NULL,	'',	'',	'2015-12-22 09:47:43',	'2015-12-22 09:47:43');
 
--- 2015-12-29 07:53:26
+-- 2015-12-30 07:11:21

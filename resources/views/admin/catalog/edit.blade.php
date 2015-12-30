@@ -4,13 +4,15 @@
 @section('content')
     <div class="ibox float-e-margins">
         <div class="ibox-title background-transparent">
-            {!! Breadcrumbs::render('admin.catalog.tovar', $data) !!}
-            <div>Так же в разделах:</div>
-            @foreach($data->get_category as $category)
-                <ul>
-                    <li>{{ $category->title }}: <a href="/{{ $app['name'] }}/{{ $category->url }}/{{ $data->url }}">/{{ $app['name'] }}/{{ $category->url }}/{{ $data->url }}</a></li>
-                </ul>
-            @endforeach
+            {!! Breadcrumbs::render('admin.catalog.edit', $data) !!}
+            @if(count($data->get_category) > 1)
+                <div>Так же в разделах:</div>
+                @foreach($data->get_category as $category)
+                    <ul>
+                        <li>{{ $category->title }}: <a href="/{{ $app['name'] }}/{{ $category->url }}/{{ $data->url }}">/{{ $app['name'] }}/{{ $category->url }}/{{ $data->url }}</a></li>
+                    </ul>
+                @endforeach
+            @endif
         </div>
 
         <div>

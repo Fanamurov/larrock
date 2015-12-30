@@ -4,12 +4,12 @@
 @section('content')
     <div class="ibox float-e-margins">
         <div class="ibox-title background-transparent">
-            <h1 class="inline">
-                <a href="/admin/{{ $app['name'] }}">{{ $app['title'] }}</a>/
-                <a href="/admin/{{ $app['name'] }}/{{ $data->get_category->id }}">{{ $data->get_category->title }}</a>
-                /Новый материал
-            </h1>
-            <a href="/{{ $app['name'] }}/{{ $data->get_category->url}}">/{{ $app['name'] }}/{{ $data->get_category->url}}</a>
+            {!! Breadcrumbs::render('admin.feed.create', $data) !!}
+            @if(isset($data->get_category->url))
+                <a href="/{{ $app['name'] }}/{{ $data->get_category->url }}">/{{ $app['name'] }}/{{ $data->get_category->url }}/</a>
+            @else
+                <a href="/{{ $app['name'] }}">/{{ $app['name'] }}</a>
+            @endif
         </div>
 
         <div>

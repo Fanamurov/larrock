@@ -84,15 +84,23 @@ class Component implements ComponentInterface
 	/**
 	 * Вспомогательный метод построения правил валидации из конфига полей компонента
 	 *
-	 * @param @rows
+	 * @param array $rows
+	 * @param string $action create|update
+	 * @param null   $id
+	 *
 	 * @return array
 	 */
-	public static function _valid_construct($rows)
+	public static function _valid_construct(array $rows, $action = 'create', $id = NULL)
 	{
 		$rules = array();
 		foreach($rows as $rows_key => $rows_value){
 			if(array_key_exists('valid', $rows_value)){
 				$rules[$rows_key] = $rows_value['valid'];
+				if($action === 'update'){
+					$rules[$rows_key] = str_replace(':id', $id, $rules[$rows_key]);
+				}else{
+					$rules[$rows_key] = str_replace(',:id', '', $rules[$rows_key]);
+				}
 			}
 		}
 		return $rules;

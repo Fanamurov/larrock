@@ -4,11 +4,11 @@
 @section('content')
     <div class="ibox float-e-margins">
         <div class="ibox-title background-transparent">
-            {!! Breadcrumbs::render('admin.catalog.tovar', $data) !!}
+            {!! Breadcrumbs::render('admin.catalog.create', $data) !!}
             @if(isset($data->get_category->url))
-                <a href="/{{ $app['name'] }}/{{ $data->get_category->url }}">/catalog/{{ $data->get_category->url }}/</a>
+                <a href="/{{ $app['name'] }}/{{ $data->get_category->url }}">/{{ $app['name'] }}/{{ $data->get_category->url }}/</a>
             @else
-                <a href="/{{ $app['name'] }}">/catalog</a>
+                <a href="/{{ $app['name'] }}">/{{ $app['name'] }}</a>
             @endif
         </div>
 

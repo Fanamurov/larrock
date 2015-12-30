@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Admin\Blocks\MenuBlock;
+use Breadcrumbs;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -31,6 +32,11 @@ class FeedController extends Controller
 		if(Route::current()){
 			View::share('menu', $menu->index(Route::current()->getUri())->render());
 		}
+
+		Breadcrumbs::register('admin.feed.index', function($breadcrumbs)
+		{
+			$breadcrumbs->push('Ленты', route('admin.feed.index'));
+		});
 	}
 
 	/**
@@ -63,6 +69,28 @@ class FeedController extends Controller
 
 		$validator = JsValidator::make(Component::_valid_construct($this->config['rows']));
 		View::share('validator', $validator);
+
+		Breadcrumbs::register('admin.feed.create', function($breadcrumbs, $data)
+		{
+			$breadcrumbs->parent('admin.feed.index');
+			if($find_parent = Category::find($data->category)){
+				if($find_parent_2 = Category::find($find_parent->parent)){
+					$find_parent_3 = Category::find($find_parent_2->parent);
+				}
+			}
+
+			if(isset($find_parent_3->title)){
+				$breadcrumbs->push($find_parent_3->title, route('admin.feed.show', $find_parent_3->id));
+			}
+			if(isset($find_parent_2->title)){
+				$breadcrumbs->push($find_parent_2->title, route('admin.feed.show', $find_parent_2->id));
+			}
+			if(isset($find_parent->title)){
+				$breadcrumbs->push($find_parent->title, route('admin.feed.show', $find_parent->id));
+			}
+			$breadcrumbs->push('Новый материал');
+		});
+
 		return view('admin.feed.create', $data);
 	}
 
@@ -114,7 +142,23 @@ class FeedController extends Controller
 		$data['category'] = Category::findOrFail($id);
 		$data['data'] = Feed::whereCategory($id)->paginate(30);
 		View::share('validator', '');
-		return view('admin.feed.category', $data);
+
+		Breadcrumbs::register('admin.feed.category', function($breadcrumbs, $data)
+		{
+			$breadcrumbs->parent('admin.feed.index');
+			if($find_parent = Category::find($data->parent)){
+				$breadcrumbs->push($find_parent->title, route('admin.feed.show', $find_parent->id));
+				if($find_parent = Category::find($find_parent->parent)){
+					$breadcrumbs->push($find_parent->title, route('admin.feed.show', $find_parent->id));
+					if($find_parent = Category::find($find_parent->parent)){
+						$breadcrumbs->push($find_parent->title, route('admin.feed.show', $find_parent->id));
+					}
+				}
+			}
+			$breadcrumbs->push($data->title, route('admin.feed.show', $data->id));
+		});
+
+		return view('admin.feed.show', $data);
 	}
 
 	/**
@@ -144,6 +188,10 @@ class FeedController extends Controller
 
 		$validator = JsValidator::make(Component::_valid_construct($this->config['rows']));
 		View::share('validator', $validator);
+
+		$breadcrumbsHelper = new BreadcrumbsHelper();
+		$breadcrumbsHelper->generateEdit($data['app']['name']);
+
 		return view('admin.feed.edit', $data);
 	}
 

@@ -90,6 +90,10 @@ class FormBuilder implements FormBuilderInterface
 			$data->$row_key = \Request::input($row_key);
 		}
 
+		if( !isset($row_settings['options_connect']['selected_search'])){
+			$row_settings['options_connect']['selected_search'] = 'key';
+		}
+
 		if(isset($row_settings['options_connect']['where'])){
 			foreach($row_settings['options_connect']['where'] as $where_key => $where_value){
 				if($get_options = DB::table($row_settings['options_connect']['table'])->where($where_key, '=', $where_value)->get([$row_settings['options_connect']['row'], 'id'])){
@@ -118,17 +122,17 @@ class FormBuilder implements FormBuilderInterface
 		if(array_key_exists('default', $row_settings)){
 			$row_settings['options'][''] = $row_settings['default'];
 		}
+		$selected = [];
 		if(\Request::input($row_key)){
-			$data->$row_key = [(int) \Request::input($row_key)];
+			$selected[] = \Request::input($row_key);
 		}else{
-			//TODO: Внесение массива выбранных разделов у созданного товара
-			foreach($data->get_category as $category){
-				$data->$row_key = $category->id;
+			if($data->get_category){
+				foreach($data->get_category as $category){
+					$selected[] = $category->id;
+				}
 			}
 		}
 		$list_categories = [];
-
-		dd($data->$row_key);
 
 		if(isset($row_settings['options_connect']['where'])){
 			foreach($row_settings['options_connect']['where'] as $where_key => $where_value){
@@ -150,6 +154,6 @@ class FormBuilder implements FormBuilderInterface
 		$tree = new Tree;
 		$row_settings['options'] = $tree->build_tree($list_categories, 'parent');
 
-		return View::make('formbuilder.select.category', ['row_key' => $row_key, 'row_settings' => $row_settings, 'data' => $data])->render();
+		return View::make('formbuilder.select.category', ['row_key' => $row_key, 'row_settings' => $row_settings, 'data' => $data, 'selected' => $selected])->render();
 	}
 }

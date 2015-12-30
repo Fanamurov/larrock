@@ -1,4 +1,4 @@
-<div class="form-group form-group-{{ $row_key }}">
+<div class="form-group form-group-{{ $row_key }} {{ \Illuminate\Support\Arr::get($row_settings, 'css_class_group') }}">
     <div class="checkbox">
         <label>
             <input type="checkbox" name="{{ $row_key }}" id="{{ $row_key }}"

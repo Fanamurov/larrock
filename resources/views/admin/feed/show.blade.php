@@ -5,7 +5,7 @@
     <div class="ibox float-e-margins">
         <div class="ibox-title background-transparent">
             <div>
-                <h1 class="inline"><a href="/admin/feed">Ленты</a>/{{ $category->title }}</h1>
+                {!! Breadcrumbs::render('admin.feed.category', $category) !!}
                 <a href="/feed/{{ $category->url}}">/feed/{{ $category->url}}</a>
                 <div class="add-panel">
                     <div>
@@ -38,7 +38,6 @@
 
     <div class="ibox float-e-margins">
         <div class="ibox-title background-transparent">
-            <h2 class="inline">Материалы раздела:</h2>
             <div class="add-panel">
                 <a class="btn btn-info pull-right" href="/admin/{{ $app['name'] }}/create?category={{ $category->id }}">Добавить материал</a>
             </div>
@@ -56,7 +55,7 @@
                     <th>URL</th>
                     <th width="141">Изменено</th>
                     <th width="90" data-toggle="tooltip" data-placement="bottom" title="Вес. Чем больше, тем выше в списках">Вес</th>
-                    <th width="93" class="pull-right">Активность</th>
+                    <th width="93"></th>
                     <th width="90"></th>
                     <th width="90"></th>
                 </tr>

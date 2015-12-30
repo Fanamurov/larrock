@@ -56,15 +56,15 @@ class Ajax extends Controller
 		//$get_app = Apps::whereName($folder)->get(['plugins_backend', 'settings']);
 
         if( !file_exists('images')){
-            mkdir('images/', 0755);
+            @mkdir('images/', 0755);
         }
 
         if( !file_exists('images/'. $folder)){
-            mkdir('images/'. $folder, 0755);
+            @mkdir('images/'. $folder, 0755);
         }
 
         if( !file_exists('images/'. $folder .'/big')){
-            mkdir('images/'. $folder .'/big', 0755);
+            @mkdir('images/'. $folder .'/big', 0755);
         }
 
         foreach($images as $images_value){
@@ -133,11 +133,11 @@ class Ajax extends Controller
 		$param = Input::get('param');
 
 		if( !file_exists('files')){
-			mkdir('files/', 0755);
+			@mkdir('files/', 0755);
 		}
 
 		if( !file_exists('files/'. $folder)){
-			mkdir('files/'. $folder, 0755);
+			@mkdir('files/'. $folder, 0755);
 		}
 
 		foreach($files as $files_value){

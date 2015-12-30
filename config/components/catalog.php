@@ -10,65 +10,69 @@ return [
 			'title' => 'Заголовок',
 			'in_table_admin' => 'TRUE',
 			'type' => 'text',
-			'tab' => ['main' => 'Заголовок, описание'],
+			'tab' => ['main' => 'Описание товара'],
 			'valid' => 'max:255|required',
 			'typo' => 'true'
 		],
 		'category' => [
 			'title' => 'Раздел',
 			'type' => 'select_category',
-			'tab' => ['main' => 'Заголовок, описание'],
+			'tab' => ['main' => 'Описание товара'],
 			'valid' => 'max:255|required',
 			'options_connect' => ['row' => 'title', 'table' => 'category', 'where' => ['type' => 'catalog']]
 		],
 		'short' => [
 			'title' => 'Короткое описание',
 			'type' => 'textarea',
-			'tab' => ['main' => 'Заголовок, описание'],
+			'tab' => ['main' => 'Описание товара'],
 			'css_class' => 'not-editor'
 		],
 		'description' => [
 			'title' => 'Полное описание',
 			'type' => 'textarea',
-			'tab' => ['main' => 'Заголовок, описание']
+			'tab' => ['main' => 'Описание товара'],
 		],
 		'url' => [
 			'title' => 'URL материала',
 			'type' => 'text',
 			'tab' => ['seo' => 'Seo'],
-			'valid' => 'max:155|required|unique:catalog,url'
-		],
-		'what' => [
-			'title' => 'Мера измерений',
-			'type' => 'text',
-			'tab' => ['cost' => 'Цена'],
-			'valid' => 'max:55|required'
+			'valid' => 'max:155|required|unique:catalog,url,:id'
 		],
 		'cost' => [
 			'title' => 'Цена',
 			'type' => 'text',
-			'tab' => ['cost' => 'Цена']
+			'tab' => ['main' => 'Описание товара'],
+			'css_class_group' => 'col-xs-4'
 		],
 		'cost_old' => [
 			'title' => 'Старая цена',
 			'type' => 'text',
-			'tab' => ['cost' => 'Цена'],
+			'tab' => ['main' => 'Описание товара'],
+			'css_class_group' => 'col-xs-4'
+		],
+		'what' => [
+			'title' => 'Мера измерений',
+			'type' => 'select_row',
+			'options_connect' => ['row' => 'what', 'table' => 'catalog', 'selected_search' => 'value'],
+			'tab' => ['main' => 'Описание товара'],
+			'valid' => 'max:55|required',
+			'css_class_group' => 'col-xs-3'
 		],
 		'manufacture' => [
 			'title' => 'Производитель',
 			'type' => 'text',
-			'tab' => ['cost' => 'Цена'],
+			'tab' => ['other' => 'Дополнительные поля'],
 		],
 		'articul' => [
 			'title' => 'Артикул',
 			'type' => 'text',
-			'tab' => ['cost' => 'Цена'],
+			'tab' => ['other' => 'Дополнительные поля'],
 			'valid' => 'max:255'
 		],
 		'nalichie' => [
 			'title' => 'В наличии',
 			'type' => 'text',
-			'tab' => ['cost' => 'Цена'],
+			'tab' => ['other' => 'Дополнительные поля'],
 			'valid' => 'required|integer',
 			'default' => 999999
 		],

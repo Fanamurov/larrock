@@ -18,7 +18,7 @@ class CreateImagesTable extends Migration
 			$table->string('name', 255);
 			$table->char('mime', 10);
 			$table->string('description', 255);
-			$table->string('type', 255);
+			$table->string('type_connect', 255);
 			$table->integer('id_connect');
 			$table->text('param');
 			$table->integer('position');

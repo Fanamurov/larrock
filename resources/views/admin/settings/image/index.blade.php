@@ -27,17 +27,17 @@
                 @foreach($apps as $app)
                     <form method="post" action="">
                     <tr>
-                        <td>{{ $app->title }} <small class="text-muted">[{{ $app->name }}]</small></td>
+                        <td>{{ $app['title'] }} <small class="text-muted">[{{ $app['name'] }}]</small></td>
                         <td>
                             <div class="form-group">
                                 <input type="text" class="form-control" name="image_original" placeholder="без ограничений"
-                                value="{{ Input::old('image_original', \Funct\Collection\get($app->settings, 'image_original')) }}">
+                                value="{{ Input::old('image_original', \Illuminate\Support\Arr::get($app['settings'], 'image_original')) }}">
                             </div>
                         </td>
                         <td>
                             <div class="form-group">
                                 <input type="text" class="form-control" name="image_generate" placeholder="нет"
-                                value="{{ Input::old('image_generate', \Funct\Collection\get($app->settings, 'image_generate')) }}">
+                                value="{{ Input::old('image_generate', \Illuminate\Support\Arr::get($app['settings'], 'image_generate')) }}">
                             </div>
                         </td>
                         <td>
@@ -47,7 +47,7 @@
                         </td>
                         <td>
                             <div class="form-group">
-                                <input type="hidden" name="id" value="{{ $app->id }}">
+                                <input type="hidden" name="name" value="{{ $app['name'] }}">
                                 <input type="hidden" name="_token" value="{{csrf_token()}}">
                                 <button type="submit" class="btn btn-success" name="save_preset">Сохранить</button>
                             </div>

@@ -53,7 +53,7 @@ return [
 			'title' => 'URL материала',
 			'type' => 'text',
 			'tab' => ['seo' => 'Seo'],
-			'valid' => 'max:155|required|unique:category,url'
+			'valid' => 'max:155|required|unique:category,url,:id'
 		],
 		'position' => [
 			'title' => 'Вес материала',

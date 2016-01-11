@@ -102,7 +102,7 @@ class PageController extends Controller
      */
     public function update(Request $request, $id, ContentPlugins $plugins)
     {
-		$validator = Validator::make($request->all(), Component::_valid_construct($this->config['rows']));
+		$validator = Validator::make($request->all(), Component::_valid_construct($this->config['rows'], 'update', $id));
 		if($validator->fails()){
 			return back()->withInput($request->except('password'))->withErrors($validator);
 		}
@@ -137,14 +137,14 @@ class PageController extends Controller
 		$data->active = $request->input('active', 0);
 		$data->position = $request->input('position', 0);
 		$today = getdate();
-		$data->date = $request->input('position');
+		$data->date = $request->input('date');
 		if(empty($data->date)){
 			$data->date = $today['year'] .'-'. $today['mon'] .'-'. $today['mday'];
 		}
 
 		if($data->save()){
 			Alert::add('success', 'Материал '. $request->input('title') .' добавлен')->flash();
-			Input::input('connect_id', $data->id);
+			Input::merge(['id_connect' => $data->id, 'stash_id' => $request->input('id_connect')]);
 			$plugins->update($this->config['plugins_backend']);
 
 			return Redirect::to('/admin/'. $this->config['name'] .'/'. $data->id .'/edit')->withInput();

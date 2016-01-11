@@ -154,10 +154,10 @@ $(document).ready(function(){
         $('#tabfiles').removeClass('active');
     });
 
-    function get_loaded_images(id_connect, type)
+    function get_loaded_images(id_connect, type_connect)
     {
         $.ajax({
-            data: {id_connect: id_connect, type: type},
+            data: {id_connect: id_connect, type_connect: type_connect},
             type: "POST",
             dataType: "json",
             url: "/admin/ajax/getLoadedImages",
@@ -481,8 +481,9 @@ $(document).ready(function(){
         firstDay: 1,
         monthsFull: [ 'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь' ],
         weekdaysShort: [ 'Вск', 'Пон', 'Вт', 'Ср', 'Чт', 'Пт', 'Суб' ],
-        format: 'yyyy-mm-dd 00:00:00'
+        format: 'yyyy-mm-dd'
     });
+
 
     /*
      * Универсальный обработчик для выделения блока как ссылки

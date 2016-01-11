@@ -35,7 +35,7 @@ return [
 			'title' => 'URL материала',
 			'type' => 'text',
 			'tab' => ['seo' => 'Seo'],
-			'valid' => 'max:155|required|unique:feed,url'
+			'valid' => 'max:155|required|unique:feed,url,:id'
 		],
 		'date' => [
 			'title' => 'Дата материала',

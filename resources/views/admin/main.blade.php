@@ -33,14 +33,14 @@
                             @foreach($errors->all() as $error)
                                 <div class="alert alert-danger alert-dismissable">
                                     <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-                                    <i class="icon-plus"></i> {{ $error }}
+                                    {{ $error }}
                                 </div>
                             @endforeach
                             @foreach (Alert::getMessages() as $type => $messages)
                                 @foreach ($messages as $message)
                                     <div class="alert alert-{{ $type }} alert-dismissable">
                                         <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-                                        <i class="icon-plus"></i> {{ $message }}
+                                        {{ $message }}
                                     </div>
                                 @endforeach
                             @endforeach

@@ -24,6 +24,10 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Roles extends Model
 {
+	protected $table = 'roles';
+
+	protected $fillable = ['slug', 'name', 'permission'];
+
 	public function user()
 	{
 		return $this->belongsTo('App\Models\Users');

@@ -75,6 +75,8 @@
                         <td class="row-delete">
                             <form action="/admin/{{ $app['name'] }}/{{ $data_value->id }}" method="post">
                                 <input name="_method" type="hidden" value="DELETE">
+                                <input name="id_connect" type="hidden" value="{{ $data_value->id }}">
+                                <input name="type_connect" type="hidden" value="{{ $app['name'] }}">
                                 <input type="hidden" name="_token" value="{{csrf_token()}}">
                                 <button type="submit" class="btn btn-danger btn-xs please_conform">Удалить</button>
                             </form>

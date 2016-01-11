@@ -50,7 +50,7 @@ class Ajax extends Controller
         $images = Input::file('images');
         $folder = Input::get('folder');
         $id_connect = Input::get('id_connect');
-        $param = Input::get('param');
+        $param = Input::get('param', $folder.$id_connect);
 
 		//Достаем конфиг пресетов компонента
 		//$get_app = Apps::whereName($folder)->get(['plugins_backend', 'settings']);
@@ -78,7 +78,7 @@ class Ajax extends Controller
 				$inset_image->name = $images_value->getClientOriginalName();
 				$inset_image->mime = $images_value->getClientMimeType();
 				$inset_image->description = '';
-				$inset_image->type = $folder;
+				$inset_image->type_connect = $folder;
 				$inset_image->id_connect = $id_connect;
 				$inset_image->param = $param;
 				$inset_image->position = 0;
@@ -91,10 +91,10 @@ class Ajax extends Controller
 
 	public function getLoadedImages()
 	{
-        $images = Model_Images::whereIdConnect(Input::get('id_connect'))->whereType(Input::get('type'))->orderBy('position', 'asc')->get();
+        $images = Model_Images::whereIdConnect(Input::get('id_connect'))->whereTypeConnect(Input::get('type_connect'))->orderBy('position', 'asc')->get();
 		foreach($images as $images_key => $images_value){
 			$images[$images_key]->type = $images_value->mime;
-			$images[$images_key]->file = '/images/'. Input::get('type') .'/big/'. $images_value->name;
+			$images[$images_key]->file = '/images/'. $images_value->type_connect .'/big/'. $images_value->name;
 			$images[$images_key]->size = 456;
 		}
 		return $images;
@@ -147,7 +147,7 @@ class Ajax extends Controller
 			$inset_file->name = $files_value->getClientOriginalName();
 			$inset_file->mime = $files_value->getClientMimeType();
 			$inset_file->description = '';
-			$inset_file->type = $folder;
+			$inset_file->type_connect = $folder;
 			$inset_file->id_connect = $id_connect;
 			$inset_file->param = $param;
 			$inset_file->position = 0;
@@ -157,10 +157,10 @@ class Ajax extends Controller
 
 	public function getLoadedFiles()
 	{
-		$images = Model_Files::whereIdConnect(Input::get('id_connect'))->whereType(Input::get('type'))->orderBy('position', 'asc')->get();
+		$images = Model_Files::whereIdConnect(Input::get('id_connect'))->whereTypeConnect(Input::get('type_connect'))->orderBy('position', 'asc')->get();
 		foreach($images as $images_key => $images_value){
 			$images[$images_key]->type = $images_value->mime;
-			$images[$images_key]->file = '/files/'. Input::get('type') .'/big/'. $images_value->name;
+			$images[$images_key]->file = '/files/'. $images_value->type_connect .'/big/'. $images_value->name;
 			$images[$images_key]->size = 456;
 		}
 		return $images;

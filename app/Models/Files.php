@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $name
  * @property string $mime
  * @property string $description
- * @property string $type
+ * @property string $type_connect
  * @property integer $id_connect
  * @property string $param
  * @property integer $position
@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Files whereName($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Files whereMime($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Files whereDescription($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Files whereType($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Files whereTypeConnect($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Files whereIdConnect($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Files whereParam($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Files wherePosition($value)
@@ -31,4 +31,6 @@ use Illuminate\Database\Eloquent\Model;
 class Files extends Model
 {
     protected $table = 'files';
+
+	protected $fillable = ['name', 'mime', 'description', 'type_connect', 'id_connect', 'param', 'position'];
 }

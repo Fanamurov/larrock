@@ -118,7 +118,7 @@ class CatalogController extends Controller
 				$data->get_category()->attach($category, ['catalog_id' => $data->id]);
 			}
 			Alert::add('success', 'Товар '. $request->input('title') .' добавлен')->flash();
-			Input::input('connect_id', $data->id);
+			Input::merge(['id_connect' => $data->id, 'stash_id' => $request->input('id')]);
 			$plugins->update($this->config['plugins_backend']);
 
 			return Redirect::to('/admin/'. $this->config['name'] .'/'. $data->id .'/edit')->withInput();

@@ -23,7 +23,7 @@ return [
 			'title' => 'URL материала',
 			'type' => 'text',
 			'tab' => ['seo' => 'Seo'],
-			'valid' => 'max:155|required|unique:page,url'
+			'valid' => 'max:155|required|unique:page,url,:id'
 		],
 		'date' => [
 			'title' => 'Дата материала',

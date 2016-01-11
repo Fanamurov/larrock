@@ -125,6 +125,8 @@ CREATE TABLE `config` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+INSERT INTO `config` (`id`, `key`, `value`, `type`, `created_at`, `updated_at`) VALUES
+(1,	'catalog',	'a:2:{s:14:\"image_original\";a:1:{i:0;s:7:\"800-800\";}s:14:\"image_generate\";a:2:{i:0;s:7:\"260-120\";i:1;s:7:\"600-600\";}}',	'image_presets',	'2016-01-11 07:21:09',	'2016-01-11 07:21:09');
 
 DROP TABLE IF EXISTS `feed`;
 CREATE TABLE `feed` (
@@ -156,7 +158,7 @@ CREATE TABLE `files` (
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `mime` char(10) COLLATE utf8_unicode_ci NOT NULL,
   `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `type_connect` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `id_connect` int(11) NOT NULL,
   `param` text COLLATE utf8_unicode_ci NOT NULL,
   `position` int(11) NOT NULL,
@@ -165,7 +167,7 @@ CREATE TABLE `files` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `files` (`id`, `name`, `mime`, `description`, `type`, `id_connect`, `param`, `position`, `created_at`, `updated_at`) VALUES
+INSERT INTO `files` (`id`, `name`, `mime`, `description`, `type_connect`, `id_connect`, `param`, `position`, `created_at`, `updated_at`) VALUES
 (1,	'bg_header.jpg',	'image/jpeg',	'',	'feed',	4,	'novost-o-novom-gode',	0,	'2015-12-18 05:28:15',	'2015-12-18 05:28:15'),
 (2,	'план финансово-хозяйственной деятельности на 2015 год.rar',	'applicatio',	'',	'feed',	1,	'primer-zagolovka',	0,	'2015-12-18 06:43:20',	'2015-12-18 06:43:20'),
 (3,	'муниципальное задание на 2015 год.rar',	'applicatio',	'',	'feed',	1,	'primer-zagolovka',	0,	'2015-12-18 06:43:20',	'2015-12-18 06:43:20');
@@ -176,7 +178,7 @@ CREATE TABLE `images` (
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `mime` char(10) COLLATE utf8_unicode_ci NOT NULL,
   `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `type_connect` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `id_connect` int(11) NOT NULL,
   `param` text COLLATE utf8_unicode_ci NOT NULL,
   `position` int(11) NOT NULL,
@@ -185,13 +187,6 @@ CREATE TABLE `images` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `images` (`id`, `name`, `mime`, `description`, `type`, `id_connect`, `param`, `position`, `created_at`, `updated_at`) VALUES
-(5,	'foo.jpg',	'image/jpg',	'',	'page',	1,	'89ttrtr',	3,	'2015-12-03 02:13:09',	'2015-12-03 02:13:09'),
-(9,	'MORNING_EROFEY_on_Vimeo.png',	'image/png',	'',	'page',	9,	'333',	0,	'2015-12-04 16:08:49',	'2015-12-04 16:08:49'),
-(10,	'baner_ng.png',	'image/png',	'',	'feed',	3,	'URL',	0,	'2015-12-11 06:57:18',	'2015-12-11 06:57:18'),
-(11,	'33665ue.jpg',	'image/jpeg',	'',	'feed',	4,	'novost-o-novom-gode',	0,	'2015-12-18 04:30:57',	'2015-12-18 04:30:57'),
-(13,	'nhk733b5ue.jpg',	'image/jpeg',	'',	'test',	4,	'novost-o-novom-gode',	0,	'2015-12-18 04:30:57',	'2015-12-18 04:30:57'),
-(14,	'652525ue.jpg',	'image/jpeg',	'',	'feed',	4,	'novost-o-novom-gode',	0,	'2015-12-18 04:30:57',	'2015-12-18 04:30:57');
 
 DROP TABLE IF EXISTS `menu`;
 CREATE TABLE `menu` (
@@ -255,9 +250,6 @@ CREATE TABLE `page` (
   UNIQUE KEY `page_url_unique` (`url`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `page` (`id`, `title`, `description`, `url`, `date`, `position`, `active`, `created_at`, `updated_at`) VALUES
-(1,	'Тестовая страница',	'<p>Пример текста</p>',	'testovaya-stranica',	'0000-00-00',	0,	1,	'2015-12-08 07:49:25',	'2015-12-08 07:49:25'),
-(2,	'Статичная страница',	'<p>4234324</p>',	'statichnaya-stranica',	'2015-12-21',	0,	1,	'2015-12-21 00:44:01',	'2015-12-21 00:44:01');
 
 DROP TABLE IF EXISTS `persistences`;
 CREATE TABLE `persistences` (
@@ -340,24 +332,7 @@ CREATE TABLE `seo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `seo` (`id`, `seo_title`, `seo_description`, `seo_keywords`, `id_connect`, `url_connect`, `type_connect`, `created_at`, `updated_at`) VALUES
-(5,	'',	'',	'',	1,	NULL,	'page',	'2015-12-02 05:58:07',	'2015-12-08 07:49:25'),
-(6,	'Title material',	'',	'',	3,	NULL,	'page',	'2015-12-02 06:27:28',	'2015-12-02 06:27:28'),
-(11,	'',	'',	'',	10,	NULL,	'page',	'2015-12-04 04:45:08',	'2015-12-04 04:45:08'),
-(12,	'',	'',	'',	9,	NULL,	'page',	'2015-12-04 16:10:40',	'2015-12-04 16:10:40'),
-(13,	'',	'',	'',	2,	NULL,	'feed',	'2015-12-16 07:28:44',	'2015-12-16 07:28:44'),
-(14,	'',	'',	'',	4,	NULL,	'test',	'2015-12-17 06:09:43',	'2015-12-17 06:09:43'),
-(16,	'Titlw 21',	'',	'',	2,	NULL,	'page',	'2015-12-21 00:44:01',	'2015-12-21 00:52:12'),
-(17,	'Новый тестовый',	'234234324',	'',	0,	NULL,	'',	'2015-12-22 06:07:04',	'2015-12-22 06:07:04'),
-(18,	'1111',	'222',	'',	0,	NULL,	'custom',	'2015-12-22 06:08:52',	'2015-12-22 06:08:52'),
-(19,	'4234',	'4234',	'',	23,	NULL,	'custom',	'2015-12-22 06:12:22',	'2015-12-22 06:12:22'),
-(20,	'',	'',	'',	4,	NULL,	'feed',	'2015-12-24 03:43:09',	'2015-12-24 03:43:09'),
-(21,	'',	'',	'',	5,	NULL,	'category',	'2015-12-24 05:22:04',	'2015-12-24 05:22:04'),
-(22,	'',	'',	'',	6,	NULL,	'category',	'2015-12-24 05:32:48',	'2015-12-24 05:32:48'),
-(23,	'',	'',	'',	7,	NULL,	'category',	'2015-12-24 05:38:38',	'2015-12-24 05:38:38'),
-(24,	'',	'',	'',	2,	NULL,	'catalog',	'2015-12-29 02:00:38',	'2015-12-29 02:00:38'),
-(25,	'',	'',	'',	3,	NULL,	'catalog',	'2015-12-29 03:16:28',	'2015-12-29 03:16:28'),
-(26,	'',	'',	'',	5,	NULL,	'feed',	'2015-12-29 04:01:52',	'2015-12-29 04:01:52'),
-(27,	'',	'',	'',	4,	NULL,	'catalog',	'2015-12-29 04:34:57',	'2015-12-29 04:34:57');
+(29,	'tess',	'',	'',	1,	NULL,	'page',	'2016-01-11 05:36:02',	'2016-01-11 05:36:02');
 
 DROP TABLE IF EXISTS `templates`;
 CREATE TABLE `templates` (
@@ -380,7 +355,11 @@ INSERT INTO `templates` (`id`, `template`, `template_global`, `type_connect`, `i
 (14,	'Template1',	'Template1',	'catalog',	2,	'2015-12-29 02:00:38',	'2015-12-29 02:00:38'),
 (15,	'Template1',	'Template1',	'catalog',	3,	'2015-12-29 03:16:28',	'2015-12-29 03:16:28'),
 (16,	'Template1',	'Template1',	'feed',	5,	'2015-12-29 04:01:52',	'2015-12-29 04:01:52'),
-(17,	'Template1',	'Template1',	'catalog',	4,	'2015-12-29 04:34:57',	'2015-12-29 04:34:57');
+(17,	'Template1',	'Template1',	'catalog',	4,	'2015-12-29 04:34:57',	'2015-12-29 04:34:57'),
+(18,	'Template2',	'Template2',	'page',	3,	'2016-01-11 04:23:53',	'2016-01-11 04:23:53'),
+(19,	'Template2',	'Template1',	'page',	4,	'2016-01-11 04:25:47',	'2016-01-11 04:25:47'),
+(20,	'Template1',	'Template1',	'page',	5,	'2016-01-11 04:41:24',	'2016-01-11 04:41:24'),
+(21,	'Template1',	'Template1',	'page',	1,	'2016-01-11 04:47:59',	'2016-01-11 04:47:59');
 
 DROP TABLE IF EXISTS `throttle`;
 CREATE TABLE `throttle` (
@@ -433,4 +412,4 @@ INSERT INTO `users` (`id`, `email`, `password`, `permissions`, `last_login`, `fi
 (1,	'fanamurov@ya.ru',	'$2y$10$SJzDIVLhyCdzOMxfnqAADOCoyzVgjwjmBlYaVWQlikchTd67mWPRa',	NULL,	'2015-12-25 07:18:00',	'4234',	'',	'2015-11-19 15:41:49',	'2015-12-25 07:18:00'),
 (2,	'4234234@fa.ru',	'$2y$10$7xxex.8N0z6VSgHKACE1/e.RuIUzPN3IDnErUIG5Kiq/Jm1.5/QzG',	NULL,	NULL,	'',	'',	'2015-12-22 09:47:43',	'2015-12-22 09:47:43');
 
--- 2015-12-30 07:11:21
+-- 2016-01-11 07:41:50

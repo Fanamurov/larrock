@@ -1,6 +1,6 @@
 <div class="form-group">
     <p class="url_link">
-        <span>Url:</span> <a href="/images/{{ $image->type }}/big/{{ $image->name }}">/images/{{ $image->type }}/big/{{ $image->name }}</a>
+        <span>Url:</span> <a href="/images/{{ $image->type_connect }}/big/{{ $image->name }}">/images/{{ $image->type_connect }}/big/{{ $image->name }}</a>
         <span class="label">800x564</span>, <span class="label">300x215</span>
     </p>
 </div>

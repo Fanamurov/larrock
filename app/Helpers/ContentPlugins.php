@@ -3,6 +3,8 @@
 namespace App\Helpers;
 
 use App\Helpers\ContentPlugins\ContentPluginsInterface;
+use App\Models\Files;
+use App\Models\Images;
 use App\Models\Seo;
 use App\Models\Templates;
 use App\Models\Images as Model_Images;
@@ -89,6 +91,10 @@ class ContentPlugins implements ContentPluginsInterface
 		return $data;
 	}
 
+	/**
+	 * Обновление данных плагинов
+	 * @param array $plugins_load
+	 */
 	public function update(array $plugins_load)
 	{
 		foreach($plugins_load as $plugins_load_value){
@@ -98,6 +104,12 @@ class ContentPlugins implements ContentPluginsInterface
 			if($plugins_load_value === 'templates'){
 				$this->update_templates();
 			}
+			if($plugins_load_value === 'images'){
+				$this->update_images();
+			}
+			if($plugins_load_value === 'files'){
+				$this->update_files();
+			}
 		}
 	}
 
@@ -106,7 +118,9 @@ class ContentPlugins implements ContentPluginsInterface
 		if( !$seo = Seo::whereIdConnect(Request::input('id_connect'))->whereTypeConnect(Request::input('type_connect'))->first()){
 			$seo = new Seo();
 		}
-		$seo->fill(Request::all())->save();
+		if(Request::get('seo_title', '') !== ''){
+			$seo->fill(Request::all())->save();
+		}
 	}
 
 	protected function update_templates()
@@ -115,6 +129,20 @@ class ContentPlugins implements ContentPluginsInterface
 			$template = new Templates();
 		}
 		$template->fill(Request::all())->save();
+	}
+
+	protected function update_images()
+	{
+		if(Request::get('stash_id')){
+			Images::whereIdConnect(Request::get('stash_id'))->whereTypeConnect(Request::input('type_connect'))->update(['id_connect' => Request::input('id_connect')]);
+		}
+	}
+
+	protected function update_files()
+	{
+		if(Request::get('stash_id')){
+			Files::whereIdConnect(Request::get('stash_id'))->whereTypeConnect(Request::input('type_connect'))->update(['id_connect' => Request::input('id_connect')]);
+		}
 	}
 
 	public function destroy(array $plugins_load)
@@ -151,17 +179,18 @@ class ContentPlugins implements ContentPluginsInterface
 
     protected function destroy_images()
     {
-        if($images = Model_Images::whereIdConnect(Request::input('id_connect'))->whereType(Request::input('type_connect'))->get()){
+        if($images = Model_Images::whereIdConnect(Request::input('id_connect'))->whereTypeConnect(Request::input('type_connect'))->get()){
             foreach($images as $images_value){
                 $images_value->delete();
                 @unlink('images/'. Request::input('type_connect') .'/big/'. $images_value->name);
+				//TODO: удаление файлов от пресетов
             }
         }
     }
 
     protected function destroy_files()
     {
-		if($files = Model_Files::whereIdConnect(Request::input('id_connect'))->whereType(Request::input('type_connect'))->get()){
+		if($files = Model_Files::whereIdConnect(Request::input('id_connect'))->whereTypeConnect(Request::input('type_connect'))->get()){
 			foreach($files as $files_value){
 				$files_value->delete();
 				@unlink('files/'. Request::input('type_connect') .'/'. $files_value->name);

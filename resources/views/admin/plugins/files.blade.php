@@ -1,6 +1,6 @@
 <div class="form-group">
     <p class="url_link">
-        <span>Url:</span> <a href="/files/{{ $file->type }}/{{ $file->name }}">/files/{{ $file->type }}/{{ $file->name }}</a>
+        <span>Url:</span> <a href="/files/{{ $file->type_connect }}/{{ $file->name }}">/files/{{ $file->type_connect }}/{{ $file->name }}</a>
     </p>
 </div>
 <div class="form-group">

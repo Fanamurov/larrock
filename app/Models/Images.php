@@ -28,8 +28,11 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Images whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Images whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Images find($value)
+ * @property string $type_connect
  */
 class Images extends Model
 {
 	protected $table = 'images';
+
+	protected $fillable = ['name', 'mime', 'description', 'type_connect', 'id_connect', 'param', 'position'];
 }

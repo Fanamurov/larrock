@@ -183,7 +183,9 @@ $(document).ready(function(){
         });
     }
 
-    get_loaded_images($('input[name=id_connect]').val(), $('input[name=folder]').val());
+    if($('input[name=folder]').val() !== undefined){
+        get_loaded_images($('input[name=id_connect]').val(), $('input[name=folder]').val());
+    }
 
     function load_image_plugin(uploaded_files)
     {
@@ -311,9 +313,6 @@ $(document).ready(function(){
     }
     /* End image upload */
 
-
-
-
     function get_loaded_files(id_connect, type)
     {
         $.ajax({
@@ -343,7 +342,9 @@ $(document).ready(function(){
         });
     }
 
-    get_loaded_files($('input[name=id_connect]').val(), $('input[name=folder]').val());
+    if($('input[name=folder]').val() !== undefined){
+        get_loaded_files($('input[name=id_connect]').val(), $('input[name=folder]').val());
+    }
 
     function load_files_plugin(uploaded_files)
     {

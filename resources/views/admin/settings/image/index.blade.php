@@ -31,13 +31,13 @@
                         <td>
                             <div class="form-group">
                                 <input type="text" class="form-control" name="image_original" placeholder="без ограничений"
-                                value="{{ Input::old('image_original', \Illuminate\Support\Arr::get($app['settings'], 'image_original')) }}">
+                                value="{{ Input::old('image_original', \Illuminate\Support\Arr::get($app, 'image_original')) }}">
                             </div>
                         </td>
                         <td>
                             <div class="form-group">
                                 <input type="text" class="form-control" name="image_generate" placeholder="нет"
-                                value="{{ Input::old('image_generate', \Illuminate\Support\Arr::get($app['settings'], 'image_generate')) }}">
+                                value="{{ Input::old('image_generate', \Illuminate\Support\Arr::get($app, 'image_generate')) }}">
                             </div>
                         </td>
                         <td>

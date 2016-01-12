@@ -94,6 +94,7 @@ return [
 	],
 	'menu_category' => 'catalog',
 	'admin_menu' => ['type' => 'category_list'],
+	'admin_menu_push' => ['Wizard' => '/admin/wizard'],
 	'settings' => [],
 	'plugins_backend' => ['seo', 'images', 'files', 'templates'],
 	'plugins_front' => [],

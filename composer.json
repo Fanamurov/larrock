@@ -19,7 +19,7 @@
         "gloudemans/shoppingcart": "~1.3",
         "nicolaslopezj/searchable": "~1.6",
         "greggilbert/recaptcha": "~2.0",
-        "maatwebsite/excel": "~2.0",
+        "maatwebsite/excel": "^2.1",
         "intervention/image": "^2.3",
         "prologue/alerts": "^0.4.0",
         "kix/mdash": "^0.5.4",

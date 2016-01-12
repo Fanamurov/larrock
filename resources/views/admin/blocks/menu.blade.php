@@ -16,6 +16,11 @@
                                 @foreach($component['admin_menu_items'] as $menu_item)
                                     <li><a href="/admin/{{ $component['name'] }}/{{ $menu_item['id'] }}">{{ $menu_item['title'] }}</a></li>
                                 @endforeach
+                                @if(array_key_exists('admin_menu_push', $component))
+                                    @foreach($component['admin_menu_push'] as $menu_title => $menu_url)
+                                        <li><a href="{{ $menu_url }}">{{ $menu_title }}</a></li>
+                                    @endforeach
+                                @endif
                             </ul>
                         </li>
                     @else

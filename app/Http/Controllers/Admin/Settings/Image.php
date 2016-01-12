@@ -22,7 +22,6 @@ class Image extends Controller
 
     public function __construct(MenuBlock $menu)
     {
-        $this->config = Config::get('components.feed');
 		if(Route::current()){
 			View::share('menu', $menu->index(Route::current()->getUri())->render());
 		}
@@ -35,18 +34,17 @@ class Image extends Controller
      */
     public function index()
     {
-		//TODO: значения конфига в строку (implode)
         $data['apps'] = Config::get('components');
 		foreach($data['apps'] as $app_key => $app_value){
             if(in_array('images', $app_value['plugins_backend'], TRUE)){
-				$app_value['image_presets'] = Model_Config::whereType('image_presets')->whereKey($app_value['name'])->first()->toArray();
-				dd($app_value['image_presets']);
-				$app_value['image_presets'] = unserialize(Arr::get($app_value['image_presets'], 'value', []));
-				if(array_key_exists('image_original', $app_value['image_presets'])){
-					$app_value['image_presets']['image_original'] = implode(',', $app_value['image_presets']['image_original']);
-				}
-				if(array_key_exists('image_generate', $app_value['image_presets'])){
-					$app_value['image_presets']['image_generate'] = implode(',', $app_value['image_presets']['image_generate']);
+				$get_presets = Model_Config::whereType('image_presets')->whereKey($app_value['name'])->first();
+				if(isset($get_presets->value)){
+					if(array_key_exists('image_original', $get_presets->value)){
+						$data['apps'][$app_key]['image_original'] = $get_presets->value['image_original'];
+					}
+					if(array_key_exists('image_generate', $get_presets->value)){
+						$data['apps'][$app_key]['image_generate'] = implode(', ', $get_presets->value['image_generate']);
+					}
 				}
             }else{
 				unset($data['apps'][$app_key]);
@@ -57,13 +55,14 @@ class Image extends Controller
 
     /**
      * Store a newly created resource in storage.
+	 * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-		$settings['image_original'] = array_map('trim', explode(',', $request->input('image_original', 'none')));
+		$settings['image_original'] = $request->input('image_original', '');
 		$settings['image_generate'] = array_map('trim', explode(',', $request->input('image_generate', 'none')));
 		$settings = serialize($settings);
 
@@ -81,17 +80,5 @@ class Image extends Controller
 
 		Alert::add('error', 'Пресет картинок '. $request->get('name') .' не изменен')->flash();
 		return back()->withInput();
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
     }
 }

@@ -126,7 +126,8 @@ CREATE TABLE `config` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `config` (`id`, `key`, `value`, `type`, `created_at`, `updated_at`) VALUES
-(1,	'catalog',	'a:2:{s:14:\"image_original\";a:1:{i:0;s:7:\"800-800\";}s:14:\"image_generate\";a:2:{i:0;s:7:\"260-120\";i:1;s:7:\"600-600\";}}',	'image_presets',	'2016-01-11 07:21:09',	'2016-01-11 07:21:09');
+(1,	'catalog',	'a:2:{s:14:\"image_original\";s:7:\"800-800\";s:14:\"image_generate\";a:2:{i:0;s:7:\"260-120\";i:1;s:7:\"600-600\";}}',	'image_presets',	'2016-01-11 07:21:09',	'2016-01-12 02:06:36'),
+(2,	'page',	'a:2:{s:14:\"image_original\";s:0:\"\";s:14:\"image_generate\";a:2:{i:0;s:7:\"100-200\";i:1;s:7:\"300-540\";}}',	'image_presets',	'2016-01-12 04:34:30',	'2016-01-12 04:34:30');
 
 DROP TABLE IF EXISTS `feed`;
 CREATE TABLE `feed` (
@@ -187,6 +188,8 @@ CREATE TABLE `images` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+INSERT INTO `images` (`id`, `name`, `mime`, `description`, `type_connect`, `id_connect`, `param`, `position`, `created_at`, `updated_at`) VALUES
+(21,	'ek_111.png',	'image/png',	'',	'page',	22,	'',	0,	'2016-01-12 05:11:47',	'2016-01-12 05:12:15');
 
 DROP TABLE IF EXISTS `menu`;
 CREATE TABLE `menu` (
@@ -250,6 +253,8 @@ CREATE TABLE `page` (
   UNIQUE KEY `page_url_unique` (`url`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+INSERT INTO `page` (`id`, `title`, `description`, `url`, `date`, `position`, `active`, `created_at`, `updated_at`) VALUES
+(22,	'rwerwe',	'',	'rwerwe',	'2016-01-12',	0,	1,	'2016-01-12 05:12:15',	'2016-01-12 05:12:15');
 
 DROP TABLE IF EXISTS `persistences`;
 CREATE TABLE `persistences` (
@@ -359,7 +364,8 @@ INSERT INTO `templates` (`id`, `template`, `template_global`, `type_connect`, `i
 (18,	'Template2',	'Template2',	'page',	3,	'2016-01-11 04:23:53',	'2016-01-11 04:23:53'),
 (19,	'Template2',	'Template1',	'page',	4,	'2016-01-11 04:25:47',	'2016-01-11 04:25:47'),
 (20,	'Template1',	'Template1',	'page',	5,	'2016-01-11 04:41:24',	'2016-01-11 04:41:24'),
-(21,	'Template1',	'Template1',	'page',	1,	'2016-01-11 04:47:59',	'2016-01-11 04:47:59');
+(21,	'Template1',	'Template1',	'page',	1,	'2016-01-11 04:47:59',	'2016-01-11 04:47:59'),
+(25,	'Template1',	'Template1',	'page',	22,	'2016-01-12 05:12:15',	'2016-01-12 05:12:15');
 
 DROP TABLE IF EXISTS `throttle`;
 CREATE TABLE `throttle` (
@@ -412,4 +418,4 @@ INSERT INTO `users` (`id`, `email`, `password`, `permissions`, `last_login`, `fi
 (1,	'fanamurov@ya.ru',	'$2y$10$SJzDIVLhyCdzOMxfnqAADOCoyzVgjwjmBlYaVWQlikchTd67mWPRa',	NULL,	'2015-12-25 07:18:00',	'4234',	'',	'2015-11-19 15:41:49',	'2015-12-25 07:18:00'),
 (2,	'4234234@fa.ru',	'$2y$10$7xxex.8N0z6VSgHKACE1/e.RuIUzPN3IDnErUIG5Kiq/Jm1.5/QzG',	NULL,	NULL,	'',	'',	'2015-12-22 09:47:43',	'2015-12-22 09:47:43');
 
--- 2016-01-11 07:41:50
+-- 2016-01-12 07:59:06

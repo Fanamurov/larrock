@@ -1,7 +1,14 @@
 <div class="form-group">
     <p class="url_link">
         <span>Url:</span> <a href="/images/{{ $image->type_connect }}/big/{{ $image->name }}">/images/{{ $image->type_connect }}/big/{{ $image->name }}</a>
-        <span class="label">800x564</span>, <span class="label">300x215</span>
+        @if(array_key_exists('image_original', $config))
+            <span class="label">Оригиналы: {{ $config['image_original'] }}</span>
+        @endif
+        @if(array_key_exists('image_generate', $config))
+            @foreach($config['image_generate'] as $config_value)
+                <span class="label">{{ $config_value }}</span>
+            @endforeach
+        @endif
     </p>
 </div>
 <div class="form-group">

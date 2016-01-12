@@ -65,4 +65,17 @@ Route::group(['middleware'=>'AuthAdmin'], function(){
 	Route::post('/admin/settings/image', 'Admin\Settings\Image@store');
 
 	Route::get('/admin/blocks/MenuBlock', 'Admin\Blocks\MenuBlock@index');
+
+	Route::get('/admin/wizard', [
+		'as' => 'admin.wizard', 'uses' => 'Admin\WizardController@step1'
+	]);
+	Route::get('/admin/wizard/step2', [
+		'as' => 'admin.wizard.step2', 'uses' => 'Admin\WizardController@step2'
+	]);
+	Route::get('/admin/wizard/step3', [
+		'as' => 'admin.wizard.step3', 'uses' => 'Admin\WizardController@step3'
+	]);
+	Route::get('/admin/wizard/step4', [
+		'as' => 'admin.wizard.step4', 'uses' => 'Admin\WizardController@step4'
+	]);
 });

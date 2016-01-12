@@ -169,9 +169,6 @@ return [
         /* https://packagist.org/packages/rap2hpoutre/laravel-log-viewer */
         //Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
 
-        /* http://laravel-breadcrumbs.davejamesmiller.com/en/latest/start.html#define-your-breadcrumbs */
-        //DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
-
         /* https://packagist.org/packages/mccool/laravel-auto-presenter :: A system for auto-decorating models with presenter objects. */
         //McCool\LaravelAutoPresenter\AutoPresenterServiceProvider::class,
 
@@ -189,6 +186,9 @@ return [
 
 		/* http://laravel-breadcrumbs.davejamesmiller.com/ */
 		DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
+
+		/* http://www.maatwebsite.nl/laravel-excel/docs/import */
+		Maatwebsite\Excel\ExcelServiceProvider::class,
 
     ],
 
@@ -239,9 +239,9 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
 
-		'FormBuilder' => App\Providers\FormBuilderServiceProvider::class,
-		'Component' => \App\Helpers\Component::class,
-		'Tree' => \App\Helpers\Tree::class,
+		'FormBuilder' 	=> App\Providers\FormBuilderServiceProvider::class,
+		'Component' 	=> \App\Helpers\Component::class,
+		'Tree' 			=> \App\Helpers\Tree::class,
 
         'Image'     => Intervention\Image\Facades\Image::class,
         'Alert'     => Prologue\Alerts\Facades\Alert::class,
@@ -250,11 +250,12 @@ return [
         'Reminder'   => Cartalyst\Sentinel\Laravel\Facades\Reminder::class,
         'Sentinel'   => Cartalyst\Sentinel\Laravel\Facades\Sentinel::class,
 
-        'Debugbar' => Barryvdh\Debugbar\Facade::class,
-        'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facade::class,
-        'JsValidator' => Proengsoft\JsValidation\Facades\JsValidatorFacade::class,
+        'Debugbar' 		=> Barryvdh\Debugbar\Facade::class,
+        'Breadcrumbs' 	=> DaveJamesMiller\Breadcrumbs\Facade::class,
+        'JsValidator' 	=> Proengsoft\JsValidation\Facades\JsValidatorFacade::class,
+		'Excel' 		=> Maatwebsite\Excel\Facades\Excel::class,
         //'Cart'        => Gloudemans\Shoppingcart\Facades\Cart::class,
-        //'Recaptcha' => Greggilbert\Recaptcha\Facades\Recaptcha::class,
+        //'Recaptcha' 	=> Greggilbert\Recaptcha\Facades\Recaptcha::class,
 
     ],
 

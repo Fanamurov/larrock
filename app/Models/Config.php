@@ -19,4 +19,14 @@ class Config extends Model
     protected $table = 'config';
 
 	protected $fillable = ['key', 'value', 'type'];
+
+	public function scopeImagePresets($query, $key)
+	{
+		return $query->where('key', '=', $key)->where('type', '=', 'image_presets');
+	}
+
+	public function getValueAttribute($value)
+	{
+		return unserialize($value);
+	}
 }

@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Helpers\ContentPlugins;
+use App\Models\Config;
 use EMT\EMTypograph;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use DB;
+use Illuminate\Support\Arr;
 use Input;
 use Image;
 use App\Models\Images as Model_Images;
@@ -53,7 +55,7 @@ class Ajax extends Controller
         $param = Input::get('param', $folder.$id_connect);
 
 		//Достаем конфиг пресетов компонента
-		//$get_app = Apps::whereName($folder)->get(['plugins_backend', 'settings']);
+		$config = Config::ImagePresets($folder)->first();
 
         if( !file_exists('images')){
             @mkdir('images/', 0755);
@@ -67,11 +69,37 @@ class Ajax extends Controller
             @mkdir('images/'. $folder .'/big', 0755);
         }
 
+		$image_original = [0 => 1800, 1 => null];
+		if(array_key_exists('image_generate', $config->value)){
+			foreach($config->value['image_generate'] as $generate){
+				if( !file_exists('images/'. $folder .'/'. $generate)){
+					@mkdir('images/'. $folder .'/'. $generate, 0755);
+				}
+			}
+			$image_original = array_map('trim', explode('-', $config->value['image_original']));
+		}
+
+		if( !array_key_exists(1, $image_original)){
+			$image_original = [0 => 1800, 1 => null];
+		}
+
         foreach($images as $images_value){
             if(Image::make($images_value->getRealPath())
-                ->resize(1200, null, function ($constraint) {
+                ->resize($image_original[0], $image_original[1], function ($constraint) {
                 $constraint->aspectRatio();
             })->save('images/'. $folder .'/big/'. $images_value->getClientOriginalName())){
+
+				//Сохраняем картинки пресетов
+				if(array_key_exists('image_generate', $config->value)){
+					foreach($config->value['image_generate'] as $generate){
+						$image_generate = array_map('trim', explode('-', $generate));
+						if(array_key_exists(1, $image_generate)){
+							Image::make($images_value->getRealPath())->resize($image_generate[0], $image_generate[1], function ($constraint) {
+								$constraint->aspectRatio();
+							})->save('images/'. $folder .'/'. $generate .'/'. $images_value->getClientOriginalName());
+						}
+					}
+				}
 
 				//Загрузка информации о фото в БД
 				$inset_image = new Model_Images();
@@ -97,6 +125,7 @@ class Ajax extends Controller
 			$images[$images_key]->file = '/images/'. $images_value->type_connect .'/big/'. $images_value->name;
 			$images[$images_key]->size = 456;
 		}
+
 		return $images;
 	}
 
@@ -104,7 +133,9 @@ class Ajax extends Controller
     {
         $data = Model_Images::whereName(Input::get('name'))->first();
         if(isset($data->id)){
-            return view('admin.plugins.images', ['image' => $data]);
+			//Достаем конфиг пресетов компонента
+			$config = Config::ImagePresets($data->type_connect)->first();
+            return view('admin.plugins.images', ['image' => $data, 'config' => $config->value]);
         }else{
             return response('');
         }

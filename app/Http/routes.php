@@ -78,4 +78,6 @@ Route::group(['middleware'=>'AuthAdmin'], function(){
 	Route::get('/admin/wizard/step4', [
 		'as' => 'admin.wizard.step4', 'uses' => 'Admin\WizardController@step4'
 	]);
+
+	Route::post('/admin/wizard', 'Admin\WizardController@storeConfig');
 });

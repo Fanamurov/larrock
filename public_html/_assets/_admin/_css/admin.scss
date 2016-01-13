@@ -50,6 +50,18 @@
   }
 }
 
+.table.table-clean{
+  >thead>tr>th,
+  >tbody>tr>th,
+  >tfoot>tr>th,
+  >thead>tr>td,
+  >tbody>tr>td,
+	>tfoot>tr>td{
+	border-top: none;
+	border-bottom: none;
+  }
+}
+
 i.icon-padding{
   display: inline-block;
   padding-right: 5px;

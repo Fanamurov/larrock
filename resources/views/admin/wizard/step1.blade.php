@@ -15,6 +15,9 @@
 
     <div class="ibox float-e-margins">
         <div class="ibox-content">
+            @foreach($required as $required_key => $required_value)
+                <p>{{ $required_key }} - поле обязательно для заполнения</p>
+            @endforeach
             <form action="" method="post">
                 <table class="table table-clean">
                     <thead>

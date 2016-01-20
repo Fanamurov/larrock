@@ -5,9 +5,9 @@
     <div class="ibox float-e-margins">
         <div class="ibox-title background-transparent">
             <div>
-                {!! Breadcrumbs::render('admin.wizard.step1') !!}
+                {!! Breadcrumbs::render('admin.wizard.aliases') !!}
                 <div class="add-panel">
-                    <a class="btn btn-info pull-right" href="/admin/{{ $app['name'] }}/step2">Далее</a>
+                    <a class="btn btn-info pull-right" href="/admin/{{ $app['name'] }}/check">Далее</a>
                 </div>
             </div>
         </div>
@@ -16,7 +16,9 @@
     <div class="ibox float-e-margins">
         <div class="ibox-content">
             @foreach($required as $required_key => $required_value)
-                <p>{{ $required_key }} - поле обязательно для заполнения</p>
+                @if($required_value['attached'] === 'FALSE')
+                    <p>{{ $required_key }} - поле обязательно для заполнения</p>
+                @endif
             @endforeach
             <form action="" method="post">
                 <table class="table table-clean">

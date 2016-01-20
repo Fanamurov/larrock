@@ -16,7 +16,6 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Config;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Input;
 use Route;
 use Validator;
 use View;
@@ -39,7 +38,12 @@ class WizardController extends Controller
 		});
 	}
 
-	public function step1()
+	/**
+	 * Сопоставление полей в прайсе с БД и выводом сайта
+	 *
+	 * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+	 */
+	public function aliases()
 	{
 		$data['app'] = $this->config;
 		$data['catalog'] = Config::get('components.catalog');
@@ -49,29 +53,59 @@ class WizardController extends Controller
 
 		//TODO: Проверка сопоставления обязательных для заполнения полей
 		$data['required'] = [];
+		$rows_passed = ['category', 'url', 'position', 'active', 'nalichie', 'articul'];
 		foreach($data['catalog']['rows'] as $rows_key => $rows_value){
-			if(array_key_exists('valid', $rows_value)){
-				$data['required'][$rows_key] = $rows_value;
+			if( !in_array($rows_key, $rows_passed, FALSE) && array_key_exists('valid', $rows_value)){
+				$data['required'][$rows_key]= $rows_value;
+				$data['required'][$rows_key]['attached'] = 'FALSE';
+				foreach($data['wizard'] as $wizard_value){
+					if($wizard_value['slug'] === $rows_key){
+						$data['required'][$rows_key]['attached'] = 'TRUE';
+					}
+				}
 			}
 		}
 
-		Breadcrumbs::register('admin.wizard.step1', function($breadcrumbs)
+		Breadcrumbs::register('admin.wizard.aliases', function($breadcrumbs)
 		{
 			$breadcrumbs->parent('admin.wizard.index');
-			$breadcrumbs->push('Настройка полей', route('admin.wizard'));
-			$breadcrumbs->push('Правила экспорта');
-			$breadcrumbs->push('Экспорт');
+			$breadcrumbs->push('Сопоставление полей');
+			$breadcrumbs->push('Проверка xls', route('admin.wizard.check'));
+			$breadcrumbs->push('Импорт', route('admin.wizard.import'));
 		});
 
-		return view('admin.wizard.step1', $data);
+		return view('admin.wizard.aliases', $data);
+	}
+
+	/**
+	 * Проверка xls на корректность
+	 *
+	 * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+	 */
+	public function check()
+	{
+		$data['data'] = Excel::load('resources/wizard/test.xls', function($reader) {
+
+		})->get();
+
+		$data['app'] = $this->config;
+		Breadcrumbs::register('admin.wizard.check', function($breadcrumbs)
+		{
+			$breadcrumbs->parent('admin.wizard.index');
+			$breadcrumbs->push('Сопоставление полей');
+			$breadcrumbs->push('Проверка xls', route('admin.wizard.check'));
+			$breadcrumbs->push('Импорт', route('admin.wizard.import'));
+		});
+
+		return view('admin.wizard.check', $data);
 	}
 
     /**
-     * Display a listing of the resource.
+     * Импорт товаров из xls в БД
      *
      * @return \Illuminate\Http\Response
      */
-    public function step3()
+    public function import()
     {
 		$this->deleteCatalog();
 		$this->deleteCategoryCatalog();
@@ -93,7 +127,7 @@ class WizardController extends Controller
 						$add_category = json_decode($this->storeCategory($add_data)->getContent());
 						if($add_category->status === 'success'){
 							$add_data['id'] = $add_category->message;
-							$saved_category[$add_data['level']] = $add_data;
+							$saved_category[(int)$add_data['level']] = $add_data;
 							$saved_category['current'] = $add_data;
 						}else{
 							$explain = '';
@@ -123,13 +157,13 @@ class WizardController extends Controller
 		Breadcrumbs::register('admin.wizard.step3', function($breadcrumbs)
 		{
 			$breadcrumbs->parent('admin.wizard.index');
-			$breadcrumbs->push('Настройка полей', route('admin.wizard'));
-			$breadcrumbs->push('Правила экспорта', route('admin.wizard.step3'));
-			$breadcrumbs->push('Экспорт');
+			$breadcrumbs->push('Сопоставление полей', route('admin.wizard'));
+			$breadcrumbs->push('Проверка xls', route('admin.wizard.check'));
+			$breadcrumbs->push('Импорт', route('admin.wizard.import'));
 		});
 
-		$app['name'] = 'Wizard. Export .xls to catalog';
-		return view('admin.wizard.step3', ['app' => $app]);
+		$data['app'] = $this->config;
+		return view('admin.wizard.step3', $data);
     }
 
 	/**

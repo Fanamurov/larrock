@@ -25,13 +25,34 @@ var imagemin = require('gulp-imagemin');
 var pngquant = require('imagemin-pngquant');
 
 gulp.task('default', function() {
-    gulp.start('sass_admin', 'javascript_admin', 'watch');
+    gulp.start('sass_admin', 'sass', 'javascript_admin', 'watch');
     //gulp.start('sass', 'sass_admin', 'javascript', 'javascript_admin', 'watch');
 });
 
 gulp.task('watch', function () {
     gulp.watch('./public_html/_assets/_admin/_css/**/*.scss', ['sass_admin']);
+    gulp.watch('./public_html/_assets/_front/_css/**/*.scss', ['sass']);
     gulp.watch(['./resources/assets/admin/_js/**/*.js', '!./resources/assets/admin/_js/min/*'], ['javascript_admin']);
+});
+
+gulp.task('sass', function () {
+    gulp.src(['./public_html/_assets/_front/_css/*.scss'])
+        .pipe(changed('./public_html/_assets/_front/_css/**/*.scss'))
+        .pipe(sass.sync().on('error', sass.logError))
+        //.pipe(sourcemaps.init())
+        .pipe(autoprefixer({
+            browsers: ['last 2 versions'],
+            cascade: true
+        }))
+        .pipe(bless())
+        .pipe(csso())
+        //.pipe(sourcemaps.write('./maps'))
+        .pipe(rename({suffix: '.min'} ))
+        .pipe(concat('front.min.css'))
+        .pipe(size({showFiles : true}))
+        .pipe(gulp.dest('./public_html/_assets/_front/_css/min'))
+        .pipe(removeLogs())
+        .pipe(notify("Scss reload: <%= file.relative %>! "+ project));
 });
 
 gulp.task('sass_admin', function () {

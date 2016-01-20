@@ -40,7 +40,7 @@
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Администрирование <span class="caret"></span></a>
+                    <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Настройки <span class="caret"></span></a>
                     <ul role="menu" class="dropdown-menu">
                         <li><a href="{{ action('Admin\SeoController@index') }}">Seo</a></li>
                         <li><a href="{{ action('Admin\MenuController@index') }}">Меню сайта</a></li>

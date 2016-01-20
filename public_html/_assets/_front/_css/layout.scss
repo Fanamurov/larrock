@@ -1,0 +1,25 @@
+.container {
+  min-width: 992px;
+}
+@media (min-width: 768px){
+  .container {
+	width: 992px;
+  }
+}
+@media (min-width: 992px){
+  .container {
+	width: inherit;
+  }
+}
+@media (min-width: 1200px){
+  .container {
+	max-width: 1346px;
+	width: inherit;
+  }
+}
+
+
+@import "sections/header";
+@import "sections/footer";
+@import "sections/rightColomn";
+@import "sections/content";

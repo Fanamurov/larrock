@@ -13,8 +13,6 @@
 
 Route::get('/', 'Page\PageController@getIndex');
 
-Route::controller('page', 'Page\PageController');
-
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
 Route::get('auth/login', 'Auth\AuthController@getLogin');
@@ -28,6 +26,8 @@ Route::get('admin/auth/login', 'Admin\AuthController@getLogin');
 Route::post('admin/auth/login', 'Admin\AuthController@postLogin');
 Route::get('admin/auth/logout', 'Admin\AuthController@getLogout');
 
+Route::get('/page/{url}', 'PageController@getItem');
+
 
 Route::group(['middleware'=>'AuthAdmin'], function(){
 	Route::resource('admin/users', 'Admin\UsersController');
@@ -38,6 +38,7 @@ Route::group(['middleware'=>'AuthAdmin'], function(){
 	Route::resource('admin/feed', 'Admin\FeedController');
 	Route::resource('admin/catalog', 'Admin\CatalogController');
 	Route::resource('admin/category', 'Admin\CategoryController');
+	Route::resource('admin/blocks', 'Admin\BlocksController');
 	Route::post('/admin/category/storeEasy', 'Admin\CategoryController@storeEasy');
 
 	Route::post('admin/ajax/EditRow', 'Admin\Ajax@EditRow');
@@ -61,22 +62,21 @@ Route::group(['middleware'=>'AuthAdmin'], function(){
 
 	Route::get('admin', 'Admin\PageController@index'); //Роут главной страницы админки
 
+	Route::get('admin/cart', 'Admin\CartController@index');
+
 	Route::get('/admin/settings/image', 'Admin\Settings\Image@index');
 	Route::post('/admin/settings/image', 'Admin\Settings\Image@store');
 
 	Route::get('/admin/blocks/MenuBlock', 'Admin\Blocks\MenuBlock@index');
 
 	Route::get('/admin/wizard', [
-		'as' => 'admin.wizard', 'uses' => 'Admin\WizardController@step1'
+		'as' => 'admin.wizard', 'uses' => 'Admin\WizardController@aliases'
 	]);
-	Route::get('/admin/wizard/step2', [
-		'as' => 'admin.wizard.step2', 'uses' => 'Admin\WizardController@step2'
+	Route::get('/admin/wizard/check', [
+		'as' => 'admin.wizard.check', 'uses' => 'Admin\WizardController@check'
 	]);
-	Route::get('/admin/wizard/step3', [
-		'as' => 'admin.wizard.step3', 'uses' => 'Admin\WizardController@step3'
-	]);
-	Route::get('/admin/wizard/step4', [
-		'as' => 'admin.wizard.step4', 'uses' => 'Admin\WizardController@step4'
+	Route::get('/admin/wizard/import', [
+		'as' => 'admin.wizard.import', 'uses' => 'Admin\WizardController@import'
 	]);
 
 	Route::post('/admin/wizard', 'Admin\WizardController@storeConfig');

@@ -28,7 +28,7 @@
                     <th>URL</th>
                     <th width="141">Изменено</th>
                     <th width="90" data-toggle="tooltip" data-placement="bottom" title="Вес. Чем больше, тем выше в списках">Вес</th>
-                    <th width="93" class="pull-right">Активность</th>
+                    <th width="93">Активность</th>
                     <th width="90"></th>
                     <th width="90"></th>
                 </tr>

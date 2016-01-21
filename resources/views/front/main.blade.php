@@ -24,39 +24,46 @@
 
 <div class="container">
     <header class="row">
-        <div class="col-xs-24">
-            HEADER
-        </div>
-    </header>
-    <section class="row" id="content">
         <div class="col-xs-16">
             <div class="col-xs-22 col-xs-offset-1">
-                @foreach($errors->all() as $error)
-                    <div class="alert alert-danger alert-dismissable">
-                        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-                        {{ $error }}
-                    </div>
-                @endforeach
-                @foreach (Alert::getMessages() as $type => $messages)
-                    @foreach ($messages as $message)
-                        <div class="alert alert-{{ $type }} alert-dismissable">
-                            <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-                            {{ $message }}
-                        </div>
-                    @endforeach
-                @endforeach
-
-                @yield('content')
+                <a href="/" class="logo">
+                    <img src="/_assets/_front/_images/logo.png" width="400" height="160" alt="Company name">
+                </a>
+                <div class="block-headerEmail">
+                    {!! $header_email->description !!}
+                </div>
+                <div class="block-headerSearch">
+                    @include('front.modules.search.catalog')
+                </div>
+                <div class="block-headerSlogan">
+                    {!! $header_slogan->description !!}
+                </div>
             </div>
         </div>
-        <section id="right_colomn" class="col-xs-8">
-            @yield('rightColomn', 'RIGHT COLOMN')
+    </header>
+
+    <section class="row" id="content">
+        <div class="col-xs-17">
+            <div class="col-xs-22 col-xs-offset-1">
+                @include('front.errors')
+
+                @yield('content')
+
+                @include('front.modules.seofish.item', $contentBottom)
+            </div>
+        </div>
+        <section id="right_colomn" class="col-xs-7">
+            <div class="col-xs-19 col-xs-offset-2">
+                @yield('rightColomn', 'RIGHT COLOMN test content with float width a b RIGHT COLOMN test content with float width')
+            </div>
         </section>
     </section>
 
     <footer class="row">
-        <div class="col-xs-24">
-            @yield('footer', 'FOOTER')
+        <div class="col-xs-16">
+            <div class="col-xs-22 col-xs-offset-1">
+                @yield('footer', 'FOOTER')
+            </div>
         </div>
     </footer>
 </div>

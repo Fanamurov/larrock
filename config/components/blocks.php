@@ -7,7 +7,7 @@ return [
 	'table_content' => 'blocks',
 	'rows' => [
 		'title' => [
-			'title' => 'Заголовок',
+			'title' => 'Название блока',
 			'in_table_admin' => 'TRUE',
 			'type' => 'text',
 			'tab' => ['main' => 'Заголовок, описание'],

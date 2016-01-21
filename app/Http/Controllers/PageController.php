@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blocks;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -15,9 +16,13 @@ class PageController extends Controller
 	public function __construct()
 	{
 		$this->config = \Config::get('components.page');
+
+		\View::share('header_email', Blocks::whereUrl('header-email')->first());
+		\View::share('header_slogan', Blocks::whereUrl('header-slogan')->first());
+		\View::share('contentBottom', Blocks::whereUrl('header-slogan')->first());
 	}
 
-    public function getItem($url)
+    public function getItem($url = 'test')
 	{
 		if( !$data['data'] = Page::with([
 				'get_seo' => function($query){
@@ -32,9 +37,6 @@ class PageController extends Controller
 		)->whereUrl($url)->first()){
 			abort('404', 'Page not found');
 		}
-
-
-
 		return view('front.page.item', $data);
 	}
 }

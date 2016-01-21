@@ -40,6 +40,6 @@ class MenuBlock extends Controller
 		}
 		$data['components'] = $components;
         $data['current_uri'] = $explode_uri;
-		return view('admin.blocks.menu', $data);
+		return view('admin.sectionmenu.menu', $data);
     }
 }

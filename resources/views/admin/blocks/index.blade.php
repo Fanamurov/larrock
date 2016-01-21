@@ -49,9 +49,7 @@
                             @endif
                         @endforeach
                         <td>
-                            <a href="{{ action('PageController@getItem', ['url' => $data_value->url]) }}">
-                                {{ action('PageController@getItem', ['url' => $data_value->url], FALSE) }}
-                            </a>
+                            {{ $data_value->url }}
                         </td>
                         <td class="row-updated_at">{{ $data_value->updated_at }}</td>
                         <td class="row-position">

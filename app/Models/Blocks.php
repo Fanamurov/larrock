@@ -8,7 +8,7 @@ class Blocks extends Model
 {
 	protected $table = 'blocks';
 
-	protected $fillable = ['title', 'short', 'description', 'url', 'date', 'position', 'active'];
+	protected $fillable = ['title', 'short', 'description', 'url', 'position', 'active'];
 
 	public function get_images()
 	{
@@ -23,5 +23,10 @@ class Blocks extends Model
 	public function get_templates()
 	{
 		return $this->hasOne('App\Models\Templates', 'id_connect', 'id');
+	}
+
+	public function get_seo()
+	{
+		return $this->hasOne('App\Models\Seo', 'id_connect', 'id');
 	}
 }

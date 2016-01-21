@@ -1,3 +1,7 @@
 #right_colomn{
-	background: lightgray;
+  background: url("/_assets/_front/_images/bg/bg_block_right.png") repeat-y left top transparent;
+  margin-top: 20px;
+  > {
+	background: red;
+  }
 }

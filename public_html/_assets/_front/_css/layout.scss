@@ -18,6 +18,16 @@
   }
 }
 
+a, .link{
+  text-decoration: underline;
+  color: #ff3300;
+  &:hover,
+  &:focus{
+	text-decoration: underline;
+	color: #b02300;
+  }
+}
+
 
 @import "sections/header";
 @import "sections/footer";

@@ -19,7 +19,7 @@ use Route;
 use Validator;
 use View;
 
-class BlocksController extends Controller
+class AdminBlocksController extends Controller
 {
 	protected $config;
 
@@ -42,7 +42,7 @@ class BlocksController extends Controller
 		$data['app'] = $ContentPlugins->attach_rows($this->config);
 		$data['data'] = Model_Blocks::orderBy('position', 'DESC')->paginate(30);
 		View::share('validator', '');
-		return view('admin.apps.index', $data);
+		return view('admin.blocks.index', $data);
 	}
 
 	/**
@@ -61,7 +61,7 @@ class BlocksController extends Controller
 
 		$validator = JsValidator::make(Component::_valid_construct($this->config['rows']));
 		View::share('validator', $validator);
-		return view('admin.apps.create', $data);
+		return view('admin.blocks.create', $data);
 	}
 
 	/**
@@ -90,7 +90,7 @@ class BlocksController extends Controller
 
 		$validator = JsValidator::make(Component::_valid_construct($this->config['rows']));
 		View::share('validator', $validator);
-		return view('admin.apps.edit', $data);
+		return view('admin.blocks.edit', $data);
 	}
 
 	/**
@@ -137,11 +137,6 @@ class BlocksController extends Controller
 		$data->fill($request->all());
 		$data->active = $request->input('active', 0);
 		$data->position = $request->input('position', 0);
-		$today = getdate();
-		$data->date = $request->input('date');
-		if(empty($data->date)){
-			$data->date = $today['year'] .'-'. $today['mon'] .'-'. $today['mday'];
-		}
 
 		if($data->save()){
 			Alert::add('success', 'Материал '. $request->input('title') .' добавлен')->flash();

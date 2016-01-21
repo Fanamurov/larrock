@@ -11,7 +11,9 @@
 |
 */
 
-Route::get('/', 'Page\PageController@getIndex');
+Route::get('/', [
+	'as' => 'mainpage', 'uses' => 'PageController@getItem'
+]);
 
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
@@ -32,13 +34,13 @@ Route::get('/page/{url}', 'PageController@getItem');
 Route::group(['middleware'=>'AuthAdmin'], function(){
 	Route::resource('admin/users', 'Admin\UsersController');
 	Route::resource('admin/roles', 'Admin\RolesController');
-	Route::resource('admin/page', 'Admin\PageController');
+	Route::resource('admin/page', 'Admin\AdminPageController');
 	Route::resource('admin/seo', 'Admin\SeoController');
 	Route::resource('admin/menu', 'Admin\MenuController');
 	Route::resource('admin/feed', 'Admin\FeedController');
 	Route::resource('admin/catalog', 'Admin\CatalogController');
 	Route::resource('admin/category', 'Admin\CategoryController');
-	Route::resource('admin/blocks', 'Admin\BlocksController');
+	Route::resource('admin/blocks', 'Admin\AdminBlocksController');
 	Route::post('/admin/category/storeEasy', 'Admin\CategoryController@storeEasy');
 
 	Route::post('admin/ajax/EditRow', 'Admin\Ajax@EditRow');
@@ -60,7 +62,7 @@ Route::group(['middleware'=>'AuthAdmin'], function(){
 
 	Route::post('admin/ajax/UploadFile', 'Admin\Ajax@UploadFile');
 
-	Route::get('admin', 'Admin\PageController@index'); //Роут главной страницы админки
+	Route::get('admin', 'Admin\AdminPageController@index'); //Роут главной страницы админки
 
 	Route::get('admin/cart', 'Admin\CartController@index');
 

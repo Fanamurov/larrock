@@ -18,7 +18,7 @@ use Redirect;
 use View;
 use Input;
 
-class PageController extends Controller
+class AdminPageController extends Controller
 {
 	protected $config;
 

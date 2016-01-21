@@ -1,3 +1,17 @@
 footer{
-  background: grey;
+  background: url("/_assets/_front/_images/bg/bg_footer.png") no-repeat left top transparent;
+  height: 300px;
+  padding: 40px 18px;
+  position: relative;
+
+  &:before{
+	background: url("/_assets/_front/_images/bg/bg_footer_up.png") repeat-x left top transparent;
+	height: 43px;
+	width: 100%;
+	position: absolute;
+	left: 0;
+	right: 0;
+	z-index: 5;
+	top: -2px;
+  }
 }

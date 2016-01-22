@@ -10,7 +10,7 @@
                 <i class="icon-padding icon-color glyphicon glyphicon-folder-close"></i> {{ $data_value->title }}</a>
         </td>
         <td>
-            <a href="{{ action('Admin\FeedController@index') }}/{{ $data_value->url }}">
+            <a href="/catalog/{{ $data_value->url }}">
                 /catalog/{{ $data_value->url }}
             </a>
         </td>
@@ -32,7 +32,7 @@
             </div>
         </td>
         <td class="row-edit">
-            <a href="/admin/{{ $app['name'] }}/{{ $data_value->id }}/edit" class="btn btn-info btn-xs">Свойства</a>
+            <a href="/admin/category/{{ $data_value->id }}/edit" class="btn btn-info btn-xs">Свойства</a>
         </td>
         <td class="row-delete">
             <form action="/admin/category/{{ $data_value->id }}" method="post">

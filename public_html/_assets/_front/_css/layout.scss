@@ -1,6 +1,52 @@
+$color_link: #128bc7;
+$color_link_hover: #be1318;
+
+body{
+  background: url("/_assets/_front/_images/bg.png") repeat 0 0 #eee3d9;
+  font-family: 'Open Sans', Calibri, sans-serif;
+  font-size: 15px;
+  line-height: 24px;
+  color: #000000;
+  font-weight: 500;
+  #body_content{
+	padding: 0;
+	background-color: #ffffff;
+	box-shadow: 0 0 30px rgba(0,0,0,.33);
+	position: relative;
+	min-width: 1000px;
+  }
+}
+
+@mixin list-mart(){
+  padding-left: 0;
+  list-style-type: none;
+  li{
+	background: url('/_assets/_front/_images/ul-1.gif') no-repeat left 11px transparent;
+	padding-left: 15px;
+	position: relative;
+	left: -16px;
+	padding-bottom: 9px;
+	&:last-of-type {
+	  padding-bottom: 0;
+	}
+  }
+  > ul{
+	padding-left: 25px;
+	margin-bottom: 15px;
+	ul{
+	  padding-left: 25px;
+	}
+  }
+}
+
+.container-body{
+  position: relative;
+  box-shadow: 0 0 30px #c2c2c2;
+}
 .container {
   min-width: 992px;
 }
+
 @media (min-width: 768px){
   .container {
 	width: 992px;
@@ -33,3 +79,5 @@ a, .link{
 @import "sections/footer";
 @import "sections/rightColomn";
 @import "sections/content";
+
+@import "catalog/category";

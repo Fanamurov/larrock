@@ -1,0 +1,33 @@
+//Template: front/catalog/blockCategory
+
+.catalogBlockCategory{
+  > div{
+	background: url("/_assets/_front/_images/bg/bg_tex.png") repeat-y left top transparent;
+	margin-bottom: 50px;
+	padding-top: 10px;
+	position: relative;
+	text-align: center;
+	height: 225px;
+	width: 164px;
+	cursor: pointer;
+	display: inline-block;
+	float: left;
+	&:hover,
+	&:focus{
+	  background: url("/_assets/_front/_images/bg/bg_tex.png") repeat-y -164px top transparent;
+	}
+  }
+  h3{
+	line-height: 20px;
+	font-size: 14px;
+	a{
+	  color: #000000;
+	  text-decoration: none;
+	  font-weight: 600;
+	}
+  }
+  img.categoryImage{
+	border-radius: 4px;
+	box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
+  }
+}

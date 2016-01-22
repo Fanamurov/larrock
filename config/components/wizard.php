@@ -14,6 +14,7 @@ return [
 			'typo' => 'true'
 		],
 	],
+	'plugins_backend' => [],
 	'settings' => [],
 	'version' => 1
 ];

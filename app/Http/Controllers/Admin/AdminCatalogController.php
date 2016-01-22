@@ -21,7 +21,7 @@ use Redirect;
 use View;
 use Input;
 
-class CatalogController extends Controller
+class AdminCatalogController extends Controller
 {
 	protected $config;
 

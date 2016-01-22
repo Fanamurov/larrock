@@ -21,23 +21,26 @@
     @endif
 </head>
 <body>
-
-<div class="container">
+<div class="container container-body">
     <header class="row">
         <div class="col-xs-16">
             <div class="col-xs-22 col-xs-offset-1">
                 <a href="/" class="logo">
                     <img src="/_assets/_front/_images/logo.png" width="400" height="160" alt="Company name">
                 </a>
-                <div class="block-headerEmail">
-                    {!! $header_email->description !!}
-                </div>
+                @if(isset($header_email))
+                    <div class="block-headerEmail">
+                        {!! $header_email->description !!}
+                    </div>
+                @endif
                 <div class="block-headerSearch">
                     @include('front.modules.search.catalog')
                 </div>
-                <div class="block-headerSlogan">
-                    {!! $header_slogan->description !!}
-                </div>
+                @if(isset($header_slogan))
+                    <div class="block-headerSlogan">
+                        {!! $header_slogan->description !!}
+                    </div>
+                @endif
             </div>
         </div>
     </header>
@@ -49,7 +52,9 @@
 
                 @yield('content')
 
-                @include('front.modules.seofish.item', $contentBottom)
+                @if(isset($contentBottom))
+                    @include('front.modules.seofish.item', $contentBottom)
+                @endif
             </div>
         </div>
         <section id="right_colomn" class="col-xs-7">
@@ -70,6 +75,7 @@
 
 <!-- Mainly scripts -->
 <script src="{{asset('_assets/_front/_js/bootstrap.min.js')}}"></script>
+<script src="{{asset('_assets/_front/_js/front_core.min.js')}}"></script>
 
 <!-- Laravel Javascript Validation -->
 <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>

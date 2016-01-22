@@ -30,6 +30,8 @@ Route::get('admin/auth/logout', 'Admin\AuthController@getLogout');
 
 Route::get('/page/{url}', 'PageController@getItem');
 
+Route::get('/catalog', 'CatalogController@getCategory');
+
 
 Route::group(['middleware'=>'AuthAdmin'], function(){
 	Route::resource('admin/users', 'Admin\UsersController');
@@ -38,7 +40,7 @@ Route::group(['middleware'=>'AuthAdmin'], function(){
 	Route::resource('admin/seo', 'Admin\SeoController');
 	Route::resource('admin/menu', 'Admin\MenuController');
 	Route::resource('admin/feed', 'Admin\FeedController');
-	Route::resource('admin/catalog', 'Admin\CatalogController');
+	Route::resource('admin/catalog', 'Admin\AdminCatalogController');
 	Route::resource('admin/category', 'Admin\CategoryController');
 	Route::resource('admin/blocks', 'Admin\AdminBlocksController');
 	Route::post('/admin/category/storeEasy', 'Admin\CategoryController@storeEasy');

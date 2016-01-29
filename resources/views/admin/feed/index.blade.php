@@ -51,8 +51,8 @@
                         @endforeach
                         <td>{{ $data_value->get_category->title }}</td>
                         <td>
-                            <a href="{{ action('Admin\FeedController@index') }}/{{ $data_value->get_category->url}}/{{ $data_value->url }}">
-                                {{ action('Admin\FeedController@index', [], FALSE) }}/{{ $data_value->get_category->url}}/{{ $data_value->url }}
+                            <a href="{{ action('Admin\AdminFeedController@index') }}/{{ $data_value->get_category->url}}/{{ $data_value->url }}">
+                                {{ action('Admin\AdminFeedController@index', [], FALSE) }}/{{ $data_value->get_category->url}}/{{ $data_value->url }}
                             </a>
                         </td>
                         <td class="row-updated_at">{{ $data_value->updated_at }}</td>

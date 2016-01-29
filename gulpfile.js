@@ -38,7 +38,7 @@ gulp.task('watch', function () {
 
 gulp.task('sass', function () {
     gulp.src(['./public_html/_assets/_front/_css/*.scss'])
-        .pipe(changed('./public_html/_assets/_front/_css/**/*.scss'))
+        .pipe(changed('./public_html/_assets/_front/_css/**/**/*.scss'))
         .pipe(sass.sync().on('error', sass.logError))
         //.pipe(sourcemaps.init())
         .pipe(autoprefixer({

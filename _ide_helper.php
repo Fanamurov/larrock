@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.2.6 on 2016-01-12.
+ * Generated for Laravel 5.2.12 on 2016-01-28.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -1757,18 +1757,6 @@ namespace {
         /**
          * Begin executing a new tags operation if the store supports it.
          *
-         * @param string $name
-         * @return \Illuminate\Cache\TaggedCache 
-         * @deprecated since version 5.1. Use tags instead.
-         * @static 
-         */
-        public static function section($name){
-            return \Illuminate\Cache\Repository::section($name);
-        }
-        
-        /**
-         * Begin executing a new tags operation if the store supports it.
-         *
          * @param array|mixed $names
          * @return \Illuminate\Cache\TaggedCache 
          * @throws \BadMethodCallException
@@ -2557,7 +2545,7 @@ namespace {
          *
          * @param \Closure $callback
          * @return mixed 
-         * @throws \Throwable
+         * @throws \Exception|\Throwable
          * @static 
          */
         public static function transaction($callback){
@@ -2720,6 +2708,7 @@ namespace {
          *
          * @param \PDO|null $pdo
          * @return $this 
+         * @throws \RuntimeException
          * @static 
          */
         public static function setPdo($pdo){
@@ -3283,7 +3272,7 @@ namespace {
         }
         
         /**
-         * Add a relationship count condition to the query.
+         * Add a relationship count / exists condition to the query.
          *
          * @param string $relation
          * @param string $operator
@@ -3298,7 +3287,7 @@ namespace {
         }
         
         /**
-         * Add a relationship count condition to the query.
+         * Add a relationship count / exists condition to the query.
          *
          * @param string $relation
          * @param string $boolean
@@ -3311,7 +3300,7 @@ namespace {
         }
         
         /**
-         * Add a relationship count condition to the query with where clauses.
+         * Add a relationship count / exists condition to the query with where clauses.
          *
          * @param string $relation
          * @param \Closure $callback
@@ -3325,7 +3314,7 @@ namespace {
         }
         
         /**
-         * Add a relationship count condition to the query with where clauses.
+         * Add a relationship count / exists condition to the query with where clauses.
          *
          * @param string $relation
          * @param \Closure|null $callback
@@ -3337,7 +3326,7 @@ namespace {
         }
         
         /**
-         * Add a relationship count condition to the query with an "or".
+         * Add a relationship count / exists condition to the query with an "or".
          *
          * @param string $relation
          * @param string $operator
@@ -3350,7 +3339,7 @@ namespace {
         }
         
         /**
-         * Add a relationship count condition to the query with where clauses and an "or".
+         * Add a relationship count / exists condition to the query with where clauses and an "or".
          *
          * @param string $relation
          * @param \Closure $callback
@@ -3498,6 +3487,7 @@ namespace {
          * @param \Closure|\Illuminate\Database\Query\Builder|string $query
          * @param string $as
          * @return \Illuminate\Database\Query\Builder|static 
+         * @throws \InvalidArgumentException
          * @static 
          */
         public static function selectSub($query, $as){
@@ -3782,6 +3772,19 @@ namespace {
         }
         
         /**
+         * Add an exists clause to the query.
+         *
+         * @param \Illuminate\Database\Query\Builder $query
+         * @param string $boolean
+         * @param bool $not
+         * @return $this 
+         * @static 
+         */
+        public static function addWhereExistsQuery($query, $boolean = 'and', $not = false){
+            return \Illuminate\Database\Query\Builder::addWhereExistsQuery($query, $boolean, $not);
+        }
+        
+        /**
          * Add a "where in" clause to the query.
          *
          * @param string $column
@@ -3891,6 +3894,19 @@ namespace {
          */
         public static function whereDate($column, $operator, $value, $boolean = 'and'){
             return \Illuminate\Database\Query\Builder::whereDate($column, $operator, $value, $boolean);
+        }
+        
+        /**
+         * Add an "or where date" statement to the query.
+         *
+         * @param string $column
+         * @param string $operator
+         * @param int $value
+         * @return \Illuminate\Database\Query\Builder|static 
+         * @static 
+         */
+        public static function orWhereDate($column, $operator, $value){
+            return \Illuminate\Database\Query\Builder::orWhereDate($column, $operator, $value);
         }
         
         /**
@@ -5278,6 +5294,17 @@ namespace {
         }
         
         /**
+         * Determine if the current request URL and query string matches a pattern.
+         *
+         * @param mixed  string
+         * @return bool 
+         * @static 
+         */
+        public static function fullUrlIs(){
+            return \Illuminate\Http\Request::fullUrlIs();
+        }
+        
+        /**
          * Determine if the request is the result of an AJAX call.
          *
          * @return bool 
@@ -5723,6 +5750,7 @@ namespace {
          * Get a unique fingerprint for the request / route / IP address.
          *
          * @return string 
+         * @throws \RuntimeException
          * @static 
          */
         public static function fingerprint(){
@@ -6743,7 +6771,7 @@ namespace {
          * @param array $replace
          * @param string|null $locale
          * @param bool $fallback
-         * @return string 
+         * @return string|array|null 
          * @static 
          */
         public static function get($key, $replace = array(), $locale = null, $fallback = true){
@@ -6771,7 +6799,7 @@ namespace {
          * @param array $parameters
          * @param string $domain
          * @param string $locale
-         * @return string 
+         * @return string|array|null 
          * @static 
          */
         public static function trans($id, $parameters = array(), $domain = 'messages', $locale = null){
@@ -7178,11 +7206,11 @@ namespace {
          *
          * @param string $text
          * @param mixed $callback
-         * @return int 
+         * @return void 
          * @static 
          */
         public static function raw($text, $callback){
-            return \Illuminate\Mail\Mailer::raw($text, $callback);
+            \Illuminate\Mail\Mailer::raw($text, $callback);
         }
         
         /**
@@ -7191,11 +7219,11 @@ namespace {
          * @param string $view
          * @param array $data
          * @param mixed $callback
-         * @return int 
+         * @return void 
          * @static 
          */
         public static function plain($view, $data, $callback){
-            return \Illuminate\Mail\Mailer::plain($view, $data, $callback);
+            \Illuminate\Mail\Mailer::plain($view, $data, $callback);
         }
         
         /**
@@ -7397,18 +7425,6 @@ namespace {
             \Illuminate\Auth\Passwords\PasswordBrokerManager::setDefaultDriver($name);
         }
         
-        /**
-         * Create the user provider implementation for the driver.
-         *
-         * @param string $provider
-         * @return \Illuminate\Contracts\Auth\UserProvider 
-         * @throws \InvalidArgumentException
-         * @static 
-         */
-        public static function createUserProvider($provider){
-            return \Illuminate\Auth\Passwords\PasswordBrokerManager::createUserProvider($provider);
-        }
-        
     }
 
 
@@ -7553,7 +7569,7 @@ namespace {
          * @param mixed $data
          * @param string $queue
          * @return mixed 
-         * @throws \Throwable
+         * @throws \Exception|\Throwable
          * @static 
          */
         public static function push($job, $data = '', $queue = null){
@@ -7938,6 +7954,17 @@ namespace {
          */
         public static function is(){
             return \Illuminate\Http\Request::is();
+        }
+        
+        /**
+         * Determine if the current request URL and query string matches a pattern.
+         *
+         * @param mixed  string
+         * @return bool 
+         * @static 
+         */
+        public static function fullUrlIs(){
+            return \Illuminate\Http\Request::fullUrlIs();
         }
         
         /**
@@ -8386,6 +8413,7 @@ namespace {
          * Get a unique fingerprint for the request / route / IP address.
          *
          * @return string 
+         * @throws \RuntimeException
          * @static 
          */
         public static function fingerprint(){
@@ -10155,6 +10183,19 @@ namespace {
         public static function hasColumns($table, $columns){
             //Method inherited from \Illuminate\Database\Schema\Builder            
             return \Illuminate\Database\Schema\MySqlBuilder::hasColumns($table, $columns);
+        }
+        
+        /**
+         * Get the data type for the given column name.
+         *
+         * @param string $table
+         * @param string $column
+         * @return string 
+         * @static 
+         */
+        public static function getColumnType($table, $column){
+            //Method inherited from \Illuminate\Database\Schema\Builder            
+            return \Illuminate\Database\Schema\MySqlBuilder::getColumnType($table, $column);
         }
         
         /**

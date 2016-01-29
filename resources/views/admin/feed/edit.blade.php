@@ -52,7 +52,7 @@
             <div class="tab-content">
                 <div class="tab-pane" id="tabimages">
                     <div class="form-group">
-                        <form action="{{ action('Admin\Ajax@UploadImage') }}" method="post" enctype="multipart/form-data" id="plugin_image">
+                        <form action="{{ action('Admin\AdminAjax@UploadImage') }}" method="post" enctype="multipart/form-data" id="plugin_image">
                             <input type="hidden" name="folder" value="{{ $app['name'] }}">
                             <input type="hidden" name="id_connect" value="{{ $data->id }}">
                             <input type="hidden" name="param" value="{{ $data->url }}">
@@ -66,7 +66,7 @@
             <div class="tab-content">
                 <div class="tab-pane" id="tabfiles">
                     <div class="form-group">
-                        <form action="{{ action('Admin\Ajax@UploadFile') }}" method="post" enctype="multipart/form-data" id="plugin_files">
+                        <form action="{{ action('Admin\AdminAjax@UploadFile') }}" method="post" enctype="multipart/form-data" id="plugin_files">
                             <input type="hidden" name="folder" value="{{ $app['name'] }}">
                             <input type="hidden" name="id_connect" value="{{ $data->id }}">
                             <input type="hidden" name="param" value="{{ $data->url }}">

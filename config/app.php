@@ -190,6 +190,9 @@ return [
 		/* http://www.maatwebsite.nl/laravel-excel/docs/import */
 		Maatwebsite\Excel\ExcelServiceProvider::class,
 
+		/* https://github.com/jarektkaczyk/eloquence :: Поиск по сайту */
+		Sofa\Eloquence\ServiceProvider::class,
+
     ],
 
     /*
@@ -256,6 +259,7 @@ return [
 		'Excel' 		=> Maatwebsite\Excel\Facades\Excel::class,
         //'Cart'        => Gloudemans\Shoppingcart\Facades\Cart::class,
         //'Recaptcha' 	=> Greggilbert\Recaptcha\Facades\Recaptcha::class,
+        'Search' 		=> Sofa\Eloquence\ServiceProvider::class,
 
     ],
 

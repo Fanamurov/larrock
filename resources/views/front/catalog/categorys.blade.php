@@ -1,5 +1,5 @@
 @extends('front.main')
-@section('title') TEST @endsection
+@section('title') {{ $seo['title'] }} @endsection
 
 @section('content')
     <div class="catalogPageCategory row">

@@ -32,24 +32,24 @@
                 <li class="dropdown @if(in_array('users', $current_uri)) active @endif">
                     <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Пользователи <span class="caret"></span></a>
                     <ul role="menu" class="dropdown-menu">
-                        <li><a href="{{ action('Admin\UsersController@index') }}"><i class="fa fa-list"></i> Список пользователей</a></li>
-                        <li><a href="{{ action('Admin\UsersController@create') }}"><i class="fa fa-plus"></i> Добавить пользователя</a></li>
+                        <li><a href="{{ action('Admin\AdminUsersController@index') }}"><i class="fa fa-list"></i> Список пользователей</a></li>
+                        <li><a href="{{ action('Admin\AdminUsersController@create') }}"><i class="fa fa-plus"></i> Добавить пользователя</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="{{ action('Admin\RolesController@index') }}"><i class="fa fa-list"></i> Список ролей</a></li>
-                        <li><a href="{{ action('Admin\RolesController@create') }}"><i class="fa fa-plus"></i> Добавить роль</a></li>
+                        <li><a href="{{ action('Admin\AdminRolesController@index') }}"><i class="fa fa-list"></i> Список ролей</a></li>
+                        <li><a href="{{ action('Admin\AdminRolesController@create') }}"><i class="fa fa-plus"></i> Добавить роль</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
                     <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Настройки <span class="caret"></span></a>
                     <ul role="menu" class="dropdown-menu">
-                        <li><a href="{{ action('Admin\SeoController@index') }}">Seo</a></li>
-                        <li><a href="{{ action('Admin\MenuController@index') }}">Меню сайта</a></li>
+                        <li><a href="{{ action('Admin\AdminSeoController@index') }}">Seo</a></li>
+                        <li><a href="{{ action('Admin\AdminMenuController@index') }}">Меню сайта</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="#">Глобальные настройки</a></li>
                         <li><a href="#">Компоненты</a></li>
                         <li><a href="#">Модули</a></li>
                         <li><a href="#">Блоки шаблона</a></li>
-                        <li><a href="{{ action('Admin\Settings\Image@index') }}">Картинки</a></li>
+                        <li><a href="{{ action('Admin\AdminSettings\Image@index') }}">Картинки</a></li>
                         <li role="separator" class="divider"></li>
                         <li>
                             <a href="#" id="clear_cache"><i class="fa fa-trash-o"></i> Кэш</a>
@@ -74,7 +74,7 @@
                     <a aria-expanded="false" role="button" href="/" target="_blank">К сайту</a>
                 </li>
                 <li>
-                    <a href="{{ action('Admin\AuthController@getLogout') }}">
+                    <a href="{{ action('Admin\AdminAuthController@getLogout') }}">
                         <i class="fa fa-sign-out"></i> Выйти
                     </a>
                 </li>

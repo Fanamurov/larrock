@@ -9,6 +9,7 @@
     <link href="{{asset('ico.png?6v')}}" rel="shortcut icon" />
     <link rel="stylesheet" href="{{asset('_assets/_front/_css/min/bootstrap.min.css')}}"/>
     <link rel="stylesheet" href="{{asset('_assets/_front/_css/min/front.min.css')}}"/>
+    <link rel="stylesheet" href="/_assets/bower_components/selectize/dist/css/selectize.bootstrap3.css"/>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,400italic,500,500italic,600,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -60,6 +61,7 @@
         <section id="right_colomn" class="col-xs-7">
             <div class="col-xs-19 col-xs-offset-2">
                 @yield('rightColomn', 'RIGHT COLOMN test content with float width a b RIGHT COLOMN test content with float width')
+                @include('front.modules.list.catalog', [])
             </div>
         </section>
     </section>
@@ -75,6 +77,10 @@
 
 <!-- Mainly scripts -->
 <script src="{{asset('_assets/_front/_js/bootstrap.min.js')}}"></script>
+<script src="/_assets/bower_components/selectize/dist/js/standalone/selectize.min.js"></script>
+<script type="text/javascript">
+    var root = '{{url("/")}}';
+</script>
 <script src="{{asset('_assets/_front/_js/front_core.min.js')}}"></script>
 
 <!-- Laravel Javascript Validation -->

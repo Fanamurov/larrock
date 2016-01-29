@@ -40,12 +40,12 @@ class Page extends Model
 
 	public function get_images()
 	{
-		return $this->hasMany('App\Models\Images', 'id_connect', 'id');
+		return $this->hasMany('App\Models\Images', 'id_connect', 'id')->whereTypeConnect('page')->orderBy('position', 'DESC');
 	}
 
 	public function get_files()
 	{
-		return $this->hasMany('App\Models\Files', 'id_connect', 'id');
+		return $this->hasMany('App\Models\Files', 'id_connect', 'id')->whereTypeConnect('page')->orderBy('position', 'DESC');
 	}
 
 	public function get_templates()

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Alert;
 use App\Helpers\ContentPlugins;
-use App\Http\Controllers\Admin\Blocks\MenuBlock;
+use App\Http\Controllers\Admin\AdminBlocks\MenuBlock;
 use App\Models\Blocks;
 use Component;
 use Illuminate\Http\Request;
@@ -73,14 +73,7 @@ class AdminBlocksController extends Controller
 	 */
 	public function edit($id, ContentPlugins $ContentPlugins)
 	{
-		$data['data'] = Model_Blocks::with([
-				'get_seo' => function($query){
-					$query->whereTypeConnect($this->config['name']);
-				},
-				'get_templates'=> function($query){
-					$query->whereTypeConnect($this->config['name']);
-				}]
-		)->findOrFail($id);
+		$data['data'] = Model_Blocks::with(['get_seo','get_templates'])->findOrFail($id);
 
 		$data['id'] = $id;
 		$data['app'] = $ContentPlugins->attach_rows($this->config);

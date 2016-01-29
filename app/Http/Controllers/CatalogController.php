@@ -2,11 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Catalog;
 use App\Models\Category;
+use Breadcrumbs;
+use Cookie;
+use DB;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Input;
+use URL;
+use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 
 class CatalogController extends Controller
 {
@@ -15,16 +22,140 @@ class CatalogController extends Controller
 	public function __construct()
 	{
 		$this->config = \Config::get('components.catalog');
+
+		Breadcrumbs::register('catalog.index', function($breadcrumbs)
+		{
+			$breadcrumbs->push('Каталог', route('catalog.index'));
+		});
 	}
 
-    public function getCategory()
+    public function getMainCategory()
 	{
-		$data['data'] = Category::whereType('catalog')->whereLevel(1)->whereActive(1)->with(
-			['get_images'=> function($query){
-				$query->whereTypeConnect('category');
-			}]
-		)->get();
+		$data['data'] = Category::whereType('catalog')->whereLevel(1)->whereActive(1)->with(['get_images'])->get();
 
 		return view('front.catalog.categorys', $data);
+	}
+
+	public function getCategory(Request $request, $category, $child = NULL, $grandson = NULL)
+	{
+		//Смотрим какой раздел выбираем для работы
+		//Первый уровень: /Раздел
+		$select_category = $category;
+		if($child){
+			//Вложенный раздел: /Раздел/Подраздел
+			$select_category = $child;
+			if($grandson){
+				//Вложенный раздел: /Раздел/Подраздел/Подраздел
+				$select_category = $grandson;
+			}
+		}
+
+		$data['data'] = Category::whereType('catalog')->whereUrl($select_category)->with([
+				'get_child' => function($query){
+					$query->with('get_images', 'get_parent');
+				}
+			]
+		)->first();
+
+		Breadcrumbs::register('catalog.category', function($breadcrumbs, $data)
+		{
+			$breadcrumbs->parent('catalog.index');
+			if($data->level !== 1 &&
+				$get_parent = Category::whereType('catalog')->whereId($data->parent)->first()){
+				if($get_parent->level !== 1
+					&& $get_granddad = Category::whereType('catalog')->whereId($get_parent->parent)->first()){
+					$breadcrumbs->push($get_granddad->title);
+				}
+				$breadcrumbs->push($get_parent->title, '/catalog/'. $get_parent->url);
+			}
+			$breadcrumbs->push($data->title);
+		});
+
+		if( !$data['data']){
+			return $this->getItem($select_category);
+		}
+
+		if(count($data['data']->get_child) === 0){
+			return $this->getTovars($select_category, $request);
+		}
+
+		return view('front.catalog.categorysListChilds', $data);
+	}
+
+	public function getTovars($category, Request $request)
+	{
+		Breadcrumbs::register('catalog.items', function($breadcrumbs, $data)
+		{
+			$breadcrumbs->parent('catalog.category', $data);
+		});
+
+		$paginate = $request->get('perPage', 5);
+
+		//Основной запрос для вывода
+		$data['data'] = Category::whereUrl($category)->with(
+			['get_tovars' => function($query) use ($paginate){
+				$query->with('get_images')->paginate($paginate);
+			}, 'get_tovarsAlias', 'get_parent', 'get_tovarsAlias', 'get_seo']
+		)->first();
+
+		$data['paginator'] = new Paginator(
+			$data['data']->get_tovars,
+			count($data['data']->get_tovarsAlias),
+			$limit = $paginate,
+			$page = $request->get('page', 1), [
+				'path'  => $request->url(),
+				'query' => $request->query(),
+		]);
+
+		if($data['data']->get_seo){
+			$data['seo']['title'] = $data['data']->get_seo->title;
+		}else{
+			$data['seo']['title'] = $data['data']->title;
+		}
+
+		return view('front.catalog.items-4-3', $data);
+	}
+
+	public function getItem($item)
+	{
+		$data['data'] = Catalog::whereUrl($item)->with(['get_images', 'get_files', 'get_seo', 'get_templates', 'get_category'])->first();
+
+		Breadcrumbs::register('catalog.item', function($breadcrumbs, $data)
+		{
+			$url = '';
+			$breadcrumbs->parent('catalog.index');
+			$get_category = $data->get_category->first();
+			if($get_category->level !== 1){
+				$parent = $get_category->get_parent;
+				if($parent->level !== 1){
+					$grandpa = $parent->get_parent;
+					$breadcrumbs->push($grandpa->title, '/catalog/'. $grandpa->url .'/'. $parent->url);
+					$url = '/catalog/'. $grandpa->url .'/'. $parent->url;
+				}
+				$breadcrumbs->push($parent->title, '/catalog/'. $parent->url);
+				$url = '/catalog/'. $parent->url;
+			}
+			$breadcrumbs->push($get_category->title, $url .'/'. $get_category->url);
+			$breadcrumbs->push($data->title);
+		});
+
+		$data['data'] = Catalog::whereUrl($item)->first();
+
+		if($data['data']->get_seo){
+			$data['seo']['title'] = $data['data']->get_seo->title;
+		}else{
+			$data['seo']['title'] = $data['data']->title;
+		}
+
+		return view('front.catalog.item', $data);
+	}
+
+	public function searchItem(Request $request)
+	{
+		$query = $request->get('q');
+		if( !$query && $query === '') return \Response::json(array(), 400);
+
+		$search = Catalog::search($query)->get()->toArray();
+		return \Response::json($search);
 	}
 }

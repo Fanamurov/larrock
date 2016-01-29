@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Admin\Blocks\MenuBlock;
+use App\Http\Controllers\Admin\AdminBlocks\MenuBlock;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -72,15 +72,7 @@ class AdminPageController extends Controller
 	 */
 	public function edit($id, ContentPlugins $ContentPlugins)
 	{
-		$data['data'] = Page::with([
-			'get_seo' => function($query){
-				$query->whereTypeConnect($this->config['name']);
-			},
-			'get_templates'=> function($query){
-				$query->whereTypeConnect($this->config['name']);
-			}]
-		)->findOrFail($id);
-
+		$data['data'] = Page::with(['get_seo', 'get_templates'])->findOrFail($id);
 		$data['id'] = $id;
 		$data['app'] = $ContentPlugins->attach_rows($this->config);
 		$data['data'] = $ContentPlugins->attach_data($this->config, $data['data']);

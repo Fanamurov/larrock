@@ -10,7 +10,7 @@
                 <i class="icon-padding icon-color glyphicon glyphicon-folder-close"></i> {{ $data_value->title }}</a>
         </td>
         <td>
-            <a href="{{ action('Admin\FeedController@index') }}/{{ $data_value->url }}">
+            <a href="/catalog/{{ $data_value->url }}">
                 /catalog/{{ $data_value->url }}
             </a>
         </td>

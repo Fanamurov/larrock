@@ -45,12 +45,12 @@ class Category extends Model
 
 	public function get_images()
 	{
-		return $this->hasMany('App\Models\Images', 'id_connect', 'id')->orderBy('position', 'DESC');
+		return $this->hasMany('App\Models\Images', 'id_connect', 'id')->whereTypeConnect('category')->orderBy('position', 'DESC');
 	}
 
 	public function get_files()
 	{
-		return $this->hasMany('App\Models\Files', 'id_connect', 'id')->orderBy('position', 'DESC');
+		return $this->hasMany('App\Models\Files', 'id_connect', 'id')->whereTypeConnect('category')->orderBy('position', 'DESC');
 	}
 
 	public function get_templates()
@@ -64,6 +64,11 @@ class Category extends Model
 	}
 
 	public function get_tovars()
+	{
+		return $this->belongsToMany('App\Models\Catalog', 'category_catalog', 'category_id', 'catalog_id');
+	}
+
+	public function get_tovarsAlias()
 	{
 		return $this->belongsToMany('App\Models\Catalog', 'category_catalog', 'category_id', 'catalog_id');
 	}

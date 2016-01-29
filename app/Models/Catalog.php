@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Sofa\Eloquence\Eloquence;
 
 /**
  * App\Models\Catalog
@@ -45,6 +46,11 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Catalog extends Model
 {
+	use Eloquence;
+
+	// no need for this, but you can define default searchable columns:
+	protected $searchableColumns = ['title'];
+
     protected $table = 'catalog';
 
 	protected $fillable = ['title', 'short', 'description', 'url', 'position', 'active', 'what', 'cost', 'cost_old', 'manufacture', 'articul', 'nalicie'];
@@ -56,12 +62,12 @@ class Catalog extends Model
 
 	public function get_images()
 	{
-		return $this->hasMany('App\Models\Images', 'id_connect', 'id');
+		return $this->hasMany('App\Models\Images', 'id_connect', 'id')->whereTypeConnect('catalog')->orderBy('position', 'DESC');
 	}
 
 	public function get_files()
 	{
-		return $this->hasMany('App\Models\Files', 'id_connect', 'id');
+		return $this->hasMany('App\Models\Files', 'id_connect', 'id')->whereTypeConnect('catalog')->orderBy('position', 'DESC');
 	}
 
 	public function get_templates()

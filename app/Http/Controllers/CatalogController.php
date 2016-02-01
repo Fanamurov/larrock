@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Catalog;
 use App\Models\Category;
 use Breadcrumbs;
+use Cart;
 use Cookie;
 use DB;
 use Illuminate\Http\Request;
@@ -32,6 +33,7 @@ class CatalogController extends Controller
     public function getMainCategory()
 	{
 		$data['data'] = Category::whereType('catalog')->whereLevel(1)->whereActive(1)->with(['get_images'])->get();
+		$data['seo']['title'] = 'SEO title getMainCategory';
 
 		return view('front.catalog.categorys', $data);
 	}
@@ -78,6 +80,8 @@ class CatalogController extends Controller
 		if(count($data['data']->get_child) === 0){
 			return $this->getTovars($select_category, $request);
 		}
+
+		$data['seo']['title'] = 'SEO title getCategory';
 
 		return view('front.catalog.categorysListChilds', $data);
 	}

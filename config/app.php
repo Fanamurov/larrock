@@ -179,10 +179,10 @@ return [
         //Roumen\Sitemap\SitemapServiceProvider::class,
 
         /* https://packagist.org/packages/gloudemans/shoppingcart :: Корзина для каталога */
-        //'Gloudemans\Shoppingcart\ShoppingcartServiceProvider'
+        Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
 
         /* https://packagist.org/packages/greggilbert/recaptcha :: Каптча */
-        //Greggilbert\Recaptcha\RecaptchaServiceProvider::class,
+        Greggilbert\Recaptcha\RecaptchaServiceProvider::class,
 
 		/* http://laravel-breadcrumbs.davejamesmiller.com/ */
 		DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
@@ -192,6 +192,9 @@ return [
 
 		/* https://github.com/jarektkaczyk/eloquence :: Поиск по сайту */
 		Sofa\Eloquence\ServiceProvider::class,
+
+		/* https://github.com/GrahamCampbell/Laravel-Exceptions */
+		GrahamCampbell\Exceptions\ExceptionsServiceProvider::class,
 
     ],
 
@@ -257,8 +260,8 @@ return [
         'Breadcrumbs' 	=> DaveJamesMiller\Breadcrumbs\Facade::class,
         'JsValidator' 	=> Proengsoft\JsValidation\Facades\JsValidatorFacade::class,
 		'Excel' 		=> Maatwebsite\Excel\Facades\Excel::class,
-        //'Cart'        => Gloudemans\Shoppingcart\Facades\Cart::class,
-        //'Recaptcha' 	=> Greggilbert\Recaptcha\Facades\Recaptcha::class,
+        'Cart'        	=> Gloudemans\Shoppingcart\Facades\Cart::class,
+        'Recaptcha' 	=> Greggilbert\Recaptcha\Facades\Recaptcha::class,
         'Search' 		=> Sofa\Eloquence\ServiceProvider::class,
 
     ],

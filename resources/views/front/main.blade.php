@@ -42,6 +42,7 @@
                         {!! $header_slogan->description !!}
                     </div>
                 @endif
+                <a href="/cart">{!! \Cart::total() !!}</a>
             </div>
         </div>
     </header>
@@ -79,7 +80,7 @@
 <script src="{{asset('_assets/_front/_js/bootstrap.min.js')}}"></script>
 <script src="/_assets/bower_components/selectize/dist/js/standalone/selectize.min.js"></script>
 <script type="text/javascript">
-    var root = '{{url("/")}}';
+    var root = '{{url('/')}}';
 </script>
 <script src="{{asset('_assets/_front/_js/front_core.min.js')}}"></script>
 

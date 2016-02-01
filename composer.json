@@ -24,7 +24,8 @@
         "prologue/alerts": "^0.4.0",
         "kix/mdash": "^0.5.4",
         "spatie/laravel-paginateroute": "^2.0",
-        "sofa/eloquence": "~5.1@dev"
+        "sofa/eloquence": "~5.1@dev",
+        "graham-campbell/exceptions": "^8.3"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -32,7 +33,8 @@
         "phpunit/phpunit": "~4.0",
         "phpspec/phpspec": "~2.1",
         "symfony/dom-crawler": "~3.0",
-        "symfony/css-selector": "~3.0"
+        "symfony/css-selector": "~3.0",
+        "filp/whoops": "^2.0"
     },
     "autoload": {
         "classmap": [

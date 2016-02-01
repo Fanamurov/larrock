@@ -48,9 +48,22 @@ Route::get('/search/catalog', [
 Route::post('/ajax/editPerPage', [
 	'as' => 'ajax.editPerPage', 'uses' => 'Ajax@editPerPage'
 ]);
+Route::post('/ajax/cartAdd', [
+	'as' => 'ajax.cartAdd', 'uses' => 'Ajax@cartAdd'
+]);
+Route::post('/ajax/cartRemove', [
+	'as' => 'ajax.cartRemove', 'uses' => 'Ajax@cartRemove'
+]);
+Route::post('/ajax/cartQty', [
+	'as' => 'ajax.cartQty', 'uses' => 'Ajax@cartQty'
+]);
 
 Route::get('/modules/ListCatalog', [
 	'as' => 'modules.listCatalog', 'uses' => 'Modules\ListCatalog@categories'
+]);
+
+Route::get('/cart', [
+	'as' => 'cart.index', 'uses' => 'CartController@getIndex'
 ]);
 
 
@@ -59,55 +72,55 @@ Route::get('admin/auth/login', 'Admin\AdminAuthController@getLogin');
 Route::post('admin/auth/login', 'Admin\AdminAuthController@postLogin');
 Route::get('admin/auth/logout', 'Admin\AdminAuthController@getLogout');
 
-Route::group(['middleware'=>'AuthAdmin'], function(){
-	Route::resource('admin/users', 'Admin\AdminUsersController');
-	Route::resource('admin/roles', 'Admin\AdminRolesController');
-	Route::resource('admin/page', 'Admin\AdminPageController');
-	Route::resource('admin/seo', 'Admin\AdminSeoController');
-	Route::resource('admin/menu', 'Admin\AdminMenuController');
-	Route::resource('admin/feed', 'Admin\AdminFeedController');
-	Route::resource('admin/catalog', 'Admin\AdminCatalogController');
-	Route::resource('admin/category', 'Admin\AdminCategoryController');
-	Route::resource('admin/blocks', 'Admin\AdminBlocksController');
-	Route::post('/admin/category/storeEasy', 'Admin\AdminCategoryController@storeEasy');
+Route::group(['prefix' => 'admin', 'middleware'=>'AuthAdmin'], function(){
+	Route::resource('users', 'Admin\AdminUsersController');
+	Route::resource('roles', 'Admin\AdminRolesController');
+	Route::resource('page', 'Admin\AdminPageController');
+	Route::resource('seo', 'Admin\AdminSeoController');
+	Route::resource('menu', 'Admin\AdminMenuController');
+	Route::resource('feed', 'Admin\AdminFeedController');
+	Route::resource('catalog', 'Admin\AdminCatalogController');
+	Route::resource('category', 'Admin\AdminCategoryController');
+	Route::resource('blocks', 'Admin\AdminBlocksController');
+	Route::post('/category/storeEasy', 'Admin\AdminCategoryController@storeEasy');
 
-	Route::post('admin/ajax/EditRow', 'Admin\AdminAjax@EditRow');
-	Route::post('admin/ajax/ClearCache', 'Admin\AdminAjax@ClearCache');
+	Route::post('ajax/EditRow', 'Admin\AdminAjax@EditRow');
+	Route::post('ajax/ClearCache', 'Admin\AdminAjax@ClearCache');
 
-    Route::post('admin/ajax/UploadImage', 'Admin\AdminAjax@UploadImage');
-    Route::post('admin/ajax/getLoadedImages', 'Admin\AdminAjax@getLoadedImages');
-    Route::post('admin/ajax/getImageParams', 'Admin\AdminAjax@getImageParams');
-    Route::post('admin/ajax/destroyImage', 'Admin\AdminAjax@destroyImage');
+    Route::post('ajax/UploadImage', 'Admin\AdminAjax@UploadImage');
+    Route::post('ajax/getLoadedImages', 'Admin\AdminAjax@getLoadedImages');
+    Route::post('ajax/getImageParams', 'Admin\AdminAjax@getImageParams');
+    Route::post('ajax/destroyImage', 'Admin\AdminAjax@destroyImage');
 
-	Route::post('admin/ajax/UploadFile', 'Admin\AdminAjax@UploadFile');
-	Route::post('admin/ajax/getLoadedFiles', 'Admin\AdminAjax@getLoadedFiles');
-	Route::post('admin/ajax/getFileParams', 'Admin\AdminAjax@getFileParams');
-	Route::post('admin/ajax/destroyFile', 'Admin\AdminAjax@destroyFile');
+	Route::post('ajax/UploadFile', 'Admin\AdminAjax@UploadFile');
+	Route::post('ajax/getLoadedFiles', 'Admin\AdminAjax@getLoadedFiles');
+	Route::post('ajax/getFileParams', 'Admin\AdminAjax@getFileParams');
+	Route::post('ajax/destroyFile', 'Admin\AdminAjax@destroyFile');
 
-    Route::post('admin/ajax/Typograph', 'Admin\AdminAjax@Typograph');
-    Route::post('admin/ajax/TypographLight', 'Admin\AdminAjax@TypographLight');
-    Route::post('admin/ajax/Translit', 'Admin\AdminAjax@Translit');
+    Route::post('ajax/Typograph', 'Admin\AdminAjax@Typograph');
+    Route::post('ajax/TypographLight', 'Admin\AdminAjax@TypographLight');
+    Route::post('ajax/Translit', 'Admin\AdminAjax@Translit');
 
-	Route::post('admin/ajax/UploadFile', 'Admin\AdminAjax@UploadFile');
+	Route::post('ajax/UploadFile', 'Admin\AdminAjax@UploadFile');
 
-	Route::get('admin', 'Admin\AdminPageController@index'); //Роут главной страницы админки
+	Route::get('/', 'Admin\AdminPageController@index'); //Роут главной страницы админки
 
-	Route::get('admin/cart', 'Admin\AdminCartController@index');
+	Route::get('cart', 'Admin\AdminCartController@index');
 
-	Route::get('/admin/settings/image', 'Admin\AdminSettings\Image@index');
-	Route::post('/admin/settings/image', 'Admin\AdminSettings\Image@store');
+	Route::get('/settings/image', 'Admin\AdminSettings\Image@index');
+	Route::post('/settings/image', 'Admin\AdminSettings\Image@store');
 
-	Route::get('/admin/blocks/MenuBlock', 'Admin\AdminBlocks\MenuBlock@index');
+	Route::get('/blocks/MenuBlock', 'Admin\AdminBlocks\MenuBlock@index');
 
-	Route::get('/admin/wizard', [
+	Route::get('/wizard', [
 		'as' => 'admin.wizard', 'uses' => 'Admin\AdminWizardController@aliases'
 	]);
-	Route::get('/admin/wizard/check', [
+	Route::get('/wizard/check', [
 		'as' => 'admin.wizard.check', 'uses' => 'Admin\AdminWizardController@check'
 	]);
-	Route::get('/admin/wizard/import', [
+	Route::get('/wizard/import', [
 		'as' => 'admin.wizard.import', 'uses' => 'Admin\AdminWizardController@import'
 	]);
 
-	Route::post('/admin/wizard', 'Admin\AdminWizardController@storeConfig');
+	Route::post('/wizard', 'Admin\AdminWizardController@storeConfig');
 });

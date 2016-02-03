@@ -6,7 +6,11 @@
             Not photo
         @endif
         <h3>
-            <a href="/catalog/{{ $data->url }}">{{ $data->title }}</a>
+            @if(isset($data->get_parent->url))
+                <a href="/catalog/{{ $data->get_parent->url }}/{{ $data->url }}">{{ $data->title }}</a>
+            @else
+                <a href="/catalog/{{ $data->url }}">{{ $data->title }}</a>
+            @endif
         </h3>
     </div>
 </div>

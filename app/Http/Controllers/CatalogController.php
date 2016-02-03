@@ -94,12 +94,20 @@ class CatalogController extends Controller
 		});
 
 		$paginate = $request->get('perPage', 5);
+		//echo Cookie::get('sort_cost');
 
 		//Основной запрос для вывода
 		$data['data'] = Category::whereUrl($category)->with(
 			['get_tovars' => function($query) use ($paginate){
-				$query->with('get_images')->paginate($paginate);
-			}, 'get_tovarsAlias', 'get_parent', 'get_tovarsAlias', 'get_seo']
+				//TODO: сортировки и фильтры
+				if(Cookie::get('sort_cost') === 'asc'){
+					$query->orderBy('cost', 'asc')->with('get_images')->paginate($paginate);
+				}elseif(Cookie::get('sort_cost') === 'desc'){
+					$query->orderBy('cost', 'desc')->with('get_images')->paginate($paginate);
+				}else{
+					$query->with('get_images')->paginate($paginate);
+				}
+			}, 'get_tovarsAlias', 'get_parent', 'get_seo']
 		)->first();
 
 		$data['paginator'] = new Paginator(
@@ -117,7 +125,11 @@ class CatalogController extends Controller
 			$data['seo']['title'] = $data['data']->title;
 		}
 
-		return view('front.catalog.items-4-3', $data);
+		if(Cookie::get('vid') === 'table'){
+			return view('front.catalog.items-table', $data);
+		}else{
+			return view('front.catalog.items-4-3', $data);
+		}
 	}
 
 	public function getItem($item)

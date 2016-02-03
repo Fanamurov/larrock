@@ -19,6 +19,20 @@ class Ajax extends Controller
 		return $response;
 	}
 
+	public function sort(Request $request)
+	{
+		$response = new \Illuminate\Http\Response('sort');
+		$response->withCookie(cookie('sort_'. $request->get('type'), $request->get('q'), 45000));
+		return $response;
+	}
+
+	public function vid(Request $request)
+	{
+		$response = new \Illuminate\Http\Response('vid');
+		$response->withCookie(cookie('vid', $request->get('q', 'cards'), 45000));
+		return $response;
+	}
+
 	public function getTovar(Request $request)
 	{
 		$get_tovar = Catalog::whereId($request->get('id'))->with(['get_images'])->first();

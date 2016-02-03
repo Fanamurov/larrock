@@ -1,15 +1,15 @@
 //Install Gulp:
-//npm install -g npm  *if need*
-//npm install --global gulp *if need*
-//npm install gulp --save-dev
+//npm install --global gulp-cli *if need*
+//npm install --save-dev gulp
 //npm install gulp-sass --save-dev
-//npm install gulp-csso gulp-autoprefixer gulp-bless gulp-concat gulp-notify gulp-removelogs gulp-uglify gulp-rename gulp-changed gulp-filesize gulp-imagemin imagemin-pngquant --save-dev
+//npm install gulp-csso gulp-cssnano gulp-autoprefixer gulp-bless gulp-concat gulp-notify gulp-removelogs gulp-uglify gulp-rename gulp-changed gulp-filesize gulp-imagemin imagemin-pngquant --save-dev
 
 var project = 'larrock'; //Название проекта
 
 var gulp = require('gulp');
 var sass = require('gulp-sass');
-var csso = require('gulp-csso');
+//var csso = require('gulp-csso');
+var nano = require('gulp-cssnano');
 var autoprefixer = require('gulp-autoprefixer');
 var bless = require('gulp-bless');
 var concat = require('gulp-concat');
@@ -46,7 +46,7 @@ gulp.task('sass', function () {
             cascade: true
         }))
         .pipe(bless())
-        .pipe(csso())
+        .pipe(nano())
         //.pipe(sourcemaps.write('./maps'))
         .pipe(rename({suffix: '.min'} ))
         .pipe(concat('front.min.css'))
@@ -67,7 +67,7 @@ gulp.task('sass_admin', function () {
             cascade: true
         }))
         .pipe(bless())
-        .pipe(csso())
+        .pipe(nano())
         //.pipe(sourcemaps.write('./maps'))
         .pipe(rename({suffix: '.min'} ))
         .pipe(concat('admin.min.css'))

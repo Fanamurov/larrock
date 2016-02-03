@@ -42,7 +42,7 @@
                         {!! $header_slogan->description !!}
                     </div>
                 @endif
-                <div class="block-headerCart moduleCart">
+                <div class="block-headerCart">
                     @include('front.modules.cart.moduleSplash')
                 </div>
             </div>

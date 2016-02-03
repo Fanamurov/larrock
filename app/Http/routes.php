@@ -48,6 +48,12 @@ Route::get('/search/catalog', [
 Route::post('/ajax/editPerPage', [
 	'as' => 'ajax.editPerPage', 'uses' => 'Ajax@editPerPage'
 ]);
+Route::post('/ajax/sort', [
+	'as' => 'ajax.sort', 'uses' => 'Ajax@sort'
+]);
+Route::post('/ajax/vid', [
+	'as' => 'ajax.vid', 'uses' => 'Ajax@vid'
+]);
 Route::post('/ajax/cartAdd', [
 	'as' => 'ajax.cartAdd', 'uses' => 'Ajax@cartAdd'
 ]);

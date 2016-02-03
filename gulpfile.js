@@ -31,7 +31,7 @@ gulp.task('default', function() {
 
 gulp.task('watch', function () {
     gulp.watch('./public_html/_assets/_admin/_css/**/*.scss', ['sass_admin']);
-    gulp.watch('./public_html/_assets/_front/_css/**/*.scss', ['sass']);
+    gulp.watch('./public_html/_assets/_front/_css/**/**/*.scss', ['sass']);
     gulp.watch(['./resources/assets/admin/_js/**/*.js', '!./resources/assets/admin/_js/min/*'], ['javascript_admin']);
     gulp.watch(['./resources/assets/front/_js/**/*.js', '!./resources/assets/front/_js/min/*'], ['javascript_front']);
 });

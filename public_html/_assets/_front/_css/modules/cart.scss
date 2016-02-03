@@ -1,0 +1,22 @@
+.moduleCart{
+  position: absolute;
+  left: 450px;
+  top: 100px;
+
+  img{
+	top: -5px;
+	position: relative;
+  }
+  p{
+	font-size: 18px;
+  }
+}
+
+#ModalToCart{
+  button{
+	display: inline-block;
+  }
+  .modal-buttons{
+	padding-top: 40px;
+  }
+}

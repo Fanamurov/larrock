@@ -57,6 +57,9 @@ Route::post('/ajax/cartRemove', [
 Route::post('/ajax/cartQty', [
 	'as' => 'ajax.cartQty', 'uses' => 'Ajax@cartQty'
 ]);
+Route::post('/ajax/getTovar', [
+	'as' => 'ajax.getTovar', 'uses' => 'Ajax@getTovar'
+]);
 
 Route::get('/modules/ListCatalog', [
 	'as' => 'modules.listCatalog', 'uses' => 'Modules\ListCatalog@categories'

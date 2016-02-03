@@ -93,6 +93,10 @@ a, .link{
   font-weight: 500;
   padding: .2em 0.3em .3em;
 }
+.all-width{
+  width: 100%;
+  max-width: 100%;
+}
 
 @import "sections/header";
 @import "sections/footer";
@@ -103,3 +107,4 @@ a, .link{
 @import "catalog/items";
 
 @import "modules/breadcrumbs";
+@import "modules/cart";

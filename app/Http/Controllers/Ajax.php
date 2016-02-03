@@ -19,6 +19,12 @@ class Ajax extends Controller
 		return $response;
 	}
 
+	public function getTovar(Request $request)
+	{
+		$get_tovar = Catalog::whereId($request->get('id'))->with(['get_images'])->first();
+		return response()->json($get_tovar);
+	}
+
 
 	/* https://packagist.org/packages/gloudemans/shoppingcart */
 	/**

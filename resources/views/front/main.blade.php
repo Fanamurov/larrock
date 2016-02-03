@@ -42,7 +42,9 @@
                         {!! $header_slogan->description !!}
                     </div>
                 @endif
-                <a href="/cart">{!! \Cart::total() !!}</a>
+                <div class="block-headerCart moduleCart">
+                    @include('front.modules.cart.moduleSplash')
+                </div>
             </div>
         </div>
     </header>
@@ -71,7 +73,15 @@
         <div class="col-xs-16">
             <div class="col-xs-22 col-xs-offset-1">
                 @yield('footer', 'FOOTER')
+                <address class="footer-left-text">
+                    <p>ООО «Пожсервис»<br>680007, г. Хабаровск, пер. Трубный 10, оф. 123<br>Тел./факс: +7 (4212) 48-72-57, 24-21-15</p>
+                    <p><a href="mailto:pshabar@mail.ru">pshabar@mail.ru</a></p>
+                </address>
             </div>
+        </div>
+        <div class="footer-copyright">
+            <img src="/_assets/_front/_images/icons/ico_mart.png" alt="Разработка сайтов в Хабаровске: ДС «Март»">
+            <a href="http://martds.ru" title="Разработка сайтов в Хабаровске: ДС «Март»">Разработка сайтов в Хабаровске: ДС «Март»</a>
         </div>
     </footer>
 </div>

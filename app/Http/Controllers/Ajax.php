@@ -35,8 +35,11 @@ class Ajax extends Controller
 
 	public function getTovar(Request $request)
 	{
-		$get_tovar = Catalog::whereId($request->get('id'))->with(['get_images'])->first();
-		return response()->json($get_tovar);
+		if($get_tovar = Catalog::whereId($request->get('id'))->with(['get_images'])->first()){
+			return response()->json($get_tovar);
+		}else{
+			return response('Товар не найден', 404);
+		}
 	}
 
 

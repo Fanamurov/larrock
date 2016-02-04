@@ -13,6 +13,15 @@
 
     <div class="ibox float-e-margins">
         <div class="ibox-content">
+            <form method="post" action="{{ route('admin.image.generate') }}">
+                <input type="hidden" name="_token" value="{{csrf_token()}}">
+                <button name="generate" class="btn btn-primary">Сгенерировать миниатюры</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="ibox float-e-margins">
+        <div class="ibox-content">
             <table class="table">
                 <thead>
                 <tr>

@@ -12,7 +12,7 @@
         @endif
 
         <h1>{{ $data->title }}</h1>
-        <p>{{ $data->description }}</p>
+        <div>{!! $data->description !!}</div>
         <p>{{ $data->cost }} {{ $data->what }}</p>
     </div>
 @endsection

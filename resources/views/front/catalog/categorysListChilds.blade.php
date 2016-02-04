@@ -7,3 +7,7 @@
         @each('front.catalog.blockCategory', $data->get_child, 'data')
     </div>
 @endsection
+
+@section('front.modules.list.catalog')
+    @include('front.modules.list.catalog')
+@endsection

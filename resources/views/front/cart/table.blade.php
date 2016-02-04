@@ -18,11 +18,11 @@
         @foreach($cart as $row)
             <tr data-rowid="{{ $row->rowid }}">
                 <td>
-                    @if(count($row->get_images) === 0)
+                    @if(count($row->catalog->get_images) === 0)
                         <img src="/_assets/_front/_images/empty_big.png" alt="Not Photo" width="50">
                     @else
-                        @foreach($row->get_images as $image)
-                            <img src="/images/catalog/big/{{ $image->title }}" alt="{{ $row->name }}">
+                        @foreach($row->catalog->get_images as $image)
+                            <img src="/images/catalog/140-140/{{ $image->name }}" alt="{{ $row->name }}">
                         @endforeach
                     @endif
                 </td>

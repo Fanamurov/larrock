@@ -110,6 +110,8 @@ class FormBuilder implements FormBuilderInterface
 			}
 		}
 
+		$row_settings['options'] = array_unique($row_settings['options']);
+
         return View::make('formbuilder.select.row', ['row_key' => $row_key, 'row_settings' => $row_settings, 'data' => $data])->render();
     }
 

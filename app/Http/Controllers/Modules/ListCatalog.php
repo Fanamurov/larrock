@@ -18,7 +18,6 @@ class ListCatalog extends Controller
 {
     public function categories()
 	{
-		$data['data'] = Category::type('catalog')->with(['get_images'])->get(['title']);
-		return view('front.modules.list.catalog', $data);
+		return $data['data'] = Category::type('catalog')->with(['get_images'])->get(['title', 'url', 'level']);
 	}
 }

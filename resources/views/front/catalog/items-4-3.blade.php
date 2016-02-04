@@ -16,3 +16,7 @@
 
     <div class="Pagination catalogPagination">{!! $paginator->render() !!}</div>
 @endsection
+
+@section('front.modules.list.catalog')
+    @include('front.modules.list.catalog')
+@endsection

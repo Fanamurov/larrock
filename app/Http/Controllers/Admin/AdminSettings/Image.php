@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin\AdminSettings;
 
-use App\Http\Controllers\Admin\Blocks\MenuBlock;
+use App\Http\Controllers\Admin\AdminBlocks\MenuBlock;
 use Config;
 use Illuminate\Http\Request;
 
@@ -34,23 +34,7 @@ class Image extends Controller
      */
     public function index()
     {
-        $data['apps'] = Config::get('components');
-		foreach($data['apps'] as $app_key => $app_value){
-            if(in_array('images', $app_value['plugins_backend'], TRUE)){
-				$get_presets = Model_Config::whereType('image_presets')->whereKey($app_value['name'])->first();
-				if(isset($get_presets->value)){
-					if(array_key_exists('image_original', $get_presets->value)){
-						$data['apps'][$app_key]['image_original'] = $get_presets->value['image_original'];
-					}
-					if(array_key_exists('image_generate', $get_presets->value)){
-						$data['apps'][$app_key]['image_generate'] = implode(', ', $get_presets->value['image_generate']);
-					}
-				}
-            }else{
-				unset($data['apps'][$app_key]);
-			}
-		}
-        return View::make('admin.settings.image.index', $data)->render();
+        return View::make('admin.settings.image', $data = $this->prepare_config())->render();
     }
 
     /**
@@ -78,7 +62,40 @@ class Image extends Controller
 			return back();
 		}
 
-		Alert::add('error', 'Пресет картинок '. $request->get('name') .' не изменен')->flash();
+		Alert::add('danger', 'Пресет картинок '. $request->get('name') .' не изменен')->flash();
 		return back()->withInput();
     }
+
+	/* TODO: перегенерация миниатюр и больших фото по пресетам */
+	public function generate()
+	{
+		$config = $this->prepare_config();
+		foreach($config['apps'] as $app => $config_item){
+
+		}
+
+		Alert::add('danger', 'Генерация картинок еще не написана')->flash();
+		return back()->withInput();
+	}
+
+	public function prepare_config()
+	{
+		$data['apps'] = Config::get('components');
+		foreach($data['apps'] as $app_key => $app_value){
+			if(in_array('images', $app_value['plugins_backend'], TRUE)){
+				$get_presets = Model_Config::whereType('image_presets')->whereKey($app_value['name'])->first();
+				if(isset($get_presets->value)){
+					if(array_key_exists('image_original', $get_presets->value)){
+						$data['apps'][$app_key]['image_original'] = $get_presets->value['image_original'];
+					}
+					if(array_key_exists('image_generate', $get_presets->value)){
+						$data['apps'][$app_key]['image_generate'] = implode(', ', $get_presets->value['image_generate']);
+					}
+				}
+			}else{
+				unset($data['apps'][$app_key]);
+			}
+		}
+		return $data;
+	}
 }

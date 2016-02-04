@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Modules\ListCatalog;
 use App\Models\Catalog;
 use App\Models\Category;
 use Breadcrumbs;
-use Cart;
 use Cookie;
-use DB;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -38,7 +37,7 @@ class CatalogController extends Controller
 		return view('front.catalog.categorys', $data);
 	}
 
-	public function getCategory(Request $request, $category, $child = NULL, $grandson = NULL)
+	public function getCategory(Request $request, ListCatalog $listCatalog, $category, $child = NULL, $grandson = NULL)
 	{
 		//Смотрим какой раздел выбираем для работы
 		//Первый уровень: /Раздел
@@ -73,12 +72,15 @@ class CatalogController extends Controller
 			$breadcrumbs->push($data->title);
 		});
 
+		//Модуль списка разделов справа
+		$data['module_listCatalog'] = $listCatalog->categories();
+
 		if( !$data['data']){
-			return $this->getItem($select_category);
+			return $this->getItem($select_category, $data['module_listCatalog']);
 		}
 
 		if(count($data['data']->get_child) === 0){
-			return $this->getTovars($select_category, $request);
+			return $this->getTovars($select_category, $request, $data['module_listCatalog']);
 		}
 
 		$data['seo']['title'] = 'SEO title getCategory';
@@ -86,14 +88,14 @@ class CatalogController extends Controller
 		return view('front.catalog.categorysListChilds', $data);
 	}
 
-	public function getTovars($category, Request $request)
+	public function getTovars($category, Request $request, $module_listCatalog)
 	{
 		Breadcrumbs::register('catalog.items', function($breadcrumbs, $data)
 		{
 			$breadcrumbs->parent('catalog.category', $data);
 		});
 
-		$paginate = $request->get('perPage', 5);
+		$paginate = Cookie::get('perPage', 24);
 		//echo Cookie::get('sort_cost');
 
 		//Основной запрос для вывода
@@ -125,6 +127,9 @@ class CatalogController extends Controller
 			$data['seo']['title'] = $data['data']->title;
 		}
 
+		//Модуль списка разделов справа
+		$data['module_listCatalog'] = $module_listCatalog;
+
 		if(Cookie::get('vid') === 'table'){
 			return view('front.catalog.items-table', $data);
 		}else{
@@ -132,7 +137,7 @@ class CatalogController extends Controller
 		}
 	}
 
-	public function getItem($item)
+	public function getItem($item, $module_listCatalog)
 	{
 		$data['data'] = Catalog::whereUrl($item)->with(['get_images', 'get_files', 'get_seo', 'get_templates', 'get_category'])->first();
 
@@ -157,6 +162,9 @@ class CatalogController extends Controller
 
 		$data['data'] = Catalog::whereUrl($item)->first();
 
+		//Модуль списка разделов справа
+		$data['module_listCatalog'] = $module_listCatalog;
+
 		if($data['data']->get_seo){
 			$data['seo']['title'] = $data['data']->get_seo->title;
 		}else{
@@ -169,7 +177,9 @@ class CatalogController extends Controller
 	public function searchItem(Request $request)
 	{
 		$query = $request->get('q');
-		if( !$query && $query === '') return \Response::json(array(), 400);
+		if( !$query && $query === ''){
+			return \Response::json(array(), 400);
+		}
 
 		$search = Catalog::search($query)->get()->toArray();
 		return \Response::json($search);

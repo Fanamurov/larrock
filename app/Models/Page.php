@@ -3,6 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
+use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 
 /**
  * App\Models\Page
@@ -32,8 +35,21 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Page whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Page find($value)
  */
-class Page extends Model
+class Page extends Model implements HasMediaConversions
 {
+	use HasMediaTrait;
+
+	public function registerMediaConversions()
+	{
+		$this->addMediaConversion('110x110')
+			->setManipulations(['w' => 110, 'h' => 110])
+			->performOnCollections('images');
+
+		$this->addMediaConversion('140x140')
+			->setManipulations(['w' => 140, 'h' => 140])
+			->performOnCollections('images');
+	}
+
     protected $table = 'page';
 
     protected $fillable = ['title', 'short', 'description', 'url', 'date', 'position', 'active'];

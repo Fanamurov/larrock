@@ -196,6 +196,12 @@ return [
 		/* https://github.com/GrahamCampbell/Laravel-Exceptions */
 		GrahamCampbell\Exceptions\ExceptionsServiceProvider::class,
 
+		/* http://medialibrary.spatie.be/v3/installation-and-setup/ */
+		Spatie\MediaLibrary\MediaLibraryServiceProvider::class,
+
+		/* https://github.com/LaravelRUS/localized-carbon/blob/master/docs/README-ru.md */
+		//Laravelrus\LocalizedCarbon\LocalizedCarbonServiceProvider::class,
+
     ],
 
     /*

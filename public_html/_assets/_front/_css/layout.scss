@@ -39,6 +39,15 @@ body{
   }
 }
 
+@mixin ghostVerticalAlign(){
+  &:before {
+	content: '';
+	display: inline-block;
+	vertical-align: middle;
+	height: 100%; width: .1px;
+  }
+}
+
 .container-body{
   position: relative;
   box-shadow: 0 0 30px #c2c2c2;

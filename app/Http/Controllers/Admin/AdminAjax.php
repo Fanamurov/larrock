@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Helpers\ContentPlugins;
 use App\Models\Config;
+use App\Models\Page;
 use EMT\EMTypograph;
 use Illuminate\Http\Request;
 
@@ -16,6 +17,9 @@ use Image;
 use App\Models\Images as Model_Images;
 use App\Models\Files as Model_Files;
 use Cache;
+use Spatie\MediaLibrary\Media;
+use Spatie\MediaLibrary\MediaCollection;
+use Spatie\MediaLibrary\MediaRepository;
 
 class AdminAjax extends Controller
 {
@@ -45,6 +49,71 @@ class AdminAjax extends Controller
 	{
 		Cache::flush();
 		return response()->json(['status' => 'success', 'message' => 'Кеш очищен']);
+	}
+
+	/**
+	 * Предзагрузка файлов для MediaLibrary
+	 * Логика: загружаем файлы, выводим в форме в input[], при сохранении новости подключаем medialibrary
+	 *
+	 * @return \Illuminate\Http\JsonResponse
+	 */
+	public function UploadTempImage()
+	{
+		if( !file_exists(storage_path() .'/image_cache')){
+			@mkdir(storage_path() .'/image_cache', 0755);
+		}
+		$images = Input::file('images');
+		foreach($images as $images_value){
+			Image::make($images_value->getRealPath())
+				->resize(1200, null, function ($constraint) {
+					$constraint->aspectRatio();
+				})
+				->save(storage_path() .'/image_cache/'. $images_value->getClientOriginalName());
+
+			//Проверяем, можем ли мы уже прикреплять фото к материалу
+			if(Input::get('model_type', '') !== ''){
+				$model = last(explode('\\', Input::get('model_type')));
+				$model_id = Input::get('model_id');
+				if($model === 'page'){
+					$content = Page::find($model_id);
+					$content->addMedia(storage_path() .'/image_cache/'. $images_value->getClientOriginalName())->toMediaLibrary('images');
+				}
+			}
+		}
+
+		return response()->json(['status' => 'success', 'message' => 'Все фото успешно загружены']);
+	}
+
+	public function CustomProperties()
+	{
+		$model = last(explode('\\', Input::get('model_type')));
+		$model_id = Input::get('model_id');
+		if($model === 'page'){
+			$content = Page::find($model_id);
+			$content->withCustomProperties(['alt' => Input::get('alt'), 'group' => Input::get('group'), 'position' => Input::get('position')]);
+		}
+	}
+
+	public function GetUploadedTempImage()
+	{
+
+	}
+
+	public function GetUploadedImage()
+	{
+		$model = last(explode('\\', Input::get('model_type')));
+		if($model === 'page'){
+			$content = Page::whereId(Input::get('model_id'))->first();
+			return view('admin.plugins.getUploadedImages', ['data' => $content->getMedia('images')]);
+		}
+		return response()->json(['status' => 'error', 'message' => 'Model_Type не известна']);
+	}
+
+	public function DeleteUploadedImage()
+	{
+		if(Input::get('model') === 'page'){
+			Page::find(Input::get('model_id'))->deleteMedia(Input::get('id'));
+		}
 	}
 
     public function UploadImage()

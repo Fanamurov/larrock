@@ -85,7 +85,8 @@ gulp.task('javascript_admin', function() {
             './public_html/_assets/bower_components/noty/js/noty/packaged/jquery.noty.packaged.min.js',
             './public_html/_assets/bower_components/bootstrap3-typeahead/bootstrap3-typeahead.min.js',
             './public_html/_assets/bower_components/jquery.cookie/jquery.cookie.js',
-            './resources/assets/admin/_js/backend.js'
+            './resources/assets/admin/_js/backend.js',
+            './resources/assets/admin/_js/plugin_images.js'
         ])
         //.pipe(uglify())
         //.pipe(sourcemaps.init())

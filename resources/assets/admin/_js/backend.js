@@ -162,7 +162,7 @@ $(document).ready(function(){
             dataType: "json",
             url: "/admin/ajax/getLoadedImages",
             success: function (data) {
-                load_image_plugin(data);
+                //load_image_plugin(data);
             }
         });
     }
@@ -184,7 +184,7 @@ $(document).ready(function(){
     }
 
     if($('input[name=folder]').val() !== undefined){
-        get_loaded_images($('input[name=id_connect]').val(), $('input[name=folder]').val());
+        //get_loaded_images($('input[name=id_connect]').val(), $('input[name=folder]').val());
     }
 
     function load_image_plugin(uploaded_files)
@@ -212,7 +212,7 @@ $(document).ready(function(){
                                     <span class="jFiler-item-title"><b title="{{fi-name}}">{{fi-name | limitTo: 25}}</b></span>\
                                     <span class="jFiler-item-others">{{fi-size2}}</span>\
                                 </div>\
-                                {{fi-image}}\
+                                1{{fi-image}}\
                             </div>\
                             <div class="jFiler-item-params col-xs-9" data-image="{{fi-name}}">\
                                 <div class="jFiler-item-assets jFiler-row">\
@@ -229,7 +229,7 @@ $(document).ready(function(){
                         </div>\
                     </div>\
                 </li>',
-                itemAppend: '<li class="col-xs-12 jFiler-item">\
+                itemAppend: /* уже загруженные */ '<li class="col-xs-12 jFiler-item">\
                         <div class="jFiler-item-container">\
                             <div class="jFiler-item-inner">\
                                 <div class="jFiler-item-thumb col-xs-2">\
@@ -238,7 +238,7 @@ $(document).ready(function(){
                                         <span class="jFiler-item-title hidden"><b title="{{fi-name}}">{{fi-name | limitTo: 25}}</b></span>\
                                         <span class="jFiler-item-others hidden">{{fi-size2}}</span>\
                                     </div>\
-                                    {{fi-image}}\
+                                    2{{fi-image}}\
                                 </div>\
                                 <div class="jFiler-item-params col-xs-9" data-image="{{fi-name}}"></div>\
                                 <div class="jFiler-item-assets jFiler-row col-xs-1">\

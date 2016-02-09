@@ -34,7 +34,8 @@ return [
     /*
      * The class that contains the strategy for determining a media file's path.
      */
-    'custom_path_generator_class' => null,
+    //'custom_path_generator_class' => null,
+    'custom_path_generator_class' => App\Helpers\CustomPathGenerator::class,
 
     's3' => [
         /*

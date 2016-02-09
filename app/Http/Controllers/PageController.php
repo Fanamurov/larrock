@@ -25,9 +25,9 @@ class PageController extends Controller
     public function getItem($url = 'test')
 	{
 		$page = Page::whereUrl($url)->first();
-		//$page->addMedia(public_path().'/images/page/big/ek_111.png')->toMediaLibrary('images');
-		//$mediaItems = $page->getMedia('images');
-		//echo $page->getFirstMediaUrl('images', '110x110');
+		$page->addMedia(public_path().'/images/page/big/ek_111.png')->preservingOriginal()->toMediaLibrary('images');
+		$mediaItems = $page->getMedia('images');
+		echo $page->getFirstMediaUrl('images', '110x110');
 
 		if( !$data['data'] = Page::with([
 				'get_seo' => function($query){

@@ -149,6 +149,8 @@ return [
 
 		App\Providers\FormBuilderServiceProvider::class,
 		App\Providers\ContentPluginsServiceProvider::class,
+		/* Кастомные пути для medialibrary */
+		App\Providers\CustomPathProvider::class,
 
         /* http://image.intervention.io/getting_started/installation */
         Intervention\Image\ImageServiceProvider::class,

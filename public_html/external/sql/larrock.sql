@@ -330,7 +330,8 @@ INSERT INTO `images` (`id`, `name`, `mime`, `description`, `type_connect`, `id_c
 (21,	'ek_111.png',	'image/png',	'',	'page',	22,	'',	0,	'2016-01-12 05:11:47',	'2016-01-12 05:12:15'),
 (22,	'ognetuh_l1.png',	'image/png',	'',	'category',	272,	'fotosuveniry-1-0',	0,	'2016-01-22 06:24:41',	'2016-01-22 06:24:41'),
 (23,	'ognetuh_l1.png',	'image/png',	'',	'category',	273,	'fotosuveniry-1-0',	0,	'2016-01-22 06:24:41',	'2016-01-22 06:24:41'),
-(25,	'freza.jpg',	'image/jpeg',	'',	'catalog',	96,	'kruzhka-273',	0,	'2016-02-04 02:47:30',	'2016-02-04 02:47:30');
+(25,	'freza.jpg',	'image/jpeg',	'',	'catalog',	96,	'kruzhka-273',	0,	'2016-02-04 02:47:30',	'2016-02-04 02:47:30'),
+(27,	'logo.png',	'image/png',	'',	'page',	22,	'test',	0,	'2016-02-08 06:06:50',	'2016-02-08 06:06:50');
 
 DROP TABLE IF EXISTS `media`;
 CREATE TABLE `media` (
@@ -352,7 +353,7 @@ CREATE TABLE `media` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `media` (`id`, `model_id`, `model_type`, `collection_name`, `name`, `file_name`, `disk`, `size`, `manipulations`, `custom_properties`, `order_column`, `created_at`, `updated_at`) VALUES
-(15,	22,	'App\\Models\\Page',	'images',	'ek_111',	'ek_111.png',	'media',	94528,	'[]',	'[]',	1,	'2016-02-05 05:33:33',	'2016-02-05 05:33:33');
+(70,	22,	'App\\Models\\Page',	'images',	'gardamuar_min',	'gardamuar_min.jpg',	'media',	98160,	'[]',	'[]',	1,	'2016-02-09 06:04:17',	'2016-02-09 06:04:17');
 
 DROP TABLE IF EXISTS `menu`;
 CREATE TABLE `menu` (
@@ -588,4 +589,4 @@ INSERT INTO `users` (`id`, `email`, `password`, `permissions`, `last_login`, `fi
 (1,	'fanamurov@ya.ru',	'$2y$10$SJzDIVLhyCdzOMxfnqAADOCoyzVgjwjmBlYaVWQlikchTd67mWPRa',	NULL,	'2015-12-25 07:18:00',	'4234',	'',	'2015-11-19 15:41:49',	'2015-12-25 07:18:00'),
 (2,	'4234234@fa.ru',	'$2y$10$7xxex.8N0z6VSgHKACE1/e.RuIUzPN3IDnErUIG5Kiq/Jm1.5/QzG',	NULL,	NULL,	'',	'',	'2015-12-22 09:47:43',	'2015-12-22 09:47:43');
 
--- 2016-02-05 07:58:17
+-- 2016-02-09 07:57:22

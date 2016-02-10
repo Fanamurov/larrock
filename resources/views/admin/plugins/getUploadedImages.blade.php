@@ -6,15 +6,16 @@
         <div class="col-xs-6 col-md-8">
             <div class="form-group">
                 <p class="url_link">
-                    <span>Url:</span> <a href="/media/{!! strtolower(last(explode('\\', $image->model_type))) !!}/{{ $image->file_name }}">/images/{!! strtolower(last(explode('\\', $image->model_type))) !!}/{{ $image->file_name }}</a>
+                    <span>Url:</span> <a href="/media/{!! strtolower(last(explode('\\', $image->model_type))) !!}/{{ $image->file_name }}">
+                        /images/{!! strtolower(last(explode('\\', $image->model_type))) !!}/{{ $image->file_name }}</a>
                 </p>
             </div>
             <div class="form-group">
                 <div class="input-group">
                     <div class="input-group-addon">Alt/description:</div>
-                    <input class="form-control description-image ajax_edit_media" type="text" value="{{ $image->custom_properties->alt or '' }}"
+                    <input class="form-control description-image ajax_edit_media" type="text" value="{{ $image->custom_properties['alt'] or '' }}"
                            data-model_type="{!! strtolower(last(explode('\\', $image->model_type))) !!}"
-                           data-row_where="id" data-id="{{ $image->id }}" data-row="description"
+                           data-id="{{ $image->id }}" data-row="description"
                            placeholder="Alt/description">
                 </div>
             </div>
@@ -23,10 +24,10 @@
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-addon">Группа для галереи:</div>
-                            <input class="form-control param-image ajax_edit_media" type="text" value="{{ $image->custom_properties->group or '' }}"
+                            <input class="form-control param-image ajax_edit_media" type="text" value="{{ $image->custom_properties['gallery'] or '' }}"
                                    data-model_type="{!! strtolower(last(explode('\\', $image->model_type))) !!}"
-                                   data-row_where="id" data-id="{{ $image->id }}" data-row="param"
-                                   placeholder="Группа">
+                                   data-id="{{ $image->id }}" data-row="param"
+                                   placeholder="Галерея">
                         </div>
                     </div>
                 </div>
@@ -34,9 +35,9 @@
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-addon">Вес:</div>
-                            <input class="form-control position-image ajax_edit_media" type="text" value="{{ $image->custom_properties->position or '0' }}"
+                            <input class="form-control position-image ajax_edit_media" type="text" value="{{ $image->custom_properties['position'] or '0' }}"
                                    data-model_type="{!! strtolower(last(explode('\\', $image->model_type))) !!}"
-                                   data-row_where="id" data-id="{{ $image->id }}" data-row="position"
+                                   data-id="{{ $image->id }}" data-row="position"
                                    placeholder="Вес" style="width: 50px">
                         </div>
                     </div>
@@ -51,5 +52,4 @@
         </div>
     </div>
     <br/><br/>
-    <input name="uploaded_images[]" type="hidden" class="id-image" value="{{ $image->id }}">
 @endforeach

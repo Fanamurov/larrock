@@ -55,28 +55,34 @@ class AdminAjax extends Controller
 	 * Предзагрузка файлов для MediaLibrary
 	 * Логика: загружаем файлы, выводим в форме в input[], при сохранении новости подключаем medialibrary
 	 *
+	 * @param ContentPlugins $contentPlugins
+	 *
 	 * @return \Illuminate\Http\JsonResponse
 	 */
-	public function UploadTempImage()
+	public function UploadTempImage(ContentPlugins $contentPlugins)
 	{
-		if( !file_exists(storage_path() .'/image_cache')){
-			@mkdir(storage_path() .'/image_cache', 0755);
+		if( !file_exists(public_path() .'/image_cache')){
+			@mkdir(public_path() .'/image_cache', 0755);
 		}
 		$images = Input::file('images');
+		$model_type = Input::get('model_type');
 		foreach($images as $images_value){
 			Image::make($images_value->getRealPath())
 				->resize(1200, null, function ($constraint) {
 					$constraint->aspectRatio();
 				})
-				->save(storage_path() .'/image_cache/'. $images_value->getClientOriginalName());
+				->save(public_path() .'/image_cache/'. $images_value->getClientOriginalName());
 
 			//Проверяем, можем ли мы уже прикреплять фото к материалу
-			if(Input::get('model_type', '') !== ''){
-				$model = last(explode('\\', Input::get('model_type')));
+			if($model_type){
+				$model = last(explode('\\', $model_type));
 				$model_id = Input::get('model_id');
 				if($model === 'page'){
 					$content = Page::find($model_id);
-					$content->addMedia(storage_path() .'/image_cache/'. $images_value->getClientOriginalName())->toMediaLibrary('images');
+					//Сохраняем фото под именем имямодели-idмодели-транслит(название картинки)
+					$content->addMedia(public_path() .'/image_cache/'.
+						$model .'-'. $model_id .'-'. $contentPlugins->translit($images_value->getClientOriginalName())
+					)->toMediaLibrary('images');
 				}
 			}
 		}
@@ -84,29 +90,46 @@ class AdminAjax extends Controller
 		return response()->json(['status' => 'success', 'message' => 'Все фото успешно загружены']);
 	}
 
+	/**
+	 * Изменение дополнительных параметров у прикрепленных фото
+	 *
+	 * @return \Illuminate\Http\JsonResponse
+	 */
 	public function CustomProperties()
 	{
-		$model = last(explode('\\', Input::get('model_type')));
-		$model_id = Input::get('model_id');
-		if($model === 'page'){
-			$content = Page::find($model_id);
-			$content->withCustomProperties(['alt' => Input::get('alt'), 'group' => Input::get('group'), 'position' => Input::get('position')]);
+		$id = Input::get('id'); //ID в таблице media
+		if(DB::table('media')
+			->where('id', $id)
+			->update(array('custom_properties' => json_encode([
+				'alt' => Input::get('alt'),
+				'gallery' => Input::get('gallery'),
+				'position' => Input::get('position')])))){
+			return response()->json(['status' => 'success', 'message' => 'Дополнительные параметры сохранены']);
+		}else{
+			return response()->json(['status' => 'error', 'message' => 'Запрос к БД не выполенен'], 503);
 		}
 	}
 
-	public function GetUploadedTempImage()
-	{
-
-	}
-
+	/**
+	 * Вывод списка загруженных/прикрепленных к материалу картинок
+	 *
+	 * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\View\View
+	 */
 	public function GetUploadedImage()
 	{
-		$model = last(explode('\\', Input::get('model_type')));
-		if($model === 'page'){
-			$content = Page::whereId(Input::get('model_id'))->first();
-			return view('admin.plugins.getUploadedImages', ['data' => $content->getMedia('images')]);
+		if(Input::get('model_id')){
+			//Редактирование материала
+			$model = last(explode('\\', Input::get('model_type')));
+			if($model === 'page'){
+				$content = Page::whereId(Input::get('model_id'))->first();
+				return view('admin.plugins.getUploadedImages', ['data' => $content->getMedia('images')]);
+			}
+			return response()->json(['status' => 'error', 'message' => 'Model_Type не известна']);
+		}else{
+			//Создание нового материала, еще не сохранен в БД. Достаем все картинки из временного хранилища public_path() .'/image_cache/
+			$data = \File::allFiles(public_path() .'/image_cache');
+			return view('admin.plugins.getTempImages', ['data' => $data, 'model_type' => Input::get('model_type')]);
 		}
-		return response()->json(['status' => 'error', 'message' => 'Model_Type не известна']);
 	}
 
 	public function DeleteUploadedImage()

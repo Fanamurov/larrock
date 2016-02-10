@@ -6,11 +6,15 @@
     <meta name="generator" content="Mart Larrock CMS" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>@yield('title') - Front</title>
+    <meta name="description" content="@yield('description')">
+    <meta name="author" content="MartDS">
+
     <link href="{{asset('ico.png?6v')}}" rel="shortcut icon" />
     <link rel="stylesheet" href="{{asset('_assets/_front/_css/min/bootstrap.min.css')}}"/>
     <link rel="stylesheet" href="{{asset('_assets/_front/_css/min/front.min.css')}}"/>
     <link rel="stylesheet" href="/_assets/bower_components/selectize/dist/css/selectize.bootstrap3.css"/>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,400italic,500,500italic,600,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+    @yield('styles')
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -97,5 +101,6 @@
 <!-- Laravel Javascript Validation -->
 <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
 @if(isset($validator)) {!! $validator !!} @endif
+@yield('scripts')
 </body>
 </html>

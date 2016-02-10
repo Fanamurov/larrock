@@ -56,6 +56,7 @@ class AdminPageController extends Controller
 		$data['app'] = $this->config;
 		$data['app'] = $ContentPlugins->attach_rows($this->config);
 		$data['id'] = \DB::table($this->config['table_content'])->max('id') + 1;
+		$data['images']['data'] = \File::allFiles(public_path() .'/image_cache');
 		$data = Component::tabbable($data);
 
 		$validator = JsValidator::make(Component::_valid_construct($this->config['rows']));

@@ -25,7 +25,7 @@ class PageController extends Controller
     public function getItem($url = 'test')
 	{
 		$page = Page::whereUrl($url)->first();
-		$page->addMedia(public_path().'/images/page/big/ek_111.png')->preservingOriginal()->toMediaLibrary('images');
+		$page->addMedia(public_path().'/images/page/big/ek_111.png')->withCustomProperties(['test' => '1', 'two' => 'other'])->preservingOriginal()->toMediaLibrary('images');
 		$mediaItems = $page->getMedia('images');
 		echo $page->getFirstMediaUrl('images', '110x110');
 

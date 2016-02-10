@@ -119,3 +119,15 @@ gulp.task('javascript_front', function() {
         .pipe(gulp.dest('./public_html/_assets/_front/_js'));
     //.pipe(livereload());
 });
+
+/**
+ * Copy any needed files.
+ *
+ * Do a 'gulp copyfiles' after bower updates
+ */
+gulp.task("copyfiles", function() {
+    // Copy jQuery, Bootstrap, and FontAwesome
+    //TODO
+    gulp.src("vendor/bower_dl/jquery/dist/jquery.js")
+        .pipe(gulp.dest("resources/assets/js/"));
+});

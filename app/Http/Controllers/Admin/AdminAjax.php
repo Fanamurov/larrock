@@ -59,30 +59,29 @@ class AdminAjax extends Controller
 	 *
 	 * @return \Illuminate\Http\JsonResponse
 	 */
-	public function UploadTempImage(ContentPlugins $contentPlugins)
+	public function UploadImage(ContentPlugins $contentPlugins)
 	{
 		if( !file_exists(public_path() .'/image_cache')){
 			@mkdir(public_path() .'/image_cache', 0755);
 		}
 		$images = Input::file('images');
 		$model_type = Input::get('model_type');
+		$model = last(explode('\\', $model_type));
+		$model_id = Input::get('model_id');
 		foreach($images as $images_value){
+			$image_name = $model .'-'. $model_id .'-'. $contentPlugins->translit($images_value->getClientOriginalName()) .'.'. $images_value->getClientOriginalExtension();
 			Image::make($images_value->getRealPath())
 				->resize(1200, null, function ($constraint) {
 					$constraint->aspectRatio();
 				})
-				->save(public_path() .'/image_cache/'. $images_value->getClientOriginalName());
+				->save(public_path() .'/image_cache/'. $image_name);
 
 			//Проверяем, можем ли мы уже прикреплять фото к материалу
 			if($model_type){
-				$model = last(explode('\\', $model_type));
-				$model_id = Input::get('model_id');
 				if($model === 'page'){
 					$content = Page::find($model_id);
 					//Сохраняем фото под именем имямодели-idмодели-транслит(название картинки)
-					$content->addMedia(public_path() .'/image_cache/'.
-						$model .'-'. $model_id .'-'. $contentPlugins->translit($images_value->getClientOriginalName())
-					)->toMediaLibrary('images');
+					$content->addMedia(public_path() .'/image_cache/'. $image_name)->toMediaLibrary('images');
 				}
 			}
 		}
@@ -139,7 +138,7 @@ class AdminAjax extends Controller
 		}
 	}
 
-    public function UploadImage()
+    public function UploadImageOLD()
     {
         $images = Input::file('images');
         $folder = Input::get('folder');

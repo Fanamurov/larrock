@@ -15,7 +15,7 @@
                     <input class="form-control description-image ajax_edit_media_temp" type="text" value="{{ $image->custom_properties['alt'] or '' }}"
                            data-model_type="{!! strtolower($app['name']) !!}"
                            data-filename="{{ $image->getFilename() }}" data-row="description"
-                           placeholder="Alt/description">
+                           placeholder="Alt/description" name="image_alt[]">
                 </div>
             </div>
             <div class="row">
@@ -26,7 +26,7 @@
                             <input class="form-control param-image ajax_edit_media_temp" type="text" value="{{ $image->custom_properties['gallery'] or '' }}"
                                    data-model_type="{!! strtolower($app['name']) !!}"
                                    data-filename="{{ $image->getFilename() }}" data-row="param"
-                                   placeholder="Галерея">
+                                   placeholder="Галерея" name="image_param[]">
                         </div>
                     </div>
                 </div>
@@ -37,7 +37,7 @@
                             <input class="form-control position-image ajax_edit_media_temp" type="text" value="{{ $image->custom_properties['position'] or '0' }}"
                                    data-model_type="{!! strtolower($app['name']) !!}"
                                    data-filename="{{ $image->getFilename() }}" data-row="position"
-                                   placeholder="Вес" style="width: 50px">
+                                   placeholder="Вес" style="width: 50px" name="image_position[]">
                         </div>
                     </div>
                 </div>

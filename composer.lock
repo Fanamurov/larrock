@@ -176,16 +176,16 @@
         },
         {
             "name": "cartalyst/sentinel",
-            "version": "v2.0.8",
+            "version": "v2.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cartalyst/sentinel.git",
-                "reference": "b0b6445a7b6af5938396e2ccf8185f4b6dd41526"
+                "reference": "a4921f9195835a7bc701a391e5379ef79b8837df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cartalyst/sentinel/zipball/b0b6445a7b6af5938396e2ccf8185f4b6dd41526",
-                "reference": "b0b6445a7b6af5938396e2ccf8185f4b6dd41526",
+                "url": "https://api.github.com/repos/cartalyst/sentinel/zipball/a4921f9195835a7bc701a391e5379ef79b8837df",
+                "reference": "a4921f9195835a7bc701a391e5379ef79b8837df",
                 "shasum": ""
             },
             "require": {
@@ -200,6 +200,7 @@
                 "illuminate/session": "~5.0",
                 "ircmaxell/password-compat": "~1.0",
                 "mockery/mockery": "~0.9",
+                "paragonie/random_compat": "~1.1",
                 "phpunit/phpunit": "~4.0"
             },
             "suggest": {
@@ -260,7 +261,7 @@
                 "php",
                 "security"
             ],
-            "time": "2015-11-26 00:03:11"
+            "time": "2016-02-11 00:19:11"
         },
         {
             "name": "cartalyst/support",
@@ -1410,16 +1411,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.2.14",
+            "version": "v5.2.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "ce63ba53d4891bdbb5e1aaeced1b5dd34edbc86f"
+                "reference": "78fafb78d35c617e24630f4e099746effc42c787"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/ce63ba53d4891bdbb5e1aaeced1b5dd34edbc86f",
-                "reference": "ce63ba53d4891bdbb5e1aaeced1b5dd34edbc86f",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/78fafb78d35c617e24630f4e099746effc42c787",
+                "reference": "78fafb78d35c617e24630f4e099746effc42c787",
                 "shasum": ""
             },
             "require": {
@@ -1534,7 +1535,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2016-02-03 14:19:04"
+            "time": "2016-02-12 14:59:18"
         },
         {
             "name": "laravelrus/localized-carbon",
@@ -2184,16 +2185,16 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "1.1.6",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "e6f80ab77885151908d0ec743689ca700886e8b0"
+                "reference": "b0e69d10852716b2ccbdff69c75c477637220790"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/e6f80ab77885151908d0ec743689ca700886e8b0",
-                "reference": "e6f80ab77885151908d0ec743689ca700886e8b0",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/b0e69d10852716b2ccbdff69c75c477637220790",
+                "reference": "b0e69d10852716b2ccbdff69c75c477637220790",
                 "shasum": ""
             },
             "require": {
@@ -2228,7 +2229,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2016-01-29 16:19:52"
+            "time": "2016-02-06 03:52:05"
         },
         {
             "name": "patchwork/utf8",
@@ -2711,16 +2712,16 @@
         },
         {
             "name": "roumen/sitemap",
-            "version": "v2.6.1",
+            "version": "v2.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RoumenDamianoff/laravel-sitemap.git",
-                "reference": "45fd4b604ef23cb3fda2faa28cc2ca4ab12f3e35"
+                "reference": "86ec1cc5c1f3bd0b86f3431049d5781a8d8ae1d3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RoumenDamianoff/laravel-sitemap/zipball/45fd4b604ef23cb3fda2faa28cc2ca4ab12f3e35",
-                "reference": "45fd4b604ef23cb3fda2faa28cc2ca4ab12f3e35",
+                "url": "https://api.github.com/repos/RoumenDamianoff/laravel-sitemap/zipball/86ec1cc5c1f3bd0b86f3431049d5781a8d8ae1d3",
+                "reference": "86ec1cc5c1f3bd0b86f3431049d5781a8d8ae1d3",
                 "shasum": ""
             },
             "require": {
@@ -2756,7 +2757,7 @@
                 "generator",
                 "laravel"
             ],
-            "time": "2015-12-30 17:13:35"
+            "time": "2016-02-07 17:02:43"
         },
         {
             "name": "sofa/eloquence",
@@ -2965,16 +2966,16 @@
         },
         {
             "name": "spatie/laravel-paginateroute",
-            "version": "2.1.0",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-paginateroute.git",
-                "reference": "16912874a63246995583f7c019be84d82b321c1d"
+                "reference": "2c9420d08787af3a5bf0809a75ca2870ca1383ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-paginateroute/zipball/16912874a63246995583f7c019be84d82b321c1d",
-                "reference": "16912874a63246995583f7c019be84d82b321c1d",
+                "url": "https://api.github.com/repos/spatie/laravel-paginateroute/zipball/2c9420d08787af3a5bf0809a75ca2870ca1383ac",
+                "reference": "2c9420d08787af3a5bf0809a75ca2870ca1383ac",
                 "shasum": ""
             },
             "require": {
@@ -3017,7 +3018,7 @@
                 "routing",
                 "spatie"
             ],
-            "time": "2016-01-21 10:10:28"
+            "time": "2016-02-05 13:49:08"
         },
         {
             "name": "spatie/pdf-to-image",
@@ -4846,16 +4847,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "4.8.22",
+            "version": "4.8.23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "dfb11aa5236376b4fc63853cf746af39fe780e72"
+                "reference": "6e351261f9cd33daf205a131a1ba61c6d33bd483"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/dfb11aa5236376b4fc63853cf746af39fe780e72",
-                "reference": "dfb11aa5236376b4fc63853cf746af39fe780e72",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/6e351261f9cd33daf205a131a1ba61c6d33bd483",
+                "reference": "6e351261f9cd33daf205a131a1ba61c6d33bd483",
                 "shasum": ""
             },
             "require": {
@@ -4914,7 +4915,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-02-02 09:01:21"
+            "time": "2016-02-11 14:56:33"
         },
         {
             "name": "phpunit/phpunit-mock-objects",

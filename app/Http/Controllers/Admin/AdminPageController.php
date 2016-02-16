@@ -52,16 +52,21 @@ class AdminPageController extends Controller
 	 */
 	public function create(ContentPlugins $ContentPlugins)
 	{
-		$data['data'] = new Page;
-		$data['app'] = $this->config;
-		$data['app'] = $ContentPlugins->attach_rows($this->config);
-		$data['id'] = \DB::table($this->config['table_content'])->max('id') + 1;
-		$data['images']['data'] = \File::allFiles(public_path() .'/image_cache');
-		$data = Component::tabbable($data);
+		$data = new Page();
+		$data->title = 'Новый материал';
+		$data->url = $ContentPlugins->translit($data->title);
+		$data->active = 0;
+		$data->position = 0;
+		$today = getdate();
+		$data->date = $today['year'] .'-'. $today['mon'] .'-'. $today['mday'];
 
-		$validator = JsValidator::make(Component::_valid_construct($this->config['rows']));
-		View::share('validator', $validator);
-		return view('admin.apps.create', $data);
+		if($data->save()){
+			Alert::add('success', 'Материал добавлен для редактирования')->flash();
+			return Redirect::to('/admin/'. $this->config['name'] .'/'. $data->id .'/edit')->withInput();
+		}else{
+			Alert::add('error', 'Материал не удалось создать');
+			return back();
+		}
 	}
 
 	/**

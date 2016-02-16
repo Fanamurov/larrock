@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Sofa\Eloquence\Eloquence;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
+use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 
 /**
  * App\Models\Catalog
@@ -44,8 +47,21 @@ use Sofa\Eloquence\Eloquence;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Catalog whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Catalog whereUpdatedAt($value)
  */
-class Catalog extends Model
+class Catalog extends Model implements HasMediaConversions
 {
+    use HasMediaTrait;
+
+    public function registerMediaConversions()
+    {
+        $this->addMediaConversion('110x110')
+            ->setManipulations(['w' => 110, 'h' => 110])
+            ->performOnCollections('images');
+
+        $this->addMediaConversion('140x140')
+            ->setManipulations(['w' => 140, 'h' => 140])
+            ->performOnCollections('images');
+    }
+
 	use Eloquence;
 
 	// no need for this, but you can define default searchable columns:
@@ -58,16 +74,6 @@ class Catalog extends Model
 	public function get_category()
 	{
 		return $this->belongsToMany('App\Models\Category', 'category_catalog', 'catalog_id', 'category_id');
-	}
-
-	public function get_images()
-	{
-		return $this->hasMany('App\Models\Images', 'id_connect', 'id')->whereTypeConnect('catalog')->orderBy('position', 'DESC');
-	}
-
-	public function get_files()
-	{
-		return $this->hasMany('App\Models\Files', 'id_connect', 'id')->whereTypeConnect('catalog')->orderBy('position', 'DESC');
 	}
 
 	public function get_templates()

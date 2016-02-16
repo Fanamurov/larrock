@@ -34,6 +34,7 @@ use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Page whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Page whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Page find($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\MediaLibrary\Media[] $media
  */
 class Page extends Model implements HasMediaConversions
 {
@@ -54,15 +55,9 @@ class Page extends Model implements HasMediaConversions
 
     protected $fillable = ['title', 'short', 'description', 'url', 'date', 'position', 'active'];
 
-	public function get_images()
-	{
-		return $this->hasMany('App\Models\Images', 'id_connect', 'id')->whereTypeConnect('page')->orderBy('position', 'DESC');
-	}
-
-	public function get_files()
-	{
-		return $this->hasMany('App\Models\Files', 'id_connect', 'id')->whereTypeConnect('page')->orderBy('position', 'DESC');
-	}
+    protected $casts = [
+        'position' => 'integer',
+    ];
 
 	public function get_templates()
 	{

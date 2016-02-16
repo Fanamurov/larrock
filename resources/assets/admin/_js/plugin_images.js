@@ -7,7 +7,7 @@ $(document).ready(function(){
 
     ajax_bind_actions();
 
-    function getUploadedImages(model_id, model_type)
+    function getUploadedImages(model_id, model_type, el)
     {
         $.ajax({
             data: {model_id: model_id, model_type: model_type},
@@ -16,6 +16,7 @@ $(document).ready(function(){
             success: function (data) {
                 $('#uploadedImages').html(data);
                 ajax_bind_actions();
+                el.slideUp('slow');
             },
             error: function (data) {
                 alert('Не удалось загрузить прикрепленные фотографии');
@@ -90,8 +91,7 @@ $(document).ready(function(){
                     var parent = el.find(".jFiler-jProgressBar").parent();
                     el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
                         $("<div class=\"jFiler-item-others text-success\"><i class=\"icon-jfi-check-circle\"></i> Загружено</div>").hide().appendTo(parent).fadeIn("slow");
-                        getUploadedImages($('#uploadedImages').attr('data-model_id'), $('#uploadedImages').attr('data-model_type'));
-                        el.slideUp('slow');
+                        getUploadedImages($('#uploadedImages').attr('data-model_id'), $('#uploadedImages').attr('data-model_type'), el);
                     });
                 },
                 error: function(el){

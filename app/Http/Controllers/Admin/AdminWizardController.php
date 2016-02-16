@@ -249,8 +249,7 @@ class AdminWizardController extends Controller
 		}
 
 		$data['category'] = [$saved_category['current']['id']];
-		$contentPlugins = new App\Helpers\ContentPlugins();
-		$data['url'] = $contentPlugins->translit($data['title'] .'-'. $saved_category['current']['id']. '-'. $saved_tovar);
+		$data['url'] = str_slug($data['title'] .'-'. $saved_category['current']['id']. '-'. $saved_tovar);
 		$data['nalichie'] = '9999999';
 		return $data;
 	}
@@ -323,11 +322,10 @@ class AdminWizardController extends Controller
 		}else{
 			$data['parent'] = 0;
 		}
-		$contentPlugins = new App\Helpers\ContentPlugins();
 		if(array_key_exists('level', $data)){
-			$data['url'] = $contentPlugins->translit($data['title']) .'-'. $data['level'] .'-'. $data['parent'];
+			$data['url'] = str_slug($data['title']) .'-'. $data['level'] .'-'. $data['parent'];
 		}else{
-			$data['url'] = $contentPlugins->translit($data['title']);
+			$data['url'] = str_slug($data['title']);
 		}
 		$data['sitemap'] = 1;
 		$data['active'] = 1;

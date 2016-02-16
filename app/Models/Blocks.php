@@ -3,22 +3,40 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
+use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 
-class Blocks extends Model
+/**
+ * App\Models\Blocks
+ *
+ * @property integer $id
+ * @property string $title
+ * @property string $description
+ * @property string $url
+ * @property integer $position
+ * @property integer $active
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ */
+class Blocks extends Model implements HasMediaConversions
 {
+    use HasMediaTrait;
+
+    public function registerMediaConversions()
+    {
+        $this->addMediaConversion('110x110')
+            ->setManipulations(['w' => 110, 'h' => 110])
+            ->performOnCollections('images');
+
+        $this->addMediaConversion('140x140')
+            ->setManipulations(['w' => 140, 'h' => 140])
+            ->performOnCollections('images');
+    }
+
 	protected $table = 'blocks';
 
 	protected $fillable = ['title', 'short', 'description', 'url', 'position', 'active'];
-
-	public function get_images()
-	{
-		return $this->hasMany('App\Models\Images', 'id_connect', 'id')->whereTypeConnect('blocks')->orderBy('position', 'DESC');
-	}
-
-	public function get_files()
-	{
-		return $this->hasMany('App\Models\Files', 'id_connect', 'id')->whereTypeConnect('blocks')->orderBy('position', 'DESC');
-	}
 
 	public function get_templates()
 	{

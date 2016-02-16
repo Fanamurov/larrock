@@ -32,8 +32,7 @@ class AdminCatalogController extends Controller
 			View::share('menu', $menu->index(Route::current()->getUri())->render());
 		}
 
-		Breadcrumbs::register('admin.catalog.index', function($breadcrumbs)
-		{
+		Breadcrumbs::register('admin.catalog.index', function($breadcrumbs){
 			$breadcrumbs->push('Каталог', route('admin.catalog.index'));
 		});
 	}
@@ -168,6 +167,7 @@ class AdminCatalogController extends Controller
 	public function edit($id, ContentPlugins $ContentPlugins)
 	{
 		$data['data'] = Catalog::with(['get_category', 'get_seo', 'get_templates'])->findOrFail($id);
+        $data['images']['data'] = $data['data']->getMedia('images');
 
 		$data['id'] = $id;
 		$data['app'] = $ContentPlugins->attach_rows($this->config);
@@ -244,6 +244,7 @@ class AdminCatalogController extends Controller
 	public function destroy($id, ContentPlugins $plugins)
 	{
 		$data = Catalog::find($id);
+        $data->clearMediaCollection();
 		$category = $data->get_category()->get();
 		if($data->delete()){
 			//Отсоединяем разделы

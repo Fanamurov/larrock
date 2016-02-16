@@ -33,8 +33,7 @@ class AdminFeedController extends Controller
 			View::share('menu', $menu->index(Route::current()->getUri())->render());
 		}
 
-		Breadcrumbs::register('admin.feed.index', function($breadcrumbs)
-		{
+		Breadcrumbs::register('admin.feed.index', function($breadcrumbs){
 			$breadcrumbs->push('Ленты', route('admin.feed.index'));
 		});
 	}
@@ -171,6 +170,7 @@ class AdminFeedController extends Controller
 	public function edit($id, ContentPlugins $ContentPlugins)
 	{
 		$data['data'] = Feed::with(['get_category', 'get_seo', 'get_templates'])->findOrFail($id);
+        $data['images']['data'] = $data['data']->getMedia('images');
 
 		$data['id'] = $id;
 		$data['app'] = $ContentPlugins->attach_rows($this->config);
@@ -180,9 +180,6 @@ class AdminFeedController extends Controller
 
 		$validator = JsValidator::make(Component::_valid_construct($this->config['rows']));
 		View::share('validator', $validator);
-
-		$breadcrumbsHelper = new BreadcrumbsHelper();
-		$breadcrumbsHelper->generateEdit($data['app']['name']);
 
 		return view('admin.feed.edit', $data);
 	}
@@ -223,6 +220,7 @@ class AdminFeedController extends Controller
 	public function destroy($id, ContentPlugins $plugins)
 	{
 		$data = Feed::find($id);
+        $data->clearMediaCollection();
 		$category = $data->category;
 		if($data->delete()){
 			Alert::add('success', 'Материал успешно удален')->flash();

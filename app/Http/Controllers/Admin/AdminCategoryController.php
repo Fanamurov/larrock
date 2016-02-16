@@ -122,7 +122,7 @@ class AdminCategoryController extends Controller
 		$data->fill($request->all());
 		$data->active = $request->input('active', 1);
 		$data->position = $request->input('position', 0);
-		$data->url = $contentPlugins->translit($request->input('title'));
+		$data->url = str_slug($request->input('title'));
 
 		if((int)$request->input('parent') !== 0){
 			if($get_parent = Category::find($request->input('parent'))->first()){
@@ -162,15 +162,9 @@ class AdminCategoryController extends Controller
 	 */
     public function edit($id, ContentPlugins $ContentPlugins)
     {
-		$data['data'] = Category::with([
-				'get_seo' => function($query){
-					$query->whereTypeConnect($this->config['name']);
-				},
-				'get_templates'=> function($query){
-					$query->whereTypeConnect($this->config['name']);
-				}]
-		)->findOrFail($id);
+		$data['data'] = Category::with(['get_seo', 'get_templates'])->findOrFail($id);
 
+        $data['images']['data'] = $data['data']->getMedia('images');
 		$data['id'] = $id;
 		$data['app'] = $ContentPlugins->attach_rows($this->config);
 		$data['data'] = $ContentPlugins->attach_data($this->config, $data['data']);
@@ -204,6 +198,7 @@ class AdminCategoryController extends Controller
 	public function destroy($id, ContentPlugins $plugins)
 	{
 		$data = Category::find($id);
+        $data->clearMediaCollection();
 		if($data->delete()){
 			Alert::add('success', 'Раздел успешно удален')->flash();
 			//уничтожение данные от плагинов фото, файлы

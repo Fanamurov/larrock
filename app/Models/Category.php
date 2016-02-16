@@ -3,6 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
+use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 
 /**
  * App\Models\Category
@@ -37,21 +40,24 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Category type($type)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Category level($level)
  */
-class Category extends Model
+class Category extends Model implements HasMediaConversions
 {
+    use HasMediaTrait;
+
+    public function registerMediaConversions()
+    {
+        $this->addMediaConversion('110x110')
+            ->setManipulations(['w' => 110, 'h' => 110])
+            ->performOnCollections('images');
+
+        $this->addMediaConversion('140x140')
+            ->setManipulations(['w' => 140, 'h' => 140])
+            ->performOnCollections('images');
+    }
+
     protected $table = 'category';
 
 	protected $fillable = ['title', 'short', 'description', 'type', 'parent', 'level', 'url', 'sitemap', 'position', 'active'];
-
-	public function get_images()
-	{
-		return $this->hasMany('App\Models\Images', 'id_connect', 'id')->whereTypeConnect('category')->orderBy('position', 'DESC');
-	}
-
-	public function get_files()
-	{
-		return $this->hasMany('App\Models\Files', 'id_connect', 'id')->whereTypeConnect('category')->orderBy('position', 'DESC');
-	}
 
 	public function get_templates()
 	{

@@ -12,6 +12,7 @@ use App\Helpers\Component;
 use App\Models\Page;
 use JsValidator;
 use Alert;
+use Lang;
 use Route;
 use Validator;
 use Redirect;
@@ -45,28 +46,19 @@ class AdminPageController extends Controller
 	}
 
 	/**
-	 * Show the form for creating a new resource.
+	 * Подготовка данных для создания черновика материала
 	 *
 	 * @param \App\Helpers\ContentPlugins $ContentPlugins
 	 * @return \Illuminate\Http\Response
 	 */
 	public function create(ContentPlugins $ContentPlugins)
 	{
-		$data = new Page();
-		$data->title = 'Новый материал';
-		$data->url = $ContentPlugins->translit($data->title);
-		$data->active = 0;
-		$data->position = 0;
-		$today = getdate();
-		$data->date = $today['year'] .'-'. $today['mon'] .'-'. $today['mday'];
-
-		if($data->save()){
-			Alert::add('success', 'Материал добавлен для редактирования')->flash();
-			return Redirect::to('/admin/'. $this->config['name'] .'/'. $data->id .'/edit')->withInput();
-		}else{
-			Alert::add('error', 'Материал не удалось создать');
-			return back();
-		}
+        $test = Request::create('/admin/page', 'POST', [
+            'title' => 'Черновик страницы',
+            'url' => str_slug('Черновик страницы'),
+            'active' => 0
+        ]);
+        return $this->store($test, $ContentPlugins);
 	}
 
 	/**
@@ -108,12 +100,12 @@ class AdminPageController extends Controller
 
 		$data = Page::find($id);
 		if($data->fill($request->all())->save()){
-			Alert::add('success', 'Материал '. $request->input('title') .' изменен')->flash();
+			Alert::add('success', Lang::get('apps.update.success', ['name' => $request->input('title')]))->flash();
 			$plugins->update($this->config['plugins_backend']);
 			return back();
-		}
-
-		Alert::add('error', 'Материал '. $request->input('title') .' не изменен')->flash();
+		}else{
+            Alert::add('warning', Lang::get('apps.update.nothing', ['name' => $request->input('title')]))->flash();
+        }
 		return back()->withInput();
     }
 
@@ -135,22 +127,17 @@ class AdminPageController extends Controller
 		$data->fill($request->all());
 		$data->active = $request->input('active', 0);
 		$data->position = $request->input('position', 0);
-		$today = getdate();
-		$data->date = $request->input('date');
-		if(empty($data->date)){
-			$data->date = $today['year'] .'-'. $today['mon'] .'-'. $today['mday'];
-		}
+		$data->date = $request->input('date', date('Y-m-d'));
 
-		if($data->save()){
-			Alert::add('success', 'Материал '. $request->input('title') .' добавлен')->flash();
-			Input::merge(['id_connect' => $data->id, 'stash_id' => $request->input('id_connect')]);
-			$plugins->update($this->config['plugins_backend']);
-
-			return Redirect::to('/admin/'. $this->config['name'] .'/'. $data->id .'/edit')->withInput();
-		}
-
-		Alert::add('error', 'Материал '. $request->input('title') .' не добавлен')->flash();
-		return back()->withInput();
+        if($data->save()){
+            Alert::add('success', Lang::get('apps.create.success-temp'))->flash();
+            Input::merge(['id_connect' => $data->id, 'stash_id' => $request->input('id_connect')]);
+            $plugins->update($this->config['plugins_backend']);
+            return Redirect::to('/admin/'. $this->config['name'] .'/'. $data->id .'/edit')->withInput();
+        }else{
+            Alert::add('error', Lang::get('apps.create.error'));
+            return back()->withInput();
+        }
 	}
 
 	/**
@@ -163,12 +150,12 @@ class AdminPageController extends Controller
 	public function destroy($id, ContentPlugins $plugins)
 	{
 		$data = Page::find($id);
+        $data->clearMediaCollection();
 		if($data->delete()){
-			Alert::add('success', 'Материал успешно удален')->flash();
-			//уничтожение данные от плагинов фото, файлы
+			Alert::add('success', Lang::get('apps.delete.success'))->flash();
 			$plugins->destroy($this->config['plugins_backend']);
 		}else{
-			Alert::add('error', 'Материал не удален')->flash();
+			Alert::add('error', Lang::get('apps.delete.error'))->flash();
 		}
 		return Redirect::to('/admin/'. $this->config['name']);
 	}

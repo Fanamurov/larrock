@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use DB;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
+use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 
 /**
  * App\Models\Feed
@@ -33,8 +36,21 @@ use DB;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Feed find($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Feed categoryInfo()
  */
-class Feed extends Model
+class Feed extends Model implements HasMediaConversions
 {
+    use HasMediaTrait;
+
+    public function registerMediaConversions()
+    {
+        $this->addMediaConversion('110x110')
+            ->setManipulations(['w' => 110, 'h' => 110])
+            ->performOnCollections('images');
+
+        $this->addMediaConversion('140x140')
+            ->setManipulations(['w' => 140, 'h' => 140])
+            ->performOnCollections('images');
+    }
+
     protected $table = 'feed';
 
 	protected $fillable = ['title', 'short', 'description', 'category', 'url', 'date', 'position', 'active'];
@@ -51,16 +67,6 @@ class Feed extends Model
 	public function get_category()
 	{
 		return $this->hasOne('App\Models\Category', 'id', 'category');
-	}
-
-	public function get_images()
-	{
-		return $this->hasMany('App\Models\Images', 'id_connect', 'id')->whereTypeConnect('feed')->orderBy('position', 'DESC');
-	}
-
-	public function get_files()
-	{
-		return $this->hasMany('App\Models\Files', 'id_connect', 'id')->whereTypeConnect('feed')->orderBy('position', 'DESC');
 	}
 
 	public function get_templates()

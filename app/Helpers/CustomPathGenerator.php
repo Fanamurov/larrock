@@ -20,10 +20,8 @@ class CustomPathGenerator implements PathGenerator
 	 */
 	public function getPath(Media $media)
 	{
-		//dd($media);
-		$model_type = $media->model_type;
-		$model = strtolower(last(explode('\\', $model_type)));
-		return $model . '/';
+		$model = class_basename($media->model_type);
+		return $model .'/';
 	}
 	/**
 	 * Get the path for conversions of the given media, relative to the root storage path.
@@ -34,11 +32,6 @@ class CustomPathGenerator implements PathGenerator
 	 */
 	public function getPathForConversions(Media $media)
 	{
-		$model_type = $media->model_type;
-		$model = strtolower(last(explode('\\', $model_type)));
-
-		$filename = explode('.', $media->file_name);
-
-		return $model. '/'. $filename[0] .'/';
+		return class_basename($media->model_type). '/'. $media->name .'/';
 	}
 }

@@ -291,6 +291,46 @@ INSERT INTO `feed` (`id`, `title`, `category`, `short`, `description`, `url`, `d
 (4,	'Новость о «новом годе»',	1,	'<h1>Test</h1>\r\n<h2>32234</h2>\r\n<p>Вот так вот</p>',	'<p>Текст новости</p>',	'novost-o-novom-gode',	'2015-12-17 00:00:00',	0,	1,	'2015-12-17 06:09:43',	'2015-12-24 03:51:45'),
 (5,	'32423423',	1,	'',	'',	'32423423',	'0000-00-00 00:00:00',	0,	1,	'2015-12-29 04:01:52',	'2015-12-29 04:01:52');
 
+DROP TABLE IF EXISTS `files`;
+CREATE TABLE `files` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `mime` char(10) COLLATE utf8_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `type_connect` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `id_connect` int(11) NOT NULL,
+  `param` text COLLATE utf8_unicode_ci NOT NULL,
+  `position` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `files` (`id`, `name`, `mime`, `description`, `type_connect`, `id_connect`, `param`, `position`, `created_at`, `updated_at`) VALUES
+(1,	'bg_header.jpg',	'image/jpeg',	'',	'feed',	4,	'novost-o-novom-gode',	0,	'2015-12-18 05:28:15',	'2015-12-18 05:28:15'),
+(2,	'план финансово-хозяйственной деятельности на 2015 год.rar',	'applicatio',	'',	'feed',	1,	'primer-zagolovka',	0,	'2015-12-18 06:43:20',	'2015-12-18 06:43:20'),
+(3,	'муниципальное задание на 2015 год.rar',	'applicatio',	'',	'feed',	1,	'primer-zagolovka',	0,	'2015-12-18 06:43:20',	'2015-12-18 06:43:20');
+
+DROP TABLE IF EXISTS `images`;
+CREATE TABLE `images` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `mime` char(10) COLLATE utf8_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `type_connect` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `id_connect` int(11) NOT NULL,
+  `param` text COLLATE utf8_unicode_ci NOT NULL,
+  `position` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `images` (`id`, `name`, `mime`, `description`, `type_connect`, `id_connect`, `param`, `position`, `created_at`, `updated_at`) VALUES
+(22,	'ognetuh_l1.png',	'image/png',	'',	'category',	272,	'fotosuveniry-1-0',	0,	'2016-01-22 06:24:41',	'2016-01-22 06:24:41'),
+(23,	'ognetuh_l1.png',	'image/png',	'',	'category',	273,	'fotosuveniry-1-0',	0,	'2016-01-22 06:24:41',	'2016-01-22 06:24:41'),
+(25,	'freza.jpg',	'image/jpeg',	'',	'catalog',	96,	'kruzhka-273',	0,	'2016-02-04 02:47:30',	'2016-02-04 02:47:30');
+
 DROP TABLE IF EXISTS `media`;
 CREATE TABLE `media` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -311,10 +351,8 @@ CREATE TABLE `media` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `media` (`id`, `model_id`, `model_type`, `collection_name`, `name`, `file_name`, `disk`, `size`, `manipulations`, `custom_properties`, `order_column`, `created_at`, `updated_at`) VALUES
-(72,	23,	'App\\Models\\Page',	'images',	'page-23-1453998876_politic-png',	'page-23-1453998876_politic-png.png',	'media',	95658,	'[]',	'[]',	3,	'2016-02-16 09:00:54',	'2016-02-16 09:00:54'),
-(73,	23,	'App\\Models\\Page',	'images',	'page-23-1453999613_vector_65_04-png',	'page-23-1453999613_vector_65_04-png.png',	'media',	124051,	'[]',	'[]',	3,	'2016-02-16 09:00:54',	'2016-02-16 09:00:54'),
-(74,	23,	'App\\Models\\Page',	'images',	'page-23-1454000036_featured-png',	'page-23-1454000036_featured-png.png',	'media',	84243,	'[]',	'[]',	4,	'2016-02-16 09:00:54',	'2016-02-16 09:00:54'),
-(76,	2,	'App\\Models\\Blocks',	'images',	'blocks-2-1453998876-politicpng',	'blocks-2-1453998876-politicpng.png',	'media',	95658,	'[]',	'[]',	5,	'2016-02-16 18:06:00',	'2016-02-16 18:06:00');
+(118,	24,	'App\\Models\\Page',	'files',	'Page-24-price-moskowxls',	'Page-24-price-moskowxls.xls',	'media',	106496,	'[]',	'[]',	2,	'2016-02-17 04:51:09',	'2016-02-17 04:51:09'),
+(120,	24,	'App\\Models\\Page',	'images',	'Page-24-gardamuar-minjpg',	'Page-24-gardamuar-minjpg.jpg',	'media',	100055,	'[]',	'[]',	4,	'2016-02-17 04:58:55',	'2016-02-17 04:58:55');
 
 DROP TABLE IF EXISTS `menu`;
 CREATE TABLE `menu` (
@@ -383,8 +421,7 @@ CREATE TABLE `page` (
 
 INSERT INTO `page` (`id`, `title`, `description`, `url`, `date`, `position`, `active`, `created_at`, `updated_at`) VALUES
 (23,	'Пример страницы',	'<p>Текст</p>',	'primer-stranicy',	'2016-02-16',	0,	0,	'2016-02-16 09:00:30',	'2016-02-16 09:01:10'),
-(24,	'Новый материал',	'',	'novyy-material',	'2016-02-16',	0,	0,	'2016-02-16 11:33:44',	'2016-02-16 11:33:44'),
-(31,	'Черновик страницы',	'',	'chernovik-stranitsy',	'2016-02-17',	0,	0,	'2016-02-16 17:42:07',	'2016-02-16 17:42:07');
+(24,	'Новый материал',	'',	'novyy-material',	'2016-02-16',	0,	0,	'2016-02-16 11:33:44',	'2016-02-16 11:33:44');
 
 DROP TABLE IF EXISTS `persistences`;
 CREATE TABLE `persistences` (
@@ -507,7 +544,8 @@ INSERT INTO `templates` (`id`, `template`, `template_global`, `type_connect`, `i
 (35,	'',	'',	'',	28,	'2016-02-16 17:26:00',	'2016-02-16 17:26:00'),
 (36,	'',	'',	'',	29,	'2016-02-16 17:26:53',	'2016-02-16 17:26:53'),
 (37,	'',	'',	'',	30,	'2016-02-16 17:32:43',	'2016-02-16 17:32:43'),
-(38,	'',	'',	'',	31,	'2016-02-16 17:42:07',	'2016-02-16 17:42:07');
+(38,	'',	'',	'',	31,	'2016-02-16 17:42:07',	'2016-02-16 17:42:07'),
+(39,	'Template1',	'Template1',	'page',	31,	'2016-02-17 02:44:25',	'2016-02-17 02:44:25');
 
 DROP TABLE IF EXISTS `throttle`;
 CREATE TABLE `throttle` (
@@ -560,4 +598,4 @@ INSERT INTO `users` (`id`, `email`, `password`, `permissions`, `last_login`, `fi
 (1,	'fanamurov@ya.ru',	'$2y$10$SJzDIVLhyCdzOMxfnqAADOCoyzVgjwjmBlYaVWQlikchTd67mWPRa',	NULL,	'2015-12-25 07:18:00',	'4234',	'',	'2015-11-19 15:41:49',	'2015-12-25 07:18:00'),
 (2,	'4234234@fa.ru',	'$2y$10$7xxex.8N0z6VSgHKACE1/e.RuIUzPN3IDnErUIG5Kiq/Jm1.5/QzG',	NULL,	NULL,	'',	'',	'2015-12-22 09:47:43',	'2015-12-22 09:47:43');
 
--- 2016-02-16 18:29:24
+-- 2016-02-17 07:55:02

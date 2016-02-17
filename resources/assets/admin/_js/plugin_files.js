@@ -5,40 +5,27 @@ $(document).ready(function() {
         }
     });
 
-    function get_loaded_files(id_connect, type)
+    ajax_bind_actions_files();
+
+    function getUploadedFiles(model_id, model_type, el)
     {
         $.ajax({
-            data: {id_connect: id_connect, type: type},
+            data: {model_id: model_id, model_type: model_type},
             type: "POST",
-            dataType: "json",
-            url: "/admin/ajax/getLoadedFiles",
+            url: "/admin/ajax/GetUploadedFile",
             success: function (data) {
-                load_files_plugin(data);
+                $('#uploadedFiles').html(data);
+                ajax_bind_actions_files();
+                el.slideUp('slow');
+            },
+            error: function (data) {
+                alert('Не удалось загрузить прикрепленные файлы');
             }
         });
     }
 
-    function view_loaded_files_params(uploaded_files)
-    {
-        $.each(uploaded_files, function (key, val) {
-            $.ajax({
-                data: {name: val.name},
-                type: "POST",
-                dataType: "html",
-                url: "/admin/ajax/getFileParams",
-                success: function (data) {
-                    $('.jFiler-item-params[data-image="'+val.name +'"]').html(data);
-                    ajax_edit_row();
-                }
-            });
-        });
-    }
-
-    if($('input[name=folder]').val() !== undefined){
-        get_loaded_files($('input[name=id_connect]').val(), $('input[name=folder]').val());
-    }
-
-    function load_files_plugin(uploaded_files)
+    load_files_plugin();
+    function load_files_plugin()
     {
         /* Image upload http://filer.grandesign.md/#download */
         $('#upload_file_filer').filer({
@@ -51,7 +38,7 @@ $(document).ready(function() {
             showThumbs: true,
             theme: "dragdropbox",
             addMore: true,
-            files: uploaded_files,
+            files: [],
             templates: {
                 box: '<ul class="jFiler-items-list jFiler-items-grid"></ul>',
                 item: '<li class="jFiler-item col-xs-12">\
@@ -73,33 +60,10 @@ $(document).ready(function() {
                                 </div>\
                             </div>\
                             <div class="jFiler-item-assets jFiler-row col-xs-1">\
-                                <ul class="list-inline pull-right">\
-                                    <li><a class="btn btn-danger jFiler-item-trash-action">Удалить</a></li>\
-                                </ul>\
                             </div>\
                         </div>\
                     </div>\
                 </li>',
-                itemAppend: '<li class="col-xs-12 jFiler-item">\
-                        <div class="jFiler-item-container">\
-                            <div class="jFiler-item-inner">\
-                                <div class="jFiler-item-thumb col-xs-2">\
-                                    <div class="jFiler-item-status"></div>\
-                                    <div class="jFiler-item-info">\
-                                        <span class="jFiler-item-title hidden"><b title="{{fi-name}}">{{fi-name | limitTo: 25}}</b></span>\
-                                        <span class="jFiler-item-others hidden">{{fi-size2}}</span>\
-                                    </div>\
-                                    {{fi-image}}\
-                                </div>\
-                                <div class="jFiler-item-params col-xs-9" data-file="{{fi-name}}"></div>\
-                                <div class="jFiler-item-assets jFiler-row col-xs-1">\
-                                    <ul class="list-inline pull-right">\
-                                        <li><a class="btn btn-danger jFiler-item-trash-action">Удалить</a></li>\
-                                    </ul>\
-                                </div>\
-                            </div>\
-                        </div>\
-                    </li>',
                 progressBar: '<div class="bar"></div>',
                 itemAppendToEnd: false,
                 removeConfirmation: true,
@@ -118,9 +82,8 @@ $(document).ready(function() {
             uploadFile: {
                 url: "/admin/ajax/UploadFile",
                 data: {
-                    folder: $('input[name=folder]').val(),
-                    id_connect: $('input[name=id_connect]').val(),
-                    param: $('input[name=param]').val()
+                    model_id: $('#uploadedFiles').attr('data-model_id'),
+                    model_type: $('#uploadedFiles').attr('data-model_type')
                 },
                 type: 'POST',
                 enctype: 'multipart/form-data',
@@ -129,8 +92,7 @@ $(document).ready(function() {
                     var parent = el.find(".jFiler-jProgressBar").parent();
                     el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
                         $("<div class=\"jFiler-item-others text-success\"><i class=\"icon-jfi-check-circle\"></i> Загружено</div>").hide().appendTo(parent).fadeIn("slow");
-                        var image_name = el.find('.jFiler-item-params').attr('data-file');
-                        view_loaded_files_params({loaded: {name: image_name}});
+                        getUploadedFiles($('#uploadedFiles').attr('data-model_id'), $('#uploadedFiles').attr('data-model_type'), el);
                     });
                 },
                 error: function(el){
@@ -142,9 +104,6 @@ $(document).ready(function() {
                 statusCode: null,
                 onProgress: null,
                 onComplete: null
-            },
-            onRemove: function(itemEl, file){
-                $.post("/admin/ajax/destroyFile", {name: file.name});
             },
             captions: {
                 button: "Choose Files",
@@ -159,8 +118,47 @@ $(document).ready(function() {
                     filesSizeAll: "Files you've choosed are too large! Please upload files up to {{fi-maxSize}} MB."
                 }
             },
-            afterShow: view_loaded_files_params(uploaded_files)
+            afterShow: null
         });
     }
     /* END FILE PLUGIN UPLOADED */
 });
+
+function ajax_bind_actions_files()
+{
+    $('.btn_delete_file').click(function(){
+        var id = $(this).attr('data-id');
+        var model = $(this).attr('data-model');
+        var model_id = $(this).attr('data-model_id');
+        $.ajax({
+            data: {id: id, model: model, model_id: model_id},
+            type: "POST",
+            url: "/admin/ajax/DeleteUploadedFile",
+            success: function (data) {
+                $('#file-'+ id).hide('slow');
+                notify_show('success', 'Файл удален');
+            },
+            error: function (data) {
+                notify_show('danger', 'Файл не удален');
+            }
+        });
+    });
+
+    $('.ajax_edit_media').change(function(){
+        var id = $(this).attr('data-id');
+        var alt = $('#file-'+ id).find('.description-file').val();
+        var gallery = $('#file-'+ id).find('.param-file').val();
+        var position = $('#file-'+ id).find('.position-file').val();
+        $.ajax({
+            data: {alt: alt, gallery: gallery, position: position, id: id},
+            type: "POST",
+            url: "/admin/ajax/CustomProperties",
+            success: function (data) {
+                notify_show('success', 'Данные сохранены');
+            },
+            error: function (data) {
+                notify_show('danger', 'Дополнительные параметры не сохранены');
+            }
+        });
+    });
+}

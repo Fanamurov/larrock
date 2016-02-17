@@ -59,7 +59,7 @@
                             <input type="file" name="images[]" id="upload_image_filer" multiple="multiple">
                             <input type="submit" value="Submit" class="btn btn-info hidden">
                         </form>
-                        <div id="uploadedImages" data-model_id="{{ $data->id }}" data-model_type="App\Models\{{ $app['name'] }}">
+                        <div id="uploadedImages" data-model_id="{{ $data->id }}" data-model_type="App\Models\{{ ucfirst($app['name']) }}">
                             @include('admin.plugins.getUploadedImages', $images)
                         </div>
                     </div>

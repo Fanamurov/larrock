@@ -72,6 +72,8 @@ class AdminPageController extends Controller
 	{
 		$data['data'] = Page::with(['get_seo', 'get_templates'])->findOrFail($id);
 		$data['images']['data'] = $data['data']->getMedia('images');
+		$data['files']['data'] = $data['data']->getMedia('files');
+
 		$data['id'] = $id;
 		$data['app'] = $ContentPlugins->attach_rows($this->config);
 		$data['data'] = $ContentPlugins->attach_data($this->config, $data['data']);

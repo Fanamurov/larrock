@@ -108,9 +108,9 @@ Route::group(['prefix' => 'admin', 'middleware'=>'AuthAdmin'], function(){
 
 
 	Route::post('ajax/UploadFile', 'Admin\AdminAjax@UploadFile');
-	Route::post('ajax/getLoadedFiles', 'Admin\AdminAjax@getLoadedFiles');
+	Route::post('ajax/GetUploadedFile', 'Admin\AdminAjax@GetUploadedFile');
 	Route::post('ajax/getFileParams', 'Admin\AdminAjax@getFileParams');
-	Route::post('ajax/destroyFile', 'Admin\AdminAjax@destroyFile');
+	Route::post('ajax/DeleteUploadedFile', 'Admin\AdminAjax@DeleteUploadedFile');
 
     Route::post('ajax/Typograph', 'Admin\AdminAjax@Typograph');
     Route::post('ajax/TypographLight', 'Admin\AdminAjax@TypographLight');

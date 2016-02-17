@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Helpers\ContentPlugins;
 use App\Models\Blocks;
-use App\Models\Config;
 use App\Models\Page;
 use EMT\EMTypograph;
 use Illuminate\Http\Request;
@@ -12,15 +11,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use DB;
-use Illuminate\Support\Arr;
 use Input;
 use Image;
-use App\Models\Images as Model_Images;
-use App\Models\Files as Model_Files;
 use Cache;
-use Spatie\MediaLibrary\Media;
-use Spatie\MediaLibrary\MediaCollection;
-use Spatie\MediaLibrary\MediaRepository;
 
 class AdminAjax extends Controller
 {
@@ -67,24 +60,30 @@ class AdminAjax extends Controller
 		$model = class_basename(Input::get('model_type'));
 		$model_id = Input::get('model_id');
 		foreach($images as $images_value){
-			$image_name = $model .'-'. $model_id .'-'.str_slug($images_value->getClientOriginalName()) .'.'. $images_value->getClientOriginalExtension();
-			Image::make($images_value->getRealPath())
-				->resize(1200, null, function ($constraint) {
-					$constraint->aspectRatio();
-				})
-				->save(public_path() .'/image_cache/'. $image_name);
+			if($images_value->isValid()){
+				$image_name = $model .'-'. $model_id .'-'.str_slug($images_value->getClientOriginalName()) .'.'. $images_value->getClientOriginalExtension();
+				Image::make($images_value->getRealPath())
+					->resize(1200, null, function ($constraint) {
+						$constraint->aspectRatio();
+					})
+					->save(public_path() .'/image_cache/'. $image_name);
 
-			//Проверяем, можем ли мы уже прикреплять фото к материалу
-            if($model === 'page'){
-                $content = Page::find($model_id);
-                //Сохраняем фото под именем имямодели-idмодели-транслит(название картинки)
-                $content->addMedia(public_path() .'/image_cache/'. $image_name)->toMediaLibrary('images');
-            }
-            if($model === 'blocks'){
-                $content = Blocks::find($model_id);
-                //Сохраняем фото под именем имямодели-idмодели-транслит(название картинки)
-                $content->addMedia(public_path() .'/image_cache/'. $image_name)->toMediaLibrary('images');
-            }
+				//Проверяем, можем ли мы уже прикреплять фото к материалу
+				if($model === 'Page'){
+					$content = Page::find($model_id);
+					//Сохраняем фото под именем имямодели-idмодели-транслит(название картинки)
+					$content->addMedia(public_path() .'/image_cache/'. $image_name)->toMediaLibrary('images');
+				}
+				elseif($model === 'Blocks'){
+					$content = Blocks::find($model_id);
+					//Сохраняем фото под именем имямодели-idмодели-транслит(название картинки)
+					$content->addMedia(public_path() .'/image_cache/'. $image_name)->toMediaLibrary('images');
+				}else{
+					return response()->json(['status' => 'error', 'message' => 'Model_Type '. $model .' не известна'], 300);
+				}
+			}else{
+				return response()->json(['status' => 'error', 'message' => $images_value->getClientOriginalName() .' не валиден'], 300);
+			}
 		}
 
 		return response()->json(['status' => 'success', 'message' => 'Все фото успешно загружены']);
@@ -120,30 +119,94 @@ class AdminAjax extends Controller
 		if(Input::get('model_id')){
 			//Редактирование материала
 			$model = class_basename(Input::get('model_type'));
-			if($model === 'page'){
+			if($model === 'Page'){
 				$content = Page::whereId(Input::get('model_id'))->first();
 				return view('admin.plugins.getUploadedImages', ['data' => $content->getMedia('images')]);
 			}
-            if($model === 'blocks'){
+            if($model === 'Blocks'){
                 $content = Blocks::whereId(Input::get('model_id'))->first();
                 return view('admin.plugins.getUploadedImages', ['data' => $content->getMedia('images')]);
             }
-			return response()->json(['status' => 'error', 'message' => 'Model_Type не известна']);
+			return response()->json(['status' => 'error', 'message' => 'Model_Type '. $model .' не известна'], 300);
 		}else{
-			//Создание нового материала, еще не сохранен в БД. Достаем все картинки из временного хранилища public_path() .'/image_cache/
-			$data = \File::allFiles(public_path() .'/image_cache');
-			return view('admin.plugins.getTempImages', ['data' => $data, 'model_type' => Input::get('model_type')]);
+			return response()->json(['status' => 'error', 'message' => 'Не передан model_id'], 300);
 		}
 	}
 
 	public function DeleteUploadedImage()
 	{
-		if(Input::get('model') === 'page'){
+		if(Input::get('model') === 'Page'){
 			Page::find(Input::get('model_id'))->deleteMedia(Input::get('id'));
+			return response()->json(['status' => 'success', 'message' => 'Файл удален']);
 		}
-        if(Input::get('model') === 'blocks'){
+        if(Input::get('model') === 'Blocks'){
             Blocks::find(Input::get('model_id'))->deleteMedia(Input::get('id'));
+			return response()->json(['status' => 'success', 'message' => 'Файл удален']);
         }
+		return response()->json(['status' => 'error', 'message' => 'Model_Type '. $model .' не известна'], 300);
+	}
+
+
+	public function GetUploadedFile()
+	{
+		if(Input::get('model_id')){
+			//Редактирование материала
+			$model = class_basename(Input::get('model_type'));
+			if($model === 'Page'){
+				$content = Page::whereId(Input::get('model_id'))->first();
+				return view('admin.plugins.getUploadedFiles', ['data' => $content->getMedia('files')]);
+			}
+			if($model === 'Blocks'){
+				$content = Blocks::whereId(Input::get('model_id'))->first();
+				return view('admin.plugins.getUploadedFiles', ['data' => $content->getMedia('files')]);
+			}
+			return response()->json(['status' => 'error', 'message' => 'Model_Type '. $model .' не известна'], 300);
+		}else{
+			return response()->json(['status' => 'error', 'message' => 'Не передан model_id'], 300);
+		}
+	}
+
+	public function UploadFile()
+	{
+		$files = Input::file('files');
+		$model = class_basename(Input::get('model_type'));
+		$model_id = Input::get('model_id');
+		foreach($files as $files_value){
+			if($files_value->isValid()){
+				$file_name = $model .'-'. $model_id .'-'.str_slug($files_value->getClientOriginalName()) .'.'. $files_value->getClientOriginalExtension();
+				$files_value->move(public_path() .'/media/', $file_name);
+
+				//Проверяем, можем ли мы уже прикреплять фото к материалу
+				if($model === 'Page'){
+					$content = Page::find($model_id);
+					//Сохраняем фото под именем имямодели-idмодели-транслит(название файла)
+					$content->addMedia(public_path() .'/media/'. $file_name)->toMediaLibrary('files');
+				}
+				elseif($model === 'Blocks'){
+					$content = Blocks::find($model_id);
+					$content->addMedia(public_path() .'/media/'. $file_name)->toMediaLibrary('files');
+				}else{
+					return response()->json(['status' => 'error', 'message' => 'Model_Type '. $model .' не известна'], 300);
+				}
+			}else{
+				return response()->json(['status' => 'error', 'message' => $files_value->getClientOriginalName() .' не валиден'], 300);
+			}
+		}
+
+		return response()->json(['status' => 'success', 'message' => 'Все файлы успешно загружены']);
+	}
+
+	public function DeleteUploadedFile()
+	{
+		if(Input::get('model') === 'Page'){
+			Page::find(Input::get('model_id'))->deleteMedia(Input::get('id'));
+			return response()->json(['status' => 'success', 'message' => 'Файл удален']);
+		}
+		if(Input::get('model') === 'Blocks'){
+			Blocks::find(Input::get('model_id'))->deleteMedia(Input::get('id'));
+			return response()->json(['status' => 'success', 'message' => 'Файл удален']);
+		}
+		return response()->json(['status' => 'error', 'message' => 'Model_Type '. Input::get('model') .' не известна'], 300);
 	}
 
     public function Translit()

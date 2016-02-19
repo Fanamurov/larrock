@@ -27,7 +27,8 @@
         "sofa/eloquence": "~5.1@dev",
         "graham-campbell/exceptions": "^8.3",
         "spatie/laravel-medialibrary": "^3.14",
-        "laravelrus/localized-carbon": "1.*"
+        "laravelrus/localized-carbon": "1.*",
+        "guzzlehttp/guzzle": "^6.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

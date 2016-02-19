@@ -75,6 +75,20 @@ Route::get('/cart', [
 	'as' => 'cart.index', 'uses' => 'CartController@getIndex'
 ]);
 
+/* Otapi */
+Route::get('/otapi', [
+	'as' => 'otapi.index', 'uses' => 'Otapi@get_index'
+]);
+Route::get('/otapi/{categoryId}', [
+	'as' => 'otapi.category', 'uses' => 'Otapi@get_category'
+]);
+Route::get('/otapi/{categoryId}/list', [
+	'as' => 'otapi.category.tovars', 'uses' => 'Otapi@get_tovarsCategory'
+]);
+Route::get('/otapi/{categoryId}/tovar/{itemId}', [
+	'as' => 'otapi.category.tovars', 'uses' => 'Otapi@get_tovar'
+]);
+
 
 Route::get('admin/auth', 'Admin\AdminAuthController@getLogin');
 Route::get('admin/auth/login', 'Admin\AdminAuthController@getLogin');

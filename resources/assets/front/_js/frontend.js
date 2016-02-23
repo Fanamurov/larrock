@@ -6,6 +6,21 @@ $(document).ready(function(){
         }
     });
 
+    $(".fancybox").fancybox({
+        helpers	: {
+            thumbs	: {
+                width	: 50,
+                height	: 50
+            }
+        }
+    });
+
+    $('.show_menu').click(
+        function(){
+            $('#menu-catalog').toggle('slow');
+        }
+    );
+
     /* http://maxoffsky.com/code-blog/laravel-shop-tutorial-3-implementing-smart-search/ */
     /* https://github.com/selectize/selectize.js/blob/master/docs/usage.md */
     $('select#searchCatalog').selectize({

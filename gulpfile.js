@@ -32,6 +32,7 @@ gulp.task('default', function() {
 gulp.task('watch', function () {
     gulp.watch('./public_html/_assets/_admin/_css/**/*.scss', ['sass_admin']);
     gulp.watch('./public_html/_assets/_front/_css/**/**/*.scss', ['sass']);
+    gulp.watch('./public_html/_assets/tbkhv/_css/**/**/*.scss', ['sass_tbkhv']);
     gulp.watch(['./resources/assets/admin/_js/**/*.js', '!./resources/assets/admin/_js/min/*'], ['javascript_admin']);
     gulp.watch(['./resources/assets/front/_js/**/*.js', '!./resources/assets/front/_js/min/*'], ['javascript_front']);
 });
@@ -52,6 +53,26 @@ gulp.task('sass', function () {
         .pipe(concat('front.min.css'))
         .pipe(size({showFiles : true}))
         .pipe(gulp.dest('./public_html/_assets/_front/_css/min'))
+        .pipe(removeLogs())
+        .pipe(notify("Scss reload: <%= file.relative %>! "+ project));
+});
+
+gulp.task('sass_tbkhv', function () {
+    gulp.src(['./public_html/_assets/tbkhv/_css/**/*.scss'])
+        .pipe(changed('./public_html/_assets/tbkhv/_css/**/**/*.scss'))
+        .pipe(sass.sync().on('error', sass.logError))
+        //.pipe(sourcemaps.init())
+        .pipe(autoprefixer({
+            browsers: ['last 2 versions'],
+            cascade: true
+        }))
+        .pipe(bless())
+        .pipe(nano())
+        //.pipe(sourcemaps.write('./maps'))
+        .pipe(rename({suffix: '.min'} ))
+        .pipe(concat('front.min.css'))
+        .pipe(size({showFiles : true}))
+        .pipe(gulp.dest('./public_html/_assets/tbkhv/_css/min'))
         .pipe(removeLogs())
         .pipe(notify("Scss reload: <%= file.relative %>! "+ project));
 });

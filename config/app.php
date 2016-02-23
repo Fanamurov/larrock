@@ -204,8 +204,6 @@ return [
 		/* https://github.com/LaravelRUS/localized-carbon/blob/master/docs/README-ru.md */
 		//Laravelrus\LocalizedCarbon\LocalizedCarbonServiceProvider::class,
 
-		\App\Providers\Otapilib2ServiceProvider::class,
-
     ],
 
     /*

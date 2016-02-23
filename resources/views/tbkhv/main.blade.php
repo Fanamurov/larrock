@@ -138,7 +138,7 @@
 
 <footer class="row footer">
     <div class="container">
-        <div class="col-xs-22 col-xs-offset-1">
+        <div class="col-xs-24">
             @yield('footer')
             <address class="footer-left-text">
                 <p>ООО «Таобао.кхв»<br>680007, г. Хабаровск, пер. Трубный 10, оф. 123<br>Тел./факс: +7 (4212) 48-72-57, 24-21-15</p>

@@ -72,9 +72,10 @@ class Otapi extends Controller
 
 	public function get_subCategoryList($parentCategoryId)
 	{
-		$body = $this->create_request('GetCategorySubcategoryInfoList', ['parentCategoryId' => $parentCategoryId]);
-		if(count($body->CategoryInfoList->Content->Item) > 0){
-			return view('otapi.categoryList', ['data' => $body->CategoryInfoList->Content]);
+		$body['data'] = $this->create_request('GetCategorySubcategoryInfoList', ['parentCategoryId' => $parentCategoryId]);
+        $body['category'] = $this->create_request('GetCategoryInfo', ['categoryId' => $parentCategoryId]);
+		if(count($body['data']->CategoryInfoList->Content->Item) > 0){
+			return view('otapi.categoryList', $body);
 		}else{
 			return NULL;
 		}

@@ -72,8 +72,11 @@ Route::get('/modules/ListCatalog', [
 	'as' => 'modules.listCatalog', 'uses' => 'Modules\ListCatalog@categories'
 ]);
 
-Route::get('/cart', [
+/*Route::get('/cart', [
 	'as' => 'cart.index', 'uses' => 'CartController@getIndex'
+]);*/
+Route::get('/cart', [
+	'as' => 'cart.index', 'uses' => 'Otapi@get_cart'
 ]);
 
 /* Otapi */
@@ -85,6 +88,9 @@ Route::get('/otapi/menu', [
 ]);
 Route::get('/otapi/search', [
     'as' => 'otapi.search', 'uses' => 'Otapi@SearchItemsFrame'
+]);
+Route::get('/otapi/brand/{brandId}', [
+	'as' => 'otapi.brand', 'uses' => 'Otapi@get_brand'
 ]);
 Route::post('/otapi/AddToCart', [
     'as' => 'otapi.AddToCart', 'uses' => 'Otapi@AddToCart'

@@ -31,13 +31,13 @@
     @endif
 </head>
 <body>
-<div class="header_line row">
+<div class="header_line">
     <div class="container">
-        <div class="block-headerCart col-xs-24 col-sm-6">
+        <div class="block-headerCart col-xs-24 col-sm-7">
             @include('tbkhv.modules.cart.moduleSplash')
         </div>
-        <div class="col-xs-24 col-sm-18">
-            <ul class="nav nav-pills pull-right">
+        <div class="col-xs-24 col-sm-17">
+            <ul class="nav nav-pills pull-right nav-menu">
                 <li>
                     <a href="#">Доставка</a>
                 </li>
@@ -60,6 +60,7 @@
         </div>
     </div>
 </div>
+<div class="clearfix"></div>
 <div class="container container-body">
     <header class="row">
         <div class="col-xs-5">
@@ -102,12 +103,14 @@
             <span class="text-uppercase"><i class="fa fa-reorder"></i> | Категории товаров</span>
         </div>
         <div class="col-xs-16 col-xs-offset-1">
-            <div class="input-group block-search">
-                <input type="text" class="form-control" placeholder="Поиск товаров по названию или коду...">
-                <span class="input-group-btn">
-                    <button class="btn btn-default" type="button"><i class="fa fa-search"></i> Искать!</button>
-                </span>
-            </div>
+            <form action="/otapi/search" method="get">
+                <div class="input-group block-search">
+                    <input name="search" type="text" class="form-control" placeholder="Поиск товаров по названию или коду...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button"><i class="fa fa-search"></i> Искать!</button>
+                    </span>
+                </div>
+            </form>
         </div>
     </div>
     <div class="clearfix"></div>
@@ -136,7 +139,7 @@
     </section>
 </div>
 
-<footer class="row footer">
+<footer class="footer">
     <div class="container">
         <div class="col-xs-24">
             @yield('footer')
@@ -148,6 +151,7 @@
         </div>
     </div>
 </footer>
+<div class="clearfix"></div>
 
 <!-- Mainly scripts -->
 <script src="{{asset('_assets/_front/_js/bootstrap.min.js')}}"></script>

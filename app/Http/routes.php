@@ -12,8 +12,7 @@
 */
 
 Route::get('/', [
-	//'as' => 'mainpage', 'uses' => 'CatalogController@getMainCategory'
-	'as' => 'mainpage', 'uses' => 'Otapi@get_index'
+	'as' => 'mainpage', 'uses' => 'CatalogController@getMainCategory'
 ]);
 
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
@@ -72,44 +71,8 @@ Route::get('/modules/ListCatalog', [
 	'as' => 'modules.listCatalog', 'uses' => 'Modules\ListCatalog@categories'
 ]);
 
-/*Route::get('/cart', [
-	'as' => 'cart.index', 'uses' => 'CartController@getIndex'
-]);*/
 Route::get('/cart', [
-	'as' => 'cart.index', 'uses' => 'Otapi@get_cart'
-]);
-
-/* Otapi */
-Route::get('/otapi', [
-	'as' => 'otapi.index', 'uses' => 'Otapi@get_index'
-]);
-Route::get('/otapi/menu', [
-    'as' => 'otapi.menu', 'uses' => 'Otapi@getMenu'
-]);
-Route::get('/otapi/search', [
-    'as' => 'otapi.search', 'uses' => 'Otapi@SearchItemsFrame'
-]);
-Route::get('/otapi/brand/{brandId}', [
-	'as' => 'otapi.brand', 'uses' => 'Otapi@get_brand'
-]);
-Route::post('/otapi/AddToCart', [
-    'as' => 'otapi.AddToCart', 'uses' => 'Otapi@AddToCart'
-]);
-Route::get('/otapi/vendor/{vendorId}', [
-    'as' => 'otapi.vendor', 'uses' => 'Otapi@get_vendor'
-]);
-Route::get('/otapi/{categoryId}', [
-	'as' => 'otapi.category', 'uses' => 'Otapi@get_category'
-]);
-Route::get('/otapi/{categoryId}/list', [
-	'as' => 'otapi.category.tovars', 'uses' => 'Otapi@get_tovarsCategory'
-]);
-Route::get('/otapi/{categoryId}/tovar/{itemId}', [
-	'as' => 'otapi.category.tovar', 'uses' => 'Otapi@get_tovar'
-]);
-
-Route::get('/test', [
-    'as' => 'otapi.test', 'uses' => 'Otapi@test'
+	'as' => 'cart.index', 'uses' => 'CartController@getIndex'
 ]);
 
 

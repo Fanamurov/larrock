@@ -67,8 +67,8 @@
         </div>
         <section id="right_colomn" class="col-xs-7">
             <div class="col-xs-19 col-xs-offset-2">
-                @yield('rightColomn', 'RIGHT COLOMN test content with float width a b RIGHT COLOMN test content with float width')
                 @yield('front.modules.list.catalog')
+                @yield('rightColomn')
             </div>
         </section>
     </section>

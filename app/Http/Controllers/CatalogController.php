@@ -31,7 +31,10 @@ class CatalogController extends Controller
 
     public function getMainCategory()
 	{
-		$data['data'] = Category::whereType('catalog')->whereLevel(1)->whereActive(1)->with(['get_images'])->get();
+		$data['data'] = Category::whereType('catalog')->whereLevel(1)->whereActive(1)->get();
+		foreach($data['data'] as $key => $value){
+			$data['data'][$key]['images'] = $value->getMedia('images');
+		}
 		$data['seo']['title'] = 'SEO title getMainCategory';
 
 		return view('front.catalog.categorys', $data);
@@ -53,10 +56,11 @@ class CatalogController extends Controller
 
 		$data['data'] = Category::whereType('catalog')->whereUrl($select_category)->with([
 				'get_child' => function($query){
-					$query->with('get_images', 'get_parent');
+					$query->with('get_parent');
 				}
 			]
 		)->first();
+		$data['data']['images'] = $data['data']->getMedia('images');
 
 		Breadcrumbs::register('catalog.category', function($breadcrumbs, $data)
 		{
@@ -103,14 +107,19 @@ class CatalogController extends Controller
 			['get_tovars' => function($query) use ($paginate){
 				//TODO: сортировки и фильтры
 				if(Cookie::get('sort_cost') === 'asc'){
-					$query->orderBy('cost', 'asc')->with('get_images')->paginate($paginate);
+					$query->orderBy('cost', 'asc')->paginate($paginate);
 				}elseif(Cookie::get('sort_cost') === 'desc'){
-					$query->orderBy('cost', 'desc')->with('get_images')->paginate($paginate);
+					$query->orderBy('cost', 'desc')->paginate($paginate);
 				}else{
-					$query->with('get_images')->paginate($paginate);
+					$query->paginate($paginate);
 				}
 			}, 'get_tovarsAlias', 'get_parent', 'get_seo']
 		)->first();
+
+		$data['data']['images'] = $data['data']->getMedia('images');
+		foreach($data['data']->get_tovars as $key => $value){
+			$data['data']->get_tovars[$key]['images'] = $value->getMedia('images');
+		}
 
 		$data['paginator'] = new Paginator(
 			$data['data']->get_tovars,
@@ -139,7 +148,9 @@ class CatalogController extends Controller
 
 	public function getItem($item, $module_listCatalog)
 	{
-		$data['data'] = Catalog::whereUrl($item)->with(['get_images', 'get_files', 'get_seo', 'get_templates', 'get_category'])->first();
+		$data['data'] = Catalog::whereUrl($item)->with(['get_seo', 'get_templates', 'get_category'])->first();
+		$data['data']['images'] = $data['data']->getMedia('images');
+		$data['data']['files'] = $data['data']->getMedia('files');
 
 		Breadcrumbs::register('catalog.item', function($breadcrumbs, $data)
 		{
@@ -159,8 +170,6 @@ class CatalogController extends Controller
 			$breadcrumbs->push($get_category->title, $url .'/'. $get_category->url);
 			$breadcrumbs->push($data->title);
 		});
-
-		$data['data'] = Catalog::whereUrl($item)->first();
 
 		//Модуль списка разделов справа
 		$data['module_listCatalog'] = $module_listCatalog;

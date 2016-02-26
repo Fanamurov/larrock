@@ -1,8 +1,8 @@
 <div class="catalogBlockItem col-xs-8 col-md-8 col-lg-6">
     <div class="link_block_this" data-href="{!! URL::current() !!}/{{ $data->url }}">
         <div class="catalogImage">
-            @if(count($data->get_images) > 0)
-                <img src="/images/catalog/140-140/{{ $data->get_images->first()->name }}" alt="{{$data->title}}" class="listItemImage">
+            @if($data->getFirstMediaUrl('images', '140x140'))
+                <img src="{{ $data->getFirstMediaUrl('images', '140x140') }}" class="categoryImage">
             @else
                 <img src="/_assets/_front/_images/empty_big.png" width="125" alt="Нет фото" class="listItemImage listItemImage-empty">
             @endif

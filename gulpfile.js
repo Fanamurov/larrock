@@ -108,6 +108,11 @@ gulp.task('javascript_front', function() {
             './public_html/_assets/bower_components/noty/js/noty/packaged/jquery.noty.packaged.min.js',
             './public_html/_assets/bower_components/bootstrap3-typeahead/bootstrap3-typeahead.min.js',
             './public_html/_assets/bower_components/jquery.cookie/jquery.cookie.js',
+            './public_html/_assets/bower_components/fancybox/lib/jquery.mousewheel-3.0.6.pack.js',
+            './public_html/_assets/bower_components/fancybox/source/jquery.fancybox.pack.js',
+            './public_html/_assets/bower_components/fancybox/source/helpers/jquery.fancybox-thumbs.js',
+            './public_html/_assets/bower_components/fancybox/source/helpers/jquery.fancybox-media.js',
+            './public_html/_assets/bower_components/fancybox/source/helpers/jquery.fancybox-buttons.js',
             './resources/assets/front/_js/frontend.js'
         ])
         //.pipe(uglify())

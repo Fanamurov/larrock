@@ -60,8 +60,6 @@ class CatalogController extends Controller
 				}
 			]
 		)->first();
-		$data['data']['images'] = $data['data']->getMedia('images');
-
 		Breadcrumbs::register('catalog.category', function($breadcrumbs, $data)
 		{
 			$breadcrumbs->parent('catalog.index');
@@ -80,8 +78,11 @@ class CatalogController extends Controller
 		$data['module_listCatalog'] = $listCatalog->categories();
 
 		if( !$data['data']){
+			//Раздела с таким url нет, значит ищем товар
 			return $this->getItem($select_category, $data['module_listCatalog']);
 		}
+
+		$data['data']['images'] = $data['data']->getMedia('images');
 
 		if(count($data['data']->get_child) === 0){
 			return $this->getTovars($select_category, $request, $data['module_listCatalog']);
@@ -163,9 +164,10 @@ class CatalogController extends Controller
 					$grandpa = $parent->get_parent;
 					$breadcrumbs->push($grandpa->title, '/catalog/'. $grandpa->url .'/'. $parent->url);
 					$url = '/catalog/'. $grandpa->url .'/'. $parent->url;
+				}else{
+					$breadcrumbs->push($parent->title, '/catalog/'. $parent->url);
+					$url = '/catalog/'. $parent->url;
 				}
-				$breadcrumbs->push($parent->title, '/catalog/'. $parent->url);
-				$url = '/catalog/'. $parent->url;
 			}
 			$breadcrumbs->push($get_category->title, $url .'/'. $get_category->url);
 			$breadcrumbs->push($data->title);
@@ -184,6 +186,17 @@ class CatalogController extends Controller
 	}
 
 	public function searchItem(Request $request)
+	{
+		$query = $request->get('q');
+		if( !$query && $query === ''){
+			return \Response::json(array(), 400);
+		}
+
+		$search = Catalog::search($query)->with(['get_category'])->get()->toArray();
+		return \Response::json($search);
+	}
+
+	public function searchCategory(Request $request)
 	{
 		$query = $request->get('q');
 		if( !$query && $query === ''){

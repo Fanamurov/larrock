@@ -38,6 +38,11 @@ class Blocks extends Model implements HasMediaConversions
 
 	protected $fillable = ['title', 'short', 'description', 'url', 'position', 'active'];
 
+	protected $casts = [
+		'position' => 'integer',
+		'active' => 'integer'
+	];
+
 	public function get_templates()
 	{
 		return $this->hasOne('App\Models\Templates', 'id_connect', 'id')->whereTypeConnect('blocks');

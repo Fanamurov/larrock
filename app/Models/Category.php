@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Sofa\Eloquence\Eloquence;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
@@ -59,6 +60,24 @@ class Category extends Model implements HasMediaConversions
 
 	protected $fillable = ['title', 'short', 'description', 'type', 'parent', 'level', 'url', 'sitemap', 'position', 'active'];
 
+	protected $casts = [
+		'position' => 'integer',
+		'active' => 'integer',
+		'sitemap' => 'integer',
+		'level' => 'integer',
+		'parent' => 'integer'
+	];
+
+	protected $appends = [
+		'full_url',
+		'class_element'
+	];
+
+	use Eloquence;
+
+	// no need for this, but you can define default searchable columns:
+	protected $searchableColumns = ['title'];
+
 	public function get_templates()
 	{
 		return $this->hasOne('App\Models\Templates', 'id_connect', 'id');
@@ -97,5 +116,27 @@ class Category extends Model implements HasMediaConversions
 	public function scopeLevel($query, $level)
 	{
 		return $query->where('level', '=', $level);
+	}
+
+	public function getFullUrlAttribute()
+	{
+		if($search_parent = Category::whereId($this->get_category->first()->parent)->first()){
+			if($search_parent_2 = Category::whereId($search_parent->parent)->first()){
+				if($search_parent_3 = Category::whereId($search_parent->parent_2)->first()){
+					return $search_parent_3->url .'/'. $search_parent_2->url .'/' . $search_parent->url .'/'. $this->get_category->first()->url .'/'. $this->url;
+				}else{
+					return $search_parent_2->url .'/' . $search_parent->url .'/'. $this->get_category->first()->url .'/'. $this->url;
+				}
+			}else{
+				return $search_parent->url .'/'. $this->get_category->first()->url .'/'. $this->url;
+			}
+		}else{
+			return $this->get_category->first()->url .'/'. $this->url;
+		}
+	}
+
+	public function getClassElementAttribute()
+	{
+		return 'category';
 	}
 }

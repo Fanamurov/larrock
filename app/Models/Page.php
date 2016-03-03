@@ -55,9 +55,12 @@ class Page extends Model implements HasMediaConversions
 
     protected $fillable = ['title', 'short', 'description', 'url', 'date', 'position', 'active'];
 
-    protected $casts = [
-        'position' => 'integer',
-    ];
+	protected $casts = [
+		'position' => 'integer',
+		'active' => 'integer'
+	];
+
+	protected $dates = ['created_at', 'updated_at', 'date'];
 
 	public function get_templates()
 	{

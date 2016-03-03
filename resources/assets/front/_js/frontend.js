@@ -24,6 +24,12 @@ $(document).ready(function(){
         maxOptions: 10,
         options: [],
         create: false,
+        optgroups: [
+            {value: 'product', label: 'Products'},
+            {value: 'category', label: 'Categories'}
+        ],
+        optgroupField: 'class_element',
+        optgroupOrder: ['product','category'],
         render: {
             option: function(item, escape) {
                 return '<div class="seach">' +escape(item.title)+'</div>';

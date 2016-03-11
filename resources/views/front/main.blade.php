@@ -33,17 +33,11 @@
     <header class="row">
         <div class="col-xs-16">
             <div class="col-xs-22 col-xs-offset-1">
-                <a href="/" class="logo">
-                    <img src="/_assets/_front/_images/logo.png" width="400" height="160" alt="Company name">
-                </a>
                 @if(isset($header_email))
                     <div class="block-headerEmail">
                         {!! $header_email->description !!}
                     </div>
                 @endif
-                <div class="block-headerSearch">
-                    @include('front.modules.search.catalog')
-                </div>
                 @if(isset($header_slogan))
                     <div class="block-headerSlogan">
                         {!! $header_slogan->description !!}
@@ -71,7 +65,7 @@
         <section id="right_colomn" class="col-xs-7">
             <div class="col-xs-19 col-xs-offset-2">
                 @yield('front.modules.list.catalog')
-                @yield('rightColomn')
+                @yield('rightColomn', 'Правая колонка<br/>Правая колонка<br/>Правая колонка')
             </div>
         </section>
     </section>
@@ -79,10 +73,11 @@
     <footer class="row">
         <div class="col-xs-16">
             <div class="col-xs-22 col-xs-offset-1">
-                @yield('footer', 'FOOTER')
+                @yield('footer')
                 <address class="footer-left-text">
-                    <p>ООО «Пожсервис»<br>680007, г. Хабаровск, пер. Трубный 10, оф. 123<br>Тел./факс: +7 (4212) 48-72-57, 24-21-15</p>
-                    <p><a href="mailto:pshabar@mail.ru">pshabar@mail.ru</a></p>
+                    <p>Раболовецкий колхоз «Витязь»<br>680009, Хабаровский край, г. Хабаровск,
+                        <br/>ул. Промышленная, 12г, оф. 10<br>Тел: 8 (4212) 93-25-49</p>
+                    <p><a href="mailto:STORMELECTRIC@MAIL.RU">STORMELECTRIC@MAIL.RU</a></p>
                 </address>
             </div>
         </div>

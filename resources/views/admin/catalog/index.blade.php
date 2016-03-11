@@ -19,6 +19,7 @@
         <div class="ibox-content">
             @if(count($data) === 0)
                 <div class="alert alert-warning">Разделов еще нет</div>
+                @include('admin.category.include-create-easy', array('parent' => 0, 'type' => 'catalog'))
             @else
                 <table class="table table-striped table-hover">
                     <thead>
@@ -34,6 +35,7 @@
                     <tbody>
                     @if(count($data) === 0)
                         <div class="alert alert-warning">Разделов еще нет</div>
+                        @include('admin.category.include-create-easy', array('parent' => 0, 'type' => 'catalog'))
                     @else
                         @include('admin.category.include-create-easy', array('parent' => 0, 'type' => 'catalog'))
                         @include('admin.category.include-list-categories', array('data' => $data, 'app' => $app))

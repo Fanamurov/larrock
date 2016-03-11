@@ -2,19 +2,17 @@
 
 .catalogBlockCategory{
   > div{
-	background: url("/_assets/_front/_images/bg/bg_tex.png") repeat-y left top transparent;
+	//background: url("/_assets/_front/_images/bg/bg_tex.png") repeat left top transparent;
 	margin-bottom: 50px;
 	padding-top: 10px;
 	position: relative;
 	text-align: center;
-	height: 225px;
-	width: 164px;
 	cursor: pointer;
 	display: inline-block;
 	float: left;
 	&:hover,
 	&:focus{
-	  background: url("/_assets/_front/_images/bg/bg_tex.png") repeat-y -164px top transparent;
+	  //background: url("/_assets/_front/_images/bg/bg_tex.png") repeat -164px top transparent;
 	}
   }
   h3{
@@ -29,5 +27,20 @@
   img.categoryImage{
 	border-radius: 4px;
 	box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
+  }
+}
+
+.catalogPageCategory-2{
+  margin-left: -5.333333%;
+  img.categoryImage{
+	width: 100%;
+	max-width: 100%;
+	box-shadow: none;
+	border-radius: inherit;
+  }
+  h3{
+	a{
+	  color: #0582c2;
+	}
   }
 }

@@ -64,9 +64,6 @@ class AdminAjax extends Controller
 			if($images_value->isValid()){
 				$image_name = $model .'-'. $model_id .'-'.str_slug($images_value->getClientOriginalName()) .'.'. $images_value->getClientOriginalExtension();
 				Image::make($images_value->getRealPath())
-					->resize(1200, null, function ($constraint) {
-						$constraint->aspectRatio();
-					})
 					->save(public_path() .'/image_cache/'. $image_name);
 
 				//Проверяем, можем ли мы уже прикреплять фото к материалу

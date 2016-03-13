@@ -57,6 +57,11 @@ class Feed extends Model implements HasMediaConversions
 
     protected $dates = ['created_at', 'updated_at', 'date'];
 
+	protected $casts = [
+		'position' => 'integer',
+		'active' => 'integer'
+	];
+
 	public function scopeCategoryInfo()
 	{
 		return DB::table('feed')

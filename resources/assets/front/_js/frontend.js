@@ -15,12 +15,6 @@ $(document).ready(function(){
         }
     });
 
-    $('.show_menu').click(
-        function(){
-            $('#menu-catalog').toggle('slow');
-        }
-    );
-
     /* http://maxoffsky.com/code-blog/laravel-shop-tutorial-3-implementing-smart-search/ */
     /* https://github.com/selectize/selectize.js/blob/master/docs/usage.md */
     $('select#searchCatalog').selectize({
@@ -30,6 +24,12 @@ $(document).ready(function(){
         maxOptions: 10,
         options: [],
         create: false,
+        optgroups: [
+            {value: 'product', label: 'Products'},
+            {value: 'category', label: 'Categories'}
+        ],
+        optgroupField: 'class_element',
+        optgroupOrder: ['product','category'],
         render: {
             option: function(item, escape) {
                 return '<div class="seach">' +escape(item.title)+'</div>';

@@ -71,6 +71,19 @@ class Catalog extends Model implements HasMediaConversions
 
 	protected $fillable = ['title', 'short', 'description', 'url', 'position', 'active', 'what', 'cost', 'cost_old', 'manufacture', 'articul', 'nalicie'];
 
+	protected $casts = [
+		'position' => 'integer',
+		'active' => 'integer',
+		'cost' => 'float',
+		'cost_old' => 'float',
+		'nalichie' => 'integer'
+	];
+
+	protected $appends = [
+		'full_url',
+		'class_element'
+	];
+
 	public function get_category()
 	{
 		return $this->belongsToMany('App\Models\Category', 'category_catalog', 'catalog_id', 'category_id');
@@ -84,5 +97,31 @@ class Catalog extends Model implements HasMediaConversions
 	public function get_seo()
 	{
 		return $this->hasOne('App\Models\Seo', 'id_connect', 'id');
+	}
+
+	public function getFullUrlAttribute()
+	{
+		if($this->get_category->first()){
+			if($search_parent = Category::whereId($this->get_category->first()->parent)->first()){
+				if($search_parent_2 = Category::whereId($search_parent->parent)->first()){
+					if($search_parent_3 = Category::whereId($search_parent->parent_2)->first()){
+						return '/catalog/'. $search_parent_3->url .'/'. $search_parent_2->url .'/' . $search_parent->url .'/'. $this->get_category->first()->url .'/'. $this->url;
+					}else{
+						return '/catalog/'. $search_parent_2->url .'/' . $search_parent->url .'/'. $this->get_category->first()->url .'/'. $this->url;
+					}
+				}else{
+					return '/catalog/' . $search_parent->url .'/'. $this->get_category->first()->url .'/'. $this->url;
+				}
+			}else{
+				return '/catalog/'. $this->get_category->first()->url .'/'. $this->url;
+			}
+		}else{
+			return '/catalog/'. $this->url;
+		}
+	}
+
+	public function getClassElementAttribute()
+	{
+		return 'product';
 	}
 }

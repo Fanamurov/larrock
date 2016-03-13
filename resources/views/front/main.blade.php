@@ -13,6 +13,9 @@
     <link rel="stylesheet" href="{{asset('_assets/_front/_css/min/bootstrap.min.css')}}"/>
     <link rel="stylesheet" href="{{asset('_assets/_front/_css/min/front.min.css')}}"/>
     <link rel="stylesheet" href="/_assets/bower_components/selectize/dist/css/selectize.bootstrap3.css"/>
+    <link rel="stylesheet" href="/_assets/bower_components/fancybox/source/jquery.fancybox.css"/>
+    <link rel="stylesheet" href="/_assets/bower_components/fancybox/source/helpers/jquery.fancybox-buttons.css"/>
+    <link rel="stylesheet" href="/_assets/bower_components/fancybox/source/helpers/jquery.fancybox-thumbs.css"/>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,400italic,500,500italic,600,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
     @yield('styles')
     <!--[if lt IE 9]>
@@ -67,8 +70,8 @@
         </div>
         <section id="right_colomn" class="col-xs-7">
             <div class="col-xs-19 col-xs-offset-2">
-                @yield('rightColomn', 'RIGHT COLOMN test content with float width a b RIGHT COLOMN test content with float width')
                 @yield('front.modules.list.catalog')
+                @yield('rightColomn')
             </div>
         </section>
     </section>

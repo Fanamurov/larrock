@@ -45,7 +45,7 @@ class AdminCatalogController extends Controller
 	public function index()
 	{
 		$data['app'] = $this->config;
-		$data['data'] = Category::type('catalog')->level(1)->orderBy('position', 'DESC')->with('get_tovars')->with('get_child')->with('get_parent')->get();
+		$data['data'] = Category::type('catalog')->level(1)->orderBy('position', 'DESC')->with(['get_tovars.get_category', 'get_child', 'get_parent'])->get();
 		View::share('validator', '');
 		return view('admin.catalog.index', $data);
 	}
@@ -54,41 +54,20 @@ class AdminCatalogController extends Controller
 	 * Show the form for creating a new resource.
 	 *
 	 * @param \App\Helpers\ContentPlugins $ContentPlugins
+	 * @param Request                     $request
+	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function create(ContentPlugins $ContentPlugins)
+	public function create(ContentPlugins $ContentPlugins, Request $request)
 	{
-		$data['data'] = new Catalog();
-		$data['app'] = $this->config;
-		$data['app'] = $ContentPlugins->attach_rows($this->config);
-		$data['data']->get_category = Category::find(\Input::get('category'));
-		$data['id'] = DB::table($this->config['table_content'])->max('id') + 1;
-		$data = Component::tabbable($data);
-
-		Breadcrumbs::register('admin.catalog.create', function($breadcrumbs, $data)
-		{
-			$breadcrumbs->parent('admin.catalog.index');
-			if($find_parent = Category::find($data->get_category->id)){
-				if($find_parent_2 = Category::find($find_parent->parent)){
-					$find_parent_3 = Category::find($find_parent_2->parent);
-				}
-			}
-
-			if(isset($find_parent_3->title)){
-				$breadcrumbs->push($find_parent_3->title, route('admin.catalog.show', $find_parent_3->id));
-			}
-			if(isset($find_parent_2->title)){
-				$breadcrumbs->push($find_parent_2->title, route('admin.catalog.show', $find_parent_2->id));
-			}
-			if(isset($find_parent->title)){
-				$breadcrumbs->push($find_parent->title, route('admin.catalog.show', $find_parent->id));
-			}
-			$breadcrumbs->push('Новый товар');
-		});
-
-		$validator = JsValidator::make(Component::_valid_construct($this->config['rows']));
-		View::share('validator', $validator);
-		return view('admin.catalog.create', $data);
+		$create_data = Request::create('/admin/catalog', 'POST', [
+			'title' => 'Новый материал',
+			'url' => str_slug('Новый материал'),
+			'what' => 'руб./шт.',
+			'category' => [$request->get('category')],
+			'active' => 0
+		]);
+		return $this->store($create_data, $ContentPlugins);
 	}
 
 	/**
@@ -136,7 +115,7 @@ class AdminCatalogController extends Controller
 	public function show($id)
 	{
 		$data['app'] = $this->config;
-		$data['data'] = Category::whereId($id)->with('get_tovars')->with('get_child')->with('get_parent')->first();
+		$data['data'] = Category::whereId($id)->with(['get_tovars.get_category', 'get_child', 'get_parent'])->first();
 		View::share('validator', '');
 
 		Breadcrumbs::register('admin.catalog.category', function($breadcrumbs, $data)
@@ -219,11 +198,16 @@ class AdminCatalogController extends Controller
 		}
 
 		$data = Catalog::find($id);
+
+		//Открепляем от старых разделов
+		foreach($data->get_category()->get() as $category){
+			$data->get_category()->detach($category);
+		}
+
 		if($data->fill($request->all())->save()){
 			//Присоединяем разделы
 			foreach($request->input('category') as $category){
-				$data->get_category()->detach($category, ['catalog_id' => $data->id]);
-				$data->get_category()->attach($category, ['catalog_id' => $data->id]);
+				$data->get_category()->attach($category);
 			}
 			Alert::add('success', 'Материал '. $request->input('title') .' изменен')->flash();
 			$plugins->update($this->config['plugins_backend']);

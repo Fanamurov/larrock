@@ -93,14 +93,24 @@ class Category extends Model implements HasMediaConversions
 		return $this->belongsToMany('App\Models\Catalog', 'category_catalog', 'category_id', 'catalog_id');
 	}
 
+	public function get_tovarsActive()
+	{
+		return $this->belongsToMany('App\Models\Catalog', 'category_catalog', 'category_id', 'catalog_id')->whereActive(1);
+	}
+
 	public function get_tovarsAlias()
 	{
-		return $this->belongsToMany('App\Models\Catalog', 'category_catalog', 'category_id', 'catalog_id');
+		return $this->belongsToMany('App\Models\Catalog', 'category_catalog', 'category_id', 'catalog_id')->whereActive(1);
 	}
 
 	public function get_child()
 	{
 		return $this->hasMany('App\Models\Category', 'parent', 'id')->orderBy('position', 'DESC');
+	}
+
+	public function get_childActive()
+	{
+		return $this->hasMany('App\Models\Category', 'parent', 'id')->whereActive(1)->orderBy('position', 'DESC');
 	}
 
 	public function get_parent()

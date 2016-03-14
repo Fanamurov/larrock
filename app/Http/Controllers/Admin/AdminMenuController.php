@@ -98,8 +98,6 @@ class AdminMenuController extends Controller
         $data->active = $request->input('active', 1);
         $data->position = $request->input('position', 0);
 
-        dd($data);
-
         if($data->save()){
             Alert::add('success', 'Пункт меню '. $request->input('title') .' добавлен')->flash();
             \Input::input('connect_id', $data->id);

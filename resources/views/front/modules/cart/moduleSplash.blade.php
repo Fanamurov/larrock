@@ -7,6 +7,4 @@
                 Товаров на сумму <span class="total_cart">{!! Cart::total() !!}</span> р.</a></p>
     @endif
 </div>
-
-
 @include('front.modals.addToCart')

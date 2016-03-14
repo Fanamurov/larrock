@@ -5,8 +5,8 @@
                 <i class="icon-padding icon-color glyphicon glyphicon-file"></i> {{ $data_value->title }}</a>
         </td>
         <td>
-            <a href="/catalog/{{ $data_value->url }}">
-                /catalog/{{ $data_value->url }}
+            <a href="/catalog/{{ $data_value->get_category->first()->url }}/{{ $data_value->url }}">
+                /catalog/{{ $data_value->get_category->first()->url }}/{{ $data_value->url }}
             </a>
         </td>
         <td class="row-position">
@@ -17,11 +17,11 @@
         <td class="row-active">
             <div class="btn-group pull-right btn-group_switch_ajax" role="group">
                 <button type="button" class="btn btn-xs btn-info @if($data_value->active === 0) btn-outline @endif"
-                        data-row_where="id" data-value_where="{{ $data_value->id }}" data-table="category"
+                        data-row_where="id" data-value_where="{{ $data_value->id }}" data-table="catalog"
                         data-row="active" data-value="1"
                         data-toggle="tooltip" data-placement="bottom" title="Включить">on</button>
                 <button type="button" class="btn btn-xs btn-danger @if($data_value->active === 1) btn-outline @endif"
-                        data-row_where="id" data-value_where="{{ $data_value->id }}" data-table="category"
+                        data-row_where="id" data-value_where="{{ $data_value->id }}" data-table="catalog"
                         data-row="active" data-value="0"
                         data-toggle="tooltip" data-placement="bottom" title="Выключить">off</button>
             </div>

@@ -5,6 +5,10 @@ $(document).ready(function(){
         }
     });
 
+    $('button[type=submit]').click(function(){
+        notify_show('message', 'Выполняется...');
+    });
+
     var editor_height = 300;
     tinymce.init({
         selector: "textarea:not(.not-editor)",
@@ -229,7 +233,7 @@ $(document).ready(function(){
         if(url_input !== undefined){
             if(url_input.length < 1 || url_input === 'novyy-material'){
                 var table = $(this).attr('data-table');
-                change_url(title, table, form);
+                change_url_title(title, table, form);
             }
         }
     });
@@ -238,7 +242,7 @@ $(document).ready(function(){
         var title = input.val();
         var form = $(this).closest('form');
         var table = input.attr('data-table');
-        change_url(title, table, form);
+        change_url_title(title, table, form);
     });
 
     /**
@@ -414,7 +418,7 @@ function clear_cache() {
  * string @param table  Имя таблицы для проверки уникальности url (опционально, можно передать пустое значение)
  * string @param form   Форма в которой проводятся операции
  */
-function change_url(title, table, form){
+function change_url_title(title, table, form){
     $.ajax({
         type: "POST",
         data: { text: title, table: table},
@@ -422,8 +426,10 @@ function change_url(title, table, form){
         url: "/admin/ajax/Translit",
         success: function (data) {
             var url_input = $(form).find('input[name=url]');
+            var active_input = $(form).find('input[name=active]');
             if (data.message) {
                 url_input.val(data.message);
+                active_input.attr('checked', 'checked');
                 notify_show('info', 'Материалу будет присвоен url: '+data.message);
             }
         }

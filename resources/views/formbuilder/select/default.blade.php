@@ -3,10 +3,7 @@
     {{ $data->$row_key }}
     <select name="{{ $row_key }}" class="form-control" id="{{ $row_key }}">
         @foreach($row_settings['options'] as $options_key => $options_value)
-            <option value="{{ $options_key }}"
-                    @if(Input::old($row_key, $data->$row_key) === $options_key) selected @endif>
-                {{ $options_value }}
-            </option>
+            <option value="{{ $options_key }}" @if(Input::old($row_key, $data->$row_key) === $options_key) selected @endif>{{ $options_value }}</option>
         @endforeach
     </select>
     @if(array_key_exists('help', $row_settings))

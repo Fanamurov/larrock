@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Modules\ListCatalog;
 use App\Models\Catalog;
 use App\Models\Category;
+use App\Models\Menu;
 use Breadcrumbs;
 use Cookie;
 use Illuminate\Http\Request;
@@ -27,6 +28,7 @@ class CatalogController extends Controller
 		{
 			$breadcrumbs->push('Каталог', route('catalog.index'));
 		});
+		\View::share('menu', Menu::whereActive(1)->get());
 	}
 
     public function getMainCategory()
@@ -54,8 +56,8 @@ class CatalogController extends Controller
 			}
 		}
 
-		$data['data'] = Category::whereType('catalog')->whereUrl($select_category)->with([
-				'get_child' => function($query){
+		$data['data'] = Category::whereType('catalog')->whereActive(1)->whereUrl($select_category)->with([
+				'get_childActive' => function($query){
 					$query->with('get_parent');
 				}
 			]
@@ -104,8 +106,8 @@ class CatalogController extends Controller
 		//echo Cookie::get('sort_cost');
 
 		//Основной запрос для вывода
-		$data['data'] = Category::whereUrl($category)->with(
-			['get_tovars' => function($query) use ($paginate){
+		$data['data'] = Category::whereUrl($category)->whereActive(1)->with(
+			['get_tovarsActive' => function($query) use ($paginate){
 				//TODO: сортировки и фильтры
 				if(Cookie::get('sort_cost') === 'asc'){
 					$query->orderBy('cost', 'asc')->paginate($paginate);
@@ -143,7 +145,7 @@ class CatalogController extends Controller
 		if(Cookie::get('vid') === 'table'){
 			return view('front.catalog.items-table', $data);
 		}else{
-			return view('front.catalog.items-4-3', $data);
+			return view('front.catalog.items-2', $data);
 		}
 	}
 
@@ -192,7 +194,7 @@ class CatalogController extends Controller
 			return \Response::json(array(), 400);
 		}
 
-		$search = Catalog::search($query)->with(['get_category'])->get()->toArray();
+		$search = Catalog::search($query)->with(['get_category'])->whereActive(1)->get()->toArray();
 		return \Response::json($search);
 	}
 
@@ -203,7 +205,7 @@ class CatalogController extends Controller
 			return \Response::json(array(), 400);
 		}
 
-		$search = Catalog::search($query)->get()->toArray();
+		$search = Catalog::search($query)->whereActive(1)->get()->toArray();
 		return \Response::json($search);
 	}
 }

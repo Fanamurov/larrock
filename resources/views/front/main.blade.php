@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="/_assets/bower_components/fancybox/source/helpers/jquery.fancybox-buttons.css"/>
     <link rel="stylesheet" href="/_assets/bower_components/fancybox/source/helpers/jquery.fancybox-thumbs.css"/>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,400italic,500,500italic,600,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Lobster&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
     @yield('styles')
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -31,22 +33,16 @@
 <body>
 <div class="container container-body">
     <header class="row">
-        <div class="col-xs-16">
-            <div class="col-xs-22 col-xs-offset-1">
-                @if(isset($header_email))
-                    <div class="block-headerEmail">
-                        {!! $header_email->description !!}
-                    </div>
-                @endif
-                @if(isset($header_slogan))
-                    <div class="block-headerSlogan">
-                        {!! $header_slogan->description !!}
-                    </div>
-                @endif
-                <div class="block-headerCart">
-                    @include('front.modules.cart.moduleSplash')
-                </div>
+        <div class="col-xs-24">
+            <div class="block-header-left">
+                <a href="mailto:stormelectric@mail.ru">stormelectric@mail.ru</a></p>
             </div>
+            <div class="block-header-right">
+                <a href="tel:8 (4212) 93-25-49">8 (4212) 93-25-49</a></p>
+            </div>
+        </div>
+        <div class="col-xs-24 div-menu">
+            @include('front.modules.menu.top', $menu)
         </div>
     </header>
 
@@ -75,9 +71,9 @@
             <div class="col-xs-22 col-xs-offset-1">
                 @yield('footer')
                 <address class="footer-left-text">
-                    <p>Раболовецкий колхоз «Витязь»<br>680009, Хабаровский край, г. Хабаровск,
-                        <br/>ул. Промышленная, 12г, оф. 10<br>Тел: 8 (4212) 93-25-49</p>
-                    <p><a href="mailto:STORMELECTRIC@MAIL.RU">STORMELECTRIC@MAIL.RU</a></p>
+                    <p><strong>Рыболовецкий колхоз «Витязь»</strong><br>680009, Хабаровский край, г. Хабаровск,
+                        <br/>ул. Промышленная, 12г, оф. 10<br>Тел: 8 (4212) 93-25-49<br/>
+                        <a href="mailto:stormelectric@mail.ru">stormelectric@mail.ru</a></p>
                 </address>
             </div>
         </div>

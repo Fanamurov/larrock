@@ -1,8 +1,30 @@
 header{
-  background: url("/_assets/_front/_images/bg/bg_header.png") no-repeat left top transparent;
+  background: url("/_assets/_front/_images/bg/bg_header.png") no-repeat center top transparent;
   height: 268px;
   padding: 0 18px;
   position: relative;
+
+  .block-header-left{
+	position: absolute;
+	left: 250px;
+	top: 152px;
+	a{
+	  font-family: 'Open Sans Condensed', sans-serif;
+	  font-size: 27px;
+	  color: black;
+	}
+  }
+  .block-header-right{
+	position: absolute;
+	right: 250px;
+	top: 152px;
+	a{
+	  font-family: 'Open Sans Condensed', sans-serif;
+	  font-size: 27px;
+	  text-decoration: none;
+	  color: black;
+	}
+  }
 
   .block-headerEmail{
 	position: absolute;
@@ -30,6 +52,41 @@ header{
 	}
 	.input-group-btn{
 	  left: 5px;
+	}
+  }
+  .div-menu{
+	margin-top: 225px;
+	text-align: center;
+	color: white;
+	font-size: 19px;
+	a{
+	  color: white;
+	  display: inline-block;
+	  &:hover,
+	  &:focus{
+		font-weight: 600;
+		transition: all .2s linear;
+	  }
+	}
+	ul{
+	  margin-bottom: 0;
+	  li{
+		padding: 9px 20px 9px;
+		&.active{
+		  font-weight: 600;
+		  a{
+			text-decoration: none;
+		  }
+		}
+	  }
+	}
+	.moduleCart-menu{
+	  border-left: 2px solid white;
+	  padding-left: 27px;
+	  img{
+		margin-top: -5px;
+		padding-right: 2px;
+	  }
 	}
   }
 }

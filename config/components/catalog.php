@@ -25,7 +25,7 @@ return [
 			'title' => 'Короткое описание',
 			'type' => 'textarea',
 			'tab' => ['main' => 'Описание товара'],
-			'css_class' => 'not-editor'
+			//'css_class' => 'not-editor'
 		],
 		'description' => [
 			'title' => 'Полное описание',
@@ -69,13 +69,13 @@ return [
 			'tab' => ['other' => 'Дополнительные поля'],
 			'valid' => 'max:255'
 		],
-		'nalichie' => [
+		/*'nalichie' => [
 			'title' => 'В наличии',
 			'type' => 'text',
 			'tab' => ['other' => 'Дополнительные поля'],
 			'valid' => 'required|integer',
 			'default' => 999999
-		],
+		],*/
 		'position' => [
 			'title' => 'Вес материала',
 			'type' => 'text',

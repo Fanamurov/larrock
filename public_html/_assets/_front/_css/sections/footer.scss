@@ -16,15 +16,19 @@ footer{
   }
   .footer-copyright{
 	position: absolute;
-	bottom: 20px;
-	right: 5%;
+	top: 210px;
+	right: 255px;
+	a{
+	  color: black;
+	  font-size: 12px;
+	}
   }
   .footer-left-text{
-	line-height: 37px;
+	line-height: 41px;
 	font-size: 21px;
 	z-index: 7;
 	position: relative;
-	top: 35px;
+	top: 3px;
 	left: 0;
 	width: 600px;
   }

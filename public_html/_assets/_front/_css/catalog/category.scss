@@ -32,6 +32,9 @@
 
 .catalogPageCategory-2{
   margin-left: -5.333333%;
+  .catalogBlockCategory{
+	padding-bottom: 10px;
+  }
   img.categoryImage{
 	width: 100%;
 	max-width: 100%;
@@ -40,7 +43,10 @@
   }
   h3{
 	a{
-	  color: #0582c2;
+	  color: #afa687;
+	  font-family: 'Lobster', cursive;
+	  font-size: 30px;
+	  font-weight: 500;
 	}
   }
 }

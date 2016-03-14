@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Helpers\ContentPlugins;
 use App\Models\Blocks;
+use App\Models\Catalog;
 use App\Models\Category;
 use App\Models\Page;
 use EMT\EMTypograph;
@@ -77,6 +78,11 @@ class AdminAjax extends Controller
 					//Сохраняем фото под именем имямодели-idмодели-транслит(название картинки)
 					$content->addMedia(public_path() .'/image_cache/'. $image_name)->toMediaLibrary('images');
 				}
+				elseif($model === 'Catalog'){
+					$content = Catalog::find($model_id);
+					//Сохраняем фото под именем имямодели-idмодели-транслит(название картинки)
+					$content->addMedia(public_path() .'/image_cache/'. $image_name)->toMediaLibrary('images');
+				}
 				elseif($model === 'Blocks'){
 					$content = Blocks::find($model_id);
 					//Сохраняем фото под именем имямодели-idмодели-транслит(название картинки)
@@ -130,6 +136,10 @@ class AdminAjax extends Controller
                 $content = Blocks::whereId(Input::get('model_id'))->first();
                 return view('admin.plugins.getUploadedImages', ['data' => $content->getMedia('images')]);
             }
+			if($model === 'Catalog'){
+				$content = Catalog::whereId(Input::get('model_id'))->first();
+				return view('admin.plugins.getUploadedImages', ['data' => $content->getMedia('images')]);
+			}
 			if($model === 'Category'){
 				$content = Category::whereId(Input::get('model_id'))->first();
 				return view('admin.plugins.getUploadedImages', ['data' => $content->getMedia('images')]);
@@ -154,6 +164,10 @@ class AdminAjax extends Controller
 			Category::find(Input::get('model_id'))->deleteMedia(Input::get('id'));
 			return response()->json(['status' => 'success', 'message' => 'Файл удален']);
 		}
+		if(Input::get('model') === 'Catalog'){
+			Catalog::find(Input::get('model_id'))->deleteMedia(Input::get('id'));
+			return response()->json(['status' => 'success', 'message' => 'Файл удален']);
+		}
 		return response()->json(['status' => 'error', 'message' => 'Model_Type '. Input::get('model') .' не известна'], 300);
 	}
 
@@ -173,6 +187,10 @@ class AdminAjax extends Controller
 			}
 			if($model === 'Category'){
 				$content = Category::whereId(Input::get('model_id'))->first();
+				return view('admin.plugins.getUploadedFiles', ['data' => $content->getMedia('files')]);
+			}
+			if($model === 'Catalog'){
+				$content = Catalog::whereId(Input::get('model_id'))->first();
 				return view('admin.plugins.getUploadedFiles', ['data' => $content->getMedia('files')]);
 			}
 			return response()->json(['status' => 'error', 'message' => 'Model_Type '. $model .' не известна'], 300);
@@ -201,6 +219,10 @@ class AdminAjax extends Controller
 					$content = Category::find($model_id);
 					$content->addMedia(public_path() .'/media/'. $file_name)->toMediaLibrary('files');
 				}
+				elseif($model === 'Catalog'){
+					$content = Catalog::find($model_id);
+					$content->addMedia(public_path() .'/media/'. $file_name)->toMediaLibrary('files');
+				}
 				elseif($model === 'Blocks'){
 					$content = Blocks::find($model_id);
 					$content->addMedia(public_path() .'/media/'. $file_name)->toMediaLibrary('files');
@@ -227,6 +249,10 @@ class AdminAjax extends Controller
 		}
 		if(Input::get('model') === 'Category'){
 			Category::find(Input::get('model_id'))->deleteMedia(Input::get('id'));
+			return response()->json(['status' => 'success', 'message' => 'Файл удален']);
+		}
+		if(Input::get('model') === 'Catalog'){
+			Catalog::find(Input::get('model_id'))->deleteMedia(Input::get('id'));
 			return response()->json(['status' => 'success', 'message' => 'Файл удален']);
 		}
 		return response()->json(['status' => 'error', 'message' => 'Model_Type '. Input::get('model') .' не известна'], 300);

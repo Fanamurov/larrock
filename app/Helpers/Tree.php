@@ -2,6 +2,8 @@
 
 namespace App\Helpers;
 
+use Illuminate\Support\Arr;
+
 class Tree{
 	/**
 	 * Построение дерева объектов по определенному полю(по-умолчанию parent)
@@ -17,7 +19,7 @@ class Tree{
 		foreach ($data as $a){
 			$new[$a->$row_level][] = $a;
 		}
-		return $this->createTree($new, $new[0]);
+		return $this->createTree($new, Arr::get($new, 0, []));
 	}
 
 	/**

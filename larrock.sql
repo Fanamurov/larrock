@@ -46,6 +46,45 @@ INSERT INTO `apps` (`id`, `title`, `name`, `description`, `table_content`, `rows
 (5,	'Меню сайта',	'menu',	'',	'menu',	'a:8:{s:5:\"title\";a:5:{s:5:\"title\";s:29:\"Название пункта\";s:14:\"in_table_admin\";s:4:\"TRUE\";s:4:\"type\";s:4:\"text\";s:5:\"valid\";s:16:\"max:255|required\";s:4:\"typo\";s:4:\"true\";}s:8:\"category\";a:3:{s:5:\"title\";s:15:\"Вид меню\";s:4:\"type\";s:6:\"select\";s:7:\"default\";s:3:\"top\";}s:4:\"type\";a:2:{s:5:\"title\";s:6:\"Тип\";s:4:\"type\";s:4:\"text\";}s:6:\"parent\";a:4:{s:5:\"title\";s:16:\"Родитель\";s:4:\"type\";s:10:\"select_row\";s:7:\"default\";s:36:\"Это главный уровень\";s:15:\"options_connect\";a:2:{s:3:\"row\";s:5:\"title\";s:5:\"table\";s:4:\"menu\";}}s:7:\"connect\";a:2:{s:5:\"title\";s:10:\"Связь\";s:4:\"type\";s:4:\"text\";}s:3:\"url\";a:4:{s:5:\"title\";s:16:\"URL пункта\";s:14:\"in_table_admin\";s:4:\"TRUE\";s:4:\"type\";s:4:\"text\";s:5:\"valid\";s:16:\"max:155|required\";}s:8:\"position\";a:4:{s:5:\"title\";s:6:\"Вес\";s:4:\"type\";s:4:\"text\";s:5:\"valid\";s:7:\"integer\";s:7:\"default\";i:0;}s:6:\"active\";a:5:{s:5:\"title\";s:22:\"Опубликован\";s:4:\"type\";s:8:\"checkbox\";s:7:\"checked\";s:4:\"TRUE\";s:5:\"valid\";s:13:\"integer|max:1\";s:7:\"default\";i:1;}}',	'a:0:{}',	'a:0:{}',	'a:0:{}',	'',	1,	10,	1,	'2015-12-05 14:58:18',	'2015-12-08 04:04:46'),
 (6,	'Ленты',	'feed',	'Страницы с привязкой к определенным разделам',	'feed',	'a:7:{s:5:\"title\";a:6:{s:5:\"title\";s:18:\"Заголовок\";s:14:\"in_table_admin\";s:4:\"TRUE\";s:4:\"type\";s:4:\"text\";s:3:\"tab\";a:1:{s:4:\"main\";s:36:\"Заголовок, описание\";}s:5:\"valid\";s:16:\"max:255|required\";s:4:\"typo\";s:4:\"true\";}s:8:\"category\";a:5:{s:5:\"title\";s:12:\"Раздел\";s:4:\"type\";s:10:\"select_row\";s:3:\"tab\";a:1:{s:4:\"main\";s:36:\"Заголовок, описание\";}s:5:\"valid\";s:16:\"max:255|required\";s:15:\"options_connect\";a:2:{s:3:\"row\";s:5:\"title\";s:5:\"table\";s:8:\"category\";}}s:11:\"description\";a:3:{s:5:\"title\";s:25:\"Текст новости\";s:4:\"type\";s:8:\"textarea\";s:3:\"tab\";a:1:{s:4:\"main\";s:36:\"Заголовок, описание\";}}s:3:\"url\";a:4:{s:5:\"title\";s:22:\"URL материала\";s:4:\"type\";s:4:\"text\";s:3:\"tab\";a:1:{s:3:\"seo\";s:3:\"Seo\";}s:5:\"valid\";s:16:\"max:155|required\";}s:4:\"date\";a:4:{s:5:\"title\";s:27:\"Дата материала\";s:4:\"type\";s:4:\"date\";s:3:\"tab\";a:1:{s:5:\"other\";s:38:\"Дата, вес, активность\";}s:5:\"valid\";s:17:\"date_format:Y-m-d\";}s:8:\"position\";a:5:{s:5:\"title\";s:25:\"Вес материала\";s:4:\"type\";s:4:\"text\";s:3:\"tab\";a:1:{s:5:\"other\";s:38:\"Дата, вес, активность\";}s:5:\"valid\";s:7:\"integer\";s:7:\"default\";i:0;}s:6:\"active\";a:6:{s:5:\"title\";s:22:\"Опубликован\";s:4:\"type\";s:8:\"checkbox\";s:7:\"checked\";s:4:\"TRUE\";s:3:\"tab\";a:1:{s:5:\"other\";s:38:\"Дата, вес, активность\";}s:5:\"valid\";s:13:\"integer|max:1\";s:7:\"default\";i:1;}}',	's:0:\"\";',	'a:4:{i:0;s:3:\"seo\";i:1;s:6:\"images\";i:2;s:5:\"files\";i:3;s:9:\"templates\";}',	's:0:\"\";',	'feed',	1,	3,	1,	'2015-12-08 05:33:40',	'2015-12-16 07:41:18');
 
+DROP TABLE IF EXISTS `blocks`;
+CREATE TABLE `blocks` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `description` text COLLATE utf8_unicode_ci NOT NULL,
+  `url` varchar(155) COLLATE utf8_unicode_ci NOT NULL,
+  `position` int(11) NOT NULL DEFAULT '0',
+  `active` int(11) NOT NULL DEFAULT '1',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `blocks_url_unique` (`url`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `blocks` (`id`, `title`, `description`, `url`, `position`, `active`, `created_at`, `updated_at`) VALUES
+(1,	'header-email',	'<p><a href=\"mailto:pshabar@mail.ru\">pshabar@mail.ru</a></p>',	'header-email',	0,	1,	'2016-01-21 05:45:22',	'2016-01-21 05:45:22'),
+(2,	'header-slogan',	'<p>Огнетушители и пожарное оборудование</p>',	'header-slogan',	0,	1,	'2016-01-21 07:08:15',	'2016-01-21 07:08:15');
+
+DROP TABLE IF EXISTS `cart`;
+CREATE TABLE `cart` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) NOT NULL,
+  `user` int(11) NOT NULL,
+  `items` text COLLATE utf8_unicode_ci NOT NULL,
+  `cost` double(10,2) NOT NULL DEFAULT '0.00',
+  `cost_discount` double(10,2) DEFAULT NULL,
+  `kupon` char(255) COLLATE utf8_unicode_ci NOT NULL,
+  `status_order` char(255) COLLATE utf8_unicode_ci NOT NULL,
+  `status_pay` char(255) COLLATE utf8_unicode_ci NOT NULL,
+  `method_pay` char(255) COLLATE utf8_unicode_ci NOT NULL,
+  `method_delivery` char(255) COLLATE utf8_unicode_ci NOT NULL,
+  `comment` text COLLATE utf8_unicode_ci NOT NULL,
+  `position` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
 DROP TABLE IF EXISTS `catalog`;
 CREATE TABLE `catalog` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -68,7 +107,7 @@ CREATE TABLE `catalog` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `catalog` (`id`, `title`, `short`, `description`, `url`, `what`, `cost`, `cost_old`, `manufacture`, `position`, `articul`, `active`, `nalichie`, `created_at`, `updated_at`) VALUES
-(96,	'Кружка',	'',	'Кружка керамическая для сублимации, белая, размер 95х80 мм',	'kruzhka-273',	'р./шт.',	400.00,	NULL,	'',	0,	'AR',	1,	0,	'2016-01-15 07:35:51',	'2016-01-15 07:35:51'),
+(96,	'Кружка',	'        Кружка керамическая для сублимации, белая, размер 95х80 мм\r\n    ',	'<p>Кружка керамическая для сублимации, белая, размер 95х80 мм</p>',	'kruzhka-273',	'\r\n                        р./шт.\r\n            ',	400.00,	0.00,	'',	0,	'AR',	1,	0,	'2016-02-04 03:07:14',	'2016-02-04 03:07:14'),
 (97,	'Кружка с окантовкой',	'',	'Кружка керамическая для сублимации, белая с розовой окантовкой, размер 95х80 мм',	'kruzhka-s-okantovkoy-273-96',	'р./шт.',	450.00,	NULL,	'',	0,	'AR',	1,	0,	'2016-01-15 07:35:51',	'2016-01-15 07:35:51'),
 (98,	'Кружка с окантовкой',	'',	'Кружка керамическая для сублимации, белая с голубой окантовкой, размер 95х80 мм',	'kruzhka-s-okantovkoy-273-97',	'р./шт.',	450.00,	NULL,	'',	0,	'AR',	1,	0,	'2016-01-15 07:35:51',	'2016-01-15 07:35:51'),
 (99,	'Кружка с окантовкой',	'',	'Кружка керамическая для сублимации, белая с фиолетовой окантовкой, размер 95х80 мм',	'kruzhka-s-okantovkoy-273-98',	'р./шт.',	450.00,	NULL,	'',	0,	'AR',	1,	0,	'2016-01-15 07:35:51',	'2016-01-15 07:35:51'),
@@ -168,7 +207,6 @@ CREATE TABLE `category_catalog` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `category_catalog` (`category_id`, `catalog_id`, `created_at`, `updated_at`) VALUES
-(273,	96,	'2016-01-15 07:35:51',	'0000-00-00 00:00:00'),
 (273,	97,	'2016-01-15 07:35:51',	'0000-00-00 00:00:00'),
 (273,	98,	'2016-01-15 07:35:51',	'0000-00-00 00:00:00'),
 (273,	99,	'2016-01-15 07:35:51',	'0000-00-00 00:00:00'),
@@ -209,7 +247,8 @@ INSERT INTO `category_catalog` (`category_id`, `catalog_id`, `created_at`, `upda
 (293,	134,	'2016-01-15 07:35:51',	'0000-00-00 00:00:00'),
 (293,	135,	'2016-01-15 07:35:51',	'0000-00-00 00:00:00'),
 (293,	136,	'2016-01-15 07:35:51',	'0000-00-00 00:00:00'),
-(293,	137,	'2016-01-15 07:35:51',	'0000-00-00 00:00:00');
+(293,	137,	'2016-01-15 07:35:51',	'0000-00-00 00:00:00'),
+(273,	96,	'2016-02-04 03:07:14',	'0000-00-00 00:00:00');
 
 DROP TABLE IF EXISTS `config`;
 CREATE TABLE `config` (
@@ -223,9 +262,10 @@ CREATE TABLE `config` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `config` (`id`, `key`, `value`, `type`, `created_at`, `updated_at`) VALUES
-(1,	'catalog',	'a:2:{s:14:\"image_original\";s:7:\"800-800\";s:14:\"image_generate\";a:2:{i:0;s:7:\"260-120\";i:1;s:7:\"600-600\";}}',	'image_presets',	'2016-01-11 07:21:09',	'2016-01-12 02:06:36'),
+(1,	'catalog',	'a:2:{s:14:\"image_original\";s:7:\"800-800\";s:14:\"image_generate\";a:1:{i:0;s:7:\"140-140\";}}',	'image_presets',	'2016-01-11 07:21:09',	'2016-02-04 02:33:12'),
 (2,	'page',	'a:2:{s:14:\"image_original\";s:0:\"\";s:14:\"image_generate\";a:2:{i:0;s:7:\"100-200\";i:1;s:7:\"300-540\";}}',	'image_presets',	'2016-01-12 04:34:30',	'2016-01-12 04:34:30'),
-(4,	'catalog',	'a:5:{s:12:\"naimenovanie\";a:2:{s:2:\"db\";s:5:\"title\";s:4:\"slug\";s:5:\"title\";}s:8:\"opisanie\";a:2:{s:2:\"db\";s:11:\"description\";s:4:\"slug\";s:5:\"short\";}s:5:\"tsena\";a:2:{s:2:\"db\";s:4:\"cost\";s:4:\"slug\";s:4:\"cost\";}s:19:\"edenitsy_izmereniya\";a:2:{s:2:\"db\";s:4:\"what\";s:4:\"slug\";s:4:\"what\";}s:4:\"foto\";a:2:{s:2:\"db\";s:0:\"\";s:4:\"slug\";s:0:\"\";}}',	'wizard',	'2016-01-13 04:13:59',	'2016-01-13 05:14:21');
+(4,	'catalog',	'a:5:{s:12:\"naimenovanie\";a:2:{s:2:\"db\";s:5:\"title\";s:4:\"slug\";s:5:\"title\";}s:8:\"opisanie\";a:2:{s:2:\"db\";s:5:\"short\";s:4:\"slug\";s:5:\"short\";}s:5:\"tsena\";a:2:{s:2:\"db\";s:4:\"cost\";s:4:\"slug\";s:4:\"cost\";}s:19:\"edenitsy_izmereniya\";a:2:{s:2:\"db\";s:4:\"what\";s:4:\"slug\";s:4:\"what\";}s:4:\"foto\";a:2:{s:2:\"db\";s:0:\"\";s:4:\"slug\";s:0:\"\";}}',	'wizard',	'2016-01-13 04:13:59',	'2016-02-04 03:02:25'),
+(5,	'category',	'a:2:{s:14:\"image_original\";s:0:\"\";s:14:\"image_generate\";a:1:{i:0;s:7:\"140-140\";}}',	'image_presets',	'2016-01-22 06:24:30',	'2016-01-22 06:24:30');
 
 DROP TABLE IF EXISTS `feed`;
 CREATE TABLE `feed` (
@@ -287,7 +327,32 @@ CREATE TABLE `images` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `images` (`id`, `name`, `mime`, `description`, `type_connect`, `id_connect`, `param`, `position`, `created_at`, `updated_at`) VALUES
-(21,	'ek_111.png',	'image/png',	'',	'page',	22,	'',	0,	'2016-01-12 05:11:47',	'2016-01-12 05:12:15');
+(22,	'ognetuh_l1.png',	'image/png',	'',	'category',	272,	'fotosuveniry-1-0',	0,	'2016-01-22 06:24:41',	'2016-01-22 06:24:41'),
+(23,	'ognetuh_l1.png',	'image/png',	'',	'category',	273,	'fotosuveniry-1-0',	0,	'2016-01-22 06:24:41',	'2016-01-22 06:24:41'),
+(25,	'freza.jpg',	'image/jpeg',	'',	'catalog',	96,	'kruzhka-273',	0,	'2016-02-04 02:47:30',	'2016-02-04 02:47:30');
+
+DROP TABLE IF EXISTS `media`;
+CREATE TABLE `media` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `model_id` int(10) unsigned NOT NULL,
+  `model_type` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `collection_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `file_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `disk` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `size` int(10) unsigned NOT NULL,
+  `manipulations` text COLLATE utf8_unicode_ci NOT NULL,
+  `custom_properties` text COLLATE utf8_unicode_ci NOT NULL,
+  `order_column` int(10) unsigned DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `media_model_id_model_type_index` (`model_id`,`model_type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `media` (`id`, `model_id`, `model_type`, `collection_name`, `name`, `file_name`, `disk`, `size`, `manipulations`, `custom_properties`, `order_column`, `created_at`, `updated_at`) VALUES
+(118,	24,	'App\\Models\\Page',	'files',	'Page-24-price-moskowxls',	'Page-24-price-moskowxls.xls',	'media',	106496,	'[]',	'[]',	2,	'2016-02-17 04:51:09',	'2016-02-17 04:51:09'),
+(120,	24,	'App\\Models\\Page',	'images',	'Page-24-gardamuar-minjpg',	'Page-24-gardamuar-minjpg.jpg',	'media',	100055,	'[]',	'[]',	4,	'2016-02-17 04:58:55',	'2016-02-17 04:58:55');
 
 DROP TABLE IF EXISTS `menu`;
 CREATE TABLE `menu` (
@@ -334,7 +399,10 @@ INSERT INTO `migrations` (`migration`, `batch`) VALUES
 ('2015_12_18_151456_create_files_table',	10),
 ('2015_12_22_224121_create_config_table',	11),
 ('2015_12_23_115811_create_catalog_table',	12),
-('2015_12_29_144628_create_category_catalog_table',	12);
+('2015_12_29_144628_create_category_catalog_table',	12),
+('2016_01_19_144649_create_blocks_table',	13),
+('2016_01_19_162530_create_cart_table',	14),
+('2016_02_05_140905_create_media_table',	15);
 
 DROP TABLE IF EXISTS `page`;
 CREATE TABLE `page` (
@@ -352,7 +420,8 @@ CREATE TABLE `page` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `page` (`id`, `title`, `description`, `url`, `date`, `position`, `active`, `created_at`, `updated_at`) VALUES
-(22,	'rwerwe',	'',	'rwerwe',	'2016-01-12',	0,	1,	'2016-01-12 05:12:15',	'2016-01-12 05:12:15');
+(23,	'Пример страницы',	'<p>Текст</p>',	'primer-stranicy',	'2016-02-16',	0,	0,	'2016-02-16 09:00:30',	'2016-02-16 09:01:10'),
+(24,	'Новый материал',	'',	'novyy-material',	'2016-02-16',	0,	0,	'2016-02-16 11:33:44',	'2016-02-16 11:33:44');
 
 DROP TABLE IF EXISTS `persistences`;
 CREATE TABLE `persistences` (
@@ -463,8 +532,20 @@ INSERT INTO `templates` (`id`, `template`, `template_global`, `type_connect`, `i
 (19,	'Template2',	'Template1',	'page',	4,	'2016-01-11 04:25:47',	'2016-01-11 04:25:47'),
 (20,	'Template1',	'Template1',	'page',	5,	'2016-01-11 04:41:24',	'2016-01-11 04:41:24'),
 (21,	'Template1',	'Template1',	'page',	1,	'2016-01-11 04:47:59',	'2016-01-11 04:47:59'),
-(25,	'Template1',	'Template1',	'page',	22,	'2016-01-12 05:12:15',	'2016-01-12 05:12:15'),
-(26,	'',	'',	'',	17,	'2016-01-13 08:16:31',	'2016-01-13 08:16:31');
+(26,	'',	'',	'',	17,	'2016-01-13 08:16:31',	'2016-01-13 08:16:31'),
+(27,	'Template1',	'Template1',	'blocks',	1,	'2016-01-21 05:45:22',	'2016-01-21 05:45:22'),
+(28,	'Template1',	'Template1',	'blocks',	2,	'2016-01-21 07:08:15',	'2016-01-21 07:08:15'),
+(29,	'Template1',	'Template1',	'catalog',	96,	'2016-02-04 02:30:41',	'2016-02-04 02:30:41'),
+(30,	'Template1',	'Template1',	'page',	23,	'2016-02-16 09:01:10',	'2016-02-16 09:01:10'),
+(31,	'',	'',	'',	24,	'2016-02-16 11:33:45',	'2016-02-16 11:33:45'),
+(32,	'',	'',	'',	25,	'2016-02-16 11:43:02',	'2016-02-16 11:43:02'),
+(33,	'',	'',	'',	26,	'2016-02-16 17:22:24',	'2016-02-16 17:22:24'),
+(34,	'',	'',	'',	27,	'2016-02-16 17:25:24',	'2016-02-16 17:25:24'),
+(35,	'',	'',	'',	28,	'2016-02-16 17:26:00',	'2016-02-16 17:26:00'),
+(36,	'',	'',	'',	29,	'2016-02-16 17:26:53',	'2016-02-16 17:26:53'),
+(37,	'',	'',	'',	30,	'2016-02-16 17:32:43',	'2016-02-16 17:32:43'),
+(38,	'',	'',	'',	31,	'2016-02-16 17:42:07',	'2016-02-16 17:42:07'),
+(39,	'Template1',	'Template1',	'page',	31,	'2016-02-17 02:44:25',	'2016-02-17 02:44:25');
 
 DROP TABLE IF EXISTS `throttle`;
 CREATE TABLE `throttle` (
@@ -517,4 +598,4 @@ INSERT INTO `users` (`id`, `email`, `password`, `permissions`, `last_login`, `fi
 (1,	'fanamurov@ya.ru',	'$2y$10$SJzDIVLhyCdzOMxfnqAADOCoyzVgjwjmBlYaVWQlikchTd67mWPRa',	NULL,	'2015-12-25 07:18:00',	'4234',	'',	'2015-11-19 15:41:49',	'2015-12-25 07:18:00'),
 (2,	'4234234@fa.ru',	'$2y$10$7xxex.8N0z6VSgHKACE1/e.RuIUzPN3IDnErUIG5Kiq/Jm1.5/QzG',	NULL,	NULL,	'',	'',	'2015-12-22 09:47:43',	'2015-12-22 09:47:43');
 
--- 2016-01-15 07:53:30
+-- 2016-02-17 07:55:02

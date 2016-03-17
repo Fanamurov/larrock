@@ -28,7 +28,9 @@ class AdminAjax extends Controller
         $table = $request->get('table');
 
 		//Получаем данные до изменения
-		$old_data = DB::table($table)->where($row_where, '=', $value_where)->first([$row]);
+		if( !$old_data = DB::table($table)->where($row_where, '=', $value_where)->first([$row])){
+			return response()->json(['status' => 'error', 'message' => 'Данные не найдены']);
+		}
 
 		if($old_data->$row !== $value){
 			if(DB::table($table)->where($row_where, '=', $value_where)->update([$row => $value])){

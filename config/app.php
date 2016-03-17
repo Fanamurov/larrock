@@ -149,14 +149,15 @@ return [
 
 		App\Providers\FormBuilderServiceProvider::class,
 		App\Providers\ContentPluginsServiceProvider::class,
-		/* Кастомные пути для medialibrary */
-		App\Providers\CustomPathProvider::class,
 
         /* http://image.intervention.io/getting_started/installation */
         Intervention\Image\ImageServiceProvider::class,
 
         /* https://cartalyst.com/manual/sentinel/2.0#installation :: ACL, Oauth, register etc. */
-        Cartalyst\Sentinel\Laravel\SentinelServiceProvider::class,
+        //Cartalyst\Sentinel\Laravel\SentinelServiceProvider::class,
+
+		/* https://github.com/romanbican/roles */
+		Bican\Roles\RolesServiceProvider::class,
 
         /* https://packagist.org/packages/barryvdh/laravel-ide-helper */
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
@@ -198,8 +199,10 @@ return [
 		/* https://github.com/GrahamCampbell/Laravel-Exceptions */
 		GrahamCampbell\Exceptions\ExceptionsServiceProvider::class,
 
-		/* http://medialibrary.spatie.be/v3/installation-and-setup/ */
+		/* https://docs.spatie.be/laravel-medialibrary/v3/ */
 		Spatie\MediaLibrary\MediaLibraryServiceProvider::class,
+		/* Кастомные пути для medialibrary */
+		App\Providers\CustomPathProvider::class,
 
 		/* https://github.com/LaravelRUS/localized-carbon/blob/master/docs/README-ru.md */
 		//Laravelrus\LocalizedCarbon\LocalizedCarbonServiceProvider::class,
@@ -260,9 +263,9 @@ return [
         'Image'     => Intervention\Image\Facades\Image::class,
         'Alert'     => Prologue\Alerts\Facades\Alert::class,
 
-        'Activation' => Cartalyst\Sentinel\Laravel\Facades\Activation::class,
-        'Reminder'   => Cartalyst\Sentinel\Laravel\Facades\Reminder::class,
-        'Sentinel'   => Cartalyst\Sentinel\Laravel\Facades\Sentinel::class,
+        //'Activation' => Cartalyst\Sentinel\Laravel\Facades\Activation::class,
+        //'Reminder'   => Cartalyst\Sentinel\Laravel\Facades\Reminder::class,
+        //'Sentinel'   => Cartalyst\Sentinel\Laravel\Facades\Sentinel::class,
 
         'Debugbar' 		=> Barryvdh\Debugbar\Facade::class,
         'Breadcrumbs' 	=> DaveJamesMiller\Breadcrumbs\Facade::class,

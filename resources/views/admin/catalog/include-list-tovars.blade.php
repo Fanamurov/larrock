@@ -2,7 +2,13 @@
 @foreach($data as $data_value)
     <tr>
         <td><a href="/admin/catalog/{{ $data_value->id }}/edit">
-                <i class="icon-padding icon-color glyphicon glyphicon-file"></i> {{ $data_value->title }}</a>
+                @if($data_value->getFirstMediaUrl('images', '110x110'))
+                    <img src="{{ $data_value->getFirstMediaUrl('images', '110x110') }}">
+                @else
+                    <i class="icon-padding icon-color glyphicon glyphicon-file"></i>
+                @endif
+                {{ $data_value->title }}
+            </a>
         </td>
         <td>
             <a href="/catalog/{{ $data_value->get_category->first()->url }}/{{ $data_value->url }}">
@@ -11,7 +17,7 @@
         </td>
         <td class="row-position">
             <input type="text" name="position" value="{{ $data_value->position }}" class="ajax_edit_row form-control"
-                   data-row_where="id" data-value_where="{{ $data_value->id }}" data-table="category"
+                   data-row_where="id" data-value_where="{{ $data_value->id }}" data-table="catalog"
                    data-toggle="tooltip" data-placement="bottom" title="Вес. Чем больше, тем выше в списках">
         </td>
         <td class="row-active">

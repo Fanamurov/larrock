@@ -11,11 +11,11 @@
 |
 */
 
-Route::get('/', [
+/*Route::get('/', [
 	'as' => 'mainpage', 'uses' => 'CatalogController@getMainCategory'
-]);
+]);*/
 
-Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+//Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
@@ -23,10 +23,20 @@ Route::get('auth/logout', 'Auth\AuthController@getLogout');
 Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
 
-Route::get('/page/{url}', 'PageController@getItem');
+Route::get('/page/{url}', [
+	'as' => 'page', 'uses' => 'PageController@getItem'
+]);
 
-Route::get('/catalog', [
+Route::get('/', [
 	'as' => 'catalog.index', 'uses' => 'CatalogController@getMainCategory'
+]);
+Route::get('/catalog', function()
+{
+	return Redirect::to('/');
+});
+
+Route::get('/catalog/all', [
+	'as' => 'catalog.all', 'uses' => 'CatalogController@getAllTovars'
 ]);
 Route::get('/catalog/{category}', [
 	'as' => 'catalog.category', 'uses' => 'CatalogController@getCategory'
@@ -38,7 +48,7 @@ Route::get('/catalog/{category}/{child}/{grandson}', [
 	'as' => 'catalog.category.grandson', 'uses' => 'CatalogController@getCategory'
 ]);
 Route::get('/catalog/{category}/{child}/{grandson}/{item}', [
-	'as' => 'catalog.category.grandson', 'uses' => 'CatalogController@getItem'
+	'as' => 'catalog.category.grandson.item', 'uses' => 'CatalogController@getItem'
 ]);
 
 Route::get('/search/catalog', [
@@ -75,13 +85,30 @@ Route::get('/cart', [
 	'as' => 'cart.index', 'uses' => 'CartController@getIndex'
 ]);
 
+//Forms
+Route::post('/forms/contact', [
+	'as' => 'submit.contacts', 'uses' => 'Modules\Forms@send_form'
+]);
 
-Route::get('admin/auth', 'Admin\AdminAuthController@getLogin');
-Route::get('admin/auth/login', 'Admin\AdminAuthController@getLogin');
-Route::post('admin/auth/login', 'Admin\AdminAuthController@postLogin');
-Route::get('admin/auth/logout', 'Admin\AdminAuthController@getLogout');
 
-Route::group(['prefix' => 'admin', 'middleware'=>'AuthAdmin'], function(){
+// Authentication routes...
+Route::get('auth/login', 'Auth\AuthController@getLogin');
+Route::post('auth/login', 'Auth\AuthController@postLogin');
+Route::get('auth/logout', 'Auth\AuthController@getLogout');
+
+// Registration routes...
+Route::get('auth/register', 'Auth\AuthController@getRegister');
+Route::post('auth/register', 'Auth\AuthController@postRegister');
+
+// Password reset link request routes...
+Route::get('password/email', 'Auth\PasswordController@getEmail');
+Route::post('password/email', 'Auth\PasswordController@postEmail');
+
+// Password reset routes...
+Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
+Route::post('password/reset', 'Auth\PasswordController@postReset');
+
+Route::group(['prefix' => 'admin', 'middleware'=>'level:2'], function(){
 	Route::resource('users', 'Admin\AdminUsersController');
 	Route::resource('roles', 'Admin\AdminRolesController');
 	Route::resource('page', 'Admin\AdminPageController');

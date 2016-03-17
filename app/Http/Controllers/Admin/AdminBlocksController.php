@@ -53,8 +53,8 @@ class AdminBlocksController extends Controller
 	public function create(ContentPlugins $ContentPlugins)
 	{
         $test = Request::create('/admin/blocks', 'POST', [
-            'title' => 'Черновик блока',
-            'url' => str_slug('Черновик блока'),
+            'title' => 'Черновик',
+            'url' => str_slug('Черновик'),
             'active' => 0
         ]);
         return $this->store($test, $ContentPlugins);
@@ -102,6 +102,7 @@ class AdminBlocksController extends Controller
 		if($data->fill($request->all())->save()){
 			Alert::add('success', 'Материал '. $request->input('title') .' изменен')->flash();
 			$plugins->update($this->config['plugins_backend']);
+			\Cache::flush();
 			return back();
 		}
 
@@ -155,6 +156,7 @@ class AdminBlocksController extends Controller
 			Alert::add('success', 'Материал успешно удален')->flash();
 			//уничтожение данные от плагинов фото, файлы
 			$plugins->destroy($this->config['plugins_backend']);
+			\Cache::flush();
 		}else{
 			Alert::add('error', 'Материал не удален')->flash();
 		}

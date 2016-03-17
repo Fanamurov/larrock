@@ -7,7 +7,7 @@
 	content: '';
 	display: block;
 	bottom: -9px;
-	left: 0;
+	left: -1px;
 	position: absolute;
   }
   &:before{
@@ -19,5 +19,11 @@
 	top: -9px;
 	left: 0;
 	position: absolute;
+  }
+  .block-banner{
+	padding-top: 50px;
+  }
+  .form-contact{
+	padding-top: 15px;
   }
 }

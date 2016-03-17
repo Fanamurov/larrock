@@ -2,7 +2,7 @@ $color_link: #128bc7;
 $color_link_hover: #be1318;
 
 body{
-  background: url("/_assets/_front/_images/bg.png") repeat 0 0 #eee3d9;
+  background: url("/_assets/_front/_images/bg.png") repeat 70px 0 #eee3d9;
   font-family: 'Open Sans', Calibri, sans-serif;
   font-size: 15px;
   line-height: 24px;
@@ -106,6 +106,9 @@ a, .link{
   width: 100%;
   max-width: 100%;
 }
+.max-width{
+  max-width: 100%;
+}
 
 @import "sections/header";
 @import "sections/footer";
@@ -114,6 +117,13 @@ a, .link{
 
 @import "catalog/category";
 @import "catalog/items";
+@import "catalog/item";
 
 @import "modules/breadcrumbs";
 @import "modules/cart";
+@import "modules/listCatalog";
+@import "modules/seofish";
+
+@import "plugins/gallery";
+
+@import "page/pages";

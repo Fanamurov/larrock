@@ -55,42 +55,23 @@ class AdminFeedController extends Controller
 	 * Show the form for creating a new resource.
 	 *
 	 * @param \App\Helpers\ContentPlugins $ContentPlugins
+	 * @param Request                     $request
+	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function create(ContentPlugins $ContentPlugins)
+	public function create(ContentPlugins $ContentPlugins, Request $request)
 	{
-		$data['data'] = new Feed;
-		$data['app'] = $this->config;
-		$data['app'] = $ContentPlugins->attach_rows($this->config);
-		$data['data']->get_category = Category::findOrFail(\Input::get('category'));
-		$data['id'] = DB::table($this->config['table_content'])->max('id') + 1;
-		$data = Component::tabbable($data);
-
-		$validator = JsValidator::make(Component::_valid_construct($this->config['rows']));
-		View::share('validator', $validator);
-
-		Breadcrumbs::register('admin.feed.create', function($breadcrumbs, $data)
-		{
-			$breadcrumbs->parent('admin.feed.index');
-			if($find_parent = Category::find($data->category)){
-				if($find_parent_2 = Category::find($find_parent->parent)){
-					$find_parent_3 = Category::find($find_parent_2->parent);
-				}
-			}
-
-			if(isset($find_parent_3->title)){
-				$breadcrumbs->push($find_parent_3->title, route('admin.feed.show', $find_parent_3->id));
-			}
-			if(isset($find_parent_2->title)){
-				$breadcrumbs->push($find_parent_2->title, route('admin.feed.show', $find_parent_2->id));
-			}
-			if(isset($find_parent->title)){
-				$breadcrumbs->push($find_parent->title, route('admin.feed.show', $find_parent->id));
-			}
-			$breadcrumbs->push('Новый материал');
-		});
-
-		return view('admin.feed.create', $data);
+		if( !$category = Category::whereType('feed')->first()){
+			Category::create(['title' => 'Новый раздел', 'url' => str_slug('Новый раздел')]);
+			$category = Category::whereType('feed')->first();
+		}
+		$test = Request::create('/admin/feed', 'POST', [
+			'title' => 'Черновик страницы',
+			'url' => str_slug('Черновик страницы'),
+			'category' => $request->get('category', $category->id),
+			'active' => 0
+		]);
+		return $this->store($test, $ContentPlugins);
 	}
 
 	/**
@@ -178,6 +159,29 @@ class AdminFeedController extends Controller
 
 		$data = Component::tabbable($data);
 
+		Breadcrumbs::register('admin.feed.edit', function($breadcrumbs, $data)
+		{
+			$breadcrumbs->parent('admin.feed.index');
+			//dd($data);
+			if($find_parent = Category::find($data->get_category->id)){
+				if($find_parent_2 = Category::find($find_parent->parent)){
+					$find_parent_3 = Category::find($find_parent_2->parent);
+				}
+			}
+
+			if(isset($find_parent_3->title)){
+				$breadcrumbs->push($find_parent_3->title, '/admin/feed/'. $find_parent_3->id);
+			}
+			if(isset($find_parent_2->title)){
+				$breadcrumbs->push($find_parent_2->title, '/admin/feed/'. $find_parent_2->id);
+			}
+			if(isset($find_parent->title)){
+				$breadcrumbs->push($find_parent->title, '/admin/feed/'. $find_parent->id);
+			}
+
+			$breadcrumbs->push($data->title, '/admin/feed/'. $data->id);
+		});
+
 		$validator = JsValidator::make(Component::_valid_construct($this->config['rows']));
 		View::share('validator', $validator);
 
@@ -194,7 +198,7 @@ class AdminFeedController extends Controller
 	 */
 	public function update(Request $request, $id, ContentPlugins $plugins)
 	{
-		$validator = Validator::make($request->all(), Component::_valid_construct($this->config['rows']));
+		$validator = Validator::make($request->all(), Component::_valid_construct($this->config['rows'], 'update', $id));
 		if($validator->fails()){
 			return back()->withInput($request->except('password'))->withErrors($validator);
 		}
@@ -203,6 +207,7 @@ class AdminFeedController extends Controller
 		if($data->fill($request->all())->save()){
 			Alert::add('success', 'Материал '. $request->input('title') .' изменен')->flash();
 			$plugins->update($this->config['plugins_backend']);
+			\Cache::flush();
 			return back();
 		}
 
@@ -221,14 +226,14 @@ class AdminFeedController extends Controller
 	{
 		$data = Feed::find($id);
         $data->clearMediaCollection();
-		$category = $data->category;
 		if($data->delete()){
 			Alert::add('success', 'Материал успешно удален')->flash();
 			//уничтожение данные от плагинов фото, файлы
 			$plugins->destroy($this->config['plugins_backend']);
+			\Cache::flush();
 		}else{
 			Alert::add('error', 'Материал не удален')->flash();
 		}
-		return Redirect::to('/admin/'. $this->config['name'] .'/'. $category);
+		return back();
 	}
 }

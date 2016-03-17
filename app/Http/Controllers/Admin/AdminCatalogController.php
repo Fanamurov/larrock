@@ -211,6 +211,7 @@ class AdminCatalogController extends Controller
 			}
 			Alert::add('success', 'Материал '. $request->input('title') .' изменен')->flash();
 			$plugins->update($this->config['plugins_backend']);
+			\Cache::flush();
 			return back();
 		}
 
@@ -238,6 +239,7 @@ class AdminCatalogController extends Controller
 			Alert::add('success', 'Материал успешно удален')->flash();
 			//уничтожение данные от плагинов фото, файлы
 			$plugins->destroy($this->config['plugins_backend']);
+			\Cache::flush();
 		}else{
 			Alert::add('error', 'Материал не удален')->flash();
 		}

@@ -90,17 +90,17 @@ class Category extends Model implements HasMediaConversions
 
 	public function get_tovars()
 	{
-		return $this->belongsToMany('App\Models\Catalog', 'category_catalog', 'category_id', 'catalog_id');
+		return $this->belongsToMany('App\Models\Catalog', 'category_catalog', 'category_id', 'catalog_id')->orderBy('position', 'DESC');
 	}
 
 	public function get_tovarsActive()
 	{
-		return $this->belongsToMany('App\Models\Catalog', 'category_catalog', 'category_id', 'catalog_id')->whereActive(1);
+		return $this->belongsToMany('App\Models\Catalog', 'category_catalog', 'category_id', 'catalog_id')->whereActive(1)->orderBy('position', 'DESC');
 	}
 
 	public function get_tovarsAlias()
 	{
-		return $this->belongsToMany('App\Models\Catalog', 'category_catalog', 'category_id', 'catalog_id')->whereActive(1);
+		return $this->belongsToMany('App\Models\Catalog', 'category_catalog', 'category_id', 'catalog_id')->whereActive(1)->orderBy('position', 'DESC');
 	}
 
 	public function get_child()
@@ -130,18 +130,18 @@ class Category extends Model implements HasMediaConversions
 
 	public function getFullUrlAttribute()
 	{
-		if($search_parent = Category::whereId($this->get_category->first()->parent)->first()){
+		if($search_parent = Category::whereId($this->parent)->first()){
 			if($search_parent_2 = Category::whereId($search_parent->parent)->first()){
 				if($search_parent_3 = Category::whereId($search_parent->parent_2)->first()){
-					return $search_parent_3->url .'/'. $search_parent_2->url .'/' . $search_parent->url .'/'. $this->get_category->first()->url .'/'. $this->url;
+					return $search_parent_3->url . '/' . $search_parent_2->url . '/' . $search_parent->url . '/' . $this->get_category->first()->url . '/' . $this->url;
 				}else{
-					return $search_parent_2->url .'/' . $search_parent->url .'/'. $this->get_category->first()->url .'/'. $this->url;
+					return $search_parent_2->url . '/' . $search_parent->url . '/' . $this->get_category->first()->url . '/' . $this->url;
 				}
 			}else{
-				return $search_parent->url .'/'. $this->get_category->first()->url .'/'. $this->url;
+				return $search_parent->url . '/' . $this->url . '/' . $this->url;
 			}
 		}else{
-			return $this->get_category->first()->url .'/'. $this->url;
+			return $this->url;
 		}
 	}
 

@@ -1,0 +1,24 @@
+//resources/views/front/modules/list/catalog.blade.php
+ul.block-module_listCatalog{
+  position: relative;
+  left: -11px;
+  margin-right: -11px;
+  li{
+	margin-bottom: 10px;
+	position: relative;
+	border-radius: 4px;
+	&.active{
+	  background: url("/_assets/_front/_images/bg/bg_active.png") repeat scroll 0 0 transparent;
+	  a{
+		color: #000000;
+		text-decoration: none;
+		font-weight: 600;
+	  }
+	}
+	a{
+	  display: block;
+	  padding: 11px;
+	  font-size: 18px;
+	}
+  }
+}

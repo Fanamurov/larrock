@@ -76,8 +76,8 @@
                             @endif
                         @endforeach
                         <td>
-                            <a href="{{ action('Admin\FeedController@index') }}/{{ $category->url}}/{{ $data_value->url }}">
-                                {{ action('Admin\FeedController@index', [], FALSE) }}/{{ $category->url}}/{{ $data_value->url }}
+                            <a href="/feed/{{ $category->url}}/{{ $data_value->url }}">
+                                /feed/{{ $category->url}}/{{ $data_value->url }}
                             </a>
                         </td>
                         <td class="row-updated_at">{{ $data_value->updated_at }}</td>

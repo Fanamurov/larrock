@@ -3,14 +3,11 @@
 namespace App\Helpers;
 
 use App\Helpers\ContentPlugins\ContentPluginsInterface;
-use App\Models\Files;
-use App\Models\Images;
 use App\Models\Seo;
 use App\Models\Templates;
-use App\Models\Images as Model_Images;
-use App\Models\Files as Model_Files;
 use Request;
 use Illuminate\Support\Arr;
+use Spatie\MediaLibrary\Media;
 
 class ContentPlugins implements ContentPluginsInterface
 {
@@ -149,5 +146,26 @@ class ContentPlugins implements ContentPluginsInterface
 		if($template = Templates::whereIdConnect(Request::input('id_connect'))->whereTypeConnect(Request::input('type_connect'))->first()){
 			$template->delete();
 		}
+	}
+
+	/**
+	 * Прикрепление отображения фото-галереи внутри материала
+	 * @param $modelResult
+	 */
+	public function renderGallery($modelResult)
+	{
+		$re = "/{Фото\\[(?P<type>\\w+)]=(?P<name>\\w+)}/";
+		preg_match_all($re, $modelResult->description, $matches);
+		foreach($matches['type'] as $key => $match){
+			//Собираем изображения под каждую найденную галерею
+			$matched_images['images'] = [];
+			foreach($modelResult['images'] as $image){
+				if($image->getCustomProperty('gallery') === $matches['name'][$key]){
+					$matched_images['images'][] = $image;
+				}
+			}
+			$modelResult->description = preg_replace('/{Фото\\[[a-zA-z]*]=[a-zA-Z0-9]*}/', view('front.plugins.'. $match, $matched_images)->render(), $modelResult->description);
+		}
+		return $modelResult;
 	}
 }

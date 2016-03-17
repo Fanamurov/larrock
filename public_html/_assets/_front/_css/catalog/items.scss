@@ -19,21 +19,32 @@
 	width: 125px;
   }
   h5{
-	font-size: 14px;
+	font-size: 25px;
 	font-weight: 600;
+	a{
+	  color: #afa687;
+	  font-family: 'Lobster', cursive;
+	  font-size: 29px;
+	  font-weight: 500;
+	  &:hover,
+	  &:focus{
+		color: #b02300;
+	  }
+	}
   }
   .catalogImage{
 	position: relative;
 	padding-bottom: 15px;
+	cursor: pointer;
   }
   .cost{
-	background: url("/_assets/_front/_images/bg_cost.png") no-repeat scroll 0 0 transparent;
-	height: 42px;
-	left: 67px;
+	background: url("/_assets/_front/_images/bg_cost_vit.png") no-repeat scroll 0 0 transparent;
+	right: 92px;
+	bottom: -10px;
 	position: absolute;
 	text-align: center;
-	top: 95px;
-	width: 90px;
+	height: 72px;
+	width: 272px;
 	font-size: 15px;
 	margin-bottom: 2px;
 	font-weight: 700;
@@ -41,16 +52,51 @@
 	line-height: 17px;
 	text-shadow: 1px 1px 1px #FFFFFF;
 	span{
-	  display: block;
-	  line-height: 11px;
-	  font-size: 11px;
-	  font-weight: 400;
+	  //display: block;
+	  font-family: 'Open Sans Condensed', sans-serif;
+	  line-height: 30px;
+	  font-size: 30px;
+	  font-weight: 700;
 	  text-shadow: none;
+	  padding-top: 27px;
+	  &.empty-cost{
+		position: relative;
+		top: 6px;
+	  }
+	  &.empty-cost > span{
+		font-family: 'Open Sans', sans-serif;
+		font-size: 17px;
+		line-height: 17px;
+		font-weight: 500;
+	  }
+	  &.default-cost > span:nth-last-child(1),
+	  &.default-cost > span:nth-last-child(2),
+	  &.default-cost > span:nth-last-child(3),
+	  &.default-cost > span:nth-last-child(4){
+		font-family: 'Open Sans', sans-serif;
+		font-size: 17px;
+		line-height: 17px;
+		font-weight: 500;
+	  }
+	  &.what{
+		font-family: 'Open Sans', sans-serif;
+		font-size: 15px;
+		line-height: 15px;
+		font-weight: 300;
+	  }
 	}
   }
   .add_to_cart{
 	position: absolute;
-	top: 68px;
-	left: 118px;
+	top: 5px;
+	right: 40px;
+  }
+  .catalogShort{
+	padding-right: 35px;
+	padding-top: 20px;
+	strong{
+	  font-weight: 600;
+	  color: grey;
+	}
   }
 }

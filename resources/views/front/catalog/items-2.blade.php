@@ -4,12 +4,6 @@
 @section('content')
     {!! Breadcrumbs::render('catalog.items', $data) !!}
 
-    <div class="catalog-filters">
-        @include('front.modules.filters.sortCost')
-        @include('front.modules.filters.vid')
-        @include('front.modules.filters.itemsOnPage')
-    </div>
-
     <div class="catalogPageCategoryItems row">
         @each('front.catalog.blockItem', $data->get_tovars, 'data')
     </div>

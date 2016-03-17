@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Modules\ListCatalog;
+use App\Models\Blocks;
 use App\Models\Catalog;
 use App\Models\Category;
+use App\Models\Feed;
 use App\Models\Menu;
 use Breadcrumbs;
+use Cache;
 use Cookie;
 use Illuminate\Http\Request;
 
@@ -26,18 +29,56 @@ class CatalogController extends Controller
 
 		Breadcrumbs::register('catalog.index', function($breadcrumbs)
 		{
-			$breadcrumbs->push('Каталог', route('catalog.index'));
+			$breadcrumbs->push('Рыбная продукция', '/catalog');
 		});
 		\View::share('menu', Menu::whereActive(1)->get());
+		\View::share('banner', Blocks::whereUrl('banner')->first()->getFirstMediaUrl('images'));
+	}
+
+	public function getAllTovars(Request $request, ListCatalog $listCatalog)
+	{
+		Breadcrumbs::register('catalog.all', function($breadcrumbs)
+		{
+			$breadcrumbs->parent('catalog.index');
+			$breadcrumbs->push('Все товары');
+		});
+
+		$data['data'] = Cache::remember('getTovars_all', 60, function()
+		{
+			//Основной запрос для вывода
+			return Catalog::all();
+		});
+		$data['module_listCatalog'] = $listCatalog->categories();
+		foreach($data['data'] as $key => $value){
+			$data['data'][$key]['images'] = $value->getMedia('images');
+		}
+
+		$data['paginator'] = new Paginator(
+			$data['data'],
+			count($data['data']),
+			$limit = 100,
+			$page = $request->get('page', 1), [
+			'path'  => $request->url(),
+			'query' => $request->query(),
+		]);
+
+		$data['seo']['title'] = 'Все товары каталога';
+
+		return view('front.catalog.items-all', $data);
 	}
 
     public function getMainCategory()
 	{
-		$data['data'] = Category::whereType('catalog')->whereLevel(1)->whereActive(1)->get();
-		foreach($data['data'] as $key => $value){
-			$data['data'][$key]['images'] = $value->getMedia('images');
-		}
-		$data['seo']['title'] = 'SEO title getMainCategory';
+		\View::share('seofish', Feed::whereCategory(2)->orderBy('position', 'DESC')->get());
+		$data = Cache::remember('getTovars_main', 60, function()
+		{
+			$data['data'] = Category::whereType('catalog')->whereLevel(1)->whereActive(1)->with('get_parent')->get();
+			foreach($data['data'] as $key => $value){
+				$data['data'][$key]['image'] = $value->getFirstMediaUrl('images');
+			}
+			$data['seo']['title'] = 'Оптовая продажа дальневосточной рыбной продукции';
+			return $data;
+		});
 
 		return view('front.catalog.categorys', $data);
 	}
@@ -56,12 +97,7 @@ class CatalogController extends Controller
 			}
 		}
 
-		$data['data'] = Category::whereType('catalog')->whereActive(1)->whereUrl($select_category)->with([
-				'get_childActive' => function($query){
-					$query->with('get_parent');
-				}
-			]
-		)->first();
+		$data['data'] = Category::whereType('catalog')->whereActive(1)->whereUrl($select_category)->with(['get_childActive.get_parent'])->first();
 		Breadcrumbs::register('catalog.category', function($breadcrumbs, $data)
 		{
 			$breadcrumbs->parent('catalog.index');
@@ -105,23 +141,31 @@ class CatalogController extends Controller
 		$paginate = Cookie::get('perPage', 24);
 		//echo Cookie::get('sort_cost');
 
-		//Основной запрос для вывода
-		$data['data'] = Category::whereUrl($category)->whereActive(1)->with(
-			['get_tovarsActive' => function($query) use ($paginate){
-				//TODO: сортировки и фильтры
-				if(Cookie::get('sort_cost') === 'asc'){
-					$query->orderBy('cost', 'asc')->paginate($paginate);
-				}elseif(Cookie::get('sort_cost') === 'desc'){
-					$query->orderBy('cost', 'desc')->paginate($paginate);
-				}else{
-					$query->paginate($paginate);
-				}
-			}, 'get_tovarsAlias', 'get_parent', 'get_seo']
-		)->first();
+		$data['data'] = Cache::remember('getTovars'. $category, 60, function() use ($category, $paginate)
+		{
+			//Основной запрос для вывода
+			return Category::whereUrl($category)->whereActive(1)->with(
+				['get_tovarsActive' => function($query) use ($paginate){
+					//TODO: сортировки и фильтры
+					if(Cookie::get('sort_cost') === 'asc'){
+						$query->orderBy('cost', 'asc')->paginate($paginate);
+					}elseif(Cookie::get('sort_cost') === 'desc'){
+						$query->orderBy('cost', 'desc')->paginate($paginate);
+					}else{
+						$query->paginate($paginate);
+					}
+				}, 'get_tovarsAlias', 'get_parent', 'get_seo']
+			)->first();
+		});
 
+		Cache::flush();
 		$data['data']['images'] = $data['data']->getMedia('images');
 		foreach($data['data']->get_tovars as $key => $value){
-			$data['data']->get_tovars[$key]['images'] = $value->getMedia('images');
+			$images = Cache::remember('catalog_image'. $value->id, 60, function() use ($value)
+			{
+				return $value->getMedia('images');
+			});
+			$data['data']->get_tovars[$key]['images'] = $images;
 		}
 
 		$data['paginator'] = new Paginator(
@@ -157,7 +201,7 @@ class CatalogController extends Controller
 
 		Breadcrumbs::register('catalog.item', function($breadcrumbs, $data)
 		{
-			$url = '';
+			$url = '/catalog';
 			$breadcrumbs->parent('catalog.index');
 			$get_category = $data->get_category->first();
 			if($get_category->level !== 1){

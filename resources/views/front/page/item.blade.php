@@ -1,7 +1,9 @@
 @extends('front.main')
-@section('title') TEST @endsection
+@section('title') {{ $data->title }} @endsection
 
 @section('content')
-    <h1>{{ $data->title }}</h1>
-    <div>{{ $data->description }}</div>
+    <div class="page-{{ $data->url }}">
+        <h1>{{ $data->title }}</h1>
+        <div class="page_description">{!! $data->description !!}</div>
+    </div>
 @endsection

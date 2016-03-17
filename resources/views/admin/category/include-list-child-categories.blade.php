@@ -7,7 +7,13 @@
 @foreach($data->get_child as $data_value)
     <tr>
         <td><a href="/admin/catalog/{{ $data_value->id }}">
-                <i class="icon-padding icon-color glyphicon glyphicon-folder-close"></i> {{ $data_value->title }}</a>
+                @if($data_value->getFirstMediaUrl('images', '110x110'))
+                    <img src="{{ $data_value->getFirstMediaUrl('images', '110x110') }}">
+                @else
+                    <i class="icon-padding icon-color glyphicon glyphicon-file"></i>
+                @endif
+                    {{ $data_value->title }}
+            </a>
         </td>
         <td>
             <a href="/catalog/{{ $data_value->url }}">

@@ -74,7 +74,7 @@
                     <a aria-expanded="false" role="button" href="/" target="_blank">К сайту</a>
                 </li>
                 <li>
-                    <a href="{{ action('Admin\AdminAuthController@getLogout') }}">
+                    <a href="/auth/logout">
                         <i class="fa fa-sign-out"></i> Выйти
                     </a>
                 </li>

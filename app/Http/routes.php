@@ -145,7 +145,9 @@ Route::group(['prefix' => 'admin', 'middleware'=>'level:2'], function(){
 
 	Route::post('ajax/UploadFile', 'Admin\AdminAjax@UploadFile');
 
-	Route::get('/', 'Admin\AdminPageController@index'); //Роут главной страницы админки
+	Route::get('/', [
+		'as' => 'admin.home', 'uses' => 'Admin\AdminPageController@index'
+	]); //Роут главной страницы админки
 
 	Route::get('cart', 'Admin\AdminCartController@index');
 

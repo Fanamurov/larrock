@@ -11,8 +11,8 @@
             </a>
         </td>
         <td>
-            <a href="/catalog/{{ $data_value->get_category->first()->url }}/{{ $data_value->url }}">
-                /catalog/{{ $data_value->get_category->first()->url }}/{{ $data_value->url }}
+            <a href="/catalog/{{ $data_value->get_category()->first()->url }}/{{ $data_value->url }}">
+                /catalog/{{ $data_value->get_category()->first()->url }}/{{ $data_value->url }}
             </a>
         </td>
         <td class="row-position">

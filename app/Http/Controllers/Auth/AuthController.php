@@ -29,7 +29,7 @@ class AuthController extends Controller
 	 *
 	 * @var string
 	 */
-	protected $redirectTo = '/';
+	protected $redirectTo = '/admin';
 
 	/**
 	 * Create a new authentication controller instance.
@@ -50,7 +50,7 @@ class AuthController extends Controller
 	{
 		if (Auth::attempt(['email' => $email, 'password' => $password])) {
 			// Authentication passed...
-			return redirect()->intended('dashboard');
+			return redirect()->intended('admin.home');
 		}
 	}
 

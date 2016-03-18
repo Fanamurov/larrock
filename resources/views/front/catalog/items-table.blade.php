@@ -21,7 +21,7 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($data->get_tovars as $item)
+            @foreach($data->get_tovarsActive as $item)
                 <tr>
                     <td>{{ $item->title }}</td>
                     <td>{{ $data->short }}</td>

@@ -231,6 +231,14 @@ input[name=position]{
 .top-navigation .navbar-brand{
   background: #428bca;
 }
+.top-navigation{
+  .navbar-nav{
+	li.hovered a{
+	  background: #1ab394;
+	  color: white;
+	}
+  }
+}
 
 .table>thead>tr>th{
   font-weight: 300;

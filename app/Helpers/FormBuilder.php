@@ -158,4 +158,48 @@ class FormBuilder implements FormBuilderInterface
 
 		return View::make('formbuilder.select.category', ['row_key' => $row_key, 'row_settings' => $row_settings, 'data' => $data, 'selected' => $selected])->render();
 	}
+
+	public function select_category_once($row_key, $row_settings, $data)
+	{
+		if( !array_key_exists('options', $row_settings)){
+			$row_settings['options'] = [];
+		}
+
+		if(array_key_exists('default', $row_settings)){
+			$row_settings['options'][''] = $row_settings['default'];
+		}
+		$selected = [];
+		if(\Request::input($row_key)){
+			$selected[] = \Request::input($row_key);
+		}else{
+			if($data->get_category){
+				foreach($data->get_category as $category){
+					$selected[] = $category->id;
+				}
+			}
+		}
+		$list_categories = [];
+
+		if(isset($row_settings['options_connect']['where'])){
+			foreach($row_settings['options_connect']['where'] as $where_key => $where_value){
+				if($get_options = DB::table($row_settings['options_connect']['table'])->where($where_key, '=', $where_value)
+					->get([$row_settings['options_connect']['row'], 'id', 'parent', 'level'])){
+					foreach($get_options as $get_options_value){
+						$list_categories[] = $get_options_value;
+					}
+				}
+			}
+		}else{
+			if($get_options = DB::table($row_settings['options_connect']['table'])->get([$row_settings['options_connect']['row'], 'id', 'parent', 'level'])){
+				foreach($get_options as $get_options_value){
+					$list_categories[] = $get_options_value;
+				}
+			}
+		}
+
+		$tree = new Tree;
+		$row_settings['options'] = $tree->build_tree($list_categories, 'parent');
+
+		return View::make('formbuilder.select.category-once', ['row_key' => $row_key, 'row_settings' => $row_settings, 'data' => $data, 'selected' => $selected])->render();
+	}
 }

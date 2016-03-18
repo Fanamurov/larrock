@@ -72,6 +72,7 @@ class AdminCategoryController extends Controller
 	 */
     public function store(Request $request, ContentPlugins $plugins)
     {
+		dd($request->all());
 		$validator = Validator::make($request->all(), Component::_valid_construct($this->config['rows']));
 		if($validator->fails()){
 			return back()->withInput($request->except('password'))->withErrors($validator);
@@ -176,16 +177,33 @@ class AdminCategoryController extends Controller
 		return view('admin.category.edit', $data);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+	/**
+	 * Update the specified resource in storage.
+	 *
+	 * @param  \Illuminate\Http\Request $request
+	 * @param  int                      $id
+	 * @param ContentPlugins            $plugins
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+    public function update(Request $request, $id, ContentPlugins $plugins)
     {
-        //
+		$validator = Validator::make($request->all(), Component::_valid_construct($this->config['rows'], 'update', $id));
+		if($validator->fails()){
+			return back()->withInput($request->except('password'))->withErrors($validator);
+		}
+
+		$data = Category::find($id);
+
+		if($data->fill($request->all())->save()){
+			Alert::add('success', 'Материал '. $request->input('title') .' изменен')->flash();
+			$plugins->update($this->config['plugins_backend']);
+			\Cache::flush();
+			return back();
+		}
+
+		Alert::add('error', 'Материал '. $request->input('title') .' не изменен')->flash();
+		return back()->withInput();
     }
 
 	/**

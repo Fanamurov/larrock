@@ -5,7 +5,7 @@
     {!! Breadcrumbs::render('catalog.items', $data) !!}
 
     <div class="catalogPageCategoryItems row">
-        @each('front.catalog.blockItem', $data->get_tovars, 'data')
+        @each('front.catalog.blockItem', $data->get_tovarsActive, 'data')
     </div>
 
     <div class="Pagination catalogPagination">{!! $paginator->render() !!}</div>

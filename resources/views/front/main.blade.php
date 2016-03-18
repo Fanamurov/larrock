@@ -34,14 +34,6 @@
         <div class="logo_link">
             <a href="/"></a>
         </div>
-        <div class="col-xs-24">
-            <div class="block-header-left">
-                <a href="mailto:rkv.dv25@gmail.com">rkv.dv25@gmail.com</a></p>
-            </div>
-            <div class="block-header-right">
-                <a href="tel:8 (4212) 93-25-49">8 (4212) 93-25-49</a></p>
-            </div>
-        </div>
         <div class="col-xs-24 div-menu">
             @include('front.modules.menu.top', $menu)
         </div>
@@ -61,7 +53,6 @@
             <div class="col-xs-19 col-xs-offset-2">
                 @yield('front.modules.list.catalog')
                 @yield('rightColomn')
-                @include('front.modules.forms.contact')
                 @include('front.modules.list.banner')
             </div>
         </section>
@@ -73,8 +64,9 @@
                 @yield('footer')
                 <address class="footer-left-text">
                     <p><strong>Рыболовецкий колхоз «Витязь»</strong><br>680009, Хабаровский край, г. Хабаровск,
-                        <br/>ул. Промышленная, 12г, оф. 10<br>Тел: 8 (4212) 93-25-49<br/>
-                        <a href="mailto:rkv.dv25@gmail.com">rkv.dv25@gmail.com</a></p>
+                        <br/>ул. Промышленная, 12г, оф. 10<br/>
+                        <a href="/page/kontakty">Контакты</a>
+                    </p>
                 </address>
             </div>
         </div>

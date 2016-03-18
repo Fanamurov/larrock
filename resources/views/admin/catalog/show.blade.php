@@ -43,6 +43,7 @@
                     @include('admin.catalog.include-list-tovars', array('data' => $data->get_tovars, 'app' => $app))
                     </tbody>
                 </table>
+                {!! $paginator->render() !!}
             @else
                 <!-- Таблица товаров, вложенных разделов нет -->
                 @if(count($data->get_tovars) === 0)
@@ -71,6 +72,7 @@
                         @include('admin.catalog.include-list-tovars', array('data' => $data->get_tovars, 'app' => $app))
                         </tbody>
                     </table>
+                    {!! $paginator->render() !!}
                 @endif
             @endif
         </div>

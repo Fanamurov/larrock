@@ -39,12 +39,10 @@
                     @else
                         @include('admin.category.include-create-easy', array('parent' => 0, 'type' => 'catalog'))
                         @include('admin.category.include-list-categories', array('data' => $data, 'app' => $app))
-                        @foreach($data as $data_value)
-                            @include('admin.catalog.include-list-tovars', array('data' => $data_value->get_tovars, 'app' => $app))
-                        @endforeach
                     @endif
                     </tbody>
                 </table>
+                {!! $data->render() !!}
             @endif
         </div>
     </div>

@@ -39,7 +39,7 @@
   }
   .cost{
 	background: url("/_assets/_front/_images/bg_cost_vit.png") no-repeat scroll 0 0 transparent;
-	right: 92px;
+	left: 32px;
 	bottom: -10px;
 	position: absolute;
 	text-align: center;
@@ -51,6 +51,10 @@
 	padding-top: 9px;
 	line-height: 17px;
 	text-shadow: 1px 1px 1px #FFFFFF;
+	@media (max-width: 1145px){
+	  left: 0;
+	  bottom: -20px;
+	}
 	span{
 	  //display: block;
 	  font-family: 'Open Sans Condensed', sans-serif;

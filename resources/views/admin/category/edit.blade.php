@@ -5,10 +5,8 @@
     <div class="ibox float-e-margins">
         <div class="ibox-title background-transparent">
             <h1 class="inline">
-                <a href="/admin/{{ $app['name'] }}">{{ $app['title'] }}</a>
-                /{{ $data->title }}
+                Раздел: {{ $data->title }}
             </h1>
-            <a href="/{{ $app['name'] }}/{{ $data->url }}">/{{ $app['name'] }}/{{ $data->url }}</a>
         </div>
 
         <div>

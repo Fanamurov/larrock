@@ -13,6 +13,7 @@ use App\Helpers\ContentPlugins;
 use App\Helpers\Component;
 use App\Models\Category;
 use DB;
+use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use JsValidator;
 use Alert;
 use Route;
@@ -45,8 +46,9 @@ class AdminCatalogController extends Controller
 	public function index()
 	{
 		$data['app'] = $this->config;
-		$data['data'] = Category::type('catalog')->level(1)->orderBy('position', 'DESC')->with(['get_tovars.get_category', 'get_child', 'get_parent'])->get();
+		$data['data'] = Category::type('catalog')->level(1)->orderBy('position', 'DESC')->with(['get_child', 'get_parent'])->paginate(30);
 		View::share('validator', '');
+
 		return view('admin.catalog.index', $data);
 	}
 
@@ -109,13 +111,29 @@ class AdminCatalogController extends Controller
 	/**
 	 * Display the list resource of category.
 	 *
-	 * @param  int  $id
+	 * @param  int    $id
+	 * @param Request $request
+	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function show($id)
+	public function show($id, Request $request)
 	{
+		$paginate = 50;
 		$data['app'] = $this->config;
-		$data['data'] = Category::whereId($id)->with(['get_tovars.get_category', 'get_child', 'get_parent'])->first();
+		$data['data'] = Category::whereId($id)->with(['get_tovars' => function($query) use ($paginate)
+		{
+			$query->paginate($paginate);
+		}, 'get_child', 'get_parent'])->first();
+
+		$data['paginator'] = new Paginator(
+			$data['data']->get_tovars(),
+			$data['data']->get_tovars()->count(),
+			$limit = $paginate,
+			$page = $request->get('page', 1), [
+			'path'  => $request->url(),
+			'query' => $request->query(),
+		]);
+
 		View::share('validator', '');
 
 		Breadcrumbs::register('admin.catalog.category', function($breadcrumbs, $data)

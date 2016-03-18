@@ -34,6 +34,7 @@ class AdminAjax extends Controller
 
 		if($old_data->$row !== $value){
 			if(DB::table($table)->where($row_where, '=', $value_where)->update([$row => $value])){
+				Cache::flush();
 				return response()->json(['status' => 'success', 'message' => 'Поле '. $row .' успешно изменено']);
 			}else{
 				return response()->json(['status' => 'error', 'message' => 'Поле не изменено']);

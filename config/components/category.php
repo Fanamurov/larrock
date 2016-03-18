@@ -8,7 +8,7 @@ return [
 	'rows' => [
 		'parent' => [
 			'title' => 'Родительский раздел',
-			'type' => 'select_category',
+			'type' => 'select_category_once',
 			'tab' => ['main' => 'Заголовок, описание'],
 			'options_connect' => ['row' => 'title', 'table' => 'category', 'where' => ['type' => 'catalog']],
 			'default' => 'Это новый корневой раздел'

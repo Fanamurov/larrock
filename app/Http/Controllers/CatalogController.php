@@ -69,10 +69,12 @@ class CatalogController extends Controller
 
     public function getMainCategory()
 	{
+		$test = Catalog::whereActive(1)->first();
+		dd($test);
 		\View::share('seofish', Feed::whereCategory(2)->orderBy('position', 'DESC')->get());
 		$data = Cache::remember('getTovars_main', 60, function()
 		{
-			$data['data'] = Category::whereType('catalog')->whereLevel(1)->whereActive(1)->with('get_parent')->get();
+			$data['data'] = Category::whereType('catalog')->whereLevel(1)->whereActive(1)->with('get_parent')->orderBy('position', 'DESC')->get();
 			foreach($data['data'] as $key => $value){
 				$data['data'][$key]['image'] = $value->getFirstMediaUrl('images');
 			}
@@ -141,7 +143,7 @@ class CatalogController extends Controller
 		$paginate = Cookie::get('perPage', 24);
 		//echo Cookie::get('sort_cost');
 
-		$data['data'] = Cache::remember('getTovars'. $category, 60, function() use ($category, $paginate)
+		$data['data'] = Cache::remember('getTovars'. $category .''. $request->get('page', 1), 60, function() use ($category, $paginate)
 		{
 			//Основной запрос для вывода
 			return Category::whereUrl($category)->whereActive(1)->with(
@@ -154,23 +156,22 @@ class CatalogController extends Controller
 					}else{
 						$query->paginate($paginate);
 					}
-				}, 'get_tovarsAlias', 'get_parent', 'get_seo']
+				}, 'get_parent', 'get_seo']
 			)->first();
 		});
 
-		Cache::flush();
 		$data['data']['images'] = $data['data']->getMedia('images');
-		foreach($data['data']->get_tovars as $key => $value){
+		foreach($data['data']->get_tovarsActive as $key => $value){
 			$images = Cache::remember('catalog_image'. $value->id, 60, function() use ($value)
 			{
 				return $value->getMedia('images');
 			});
-			$data['data']->get_tovars[$key]['images'] = $images;
+			$data['data']->get_tovarsActive[$key]['images'] = $images;
 		}
 
 		$data['paginator'] = new Paginator(
-			$data['data']->get_tovars,
-			count($data['data']->get_tovarsAlias),
+			$data['data']->get_tovarsActive(),
+			$data['data']->get_tovarsActive()->count(),
 			$limit = $paginate,
 			$page = $request->get('page', 1), [
 				'path'  => $request->url(),

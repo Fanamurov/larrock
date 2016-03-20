@@ -12,8 +12,8 @@
 */
 
 Route::get('/', [
-	//'as' => 'mainpage', 'uses' => 'CatalogController@getMainCategory'
-	'as' => 'mainpage', 'uses' => 'Otapi@get_index'
+    //'as' => 'mainpage', 'uses' => 'CatalogController@getMainCategory'
+    'as' => 'mainpage', 'uses' => 'Otapi@get_index'
 ]);
 
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
@@ -27,64 +27,70 @@ Route::post('auth/register', 'Auth\AuthController@postRegister');
 Route::get('/page/{url}', 'PageController@getItem');
 
 Route::get('/catalog', [
-	'as' => 'catalog.index', 'uses' => 'CatalogController@getMainCategory'
+    'as' => 'catalog.index', 'uses' => 'CatalogController@getMainCategory'
 ]);
 Route::get('/catalog/{category}', [
-	'as' => 'catalog.category', 'uses' => 'CatalogController@getCategory'
+    'as' => 'catalog.category', 'uses' => 'CatalogController@getCategory'
 ]);
 Route::get('/catalog/{category}/{child}', [
-	'as' => 'catalog.category.child', 'uses' => 'CatalogController@getCategory'
+    'as' => 'catalog.category.child', 'uses' => 'CatalogController@getCategory'
 ]);
 Route::get('/catalog/{category}/{child}/{grandson}', [
-	'as' => 'catalog.category.grandson', 'uses' => 'CatalogController@getCategory'
+    'as' => 'catalog.category.grandson', 'uses' => 'CatalogController@getCategory'
 ]);
 Route::get('/catalog/{category}/{child}/{grandson}/{item}', [
-	'as' => 'catalog.category.grandson', 'uses' => 'CatalogController@getItem'
+    'as' => 'catalog.category.grandson', 'uses' => 'CatalogController@getItem'
 ]);
 
 Route::get('/search/catalog', [
-	'as' => 'search.catalog', 'uses' => 'CatalogController@searchItem'
+    'as' => 'search.catalog', 'uses' => 'CatalogController@searchItem'
 ]);
 
 Route::post('/ajax/editPerPage', [
-	'as' => 'ajax.editPerPage', 'uses' => 'Ajax@editPerPage'
+    'as' => 'ajax.editPerPage', 'uses' => 'Ajax@editPerPage'
 ]);
 Route::post('/ajax/sort', [
-	'as' => 'ajax.sort', 'uses' => 'Ajax@sort'
+    'as' => 'ajax.sort', 'uses' => 'Ajax@sort'
 ]);
 Route::post('/ajax/vid', [
-	'as' => 'ajax.vid', 'uses' => 'Ajax@vid'
+    'as' => 'ajax.vid', 'uses' => 'Ajax@vid'
 ]);
 Route::post('/ajax/cartAdd', [
-	'as' => 'ajax.cartAdd', 'uses' => 'Ajax@cartAdd'
+    'as' => 'ajax.cartAdd', 'uses' => 'Ajax@cartAdd'
 ]);
 Route::post('/ajax/cartRemove', [
-	'as' => 'ajax.cartRemove', 'uses' => 'Ajax@cartRemove'
+    'as' => 'ajax.cartRemove', 'uses' => 'Ajax@cartRemove'
 ]);
 Route::post('/ajax/cartQty', [
-	'as' => 'ajax.cartQty', 'uses' => 'Ajax@cartQty'
+    'as' => 'ajax.cartQty', 'uses' => 'Ajax@cartQty'
 ]);
 Route::post('/ajax/getTovar', [
-	'as' => 'ajax.getTovar', 'uses' => 'Ajax@getTovar'
+    'as' => 'ajax.getTovar', 'uses' => 'Ajax@getTovar'
 ]);
 
 Route::get('/modules/ListCatalog', [
-	'as' => 'modules.listCatalog', 'uses' => 'Modules\ListCatalog@categories'
+    'as' => 'modules.listCatalog', 'uses' => 'Modules\ListCatalog@categories'
 ]);
 
-Route::get('/cart', [
+/*Route::get('/cart', [
 	'as' => 'cart.index', 'uses' => 'CartController@getIndex'
+]);*/
+Route::get('/cart', [
+    'as' => 'cart.index', 'uses' => 'Otapi@get_cart'
 ]);
 
 /* Otapi */
 Route::get('/otapi', [
-	'as' => 'otapi.index', 'uses' => 'Otapi@get_index'
+    'as' => 'otapi.index', 'uses' => 'Otapi@get_index'
 ]);
 Route::get('/otapi/menu', [
     'as' => 'otapi.menu', 'uses' => 'Otapi@getMenu'
 ]);
 Route::get('/otapi/search', [
     'as' => 'otapi.search', 'uses' => 'Otapi@SearchItemsFrame'
+]);
+Route::get('/otapi/brand/{brandId}', [
+    'as' => 'otapi.brand', 'uses' => 'Otapi@get_brand'
 ]);
 Route::post('/otapi/AddToCart', [
     'as' => 'otapi.AddToCart', 'uses' => 'Otapi@AddToCart'
@@ -93,13 +99,13 @@ Route::get('/otapi/vendor/{vendorId}', [
     'as' => 'otapi.vendor', 'uses' => 'Otapi@get_vendor'
 ]);
 Route::get('/otapi/{categoryId}', [
-	'as' => 'otapi.category', 'uses' => 'Otapi@get_category'
+    'as' => 'otapi.category', 'uses' => 'Otapi@get_category'
 ]);
 Route::get('/otapi/{categoryId}/list', [
-	'as' => 'otapi.category.tovars', 'uses' => 'Otapi@get_tovarsCategory'
+    'as' => 'otapi.category.tovars', 'uses' => 'Otapi@get_tovarsCategory'
 ]);
 Route::get('/otapi/{categoryId}/tovar/{itemId}', [
-	'as' => 'otapi.category.tovar', 'uses' => 'Otapi@get_tovar'
+    'as' => 'otapi.category.tovar', 'uses' => 'Otapi@get_tovar'
 ]);
 
 Route::get('/test', [
@@ -113,63 +119,63 @@ Route::post('admin/auth/login', 'Admin\AdminAuthController@postLogin');
 Route::get('admin/auth/logout', 'Admin\AdminAuthController@getLogout');
 
 Route::group(['prefix' => 'admin', 'middleware'=>'AuthAdmin'], function(){
-	Route::resource('users', 'Admin\AdminUsersController');
-	Route::resource('roles', 'Admin\AdminRolesController');
-	Route::resource('page', 'Admin\AdminPageController');
-	Route::resource('seo', 'Admin\AdminSeoController');
-	Route::resource('menu', 'Admin\AdminMenuController');
-	Route::resource('feed', 'Admin\AdminFeedController');
-	Route::resource('catalog', 'Admin\AdminCatalogController');
-	Route::resource('category', 'Admin\AdminCategoryController');
-	Route::resource('blocks', 'Admin\AdminBlocksController');
-	Route::post('/category/storeEasy', 'Admin\AdminCategoryController@storeEasy');
+    Route::resource('users', 'Admin\AdminUsersController');
+    Route::resource('roles', 'Admin\AdminRolesController');
+    Route::resource('page', 'Admin\AdminPageController');
+    Route::resource('seo', 'Admin\AdminSeoController');
+    Route::resource('menu', 'Admin\AdminMenuController');
+    Route::resource('feed', 'Admin\AdminFeedController');
+    Route::resource('catalog', 'Admin\AdminCatalogController');
+    Route::resource('category', 'Admin\AdminCategoryController');
+    Route::resource('blocks', 'Admin\AdminBlocksController');
+    Route::post('/category/storeEasy', 'Admin\AdminCategoryController@storeEasy');
 
-	Route::post('ajax/EditRow', 'Admin\AdminAjax@EditRow');
-	Route::post('ajax/ClearCache', 'Admin\AdminAjax@ClearCache');
+    Route::post('ajax/EditRow', 'Admin\AdminAjax@EditRow');
+    Route::post('ajax/ClearCache', 'Admin\AdminAjax@ClearCache');
 
     Route::post('ajax/UploadImage', 'Admin\AdminAjax@UploadImage');
     Route::post('ajax/getLoadedImages', 'Admin\AdminAjax@getLoadedImages');
     Route::post('ajax/getImageParams', 'Admin\AdminAjax@getImageParams');
     Route::post('ajax/destroyImage', 'Admin\AdminAjax@destroyImage');
 
-	Route::post('ajax/UploadTempImage', 'Admin\AdminAjax@UploadImage');
-	Route::post('ajax/GetUploadedImage', 'Admin\AdminAjax@GetUploadedImage');
-	Route::post('ajax/DeleteUploadedImage', 'Admin\AdminAjax@DeleteUploadedImage');
-	Route::post('ajax/CustomProperties', 'Admin\AdminAjax@CustomProperties');
+    Route::post('ajax/UploadTempImage', 'Admin\AdminAjax@UploadImage');
+    Route::post('ajax/GetUploadedImage', 'Admin\AdminAjax@GetUploadedImage');
+    Route::post('ajax/DeleteUploadedImage', 'Admin\AdminAjax@DeleteUploadedImage');
+    Route::post('ajax/CustomProperties', 'Admin\AdminAjax@CustomProperties');
 
 
-	Route::post('ajax/UploadFile', 'Admin\AdminAjax@UploadFile');
-	Route::post('ajax/GetUploadedFile', 'Admin\AdminAjax@GetUploadedFile');
-	Route::post('ajax/getFileParams', 'Admin\AdminAjax@getFileParams');
-	Route::post('ajax/DeleteUploadedFile', 'Admin\AdminAjax@DeleteUploadedFile');
+    Route::post('ajax/UploadFile', 'Admin\AdminAjax@UploadFile');
+    Route::post('ajax/GetUploadedFile', 'Admin\AdminAjax@GetUploadedFile');
+    Route::post('ajax/getFileParams', 'Admin\AdminAjax@getFileParams');
+    Route::post('ajax/DeleteUploadedFile', 'Admin\AdminAjax@DeleteUploadedFile');
 
     Route::post('ajax/Typograph', 'Admin\AdminAjax@Typograph');
     Route::post('ajax/TypographLight', 'Admin\AdminAjax@TypographLight');
     Route::post('ajax/Translit', 'Admin\AdminAjax@Translit');
 
-	Route::post('ajax/UploadFile', 'Admin\AdminAjax@UploadFile');
+    Route::post('ajax/UploadFile', 'Admin\AdminAjax@UploadFile');
 
-	Route::get('/', 'Admin\AdminPageController@index'); //Роут главной страницы админки
+    Route::get('/', 'Admin\AdminPageController@index'); //Роут главной страницы админки
 
-	Route::get('cart', 'Admin\AdminCartController@index');
+    Route::get('cart', 'Admin\AdminCartController@index');
 
-	Route::get('/settings/image', 'Admin\AdminSettings\Image@index');
-	Route::post('/settings/image', 'Admin\AdminSettings\Image@store');
-	Route::post('/settings/image/generate', [
-		'as' => 'admin.image.generate', 'uses' => 'Admin\AdminSettings\Image@generate'
-	]);
+    Route::get('/settings/image', 'Admin\AdminSettings\Image@index');
+    Route::post('/settings/image', 'Admin\AdminSettings\Image@store');
+    Route::post('/settings/image/generate', [
+        'as' => 'admin.image.generate', 'uses' => 'Admin\AdminSettings\Image@generate'
+    ]);
 
-	Route::get('/blocks/MenuBlock', 'Admin\AdminBlocks\MenuBlock@index');
+    Route::get('/blocks/MenuBlock', 'Admin\AdminBlocks\MenuBlock@index');
 
-	Route::get('/wizard', [
-		'as' => 'admin.wizard', 'uses' => 'Admin\AdminWizardController@aliases'
-	]);
-	Route::get('/wizard/check', [
-		'as' => 'admin.wizard.check', 'uses' => 'Admin\AdminWizardController@check'
-	]);
-	Route::get('/wizard/import', [
-		'as' => 'admin.wizard.import', 'uses' => 'Admin\AdminWizardController@import'
-	]);
+    Route::get('/wizard', [
+        'as' => 'admin.wizard', 'uses' => 'Admin\AdminWizardController@aliases'
+    ]);
+    Route::get('/wizard/check', [
+        'as' => 'admin.wizard.check', 'uses' => 'Admin\AdminWizardController@check'
+    ]);
+    Route::get('/wizard/import', [
+        'as' => 'admin.wizard.import', 'uses' => 'Admin\AdminWizardController@import'
+    ]);
 
-	Route::post('/wizard', 'Admin\AdminWizardController@storeConfig');
+    Route::post('/wizard', 'Admin\AdminWizardController@storeConfig');
 });

@@ -4,9 +4,7 @@
 @section('content')
     <div class="catalog-frontpage">
         <div class="col-sm-6 menu-items">
-            @foreach($data->Item as $data_value)
-                <a href="/otapi/{{ (string)$data_value->Id }}"><i class="fa fa-folder-o"></i> {{ (string)$data_value->Name }}</a>
-            @endforeach
+            @include('tbkhv.modules.menu.catalog-left')
         </div>
         <div class="col-sm-18 catalog-frontpage-content">
             @include('tbkhv.modules.catalog.popular', $modulePopular)

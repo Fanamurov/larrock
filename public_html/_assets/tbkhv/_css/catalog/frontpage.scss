@@ -30,6 +30,17 @@
 .moduleVendorPopular{
   .item-catalog{
     padding: 10px 15px;
+    .all-width{
+      margin-bottom: 10px;
+      border-radius: 10px;
+    }
+  }
+  .cost{
+    text-align: center;
+    font-size: 19px;
+  }
+  .vendor{
+    font-style: italic;
   }
 }
 

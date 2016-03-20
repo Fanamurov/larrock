@@ -3,20 +3,19 @@
 namespace App\Http\Controllers;
 
 use Breadcrumbs;
+use Cart;
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use GuzzleHttp\Client;
 use Cache;
-use Illuminate\Pagination\Paginator;
 use View;
 
 class Otapi extends Controller
 {
-	protected $instanceKey = 'instanceKey=531ed6b5-8ebb-4100-9f19-1077ad3b7ff2';
-	protected $lang = 'language=ru';
-	protected $service_url = 'http://otapi.net/OtapiWebService2.asmx/';
+    protected $instanceKey = 'instanceKey=531ed6b5-8ebb-4100-9f19-1077ad3b7ff2';
+    protected $lang = 'language=ru';
+    protected $service_url = 'http://otapi.net/OtapiWebService2.asmx/';
 
     public function __construct()
     {
@@ -31,74 +30,76 @@ class Otapi extends Controller
         return view('tbkhv.tovarTest', []);
     }
 
-	public function create_request($method, $params = [])
-	{
-		$param_request = '';
-		foreach($params as $param_key => $param_value){
-			$param_request .= '&'. $param_key .'='. $param_value;
-		}
+    public function create_request($method, $params = [])
+    {
+        $param_request = '';
+        foreach($params as $param_key => $param_value){
+            $param_request .= '&'. $param_key .'='. $param_value;
+        }
 
-		$cacheKey = md5($method .'_'.$param_request);
-		//Cache::forget($cacheKey);
-		if(Cache::has($cacheKey)){
-			$body = Cache::get($cacheKey, 'NONE');
-		}else{
-			$client = new Client();
-			$data = $client->request('GET', $this->service_url . $method .'?'. $this->instanceKey .'&'. $this->lang . $param_request);
-			$body = $data->getBody();
-			//Cache::add($cacheKey, $body, 60);
-		}
+        $cacheKey = md5($method .'_'.$param_request);
+        //Cache::forget($cacheKey);
+        if(Cache::has($cacheKey)){
+            $body = Cache::get($cacheKey, 'NONE');
+        }else{
+            $client = new Client();
+            $data = $client->request('GET', $this->service_url . $method .'?'. $this->instanceKey .'&'. $this->lang . $param_request);
+            $body = $data->getBody();
+            //Cache::add($cacheKey, $body, 60);
+        }
 
-		return simplexml_load_string($body);
-	}
+        return simplexml_load_string($body);
+    }
 
     public function get_index()
-	{
+    {
         View::share('modulePopular', $this->ModulePopularTovars());
         View::share('moduleLast', $this->ModuleLastTovars());
         View::share('moduleVendorPopular', $this->GetVendorRatingList());
-		$body = $this->create_request('GetRootCategoryInfoList');
-		return view('otapi.frontpage', ['data' => $body->CategoryInfoList->Content]);
-	}
+        $body = $this->create_request('GetRootCategoryInfoList');
+        return view('otapi.frontpage', ['data' => $body->CategoryInfoList->Content]);
+    }
 
-	public function get_category($categoryId = 'otc-3035')
-	{
-		if($getSub = $this->get_subCategoryList($categoryId)){
-			return $getSub;
-		}else{
-			return $this->get_tovarsCategory($categoryId);
-		}
-	}
+    public function get_category($categoryId = 'otc-3035', Request $request)
+    {
+        if($getSub = $this->get_subCategoryList($categoryId)){
+            return $getSub;
+        }else{
+            return $this->get_tovarsCategory($request, $categoryId);
+        }
+    }
 
-	public function get_subCategoryList($parentCategoryId)
-	{
-		$body['data'] = $this->create_request('GetCategorySubcategoryInfoList', ['parentCategoryId' => $parentCategoryId]);
+    public function get_subCategoryList($parentCategoryId)
+    {
+        $body['data'] = $this->create_request('GetCategorySubcategoryInfoList', ['parentCategoryId' => $parentCategoryId]);
         $body['category'] = $this->create_request('GetCategoryInfo', ['categoryId' => $parentCategoryId]);
-		if(count($body['data']->CategoryInfoList->Content->Item) > 0){
-			return view('otapi.categoryList', $body);
-		}else{
-			return NULL;
-		}
-	}
+        if(count($body['data']->CategoryInfoList->Content->Item) > 0){
+            return view('otapi.categoryList', $body);
+        }else{
+            return NULL;
+        }
+    }
 
-	/**
-	 * Получение частичного списка товаров категории
-	 *
-	 * @param string $categoryId
-	 * @param int    $framePosition
-	 * @param int    $frameSize
-	 *
-	 * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
-	 */
-	public function get_tovarsCategory($categoryId = 'otc-3035', $framePosition = 0, $frameSize = 60)
-	{
+    /**
+     * Получение частичного списка товаров категории
+     *
+     * @param string  $categoryId
+     *
+     * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function get_tovarsCategory(Request $request, $categoryId = 'otc-3035')
+    {
+        //$framePosition = $request->get('framePosition', 0);
+        $framePosition = $request->get('page', 0) * 60;
+        $frameSize = 60;
+
         $body['category'] = $this->create_request('GetCategoryInfo', ['categoryId' => $categoryId]);
         $body['GetCategorySearchProperties'] = $this->create_request('GetCategorySearchProperties', ['categoryId' => $categoryId]);
-		$body['data'] = $this->create_request('GetCategoryItemInfoListFrame', [
-			'categoryId' => $categoryId,
-			'framePosition' => $framePosition,
-			'frameSize' => $frameSize]);
-		if($body['data']->OtapiItemInfoSubList->TotalCount > 0){
+        $body['data'] = $this->create_request('GetCategoryItemInfoListFrame', [
+            'categoryId' => $categoryId,
+            'framePosition' => $framePosition,
+            'frameSize' => $frameSize]);
+        if($body['data']->OtapiItemInfoSubList->TotalCount > 0){
             Breadcrumbs::register('otapi.category', function($breadcrumbs, $categoryId)
             {
                 $breadcrumbs->parent('otapi.index');
@@ -111,22 +112,32 @@ class Otapi extends Controller
                 }
             });
 
-			return view('otapi.categoryTovars', $body);
-		}else{
-			abort(404, 'Нет товаров в разделе');
-		}
-	}
+            //Пагинатор
+            $body['paginator']['total'] = (string)$body['data']->OtapiItemInfoSubList->TotalCount;
+            $body['paginator']['pages'] = ceil($body['paginator']['total']/$frameSize)-1;
+            $body['paginator']['current'] = $request->get('page', 1);
 
-	public function get_tovar($categoryId = 'otc-3035', $itemId = 45199342419)
-	{
-		$body['category'] = $this->create_request('GetCategoryInfo', ['categoryId' => $categoryId]);
-		$body['data'] = $this->create_request('GetItemFullInfo', ['itemId' => $itemId]);
+            return view('otapi.categoryTovars', $body);
+        }else{
+            abort(404, 'Нет товаров в разделе');
+        }
+    }
+
+    /**
+     * @param string $categoryId
+     * @param int $itemId
+     * @return mixed
+     */
+    public function get_tovar($categoryId = 'otc-3035', $itemId = 45199342419)
+    {
+        $body['category'] = $this->create_request('GetCategoryInfo', ['categoryId' => $categoryId]);
+        $body['data'] = $this->create_request('GetItemFullInfo', ['itemId' => $itemId]);
         $body['GetItemDescription'] = $this->create_request('GetItemDescription', ['itemId' => $itemId]);
         $body['opinions'] = $this->create_request('GetTradeRateInfoListFrame', ['itemId' => $itemId, 'framePosition' => 0, 'frameSize' => 32]);
         $body['vendorTovars'] = $this->create_request('GetVendorItemInfoSortedListFrame',
             ['vendorId' => (string)$body['data']->OtapiItemFullInfo->VendorId, 'framePosition' => 0, 'frameSize' => 6, 'sortingParameters' => '']);
         $body['vendor'] = $this->create_request('GetVendorInfo', ['vendorId' => (string)$body['data']->OtapiItemFullInfo->VendorId]);
-		if((string)$body['data']->ErrorCode === 'Ok'){
+        if((string)$body['data']->ErrorCode === 'Ok'){
 
             Breadcrumbs::register('otapi.tovar', function($breadcrumbs, $categoryId)
             {
@@ -142,11 +153,11 @@ class Otapi extends Controller
                 $breadcrumbs->push('Товар');
             });
 
-			return view('otapi.tovarItem', $body);
-		}else{
-			abort('404', 'Товар не получен');
-		}
-	}
+            return view('otapi.tovarItem', $body);
+        }else{
+            abort('404', 'Товар не получен');
+        }
+    }
 
     public function get_vendor($vendorId)
     {
@@ -155,16 +166,31 @@ class Otapi extends Controller
         return view('otapi.vendorTovars', $body);
     }
 
-    public function SearchItemsFrame(Request $request)
+    public function get_brand($brandId, Request $request)
     {
-        //http://docs.otapi.net/ru/Documentations/Type?name=OtapiSearchItemsParameters
+        $body['brand'] = $brandId;
         $body['data'] = $this->create_request('SearchItemsFrame', [
-            'xmlParameters' => '',
+            'xmlParameters' => '<SearchItemsParameters><BrandId>'. $brandId .'</BrandId></SearchItemsParameters>',
             'framePosition' => $request->get('framePosition', 0),
             'frameSize' => $request->get('frameSize', 60)]);
 
         if((string)$body['data']->ErrorCode === 'Ok'){
-            return view('otapi.categoryTovars', $body);
+            return view('otapi.brand', $body);
+        }else{
+            abort('404', 'Товар не получен');
+        }
+    }
+
+    public function SearchItemsFrame(Request $request)
+    {
+        //http://docs.otapi.net/ru/Documentations/Type?name=OtapiSearchItemsParameters
+        $body['data'] = $this->create_request('SearchItemsFrame', [
+            'xmlParameters' => '<SearchItemsParameters><ItemTitle>'. $request->get('search') .'</ItemTitle></SearchItemsParameters>',
+            'framePosition' => $request->get('framePosition', 0),
+            'frameSize' => $request->get('frameSize', 60)]);
+
+        if((string)$body['data']->ErrorCode === 'Ok'){
+            return view('otapi.search', $body);
         }else{
             abort('404', 'Товар не получен');
         }
@@ -181,6 +207,20 @@ class Otapi extends Controller
         $options = [];
         \Cart::add($request->get('id'), $request->get('name'), 1, $request->get('price'), $options);
         return response(\Cart::total());
+    }
+
+    public function get_cart()
+    {
+        $cart = Cart::content();
+        if(count($cart) === 0){
+            return redirect()->route('mainpage');
+        }
+        $tao_items = [];
+        foreach($cart as $item){
+            $tao_items[$item->id] = $this->create_request('GetItemFullInfo', ['itemId' => $item->id]);
+        }
+        $seo = ['title' => 'Cart page'];
+        return view('tbkhv.cart.table', compact('cart', 'seo', 'tao_items', ['cart', 'seo', 'tao_items']));
     }
 
     public function ModulePopularTovars()

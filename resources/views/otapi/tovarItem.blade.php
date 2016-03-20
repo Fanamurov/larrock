@@ -6,7 +6,7 @@
 @endsection
 
 @section('content')
-    TODO: Объединение параметров, добавление в корзину, отзывы
+    {!! dd($data->OtapiItemFullInfo) !!}
     <div class="page-catalog-item">
         <div class="col-xs-7 block-gallery">
             <?$count_picture = 0?>
@@ -24,7 +24,7 @@
         <div class="col-xs-10 col-xs-offset-1">
             <h1>{{ (string)$data->OtapiItemFullInfo->Title }}</h1>
             <p class="h4">{{ (string)$data->OtapiItemFullInfo->OriginalTitle }}</p>
-            <p><a href="{{ (string)$data->OtapiItemFullInfo->TaobaoItemUrl }}">{{ (string)$data->OtapiItemFullInfo->TaobaoItemUrl }}</a></p>
+            <p><a href="{{ (string)$data->OtapiItemFullInfo->TaobaoItemUrl }}">[этот товар на таобао]</a></p>
             <p class="cost">
                 <span class="strong-heavy">{{ (string)$data->OtapiItemFullInfo->Price->ConvertedPriceWithoutSign }}</span>
                 {{ (string)$data->OtapiItemFullInfo->Price->CurrencySign }}
@@ -35,7 +35,7 @@
                         <p>
                             <span>{{ (string)$attribute->PropertyName }}:</span>
                             @if((string)$attribute->MiniImageUrl !== '')
-                                <a href="{{ (string)$attribute->ImageUrl }}">
+                                <a class="fancybox" rel="property" href="{{ (string)$attribute->ImageUrl }}">
                                     <img src="{{ (string)$attribute->MiniImageUrl }}" alt="{{ (string)$attribute->PropertyName }} {{ (string)$attribute->Value }}">
                                     {{ (string)$attribute->Value }}
                                 </a>
@@ -47,7 +47,13 @@
                 @endforeach
             </div>
             <p>В наличии: {{ (string)$data->OtapiItemFullInfo->MasterQuantity }} шт.</p>
-            <button class="btn btn-warning btn-lg"><i class="fa fa-cart-plus"></i> Добавить в корзину</button>
+            <button class="btn btn-danger btn-lg btn-add-to-cart"
+                    data-id="{{ (string)$data->OtapiItemFullInfo->Id }}"
+                    data-name="{{ (string)$data->OtapiItemFullInfo->OriginalTitle }}"
+                    data-price="{{ (string)$data->OtapiItemFullInfo->Price->ConvertedPriceWithoutSign }}">
+                <i class="fa fa-cart-plus"></i> Добавить в корзину
+            </button>
+            <a href="/cart" class="btn btn-success btn-lg hidden btn-to-cart-link">Товар добавлен в корзину. Перейти к оформлению покупки</a>
             <div class="clearfix"></div>
         </div>
         <div class="col-xs-5 col-xs-offset-1">
@@ -85,36 +91,42 @@
                     </a>
                 @endforeach
                 <p class="text-right"><i>
-                    И еще <a href="/otapi/vendor/{{ (string)$data->OtapiItemFullInfo->VendorId }}">
-                        {{ (string)$vendorTovars->OtapiItemInfoSubList->TotalCount }} товаров...</a></i>
+                        И еще <a href="/otapi/vendor/{{ (string)$data->OtapiItemFullInfo->VendorId }}">
+                            {{ (string)$vendorTovars->OtapiItemInfoSubList->TotalCount }} товаров...</a></i>
                 </p>
             </div>
         </div>
     </div>
-    <div class="clearfix"></div><br/><br/>
+    <div class="clearfix"></div><br/><br/><br/>
 
     <div class="tabs">
         <!-- Nav tabs -->
-        <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a href="#description" aria-controls="description" role="tab" data-toggle="tab">Характеристики товара</a></li>
-            <li role="presentation"><a href="#photo-description" aria-controls="photo-description" role="tab" data-toggle="tab">Фото и описание</a></li>
+        <ul class="nav nav-tabs nav-tabs-description" role="tablist">
+            <li role="presentation"><a href="#description" aria-controls="description" role="tab" data-toggle="tab">Характеристики товара</a></li>
+            <li role="presentation" class="active"><a href="#photo-description" aria-controls="photo-description" role="tab" data-toggle="tab">Фото и описание</a></li>
             <li role="presentation"><a href="#opinions" aria-controls="opinions" role="tab" data-toggle="tab">Отзывы</a></li>
         </ul>
 
         <!-- Tab panes -->
         <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="description">
-                @foreach($data->OtapiItemFullInfo->Attributes->ItemAttribute as $attribute)
-                    @if((string)$attribute->IsConfigurator === 'false')
-                        <p><i>{{ (string)$attribute->PropertyName }}: {{ (string)$attribute->Value }}</i></p>
-                    @endif
-                @endforeach
+            <div role="tabpanel" class="tab-pane" id="description">
+                <div class="col-xs-24">
+                    @foreach($data->OtapiItemFullInfo->Attributes->ItemAttribute as $attribute)
+                        @if((string)$attribute->IsConfigurator === 'false')
+                            <p><i>{{ (string)$attribute->PropertyName }}: {{ (string)$attribute->Value }}</i></p>
+                        @endif
+                    @endforeach
+                </div>
             </div>
-            <div role="tabpanel" class="tab-pane" id="photo-description">
-                {!! (string)$GetItemDescription->OtapiItemDescription->ItemDescription !!}
+            <div role="tabpanel" class="tab-pane active" id="photo-description">
+                <div class="col-xs-24">
+                    {!! (string)$GetItemDescription->OtapiItemDescription->ItemDescription !!}
+                </div>
             </div>
             <div role="tabpanel" class="tab-pane" id="opinions">
+                <div class="col-xs-24">
 
+                </div>
             </div>
         </div>
     </div>

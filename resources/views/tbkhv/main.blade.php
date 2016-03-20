@@ -33,11 +33,8 @@
 <body>
 <div class="header_line row">
     <div class="container">
-        <div class="block-headerCart col-xs-24 col-sm-6">
-            @include('tbkhv.modules.cart.moduleSplash')
-        </div>
         <div class="col-xs-24 col-sm-18">
-            <ul class="nav nav-pills pull-right">
+            <ul class="nav nav-pills">
                 <li>
                     <a href="#">Доставка</a>
                 </li>
@@ -57,6 +54,9 @@
                     <a href="#">Контакты</a>
                 </li>
             </ul>
+        </div>
+        <div class="block-headerCart col-xs-24 col-sm-6">
+            @include('tbkhv.modules.cart.moduleSplash')
         </div>
     </div>
 </div>
@@ -102,12 +102,14 @@
             <span class="text-uppercase"><i class="fa fa-reorder"></i> | Категории товаров</span>
         </div>
         <div class="col-xs-16 col-xs-offset-1">
-            <div class="input-group block-search">
-                <input type="text" class="form-control" placeholder="Поиск товаров по названию или коду...">
-                <span class="input-group-btn">
-                    <button class="btn btn-default" type="button"><i class="fa fa-search"></i> Искать!</button>
-                </span>
-            </div>
+            <form action="/otapi/search" method="get">
+                <div class="input-group block-search">
+                    <input name="search" type="text" class="form-control" placeholder="Поиск товаров по названию или коду...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit"><i class="fa fa-search"></i> Искать!</button>
+                    </span>
+                </div>
+            </form>
         </div>
     </div>
     <div class="clearfix"></div>
@@ -141,9 +143,14 @@
         <div class="col-xs-24">
             @yield('footer')
             <address class="footer-left-text">
-                <p>ООО «Таобао.кхв»<br>680007, г. Хабаровск, пер. Трубный 10, оф. 123<br>Тел./факс: +7 (4212) 48-72-57, 24-21-15</p>
-                <p><a href="mailto:pshabar@mail.ru">pshabar@mail.ru</a></p>
+                <p>
+                    <strong>Общество с ограниченной ответственностью "ХАЙВЕЙ"</strong><br/>
+                    ИНН 2724185430 КПП 272401001 ОГРН 1142724000528<br/>
+                    680024, РОССИЯ, Хабаровск, проспект 60-летия Октября, 148Ж
+                </p>
+                <p><a href="mailto:mail@tbkhv.ru">mail@tbkhv.ru</a></p>
             </address>
+            <script type="text/javascript" charset="utf-8" src="https://api-maps.yandex.ru/services/constructor/1.0/js/?sid=b_6D-D2f45c9m5pJGmxy2uMSC4kf4Dmi&width=100%&height=400&lang=ru_RU&sourceType=constructor"></script>
             <p>Powered by © OT Commerce <a href="http://otcommerce.com/" target="_blank">otcommerce.com</a></p>
         </div>
     </div>

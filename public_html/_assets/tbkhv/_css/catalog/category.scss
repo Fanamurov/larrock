@@ -1,11 +1,31 @@
 .page-catalog-category{
   .div-img{
-    height: 160px;
+    height: 153px;
     overflow: hidden;
+    box-shadow: 1px 0 3px grey;
   }
   .item-catalog{
-    height: 360px;
+    height: 375px;
     padding: 10px 20px;
+  }
+  .cost{
+    color: #FFFFFF;
+    font-size: 15px;
+    font-weight: 500;
+    background: #fd4e00;
+    padding: 4px 10px;
+    text-align: center;
+    box-shadow: 1px 0 3px grey;
+  }
+  .vendor{
+    font-style: italic;
+    color: grey;
+    font-size: 13px;
+  }
+  .link_block_this:hover,
+  .link_block_this:focus{
+    opacity: .7;
+    transition: .3s linear all;
   }
 }
 

@@ -83,8 +83,8 @@ class Otapi extends Controller
     /**
      * Получение частичного списка товаров категории
      *
-     * @param string  $categoryId
-     *
+     * @param Request $request
+     * @param string $categoryId
      * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function get_tovarsCategory(Request $request, $categoryId = 'otc-3035')
@@ -124,22 +124,30 @@ class Otapi extends Controller
     }
 
     /**
+     * Получение частичного списка товаров категории
+     *
+     * @param Request $request
      * @param string $categoryId
-     * @param int $itemId
-     * @return mixed
+     * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function get_tovar($categoryId = 'otc-3035', $itemId = 45199342419)
+    public function get_tovarsCategoryFilter(Request $request, $categoryId = 'otc-3035')
     {
-        $body['category'] = $this->create_request('GetCategoryInfo', ['categoryId' => $categoryId]);
-        $body['data'] = $this->create_request('GetItemFullInfo', ['itemId' => $itemId]);
-        $body['GetItemDescription'] = $this->create_request('GetItemDescription', ['itemId' => $itemId]);
-        $body['opinions'] = $this->create_request('GetTradeRateInfoListFrame', ['itemId' => $itemId, 'framePosition' => 0, 'frameSize' => 32]);
-        $body['vendorTovars'] = $this->create_request('GetVendorItemInfoSortedListFrame',
-            ['vendorId' => (string)$body['data']->OtapiItemFullInfo->VendorId, 'framePosition' => 0, 'frameSize' => 6, 'sortingParameters' => '']);
-        $body['vendor'] = $this->create_request('GetVendorInfo', ['vendorId' => (string)$body['data']->OtapiItemFullInfo->VendorId]);
-        if((string)$body['data']->ErrorCode === 'Ok'){
+        //$framePosition = $request->get('framePosition', 0);
+        $framePosition = $request->get('page', 0) * 60;
+        $frameSize = 60;
 
-            Breadcrumbs::register('otapi.tovar', function($breadcrumbs, $categoryId)
+        $body['category'] = $this->create_request('GetCategoryInfo', ['categoryId' => $categoryId]);
+        $body['GetCategorySearchProperties'] = $this->create_request('GetCategorySearchProperties', ['categoryId' => $categoryId]);
+        $body['data'] = $this->create_request('FindCategoryItemInfoListFrame', [
+            'categoryId' => $categoryId,
+            'categoryItemFilter' => '<CategoryItemFilterParameters><ItemTitle>'. $request->get('search') .'</ItemTitle></CategoryItemFilterParameters>',
+            'framePosition' => $framePosition,
+            'frameSize' => $frameSize]);
+
+        dd($body['data']);
+
+        if($body['data']->OtapiItemInfoSubList->TotalCount > 0){
+            Breadcrumbs::register('otapi.category', function($breadcrumbs, $categoryId)
             {
                 $breadcrumbs->parent('otapi.index');
 
@@ -149,10 +157,75 @@ class Otapi extends Controller
                         route('otapi.category.tovars', [
                             'categoryId' => (string)$item->Id]));
                 }
+            });
+
+            //Пагинатор
+            $body['paginator']['total'] = (string)$body['data']->OtapiItemInfoSubList->TotalCount;
+            $body['paginator']['pages'] = ceil($body['paginator']['total']/$frameSize)-1;
+            $body['paginator']['current'] = $request->get('page', 1);
+
+            return view('otapi.categoryTovars', $body);
+        }else{
+            abort(404, 'Нет товаров в разделе');
+        }
+    }
+
+    /**
+     * @param string $categoryId
+     * @param int $itemId
+     * @return mixed
+     */
+    public function get_tovar($categoryId = 'otc-3035', $itemId = 45199342419)
+    {
+        $body = Cache::remember('catalog'.$categoryId.$itemId, 60, function() use($categoryId, $itemId){
+            $body['category'] = $this->create_request('GetCategoryInfo', ['categoryId' => $categoryId]);
+            $body['data'] = $this->create_request('GetItemFullInfo', ['itemId' => $itemId]);
+            $body['GetItemDescription'] = $this->create_request('GetItemDescription', ['itemId' => $itemId]);
+            $body['opinions'] = $this->create_request('GetTradeRateInfoListFrame', ['itemId' => $itemId, 'framePosition' => 0, 'frameSize' => 32]);
+            $body['vendorTovars'] = $this->create_request('GetVendorItemInfoSortedListFrame',
+                ['vendorId' => (string)$body['data']->OtapiItemFullInfo->VendorId, 'framePosition' => 0, 'frameSize' => 6, 'sortingParameters' => '']);
+            $body['vendor'] = $this->create_request('GetVendorInfo', ['vendorId' => (string)$body['data']->OtapiItemFullInfo->VendorId]);
+
+            return json_encode($body);
+        });
+
+        $body = json_decode($body, TRUE);
+
+        foreach ($body['data']['OtapiItemFullInfo']['ConfiguredItems']['OtapiConfiguredItem'] as $configured){
+            $vid = $configured['Configurators']['ValuedConfigurator'][0]['@attributes']['Vid'];
+            $pid = $configured['Configurators']['ValuedConfigurator'][0]['@attributes']['Pid'];
+            $body['configured'][$vid]['Price'] = $configured['Price']['ConvertedPriceWithoutSign'];
+            $body['configured'][$vid]['Quantity'] = $configured['Quantity'];
+            $body['configured'][$vid]['Vid'] = $vid;
+            $body['configured'][$vid]['Pid'] = $pid;
+
+            $vid = $configured['Configurators']['ValuedConfigurator'][1]['@attributes']['Vid'];
+            $pid = $configured['Configurators']['ValuedConfigurator'][1]['@attributes']['Pid'];
+            $body['configured'][$vid]['Price'] = $configured['Price']['ConvertedPriceWithoutSign'];
+            $body['configured'][$vid]['Quantity'] = $configured['Quantity'];
+            $body['configured'][$vid]['Vid'] = $vid;
+            $body['configured'][$vid]['Pid'] = $pid;
+        }
+
+        if((string)$body['data']['ErrorCode'] === 'Ok'){
+            Breadcrumbs::register('otapi.tovar', function($breadcrumbs, $categoryId)
+            {
+                $breadcrumbs->parent('otapi.index');
+
+                $GetCategoryRootPath = Cache::remember('Breadcrumbs.otapi.tovar'. $categoryId, 60, function() use ($categoryId) {
+                    $GetCategoryRootPath = $this->create_request('GetCategoryRootPath', ['categoryId' => $categoryId]);
+                    return json_encode($GetCategoryRootPath->CategoryInfoList->Content);
+                });
+                $GetCategoryRootPath = json_decode($GetCategoryRootPath);
+
+                foreach($GetCategoryRootPath->Item as $item){
+                    $breadcrumbs->push($item->Name,
+                        route('otapi.category.tovars', [
+                            'categoryId' => $item->Id]));
+                }
 
                 $breadcrumbs->push('Товар');
             });
-
             return view('otapi.tovarItem', $body);
         }else{
             abort('404', 'Товар не получен');

@@ -7,20 +7,23 @@
 
 @section('filters')
     <p class="h2">Фильтры для поиска:</p>
-    @foreach($GetCategorySearchProperties->SearchPropertyInfoList->Content->Item as $filter)
-        <div class="filter-item form-group col-xs-4">
-            <label for="filter{{ (string)$filter->Id }}" class="control-label">{{ (string)$filter->Name }}:</label>
-            <select id="filter{{ (string)$filter->Id }}" class="form-control">
-                @foreach($filter->Values->PropertyValue as $filter_value)
-                    <option value="{{ (string)$filter_value->Id }}">{{ (string)$filter_value->Name }}</option>
-                @endforeach
-            </select>
+    <form action="" method="post">
+        @foreach($GetCategorySearchProperties->SearchPropertyInfoList->Content->Item as $filter)
+            <div class="filter-item form-group col-xs-4">
+                <label for="filter{{ (string)$filter->Id }}" class="control-label">{{ (string)$filter->Name }}:</label>
+                <select id="filter{{ (string)$filter->Id }}" class="form-control">
+                    @foreach($filter->Values->PropertyValue as $filter_value)
+                        <option value="{{ (string)$filter_value->Id }}">{{ (string)$filter_value->Name }}</option>
+                    @endforeach
+                </select>
+            </div>
+        @endforeach
+        <div class="clearfix"></div>
+        <div class="form-group">
+            <input type="hidden" name="_token" value="{{csrf_token()}}">
+            <button type="submit" class="btn btn-success" name="filter"><i class="fa fa-sort"></i> Применить фильтры</button>
         </div>
-    @endforeach
-    <div class="clearfix"></div>
-    <div class="form-group">
-        <button type="submit" class="btn btn-success"><i class="fa fa-sort"></i> Применить фильтры</button>
-    </div>
+    </form>
 @endsection
 
 @section('content')

@@ -104,6 +104,9 @@ Route::get('/otapi/{categoryId}', [
 Route::get('/otapi/{categoryId}/list', [
     'as' => 'otapi.category.tovars', 'uses' => 'Otapi@get_tovarsCategory'
 ]);
+Route::post('/otapi/{categoryId}/list', [
+    'as' => 'otapi.category.tovars.filter', 'uses' => 'Otapi@get_tovarsCategoryFilter'
+]);
 Route::get('/otapi/{categoryId}/tovar/{itemId}', [
     'as' => 'otapi.category.tovar', 'uses' => 'Otapi@get_tovar'
 ]);

@@ -34,11 +34,15 @@ class Ajax extends Controller
 
 	public function getTovar(Request $request)
 	{
-		if($get_tovar = Catalog::find($request->get('id'))->with(['get_category'])->first()){
+		if($get_tovar = Catalog::whereId($request->get('id'))->with(['get_category'])->first()){
 			if($image_url = $get_tovar->getFirstMediaUrl('images')){
 				$get_tovar['image_url'] = $image_url;
 			}
-			return response()->json($get_tovar);
+			if($request->get('in_template') === 'true'){
+				return view('front.modals.addToCart', ['data' => $get_tovar, 'config_app' => \Config::get('components.catalog')]);
+			}else{
+				return response()->json($get_tovar);
+			}
 		}else{
 			return response('Товар не найден', 404);
 		}

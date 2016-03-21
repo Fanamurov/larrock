@@ -1,5 +1,5 @@
 @extends('front.main')
-@section('title') {{ $data->title }} @endsection
+@section('title') {{ $data->get_seo->seo_title or $data->title }} @endsection
 
 @section('content')
     <div class="page-{{ $data->url }}">

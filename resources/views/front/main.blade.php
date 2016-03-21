@@ -51,6 +51,7 @@
         </div>
         <section id="right_colomn" class="col-xs-7">
             <div class="col-xs-19 col-xs-offset-2">
+                <a href="/page/kontakty#form-contact" class="btn btn-primary btn-block btn-to-form">Оформить заявку</a>
                 @yield('front.modules.list.catalog')
                 @yield('rightColomn')
                 @include('front.modules.list.banner')
@@ -95,5 +96,7 @@
     $('.default-cost').arctext({radius: 170, dir: -1, rotate: true})
 </script>
 @yield('scripts')
+<script src="/_assets/bower_components/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="/_assets/bower_components/jquery-validation/dist/additional-methods.min.js"></script>
 </body>
 </html>

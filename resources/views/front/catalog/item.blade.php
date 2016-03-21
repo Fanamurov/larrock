@@ -22,27 +22,37 @@
                 </div>
             </div>
             <div class="col-xs-12">
-                <form class="form-addToCart" method="post" action="/forms/contact">
+                <div class="form-addToCart">
                     <div class="input-group">
                         <span class="input-group-addon addon-x">X</span>
-                        <input type="text" class="form-control kolvo" value="20000">
+                        <input type="text" class="form-control kolvo" id="kolvo-{{ $data->id }}" name="kolvo" value="{{ $data->min_part*1000 }}">
                         <span class="input-group-addon addon-what">кг</span>
                         <div class="input-group-btn">
-                            <button type="submit" class="btn btn-info pull-right" name="submit_contact">
+                            <span class="btn btn-info pull-right">
                                 <img src="/_assets/_front/_images/icons/icon_cart_white.png"
-                                     alt="Добавить в корзину" class="add_to_cart pointer"
+                                     alt="Добавить в корзину" class="submit_to_cart pointer"
                                      data-id="{{ $data->id }}" width="32" height="32">
-                            </button>
+                            </span>
                         </div>
                     </div>
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                </form>
+                </div>
             </div>
         </div>
         <div class="row row-description">
             <div class="col-xs-12">
                 <div class="catalogFull">
                     <div>{!! $data->description !!}</div>
+                    <div class="catalog-descriptions-rows">
+                        @foreach($config_app['rows'] as $row_key => $row)
+                            @if(array_key_exists('template', $row) && $row['template'] === 'description' && isset($data->$row_key) && !empty($data->$row_key))
+                                <p><strong>{{ $row['title'] }}:</strong> {{ $data->$row_key }}</p>
+                            @endif
+                        @endforeach
+                    </div>
+                    <div>
+                        <a href="/page/kontakty#form-contact" class="btn btn-primary btn-to-form-item">Задать вопрос</a>
+                    </div>
                 </div>
             </div>
             <div class="col-xs-12 other-photos">
@@ -60,4 +70,24 @@
 
 @section('front.modules.list.catalog')
     @include('front.modules.list.catalog')
+@endsection
+
+@section('scripts')
+    <script src="/_assets/bower_components/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="/_assets/bower_components/jquery-validation/dist/additional-methods.min.js"></script>
+    <script>
+        $( ".form-addToCart" ).validate({
+            rules: {
+                kolvo: {
+                    required: true,
+                    min: {{ $data->min_part*1000 }}
+                }
+            },
+            messages: {
+                kolvo: {
+                    min: "Минимальная партия для заказа {{ $data->min_part*1000 }}",
+                }
+            }
+        });
+    </script>
 @endsection

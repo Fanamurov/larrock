@@ -240,6 +240,15 @@ input[name=position]{
   }
 }
 
+.input-group-addon-m-0{
+  padding: 0;
+  .new_list{
+	height: 32px;
+	margin-bottom: 0;
+	padding-top: 6px;
+  }
+}
+
 .table>thead>tr>th{
   font-weight: 300;
   font-style: italic;

@@ -42,13 +42,13 @@ return [
 			'title' => 'Цена',
 			'type' => 'text',
 			'tab' => ['main' => 'Описание товара'],
-			'css_class_group' => 'col-xs-4'
+			'css_class_group' => 'col-xs-4 col-md-2'
 		],
 		'cost_old' => [
 			'title' => 'Старая цена',
 			'type' => 'text',
 			'tab' => ['main' => 'Описание товара'],
-			'css_class_group' => 'col-xs-4'
+			'css_class_group' => 'col-xs-4 col-md-2'
 		],
 		'what' => [
 			'title' => 'Мера измерений',
@@ -58,6 +58,75 @@ return [
 			'valid' => 'max:55|required',
 			'css_class_group' => 'col-xs-3'
 		],
+
+		'vid_raz' => [
+			'title' => 'Вид разделки',
+			'type' => 'select_row',
+			'options_connect' => ['row' => 'vid_raz', 'table' => 'catalog', 'selected_search' => 'value'],
+			'tab' => ['main' => 'Описание товара'],
+			'valid' => 'max:55',
+			'css_class_group' => 'col-xs-3',
+			'template' => 'description'
+		],
+		'razmer' => [
+			'title' => 'Размер продукта',
+			'type' => 'text',
+			'tab' => ['main' => 'Описание товара'],
+			'css_class_group' => 'col-xs-2 col-md-2',
+			'template' => 'description'
+		],
+		'weight' => [
+			'title' => 'Вес продукции в упаковке',
+			'type' => 'select_row',
+			'options_connect' => ['row' => 'weight', 'table' => 'catalog', 'selected_search' => 'value'],
+			'tab' => ['main' => 'Описание товара'],
+			'valid' => 'max:55',
+			'css_class_group' => 'col-xs-3',
+			'template' => 'description'
+		],
+		'vid_up' => [
+			'title' => 'Вид упаковки',
+			'type' => 'select_row',
+			'options_connect' => ['row' => 'vid_up', 'table' => 'catalog', 'selected_search' => 'value'],
+			'tab' => ['main' => 'Описание товара'],
+			'valid' => 'max:55',
+			'css_class_group' => 'col-xs-3',
+			'template' => 'description'
+		],
+		'date_vilov' => [
+			'title' => 'Дата вылова',
+			'type' => 'text',
+			'tab' => ['main' => 'Описание товара'],
+			'css_class_group' => 'col-xs-3',
+			'template' => 'description'
+		],
+		'sertifikacia' => [
+			'title' => 'Сертификация',
+			'type' => 'select_row',
+			'options_connect' => ['row' => 'sertifikacia', 'table' => 'catalog', 'selected_search' => 'value'],
+			'tab' => ['main' => 'Описание товара'],
+			'valid' => 'max:55',
+			'css_class_group' => 'col-xs-3',
+			'template' => 'description'
+		],
+		'mesto' => [
+			'title' => 'Место вылова',
+			'type' => 'select_row',
+			'options_connect' => ['row' => 'mesto', 'table' => 'catalog', 'selected_search' => 'value'],
+			'tab' => ['main' => 'Описание товара'],
+			'valid' => 'max:55',
+			'css_class_group' => 'col-xs-3',
+			'template' => 'description'
+		],
+		'min_part' => [
+			'title' => 'Минимальная партия (т.)',
+			'type' => 'text',
+			'tab' => ['main' => 'Описание товара'],
+			'css_class_group' => 'col-xs-3',
+			'template' => 'description'
+		],
+
+
 		'manufacture' => [
 			'title' => 'Производитель',
 			'type' => 'text',

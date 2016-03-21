@@ -21,6 +21,13 @@
                 <a href="{!! URL::current() !!}/{{ $data->url }}">{{ $data->title }}</a>
             </h5>
             <p>{!! $data->short !!}</p>
+            <div class="catalog-descriptions-rows">
+                @foreach($config_app['rows'] as $row_key => $row)
+                    @if(array_key_exists('template', $row) && $row['template'] === 'description' && isset($data->$row_key) && !empty($data->$row_key))
+                        <p><strong>{{ $row['title'] }}:</strong> {{ $data->$row_key }}</p>
+                    @endif
+                @endforeach
+            </div>
         </div>
     </div>
 </div>

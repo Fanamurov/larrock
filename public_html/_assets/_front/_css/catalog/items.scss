@@ -12,6 +12,11 @@
 
 .catalogBlockItem{
   padding-bottom: 60px;
+  .catalog-descriptions-rows{
+	p{
+	  margin-bottom: 4px;
+	}
+  }
   .listItemImage{
 	border-radius: 4px;
 	box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);

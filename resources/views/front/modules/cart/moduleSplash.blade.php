@@ -18,4 +18,3 @@
             </a></p>
     @endif
 </div>
-@include('front.modals.addToCart')

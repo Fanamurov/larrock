@@ -26,12 +26,13 @@ class CatalogController extends Controller
 	public function __construct()
 	{
 		$this->config = \Config::get('components.catalog');
+		\View::share('config_app', $this->config);
 
 		Breadcrumbs::register('catalog.index', function($breadcrumbs)
 		{
 			$breadcrumbs->push('Рыбная продукция', '/catalog');
 		});
-		\View::share('menu', Menu::whereActive(1)->get());
+		\View::share('menu', Menu::whereActive(1)->orderBy('position', 'DESC')->get());
 		\View::share('banner', Blocks::whereUrl('banner')->first()->getFirstMediaUrl('images'));
 	}
 
@@ -69,8 +70,6 @@ class CatalogController extends Controller
 
     public function getMainCategory()
 	{
-		$test = Catalog::whereActive(1)->first();
-		dd($test);
 		\View::share('seofish', Feed::whereCategory(2)->orderBy('position', 'DESC')->get());
 		$data = Cache::remember('getTovars_main', 60, function()
 		{

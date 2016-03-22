@@ -51,7 +51,7 @@ class CatalogController extends Controller
 		});
 		$data['module_listCatalog'] = $listCatalog->categories();
 		foreach($data['data'] as $key => $value){
-			$data['data'][$key]['images'] = $value->getMedia('images');
+			$data['data'][$key]['images'] = $value->getMedia('images')->sortByDesc('order_column');
 		}
 
 		$data['paginator'] = new Paginator(
@@ -98,7 +98,18 @@ class CatalogController extends Controller
 			}
 		}
 
-		$data['data'] = Category::whereType('catalog')->whereActive(1)->whereUrl($select_category)->with(['get_childActive.get_parent'])->first();
+		//Модуль списка разделов справа
+		$data['module_listCatalog'] = $listCatalog->categories();
+
+		$data['data'] = Cache::remember('getCategory'. $select_category, 60, function() use ($select_category) {
+		    return Category::whereType('catalog')->whereActive(1)->whereUrl($select_category)->with(['get_childActive.get_parent'])->first();
+		});
+
+		if( !$data['data']){
+			//Раздела с таким url нет, значит ищем товар
+			return $this->getItem($select_category, $data['module_listCatalog']);
+		}
+
 		Breadcrumbs::register('catalog.category', function($breadcrumbs, $data)
 		{
 			$breadcrumbs->parent('catalog.index');
@@ -113,19 +124,13 @@ class CatalogController extends Controller
 			$breadcrumbs->push($data->title);
 		});
 
-		//Модуль списка разделов справа
-		$data['module_listCatalog'] = $listCatalog->categories();
-
-		if( !$data['data']){
-			//Раздела с таким url нет, значит ищем товар
-			return $this->getItem($select_category, $data['module_listCatalog']);
-		}
-
-		$data['data']['images'] = $data['data']->getMedia('images');
-
 		if(count($data['data']->get_child) === 0){
 			return $this->getTovars($select_category, $request, $data['module_listCatalog']);
 		}
+
+		$data['data']['images'] = Cache::remember('categoryImages', 60, function() use ($data) {
+			return $data['data']->getMedia('images')->sortByDesc('order_column');
+		});
 
 		$data['seo']['title'] = 'SEO title getCategory';
 
@@ -159,11 +164,11 @@ class CatalogController extends Controller
 			)->first();
 		});
 
-		$data['data']['images'] = $data['data']->getMedia('images');
+		$data['data']['images'] = $data['data']->getMedia('images')->sortByDesc('order_column');
 		foreach($data['data']->get_tovarsActive as $key => $value){
 			$images = Cache::remember('catalog_image'. $value->id, 60, function() use ($value)
 			{
-				return $value->getMedia('images');
+				return $value->getMedia('images')->sortByDesc('order_column');
 			});
 			$data['data']->get_tovarsActive[$key]['images'] = $images;
 		}
@@ -195,9 +200,9 @@ class CatalogController extends Controller
 
 	public function getItem($item, $module_listCatalog)
 	{
-		$data['data'] = Catalog::whereUrl($item)->with(['get_seo', 'get_templates', 'get_category'])->first();
-		$data['data']['images'] = $data['data']->getMedia('images');
-		$data['data']['files'] = $data['data']->getMedia('files');
+		$data['data'] = Catalog::whereUrl($item)->with(['get_seo', 'get_templates', 'get_category'])->firstOrFail();
+		$data['data']['images'] = $data['data']->getMedia('images')->sortByDesc('order_column');
+		$data['data']['files'] = $data['data']->getMedia('files')->sortByDesc('order_column');
 
 		Breadcrumbs::register('catalog.item', function($breadcrumbs, $data)
 		{

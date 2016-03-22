@@ -6,6 +6,7 @@ use App\Helpers\ContentPlugins;
 use App\Models\Blocks;
 use App\Models\Catalog;
 use App\Models\Category;
+use App\Models\Feed;
 use App\Models\Page;
 use EMT\EMTypograph;
 use Illuminate\Http\Request;
@@ -59,6 +60,7 @@ class AdminAjax extends Controller
 	public function UploadImage()
 	{
 		if( !file_exists(public_path() .'/image_cache')){
+			/** @noinspection MkdirRaceConditionInspection */
 			@mkdir(public_path() .'/image_cache', 0755);
 		}
 		$images = Input::file('images');
@@ -90,6 +92,11 @@ class AdminAjax extends Controller
 					$content = Blocks::find($model_id);
 					//Сохраняем фото под именем имямодели-idмодели-транслит(название картинки)
 					$content->addMedia(public_path() .'/image_cache/'. $image_name)->toMediaLibrary('images');
+				}
+				elseif($model === 'Feed'){
+					$content = Feed::find($model_id);
+					//Сохраняем фото под именем имямодели-idмодели-транслит(название картинки)
+					$content->addMedia(public_path() .'/image_cache/'. $image_name)->toMediaLibrary('images');
 				}else{
 					return response()->json(['status' => 'error', 'message' => 'Model_Type '. $model .' не известна'], 300);
 				}
@@ -111,10 +118,10 @@ class AdminAjax extends Controller
 		$id = Input::get('id'); //ID в таблице media
 		if(DB::table('media')
 			->where('id', $id)
-			->update(array('custom_properties' => json_encode([
+			->update(['order_column' => Input::get('position', 0),
+				'custom_properties' => json_encode([
 				'alt' => Input::get('alt'),
-				'gallery' => Input::get('gallery'),
-				'position' => Input::get('position')])))){
+				'gallery' => Input::get('gallery')])])){
 			return response()->json(['status' => 'success', 'message' => 'Дополнительные параметры сохранены']);
 		}else{
 			return response()->json(['status' => 'error', 'message' => 'Запрос к БД не выполенен'], 503);
@@ -133,19 +140,23 @@ class AdminAjax extends Controller
 			$model = class_basename(Input::get('model_type'));
 			if($model === 'Page'){
 				$content = Page::whereId(Input::get('model_id'))->first();
-				return view('admin.plugins.getUploadedImages', ['data' => $content->getMedia('images')]);
+				return view('admin.plugins.getUploadedImages', ['data' => $content->getMedia('images')->sortByDesc('order_column')]);
 			}
             if($model === 'Blocks'){
                 $content = Blocks::whereId(Input::get('model_id'))->first();
-                return view('admin.plugins.getUploadedImages', ['data' => $content->getMedia('images')]);
+                return view('admin.plugins.getUploadedImages', ['data' => $content->getMedia('images')->sortByDesc('order_column')]);
             }
 			if($model === 'Catalog'){
 				$content = Catalog::whereId(Input::get('model_id'))->first();
-				return view('admin.plugins.getUploadedImages', ['data' => $content->getMedia('images')]);
+				return view('admin.plugins.getUploadedImages', ['data' => $content->getMedia('images')->sortByDesc('order_column')]);
 			}
 			if($model === 'Category'){
 				$content = Category::whereId(Input::get('model_id'))->first();
-				return view('admin.plugins.getUploadedImages', ['data' => $content->getMedia('images')]);
+				return view('admin.plugins.getUploadedImages', ['data' => $content->getMedia('images')->sortByDesc('order_column')]);
+			}
+			if($model === 'Feed'){
+				$content = Feed::whereId(Input::get('model_id'))->first();
+				return view('admin.plugins.getUploadedImages', ['data' => $content->getMedia('images')->sortByDesc('order_column')]);
 			}
 			return response()->json(['status' => 'error', 'message' => 'Model_Type '. $model .' не известна'], 300);
 		}else{
@@ -171,6 +182,10 @@ class AdminAjax extends Controller
 			Catalog::find(Input::get('model_id'))->deleteMedia(Input::get('id'));
 			return response()->json(['status' => 'success', 'message' => 'Файл удален']);
 		}
+		if(Input::get('model') === 'Feed'){
+			Feed::find(Input::get('model_id'))->deleteMedia(Input::get('id'));
+			return response()->json(['status' => 'success', 'message' => 'Файл удален']);
+		}
 		return response()->json(['status' => 'error', 'message' => 'Model_Type '. Input::get('model') .' не известна'], 300);
 	}
 
@@ -182,19 +197,23 @@ class AdminAjax extends Controller
 			$model = class_basename(Input::get('model_type'));
 			if($model === 'Page'){
 				$content = Page::whereId(Input::get('model_id'))->first();
-				return view('admin.plugins.getUploadedFiles', ['data' => $content->getMedia('files')]);
+				return view('admin.plugins.getUploadedFiles', ['data' => $content->getMedia('files')->sortByDesc('order_column')]);
 			}
 			if($model === 'Blocks'){
 				$content = Blocks::whereId(Input::get('model_id'))->first();
-				return view('admin.plugins.getUploadedFiles', ['data' => $content->getMedia('files')]);
+				return view('admin.plugins.getUploadedFiles', ['data' => $content->getMedia('files')->sortByDesc('order_column')]);
 			}
 			if($model === 'Category'){
 				$content = Category::whereId(Input::get('model_id'))->first();
-				return view('admin.plugins.getUploadedFiles', ['data' => $content->getMedia('files')]);
+				return view('admin.plugins.getUploadedFiles', ['data' => $content->getMedia('files')->sortByDesc('order_column')]);
 			}
 			if($model === 'Catalog'){
 				$content = Catalog::whereId(Input::get('model_id'))->first();
-				return view('admin.plugins.getUploadedFiles', ['data' => $content->getMedia('files')]);
+				return view('admin.plugins.getUploadedFiles', ['data' => $content->getMedia('files')->sortByDesc('order_column')]);
+			}
+			if($model === 'Feed'){
+				$content = Feed::whereId(Input::get('model_id'))->first();
+				return view('admin.plugins.getUploadedFiles', ['data' => $content->getMedia('files')->sortByDesc('order_column')]);
 			}
 			return response()->json(['status' => 'error', 'message' => 'Model_Type '. $model .' не известна'], 300);
 		}else{
@@ -229,6 +248,10 @@ class AdminAjax extends Controller
 				elseif($model === 'Blocks'){
 					$content = Blocks::find($model_id);
 					$content->addMedia(public_path() .'/media/'. $file_name)->toMediaLibrary('files');
+				}
+				elseif($model === 'Feed'){
+					$content = Feed::find($model_id);
+					$content->addMedia(public_path() .'/media/'. $file_name)->toMediaLibrary('files');
 				}else{
 					return response()->json(['status' => 'error', 'message' => 'Model_Type '. $model .' не известна'], 300);
 				}
@@ -258,12 +281,33 @@ class AdminAjax extends Controller
 			Catalog::find(Input::get('model_id'))->deleteMedia(Input::get('id'));
 			return response()->json(['status' => 'success', 'message' => 'Файл удален']);
 		}
+		if(Input::get('model') === 'Feed'){
+			Feed::find(Input::get('model_id'))->deleteMedia(Input::get('id'));
+			return response()->json(['status' => 'success', 'message' => 'Файл удален']);
+		}
 		return response()->json(['status' => 'error', 'message' => 'Model_Type '. Input::get('model') .' не известна'], 300);
 	}
 
     public function Translit()
     {
         $url = str_slug(Input::get('text'));
+		if(Input::get('table', '') !== ''){
+			if(Input::get('table') === 'catalog' && Catalog::whereUrl($url)->first(['url'])){
+				$url = $url .'-'. mt_rand(2, 999);
+			}
+			if(Input::get('table') === 'feed' && Feed::whereUrl($url)->first(['url'])){
+				$url = $url .'-'. mt_rand(2, 999);
+			}
+			if(Input::get('table') === 'page' && Page::whereUrl($url)->first(['url'])){
+				$url = $url .'-'. mt_rand(2, 999);
+			}
+			if(Input::get('table') === 'category' && Category::whereUrl($url)->first(['url'])){
+				$url = $url .'-'. mt_rand(2, 999);
+			}
+			if(Input::get('table') === 'blocks' && Blocks::whereUrl($url)->first(['url'])){
+				$url = $url .'-'. mt_rand(2, 999);
+			}
+		}
         return response()->json(['status' => 'success', 'message' => $url]);
     }
 

@@ -57,8 +57,8 @@
             </div>
             <div class="col-xs-12 other-photos">
                 @if(count($data->images) > 1)
-                    @foreach($data->images as $key => $image)
-                        @if($key > 0)
+                    @foreach($data->images as $image)
+                        @if($image->id !== $data->images->first()->id)
                             <div class="other-photos-bg" style="background-image: url('{!! $image->getUrl() !!}')"></div>
                         @endif
                     @endforeach

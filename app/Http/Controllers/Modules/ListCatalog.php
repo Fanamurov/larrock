@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Modules;
 
 use App\Models\Category;
+use Cache;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -18,6 +19,9 @@ class ListCatalog extends Controller
 {
     public function categories()
 	{
-		return $data['data'] = Category::type('catalog')->orderBy('position', 'DESC')->get(['title', 'url', 'level']);
+		$data = Cache::remember('list_catalog', 60, function() {
+		    return Category::type('catalog')->orderBy('position', 'DESC')->get(['title', 'url', 'level']);
+		});
+		return $data;
 	}
 }

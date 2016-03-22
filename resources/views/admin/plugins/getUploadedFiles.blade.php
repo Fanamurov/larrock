@@ -12,7 +12,7 @@
             <div class="form-group">
                 <div class="input-group">
                     <div class="input-group-addon">Alt/description:</div>
-                    <input class="form-control description-file ajax_edit_media" type="text" value="{{ $file_item->custom_properties['alt'] or '' }}"
+                    <input class="form-control description-file ajax_edit_media_files" type="text" value="{{ $file_item->custom_properties['alt'] or '' }}"
                            data-model_type="{!! class_basename($file_item->model_type) !!}"
                            data-id="{{ $file_item->id }}" data-row="description"
                            placeholder="Alt/description">
@@ -23,7 +23,7 @@
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-addon">Группа для галереи:</div>
-                            <input class="form-control param-file ajax_edit_media" type="text" value="{{ $file_item->custom_properties['gallery'] or '' }}"
+                            <input class="form-control param-file ajax_edit_media_files" type="text" value="{{ $file_item->custom_properties['gallery'] or '' }}"
                                    data-model_type="{!! class_basename($file_item->model_type) !!}"
                                    data-id="{{ $file_item->id }}" data-row="param"
                                    placeholder="Галерея">
@@ -34,7 +34,7 @@
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-addon">Вес:</div>
-                            <input class="form-control position-file ajax_edit_media" type="text" value="{{ $file_item->custom_properties['position'] or '0' }}"
+                            <input class="form-control position-file ajax_edit_media_files" type="text" value="{{ $file_item->order_column or '0' }}"
                                    data-model_type="{!! class_basename($file_item->model_type) !!}"
                                    data-id="{{ $file_item->id }}" data-row="position"
                                    placeholder="Вес" style="width: 50px">

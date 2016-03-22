@@ -116,6 +116,8 @@ Route::group(['prefix' => 'admin', 'middleware'=>'level:2'], function(){
 	Route::resource('menu', 'Admin\AdminMenuController');
 	Route::resource('feed', 'Admin\AdminFeedController');
 	Route::resource('catalog', 'Admin\AdminCatalogController');
+	Route::post('catalog/copy', 'Admin\AdminCatalogController@copy');
+	
 	Route::resource('category', 'Admin\AdminCategoryController');
 	Route::resource('blocks', 'Admin\AdminBlocksController');
 	Route::post('/category/storeEasy', 'Admin\AdminCategoryController@storeEasy');

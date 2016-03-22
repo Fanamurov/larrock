@@ -2,13 +2,18 @@
 @foreach($data as $data_value)
     <tr>
         <td><a href="/admin/catalog/{{ $data_value->id }}/edit">
-                @if($data_value->getFirstMediaUrl('images', '110x110'))
-                    <img src="{{ $data_value->getFirstMediaUrl('images', '110x110') }}">
+                @if($data_value->image)
+                    <img src="{{ $data_value->image->getUrl('110x110') }}">
                 @else
                     <i class="icon-padding icon-color glyphicon glyphicon-file"></i>
                 @endif
                 {{ $data_value->title }}
             </a>
+            <form method="post" action="/admin/catalog/copy" class="hidden">
+                <input type="hidden" name="copy_id" value="{{ $data_value->id }}">
+                <input type="hidden" name="_token" value="{{csrf_token()}}">
+                <button type="submit" class="btn btn-default">Copy</button>
+            </form>
         </td>
         <td>
             <a href="/catalog/{{ $data_value->get_category()->first()->url }}/{{ $data_value->url }}">

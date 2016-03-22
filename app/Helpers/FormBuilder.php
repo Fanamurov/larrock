@@ -11,6 +11,7 @@ class FormBuilder implements FormBuilderInterface
 {
 	public function render($app, $data, $tab = NULL)
 	{
+		View::share('app', $app);
 		$render = '';
 		foreach($app['rows'] as $row_key => $row_settings){
 			if($tab){

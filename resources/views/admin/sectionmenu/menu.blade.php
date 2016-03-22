@@ -51,8 +51,8 @@
                         <li><a href="#">Блоки шаблона</a></li>
                         <li><a href="{{ action('Admin\AdminSettings\Image@index') }}">Картинки</a></li>
                         <li role="separator" class="divider"></li>
-                        <li>
-                            <a href="#" id="clear_cache"><i class="fa fa-trash-o"></i> Кэш</a>
+                        <li class="hovered">
+                            <a href="#" id="clear_cache"><i class="fa fa-trash-o"></i> Очистить кэш</a>
                         </li>
                     </ul>
                 </li>

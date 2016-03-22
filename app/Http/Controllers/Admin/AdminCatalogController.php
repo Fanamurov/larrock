@@ -108,6 +108,39 @@ class AdminCatalogController extends Controller
 		return back()->withInput();
 	}
 
+	//TODO: доделать
+	public function copy(Request $request)
+	{
+		if($request->has('copy_id')){
+			//Copy element
+			$get_copy = Catalog::whereId($request->get('copy_id'))->first();
+			$get_images = $get_copy->getMedia('images');
+			$get_files = $get_copy->getMedia('files');
+			unset($get_copy['id']);
+			unset($get_copy['created_at']);
+			unset($get_copy['updated_at']);
+			$get_copy['title'] = 'Копия '. $get_copy['title'];
+			$get_copy['url'] = str_slug($get_copy['title']);
+			if($get_copy->save()){
+				foreach($data->get_category()->get() as $category){
+					$data->get_category()->detach($category);
+				}
+
+				foreach($get_images as $image){
+					$get_copy->addMedia($image->getPath())->preservingOriginal()->toMediaLibrary('images');
+				}
+				foreach($get_files as $file){
+					$get_copy->addMedia($file->getPath())->preservingOriginal()->toMediaLibrary('images');
+				}
+				Alert::add('success', 'Товар '. $get_copy->title .' добавлен')->flash();
+				return back();
+			}
+		}else{
+			Alert::add('error', 'Объект не скопирован');
+		}
+		return back();
+	}
+
 	/**
 	 * Display the list resource of category.
 	 *
@@ -124,6 +157,10 @@ class AdminCatalogController extends Controller
 		{
 			$query->paginate($paginate);
 		}, 'get_child', 'get_parent'])->first();
+
+		foreach($data['data']->get_tovars as $key => $tovar){
+			$data['data']->get_tovars[$key]['image'] = $tovar->getMedia('images')->sortByDesc('order_column')->first();
+		}
 
 		$data['paginator'] = new Paginator(
 			$data['data']->get_tovars(),
@@ -164,7 +201,7 @@ class AdminCatalogController extends Controller
 	public function edit($id, ContentPlugins $ContentPlugins)
 	{
 		$data['data'] = Catalog::with(['get_category', 'get_seo', 'get_templates'])->findOrFail($id);
-        $data['images']['data'] = $data['data']->getMedia('images');
+        $data['images']['data'] = $data['data']->getMedia('images')->sortByDesc('order_column');
 
 		$data['id'] = $id;
 		$data['app'] = $ContentPlugins->attach_rows($this->config);

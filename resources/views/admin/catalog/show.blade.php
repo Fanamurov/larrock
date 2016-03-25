@@ -22,9 +22,13 @@
                 <table class="table table-striped table-hover">
                     <thead>
                     <tr>
+                        <th></th>
                         <th>Название</th>
                         <th>URL</th>
-                        <th width="90">Вес</th>
+                        @if($data->get_tovars)
+                            <th width="90">Цена</th>
+                        @endif
+                        <th width="90">Порядок</th>
                         <th width="93"></th>
                         <th width="90"></th>
                         <th width="90"></th>
@@ -52,9 +56,13 @@
                     <table class="table table-striped table-hover">
                         <thead>
                         <tr>
+                            <th></th>
                             <th>Название</th>
                             <th>URL</th>
-                            <th width="90">Вес</th>
+                            @if($data->get_tovars)
+                                <th width="90">Цена</th>
+                            @endif
+                            <th width="90">Порядок</th>
                             <th width="93"></th>
                             <th width="90"></th>
                             <th width="90"></th>

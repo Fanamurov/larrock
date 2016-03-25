@@ -34,8 +34,9 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next)
     {
+		//dd($this->auth->check());
         if ($this->auth->check()) {
-            return redirect('/home');
+			return redirect()->intended('/');
         }
 
         return $next($request);

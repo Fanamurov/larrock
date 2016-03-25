@@ -36,9 +36,7 @@
                         <td>{{ $data_value->first_name or 'n/a' }}</td>
                         <td>{{ $data_value->last_name or 'n/a' }}</td>
                         <td>
-                            @foreach($data_value->role as $role)
-                                {{ $role->slug }}
-                            @endforeach
+                            {{ $data_value->role->first()->slug }}
                         </td>
                         <td>{{ $data_value->updated_at }}</td>
                         <td>

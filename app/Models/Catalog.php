@@ -34,7 +34,6 @@ use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Catalog whereTitle($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Catalog whereShort($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Catalog whereDescription($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Catalog whereCategory($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Catalog whereUrl($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Catalog whereWhat($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Catalog whereCost($value)

@@ -18,8 +18,7 @@ class PageController extends Controller
 	public function __construct()
 	{
 		$this->config = \Config::get('components.page');
-		\View::share('menu', Menu::whereActive(1)->orderBy('position', 'DESC')->get());
-		\View::share('banner', Blocks::whereUrl('banner')->first()->getFirstMediaUrl('images'));
+		$this->middleware('loaderModules');
 	}
 
     public function getItem($url, ContentPlugins $contentPlugins)

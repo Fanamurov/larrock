@@ -6,16 +6,21 @@
 @endif
 @foreach($data->get_child as $data_value)
     <tr>
-        <td><a href="/admin/catalog/{{ $data_value->id }}">
-                @if($data_value->getFirstMediaUrl('images', '110x110'))
-                    <img src="{{ $data_value->getFirstMediaUrl('images', '110x110') }}">
+        <td width="110">
+            <a href="/admin/catalog/{{ $data_value->id }}">
+                @if($data_value->image)
+                    <img src="{{ $data_value->image->getUrl('110x110') }}">
                 @else
                     <i class="icon-padding icon-color glyphicon glyphicon-file"></i>
                 @endif
-                    {{ $data_value->title }}
             </a>
         </td>
         <td>
+            <a href="/admin/catalog/{{ $data_value->id }}">
+                {{ $data_value->title }}
+            </a>
+        </td>
+        <td width="200">
             <a href="/catalog/{{ $data_value->url }}">
                 /catalog/{{ $data_value->url }}
             </a>

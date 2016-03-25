@@ -74,7 +74,7 @@
                     <a aria-expanded="false" role="button" href="/" target="_blank">К сайту</a>
                 </li>
                 <li>
-                    <a href="/auth/logout">
+                    <a href="{{ url('/logout') }}">
                         <i class="fa fa-sign-out"></i> Выйти
                     </a>
                 </li>

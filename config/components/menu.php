@@ -30,6 +30,7 @@ return [
 		],
 		'connect' => [
 			'title' => 'Связь',
+			'in_table_admin' => 'TRUE',
 			'type' => 'text',
 		],
 		'url' => [

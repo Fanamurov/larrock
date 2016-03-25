@@ -27,13 +27,12 @@ class CatalogController extends Controller
 	{
 		$this->config = \Config::get('components.catalog');
 		\View::share('config_app', $this->config);
+		$this->middleware('loaderModules');
 
 		Breadcrumbs::register('catalog.index', function($breadcrumbs)
 		{
 			$breadcrumbs->push('Рыбная продукция', '/catalog');
 		});
-		\View::share('menu', Menu::whereActive(1)->orderBy('position', 'DESC')->get());
-		\View::share('banner', Blocks::whereUrl('banner')->first()->getFirstMediaUrl('images'));
 	}
 
 	public function getAllTovars(Request $request, ListCatalog $listCatalog)
@@ -70,7 +69,11 @@ class CatalogController extends Controller
 
     public function getMainCategory()
 	{
-		\View::share('seofish', Feed::whereCategory(2)->orderBy('position', 'DESC')->get());
+		$seofish = Cache::remember('seofish_mod', 60, function() {
+		    return Feed::whereCategory(2)->whereActive(1)->orderBy('position', 'DESC')->get();
+		});
+		\View::share('seofish', $seofish);
+
 		$data = Cache::remember('getTovars_main', 60, function()
 		{
 			$data['data'] = Category::whereType('catalog')->whereLevel(1)->whereActive(1)->with('get_parent')->orderBy('position', 'DESC')->get();

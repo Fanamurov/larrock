@@ -26,7 +26,7 @@
                     <tr>
                         <th>Название</th>
                         <th>URL</th>
-                        <th width="90" data-toggle="tooltip" data-placement="bottom" title="Вес. Чем больше, тем выше в списках">Вес</th>
+                        <th width="90" data-toggle="tooltip" data-placement="bottom" title="Вес. Чем больше, тем выше в списках">Порядок</th>
                         <th width="93"></th>
                         <th width="90"></th>
                         <th width="90"></th>

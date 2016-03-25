@@ -56,6 +56,9 @@ return [
     | Supported: "database", "eloquent"
     |
     */
+
+	'model' => App\User::class, //For Bican\Roles\Models\Role
+	
     'providers' => [
         'users' => [
             'driver' => 'eloquent',

@@ -1,24 +1,28 @@
 {{-- Список товаров --}}
 @foreach($data as $data_value)
     <tr>
-        <td><a href="/admin/catalog/{{ $data_value->id }}/edit">
+        <td width="110">
+            <a href="/admin/catalog/{{ $data_value->id }}/edit">
                 @if($data_value->image)
                     <img src="{{ $data_value->image->getUrl('110x110') }}">
                 @else
                     <i class="icon-padding icon-color glyphicon glyphicon-file"></i>
                 @endif
-                {{ $data_value->title }}
             </a>
-            <form method="post" action="/admin/catalog/copy" class="hidden">
-                <input type="hidden" name="copy_id" value="{{ $data_value->id }}">
-                <input type="hidden" name="_token" value="{{csrf_token()}}">
-                <button type="submit" class="btn btn-default">Copy</button>
-            </form>
         </td>
         <td>
+            <a href="/admin/catalog/{{ $data_value->id }}">
+                {{ $data_value->title }}
+            </a>
+        </td>
+        <td width="200">
             <a href="/catalog/{{ $data_value->get_category()->first()->url }}/{{ $data_value->url }}">
                 /catalog/{{ $data_value->get_category()->first()->url }}/{{ $data_value->url }}
             </a>
+        </td>
+        <td>
+            <input type="text" name="cost" value="{{ $data_value->cost }}" class="ajax_edit_row form-control"
+                   data-row_where="id" data-value_where="{{ $data_value->id }}" data-table="catalog">
         </td>
         <td class="row-position">
             <input type="text" name="position" value="{{ $data_value->position }}" class="ajax_edit_row form-control"

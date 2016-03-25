@@ -25,7 +25,6 @@
 <div id="wrapper" class="top-navigation">
     <div id="wrapper">
         <div id="page-wrapper" class="gray-bg">
-            @if(isset($menu)) {!! $menu !!} @endif
             <div class="wrapper wrapper-content">
                 <div class="container">
                     <div class="row">
@@ -53,15 +52,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="footer">
-                <div class="pull-right">
-                    Проект <a href="http://test.ru">test.ru</a>
-                </div>
-                <div>
-                    <strong>Copyright</strong> LarRock v.1 © 2015-{!! date('Y') !!}
-                </div>
-            </div>
         </div>
     </div>
 </div>
@@ -70,15 +60,6 @@
 <link href="/_assets/bower_components/jquery.filer/css/themes/jquery.filer-dragdropbox-theme.css" type="text/css" rel="stylesheet" />
 
 <script src="/_assets/bower_components/jquery.filer/js/jquery.filer.min.js"></script>
-
-<!-- Mainly scripts -->
 <script src="{{asset('_assets/_admin/_js/bootstrap.min.js')}}"></script>
-<script src="{{asset('_assets/_admin/_js/back_core.min.js')}}"></script>
-
-<script src="/_assets/bower_components/tinymce/tinymce.jquery.min.js"></script>
-
-<!-- Laravel Javascript Validation -->
-<script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
-@if(isset($validator)) {!! $validator !!} @endif
 </body>
 </html>

@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Helpers\Component;
 use App\Http\Controllers\Admin\AdminBlocks\MenuBlock;
-use App\Models\Roles;
-use App\Models\Users;
+use App\User;
+use Bican\Roles\Models\Role;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -39,7 +39,12 @@ class AdminUsersController extends Controller
      */
     public function index()
     {
-		$users = Users::paginate(15);
+		/*$roles = Role::all();
+		foreach($roles as $key => $role){
+			$roles[$key]['users'] = $role->users()->get();
+		}
+		dd(Role::all());*/
+		$users = User::with('role')->paginate(15);
 		return view('admin.users.index', array('data' => $users));
     }
 
@@ -52,7 +57,7 @@ class AdminUsersController extends Controller
     {
         $validator = JsValidator::make(Component::_valid_construct($this->config['rows']));
         View::share('validator', $validator);
-		return view('admin.users.create', array('roles' => Roles::all()));
+		return view('admin.users.create', array('roles' => Role::all()));
     }
 
     /**
@@ -87,7 +92,7 @@ class AdminUsersController extends Controller
 			'last_name' => $request->input('last_name'),
 		]);
 
-		$user = Users::whereEmail($request->input('email'))->first();
+		$user = User::whereEmail($request->input('email'))->first();
 
 		$role = Sentinel::findRoleByName($request->input('role'));
 
@@ -117,8 +122,8 @@ class AdminUsersController extends Controller
      */
     public function edit($id)
     {
-		$data['roles'] = Roles::all();
-		$data['user'] = Users::find($id)->with('role')->first();
+		$data['roles'] = Role::all();
+		$data['user'] = User::find($id)->with('role')->first();
         $validator = JsValidator::make(Component::_valid_construct($this->config['rows']));
         View::share('validator', $validator);
 		return view('admin.users.edit', $data);

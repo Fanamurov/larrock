@@ -54,7 +54,9 @@
                 <a href="/page/kontakty#form-contact" class="btn btn-primary btn-block btn-to-form">Оформить заявку</a>
                 @yield('front.modules.list.catalog')
                 @yield('rightColomn')
-                @include('front.modules.list.banner')
+                @if(isset($banner))
+                    @include('front.modules.list.banner')
+                @endif
             </div>
         </section>
     </section>

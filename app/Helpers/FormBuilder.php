@@ -5,7 +5,6 @@ namespace App\Helpers;
 use App\Helpers\FormBuilder\FormBuilderInterface;
 use DB;
 use View;
-use App\Helpers\Tree;
 
 class FormBuilder implements FormBuilderInterface
 {

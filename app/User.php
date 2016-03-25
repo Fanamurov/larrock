@@ -30,4 +30,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	protected $hidden = [
 		'password', 'remember_token',
 	];
+
+	public function role()
+	{
+		return $this->belongsToMany('Bican\Roles\Models\Role', 'role_user', 'user_id', 'role_id');
+	}
 }

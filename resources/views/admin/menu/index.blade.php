@@ -26,7 +26,7 @@
                         @endif
                     @endforeach
                     <th width="141">Изменено</th>
-                    <th width="90">Вес</th>
+                    <th width="90">Порядок</th>
                     <th width="93" class="pull-right">Активность</th>
                     <th width="130"></th>
                     <th width="76"></th>

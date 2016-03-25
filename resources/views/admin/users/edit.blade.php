@@ -2,7 +2,7 @@
 @section('title', 'Управление пользователями')
 
 @section('content')
-    <div class="ibox float-e-margins">
+    <div class="ibox float-e-margins col-md-8 col-md-offset-2">
         <div class="ibox-title background-transparent">
             <div>
                 <h1 class="inline"><a href="/admin/users">Пользователи/</a> {{ Input::old('email', $user->email) }}</h1>
@@ -13,7 +13,7 @@
         </div>
     </div>
 
-    <div class="ibox float-e-margins">
+    <div class="ibox float-e-margins col-md-8 col-md-offset-2">
         <div class="ibox-content">
             <form action="/admin/users/{{ $user->id }}" method="post">
                 <input name="_method" type="hidden" value="PUT">
@@ -34,7 +34,7 @@
                     <select class="form-control" name="role" id="role">
                         @foreach($roles as $roles_value)
                             <option
-                                @if($roles_value->id === $user->role->id)
+                                @if($roles_value->id === $user->role->first()->id)
                                 selected
                                 @endif
                                 value="{{ $roles_value->name }}">{{ $roles_value->slug }}</option>

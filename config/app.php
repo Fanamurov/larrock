@@ -153,9 +153,6 @@ return [
         /* http://image.intervention.io/getting_started/installation */
         Intervention\Image\ImageServiceProvider::class,
 
-        /* https://cartalyst.com/manual/sentinel/2.0#installation :: ACL, Oauth, register etc. */
-        //Cartalyst\Sentinel\Laravel\SentinelServiceProvider::class,
-
 		/* https://github.com/romanbican/roles */
 		Bican\Roles\RolesServiceProvider::class,
 
@@ -170,7 +167,7 @@ return [
 		App\Providers\ComponentServiceProvider::class,
 
         /* https://packagist.org/packages/rap2hpoutre/laravel-log-viewer */
-        //Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
+        Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
 
         /* https://packagist.org/packages/mccool/laravel-auto-presenter :: A system for auto-decorating models with presenter objects. */
         //McCool\LaravelAutoPresenter\AutoPresenterServiceProvider::class,
@@ -262,10 +259,6 @@ return [
 
         'Image'     => Intervention\Image\Facades\Image::class,
         'Alert'     => Prologue\Alerts\Facades\Alert::class,
-
-        //'Activation' => Cartalyst\Sentinel\Laravel\Facades\Activation::class,
-        //'Reminder'   => Cartalyst\Sentinel\Laravel\Facades\Reminder::class,
-        //'Sentinel'   => Cartalyst\Sentinel\Laravel\Facades\Sentinel::class,
 
         'Debugbar' 		=> Barryvdh\Debugbar\Facade::class,
         'Breadcrumbs' 	=> DaveJamesMiller\Breadcrumbs\Facade::class,

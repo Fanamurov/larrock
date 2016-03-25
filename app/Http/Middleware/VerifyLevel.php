@@ -40,7 +40,7 @@ class VerifyLevel
         }
 
 		\Alert::add('error', 'У вас недостаточный уровень для выполнения операции');
-		return redirect('/auth/login');
+		return redirect('/login');
 
         //throw new LevelDeniedException($level);
     }

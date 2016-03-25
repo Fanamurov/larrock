@@ -82,7 +82,7 @@ return [
 
 		'media' => [
 			'driver' => 'local',
-			'root'   => public_path().'/media',
+			'root'   => base_path() .'/public_html/media',
 		],
 
     ],

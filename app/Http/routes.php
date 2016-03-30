@@ -22,9 +22,9 @@ Route::get('/page/{url}', [
 ]);
 
 Route::get('/', [
-	'as' => 'catalog.index', 'uses' => 'CatalogController@getMainCategory'
+	'as' => 'tours.index', 'uses' => 'ToursController@getMainCategory'
 ]);
-Route::get('/catalog', function()
+Route::get('/tours', function()
 {
 	return Redirect::to('/');
 });
@@ -44,10 +44,30 @@ Route::get('/catalog/{category}/{child}/{grandson}', [
 Route::get('/catalog/{category}/{child}/{grandson}/{item}', [
 	'as' => 'catalog.category.grandson.item', 'uses' => 'CatalogController@getItem'
 ]);
-
 Route::get('/search/catalog', [
 	'as' => 'search.catalog', 'uses' => 'CatalogController@searchItem'
 ]);
+
+//TOURS
+Route::get('/tours/all', [
+	'as' => 'tours.all', 'uses' => 'ToursController@getAllTovars'
+]);
+Route::get('/tours/{category}', [
+	'as' => 'tours.category', 'uses' => 'ToursController@getCategory'
+]);
+Route::get('/tours/{category}/{child}', [
+	'as' => 'tours.category.child', 'uses' => 'ToursController@getCategory'
+]);
+Route::get('/tours/{category}/{child}/{grandson}', [
+	'as' => 'tours.category.grandson', 'uses' => 'ToursController@getCategory'
+]);
+Route::get('/tours/{category}/{child}/{grandson}/{item}', [
+	'as' => 'tours.category.grandson.item', 'uses' => 'ToursController@getItem'
+]);
+Route::get('/search/tours', [
+	'as' => 'search.tours', 'uses' => 'ToursController@searchItem'
+]);
+//TOURS END
 
 Route::post('/ajax/editPerPage', [
 	'as' => 'ajax.editPerPage', 'uses' => 'Ajax@editPerPage'
@@ -96,8 +116,8 @@ Route::group(['prefix' => 'admin', 'middleware'=>'level:2'], function(){
 	Route::resource('menu', 'Admin\AdminMenuController');
 	Route::resource('feed', 'Admin\AdminFeedController');
 	Route::resource('catalog', 'Admin\AdminCatalogController');
-	Route::post('catalog/copy', 'Admin\AdminCatalogController@copy');
-	
+	Route::resource('tours', 'Admin\AdminToursController');
+
 	Route::resource('category', 'Admin\AdminCategoryController');
 	Route::resource('blocks', 'Admin\AdminBlocksController');
 	Route::post('/category/storeEasy', 'Admin\AdminCategoryController@storeEasy');

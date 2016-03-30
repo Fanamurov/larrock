@@ -8,6 +8,7 @@ use App\Models\Catalog;
 use App\Models\Category;
 use App\Models\Feed;
 use App\Models\Page;
+use App\Models\Tours;
 use EMT\EMTypograph;
 use Illuminate\Http\Request;
 
@@ -93,6 +94,11 @@ class AdminAjax extends Controller
 					//Сохраняем фото под именем имямодели-idмодели-транслит(название картинки)
 					$content->addMedia(public_path() .'/image_cache/'. $image_name)->toMediaLibrary('images');
 				}
+				elseif($model === 'Tours'){
+					$content = Tours::find($model_id);
+					//Сохраняем фото под именем имямодели-idмодели-транслит(название картинки)
+					$content->addMedia(public_path() .'/image_cache/'. $image_name)->toMediaLibrary('images');
+				}
 				elseif($model === 'Feed'){
 					$content = Feed::find($model_id);
 					//Сохраняем фото под именем имямодели-idмодели-транслит(название картинки)
@@ -150,6 +156,10 @@ class AdminAjax extends Controller
 				$content = Catalog::whereId(Input::get('model_id'))->first();
 				return view('admin.plugins.getUploadedImages', ['data' => $content->getMedia('images')->sortByDesc('order_column')]);
 			}
+			if($model === 'Tours'){
+				$content = Tours::whereId(Input::get('model_id'))->first();
+				return view('admin.plugins.getUploadedImages', ['data' => $content->getMedia('images')->sortByDesc('order_column')]);
+			}
 			if($model === 'Category'){
 				$content = Category::whereId(Input::get('model_id'))->first();
 				return view('admin.plugins.getUploadedImages', ['data' => $content->getMedia('images')->sortByDesc('order_column')]);
@@ -182,6 +192,10 @@ class AdminAjax extends Controller
 			Catalog::find(Input::get('model_id'))->deleteMedia(Input::get('id'));
 			return response()->json(['status' => 'success', 'message' => 'Файл удален']);
 		}
+		if(Input::get('model') === 'Tours'){
+			Tours::find(Input::get('model_id'))->deleteMedia(Input::get('id'));
+			return response()->json(['status' => 'success', 'message' => 'Файл удален']);
+		}
 		if(Input::get('model') === 'Feed'){
 			Feed::find(Input::get('model_id'))->deleteMedia(Input::get('id'));
 			return response()->json(['status' => 'success', 'message' => 'Файл удален']);
@@ -209,6 +223,10 @@ class AdminAjax extends Controller
 			}
 			if($model === 'Catalog'){
 				$content = Catalog::whereId(Input::get('model_id'))->first();
+				return view('admin.plugins.getUploadedFiles', ['data' => $content->getMedia('files')->sortByDesc('order_column')]);
+			}
+			if($model === 'Tours'){
+				$content = Tours::whereId(Input::get('model_id'))->first();
 				return view('admin.plugins.getUploadedFiles', ['data' => $content->getMedia('files')->sortByDesc('order_column')]);
 			}
 			if($model === 'Feed'){
@@ -249,6 +267,10 @@ class AdminAjax extends Controller
 					$content = Blocks::find($model_id);
 					$content->addMedia(public_path() .'/media/'. $file_name)->toMediaLibrary('files');
 				}
+				elseif($model === 'Tours'){
+					$content = Tours::find($model_id);
+					$content->addMedia(public_path() .'/media/'. $file_name)->toMediaLibrary('files');
+				}
 				elseif($model === 'Feed'){
 					$content = Feed::find($model_id);
 					$content->addMedia(public_path() .'/media/'. $file_name)->toMediaLibrary('files');
@@ -281,6 +303,10 @@ class AdminAjax extends Controller
 			Catalog::find(Input::get('model_id'))->deleteMedia(Input::get('id'));
 			return response()->json(['status' => 'success', 'message' => 'Файл удален']);
 		}
+		if(Input::get('model') === 'Tours'){
+			Tours::find(Input::get('model_id'))->deleteMedia(Input::get('id'));
+			return response()->json(['status' => 'success', 'message' => 'Файл удален']);
+		}
 		if(Input::get('model') === 'Feed'){
 			Feed::find(Input::get('model_id'))->deleteMedia(Input::get('id'));
 			return response()->json(['status' => 'success', 'message' => 'Файл удален']);
@@ -293,6 +319,9 @@ class AdminAjax extends Controller
         $url = str_slug(Input::get('text'));
 		if(Input::get('table', '') !== ''){
 			if(Input::get('table') === 'catalog' && Catalog::whereUrl($url)->first(['url'])){
+				$url = $url .'-'. mt_rand(2, 999);
+			}
+			if(Input::get('table') === 'tours' && Tours::whereUrl($url)->first(['url'])){
 				$url = $url .'-'. mt_rand(2, 999);
 			}
 			if(Input::get('table') === 'feed' && Feed::whereUrl($url)->first(['url'])){

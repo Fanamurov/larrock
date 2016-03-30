@@ -72,7 +72,6 @@ class AdminCategoryController extends Controller
 	 */
     public function store(Request $request, ContentPlugins $plugins)
     {
-		dd($request->all());
 		$validator = Validator::make($request->all(), Component::_valid_construct($this->config['rows']));
 		if($validator->fails()){
 			return back()->withInput($request->except('password'))->withErrors($validator);
@@ -125,6 +124,10 @@ class AdminCategoryController extends Controller
 		$data->position = $request->input('position', 0);
 		$data->url = str_slug($request->input('title'));
 
+		if(Category::whereUrl($data->url)->first(['url'])){
+			$data->url = $data->url .'-'. mt_rand(2, 999);
+		}
+
 		if((int)$request->input('parent') !== 0){
 			if($get_parent = Category::find($request->input('parent'))->first()){
 				$data->level = (int) $get_parent->level +1;
@@ -134,6 +137,7 @@ class AdminCategoryController extends Controller
 		}
 
 		if($data->save()){
+			\Cache::flush();
 			Alert::add('success', 'Раздел '. $request->input('title') .' добавлен')->flash();
 			return back()->withInput();
 		}
@@ -221,6 +225,7 @@ class AdminCategoryController extends Controller
 			Alert::add('success', 'Раздел успешно удален')->flash();
 			//уничтожение данные от плагинов фото, файлы
 			$plugins->destroy($this->config['plugins_backend']);
+			\Cache::flush();
 		}else{
 			Alert::add('error', 'Раздел не удален')->flash();
 			return back()->withInput();

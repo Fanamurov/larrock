@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\Blocks;
+use App\Models\Category;
 use App\Models\Menu;
 use Cache;
 use Closure;
@@ -33,6 +34,12 @@ class BeforeLoaderModulesGlobal
 		    return Menu::whereActive(1)->orderBy('position', 'DESC')->get();
 		});
 		View::share('menu', $menu);
+
+		$module_vidy = Category::whereParent(377)->get();
+		foreach($module_vidy as $key => $item){
+			//$module_vidy['icon'] = $item->getFirstMediaUrl('images');
+		}
+		View::share('module_vidy', $module_vidy);
 
         return $next($request);
     }

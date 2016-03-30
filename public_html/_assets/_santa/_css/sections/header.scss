@@ -1,0 +1,71 @@
+header{
+  .header-redline{
+	background: #c72800;
+	color: white;
+	padding: 5px 0;
+	a{
+	  color: white;
+	  font-size: 14px;
+	  &:hover,
+	  &:focus{
+		color: #e0e0e0;
+	  }
+	}
+  }
+  .header-logo{
+	padding-top: 30px;
+	padding-bottom: 20px;
+	a{
+	  text-decoration: none;
+	}
+	span{
+	  display: inline-block;
+	  padding-top: 35px;
+	  color: black;
+	  font-size: 30px;
+	}
+  }
+  .header-address{
+	padding-top: 20px;
+	line-height: 30px;
+	.city{
+	  font-size: 25px;
+	  line-height: 30px;
+	}
+	.phone{
+	  text-decoration: none;
+	  font-size: 30px;
+	  line-height: 33px;
+	}
+  }
+
+  .div-menu{
+	margin-top: 10px;
+	text-align: center;
+	color: #c72800;
+	font-size: 19px;
+	font-weight: 600;
+	background: linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(241,241,241,1) 22%,rgba(255,255,255,1) 78%,rgba(241,241,241,1) 100%);
+	a{
+	  color: #c72800;
+	  display: inline-block;
+	  &:hover,
+	  &:focus{
+		font-weight: 600;
+		transition: all .2s linear;
+	  }
+	}
+	ul{
+	  margin-bottom: 0;
+	  li{
+		padding: 10px 23px;
+		&.active{
+		  font-weight: 600;
+		  a{
+			text-decoration: none;
+		  }
+		}
+	  }
+	}
+  }
+}

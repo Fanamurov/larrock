@@ -154,4 +154,24 @@ class Category extends Model implements HasMediaConversions
 	{
 		return 'category';
 	}
+
+	public function get_tours()
+	{
+		return $this->belongsToMany('App\Models\Tours', 'category_tours', 'category_id', 'tour_id')->orderBy('position', 'DESC');
+	}
+
+	public function get_toursActive()
+	{
+		return $this->belongsToMany('App\Models\Tours', 'category_tours', 'category_id', 'tour_id')->whereActive(1)->orderBy('position', 'DESC');
+	}
+
+	public function get_toursAlias()
+	{
+		return $this->belongsToMany('App\Models\Tours', 'category_tours', 'category_id', 'tour_id')->whereActive(1)->orderBy('position', 'DESC');
+	}
+
+	public function get_toursCount()
+	{
+		return $this->belongsToMany('App\Models\Tours', 'category_tours', 'category_id', 'tour_id')->count();
+	}
 }

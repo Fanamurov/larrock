@@ -1,0 +1,80 @@
+footer{
+  //background: url("/_assets/_santa/_images/bg/bg_footer.jpg") repeat-x left top transparent;
+  //height: 350px;
+  //padding: 40px 18px;
+  position: relative;
+
+  .footer-copyright{
+	position: absolute;
+	top: 210px;
+	right: 255px;
+	@media (max-width: 1380px){
+	  right: 225px;
+	}
+	@media (max-width: 1230px){
+	  right: 175px;
+	}
+	@media (max-width: 1115px){
+	  right: 125px;
+	}
+	@media (max-width: 1090px){
+	  right: 75px;
+	}
+	a{
+	  color: black;
+	  font-size: 12px;
+	}
+  }
+  .footer-left-text{
+	line-height: 41px;
+	font-size: 21px;
+	z-index: 7;
+	position: relative;
+	top: 3px;
+	left: 0;
+	width: 600px;
+  }
+
+  section.row-profits{
+	&:before{
+	  background: url("/_assets/_santa/_images/bg/bg_footer_up.png") repeat-x left top transparent;
+	  height: 43px;
+	  width: 100%;
+	  position: absolute;
+	  left: 0;
+	  right: 0;
+	  z-index: 5;
+	  top: -2px;
+	}
+  }
+
+  section.row-profits,
+  section.row-sposob{
+	background: url("/_assets/_santa/_images/bg/bg_footer.jpg") repeat-x left top transparent;
+	color: white;
+	padding-top: 30px;
+	padding-bottom: 30px;
+	.h1{
+	  font-weight: 600;
+	  margin-bottom: 30px;
+	  margin-top: 10px;
+	}
+	.h2{
+	  display: inline-block;
+	  margin-bottom: 3px;
+	  margin-top: 0;
+	}
+	a{
+	  color: white;
+	  font-size: 16px;
+	}
+  }
+
+  section.row-sposob{
+	background: url("/_assets/_santa/_images/bg/bg_footer.jpg") repeat-x 0px -250px transparent;
+  }
+
+  section.row-subscribes{
+	background: #f4f4f4;
+  }
+}

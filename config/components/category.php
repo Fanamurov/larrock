@@ -10,7 +10,7 @@ return [
 			'title' => 'Родительский раздел',
 			'type' => 'select_category_once',
 			'tab' => ['main' => 'Заголовок, описание'],
-			'options_connect' => ['row' => 'title', 'table' => 'category', 'where' => ['type' => 'catalog']],
+			'options_connect' => ['row' => 'title', 'table' => 'category', 'where' => ['type' => 'tours']],
 			'default' => 'Это новый корневой раздел'
 		],
 		'title' => [

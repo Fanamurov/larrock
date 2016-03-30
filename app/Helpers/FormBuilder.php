@@ -178,7 +178,13 @@ class FormBuilder implements FormBuilderInterface
 				}
 			}
 		}
-		$list_categories = [];
+		if(empty($selected) && isset($data->parent)){
+			if(is_array($data->parent)){
+				$selected = $data->parent;
+			}else{
+				$selected[] = $data->parent;
+			}
+		}
 
 		if(isset($row_settings['options_connect']['where'])){
 			foreach($row_settings['options_connect']['where'] as $where_key => $where_value){

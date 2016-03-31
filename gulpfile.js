@@ -117,7 +117,7 @@ gulp.task('javascript_front', function() {
         ])
         //.pipe(uglify())
         //.pipe(sourcemaps.init())
-        .pipe(concat('front_core.min.js'))
+        .pipe(concat('santa_core.min.js'))
         //.pipe(sourcemaps.write())
         .pipe(removeLogs())
         .pipe(notify("Js reload: <%= file.relative %>! "+ project))

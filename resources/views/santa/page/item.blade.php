@@ -1,4 +1,4 @@
-@extends('front.main')
+@extends('santa.main')
 @section('title') {{ $data->get_seo->seo_title or $data->title }} @endsection
 
 @section('content')

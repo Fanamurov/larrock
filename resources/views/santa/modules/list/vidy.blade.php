@@ -1,7 +1,10 @@
 <ul class="block-module_listVidy list-unstyled">
     @foreach($module_vidy as $item)
         <li>
-            <a href="{{ $item->url }}">{{ $item->title }}</a>
+            <a href="/tours/{{ $item->url }}">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+                {{ $item->title }}
+            </a>
         </li>
     @endforeach
 </ul>

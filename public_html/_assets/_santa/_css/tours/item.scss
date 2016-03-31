@@ -1,3 +1,38 @@
 .toursPageItem{
-
+  #carousel-tour{
+	border: 8px solid #f3f3f3;
+	border-radius: 6px;
+	border-bottom-left-radius: 0;
+	position: relative;
+	margin-top: 20px;
+	margin-bottom: 10px;
+	box-shadow: 0px 1px 2px #666666;
+  }
+  .toursFull{
+	table{
+	  width: 100%;
+	  tr:nth-child(even) {
+		background: #FF819D;
+	  }
+	  tr:nth-child(odd) {
+		background: #FFC4D1;
+	  }
+	  tr:first-child {
+		background: #DF1442;
+		color: #fff;
+		text-align: center;
+	  }
+	  td{
+		padding: 5px;
+	  }
+	}
+  }
+  .row-btn-group .btn-group{
+	width: 100%;
+	padding-bottom: 30px;
+	> *{
+	  width: 33.3333%;
+	  height: 64px;
+	}
+  }
 }

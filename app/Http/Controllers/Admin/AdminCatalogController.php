@@ -135,7 +135,6 @@ class AdminCatalogController extends Controller
 		    return $data;
 		});
 
-
 		$data['paginator'] = new Paginator(
 			$data['data']->get_tovars(),
 			$data['data']->get_tovars()->count(),

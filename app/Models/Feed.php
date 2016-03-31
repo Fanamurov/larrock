@@ -57,6 +57,8 @@ class Feed extends Model implements HasMediaConversions
 
     protected $dates = ['created_at', 'updated_at', 'date'];
 
+	protected $guarded = ['user_id'];
+
 	protected $casts = [
 		'position' => 'integer',
 		'active' => 'integer'

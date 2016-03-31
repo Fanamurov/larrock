@@ -19,7 +19,6 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th width="50">ID</th>
                     @foreach($app['rows'] as $rows_name)
                         @if(isset($rows_name['in_table_admin']))
                             <th>{{ $rows_name['title'] }}</th>
@@ -28,7 +27,7 @@
                     <th>Раздел</th>
                     <th>URL</th>
                     <th width="141">Изменено</th>
-                    <th width="90" data-toggle="tooltip" data-placement="bottom" title="Вес. Чем больше, тем выше в списках">Порядок</th>
+                    <th width="90">Порядок</th>
                     <th width="93"></th>
                     <th width="90"></th>
                     <th width="90"></th>
@@ -37,12 +36,12 @@
                 <tbody>
                 @foreach($data as $data_value)
                     <tr>
-                        <td class="row-id">{{ $data_value->id }}</td>
                         @foreach($app['rows'] as $rows_key => $rows_name)
                             @if(isset($rows_name['in_table_admin']))
                                 <td class="row-{{ $rows_key }}">
                                     @if($rows_key === 'title')
                                         <a href="/admin/{{ $app['name'] }}/{{ $data_value->id }}/edit">{{ $data_value->$rows_key }}</a>
+                                        <p>Автор: {{ $current_user->first_name }} {{ $current_user->last_name }}</p>
                                     @else
                                         {{ $data_value->$rows_key }}
                                     @endif

@@ -22,12 +22,19 @@ Route::get('/page/{url}', [
 ]);
 
 Route::get('/', [
-	'as' => 'tours.index', 'uses' => 'ToursController@getMainCategory'
+	'as' => 'mainpage', 'uses' => 'MainpageController@index'
 ]);
-Route::get('/tours', function()
-{
-	return Redirect::to('/');
-});
+
+Route::get('/otzyvy', [
+	'as' => 'otzyvy', 'uses' => 'OpinionsController@index'
+]);
+
+Route::get('/blog', [
+	'as' => 'blog.main', 'uses' => 'BlogController@index'
+]);
+Route::get('/blog/{item}', [
+	'as' => 'blog.item', 'uses' => 'BlogController@getItem'
+]);
 
 Route::get('/catalog/all', [
 	'as' => 'catalog.all', 'uses' => 'CatalogController@getAllTovars'

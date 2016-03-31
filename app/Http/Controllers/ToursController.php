@@ -198,7 +198,7 @@ class ToursController extends Controller
 
 	public function getItem($item, $module_listCatalog)
 	{
-		$data['data'] = Tours::whereUrl($item)->with(['get_seo', 'get_templates', 'get_category'])->firstOrFail();
+		$data['data'] = Tours::whereUrl($item)->whereActive(1)->with(['get_seo', 'get_templates', 'get_category'])->firstOrFail();
 		$data['data']['images'] = $data['data']->getMedia('images')->sortByDesc('order_column');
 		$data['data']['files'] = $data['data']->getMedia('files')->sortByDesc('order_column');
 
@@ -219,7 +219,7 @@ class ToursController extends Controller
 				}
 			}
 			$breadcrumbs->push($get_category->title, $url .'/'. $get_category->url);
-			$breadcrumbs->push($data->title);
+			//$breadcrumbs->push($data->title);
 		});
 
 		//Модуль списка разделов справа

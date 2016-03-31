@@ -93,6 +93,11 @@ class Category extends Model implements HasMediaConversions
 		return $this->belongsToMany('App\Models\Catalog', 'category_catalog', 'category_id', 'catalog_id')->orderBy('position', 'DESC');
 	}
 
+	public function get_feedActive()
+	{
+		return $this->hasMany('App\Models\Feed', 'category', 'id')->whereActive(1)->orderBy('position', 'DESC');
+	}
+
 	public function get_tovarsActive()
 	{
 		return $this->belongsToMany('App\Models\Catalog', 'category_catalog', 'category_id', 'catalog_id')->whereActive(1)->orderBy('position', 'DESC');

@@ -2,23 +2,23 @@
     <li>
         <a href="#">Компания</a>
     </li>
-    <li class="active">
-        <a href="#">Страны</a>
+    <li>
+        <a href="/tours/strany">Страны</a>
     </li>
     <li>
-        <a href="#">Виды отдыха</a>
+        <a href="/tours/vidy-otdykha">Виды отдыха</a>
     </li>
     <li>
         <a href="#">Услуги</a>
     </li>
     <li>
-        <a href="#">Контакты</a>
+        <a href="/page/kontakty">Контакты</a>
     </li>
-    <li>
-        <a href="#">Отзывы</a>
+    <li @if(Route::current()->getName() === 'otzyvy') class="active" @endif>
+        <a href="/otzyvy/">Отзывы</a>
     </li>
-    <li>
-        <a href="#">Блог</a>
+    <li @if(Route::current()->getName() === 'blog.item' OR Route::current()->getName() === 'blog.main') class="active" @endif>
+        <a href="/blog">Блог</a>
     </li>
 
     @foreach($menu as $data_item)

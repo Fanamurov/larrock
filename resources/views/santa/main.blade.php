@@ -55,7 +55,7 @@
                 сб: 10<sup>00</sup>-15<sup>00</sup></p>
         </div>
         <div class="col-xs-24 div-menu">
-            @include('santa.modules.menu.top', $menu)
+            {!! \MenuApp::render('navbar') !!}
         </div>
     </header>
 
@@ -63,9 +63,16 @@
         <div class="col-xs-17">
             <div class="col-xs-24">
                 @include('front.errors')
+                <div class="addthis_sharing_toolbox" style="    height: 16px;
+    position: absolute;
+    top: -54px;
+    right: 0;"></div>
+            </div>
                 @yield('content')
                 @yield('contentBottom')
-            </div>
+            <script type="text/javascript" src="//yastatic.net/es5-shims/0.0.2/es5-shims.min.js" charset="utf-8"></script>
+            <script type="text/javascript" src="//yastatic.net/share2/share.js" charset="utf-8"></script>
+            <div class="ya-share2 ya-share2_big" data-services="vkontakte,facebook,odnoklassniki,moimir,gplus" data-counter=""></div>
         </div>
         <section id="right_colomn" class="col-xs-7">
             <div class="col-xs-22 col-xs-offset-2">

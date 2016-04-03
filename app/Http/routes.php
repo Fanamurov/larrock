@@ -36,6 +36,13 @@ Route::get('/blog/{item}', [
 	'as' => 'blog.item', 'uses' => 'BlogController@getItem'
 ]);
 
+Route::get('/news', [
+    'as' => 'news.main', 'uses' => 'NewsController@index'
+]);
+Route::get('/news/{item}', [
+    'as' => 'news.item', 'uses' => 'NewsController@getItem'
+]);
+
 Route::get('/catalog/all', [
 	'as' => 'catalog.all', 'uses' => 'CatalogController@getAllTovars'
 ]);

@@ -204,6 +204,12 @@ return [
 		/* https://github.com/LaravelRUS/localized-carbon/blob/master/docs/README-ru.md */
 		//Laravelrus\LocalizedCarbon\LocalizedCarbonServiceProvider::class,
 
+        /* MENU: http://sky.pingpong-labs.com/docs/2.0/menus#installation */
+        Pingpong\Menus\MenusServiceProvider::class,
+
+        /* SoShare https://github.com/Cherry-Pie/SocShare */
+        Yaro\SocShare\ServiceProvider::class,
+
     ],
 
     /*
@@ -267,6 +273,8 @@ return [
         'Cart'        	=> Gloudemans\Shoppingcart\Facades\Cart::class,
         'Recaptcha' 	=> Greggilbert\Recaptcha\Facades\Recaptcha::class,
         'Search' 		=> Sofa\Eloquence\ServiceProvider::class,
+        'MenuApp'          => Pingpong\Menus\MenuFacade::class,
+        'SocShare'      => Yaro\SocShare\Facade::class,
 
     ],
 

@@ -155,7 +155,13 @@ a, .link{
   background: linear-gradient(to bottom, rgba(233,22,72,1) 0%,rgba(192,12,47,1) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e91648', endColorstr='#c00c2f',GradientType=0 );
   position: relative;
+  &:hover,
+  &:focus{
+    background: rgb(255, 23, 78);
+    background: linear-gradient(to bottom, rgba(233,22,72,1) 0%, rgba(255, 23, 78, 1) 100%);
+  }
 }
+
 
 h1, .h1{
   font-size: 30px;
@@ -166,6 +172,19 @@ h1, .h1{
 .pageOpinions{
   h1{
 	margin-bottom: 30px;
+  }
+}
+
+.ya-share2_big .ya-share2__container_size_m{
+  .ya-share2__icon{
+    height: 40px;
+    width: 40px;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  .ya-share2__container_size_m .ya-share2__counter {
+    font-size: 15px;
+    padding: 11px 8px 0 8px;
   }
 }
 

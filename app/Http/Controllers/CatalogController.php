@@ -131,7 +131,7 @@ class CatalogController extends Controller
 			return $this->getTovars($select_category, $request, $data['module_listCatalog']);
 		}
 
-		$data['data']['images'] = Cache::remember('categoryImages', 60, function() use ($data) {
+		$data['data']['images'] = Cache::remember('categoryImages'. $data['data']->id, 60, function() use ($data) {
 			return $data['data']->getMedia('images')->sortByDesc('order_column');
 		});
 

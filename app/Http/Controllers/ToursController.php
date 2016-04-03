@@ -126,11 +126,19 @@ class ToursController extends Controller
 			return $this->getTovars($select_category, $request, $data['module_listCatalog']);
 		}
 
-		$data['data']['images'] = Cache::remember('categoryImages', 60, function() use ($data) {
+		$data['data']['images'] = Cache::remember('categoryImages'. $data['data']->id, 60, function() use ($data) {
 			return $data['data']->getMedia('images')->sortByDesc('order_column');
 		});
 
+        foreach($data['data']->get_childActive as $key => $value){
+            $data['data']->get_childActive[$key]['image'] = $value->getMedia('images')->sortByDesc('order_column');
+        }
+
 		$data['seo']['title'] = 'SEO title getCategory';
+
+        if($data['data']->parent === 308){
+            return view('santa.tours.country', $data);
+        }
 
 		return view('santa.tours.categorysListChilds', $data);
 	}

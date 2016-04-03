@@ -11,7 +11,7 @@
         @if($data->image)
             <img src="{{ $data->image }}" class="categoryImage">
         @else
-            <img src="/_assets/_front/_images/empty_big.png" width="125" alt="Нет фото" class="categoryImage categoryImage-empty all-width">
+            <img src="/_assets/_santa/_images/empty_big.png" width="125" alt="Нет фото" class="categoryImage categoryImage-empty all-width">
         @endif
         <div class="description">
             {!! $data->short !!}

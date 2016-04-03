@@ -164,7 +164,7 @@ class ContentPlugins implements ContentPluginsInterface
 					$matched_images['images'][] = $image;
 				}
 			}
-			$modelResult->description = preg_replace('/{Фото\\[[a-zA-z]*]=[a-zA-Z0-9]*}/', view('front.plugins.'. $match, $matched_images)->render(), $modelResult->description);
+			$modelResult->description = preg_replace('/{Фото\\[[a-zA-z]*]=[a-zA-Z0-9]*}/', view('santa.plugins.'. $match, $matched_images)->render(), $modelResult->description);
 		}
 		return $modelResult;
 	}

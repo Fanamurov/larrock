@@ -52,7 +52,7 @@
                 сб: 10<sup>00</sup>-15<sup>00</sup></p>
         </div>
         <div class="col-xs-24 div-menu">
-            @include('santa.modules.menu.top', $menu)
+            {!! \MenuApp::render('navbar') !!}
         </div>
     </header>
 

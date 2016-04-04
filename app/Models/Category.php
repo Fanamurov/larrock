@@ -143,12 +143,20 @@ class Category extends Model implements HasMediaConversions
 		if($search_parent = Category::whereId($this->parent)->first()){
 			if($search_parent_2 = Category::whereId($search_parent->parent)->first()){
 				if($search_parent_3 = Category::whereId($search_parent->parent_2)->first()){
-					return $search_parent_3->url . '/' . $search_parent_2->url . '/' . $search_parent->url . '/' . $this->get_category->first()->url . '/' . $this->url;
+					if($this->get_category){
+						return '/'. $search_parent_3->url . '/' . $search_parent_2->url . '/' . $search_parent->url . '/' . $this->get_category->first()->url . '/' . $this->url;
+					}else{
+						return '/'. $search_parent_3->url . '/' . $search_parent_2->url . '/' . $search_parent->url . '/' . $this->url;
+					}
 				}else{
-					return $search_parent_2->url . '/' . $search_parent->url . '/' . $this->get_category->first()->url . '/' . $this->url;
+					if($this->get_category){
+						return '/'. $search_parent_2->url . '/' . $search_parent->url . '/' . $this->get_category->first()->url . '/' . $this->url;
+					}else{
+						return '/'. $search_parent_2->url . '/' . $search_parent->url . '/' . $this->url;
+					}
 				}
 			}else{
-				return $search_parent->url . '/' . $this->url . '/' . $this->url;
+				return '/'. $search_parent->url . '/' . $this->url;
 			}
 		}else{
 			return $this->url;
@@ -178,5 +186,27 @@ class Category extends Model implements HasMediaConversions
 	public function get_toursCount()
 	{
 		return $this->belongsToMany('App\Models\Tours', 'category_tours', 'category_id', 'tour_id')->count();
+	}
+
+	public function getShortWrapAttribute()
+	{
+		$string = strip_tags($this->short);
+		$string = substr($string, 0, 200);
+		$string = rtrim($string, "!,.-");
+		$string = substr($string, 0, strrpos($string, ' '));
+		if(strlen($string) > 0){
+			return $string .'...';
+		}else{
+			return $string;
+		}
+	}
+
+	public function getFirstImageAttribute()
+	{
+		if($get_image = $this->getMedia('images')->sortByDesc('order_column')->first()){
+			return $get_image->getUrl();
+		}else{
+			return '/_assets/_santa/_images/empty_big.png';
+		}
 	}
 }

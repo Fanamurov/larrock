@@ -43,7 +43,7 @@ class BeforeLoaderModulesGlobal
         {
             //$menu->url('/', 'Home');
             $menu->dropdown('Компания', function ($sub) {
-                $sub->url('/page/o-kompanii', 'О компании');
+                $sub->url('/page/o-kompanii', 'О компании', ['icon' => 'ico.png']);
                 $sub->url('/news', 'Новости');
                 $sub->url('/page/vakansii-santa-avia', 'Вакансии');
                 $sub->url('/page/pochemu-pokupat-tury-nado-tolko-u-nas', 'Почему мы лучшие');
@@ -52,12 +52,12 @@ class BeforeLoaderModulesGlobal
             });
             $menu->dropdown('Страны', function ($sub) use ($module_countryes) {
                 foreach ($module_countryes as $item){
-                    $sub->url('/tours/'. $item->url, $item->title);
+                    $sub->url('/tours/strany/'. $item->url, $item->title);
                 }
             });
             $menu->dropdown('Виды отдыха', function ($sub) use ($module_vidy) {
                 foreach($module_vidy as $key => $item){
-                    $sub->url('/tours/'. $item->url, $item->title);
+                    $sub->url('/tours/vidy-otdykha/'. $item->url, $item->title);
                 }
             });
             $menu->dropdown('Услуги', function ($sub) {

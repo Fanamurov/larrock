@@ -60,7 +60,7 @@
     </header>
 
     <section class="row" id="content">
-        <div class="col-xs-17">
+        <div class="col-xs-24 col-sm-17">
             <div class="col-xs-24">
                 @include('front.errors')
                 <div class="addthis_sharing_toolbox" style="    height: 16px;
@@ -74,8 +74,8 @@
             <script type="text/javascript" src="//yastatic.net/share2/share.js" charset="utf-8"></script>
             <div class="ya-share2 ya-share2_big" data-services="vkontakte,facebook,odnoklassniki,moimir,gplus" data-counter=""></div>
         </div>
-        <section id="right_colomn" class="col-xs-7">
-            <div class="col-xs-22 col-xs-offset-2">
+        <section id="right_colomn" class="col-xs-24 col-sm-7">
+            <div class="col-xs-24 col-sm-22 col-sm-offset-2">
                 @include('santa.modules.forms.searchTourShort')
                 @yield('rightColomn')
                 @include('santa.modules.list.vidy')

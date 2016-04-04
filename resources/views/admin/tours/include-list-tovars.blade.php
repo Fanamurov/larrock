@@ -21,10 +21,6 @@
                 /tours/{{ $data_value->get_category()->first()->url }}/{{ $data_value->url }}
             </a>
         </td>
-        <td>
-            <input type="text" name="cost" value="{{ $data_value->cost }}" class="ajax_edit_row form-control"
-                   data-row_where="id" data-value_where="{{ $data_value->id }}" data-table="tours">
-        </td>
         <td class="row-position">
             <input type="text" name="position" value="{{ $data_value->position }}" class="ajax_edit_row form-control"
                    data-row_where="id" data-value_where="{{ $data_value->id }}" data-table="tours"
@@ -43,7 +39,7 @@
             </div>
         </td>
         <td class="row-edit">
-            <a href="/admin/{{ $app['name'] }}/{{ $data_value->id }}" class="btn btn-info btn-xs">Свойства</a>
+            <a href="/admin/{{ $app['name'] }}/{{ $data_value->id }}/edit" class="btn btn-info btn-xs">Свойства</a>
         </td>
         <td class="row-delete">
             <form action="/admin/{{ $app['name'] }}/{{ $data_value->id }}" method="post">

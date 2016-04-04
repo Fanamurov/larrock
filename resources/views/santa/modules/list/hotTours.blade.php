@@ -12,23 +12,20 @@
     <!-- Tab panes -->
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="home">
-            <table class="table">
-                @for($i=0; $i < 3; $i++)
-                <tr>
-                    <td>
-                        <img src="/test/hotTours/2e670c1e20f29b7aa3757f950c49437b.jpg" alt="">
-                    </td>
-                    <td>
-                        <a href="#">Marco Polo Hotel 4*</a>
-                        <p>Дубай</p>
-                    </td>
-                    <td>13.04.2016</td>
-                    <td>7 ночей</td>
-                    <td>От 31 386 руб.</td>
-                    <td><span class="glyphicon glyphicon-chevron-right"></span></td>
-                </tr>
-                @endfor
-            </table>
+            @for($i=0; $i < 3; $i++)
+            <div class="row">
+                <div class="col-xs-12 col-sm-5">
+                    <img src="/test/hotTours/2e670c1e20f29b7aa3757f950c49437b.jpg" alt="">
+                </div>
+                <div class="col-xs-12 col-sm-5">
+                    <a href="#">Marco Polo Hotel 4*</a>
+                    <p>Дубай</p>
+                </div>
+                <div class="col-xs-12 col-sm-3">13.04.2016</div>
+                <div class="col-xs-12 col-sm-5">7 ночей</div>
+                <div class="col-xs-12 col-sm-5">От 31 386 руб. <span class="glyphicon glyphicon-chevron-right"></span></div>
+            </div><hr/>
+            @endfor
         </div>
         <div role="tabpanel" class="tab-pane" id="profile">...</div>
         <div role="tabpanel" class="tab-pane" id="messages">...</div>

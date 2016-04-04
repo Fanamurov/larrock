@@ -31,7 +31,7 @@ class ToursController extends Controller
 
 		Breadcrumbs::register('tours.index', function($breadcrumbs)
 		{
-			$breadcrumbs->push('Каталог туров', '/tours');
+			$breadcrumbs->push('Каталог туров');
 		});
 	}
 
@@ -81,8 +81,34 @@ class ToursController extends Controller
 
 		return view('santa.tours.categorys', $data);
 	}
+	
+	public function getStrany()
+	{
+		$data['data'] = Category::whereId(308)->whereActive(1)->with(['get_childActive.get_parent'])->first();
 
-	public function getCategory(Request $request, ListCatalog $listCatalog, $category, $child = NULL, $grandson = NULL)
+		Breadcrumbs::register('tours.category', function($breadcrumbs, $data)
+		{
+			$breadcrumbs->parent('tours.index');
+			$breadcrumbs->push('Страны');
+		});
+
+		return view('santa.tours.categorysListChilds', $data);
+	}
+
+	public function getVidy()
+	{
+		$data['data'] = Category::whereId(377)->whereActive(1)->with(['get_childActive.get_parent'])->first();
+
+		Breadcrumbs::register('tours.category', function($breadcrumbs, $data)
+		{
+			$breadcrumbs->parent('tours.index');
+			$breadcrumbs->push('Виды отдыха');
+		});
+
+		return view('santa.tours.categorysListChilds', $data);
+	}
+
+	public function getCategory(Request $request, $category, $child = NULL, $grandson = NULL)
 	{
 		//Смотрим какой раздел выбираем для работы
 		//Первый уровень: /Раздел
@@ -96,16 +122,13 @@ class ToursController extends Controller
 			}
 		}
 
-		//Модуль списка разделов справа
-		$data['module_listCatalog'] = $listCatalog->categories();
-
 		$data['data'] = Cache::remember('getCategory'. $select_category, 60, function() use ($select_category) {
-		    return Category::whereType('tours')->whereActive(1)->whereUrl($select_category)->with(['get_childActive.get_parent'])->first();
+			return Category::whereType('tours')->whereActive(1)->whereUrl($select_category)->with(['get_childActive.get_parent'])->first();
 		});
 
-		if( !$data['data']){
-			//Раздела с таким url нет, значит ищем товар
-			return $this->getItem($select_category, $data['module_listCatalog']);
+		//Редирект на страну
+		if($data['data']->parent === 308){
+			return $this->getCountry($select_category);
 		}
 
 		Breadcrumbs::register('tours.category', function($breadcrumbs, $data)
@@ -123,88 +146,75 @@ class ToursController extends Controller
 		});
 
 		if(count($data['data']->get_child) === 0){
-			return $this->getTovars($select_category, $request, $data['module_listCatalog']);
+			return $this->getTours($select_category, $request);
 		}
 
 		$data['data']['images'] = Cache::remember('categoryImages'. $data['data']->id, 60, function() use ($data) {
 			return $data['data']->getMedia('images')->sortByDesc('order_column');
 		});
 
-        foreach($data['data']->get_childActive as $key => $value){
-            $data['data']->get_childActive[$key]['image'] = $value->getMedia('images')->sortByDesc('order_column');
-        }
-
-		$data['seo']['title'] = 'SEO title getCategory';
-
-        if($data['data']->parent === 308){
-            return view('santa.tours.country', $data);
-        }
+		foreach($data['data']->get_childActive as $key => $value){
+			$data['data']->get_childActive[$key]['image'] = $value->getMedia('images')->sortByDesc('order_column');
+		}
 
 		return view('santa.tours.categorysListChilds', $data);
 	}
 
-	public function getTovars($category, Request $request, $module_listCatalog)
+	public function getCountry($category)
 	{
-		Breadcrumbs::register('tours.items', function($breadcrumbs, $data)
-		{
-			$breadcrumbs->parent('tours.category', $data);
+		$data['data'] = Category::whereType('tours')->whereActive(1)->whereUrl($category)->with(['get_toursActive', 'get_childActive'])->first();
+
+		$data['data']['images'] = Cache::remember('categoryImages'. $data['data']->id, 60, function() use ($data) {
+			return $data['data']->getMedia('images')->sortByDesc('order_column');
 		});
 
-		$paginate = Cookie::get('perPage', 24);
-		//echo Cookie::get('sort_cost');
-
-		$data['data'] = Cache::remember('getTours'. $category .''. $request->get('page', 1), 60, function() use ($category, $paginate)
+		Breadcrumbs::register('tours.category', function($breadcrumbs, $data)
 		{
-			//Основной запрос для вывода
-			return Category::whereUrl($category)->whereActive(1)->with(
-				['get_toursActive' => function($query) use ($paginate){
-					//TODO: сортировки и фильтры
-					if(Cookie::get('sort_cost') === 'asc'){
-						$query->orderBy('cost', 'asc')->paginate($paginate);
-					}elseif(Cookie::get('sort_cost') === 'desc'){
-						$query->orderBy('cost', 'desc')->paginate($paginate);
-					}else{
-						$query->paginate($paginate);
-					}
-				}, 'get_parent', 'get_seo']
-			)->first();
+			$breadcrumbs->parent('tours.index');
+			if($data->level !== 1 &&
+				$get_parent = Category::whereType('tours')->whereId($data->parent)->first()){
+				if($get_parent->level !== 1
+					&& $get_granddad = Category::whereType('tours')->whereId($get_parent->parent)->first()){
+					$breadcrumbs->push($get_granddad->title);
+				}
+				$breadcrumbs->push($get_parent->title, '/tours/'. $get_parent->url);
+			}
+			$breadcrumbs->push($data->title);
 		});
 
-		$data['data']['images'] = $data['data']->getMedia('images')->sortByDesc('order_column');
-		foreach($data['data']->get_toursActive as $key => $value){
-			$images = Cache::remember('tours_image'. $value->id, 60, function() use ($value)
-			{
-				return $value->getMedia('images')->sortByDesc('order_column');
-			});
-			$data['data']->get_toursActive[$key]['images'] = $images;
-		}
-
-		$data['paginator'] = new Paginator(
-			$data['data']->get_toursActive(),
-			$data['data']->get_toursActive()->count(),
-			$limit = $paginate,
-			$page = $request->get('page', 1), [
-				'path'  => $request->url(),
-				'query' => $request->query(),
-		]);
-
-		if($data['data']->get_seo){
-			$data['seo']['title'] = $data['data']->get_seo->title;
-		}else{
-			$data['seo']['title'] = $data['data']->title;
-		}
-
-		//Модуль списка разделов справа
-		$data['module_listCatalog'] = $module_listCatalog;
-
-		if(Cookie::get('vid') === 'table'){
-			return view('santa.tours.items-table', $data);
-		}else{
-			return view('santa.tours.items-2', $data);
-		}
+		return view('santa.tours.country', $data);
 	}
 
-	public function getItem($item, $module_listCatalog)
+	public function getResourt($category, $item)
+	{
+		$data['data'] = Category::whereType('tours')->whereActive(1)->whereUrl($item)->with(['get_toursActive', 'get_childActive'])->first();
+
+		if( !$data['data']){
+			return $this->getItem($category, $item);
+		}
+
+		$data['data']['images'] = Cache::remember('ResourtImages'. $data['data']->id, 60, function() use ($data) {
+			return $data['data']->getMedia('images')->sortByDesc('order_column');
+		});
+
+		Breadcrumbs::register('tours.category', function($breadcrumbs, $data)
+		{
+			$breadcrumbs->parent('tours.index');
+			if($data->level !== 1 &&
+				$get_parent = Category::whereType('tours')->whereId($data->parent)->first()){
+				if($get_parent->level !== 1
+					&& $get_granddad = Category::whereType('tours')->whereId($get_parent->parent)->first()){
+					$breadcrumbs->push($get_granddad->title, '/'. $get_granddad->url);
+				}
+				$breadcrumbs->push($get_parent->title, '/strany/'. $get_parent->url);
+			}
+			$breadcrumbs->push($data->title);
+		});
+
+		return view('santa.tours.resourt', $data);
+	}
+
+	public function getItem($category, $item)
 	{
 		$data['data'] = Tours::whereUrl($item)->whereActive(1)->with(['get_seo', 'get_templates', 'get_category'])->firstOrFail();
 		$data['data']['images'] = $data['data']->getMedia('images')->sortByDesc('order_column');
@@ -227,11 +237,8 @@ class ToursController extends Controller
 				}
 			}
 			$breadcrumbs->push($get_category->title, $url .'/'. $get_category->url);
-			//$breadcrumbs->push($data->title);
+			$breadcrumbs->push('Тур');
 		});
-
-		//Модуль списка разделов справа
-		$data['module_listCatalog'] = $module_listCatalog;
 
 		if($data['data']->get_seo){
 			$data['seo']['title'] = $data['data']->get_seo->title;
@@ -240,6 +247,46 @@ class ToursController extends Controller
 		}
 
 		return view('santa.tours.item', $data);
+	}
+
+	public function getTours($category, Request $request)
+	{
+		Breadcrumbs::register('tours.items', function($breadcrumbs, $data)
+		{
+			$breadcrumbs->parent('tours.category', $data);
+		});
+
+		$paginate = Cookie::get('perPage', 24);
+
+		$data['data'] = Cache::remember('getTours'. $category .''. $request->get('page', 1), 60, function() use ($category, $paginate)
+		{
+			//Основной запрос для вывода
+			return Category::whereUrl($category)->whereActive(1)->with(
+				['get_toursActive' => function($query) use ($paginate){
+					$query->paginate($paginate);
+				}, 'get_parent', 'get_seo']
+			)->first();
+		});
+
+		$data['data']['images'] = $data['data']->getMedia('images')->sortByDesc('order_column');
+		foreach($data['data']->get_toursActive as $key => $value){
+			$images = Cache::remember('tours_image'. $value->id, 60, function() use ($value)
+			{
+				return $value->getMedia('images')->sortByDesc('order_column');
+			});
+			$data['data']->get_toursActive[$key]['images'] = $images;
+		}
+
+		$data['paginator'] = new Paginator(
+			$data['data']->get_toursActive(),
+			$data['data']->get_toursActive()->count(),
+			$limit = $paginate,
+			$page = $request->get('page', 1), [
+			'path'  => $request->url(),
+			'query' => $request->query(),
+		]);
+
+		return view('santa.tours.items-4-3', $data);
 	}
 
 	public function searchItem(Request $request)

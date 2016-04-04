@@ -6,4 +6,29 @@
   h3{
 	font-size: 20px;
   }
+  .short{
+	font-size: 14px;
+	line-height: 19px;
+	padding-top: 15px;
+  }
+}
+
+.toursBlockTour{
+  padding-bottom: 50px;
+  > div:nth-child(3n+1){
+	margin-left: 3%;
+  }
+  h3 a{
+	font-size: 16px;
+	padding: 0 7px;
+  }
+}
+
+.toursPageCountry{
+  .toursPageCountry-photo{
+	padding-bottom: 30px;
+  }
+  .toursPageCountry-short{
+	padding-bottom: 30px;
+  }
 }

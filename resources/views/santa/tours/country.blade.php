@@ -1,13 +1,14 @@
 @extends('santa.main')
-@section('title') {{ $seo['title'] }} @endsection
+@section('title') {{ $data->title }} @endsection
 
 @section('content')
     {!! Breadcrumbs::render('tours.category', $data) !!}
     <div class="toursPageCountry row">
-        <h1>{{ $data->title }}</h1>
+        <h1 class="col-xs-24">{{ $data->title }}</h1>
+        <div class="clearfix"></div>
         <div class="toursPageCountry-photo">
             @if(count($data->images) > 0)
-                <div id="carousel-counrty" class="carousel slide" data-ride="carousel">
+                <div id="carousel-country" class="carousel slide" data-ride="carousel">
                     <!-- Indicators -->
                     <ol class="carousel-indicators">
                         <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
@@ -26,11 +27,11 @@
                     </div>
 
                     <!-- Controls -->
-                    <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                    <a class="left carousel-control" href="#carousel-country" role="button" data-slide="prev">
                         <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
                         <span class="sr-only">Previous</span>
                     </a>
-                    <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                    <a class="right carousel-control" href="#carousel-country" role="button" data-slide="next">
                         <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                         <span class="sr-only">Next</span>
                     </a>
@@ -45,18 +46,22 @@
                 {!! $data->short !!}
             </div>
         </div>
-        <div class="toursPageCountry-popular">
-            POPULAR
+        <div class="toursPageCountry-popular row">
+            <div class="col-xs-24"><h5 class="title-header">Популярные курорты</h5></div>
+            @each('santa.tours.blockResourt', $data->get_childActive, 'data')
         </div>
-        <div class="toursPageCountry-bestcost">
-            BEST
+
+        <div class="toursPageCountry-bestcost row">
+            <div class="col-xs-24"><h5 class="title-header">Лучшие цены</h5></div>
         </div>
-        <div class="toursPageCountry-recommented">
-            RECOM
+
+        <div class="toursPageCountry-recommented row">
+            <div class="col-xs-24"><h5 class="title-header">Рекомендуемые туры</h5></div>
+            @each('santa.tours.blockTour', $data->get_toursActive, 'data')
         </div>
+
         <div class="toursPageCountry-description">
             {!! $data->description !!}
         </div>
-        @each('santa.tours.blockCategory', $data->get_child, 'data')
     </div>
 @endsection

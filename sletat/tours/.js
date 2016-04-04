@@ -1,0 +1,1 @@
+sletatTemplate = null;sletatDiscount=

@@ -1,0 +1,27 @@
+div.templatesRow {
+width: 500px;
+height: 40px;
+background: grey;
+margin: 4px;
+border-radius: 10px;
+text-align: center;
+cursor: pointer;
+padding-top: 16px;
+}
+body div.deleteTemplate {
+position: relative;
+left: 474px;
+top: -54px;
+color: red;
+width: 20px;
+height: 20px;
+cursor: pointer;
+}
+p.addTpl {
+cursor: pointer;
+border: 1px solid;
+display: block;
+border-radius: 3px;
+padding: 7px;
+width: 125px;
+}

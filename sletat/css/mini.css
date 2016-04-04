@@ -1,0 +1,765 @@
+body{
+	font-family: "Trebuchet MS",PT Sans, Tahoma, Arial, sans-serif;
+}
+#content_otel{
+	border:1px solid #ccc;
+	border-bottom-color:#B1B1B1;
+	float:left;
+	margin:0 0 50px 50px;
+}
+.block_title{
+	float:left;
+}
+.block_otel{
+	padding:20px 20px 0 20px;
+	border-bottom:1px solid #DADADA;
+}
+.block_otel .flag{
+	width:16px;
+	height:10px;
+	background:url(/sletat/images/arab.png);
+	background-repeat:no-repeat;
+	float:left;
+	margin:4px 4px 0 0;
+}
+.block_otel .name_country{
+	font-size:14px;
+	color:#E12731;
+	overflow: hidden;
+}
+.block_otel .title_otel{
+	font-size:20px;
+	float:left;
+}
+.block_otel .zvezda{
+	width:13px;
+	height:13px;
+	background:url(/sletat/images/zvezda.png);
+	background-repeat:no-repeat;
+	float: right;
+	margin-top: 6px;
+}
+.clearfix:after,
+.clearfix:before{
+	display:table;
+	content:"";
+	line-height:0;
+	height:0;
+}
+.clearfix:after{
+	clear:both;
+}
+.clear{
+	clear:both;
+}
+.position{
+	position:relative;
+}
+.block_info{
+	margin-top:10px;
+}
+.block_info #img_country_u1{
+	width:233px;
+	height:190px;
+	background:url(/sletat/images/arabianSuite.png);
+	background-repeat:no-repeat;
+	float:left;
+	margin-right:10px;
+}
+.block_info #img_country_u2{
+	width:233px;
+	height:190px;
+	background:url(/sletat/images/Abidos.png);
+	background-repeat:no-repeat;
+	float:left;
+	margin-right:10px;
+}
+.block_info #img_country_u3{
+	width:233px;
+	height:190px;
+	background:url(/sletat/images/grandhote.png);
+	background-repeat:no-repeat;
+	float:left;
+	margin-right:10px;
+}
+.block_info #img_country_u4{
+	width:233px;
+	height:190px;
+	background:url(/sletat/images/gusethouse.png);
+	background-repeat:no-repeat;
+	float:left;
+	margin-right:10px;
+}
+.block_info #img_country_u5{
+	width:233px;
+	height:190px;
+	background:url(/sletat/images/admiralplaza.png);
+	background-repeat:no-repeat;
+	float:left;
+	margin-right:10px;
+}
+.block_info table.table_info{
+	width:255px;
+	font-size:14px;
+	float:left;
+	margin-right:8px;
+}
+.block_info table.table_info td{
+	vertical-align:top;
+	padding-bottom:8px;
+}
+.block_info table.table_info span{
+	font-size:11px;
+	padding-right:9px;
+}
+.block_info table.table_info .bold{
+	font-weight:bold;
+}
+.block_price{
+	width:167px;
+	float:right;
+}
+.block_price .price_tur,
+.block_price .doplaty{
+	font-size:11px;
+	color:#7D7D7D;
+	display:block;
+}
+.block_price .price_tur{
+	margin: 17px 0 5px 0;
+}
+.block_price .price{
+	background-color:#F4F4F4;
+	overflow:hidden;
+	text-align:center;
+}
+.block_price .price_{
+	font-size:22px;
+	font-weight:bold;
+	color:#E12731;
+	display:block;
+	margin-bottom:15px;
+}
+.blokc_doplaty{
+	border:1px solid #F4F4F4;
+	overflow:hidden;
+	padding:9px 0 7px 13px;
+}
+.blokc_doplaty .no_doplaty{
+	font-size:15px;
+	color:#E43640;
+}
+.blokc_doplaty .doplaty {
+	padding-top:3px;
+}
+.block_price .button2{
+	float: right;
+	margin: 13px 1px 0 0;
+}
+
+
+#paginator{
+	text-align:center;
+	padding:20px 0;
+	position:relative;
+	width: 55%;
+	margin: 0 auto;
+}
+#paginator .prev,
+#paginator .next,
+#paginator .num_paginator{
+	float:left;
+}
+#paginator .num_paginator{
+	margin:0 13px;
+}
+#paginator .num_paginator a{
+	margin:0 3px;
+}
+#paginator a{
+	color:#E44048;
+}
+#block-otel2{
+	padding:10px 20px;
+}
+#block-otel3,
+#block-otel4{
+	padding:5px 20px;
+}
+#block-otel5{
+	padding:9px 20px;
+}
+
+
+
+/* KARTOCHKA */
+#kartochka-wrapper{
+	width:715px;
+	margin:0 auto;
+	outline:1px solid #ccc;
+}
+#kartochka-wrapper .kartochka-wrapper{
+	padding:15px 17px 0px 17px;
+}
+#block-country{
+	padding:0px 15px;
+}
+#kartochka_primechanie{
+	overflow:hidden;
+}
+#kartochka-wrapper .block-top span{
+	float:left;
+}
+#kartochka-wrapper .block-top{
+	font-size:20px;
+}
+#kartochka-wrapper .block-top .red{
+	color:#E3333D;	
+}
+#kartochka-wrapper .block-top .fly{
+	display:block;
+	width:18px;
+	height:17px;
+	background:url(/sletat/images/03.png) !important;
+	background:no-repeat;
+	margin: 6px 10px;
+}
+#kartochka-wrapper .block-top{
+	margin-bottom:10px;
+}
+#kartochka-wrapper .block-top .tur{
+	margin-right: 18px;
+}
+#kartochka-wrapper .block_table_bar{
+	width:74%;
+	float:left;
+}
+#kartochka-wrapper table.table_info{
+	width:96%;
+	font-size:14px;
+}
+#kartochka-wrapper table.table_info .bold {
+	font-weight: bold;
+	padding-right:9px;
+}
+#kartochka-wrapper table.table_info span {
+font-size: 11px;
+}
+#kartochka-wrapper table.table_info td{
+	padding-bottom:3px;
+}
+#kartochka-wrapper .block_price .price{
+	border:1px solid #DFDFDF;
+	border-bottom:0;
+	border-radius:5px 5px 0 0;
+}
+#kartochka-wrapper .blokc_doplaty{
+	border:1px solid #DFDFDF;
+	border-top-width:0;
+	border-radius:0 0 5px 5px;
+}
+#kartochka-wrapper .block_price {
+	top: -35px;
+	right: 4px;
+}
+#kartochka-wrapper .blokc_doplaty{
+	padding: 9px 0 10px 15px;
+}
+#kartochka-wrapper .blokc_doplaty .doplaty{
+	padding-top:0;
+}
+#kartochka-wrapper .block_price{
+	width:169px;
+}
+#kartochka-wrapper .block_price .button3{
+	margin: 13px 0px 0 0;
+}
+#kartochka-wrapper .block_price .button2{
+	margin: 0;
+}
+#kartochka-wrapper #form-online{
+	margin-bottom:7px;
+}
+#kartochka_primechanie span{
+	float:left;
+	font-size:13px;
+	border:1px solid #DFDFDF;
+	border-right:0;
+	border-radius: 3px 0 0 3px;
+	padding:11px 14px;
+	margin-top:11px;
+}
+#kartochka_primechanie span.last{
+	margin-right:0 !important;
+}
+#kartochka_primechanie span.p-arr{
+	font-size:14px;
+	background-color:#78EA6B;
+	border:1px solid #50BA47;
+	display:block;
+	padding: 11px 5px;
+	border-radius: 0px 3px 3px 0px;
+	margin-right:8px;
+}
+#kartochka_primechanie
+#kartochka_primechanie span.p-arr_u{
+	padding: 11px 14px 11px 11px;
+}
+#kartochka_primechanie span.p-arr_u1{
+	padding:11px 10px;
+}
+.primechanie .primechanie_img{
+	width:23px;
+	height:21px;
+	background:url(/sletat/images/primechanie.png);
+	background-repeat:no-repeat;
+	float:left;
+	margin: 6px 0 0 2px;
+}
+.primechanie .primechanie_text{
+	font-size:11px;
+	margin: 64px 0 0 37px;
+}
+.block-country{
+	width:96%;	
+	padding:15px 20px;
+}
+.block-country .title{
+	font-size: 22px;
+	font-weight: bold;
+	float:left;
+}
+.block-country .reiting{
+	width:90px;
+	height:15px;
+	background:url(/sletat/images/reiting-zvezda.png) !important;
+	background:no-repeat;
+	display:block;
+	float: left;
+	margin: 5px 7px	0 0;
+}
+.block-country .block-country-bar1{
+	float:left;
+	margin-right:24px;
+}
+.block-country .block-country-bar1  .u-283{
+	width:100%;
+}
+.block-country .flag-country .flag{
+	width:17px;
+	height:12px;
+	background:url(/sletat/images/flag-country.png) !important;
+	background:no-repeat;
+	display:block;
+	margin-top:4px;
+}
+.block-country .flag-country .name-country{
+	font-size: 12px;
+	margin-left: 6px;
+}
+.block-country .site-icon{
+	width:11px;
+	height:11px;
+	background:url(/sletat/images/site.png) !important;
+	background:no-repeat;
+	display:block;
+}
+.flag-country span.flag,
+.flag-country span.name-country,
+.flag-country span.site-icon{
+	float:left;
+}
+.block-country-wrapper{
+	width:715px;
+	border-top:1px solid #DFDFDF;
+}
+
+/*SLIDER*/
+#wrapper-carousel {
+	border: 1px solid #ddd;
+	background-color: #fff;
+	width: 423px;
+	height: 274px;
+	box-shadow: 0px 2px 12px 0px #D2D2D2;
+	position:relative;
+}
+#wrapper-carousel img {
+	display: block;
+	float: left;
+}
+#wrapper-carousel #images, 
+#wrapper-carousel #thumbs {
+	height: 217px;
+	overflow: hidden;
+}
+#wrapper-carousel #images {
+	width: 290px;
+	margin: 50px 0 25px 50px;
+}
+#wrapper-carousel #thumbs {
+	width: 288px;
+	height: 100px;
+}
+#wrapper-carousel #thumbs img {
+	cursor: pointer;
+	padding:0 4px;
+}
+#wrapper-carousel #thumbs img.selected, 
+#wrapper-carousel #thumbs img:hover {
+	border-color: #333;
+}			
+#wrapper-carousel #prev, 
+#wrapper-carousel #next {
+	width: 15px;
+	height: 21px;			
+	display: block;				
+	text-indent: -999em;
+	background: transparent url(/sletat/images/carousel_control.png) no-repeat 0 0;
+	position: absolute;
+	bottom: 16px;				
+}
+#wrapper-carousel #prev {
+	background-position: 0 0;
+	left: 70px;
+}
+#wrapper-carousel #prev:hover {
+	left: 70px;
+}	
+#wrapper-carousel #prev:hover,
+#wrapper-carousel #next:hover {
+	width: 15px;
+	height: 21px;			
+	display: block;				
+	text-indent: -999em;
+	background: transparent url(/sletat/images/carousel_control-hover.png) no-repeat 0 0;
+	position: absolute;
+	bottom: 16px;				
+}	
+
+#wrapper-carousel #next {
+	background-position: -18px 0;
+	right: 70px;
+}
+#wrapper-carousel #next:hover {
+	background-position: -18px 0;
+	right: 70px;
+}	
+.block-country-bar1 .site-url{
+	font-size: 12px;
+	margin: -4 0 8px 18px;
+	display: block;
+}
+.block-country-bar1 .site-url a{
+	color:#6CABDF;
+	text-decoration:none;
+}		
+.caroufredsel_wrapper{
+	margin: 6px 0px 6px 66px !important;
+}
+.block-country-bar1{
+	width:425px;
+}
+.block-country_descritpion span{
+	font-size:14px;
+	display:block;
+	font-weight:bold;
+	margin-top: 10px;
+}
+.block-country_descritpion p{
+	font-size: 12px;
+	margin-top: 6px;
+	margin-bottom:0;
+	color:#5F5C57;
+}
+.block-country_descritpion .link{
+	font-size: 12px;
+	display: block;
+	text-align: right;
+	margin-top: -4;
+}
+.block-country_descritpion .link a,
+.news-country .link a{
+	color:#00A8D9;
+}
+#uslugi .table-uslugi1{
+	width:155px;
+}
+#uslugi .table-uslugi{
+	width:150px;
+	float:left;
+}
+#uslugi .table-uslugi,
+#uslugi .table-uslugi1{
+	font-size:11px;	
+}
+#uslugi .table-uslugi td{
+	padding-bottom:10px;
+}
+#uslugi .table-uslugi .bottom{
+	padding-bottom:55px;
+}
+#uslugi .table-uslugi .parkovka{
+	padding-bottom:25px;
+}
+#uslugi .table-uslugi1 .nomera{
+	padding-bottom:9px;
+}
+#uslugi .table-uslugi1 .obhie{
+	padding-bottom:7px;
+}
+#uslugi .table-uslugi1 .biznes{
+	padding-bottom:8px;
+}
+#uslugi .table-uslugi1 .internet{
+	padding-bottom:8px;
+}
+#uslugi .table-uslugi1 .odegda{
+	padding-bottom:8px;
+}
+#uslugi .table-uslugi1 .voda{
+	padding-bottom:14px;
+}
+#uslugi .table-uslugi1 .plyag{
+	padding-bottom:14px;
+}
+#uslugi .table-uslugi span,
+#uslugi .table-uslugi1 span{
+	text-transform:uppercase;
+	color:#79B2E2;
+	display:block;
+	margin-bottom:-3px;
+}
+#uslugi .uslugi-img,
+#uslugi .uslugi-text{
+	vertical-align:top;
+}
+#uslugi .title-uslugi{
+	font-size:14px;
+	display:block;
+	font-weight:bold;
+	margin-top:10px;
+}
+.block-country .block-country-bar2{
+	overflow:hidden;
+}
+.block-country .block-country-bar2 .block-pogoda{
+	float:left;
+	margin-bottom: 8px;
+}
+.block-country .block-country-bar2 .block-pogoda .pogoda{
+	font-size: 14px;
+	display: block;
+	font-weight: bold;
+	margin-bottom: 8px;
+}
+.block-country .block-country-bar2 .news-country{
+	margin-bottom:10px;
+}
+.news-country span{
+	display:block;
+}
+.news-country .news{
+	font-size:15px;
+	margin:0 0 8px 3px;
+	font-weight:bold;
+}
+.news-country .news-img{
+	margin-bottom:5px;
+}
+.news-country .news-description{
+	font-size: 12px;
+	line-height: 1.3;
+}
+.news-country .link{
+	font-size: 11px;
+	display: block;
+	text-align: right;
+	margin-right: 15px;
+}
+.block-country-bar2 .block_process{
+	width:100%;
+	float:none;
+	margin:68px 0 12px 0;
+}
+.block_process .reiting-otelya{
+	font-size: 14px;
+	display: block;
+	font-weight: bold;
+	margin-bottom:5px;
+}
+.block-country-bar2 .block_process .num-process{
+	display: block;
+	position: absolute;
+	color:#39A037;
+	font-weight:bold;
+}
+.block-country-bar2 .progress-bar {
+	background: url(http://hotels.sletat.ru/images/main-progress-bar.png) repeat-x;
+	height: 10px;
+	width: 82%;
+	border-width: 0px 1px;
+	border-style: solid;
+	border-color: #cbcbcb;
+	float: right;
+	margin: 7px 13px 0 0;
+}
+#content_otel .block_process{
+	overflow:hidden;
+	float:right;
+}
+#content_otel .block_process span{
+	font-size:14px;
+	color:#8E8E8E;	
+	display:block;
+	float:left;
+}
+#content_otel .block_process .progress-bar{
+	background: url(http://donwp1.sletat.ru/kovrovtour/img/rate.png) repeat-x;
+	height: 13px;
+	width: 73%;
+	border-width: 0px 1px;
+	border-style: solid;
+	border-color: #cbcbcb;
+	float: left;
+	margin:7px 9px 0 0;
+}
+#content_otel .block_process .num-process{
+	color: #39A037;
+	font-weight: bold;
+	margin-top: 4px;
+}
+.block-country-bar2 .block-map{
+	width:222px;
+	border:1px solid #EAECEC;
+	border-radius:5px;
+	margin-bottom:16px;
+}
+.block-country-bar2 .map{
+	border:5px solid #F3F4F5;
+}
+element.style {
+display: block;
+}
+#search_form {
+	width: 225px;
+	border: 1px solid #ccc;
+        margin-bottom: 30px;
+        background: #fff;
+}
+#search_form #form {
+	width: 188px;
+	margin: -5px auto 0 auto;
+}
+#search_form p.title {
+	font-size: 20px;
+	font-weight: bold;
+	text-align: center;
+	margin: 0;
+	padding-top: 15px;
+}
+#search_form .from_where_ {
+	margin-top: 19px;
+}
+.where p {
+	margin: 14px 0 4px 0;
+}
+#search_form .where_, #search_form .where1_, #search_form .from_where_ {
+	font-size: 14px;
+	color: #565656;
+}
+.select-box select {
+    border-radius: 0;
+    background: transparent;
+    height: 25px;
+    padding-left: 5px;
+    border: 0;
+	border-radius:5px;
+    font-size: 14px;
+    line-height: 1;
+    -webkit-appearance: none;
+    width: 207px;
+	box-shadow: inset 0px 2px 7px 0px #E0E0E0;
+}
+.select-box{
+    border: 1px solid #CCC;
+    overflow: hidden; 
+	border-radius: 5px;
+    height: 25px;
+    background:url(/sletat/images/chosen-sprite.png) 170px no-repeat;
+    width: 188px;
+}
+.select-box1 select {
+    border-radius: 0;
+    background: transparent;
+    height: 25px;
+    padding-left: 5px;
+    border: 0;
+	border-radius:5px;
+    font-size: 14px;
+    line-height: 1;
+    -webkit-appearance: none;
+    width: 170px;
+	box-shadow: inset 0px 2px 7px 0px #E0E0E0;
+}
+.select-box1{
+    border: 1px solid #CCC;
+    overflow: hidden; 
+	border-radius: 5px;
+    height: 25px;
+    background:url(/sletat/images/chosen-sprite.png) 125px no-repeat;
+    width: 148px;
+	float:left;
+	margin-right: 12px;
+}
+.select-box1_ select {
+    border-radius: 0;
+    background: transparent;
+    height: 25px;
+    padding-left: 5px;
+    border: 0;
+	border-radius:5px;
+    font-size: 14px;
+    line-height: 1;
+    -webkit-appearance: none;
+    width: 70px;
+	box-shadow: inset 0px 2px 7px 0px #E0E0E0;
+}
+.select-box1_{
+    border: 1px solid #CCC;
+    overflow: hidden; 
+	border-radius: 5px;
+    height: 25px;
+    background:url(/sletat/images/chosen-sprite.png) 31px no-repeat;
+    width: 50px;
+	float:left;
+	margin-right: 12px;
+	display:none;
+}
+#day .calendar img{
+	position: absolute;
+	top: 32px;
+	border: 0;
+	right: 0;
+}
+#search_form #button1 {
+	margin: 14px 0 10px 0;
+}
+#search_form #where_ {
+	margin-top: 10px;
+	border-top: 1px solid #EAEDEE;
+}
+#day {
+	position: relative;
+	border-bottom: 1px solid #EAEDEE;
+	padding-bottom: 17px;
+}
+.input-box1 input{
+	height: 25px;
+	border: 1px solid #CCCCCC;
+	box-shadow: inset 0px 2px 7px 0px #E0E0E0;
+	border-radius: 5px;
+	font-size: 14px;
+	line-height: 1;
+	padding-left: 9px;
+	width: 140px;
+}

@@ -43,41 +43,38 @@ Route::get('/news/{item}', [
     'as' => 'news.item', 'uses' => 'NewsController@getItem'
 ]);
 
-Route::get('/catalog/all', [
-	'as' => 'catalog.all', 'uses' => 'CatalogController@getAllTovars'
-]);
-Route::get('/catalog/{category}', [
-	'as' => 'catalog.category', 'uses' => 'CatalogController@getCategory'
-]);
-Route::get('/catalog/{category}/{child}', [
-	'as' => 'catalog.category.child', 'uses' => 'CatalogController@getCategory'
-]);
-Route::get('/catalog/{category}/{child}/{grandson}', [
-	'as' => 'catalog.category.grandson', 'uses' => 'CatalogController@getCategory'
-]);
-Route::get('/catalog/{category}/{child}/{grandson}/{item}', [
-	'as' => 'catalog.category.grandson.item', 'uses' => 'CatalogController@getItem'
-]);
-Route::get('/search/catalog', [
-	'as' => 'search.catalog', 'uses' => 'CatalogController@searchItem'
-]);
-
 //TOURS
 Route::get('/tours/all', [
 	'as' => 'tours.all', 'uses' => 'ToursController@getAllTovars'
 ]);
-Route::get('/tours/{category}', [
-	'as' => 'tours.category', 'uses' => 'ToursController@getCategory'
+Route::get('/tours/strany', [
+	'as' => 'tours.strany', 'uses' => 'ToursController@getStrany'
 ]);
-Route::get('/tours/{category}/{child}', [
-	'as' => 'tours.category.child', 'uses' => 'ToursController@getCategory'
+Route::get('/tours/strany/{category}', [
+	'as' => 'tours.strany', 'uses' => 'ToursController@getCategory'
 ]);
-Route::get('/tours/{category}/{child}/{grandson}', [
-	'as' => 'tours.category.grandson', 'uses' => 'ToursController@getCategory'
+Route::get('/tours/strany/{category}/{item}', [
+	'as' => 'tours.resourt', 'uses' => 'ToursController@getResourt'
 ]);
-Route::get('/tours/{category}/{child}/{grandson}/{item}', [
-	'as' => 'tours.category.grandson.item', 'uses' => 'ToursController@getItem'
+
+Route::get('/tours/vidy-otdykha', [
+	'as' => 'tours.vidy-otdykha', 'uses' => 'ToursController@getVidy'
 ]);
+Route::get('/tours/vidy-otdykha/{category}', [
+	'as' => 'tours.vidy-categories', 'uses' => 'ToursController@getCategory'
+]);
+Route::get('/tours/vidy-otdykha/{category}/{item}', [
+	'as' => 'tours.vidy-item', 'uses' => 'ToursController@getResourt'
+]);
+
+/*Route::get('/tours/{category}/{child}', [
+	'as' => 'tours.category.child', 'uses' => 'ToursController@getCountry'
+]);*/
+
+Route::get('/tours/{category}/{item}', [
+	'as' => 'tours.category.item', 'uses' => 'ToursController@getItem'
+]);
+
 Route::get('/search/tours', [
 	'as' => 'search.tours', 'uses' => 'ToursController@searchItem'
 ]);

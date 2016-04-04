@@ -1,4 +1,5 @@
-<form id="form-searchTourShort" class="form-searchTour form-searchTourShort" method="post" action="/forms/searchTour">
+<form id="form-searchTourShort" class="form-searchTour form-searchTourShort" method="post"
+      action="http://www.santa-avia.ru/goryashchie-tury/townFrom-1286/countryId-113/?nights=10&month=06/04/2016&sta=1">
     <p class="h3 text-center">Подбор тура</p>
     <div class="form-group">
         <label for="form-searchTour-out">Откуда:</label>

@@ -26,9 +26,6 @@
                         <th></th>
                         <th>Название</th>
                         <th>URL</th>
-                        @if($data->get_tours)
-                            <th width="90">Цена</th>
-                        @endif
                         <th width="90">Порядок</th>
                         <th width="93"></th>
                         <th width="90"></th>
@@ -61,9 +58,6 @@
                             <th></th>
                             <th>Название</th>
                             <th>URL</th>
-                            @if($data->get_tours)
-                                <th width="90">Цена</th>
-                            @endif
                             <th width="90">Порядок</th>
                             <th width="93"></th>
                             <th width="90"></th>

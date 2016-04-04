@@ -15,7 +15,7 @@ return [
 			'typo' => 'true'
 		],
 		'category' => [
-			'title' => 'Раздел',
+			'title' => 'Разделы',
 			'type' => 'select_category',
 			'tab' => ['main' => 'Описание товара'],
 			'valid' => 'max:255|required',

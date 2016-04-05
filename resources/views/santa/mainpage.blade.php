@@ -57,6 +57,17 @@
     </header>
 
     <section class="row" id="content">
+        <section id="right_colomn" class="col-xs-24 col-sm-7">
+            <div class="col-xs-24">
+                @include('santa.modules.forms.searchTourShort')
+                @yield('rightColomn')
+                @if(isset($banner))
+                    @include('front.modules.list.banner')
+                @endif
+                @include('santa.modules.list.vidy')
+                @include('santa.modules.forms.subscribe')
+            </div>
+        </section>
         <div class="col-xs-24 col-sm-17">
             <div class="col-xs-24">
                 @include('front.errors')
@@ -67,17 +78,6 @@
                 @yield('content')
             </div>
         </div>
-        <section id="right_colomn" class="col-xs-24 col-sm-7">
-            <div class="col-xs-24 col-sm-22 col-sm-offset-2">
-                @include('santa.modules.forms.searchTourShort')
-                @yield('rightColomn')
-                @if(isset($banner))
-                    @include('front.modules.list.banner')
-                @endif
-                @include('santa.modules.list.vidy')
-                @include('santa.modules.forms.subscribe')
-            </div>
-        </section>
     </section>
 
     <footer>

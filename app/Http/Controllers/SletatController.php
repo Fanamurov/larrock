@@ -122,18 +122,82 @@ class SletatController extends Controller
 	 * @param 	int		$countryId		Идентификатор направления
 	 * @param 	string	$towns			Идентификаторы городов, разделённые запятыми
 	 * @param	string	$stars			Идентификаторы категорий отелей, разделённые запятыми
-	 * @param	string	$filter			Фильтрация по названию отеля.
-	 * @param   string 	$all 			Количество отелей в выдаче. Возможные значения:
-	 *                       			“-1” – в выдачу попадают все отели; любое положительное
-	 *                       			целое число – точное количество отелей.
+	 * @param	string	$filter			Фильтрация по названию отеля
 	 *
 	 * @return Collection
 	 */
-	public function GetHotels($countryId, $towns = '', $stars = '', $filter = '', $all = '-1')
+	public function GetHotels($countryId, $towns = '', $stars = '', $filter = '')
 	{
 		$this->url = 'http://module.sletat.ru/Main.svc/GetCities'. $this->login_params .'&countryId='. $countryId
-			.'&towns'. $towns .'&stars'. $stars .'&filter'. $filter .'&all='. $all;
+			.'&towns'. $towns .'&stars'. $stars .'&filter'. $filter .'&all=-1';
 		$result = $this->sendRequest();
 		return collect($result->GetCitiesResult->Data);
 	}
+
+    /**
+     * Метод GetHotelStars возвращает список доступных категорий отелей в выбранных курортах.
+     * @param   int     $countryId      Идентификатор страны
+     * @param   string  $towns          Идентификаторы курортов, разделённые запятой
+     *
+     * @return Collection
+     */
+    public function GetHotelStars($countryId, $towns)
+    {
+        $this->url = 'http://module.sletat.ru/Main.svc/GetHotelStars'. $this->login_params .'&countryId='. $countryId
+        .'&towns'. $towns;
+		$result = $this->sendRequest();
+		return collect($result->GetHotelStarsResult->Data);
+    }
+
+    /**
+     * Метод GetMeals возвращает список типов питания
+     *
+     * @return mixed
+     */
+    public function GetMeals()
+    {
+        $this->url = 'http://module.sletat.ru/Main.svc/GetMeals'. $this->login_params;
+        $result = $this->sendRequest();
+        return collect($result->GetMealsResult->Data);
+    }
+
+    /**
+     * Метод GetTourDates возвращает список доступных дат вылета для выбранных города
+     * вылета, страны и курорта, используя внутреннюю статистику, собранную по ранее найденным турам.
+     *
+     * @param   int     $dptCityId      Идентификатор города вылета
+     * @param   int     $countryId      Идентификатор страны
+     * @param   string  $resorts        Список идентификаторов курортов, разделённых запятой
+     * @param   string  $sources        Список идентификаторов туроператоро, разделенных запятой
+     */
+    public function GetTourDates($dptCityId, $countryId, $resorts = '', $sources = '')
+    {
+        $this->url = 'http://module.sletat.ru/Main.svc/GetTourDates'. $this->login_params .'&countryId='. $countryId
+            .'&dptCityId'. $dptCityId .'&resorts='. $resorts .'&sources='. $sources;
+        $result = $this->sendRequest();
+        return collect($result->GetTourDatesResult->Data);
+    }
+
+
+    /** ----  Методы загрузки туров  ----- */
+
+    /**
+     * Метод GetTours используется для создания поискового запроса, а также – если в запросе
+     * передаётся параметр requestId и параметр updateResult=1 – для получения результатов
+     * поиска по запросу.
+     *
+     * @param   int     $cityFromId     Идентификатор города вылета
+     * @param   int     $countryId      Идентификатор направления перелета
+     * @param   array   $addict_params  Дополнительные параметры для поиска
+     */
+    public function GetTours($cityFromId, $countryId, $addict_params = array(''))
+    {
+        $this->url = 'http://module.sletat.ru/Main.svc/GetTourDates'. $this->login_params .'&countryId='. $countryId
+            .'&cityFromId'. $cityFromId;
+        foreach ($addict_params as $key => $item){
+            $this->url .= '&'.$key .'='. $item;
+        }
+        $result = $this->sendRequest();
+        return collect($result->GetTourDatesResult->Data);
+    }
 }

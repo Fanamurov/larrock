@@ -73,6 +73,9 @@ $(document).ready(function(){
         format: 'yyyy-mm-dd'
     });
 
+    $('input.daterange').daterangepicker();
+    $('.chosen-select').chosen();
+
     /*
      * Универсальный обработчик для выделения блока как ссылки
      * Ищет внутри блока ссылку и присваивает ее всему блоку

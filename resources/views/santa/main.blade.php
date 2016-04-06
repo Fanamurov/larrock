@@ -68,15 +68,17 @@
     top: -54px;
     right: 0;"></div>
             </div>
-                @yield('content')
-                @yield('contentBottom')
+            @yield('content')
+            @yield('contentBottom')
             <script type="text/javascript" src="//yastatic.net/es5-shims/0.0.2/es5-shims.min.js" charset="utf-8"></script>
             <script type="text/javascript" src="//yastatic.net/share2/share.js" charset="utf-8"></script>
             <div class="ya-share2 ya-share2_big" data-services="vkontakte,facebook,odnoklassniki,moimir,gplus" data-counter=""></div>
         </div>
         <section id="right_colomn" class="col-xs-24 col-sm-7">
             <div class="col-xs-24 col-sm-22 col-sm-offset-2">
-                @include('santa.modules.forms.searchTourShort')
+                @section('searchTourShort')
+                    @include('santa.modules.forms.searchTourShort')
+                @endsection
                 @yield('rightColomn')
                 @include('santa.modules.list.vidy')
             </div>
@@ -92,6 +94,7 @@
 <!-- Mainly scripts -->
 <script src="{{asset('_assets/_santa/_js/bootstrap.min.js')}}"></script>
 <script src="/_assets/bower_components/selectize/dist/js/standalone/selectize.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript">
     var root = '{{url('/')}}';
 </script>
@@ -104,5 +107,9 @@
 @yield('scripts')
 <script src="/_assets/bower_components/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="/_assets/bower_components/jquery-validation/dist/additional-methods.min.js"></script>
+
+<!-- Include Date Range Picker -->
+<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 </body>
 </html>

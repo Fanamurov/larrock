@@ -17,6 +17,9 @@ $(document).ready(function(){
         }
     });
 
+    $('.chosen-select').chosen();
+
+
     /* http://maxoffsky.com/code-blog/laravel-shop-tutorial-3-implementing-smart-search/ */
     /* https://github.com/selectize/selectize.js/blob/master/docs/usage.md */
     $('select#searchCatalog').selectize({
@@ -69,8 +72,11 @@ $(document).ready(function(){
         firstDay: 1,
         monthsFull: [ 'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь' ],
         weekdaysShort: [ 'Вск', 'Пон', 'Вт', 'Ср', 'Чт', 'Пт', 'Суб' ],
-        format: 'yyyy-mm-dd'
+        format: 'yyyy-mm-dd',
+        min: +1
     });
+
+    $('input.daterange').daterangepicker();
 
     /*
      * Универсальный обработчик для выделения блока как ссылки

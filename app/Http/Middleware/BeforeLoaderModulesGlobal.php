@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Controllers\SletatController;
 use App\Models\Blocks;
 use App\Models\Category;
 use App\Models\Menu;
@@ -72,6 +73,10 @@ class BeforeLoaderModulesGlobal
             $menu->url('/otzyvy', 'Отзывы');
             $menu->url('/blog', 'Блог');
         });
+		
+		/* Краткая форма поиска от sletat */
+		//$sletat = new SletatController();
+		//View::share('SearchForm', $sletat->getSearchForm());
 
         return $next($request);
     }

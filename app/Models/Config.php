@@ -14,6 +14,13 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Config imagePresets($key)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Config whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Config whereKey($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Config whereValue($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Config whereType($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Config whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Config whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class Config extends Model
 {

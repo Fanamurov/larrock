@@ -54,7 +54,7 @@ class AdminBlocksController extends Controller
 	{
         $test = Request::create('/admin/blocks', 'POST', [
             'title' => 'Черновик',
-            'url' => str_slug('Черновик'),
+            'url' => str_slug('create-new'),
             'active' => 0
         ]);
         return $this->store($test, $ContentPlugins);
@@ -71,6 +71,7 @@ class AdminBlocksController extends Controller
 	{
 		$data['data'] = Blocks::with(['get_seo','get_templates'])->findOrFail($id);
         $data['images']['data'] = $data['data']->getMedia('images');
+        $data['files']['data'] = $data['data']->getMedia('files');
 
 		$data['id'] = $id;
 		$data['app'] = $ContentPlugins->attach_rows($this->config);

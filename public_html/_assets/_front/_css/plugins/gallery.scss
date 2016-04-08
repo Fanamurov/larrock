@@ -3,3 +3,36 @@
 	box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
   }
 }
+
+/* FILES */
+.block-prices{
+  margin-top: 50px;
+  margin-bottom: 30px;
+  .h3{
+	margin-bottom: 20px;
+  }
+  .file-gallery-default{
+	display: block;
+
+	.file-gallery-default-item{
+	  margin-bottom: 15px;
+	  position: relative;
+	}
+	img{
+	  float: left;
+	  display: inline-block;
+	  max-width: 50px;
+	  padding-right: 15px;
+	  position: absolute;
+	  left: 0;
+	}
+	span{
+	  float: left;
+	  display: inline-block;
+	  font-size: 18px;
+	  padding-left: 50px;
+	  padding-top: 7px;
+	  min-height: 38px;
+	}
+  }
+}

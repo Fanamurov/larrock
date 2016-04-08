@@ -42,6 +42,12 @@
             </tbody>
         </table>
     </form>
+
+    <div class="row">
+        <div class="col-md-12 col-md-offset-6">
+            @include('front.modules.forms.orderShort')
+        </div>
+    </div>
 @endsection
 
 @section('scripts')

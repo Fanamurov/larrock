@@ -1,5 +1,8 @@
 <div class="catalogBlockCategory col-xs-12">
     <div class="link_block_this col-xs-22 col-xs-offset-2" data-href="/catalog/{{ $data->url }}">
+        @level(2)
+            <a class="admin_edit" href="/admin/category/{{ $data->id }}/edit">Edit element</a>
+        @endlevel
         @if($data->image)
             <img src="{{ $data->image }}" class="categoryImage">
         @else

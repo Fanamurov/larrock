@@ -27,6 +27,7 @@ class PageController extends Controller
 		$page['images'] = $page->getMedia('images');
 		$page['files'] = $page->getMedia('files');
 		$data['data'] = $contentPlugins->renderGallery($page);
+		$data['data'] = $contentPlugins->renderFilesGallery($page);
 		if(\View::exists('front.page.'. $url)){
 			return view('front.page.'. $url, $data);
 		}else{

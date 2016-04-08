@@ -1,5 +1,8 @@
 <div class="catalogBlockItem col-xs-12">
     <div>
+        @level(2)
+            <a class="admin_edit" href="/admin/catalog/{{ $data->id }}/edit">Edit element</a>
+        @endlevel
         <div class="catalogImage link_block_this" data-href="{!! URL::current() !!}/{{ $data->url }}">
             @if($data->images->first())
                 <img src="{{ $data->images->first()->getUrl() }}" class="categoryImage max-width">

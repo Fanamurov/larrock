@@ -204,6 +204,9 @@ return [
 		/* https://github.com/LaravelRUS/localized-carbon/blob/master/docs/README-ru.md */
 		//Laravelrus\LocalizedCarbon\LocalizedCarbonServiceProvider::class,
 
+		/* http://sky.pingpong-labs.com/docs/2.0/menus#installation */
+		//Pingpong\Menus\MenusServiceProvider::class,
+
     ],
 
     /*
@@ -267,7 +270,7 @@ return [
         'Cart'        	=> Gloudemans\Shoppingcart\Facades\Cart::class,
         'Recaptcha' 	=> Greggilbert\Recaptcha\Facades\Recaptcha::class,
         'Search' 		=> Sofa\Eloquence\ServiceProvider::class,
-
+		//'ModuleMenu' 	=> Pingpong\Menus\MenuFacade::class,
     ],
 
 ];

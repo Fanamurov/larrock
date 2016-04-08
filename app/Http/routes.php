@@ -78,6 +78,9 @@ Route::get('/modules/ListCatalog', [
 Route::get('/cart', [
 	'as' => 'cart.index', 'uses' => 'CartController@getIndex'
 ]);
+Route::post('/cart/short', [
+	'as' => 'cart.sendOrder', 'uses' => 'CartController@sendOrderShort'
+]);
 
 //Forms
 Route::post('/forms/contact', [

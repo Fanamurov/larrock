@@ -11,7 +11,7 @@
             </a>
         </td>
         <td>
-            <a href="/admin/catalog/{{ $data_value->id }}">
+            <a href="/admin/catalog/{{ $data_value->id }}/edit">
                 {{ $data_value->title }}
             </a>
         </td>

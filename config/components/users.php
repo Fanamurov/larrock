@@ -11,8 +11,7 @@ return [
 			'in_table_admin' => 'TRUE',
 			'type' => 'text',
 			'tab' => ['main' => 'Заголовок, описание'],
-			'valid' => 'email|min:4|required|unique:users,email,:id',
-			'typo' => 'true'
+			'valid' => 'email|min:4|required|unique:users,email,:id'
 		],
         'password' => [
             'title' => 'Password',

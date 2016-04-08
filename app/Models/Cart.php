@@ -22,6 +22,22 @@ use Illuminate\Database\Eloquent\Model;
  * @property integer $position
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Cart whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Cart whereOrderId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Cart whereUser($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Cart whereItems($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Cart whereCost($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Cart whereCostDiscount($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Cart whereKupon($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Cart whereStatusOrder($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Cart whereStatusPay($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Cart whereMethodPay($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Cart whereMethodDelivery($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Cart whereComment($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Cart wherePosition($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Cart whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Cart whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class Cart extends Model
 {

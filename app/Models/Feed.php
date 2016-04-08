@@ -35,6 +35,8 @@ use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Feed whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Feed find($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Feed categoryInfo()
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\MediaLibrary\Media[] $media
+ * @mixin \Eloquent
  */
 class Feed extends Model implements HasMediaConversions
 {
@@ -56,6 +58,8 @@ class Feed extends Model implements HasMediaConversions
 	protected $fillable = ['title', 'short', 'description', 'category', 'url', 'date', 'position', 'active'];
 
     protected $dates = ['created_at', 'updated_at', 'date'];
+
+	protected $guarded = ['user_id'];
 
 	protected $casts = [
 		'position' => 'integer',

@@ -45,6 +45,26 @@ use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Catalog whereNalichie($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Catalog whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Catalog whereUpdatedAt($value)
+ * @property string $vid_raz
+ * @property string $razmer
+ * @property string $weight
+ * @property string $vid_up
+ * @property string $date_vilov
+ * @property string $sertifikacia
+ * @property string $mesto
+ * @property string $min_part
+ * @property-read mixed $full_url
+ * @property-read mixed $class_element
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\MediaLibrary\Media[] $media
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Catalog whereVidRaz($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Catalog whereRazmer($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Catalog whereWeight($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Catalog whereVidUp($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Catalog whereDateVilov($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Catalog whereSertifikacia($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Catalog whereMesto($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Catalog whereMinPart($value)
+ * @mixin \Eloquent
  */
 class Catalog extends Model implements HasMediaConversions
 {

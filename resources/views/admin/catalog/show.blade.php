@@ -9,6 +9,7 @@
             <div class="add-panel">
                 <a class="btn btn-info pull-right" href="/admin/{{ $app['name'] }}/create?category={{ $data->id }}">Добавить товар</a>
                 <span class="btn btn-info show-please" data-target="create-category" data-focus="create-category-title">Добавить раздел</span>
+                <a class="btn btn-info" href="/admin/category/{{ $data->id }}/edit">Изменить раздел</a>
             </div>
         </div>
     </div>

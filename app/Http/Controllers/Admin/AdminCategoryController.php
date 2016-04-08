@@ -72,7 +72,6 @@ class AdminCategoryController extends Controller
 	 */
     public function store(Request $request, ContentPlugins $plugins)
     {
-		dd($request->all());
 		$validator = Validator::make($request->all(), Component::_valid_construct($this->config['rows']));
 		if($validator->fails()){
 			return back()->withInput($request->except('password'))->withErrors($validator);
@@ -142,17 +141,6 @@ class AdminCategoryController extends Controller
 		return back()->withInput();
 	}
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
 	/**
 	 * Show the form for editing the specified resource.
 	 *
@@ -166,6 +154,7 @@ class AdminCategoryController extends Controller
 		$data['data'] = Category::with(['get_seo', 'get_templates'])->findOrFail($id);
 
         $data['images']['data'] = $data['data']->getMedia('images');
+		$data['files']['data'] = $data['data']->getMedia('files');
 		$data['id'] = $id;
 		$data['app'] = $ContentPlugins->attach_rows($this->config);
 		$data['data'] = $ContentPlugins->attach_data($this->config, $data['data']);

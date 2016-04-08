@@ -65,7 +65,7 @@ class AdminCatalogController extends Controller
 	{
 		$create_data = Request::create('/admin/catalog', 'POST', [
 			'title' => 'Новый материал',
-			'url' => str_slug('Новый материал'),
+			'url' => str_slug('create-new'),
 			'what' => 'руб./шт.',
 			'category' => [$request->get('category')],
 			'active' => 0
@@ -176,6 +176,7 @@ class AdminCatalogController extends Controller
 	{
 		$data['data'] = Catalog::with(['get_category', 'get_seo', 'get_templates'])->findOrFail($id);
         $data['images']['data'] = $data['data']->getMedia('images')->sortByDesc('order_column');
+		$data['files']['data'] = $data['data']->getMedia('files');
 
 		$data['id'] = $id;
 		$data['app'] = $ContentPlugins->attach_rows($this->config);

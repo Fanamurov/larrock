@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Arr;
 use Mail;
 
 class Forms extends Controller
@@ -25,9 +24,9 @@ class Forms extends Controller
 				'contact' => $request->get('contact'), 
 				'comment' => $request->get('comment')],
 			function($message){
-				$message->from(env('MAIL_TO_ADMIN', 'robot@martds.ru'), env('MAIL_TO_ADMIN_NAME', 'TEST'));
-				$message->to(env('MAIL_TO_ADMIN', 'robot@martds.ru'), env('MAIL_TO_ADMIN_NAME', 'TEST'));
-				$message->subject('Отправлена форма заявки '. Arr::get($_SERVER, 'SERVER_NAME')
+				$message->from(env('MAIL_TO_ADMIN', 'robot@martds.ru'), env('MAIL_TO_ADMIN_NAME', 'TEST@martds.ru'));
+				$message->to(env('MAIL_TO_ADMIN', 'robot@martds.ru'), env('MAIL_TO_ADMIN_NAME', 'TEST@martds.ru'));
+				$message->subject('Отправлена форма заявки '. array_get($_SERVER, 'SERVER_NAME')
 				);
 		});
 		

@@ -6,13 +6,10 @@ use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-//use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use GrahamCampbell\Exceptions\ExceptionHandler;
 
 use Illuminate\Auth\Access\AuthorizationException;
-//use Illuminate\Database\Eloquent\ModelNotFoundException;
-//use Symfony\Component\HttpKernel\Exception\HttpException;
-use Illuminate\Foundation\Validation\ValidationException;
+use Illuminate\Validation\ValidationException;
+use GrahamCampbell\Exceptions\ExceptionHandler;
 
 class Handler extends ExceptionHandler
 {
@@ -51,7 +48,7 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $e)
     {
 		/* http://www.techigniter.in/tutorials/create-custom-error-pages-in-laravel-5/ */
-		if( !app()->isLocal()){
+		if(config('app.debug') === false){
 			/* PRODUCTION */
 			if($this->isHttpException($e))
 			{
@@ -70,17 +67,7 @@ class Handler extends ExceptionHandler
 						break;
 				}
 			}
-			else
-			{
-				return parent::render($request, $e);
-			}
-		}else{
-			/* DEV */
-			if ($e instanceof ModelNotFoundException) {
-				$e = new NotFoundHttpException($e->getMessage(), $e);
-			}
-
-			return parent::render($request, $e);
 		}
+		return parent::render($request, $e);
     }
 }

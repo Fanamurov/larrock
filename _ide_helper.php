@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.2.12 on 2016-02-01.
+ * Generated for Laravel 5.2.22 on 2016-04-07.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -1237,6 +1237,27 @@ namespace {
         }
         
         /**
+         * Get the user resolver callback.
+         *
+         * @return \Closure 
+         * @static 
+         */
+        public static function userResolver(){
+            return \Illuminate\Auth\AuthManager::userResolver();
+        }
+        
+        /**
+         * Set the callback to be used to resolve users.
+         *
+         * @param \Closure $userResolver
+         * @return $this 
+         * @static 
+         */
+        public static function resolveUsersUsing($userResolver){
+            return \Illuminate\Auth\AuthManager::resolveUsersUsing($userResolver);
+        }
+        
+        /**
          * Register a custom driver creator Closure.
          *
          * @param string $driver
@@ -1270,6 +1291,317 @@ namespace {
          */
         public static function createUserProvider($provider){
             return \Illuminate\Auth\AuthManager::createUserProvider($provider);
+        }
+        
+        /**
+         * Get the currently authenticated user.
+         *
+         * @return \App\User|null 
+         * @static 
+         */
+        public static function user(){
+            return \Illuminate\Auth\SessionGuard::user();
+        }
+        
+        /**
+         * Get the ID for the currently authenticated user.
+         *
+         * @return int|null 
+         * @static 
+         */
+        public static function id(){
+            return \Illuminate\Auth\SessionGuard::id();
+        }
+        
+        /**
+         * Log a user into the application without sessions or cookies.
+         *
+         * @param array $credentials
+         * @return bool 
+         * @static 
+         */
+        public static function once($credentials = array()){
+            return \Illuminate\Auth\SessionGuard::once($credentials);
+        }
+        
+        /**
+         * Validate a user's credentials.
+         *
+         * @param array $credentials
+         * @return bool 
+         * @static 
+         */
+        public static function validate($credentials = array()){
+            return \Illuminate\Auth\SessionGuard::validate($credentials);
+        }
+        
+        /**
+         * Attempt to authenticate using HTTP Basic Auth.
+         *
+         * @param string $field
+         * @param array $extraConditions
+         * @return \Symfony\Component\HttpFoundation\Response|null 
+         * @static 
+         */
+        public static function basic($field = 'email', $extraConditions = array()){
+            return \Illuminate\Auth\SessionGuard::basic($field, $extraConditions);
+        }
+        
+        /**
+         * Perform a stateless HTTP Basic login attempt.
+         *
+         * @param string $field
+         * @param array $extraConditions
+         * @return \Symfony\Component\HttpFoundation\Response|null 
+         * @static 
+         */
+        public static function onceBasic($field = 'email', $extraConditions = array()){
+            return \Illuminate\Auth\SessionGuard::onceBasic($field, $extraConditions);
+        }
+        
+        /**
+         * Attempt to authenticate a user using the given credentials.
+         *
+         * @param array $credentials
+         * @param bool $remember
+         * @param bool $login
+         * @return bool 
+         * @static 
+         */
+        public static function attempt($credentials = array(), $remember = false, $login = true){
+            return \Illuminate\Auth\SessionGuard::attempt($credentials, $remember, $login);
+        }
+        
+        /**
+         * Register an authentication attempt event listener.
+         *
+         * @param mixed $callback
+         * @return void 
+         * @static 
+         */
+        public static function attempting($callback){
+            \Illuminate\Auth\SessionGuard::attempting($callback);
+        }
+        
+        /**
+         * Log a user into the application.
+         *
+         * @param \Illuminate\Contracts\Auth\Authenticatable $user
+         * @param bool $remember
+         * @return void 
+         * @static 
+         */
+        public static function login($user, $remember = false){
+            \Illuminate\Auth\SessionGuard::login($user, $remember);
+        }
+        
+        /**
+         * Log the given user ID into the application.
+         *
+         * @param mixed $id
+         * @param bool $remember
+         * @return \App\User 
+         * @static 
+         */
+        public static function loginUsingId($id, $remember = false){
+            return \Illuminate\Auth\SessionGuard::loginUsingId($id, $remember);
+        }
+        
+        /**
+         * Log the given user ID into the application without sessions or cookies.
+         *
+         * @param mixed $id
+         * @return bool 
+         * @static 
+         */
+        public static function onceUsingId($id){
+            return \Illuminate\Auth\SessionGuard::onceUsingId($id);
+        }
+        
+        /**
+         * Log the user out of the application.
+         *
+         * @return void 
+         * @static 
+         */
+        public static function logout(){
+            \Illuminate\Auth\SessionGuard::logout();
+        }
+        
+        /**
+         * Get the cookie creator instance used by the guard.
+         *
+         * @return \Illuminate\Contracts\Cookie\QueueingFactory 
+         * @throws \RuntimeException
+         * @static 
+         */
+        public static function getCookieJar(){
+            return \Illuminate\Auth\SessionGuard::getCookieJar();
+        }
+        
+        /**
+         * Set the cookie creator instance used by the guard.
+         *
+         * @param \Illuminate\Contracts\Cookie\QueueingFactory $cookie
+         * @return void 
+         * @static 
+         */
+        public static function setCookieJar($cookie){
+            \Illuminate\Auth\SessionGuard::setCookieJar($cookie);
+        }
+        
+        /**
+         * Get the event dispatcher instance.
+         *
+         * @return \Illuminate\Contracts\Events\Dispatcher 
+         * @static 
+         */
+        public static function getDispatcher(){
+            return \Illuminate\Auth\SessionGuard::getDispatcher();
+        }
+        
+        /**
+         * Set the event dispatcher instance.
+         *
+         * @param \Illuminate\Contracts\Events\Dispatcher $events
+         * @return void 
+         * @static 
+         */
+        public static function setDispatcher($events){
+            \Illuminate\Auth\SessionGuard::setDispatcher($events);
+        }
+        
+        /**
+         * Get the session store used by the guard.
+         *
+         * @return \Illuminate\Session\Store 
+         * @static 
+         */
+        public static function getSession(){
+            return \Illuminate\Auth\SessionGuard::getSession();
+        }
+        
+        /**
+         * Get the user provider used by the guard.
+         *
+         * @return \Illuminate\Contracts\Auth\UserProvider 
+         * @static 
+         */
+        public static function getProvider(){
+            return \Illuminate\Auth\SessionGuard::getProvider();
+        }
+        
+        /**
+         * Set the user provider used by the guard.
+         *
+         * @param \Illuminate\Contracts\Auth\UserProvider $provider
+         * @return void 
+         * @static 
+         */
+        public static function setProvider($provider){
+            \Illuminate\Auth\SessionGuard::setProvider($provider);
+        }
+        
+        /**
+         * Return the currently cached user.
+         *
+         * @return \App\User|null 
+         * @static 
+         */
+        public static function getUser(){
+            return \Illuminate\Auth\SessionGuard::getUser();
+        }
+        
+        /**
+         * Set the current user.
+         *
+         * @param \Illuminate\Contracts\Auth\Authenticatable $user
+         * @return void 
+         * @static 
+         */
+        public static function setUser($user){
+            \Illuminate\Auth\SessionGuard::setUser($user);
+        }
+        
+        /**
+         * Get the current request instance.
+         *
+         * @return \Symfony\Component\HttpFoundation\Request 
+         * @static 
+         */
+        public static function getRequest(){
+            return \Illuminate\Auth\SessionGuard::getRequest();
+        }
+        
+        /**
+         * Set the current request instance.
+         *
+         * @param \Symfony\Component\HttpFoundation\Request $request
+         * @return $this 
+         * @static 
+         */
+        public static function setRequest($request){
+            return \Illuminate\Auth\SessionGuard::setRequest($request);
+        }
+        
+        /**
+         * Get the last user we attempted to authenticate.
+         *
+         * @return \App\User 
+         * @static 
+         */
+        public static function getLastAttempted(){
+            return \Illuminate\Auth\SessionGuard::getLastAttempted();
+        }
+        
+        /**
+         * Get a unique identifier for the auth session value.
+         *
+         * @return string 
+         * @static 
+         */
+        public static function getName(){
+            return \Illuminate\Auth\SessionGuard::getName();
+        }
+        
+        /**
+         * Get the name of the cookie used to store the "recaller".
+         *
+         * @return string 
+         * @static 
+         */
+        public static function getRecallerName(){
+            return \Illuminate\Auth\SessionGuard::getRecallerName();
+        }
+        
+        /**
+         * Determine if the user was authenticated via "remember me" cookie.
+         *
+         * @return bool 
+         * @static 
+         */
+        public static function viaRemember(){
+            return \Illuminate\Auth\SessionGuard::viaRemember();
+        }
+        
+        /**
+         * Determine if the current user is authenticated.
+         *
+         * @return bool 
+         * @static 
+         */
+        public static function check(){
+            return \Illuminate\Auth\SessionGuard::check();
+        }
+        
+        /**
+         * Determine if the current user is a guest.
+         *
+         * @return bool 
+         * @static 
+         */
+        public static function guest(){
+            return \Illuminate\Auth\SessionGuard::guest();
         }
         
     }
@@ -2889,15 +3221,39 @@ namespace {
         }
         
         /**
-         * Set the default fetch mode for the connection.
+         * Get the fetch argument to be applied when selecting.
+         *
+         * @return mixed 
+         * @static 
+         */
+        public static function getFetchArgument(){
+            //Method inherited from \Illuminate\Database\Connection            
+            return \Illuminate\Database\MySqlConnection::getFetchArgument();
+        }
+        
+        /**
+         * Get custom constructor arguments for the PDO::FETCH_CLASS fetch mode.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function getFetchConstructorArgument(){
+            //Method inherited from \Illuminate\Database\Connection            
+            return \Illuminate\Database\MySqlConnection::getFetchConstructorArgument();
+        }
+        
+        /**
+         * Set the default fetch mode for the connection, and optional arguments for the given fetch mode.
          *
          * @param int $fetchMode
+         * @param mixed $fetchArgument
+         * @param array $fetchConstructorArgument
          * @return int 
          * @static 
          */
-        public static function setFetchMode($fetchMode){
+        public static function setFetchMode($fetchMode, $fetchArgument = null, $fetchConstructorArgument = array()){
             //Method inherited from \Illuminate\Database\Connection            
-            return \Illuminate\Database\MySqlConnection::setFetchMode($fetchMode);
+            return \Illuminate\Database\MySqlConnection::setFetchMode($fetchMode, $fetchArgument, $fetchConstructorArgument);
         }
         
         /**
@@ -3087,6 +3443,52 @@ namespace {
          */
         public static function findOrFail($id, $columns = array()){
             return \Illuminate\Database\Eloquent\Builder::findOrFail($id, $columns);
+        }
+        
+        /**
+         * Find a model by its primary key or return fresh model instance.
+         *
+         * @param mixed $id
+         * @param array $columns
+         * @return \Illuminate\Database\Eloquent\Model 
+         * @static 
+         */
+        public static function findOrNew($id, $columns = array()){
+            return \Illuminate\Database\Eloquent\Builder::findOrNew($id, $columns);
+        }
+        
+        /**
+         * Get the first record matching the attributes or instantiate it.
+         *
+         * @param array $attributes
+         * @return \Illuminate\Database\Eloquent\Model 
+         * @static 
+         */
+        public static function firstOrNew($attributes){
+            return \Illuminate\Database\Eloquent\Builder::firstOrNew($attributes);
+        }
+        
+        /**
+         * Get the first record matching the attributes or create it.
+         *
+         * @param array $attributes
+         * @return \Illuminate\Database\Eloquent\Model 
+         * @static 
+         */
+        public static function firstOrCreate($attributes){
+            return \Illuminate\Database\Eloquent\Builder::firstOrCreate($attributes);
+        }
+        
+        /**
+         * Create or update a record matching the attributes, and fill it with values.
+         *
+         * @param array $attributes
+         * @param array $values
+         * @return \Illuminate\Database\Eloquent\Model 
+         * @static 
+         */
+        public static function updateOrCreate($attributes, $values = array()){
+            return \Illuminate\Database\Eloquent\Builder::updateOrCreate($attributes, $values);
         }
         
         /**
@@ -5241,6 +5643,17 @@ namespace {
         }
         
         /**
+         * Get the full URL for the request with the added query string parameters.
+         *
+         * @param array $query
+         * @return string 
+         * @static 
+         */
+        public static function fullUrlWithQuery($query){
+            return \Illuminate\Http\Request::fullUrlWithQuery($query);
+        }
+        
+        /**
          * Get the current path info for the request.
          *
          * @return string 
@@ -5453,6 +5866,16 @@ namespace {
          */
         public static function cookie($key = null, $default = null){
             return \Illuminate\Http\Request::cookie($key, $default);
+        }
+        
+        /**
+         * Get an array of all of the files on the request.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function allFiles(){
+            return \Illuminate\Http\Request::allFiles();
         }
         
         /**
@@ -5728,11 +6151,12 @@ namespace {
         /**
          * Get the user making the request.
          *
+         * @param string|null $guard
          * @return mixed 
          * @static 
          */
-        public static function user(){
-            return \Illuminate\Http\Request::user();
+        public static function user($guard = null){
+            return \Illuminate\Http\Request::user($guard);
         }
         
         /**
@@ -6729,6 +7153,29 @@ namespace {
             return \Illuminate\Http\Request::isXmlHttpRequest();
         }
         
+        /**
+         * Register a custom macro.
+         *
+         * @param string $name
+         * @param callable $macro
+         * @return void 
+         * @static 
+         */
+        public static function macro($name, $macro){
+            \Illuminate\Http\Request::macro($name, $macro);
+        }
+        
+        /**
+         * Checks if macro is registered.
+         *
+         * @param string $name
+         * @return bool 
+         * @static 
+         */
+        public static function hasMacro($name){
+            return \Illuminate\Http\Request::hasMacro($name);
+        }
+        
     }
 
 
@@ -6782,7 +7229,7 @@ namespace {
          * Get a translation according to an integer value.
          *
          * @param string $key
-         * @param int $number
+         * @param int|array|\Countable $number
          * @param array $replace
          * @param string $locale
          * @return string 
@@ -6810,7 +7257,7 @@ namespace {
          * Get a translation according to an integer value.
          *
          * @param string $id
-         * @param int $number
+         * @param int|array|\Countable $number
          * @param array $parameters
          * @param string $domain
          * @param string $locale
@@ -7431,6 +7878,17 @@ namespace {
     class Queue extends \Illuminate\Support\Facades\Queue{
         
         /**
+         * Register an event listener for the before job event.
+         *
+         * @param mixed $callback
+         * @return void 
+         * @static 
+         */
+        public static function before($callback){
+            \Illuminate\Queue\QueueManager::before($callback);
+        }
+        
+        /**
          * Register an event listener for the after job event.
          *
          * @param mixed $callback
@@ -7904,6 +8362,17 @@ namespace {
         }
         
         /**
+         * Get the full URL for the request with the added query string parameters.
+         *
+         * @param array $query
+         * @return string 
+         * @static 
+         */
+        public static function fullUrlWithQuery($query){
+            return \Illuminate\Http\Request::fullUrlWithQuery($query);
+        }
+        
+        /**
          * Get the current path info for the request.
          *
          * @return string 
@@ -8116,6 +8585,16 @@ namespace {
          */
         public static function cookie($key = null, $default = null){
             return \Illuminate\Http\Request::cookie($key, $default);
+        }
+        
+        /**
+         * Get an array of all of the files on the request.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function allFiles(){
+            return \Illuminate\Http\Request::allFiles();
         }
         
         /**
@@ -8391,11 +8870,12 @@ namespace {
         /**
          * Get the user making the request.
          *
+         * @param string|null $guard
          * @return mixed 
          * @static 
          */
-        public static function user(){
-            return \Illuminate\Http\Request::user();
+        public static function user($guard = null){
+            return \Illuminate\Http\Request::user($guard);
         }
         
         /**
@@ -9392,6 +9872,29 @@ namespace {
             return \Illuminate\Http\Request::isXmlHttpRequest();
         }
         
+        /**
+         * Register a custom macro.
+         *
+         * @param string $name
+         * @param callable $macro
+         * @return void 
+         * @static 
+         */
+        public static function macro($name, $macro){
+            \Illuminate\Http\Request::macro($name, $macro);
+        }
+        
+        /**
+         * Checks if macro is registered.
+         *
+         * @param string $name
+         * @return bool 
+         * @static 
+         */
+        public static function hasMacro($name){
+            return \Illuminate\Http\Request::hasMacro($name);
+        }
+        
     }
 
 
@@ -9478,6 +9981,18 @@ namespace {
          */
         public static function download($file, $name = null, $headers = array(), $disposition = 'attachment'){
             return \Illuminate\Routing\ResponseFactory::download($file, $name, $headers, $disposition);
+        }
+        
+        /**
+         * Return the raw contents of a binary file.
+         *
+         * @param \SplFileInfo|string $file
+         * @param array $headers
+         * @return \Symfony\Component\HttpFoundation\BinaryFileResponse 
+         * @static 
+         */
+        public static function file($file, $headers = array()){
+            return \Illuminate\Routing\ResponseFactory::file($file, $headers);
         }
         
         /**
@@ -9582,11 +10097,11 @@ namespace {
          * Register a new GET route with the router.
          *
          * @param string $uri
-         * @param \Closure|array|string $action
+         * @param \Closure|array|string|null $action
          * @return \Illuminate\Routing\Route 
          * @static 
          */
-        public static function get($uri, $action){
+        public static function get($uri, $action = null){
             return \Illuminate\Routing\Router::get($uri, $action);
         }
         
@@ -9594,11 +10109,11 @@ namespace {
          * Register a new POST route with the router.
          *
          * @param string $uri
-         * @param \Closure|array|string $action
+         * @param \Closure|array|string|null $action
          * @return \Illuminate\Routing\Route 
          * @static 
          */
-        public static function post($uri, $action){
+        public static function post($uri, $action = null){
             return \Illuminate\Routing\Router::post($uri, $action);
         }
         
@@ -9606,11 +10121,11 @@ namespace {
          * Register a new PUT route with the router.
          *
          * @param string $uri
-         * @param \Closure|array|string $action
+         * @param \Closure|array|string|null $action
          * @return \Illuminate\Routing\Route 
          * @static 
          */
-        public static function put($uri, $action){
+        public static function put($uri, $action = null){
             return \Illuminate\Routing\Router::put($uri, $action);
         }
         
@@ -9618,11 +10133,11 @@ namespace {
          * Register a new PATCH route with the router.
          *
          * @param string $uri
-         * @param \Closure|array|string $action
+         * @param \Closure|array|string|null $action
          * @return \Illuminate\Routing\Route 
          * @static 
          */
-        public static function patch($uri, $action){
+        public static function patch($uri, $action = null){
             return \Illuminate\Routing\Router::patch($uri, $action);
         }
         
@@ -9630,11 +10145,11 @@ namespace {
          * Register a new DELETE route with the router.
          *
          * @param string $uri
-         * @param \Closure|array|string $action
+         * @param \Closure|array|string|null $action
          * @return \Illuminate\Routing\Route 
          * @static 
          */
-        public static function delete($uri, $action){
+        public static function delete($uri, $action = null){
             return \Illuminate\Routing\Router::delete($uri, $action);
         }
         
@@ -9642,11 +10157,11 @@ namespace {
          * Register a new OPTIONS route with the router.
          *
          * @param string $uri
-         * @param \Closure|array|string $action
+         * @param \Closure|array|string|null $action
          * @return \Illuminate\Routing\Route 
          * @static 
          */
-        public static function options($uri, $action){
+        public static function options($uri, $action = null){
             return \Illuminate\Routing\Router::options($uri, $action);
         }
         
@@ -9654,11 +10169,11 @@ namespace {
          * Register a new route responding to all verbs.
          *
          * @param string $uri
-         * @param \Closure|array|string $action
+         * @param \Closure|array|string|null $action
          * @return \Illuminate\Routing\Route 
          * @static 
          */
-        public static function any($uri, $action){
+        public static function any($uri, $action = null){
             return \Illuminate\Routing\Router::any($uri, $action);
         }
         
@@ -9667,11 +10182,11 @@ namespace {
          *
          * @param array|string $methods
          * @param string $uri
-         * @param \Closure|array|string $action
+         * @param \Closure|array|string|null $action
          * @return \Illuminate\Routing\Route 
          * @static 
          */
-        public static function match($methods, $uri, $action){
+        public static function match($methods, $uri, $action = null){
             return \Illuminate\Routing\Router::match($methods, $uri, $action);
         }
         
@@ -9699,6 +10214,27 @@ namespace {
          */
         public static function controller($uri, $controller, $names = array()){
             \Illuminate\Routing\Router::controller($uri, $controller, $names);
+        }
+        
+        /**
+         * Set the unmapped global resource parameters to singular.
+         *
+         * @return void 
+         * @static 
+         */
+        public static function singularResourceParameters(){
+            \Illuminate\Routing\Router::singularResourceParameters();
+        }
+        
+        /**
+         * Set the global resource parameter mapping.
+         *
+         * @param array $parameters
+         * @return void 
+         * @static 
+         */
+        public static function resourceParameters($parameters = array()){
+            \Illuminate\Routing\Router::resourceParameters($parameters);
         }
         
         /**
@@ -9867,6 +10403,34 @@ namespace {
          */
         public static function middlewareGroup($name, $middleware){
             return \Illuminate\Routing\Router::middlewareGroup($name, $middleware);
+        }
+        
+        /**
+         * Add a middleware to the beginning of a middleware group.
+         * 
+         * If the middleware is already in the group, it will not be added again.
+         *
+         * @param string $group
+         * @param string $middleware
+         * @return $this 
+         * @static 
+         */
+        public static function prependMiddlewareToGroup($group, $middleware){
+            return \Illuminate\Routing\Router::prependMiddlewareToGroup($group, $middleware);
+        }
+        
+        /**
+         * Add a middleware to the end of a middleware group.
+         * 
+         * If the middleware is already in the group, it will not be added again.
+         *
+         * @param string $group
+         * @param string $middleware
+         * @return $this 
+         * @static 
+         */
+        public static function pushMiddlewareToGroup($group, $middleware){
+            return \Illuminate\Routing\Router::pushMiddlewareToGroup($group, $middleware);
         }
         
         /**
@@ -10881,6 +11445,16 @@ namespace {
         }
         
         /**
+         * Get a default cloud filesystem instance.
+         *
+         * @return \Illuminate\Contracts\Filesystem\Filesystem 
+         * @static 
+         */
+        public static function cloud(){
+            return \Illuminate\Filesystem\FilesystemManager::cloud();
+        }
+        
+        /**
          * Create an instance of the local driver.
          *
          * @param array $config
@@ -10932,6 +11506,16 @@ namespace {
          */
         public static function getDefaultDriver(){
             return \Illuminate\Filesystem\FilesystemManager::getDefaultDriver();
+        }
+        
+        /**
+         * Get the default cloud driver name.
+         *
+         * @return string 
+         * @static 
+         */
+        public static function getDefaultCloudDriver(){
+            return \Illuminate\Filesystem\FilesystemManager::getDefaultCloudDriver();
         }
         
         /**
@@ -11290,7 +11874,7 @@ namespace {
          * @param string $path
          * @param array $data
          * @param array $mergeData
-         * @return \Illuminate\View\View 
+         * @return \Illuminate\Contracts\View\View 
          * @static 
          */
         public static function file($path, $data = array(), $mergeData = array()){
@@ -11315,7 +11899,7 @@ namespace {
          *
          * @param string $view
          * @param mixed $data
-         * @return \Illuminate\View\View 
+         * @return \Illuminate\Contracts\View\View 
          * @static 
          */
         public static function of($view, $data = array()){
@@ -11434,7 +12018,7 @@ namespace {
         /**
          * Call the composer for a given view.
          *
-         * @param \Illuminate\View\View $view
+         * @param \Illuminate\Contracts\View\View $view
          * @return void 
          * @static 
          */
@@ -11445,7 +12029,7 @@ namespace {
         /**
          * Call the creator for a given view.
          *
-         * @param \Illuminate\View\View $view
+         * @param \Illuminate\Contracts\View\View $view
          * @return void 
          * @static 
          */
@@ -11973,6 +12557,17 @@ namespace {
          * @return array 
          * @static 
          */
+        public static function messages(){
+            //Method inherited from \Illuminate\Support\MessageBag            
+            return \Prologue\Alerts\AlertsMessageBag::messages();
+        }
+        
+        /**
+         * Get the raw messages in the container.
+         *
+         * @return array 
+         * @static 
+         */
         public static function getMessages(){
             //Method inherited from \Illuminate\Support\MessageBag            
             return \Prologue\Alerts\AlertsMessageBag::getMessages();
@@ -12077,642 +12672,6 @@ namespace {
         public static function toJson($options = 0){
             //Method inherited from \Illuminate\Support\MessageBag            
             return \Prologue\Alerts\AlertsMessageBag::toJson($options);
-        }
-        
-    }
-
-
-    class Activation extends \Cartalyst\Sentinel\Laravel\Facades\Activation{
-        
-        /**
-         * {@inheritDoc}
-         *
-         * @static 
-         */
-        public static function create($user){
-            return \Cartalyst\Sentinel\Activations\IlluminateActivationRepository::create($user);
-        }
-        
-        /**
-         * {@inheritDoc}
-         *
-         * @static 
-         */
-        public static function exists($user, $code = null){
-            return \Cartalyst\Sentinel\Activations\IlluminateActivationRepository::exists($user, $code);
-        }
-        
-        /**
-         * {@inheritDoc}
-         *
-         * @static 
-         */
-        public static function complete($user, $code){
-            return \Cartalyst\Sentinel\Activations\IlluminateActivationRepository::complete($user, $code);
-        }
-        
-        /**
-         * {@inheritDoc}
-         *
-         * @static 
-         */
-        public static function completed($user){
-            return \Cartalyst\Sentinel\Activations\IlluminateActivationRepository::completed($user);
-        }
-        
-        /**
-         * {@inheritDoc}
-         *
-         * @static 
-         */
-        public static function remove($user){
-            return \Cartalyst\Sentinel\Activations\IlluminateActivationRepository::remove($user);
-        }
-        
-        /**
-         * {@inheritDoc}
-         *
-         * @static 
-         */
-        public static function removeExpired(){
-            return \Cartalyst\Sentinel\Activations\IlluminateActivationRepository::removeExpired();
-        }
-        
-        /**
-         * Create a new instance of the model.
-         *
-         * @param array $data
-         * @return mixed 
-         * @static 
-         */
-        public static function createModel($data = array()){
-            return \Cartalyst\Sentinel\Activations\IlluminateActivationRepository::createModel($data);
-        }
-        
-        /**
-         * Returns the model.
-         *
-         * @return string 
-         * @static 
-         */
-        public static function getModel(){
-            return \Cartalyst\Sentinel\Activations\IlluminateActivationRepository::getModel();
-        }
-        
-        /**
-         * Runtime override of the model.
-         *
-         * @param string $model
-         * @return $this 
-         * @static 
-         */
-        public static function setModel($model){
-            return \Cartalyst\Sentinel\Activations\IlluminateActivationRepository::setModel($model);
-        }
-        
-    }
-
-
-    class Reminder extends \Cartalyst\Sentinel\Laravel\Facades\Reminder{
-        
-        /**
-         * {@inheritDoc}
-         *
-         * @static 
-         */
-        public static function create($user){
-            return \Cartalyst\Sentinel\Reminders\IlluminateReminderRepository::create($user);
-        }
-        
-        /**
-         * {@inheritDoc}
-         *
-         * @static 
-         */
-        public static function exists($user, $code = null){
-            return \Cartalyst\Sentinel\Reminders\IlluminateReminderRepository::exists($user, $code);
-        }
-        
-        /**
-         * {@inheritDoc}
-         *
-         * @static 
-         */
-        public static function complete($user, $code, $password){
-            return \Cartalyst\Sentinel\Reminders\IlluminateReminderRepository::complete($user, $code, $password);
-        }
-        
-        /**
-         * {@inheritDoc}
-         *
-         * @static 
-         */
-        public static function removeExpired(){
-            return \Cartalyst\Sentinel\Reminders\IlluminateReminderRepository::removeExpired();
-        }
-        
-        /**
-         * Create a new instance of the model.
-         *
-         * @param array $data
-         * @return mixed 
-         * @static 
-         */
-        public static function createModel($data = array()){
-            return \Cartalyst\Sentinel\Reminders\IlluminateReminderRepository::createModel($data);
-        }
-        
-        /**
-         * Returns the model.
-         *
-         * @return string 
-         * @static 
-         */
-        public static function getModel(){
-            return \Cartalyst\Sentinel\Reminders\IlluminateReminderRepository::getModel();
-        }
-        
-        /**
-         * Runtime override of the model.
-         *
-         * @param string $model
-         * @return $this 
-         * @static 
-         */
-        public static function setModel($model){
-            return \Cartalyst\Sentinel\Reminders\IlluminateReminderRepository::setModel($model);
-        }
-        
-    }
-
-
-    class Sentinel extends \Cartalyst\Sentinel\Laravel\Facades\Sentinel{
-        
-        /**
-         * Registers a user. You may provide a callback to occur before the user
-         * is saved, or provide a true boolean as a shortcut to activation.
-         *
-         * @param array $credentials
-         * @param \Closure|bool $callback
-         * @return \Cartalyst\Sentinel\Users\UserInteface|bool 
-         * @throws \InvalidArgumentException
-         * @static 
-         */
-        public static function register($credentials, $callback = null){
-            return \Cartalyst\Sentinel\Sentinel::register($credentials, $callback);
-        }
-        
-        /**
-         * Registers and activates the user.
-         *
-         * @param array $credentials
-         * @return \Cartalyst\Sentinel\Users\UserInteface|bool 
-         * @static 
-         */
-        public static function registerAndActivate($credentials){
-            return \Cartalyst\Sentinel\Sentinel::registerAndActivate($credentials);
-        }
-        
-        /**
-         * Activates the given user.
-         *
-         * @param mixed $user
-         * @return bool 
-         * @throws \InvalidArgumentException
-         * @static 
-         */
-        public static function activate($user){
-            return \Cartalyst\Sentinel\Sentinel::activate($user);
-        }
-        
-        /**
-         * Checks to see if a user is logged in.
-         *
-         * @return \Cartalyst\Sentinel\Users\UserInterface|bool 
-         * @static 
-         */
-        public static function check(){
-            return \Cartalyst\Sentinel\Sentinel::check();
-        }
-        
-        /**
-         * Checks to see if a user is logged in, bypassing checkpoints
-         *
-         * @return \Cartalyst\Sentinel\Users\UserInterface|bool 
-         * @static 
-         */
-        public static function forceCheck(){
-            return \Cartalyst\Sentinel\Sentinel::forceCheck();
-        }
-        
-        /**
-         * Checks if we are currently a guest.
-         *
-         * @return bool 
-         * @static 
-         */
-        public static function guest(){
-            return \Cartalyst\Sentinel\Sentinel::guest();
-        }
-        
-        /**
-         * Authenticates a user, with "remember" flag.
-         *
-         * @param \Cartalyst\Sentinel\Users\UserInterface|array $credentials
-         * @param bool $remember
-         * @param bool $login
-         * @return \Cartalyst\Sentinel\Users\UserInterface|bool 
-         * @static 
-         */
-        public static function authenticate($credentials, $remember = false, $login = true){
-            return \Cartalyst\Sentinel\Sentinel::authenticate($credentials, $remember, $login);
-        }
-        
-        /**
-         * Authenticates a user, with the "remember" flag.
-         *
-         * @param \Cartalyst\Sentinel\Users\UserInterface|array $credentials
-         * @return \Cartalyst\Sentinel\Users\UserInterface|bool 
-         * @static 
-         */
-        public static function authenticateAndRemember($credentials){
-            return \Cartalyst\Sentinel\Sentinel::authenticateAndRemember($credentials);
-        }
-        
-        /**
-         * Forces an authentication to bypass checkpoints.
-         *
-         * @param \Cartalyst\Sentinel\Users\UserInterface|array $credentials
-         * @param bool $remember
-         * @return \Cartalyst\Sentinel\Users\UserInterface|bool 
-         * @static 
-         */
-        public static function forceAuthenticate($credentials, $remember = false){
-            return \Cartalyst\Sentinel\Sentinel::forceAuthenticate($credentials, $remember);
-        }
-        
-        /**
-         * Forces an authentication to bypass checkpoints, with the "remember" flag.
-         *
-         * @param \Cartalyst\Sentinel\Users\UserInterface|array $credentials
-         * @return \Cartalyst\Sentinel\Users\UserInterface|bool 
-         * @static 
-         */
-        public static function forceAuthenticateAndRemember($credentials){
-            return \Cartalyst\Sentinel\Sentinel::forceAuthenticateAndRemember($credentials);
-        }
-        
-        /**
-         * Attempt a stateless authentication.
-         *
-         * @param \Cartalyst\Sentinel\Users\UserInterface|array $credentials
-         * @return \Cartalyst\Sentinel\Users\UserInterface|bool 
-         * @static 
-         */
-        public static function stateless($credentials){
-            return \Cartalyst\Sentinel\Sentinel::stateless($credentials);
-        }
-        
-        /**
-         * Attempt to authenticate using HTTP Basic Auth.
-         *
-         * @return mixed 
-         * @static 
-         */
-        public static function basic(){
-            return \Cartalyst\Sentinel\Sentinel::basic();
-        }
-        
-        /**
-         * Returns the request credentials.
-         *
-         * @return array 
-         * @static 
-         */
-        public static function getRequestCredentials(){
-            return \Cartalyst\Sentinel\Sentinel::getRequestCredentials();
-        }
-        
-        /**
-         * Sets the closure which resolves the request credentials.
-         *
-         * @param \Closure $requestCredentials
-         * @return void 
-         * @static 
-         */
-        public static function setRequestCredentials($requestCredentials){
-            \Cartalyst\Sentinel\Sentinel::setRequestCredentials($requestCredentials);
-        }
-        
-        /**
-         * Sends a response when HTTP basic authentication fails.
-         *
-         * @return mixed 
-         * @throws \RuntimeException
-         * @static 
-         */
-        public static function getBasicResponse(){
-            return \Cartalyst\Sentinel\Sentinel::getBasicResponse();
-        }
-        
-        /**
-         * Sets the callback which creates a basic response.
-         *
-         * @param \Closure $basicResonse
-         * @return void 
-         * @static 
-         */
-        public static function creatingBasicResponse($basicResponse){
-            \Cartalyst\Sentinel\Sentinel::creatingBasicResponse($basicResponse);
-        }
-        
-        /**
-         * Persists a login for the given user.
-         *
-         * @param \Cartalyst\Sentinel\Users\UserInterface $user
-         * @param bool $remember
-         * @return \Cartalyst\Sentinel\Users\UserInterface|bool 
-         * @static 
-         */
-        public static function login($user, $remember = false){
-            return \Cartalyst\Sentinel\Sentinel::login($user, $remember);
-        }
-        
-        /**
-         * Persists a login for the given user, with the "remember" flag.
-         *
-         * @param \Cartalyst\Sentinel\Users\UserInterface $user
-         * @return \Cartalyst\Sentinel\Users\UserInterface|bool 
-         * @static 
-         */
-        public static function loginAndRemember($user){
-            return \Cartalyst\Sentinel\Sentinel::loginAndRemember($user);
-        }
-        
-        /**
-         * Logs the current user out.
-         *
-         * @param \Cartalyst\Sentinel\Users\UserInterface $user
-         * @param bool $everywhere
-         * @return bool 
-         * @static 
-         */
-        public static function logout($user = null, $everywhere = false){
-            return \Cartalyst\Sentinel\Sentinel::logout($user, $everywhere);
-        }
-        
-        /**
-         * Pass a closure to Sentinel to bypass checkpoints.
-         *
-         * @param \Closure $callback
-         * @param array $checkpoints
-         * @return mixed 
-         * @static 
-         */
-        public static function bypassCheckpoints($callback, $checkpoints = array()){
-            return \Cartalyst\Sentinel\Sentinel::bypassCheckpoints($callback, $checkpoints);
-        }
-        
-        /**
-         * Checks if checkpoints are enabled.
-         *
-         * @return bool 
-         * @static 
-         */
-        public static function checkpointsStatus(){
-            return \Cartalyst\Sentinel\Sentinel::checkpointsStatus();
-        }
-        
-        /**
-         * Enables checkpoints.
-         *
-         * @return void 
-         * @static 
-         */
-        public static function enableCheckpoints(){
-            \Cartalyst\Sentinel\Sentinel::enableCheckpoints();
-        }
-        
-        /**
-         * Disables checkpoints.
-         *
-         * @return void 
-         * @static 
-         */
-        public static function disableCheckpoints(){
-            \Cartalyst\Sentinel\Sentinel::disableCheckpoints();
-        }
-        
-        /**
-         * Add a new checkpoint to Sentinel.
-         *
-         * @param string $key
-         * @param \Cartalyst\Sentinel\Checkpoints\CheckpointInterface $checkpoint
-         * @return void 
-         * @static 
-         */
-        public static function addCheckpoint($key, $checkpoint){
-            \Cartalyst\Sentinel\Sentinel::addCheckpoint($key, $checkpoint);
-        }
-        
-        /**
-         * Removes a checkpoint.
-         *
-         * @param string $key
-         * @return void 
-         * @static 
-         */
-        public static function removeCheckpoint($key){
-            \Cartalyst\Sentinel\Sentinel::removeCheckpoint($key);
-        }
-        
-        /**
-         * Returns the currently logged in user, lazily checking for it.
-         *
-         * @param bool $check
-         * @return \Cartalyst\Sentinel\Users\UserInterface 
-         * @static 
-         */
-        public static function getUser($check = true){
-            return \Cartalyst\Sentinel\Sentinel::getUser($check);
-        }
-        
-        /**
-         * Sets the user associated with Sentinel (does not log in).
-         *
-         * @param \Cartalyst\Sentinel\Users\UserInterface $user
-         * @return void 
-         * @static 
-         */
-        public static function setUser($user){
-            \Cartalyst\Sentinel\Sentinel::setUser($user);
-        }
-        
-        /**
-         * Returns the user repository.
-         *
-         * @return \Cartalyst\Sentinel\Users\UserRepositoryInterface 
-         * @static 
-         */
-        public static function getUserRepository(){
-            return \Cartalyst\Sentinel\Sentinel::getUserRepository();
-        }
-        
-        /**
-         * Sets the user repository.
-         *
-         * @param \Cartalyst\Sentinel\Users\UserRepositoryInterface $users
-         * @return void 
-         * @static 
-         */
-        public static function setUserRepository($users){
-            \Cartalyst\Sentinel\Sentinel::setUserRepository($users);
-        }
-        
-        /**
-         * Returns the role repository.
-         *
-         * @return \Cartalyst\Sentinel\Roles\RoleRepositoryInterface 
-         * @static 
-         */
-        public static function getRoleRepository(){
-            return \Cartalyst\Sentinel\Sentinel::getRoleRepository();
-        }
-        
-        /**
-         * Sets the role repository.
-         *
-         * @param \Cartalyst\Sentinel\Roles\RoleRepositoryInterface $roles
-         * @return void 
-         * @static 
-         */
-        public static function setRoleRepository($roles){
-            \Cartalyst\Sentinel\Sentinel::setRoleRepository($roles);
-        }
-        
-        /**
-         * Returns the persistences repository.
-         *
-         * @return \Cartalyst\Sentinel\Persistences\PersistenceRepositoryInterface 
-         * @static 
-         */
-        public static function getPersistenceRepository(){
-            return \Cartalyst\Sentinel\Sentinel::getPersistenceRepository();
-        }
-        
-        /**
-         * Sets the persistences repository.
-         *
-         * @param \Cartalyst\Sentinel\Persistences\PersistenceRepositoryInterface $persistences
-         * @return void 
-         * @static 
-         */
-        public static function setPersistenceRepository($persistences){
-            \Cartalyst\Sentinel\Sentinel::setPersistenceRepository($persistences);
-        }
-        
-        /**
-         * Returns the activations repository.
-         *
-         * @return \Cartalyst\Sentinel\Activations\ActivationRepositoryInterface 
-         * @static 
-         */
-        public static function getActivationRepository(){
-            return \Cartalyst\Sentinel\Sentinel::getActivationRepository();
-        }
-        
-        /**
-         * Sets the activations repository.
-         *
-         * @param \Cartalyst\Sentinel\Activations\ActivationRepositoryInterface $activations
-         * @return void 
-         * @static 
-         */
-        public static function setActivationRepository($activations){
-            \Cartalyst\Sentinel\Sentinel::setActivationRepository($activations);
-        }
-        
-        /**
-         * Returns the reminders repository.
-         *
-         * @return \Cartalyst\Sentinel\Reminders\ReminderRepositoryInterface 
-         * @static 
-         */
-        public static function getReminderRepository(){
-            return \Cartalyst\Sentinel\Sentinel::getReminderRepository();
-        }
-        
-        /**
-         * Sets the reminders repository.
-         *
-         * @param \Cartalyst\Sentinel\Reminders\ReminderRepositoryInterface $reminders
-         * @return void 
-         * @static 
-         */
-        public static function setReminderRepository($reminders){
-            \Cartalyst\Sentinel\Sentinel::setReminderRepository($reminders);
-        }
-        
-        /**
-         * Returns the event dispatcher.
-         *
-         * @return \Illuminate\Events\Dispatcher 
-         * @static 
-         */
-        public static function getDispatcher(){
-            return \Cartalyst\Sentinel\Sentinel::getDispatcher();
-        }
-        
-        /**
-         * Sets the event dispatcher instance.
-         *
-         * @param \Illuminate\Events\Dispatcher $dispatcher
-         * @return $this 
-         * @static 
-         */
-        public static function setDispatcher($dispatcher){
-            return \Cartalyst\Sentinel\Sentinel::setDispatcher($dispatcher);
-        }
-        
-        /**
-         * Returns the event dispatcher status.
-         *
-         * @return bool 
-         * @static 
-         */
-        public static function getDispatcherStatus(){
-            return \Cartalyst\Sentinel\Sentinel::getDispatcherStatus();
-        }
-        
-        /**
-         * Sets the event dispatcher status.
-         *
-         * @param bool $status
-         * @return $this 
-         * @static 
-         */
-        public static function setDispatcherStatus($status){
-            return \Cartalyst\Sentinel\Sentinel::setDispatcherStatus($status);
-        }
-        
-        /**
-         * Enables the event dispatcher.
-         *
-         * @return $this 
-         * @static 
-         */
-        public static function enableDispatcher(){
-            return \Cartalyst\Sentinel\Sentinel::enableDispatcher();
-        }
-        
-        /**
-         * Disables the event dispatcher.
-         *
-         * @return $this 
-         * @static 
-         */
-        public static function disableDispatcher(){
-            return \Cartalyst\Sentinel\Sentinel::disableDispatcher();
         }
         
     }

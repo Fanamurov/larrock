@@ -40,6 +40,10 @@ use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Category whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Category type($type)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Category level($level)
+ * @property-read mixed $full_url
+ * @property-read mixed $class_element
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\MediaLibrary\Media[] $media
+ * @mixin \Eloquent
  */
 class Category extends Model implements HasMediaConversions
 {

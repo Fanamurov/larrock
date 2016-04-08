@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Admin\AdminBlocks\MenuBlock;
 use Breadcrumbs;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -25,8 +26,9 @@ use Input;
 class AdminFeedController extends Controller
 {
 	protected $config;
+	protected $current_user;
 
-	public function __construct(MenuBlock $menu)
+	public function __construct(MenuBlock $menu, Guard $guard)
 	{
 		$this->config = Config::get('components.feed');
 		if(Route::current()){
@@ -36,6 +38,9 @@ class AdminFeedController extends Controller
 		Breadcrumbs::register('admin.feed.index', function($breadcrumbs){
 			$breadcrumbs->push('Ленты', route('admin.feed.index'));
 		});
+
+		$this->current_user = $guard->user();
+		View::share('current_user', $this->current_user);
 	}
 
 	/**
@@ -67,7 +72,7 @@ class AdminFeedController extends Controller
 		}
 		$test = Request::create('/admin/feed', 'POST', [
 			'title' => 'Черновик страницы',
-			'url' => str_slug('Черновик страницы'),
+			'url' => str_slug('create-new'),
 			'category' => $request->get('category', $category->id),
 			'active' => 0
 		]);
@@ -97,6 +102,7 @@ class AdminFeedController extends Controller
 		if(empty($data->date)){
 			$data->date = $today['year'] .'-'. $today['mon'] .'-'. $today['mday'];
 		}
+		$data->user_id = $this->current_user->id;
 
 		if($data->save()){
 			Alert::add('success', 'Материал '. $request->input('title') .' добавлен')->flash();
@@ -152,6 +158,7 @@ class AdminFeedController extends Controller
 	{
 		$data['data'] = Feed::with(['get_category', 'get_seo', 'get_templates'])->findOrFail($id);
         $data['images']['data'] = $data['data']->getMedia('images');
+		$data['files']['data'] = $data['data']->getMedia('files');
 
 		$data['id'] = $id;
 		$data['app'] = $ContentPlugins->attach_rows($this->config);
@@ -204,6 +211,8 @@ class AdminFeedController extends Controller
 		}
 
 		$data = Feed::find($id);
+		$data->user_id = $this->current_user->id;
+
 		if($data->fill($request->all())->save()){
 			Alert::add('success', 'Материал '. $request->input('title') .' изменен')->flash();
 			$plugins->update($this->config['plugins_backend']);

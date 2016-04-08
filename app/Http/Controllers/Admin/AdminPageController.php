@@ -55,7 +55,7 @@ class AdminPageController extends Controller
 	{
         $test = Request::create('/admin/page', 'POST', [
             'title' => 'Черновик страницы',
-            'url' => str_slug('Черновик страницы'),
+            'url' => str_slug('create-new'),
             'active' => 0
         ]);
         return $this->store($test, $ContentPlugins);

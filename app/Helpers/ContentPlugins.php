@@ -164,7 +164,28 @@ class ContentPlugins implements ContentPluginsInterface
 					$matched_images['images'][] = $image;
 				}
 			}
-			$modelResult->description = preg_replace('/{Фото\\[[a-zA-z]*]=[a-zA-Z0-9]*}/', view('front.plugins.'. $match, $matched_images)->render(), $modelResult->description);
+			$modelResult->description = preg_replace('/{Фото\\[[a-zA-z]*]=[a-zA-Z0-9]*}/', view('front.plugins.photoGallery'. $match, $matched_images)->render(), $modelResult->description);
+		}
+		return $modelResult;
+	}
+
+	/**
+	 * Прикрепление отображения прикрепленных внутри материала файлов
+	 * @param $modelResult
+	 */
+	public function renderFilesGallery($modelResult)
+	{
+		$re = "/{Файлы\\[(?P<type>\\w+)]=(?P<name>\\w+)}/";
+		preg_match_all($re, $modelResult->description, $matches);
+		foreach($matches['type'] as $key => $match){
+			//Собираем изображения под каждую найденную галерею
+			$matched_images['images'] = [];
+			foreach($modelResult['images'] as $image){
+				if($image->getCustomProperty('gallery') === $matches['name'][$key]){
+					$matched_images['images'][] = $image;
+				}
+			}
+			$modelResult->description = preg_replace('/{Файлы\\[[a-zA-z]*]=[a-zA-Z0-9]*}/', view('front.plugins.fileGallery'. $match, $matched_images)->render(), $modelResult->description);
 		}
 		return $modelResult;
 	}

@@ -154,6 +154,16 @@ a, .link{
   max-width: 100%;
 }
 
+.admin_edit{
+  position: absolute;
+  z-index: 3;
+  margin-top: -20px;
+  background: white;
+  border: 1px dashed red;
+  padding: 3px;
+  margin-left: -15px;
+}
+
 @import "sections/header";
 @import "sections/footer";
 @import "sections/rightColomn";

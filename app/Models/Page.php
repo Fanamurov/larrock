@@ -35,6 +35,7 @@ use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Page whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Page find($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\MediaLibrary\Media[] $media
+ * @mixin \Eloquent
  */
 class Page extends Model implements HasMediaConversions
 {

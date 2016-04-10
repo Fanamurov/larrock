@@ -46,10 +46,13 @@
                 {!! $data->short !!}
             </div>
         </div>
+
+        @if(count($data->get_childActive) > 0)
         <div class="toursPageCountry-popular row">
             <div class="col-xs-24"><h5 class="title-header">Популярные курорты</h5></div>
             @each('santa.tours.blockResourt', $data->get_childActive, 'data')
         </div>
+        @endif
 
         @if($best_cost['hotelsCount'] > 0)
         <div class="toursPageCountry-bestcost row">
@@ -58,10 +61,12 @@
         </div>
         @endif
 
+        @if(count($data->get_toursActive) > 0)
         <div class="toursPageCountry-recommented row">
             <div class="col-xs-24"><h5 class="title-header">Рекомендуемые туры</h5></div>
             @each('santa.tours.blockTour', $data->get_toursActive, 'data')
         </div>
+        @endif
 
         <div class="toursPageCountry-description">
             {!! $data->description !!}

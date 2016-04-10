@@ -167,12 +167,15 @@ class ToursController extends Controller
 		});
 
 
-        //Cache::forget('best_tours'. $data['data']->id);
-        $data['best_cost'] = Cache::remember('best_tours'. $data['data']->id, 60, function() use ($sletat) {
+        $data['best_cost'] = Cache::remember('best_cost'. $data['data']->id, 60, function() use ($sletat) {
             return $sletat->GetTours(1286, 29, [], 8);
         });
-        if(empty($data['best_cost'])){
-            Cache::forget('best_tours'. $data['data']->id);
+        if( !array_key_exists('best_cost', $data)){
+            Cache::forget('best_cost'. $data['data']->id);
+        }else{
+            if($data['best_cost']['iTotalRecords'] < 1){
+                Cache::forget('best_cost'. $data['data']->id);
+            }
         }
 
 		Breadcrumbs::register('tours.category', function($breadcrumbs, $data)
@@ -192,7 +195,7 @@ class ToursController extends Controller
 		return view('santa.tours.country', $data);
 	}
 
-	public function getResourt($category, $item)
+	public function getResourt($category, $item, Sletat $sletat)
 	{
 		$data['data'] = Category::whereType('tours')->whereActive(1)->whereUrl($item)->with(['get_toursActive', 'get_childActive'])->first();
 
@@ -203,6 +206,17 @@ class ToursController extends Controller
 		$data['data']['images'] = Cache::remember('ResourtImages'. $data['data']->id, 60, function() use ($data) {
 			return $data['data']->getMedia('images')->sortByDesc('order_column');
 		});
+
+        $data['best_cost'] = Cache::remember('best_cost'. $data['data']->id, 60, function() use ($sletat) {
+            return $sletat->GetTours(1286, 29, [], 8);
+        });
+        if( !array_key_exists('best_cost', $data)){
+            Cache::forget('best_cost'. $data['data']->id);
+        }else{
+            if($data['best_cost']['iTotalRecords'] < 1){
+                Cache::forget('best_cost'. $data['data']->id);
+            }
+        }
 
 		Breadcrumbs::register('tours.category', function($breadcrumbs, $data)
 		{

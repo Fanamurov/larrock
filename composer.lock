@@ -2871,12 +2871,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jarektkaczyk/eloquence.git",
-                "reference": "4e6d62a2e00ec47263e8a13452b6537cb79b7f4d"
+                "reference": "78b6c388b1ad7c02c2dbe9eca66d253de263ed7e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jarektkaczyk/eloquence/zipball/4e6d62a2e00ec47263e8a13452b6537cb79b7f4d",
-                "reference": "4e6d62a2e00ec47263e8a13452b6537cb79b7f4d",
+                "url": "https://api.github.com/repos/jarektkaczyk/eloquence/zipball/78b6c388b1ad7c02c2dbe9eca66d253de263ed7e",
+                "reference": "78b6c388b1ad7c02c2dbe9eca66d253de263ed7e",
                 "shasum": ""
             },
             "require": {
@@ -2919,7 +2919,7 @@
                 "mutable",
                 "searchable"
             ],
-            "time": "2016-02-03 11:36:28"
+            "time": "2016-04-05 10:20:24"
         },
         {
             "name": "sofa/hookable",
@@ -3012,23 +3012,23 @@
         },
         {
             "name": "spatie/laravel-medialibrary",
-            "version": "3.17.2",
+            "version": "3.17.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-medialibrary.git",
-                "reference": "feddc9c2ade269500b7b6913aed41268ea19890d"
+                "reference": "a9762c74a95eacd0cb697742ce117a7876edd5f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/feddc9c2ade269500b7b6913aed41268ea19890d",
-                "reference": "feddc9c2ade269500b7b6913aed41268ea19890d",
+                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/a9762c74a95eacd0cb697742ce117a7876edd5f7",
+                "reference": "a9762c74a95eacd0cb697742ce117a7876edd5f7",
                 "shasum": ""
             },
             "require": {
-                "illuminate/bus": "~5.1|~5.2",
-                "illuminate/console": "~5.1|~5.2",
-                "illuminate/database": "~5.1|~5.2",
-                "illuminate/support": "~5.1|~5.2",
+                "illuminate/bus": "~5.1.16|~5.2.0",
+                "illuminate/console": "~5.1.16|~5.2.0",
+                "illuminate/database": "~5.1.16|~5.2.0",
+                "illuminate/support": "~5.1.16|~5.2.0",
                 "php": "^5.5|^7.0",
                 "spatie/laravel-glide": "^2.2.4",
                 "spatie/pdf-to-image": "^1.0.1",
@@ -3068,7 +3068,7 @@
                 "media",
                 "spatie"
             ],
-            "time": "2016-03-25 08:43:55"
+            "time": "2016-04-04 14:28:53"
         },
         {
             "name": "spatie/laravel-paginateroute",
@@ -4369,16 +4369,16 @@
         },
         {
             "name": "filp/whoops",
-            "version": "2.1.0",
+            "version": "2.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filp/whoops.git",
-                "reference": "8da9523f07c62d56fe1cf36f8ae29b333afc181f"
+                "reference": "d13505b240a6f580bc75ba591da30299d6cb0eec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filp/whoops/zipball/8da9523f07c62d56fe1cf36f8ae29b333afc181f",
-                "reference": "8da9523f07c62d56fe1cf36f8ae29b333afc181f",
+                "url": "https://api.github.com/repos/filp/whoops/zipball/d13505b240a6f580bc75ba591da30299d6cb0eec",
+                "reference": "d13505b240a6f580bc75ba591da30299d6cb0eec",
                 "shasum": ""
             },
             "require": {
@@ -4425,7 +4425,7 @@
                 "whoops",
                 "zf2"
             ],
-            "time": "2016-03-13 10:22:39"
+            "time": "2016-04-07 06:16:25"
         },
         {
             "name": "fzaninotto/faker",

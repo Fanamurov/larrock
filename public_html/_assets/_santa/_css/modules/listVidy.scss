@@ -3,7 +3,7 @@
   padding: 10px 15px;
   margin-bottom: 30px;
 
-  li{
+  > li{
 	padding: 2px 0;
 	a{
 	  display: block;
@@ -15,7 +15,7 @@
 	  margin-top: 2px;
 	  border-radius: 5px;
 	  padding: 15px 10px 15px 2px;
-	  box-shadow: 0px 2px 2px rgba(9,9,9,0.4);
+	  box-shadow: 0 2px 2px rgba(9,9,9,0.4);
 	  &:hover,
 	  &:focus{
 		background: #de0610;
@@ -26,5 +26,15 @@
 		padding-left: 15px;
 	  }
 	}
+  }
+
+  ul{
+    li{
+      a{
+        margin-left: 35px;
+        padding-left: 25px;
+        background: linear-gradient(180deg,#fff 0,#ddd 22%,#fff 78%,#f1f1f1 97%,#fff);
+      }
+    }
   }
 }

@@ -199,15 +199,15 @@ h1, .h1{
   height: 46px;
 }
 
+.glyphicon.glyphicon-star{
+  color: gold;
+}
+
 
 @import "sections/header";
 @import "sections/footer";
 @import "sections/rightColomn";
 @import "sections/content";
-
-//@import "catalog/category";
-//@import "catalog/items";
-//@import "catalog/item";
 
 @import "tours/item";
 @import "tours/category";
@@ -219,6 +219,7 @@ h1, .h1{
 @import "modules/slideshow";
 @import "modules/listHotTours";
 @import "modules/listVidy";
+
 @import "forms/searchTour";
 @import "forms/subscribe";
 @import "forms/zakazTura";
@@ -226,6 +227,7 @@ h1, .h1{
 @import "plugins/gallery";
 
 @import "page/pages";
+@import "sletat/search";
 
 @import "../../bower_components/chosen/chosen";
 @import "../../bower_components/pickadate/lib/themes/classic.scss";

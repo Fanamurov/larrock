@@ -60,6 +60,16 @@
     </header>
 
     <section class="row" id="content">
+        <section id="right_colomn" class="col-xs-24 col-sm-7">
+            <div class="col-xs-24">
+                @if(isset($SearchFormShort))
+                    @include('santa.modules.forms.searchTourShort', $SearchFormShort)
+                @endif
+                @yield('rightColomn')
+                @include('santa.modules.list.vidy')
+                @include('santa.modules.list.strany')
+            </div>
+        </section>
         <div class="col-xs-24 col-sm-17">
             <div class="col-xs-24">
                 @include('front.errors')
@@ -74,15 +84,6 @@
             <script type="text/javascript" src="//yastatic.net/share2/share.js" charset="utf-8"></script>
             <div class="ya-share2 ya-share2_big" data-services="vkontakte,facebook,odnoklassniki,moimir,gplus" data-counter=""></div>
         </div>
-        <section id="right_colomn" class="col-xs-24 col-sm-7">
-            <div class="col-xs-24 col-sm-22 col-sm-offset-2">
-                @section('searchTourShort')
-                    @include('santa.modules.forms.searchTourShort')
-                @endsection
-                @yield('rightColomn')
-                @include('santa.modules.list.vidy')
-            </div>
-        </section>
     </section>
 
     <footer>

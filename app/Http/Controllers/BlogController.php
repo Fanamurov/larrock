@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Sletat;
 use App\Models\Category;
 use App\Models\Feed;
 use Illuminate\Http\Request;
@@ -10,9 +11,12 @@ use App\Http\Requests;
 
 class BlogController extends Controller
 {
-	public function __construct()
+	public function __construct(Sletat $sletat)
 	{
 		$this->middleware('loaderModules');
+
+        /* Краткая форма поиска от sletat */
+        \View::share('SearchFormShort', $sletat->getSearchForm());
 	}
 	
     public function index()

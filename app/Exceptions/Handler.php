@@ -1,19 +1,12 @@
 <?php
-
 namespace App\Exceptions;
-
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-//use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use GrahamCampbell\Exceptions\ExceptionHandler;
-
 use Illuminate\Auth\Access\AuthorizationException;
-//use Illuminate\Database\Eloquent\ModelNotFoundException;
-//use Symfony\Component\HttpKernel\Exception\HttpException;
-use Illuminate\Foundation\Validation\ValidationException;
-
+use Illuminate\Validation\ValidationException;
+use GrahamCampbell\Exceptions\ExceptionHandler;
 class Handler extends ExceptionHandler
 {
     /**
@@ -27,7 +20,6 @@ class Handler extends ExceptionHandler
         ModelNotFoundException::class,
         ValidationException::class,
     ];
-
     /**
      * Report or log an exception.
      *
@@ -40,7 +32,6 @@ class Handler extends ExceptionHandler
     {
         return parent::report($e);
     }
-
     /**
      * Render an exception into an HTTP response.
      *
@@ -50,37 +41,26 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
-		/* http://www.techigniter.in/tutorials/create-custom-error-pages-in-laravel-5/ */
-		if( !app()->isLocal()){
-			/* PRODUCTION */
-			if($this->isHttpException($e))
-			{
-				switch ($e->getStatusCode()) {
-					// not found
-					case 404:
-						return \Response::view('errors.404',array(),404);
-						break;
-					// internal error
-					case '500':
-						return \Response::view('errors.500',array(),500);
-						break;
-
-					default:
-						return $this->renderHttpException($e);
-						break;
-				}
-			}
-			else
-			{
-				return parent::render($request, $e);
-			}
-		}else{
-			/* DEV */
-			if ($e instanceof ModelNotFoundException) {
-				$e = new NotFoundHttpException($e->getMessage(), $e);
-			}
-
-			return parent::render($request, $e);
-		}
+        /* http://www.techigniter.in/tutorials/create-custom-error-pages-in-laravel-5/ */
+        if(config('app.debug') === false){
+            /* PRODUCTION */
+            if($this->isHttpException($e))
+            {
+                switch ($e->getStatusCode()) {
+                    // not found
+                    case 404:
+                        return \Response::view('errors.404',array(),404);
+                        break;
+                    // internal error
+                    case '500':
+                        return \Response::view('errors.500',array(),500);
+                        break;
+                    default:
+                        return $this->renderHttpException($e);
+                        break;
+                }
+            }
+        }
+        return parent::render($request, $e);
     }
 }

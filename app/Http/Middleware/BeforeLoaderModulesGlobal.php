@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use App\Http\Controllers\SletatController;
 use App\Models\Blocks;
 use App\Models\Category;
 use App\Models\Menu;
@@ -10,14 +9,16 @@ use Cache;
 use Closure;
 use View;
 use MenuApp;
+use App\Helpers\Sletat;
 
 class BeforeLoaderModulesGlobal
 {
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Closure $next
+     * @param Sletat $sletat
      * @return mixed
      */
     public function handle($request, Closure $next)
@@ -32,15 +33,17 @@ class BeforeLoaderModulesGlobal
 			View::share('banner', $banner);
 		}
 
-		$module_vidy = Category::whereParent(377)->get();
-		foreach($module_vidy as $key => $item){
-			//$module_vidy['icon'] = $item->getFirstMediaUrl('images');
-		}
+        $module_vidy = Cache::remember('module_vidy', 60, function() {
+            return Category::whereParent(377)->orderBy('position', 'DESC')->get();
+        });
 		View::share('module_vidy', $module_vidy);
 
-        $module_countryes = Category::whereParent(308)->get();
+        $module_strany = Cache::remember('module_strany', 60, function() {
+            return Category::whereParent(308)->with(['get_childActive'])->orderBy('position', 'DESC')->get();
+        });
+        View::share('module_strany', $module_strany);
 
-        MenuApp::create('navbar', function($menu) use ($module_vidy, $module_countryes)
+        MenuApp::create('navbar', function($menu) use ($module_vidy, $module_strany)
         {
             //$menu->url('/', 'Home');
             $menu->dropdown('Компания', function ($sub) {
@@ -51,8 +54,8 @@ class BeforeLoaderModulesGlobal
                 $sub->url('settings/design', 'Наша команда');
                 $sub->url('/page/zabota-o-klientakh', 'Забота о клиентах');
             });
-            $menu->dropdown('Страны', function ($sub) use ($module_countryes) {
-                foreach ($module_countryes as $item){
+            $menu->dropdown('Страны', function ($sub) use ($module_strany) {
+                foreach ($module_strany as $item){
                     $sub->url('/tours/strany/'. $item->url, $item->title);
                 }
             });
@@ -73,10 +76,6 @@ class BeforeLoaderModulesGlobal
             $menu->url('/otzyvy', 'Отзывы');
             $menu->url('/blog', 'Блог');
         });
-		
-		/* Краткая форма поиска от sletat */
-		//$sletat = new SletatController();
-		//View::share('SearchForm', $sletat->getSearchForm());
 
         return $next($request);
     }

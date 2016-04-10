@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ContentPlugins;
+use App\Helpers\Sletat;
 use App\Models\Blocks;
 use App\Models\Menu;
 use Illuminate\Http\Request;
@@ -15,10 +16,13 @@ class PageController extends Controller
 {
 	protected $config;
 
-	public function __construct()
+	public function __construct(Sletat $sletat)
 	{
 		$this->config = \Config::get('components.page');
 		$this->middleware('loaderModules');
+
+        /* Краткая форма поиска от sletat */
+        \View::share('SearchFormShort', $sletat->getSearchForm());
 	}
 
     public function getItem($url, ContentPlugins $contentPlugins)

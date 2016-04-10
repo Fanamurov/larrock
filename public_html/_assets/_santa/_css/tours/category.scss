@@ -18,9 +18,40 @@
   > div:nth-child(3n+1){
 	margin-left: 3%;
   }
-  h3 a{
-	font-size: 16px;
-	padding: 0 7px;
+  h3 a, h4 a{
+    font-size: 17px;
+    font-weight: 600;
+    padding: 0 7px;
+    line-height: 23px;
+  }
+  .cost{
+    background: url("/_assets/_santa/_images/bg/bg_cost.png") no-repeat left top transparent;
+    width: 125px;
+    height: 34px;
+    color: white;
+    font-weight: 600;
+    text-align: center;
+    font-size: 22px;
+    line-height: 30px;
+    small{
+      font-size: 70%;
+    }
+  }
+  .stars{
+    position: absolute;
+  }
+  .dates{
+    color: grey;
+    font-size: 85%;
+    line-height: 16px;
+    padding-top: 5px;
+  }
+}
+.toursBlockTourSletat{
+  h4 a{
+    line-height: 23px;
+    min-height: 72px;
+    display: inline-block;
   }
 }
 

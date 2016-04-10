@@ -51,9 +51,12 @@
             @each('santa.tours.blockResourt', $data->get_childActive, 'data')
         </div>
 
+        @if($best_cost['hotelsCount'] > 0)
         <div class="toursPageCountry-bestcost row">
             <div class="col-xs-24"><h5 class="title-header">Лучшие цены</h5></div>
+            @each('santa.tours.blockTourSletat', $best_cost['aaData'], 'item')
         </div>
+        @endif
 
         <div class="toursPageCountry-recommented row">
             <div class="col-xs-24"><h5 class="title-header">Рекомендуемые туры</h5></div>

@@ -3,10 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Modules\ListCatalog;
-use App\Models\Blocks;
 use App\Models\Category;
-use App\Models\Feed;
-use App\Models\Menu;
 use App\Models\Tours;
 use Breadcrumbs;
 use Cache;
@@ -14,16 +11,14 @@ use Cookie;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Input;
-use URL;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
+use App\Helpers\Sletat;
 
 class ToursController extends Controller
 {
 	protected $config;
 
-	public function __construct()
+	public function __construct(Sletat $sletat)
 	{
 		$this->config = \Config::get('components.tours');
 		\View::share('config_app', $this->config);
@@ -33,6 +28,9 @@ class ToursController extends Controller
 		{
 			$breadcrumbs->push('Каталог туров');
 		});
+
+        /* Краткая форма поиска от sletat */
+        \View::share('SearchFormShort', $sletat->getSearchForm());
 	}
 
 	public function getAllTovars(Request $request, ListCatalog $listCatalog)
@@ -108,7 +106,7 @@ class ToursController extends Controller
 		return view('santa.tours.categorysListChilds', $data);
 	}
 
-	public function getCategory(Request $request, $category, $child = NULL, $grandson = NULL)
+	public function getCategory(Sletat $sletat, Request $request, $category, $child = NULL, $grandson = NULL)
 	{
 		//Смотрим какой раздел выбираем для работы
 		//Первый уровень: /Раздел
@@ -128,7 +126,7 @@ class ToursController extends Controller
 
 		//Редирект на страну
 		if($data['data']->parent === 308){
-			return $this->getCountry($select_category);
+			return $this->getCountry($select_category, $sletat);
 		}
 
 		Breadcrumbs::register('tours.category', function($breadcrumbs, $data)
@@ -160,13 +158,22 @@ class ToursController extends Controller
 		return view('santa.tours.categorysListChilds', $data);
 	}
 
-	public function getCountry($category)
+	public function getCountry($category, Sletat $sletat)
 	{
 		$data['data'] = Category::whereType('tours')->whereActive(1)->whereUrl($category)->with(['get_toursActive', 'get_childActive'])->first();
 
 		$data['data']['images'] = Cache::remember('categoryImages'. $data['data']->id, 60, function() use ($data) {
 			return $data['data']->getMedia('images')->sortByDesc('order_column');
 		});
+
+
+        //Cache::forget('best_tours'. $data['data']->id);
+        $data['best_cost'] = Cache::remember('best_tours'. $data['data']->id, 60, function() use ($sletat) {
+            return $sletat->GetTours(1286, 29, [], 8);
+        });
+        if(empty($data['best_cost'])){
+            Cache::forget('best_tours'. $data['data']->id);
+        }
 
 		Breadcrumbs::register('tours.category', function($breadcrumbs, $data)
 		{

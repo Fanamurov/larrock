@@ -80,8 +80,14 @@ Route::get('/search/tours', [
 ]);
 //TOURS END
 
-Route::get('/sletat', [
+Route::any('/sletat', [
 	'as' => 'sletat.form', 'uses' => 'SletatController@getFullSearchForm'
+]);
+Route::get('/sletat/GetLoadState', [
+    'as' => 'sletat.GetLoadState', 'uses' => 'SletatController@GetLoadState'
+]);
+Route::get('/sletat/ActualizePrice/{sourceId?}/{offerId?}/{countryId?}/{requestId?}', [
+    'as' => 'sletat.ActualizePrice', 'uses' => 'SletatController@ActualizePrice'
 ]);
 
 Route::post('/ajax/editPerPage', [

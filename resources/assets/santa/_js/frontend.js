@@ -7,6 +7,7 @@ $(document).ready(function(){
     });
 
     $('.toursBlockCategory').matchHeight();
+    $('.toursBlockTour').matchHeight();
 
     $(".fancybox").fancybox({
         helpers	: {
@@ -73,7 +74,14 @@ $(document).ready(function(){
         format: 'yyyy-mm-dd'
     });
 
-    $('input.daterange').daterangepicker();
+    var today = new Date();
+    $('input.daterange').daterangepicker({
+        locale: {
+            format: 'DD/MM/YYYY'
+        },
+        startDate: today.getDate() +'/'+ today.getMonth() +'/'+ today.getFullYear()
+    });
+
     $('.chosen-select').chosen();
 
     /*

@@ -1,0 +1,22 @@
+.search-result{
+  font-size: 14px;
+  h4{
+    display: inline-block;
+    margin-bottom: 20px;
+  }
+  .cost{
+    font-size: 24px;
+    font-weight: 700;
+    text-align: center;
+  }
+  .muted{
+    color: grey;
+  }
+  i{
+    color: gold;
+    font-size: 150%;
+  }
+  .hotel-description{
+    margin-top: 20px;
+  }
+}

@@ -59,7 +59,7 @@
     <section class="row" id="content">
         <section id="right_colomn" class="col-xs-24 col-sm-7">
             <div class="col-xs-24">
-                @include('santa.modules.forms.searchTourShort')
+                @include('santa.modules.forms.searchTourShort', $SearchFormShort)
                 @yield('rightColomn')
                 @if(isset($banner))
                     @include('front.modules.list.banner')
@@ -72,7 +72,6 @@
             <div class="col-xs-24">
                 @include('front.errors')
                 @include('santa.modules.slideshow.mainpage')
-                @include('santa.modules.list.hotTours')
                 @include('santa.modules.list.news')
                 @yield('slideshow')
                 @yield('content')

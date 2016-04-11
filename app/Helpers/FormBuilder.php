@@ -173,9 +173,7 @@ class FormBuilder implements FormBuilderInterface
 			$selected[] = \Request::input($row_key);
 		}else{
 			if($data->get_category){
-				foreach($data->get_category as $category){
-					$selected[] = $category->id;
-				}
+				$selected[] = $data->get_category->id;
 			}
 		}
 		$list_categories = [];

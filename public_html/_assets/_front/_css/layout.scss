@@ -162,6 +162,11 @@ a, .link{
   border: 1px dashed red;
   padding: 3px;
   margin-left: -15px;
+  opacity: .5;
+  &:hover,
+  &:focus{
+	opacity: 1;
+  }
 }
 
 @import "sections/header";

@@ -1,5 +1,6 @@
 @extends('front.main')
-@section('title') {{ $seo['title'] }} @endsection
+@section('title'){{$seo_midd['catalog_category_prefix']}} {{$data->get_seo->seo_title or
+$seo['title'] }} {{$seo_midd['catalog_category_postfix']}}. {{ $seo_midd['postfix_global'] }}@endsection
 
 @section('content')
     {!! Breadcrumbs::render('catalog.all') !!}

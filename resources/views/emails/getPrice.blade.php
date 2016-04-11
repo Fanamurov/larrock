@@ -1,0 +1,2 @@
+<h1 style="font:26px/32px Calibri,Helvetica,Arial,sans-serif;">Запрошен прайс-лист</h1>
+<p style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;"><strong>Email:</strong> {{ $email }}</p>

@@ -51,7 +51,7 @@ class AdminFeedController extends Controller
 	public function index()
 	{
 		$data['app'] = $this->config;
-		$data['data'] = Feed::with('get_category')->paginate(30);
+		$data['data'] = Feed::with('get_category')->orderBy('position', 'desc')->paginate(30);
 		View::share('validator', '');
 		return view('admin.feed.index', $data);
 	}
@@ -126,7 +126,7 @@ class AdminFeedController extends Controller
 	{
 		$data['app'] = $this->config;
 		$data['category'] = Category::findOrFail($id);
-		$data['data'] = Feed::whereCategory($id)->paginate(30);
+		$data['data'] = Feed::whereCategory($id)->orderBy('position', 'desc')->paginate(30);
 		View::share('validator', '');
 
 		Breadcrumbs::register('admin.feed.category', function($breadcrumbs, $data)

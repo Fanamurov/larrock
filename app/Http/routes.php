@@ -86,6 +86,9 @@ Route::post('/cart/short', [
 Route::post('/forms/contact', [
 	'as' => 'submit.contacts', 'uses' => 'Modules\Forms@send_form'
 ]);
+Route::post('/forms/getPrice', [
+	'as' => 'submit.getPrice', 'uses' => 'Modules\Forms@send_formGetPrice'
+]);
 
 
 // Authentication routes...

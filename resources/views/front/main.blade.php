@@ -6,7 +6,7 @@
     <meta name="generator" content="Mart Larrock CMS" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>@yield('title')</title>
-    <meta name="description" content="@yield('description')">
+    <meta name="description" content="@yield('title')">
     <meta name="author" content="MartDS">
 
     <link href="{{asset('ico.png?6v')}}" rel="shortcut icon" />
@@ -51,14 +51,12 @@
         </div>
         <section id="right_colomn" class="col-xs-7">
             <div class="col-xs-19 col-xs-offset-2">
-                <a href="/page/kontakty#form-contact" class="btn btn-primary btn-block btn-to-form">Оформить заявку</a>
-                @yield('front.modules.list.catalog')
-                @yield('rightColomn')
-                @if(isset($prices))
-                    <div class="block-prices">
-                        @include('front.plugins.fileGallery.default', ['files' => $prices])
-                    </div>
+                @if(Route::current()->parameter('url') !== 'kontakty')
+                    <a href="/page/kontakty#form-contact" class="btn btn-primary btn-block btn-to-form">Оформить заявку</a>
                 @endif
+                @yield('front.modules.list.catalog')
+                @include('front.modules.forms.getPrice')
+                @yield('rightColomn')
                 @if(isset($banner))
                     @include('front.modules.list.banner')
                 @endif

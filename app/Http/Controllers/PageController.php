@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\ContentPlugins;
 use App\Models\Blocks;
 use App\Models\Menu;
+use Cache;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -23,11 +24,15 @@ class PageController extends Controller
 
     public function getItem($url, ContentPlugins $contentPlugins)
 	{
-		$page = Page::whereUrl($url)->with(['get_seo', 'get_templates'])->firstOrFail();
-		$page['images'] = $page->getMedia('images');
-		$page['files'] = $page->getMedia('files');
-		$data['data'] = $contentPlugins->renderGallery($page);
-		$data['data'] = $contentPlugins->renderFilesGallery($page);
+		$data = Cache::remember('page'. $url, 60, function() use ($contentPlugins, $url) {
+			$page = Page::whereUrl($url)->with(['get_seo', 'get_templates'])->firstOrFail();
+			$page['images'] = $page->getMedia('images');
+			$page['files'] = $page->getMedia('files');
+			$data['data'] = $contentPlugins->renderGallery($page);
+			$data['data'] = $contentPlugins->renderFilesGallery($page);
+		    return $data;
+		});
+
 		if(\View::exists('front.page.'. $url)){
 			return view('front.page.'. $url, $data);
 		}else{

@@ -29,12 +29,6 @@ class BeforeLoaderModulesGlobal
 			View::share('banner', $banner);
 		}
 
-		$prices = Blocks::whereUrl('prays-listy-sprava')->whereActive(1)->first();
-		if($prices){
-			$prices = $prices->getMedia('files');
-			View::share('prices', $prices);
-		}
-
 		$menu = Cache::remember('menu_front', 60, function() {
 		    return Menu::whereActive(1)->orderBy('position', 'DESC')->get();
 		});

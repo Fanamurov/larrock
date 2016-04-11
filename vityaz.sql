@@ -56,15 +56,16 @@ CREATE TABLE `blocks` (
   `active` int(11) NOT NULL DEFAULT '1',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `user_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `blocks_url_unique` (`url`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `blocks` (`id`, `title`, `description`, `url`, `position`, `active`, `created_at`, `updated_at`) VALUES
-(1,	'header-email',	'<p><a href=\"mailto:pshabar@mail.ru\">pshabar@mail.ru</a></p>',	'header-email',	0,	1,	'2016-01-21 05:45:22',	'2016-01-21 05:45:22'),
-(2,	'header-slogan',	'<p>Огнетушители и пожарное оборудование</p>',	'header-slogan',	0,	1,	'2016-01-21 07:08:15',	'2016-01-21 07:08:15'),
-(3,	'Баннер в колонке справа',	'',	'banner',	0,	1,	'2016-03-23 06:07:24',	'2016-03-16 05:56:05'),
-(4,	'Прайс-листы справа',	'',	'prays-listy-sprava',	0,	1,	'2016-04-08 06:25:42',	'2016-04-08 06:25:42');
+INSERT INTO `blocks` (`id`, `title`, `description`, `url`, `position`, `active`, `created_at`, `updated_at`, `user_id`) VALUES
+(1,	'header-email',	'<p><a href=\"mailto:pshabar@mail.ru\">pshabar@mail.ru</a></p>',	'header-email',	0,	1,	'2016-01-21 05:45:22',	'2016-01-21 05:45:22',	0),
+(2,	'header-slogan',	'<p>Огнетушители и пожарное оборудование</p>',	'header-slogan',	0,	1,	'2016-01-21 07:08:15',	'2016-01-21 07:08:15',	0),
+(3,	'Баннер в колонке справа',	'',	'banner',	0,	1,	'2016-03-23 06:07:24',	'2016-03-16 05:56:05',	0),
+(4,	'Прайс-листы справа',	'',	'prays-listy-sprava',	0,	1,	'2016-04-08 06:25:42',	'2016-04-08 06:25:42',	0);
 
 DROP TABLE IF EXISTS `cart`;
 CREATE TABLE `cart` (
@@ -323,15 +324,23 @@ CREATE TABLE `feed` (
   `active` int(1) DEFAULT '1',
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `user_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `feed_category_foreign` (`category`),
   CONSTRAINT `feed_category_foreign` FOREIGN KEY (`category`) REFERENCES `category` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `feed` (`id`, `title`, `category`, `short`, `description`, `url`, `date`, `position`, `active`, `created_at`, `updated_at`) VALUES
-(8,	'Оптовая продажа дальневосточной рыбной&nbsp;продукции',	2,	'<p>Оптовая продажа дальневосточной рыбной продукции</p>',	'',	'mainfish432',	'2016-03-17 00:00:00',	100,	1,	'2016-03-17 05:32:45',	'2016-03-17 06:21:52'),
-(9,	'Сельди',	2,	'<p>Тело сжатое с боков, с зазубренным краем брюха. Чешуя умеренная или крупная, редко мелкая. Верхняя челюсть не выдаётся за нижнюю. Рот умеренный. Зубы, если имеются, рудиментарные и выпадающие. Анальный плавник умеренной длины и имеет менее 80 лучей. Спинной плавник расположен над брюшными. Хвостовой плавник раздвоенный. К этому роду относят 3 вида. Пищу их составляют различные мелкие животные, особенно мелкие ракообразные.</p>\r\n<p>Все представители рода имеют важное промысловое значение, используются в пищу, а также для изготовления рыбной муки.</p>\r\n<p>Особенно важна в экономическом отношении атлантическая сельдь (Clupea harengus)</p>',	'',	'seldi',	'2016-03-17 00:00:00',	0,	1,	'2016-03-17 06:23:19',	'2016-03-17 06:24:18'),
-(10,	'Камбалообразные',	2,	'<p>Камбалообра́зные (лат. Pleuronectiformes) &mdash; отряд лучепёрых рыб. В состав отряда включают около 680 видов, объединяемых в 134 рода; подразделяется на три подотряда, включающие 14 семейств.</p>\r\n<p>Камбалообразные &mdash; донные рыбы, лежат и плавают на боку. Тело сильно сжато с боков, глаза расположены не по бокам головы, а смещены на одну её сторону. Плавательного пузыря нет. Верхняя сторона рыбы пигментирована, нижняя &mdash; обычно белая. Личинки камбал первоначально плавают в толще воды, но в последующем, по мере перехода к донному образу жизни, их тело уплощается в боковом направлении, а глаза перемещаются на одну из сторон тела &mdash; верхнюю.</p>',	'',	'kambaloobraznye',	'2016-03-17 00:00:00',	0,	1,	'2016-03-17 06:24:29',	'2016-03-17 06:24:51');
+INSERT INTO `feed` (`id`, `title`, `category`, `short`, `description`, `url`, `date`, `position`, `active`, `created_at`, `updated_at`, `user_id`) VALUES
+(8,	'Оптовая продажа рыбы и дальневосточных морепродуктов',	2,	'<p>Оптовая продажа рыбы и дальневосточных морепродуктов</p>',	'',	'mainfish432',	'2016-03-17 00:00:00',	100,	1,	'2016-03-17 05:32:45',	'2016-04-11 03:35:32',	1),
+(11,	'Оптовая продажа тихоокеанской сельди',	2,	'',	'',	'optovaya-prodazha-tikhookeanskoy-seldi',	'2016-04-11 00:00:00',	0,	1,	'2016-04-11 03:35:53',	'2016-04-11 03:36:42',	1),
+(12,	'Продажа дальневосточной кеты оптом',	2,	'',	'',	'prodazha-dalnevostochnoy-kety-optom',	'2016-04-11 00:00:00',	0,	1,	'2016-04-11 03:36:48',	'2016-04-11 03:37:30',	1),
+(13,	'Реализуем минтай оптом',	2,	'',	'',	'chernovik-stranitsy',	'2016-04-11 00:00:00',	0,	1,	'2016-04-11 03:37:35',	'2016-04-11 03:37:59',	1),
+(14,	'Продажа дальневосточной горбуши оптом',	2,	'',	'',	'prodazha-dalnevostochnoy-gorbushi-optom',	'2016-04-11 00:00:00',	0,	1,	'2016-04-11 03:38:54',	'2016-04-11 03:43:25',	1),
+(15,	'Продаем камбалу оптом. Партии от 23 тонн',	2,	'',	'',	'prodaem-kambalu-optom-partii-ot-23-tonn',	'2016-04-11 00:00:00',	0,	1,	'2016-04-11 03:43:40',	'2016-04-11 03:45:05',	1),
+(16,	'Продажа креведки в коробках и контейнерах',	2,	'',	'',	'prodazha-krevedki-v-korobkakh-i-konteynerakh',	'2016-04-11 00:00:00',	0,	1,	'2016-04-11 03:45:12',	'2016-04-11 03:45:41',	1),
+(17,	'Купить красную икру оптом',	2,	'',	'',	'kupit-krasnuyu-ikru-optom',	'2016-04-11 00:00:00',	0,	1,	'2016-04-11 03:45:49',	'2016-04-11 03:46:24',	1),
+(18,	'Продажа камчатского краба оптом',	2,	'',	'',	'prodazha-kamchatskogo-kraba-optom',	'2016-04-11 00:00:00',	0,	1,	'2016-04-11 03:46:31',	'2016-04-11 03:46:45',	1),
+(19,	'Реализуем навагу оптом. Вылов: Сахалин, Камчатка',	2,	'',	'',	'chernovik-stranitsy-258',	'2016-04-11 00:00:00',	0,	1,	'2016-04-11 03:46:50',	'2016-04-11 03:47:28',	1);
 
 DROP TABLE IF EXISTS `files`;
 CREATE TABLE `files` (
@@ -385,7 +394,6 @@ INSERT INTO `media` (`id`, `model_id`, `model_type`, `collection_name`, `name`, 
 (151,	145,	'App\\Models\\Catalog',	'images',	'Catalog-145-keta-psgpng',	'Catalog-145-keta-psgpng.png',	'media',	58389,	'[]',	'{\"alt\":\"\",\"gallery\":\"\"}',	118,	'2016-03-14 06:08:37',	'2016-03-14 06:08:37'),
 (153,	146,	'App\\Models\\Catalog',	'images',	'Catalog-146-keta-psgpng',	'Catalog-146-keta-psgpng.png',	'media',	58389,	'[]',	'{\"alt\":\"\",\"gallery\":\"\"}',	120,	'2016-03-14 06:10:08',	'2016-03-14 06:10:08'),
 (155,	147,	'App\\Models\\Catalog',	'images',	'Catalog-147-seld-olutpng',	'Catalog-147-seld-olutpng.png',	'media',	59920,	'[]',	'{\"alt\":\"\",\"gallery\":\"\"}',	82,	'2016-03-14 06:11:52',	'2016-03-14 06:11:52'),
-(166,	153,	'App\\Models\\Catalog',	'images',	'Catalog-153-trskapng',	'Catalog-153-trskapng.png',	'media',	56270,	'[]',	'{\"alt\":\"\",\"gallery\":\"\"}',	129,	'2016-03-14 06:58:55',	'2016-03-14 06:58:55'),
 (168,	154,	'App\\Models\\Catalog',	'images',	'Catalog-154-kambalapng',	'Catalog-154-kambalapng.png',	'media',	86485,	'[]',	'{\"alt\":\"\",\"gallery\":\"\"}',	131,	'2016-03-14 07:05:00',	'2016-03-14 07:05:00'),
 (170,	155,	'App\\Models\\Catalog',	'images',	'Catalog-155-navagapng',	'Catalog-155-navagapng.png',	'media',	38384,	'[]',	'{\"alt\":\"\",\"gallery\":\"\"}',	132,	'2016-03-14 07:07:35',	'2016-03-14 07:07:35'),
 (175,	158,	'App\\Models\\Catalog',	'images',	'Catalog-158-falang-1png',	'Catalog-158-falang-1png.png',	'media',	70150,	'[]',	'{\"alt\":\"\",\"gallery\":\"\"}',	135,	'2016-03-14 07:25:44',	'2016-03-14 07:25:44'),
@@ -421,11 +429,8 @@ INSERT INTO `media` (`id`, `model_id`, `model_type`, `collection_name`, `name`, 
 (224,	27,	'App\\Models\\Page',	'images',	'Page-27-foto-karabljpg',	'Page-27-foto-karabljpg.jpg',	'media',	94486,	'[]',	'{\"alt\":\"\",\"gallery\":\"onas\",\"position\":\"0\"}',	73,	'2016-03-21 03:20:27',	'2016-03-21 03:20:27'),
 (237,	166,	'App\\Models\\Catalog',	'images',	'Catalog-166-kambalapng',	'Catalog-166-kambalapng.png',	'media',	86485,	'[]',	'{\"alt\":\"\",\"gallery\":\"\"}',	178,	'2016-03-22 03:00:04',	'2016-03-22 03:00:04'),
 (238,	166,	'App\\Models\\Catalog',	'images',	'Catalog-166-riba-12jpg',	'Catalog-166-riba-12jpg.jpg',	'media',	28382,	'[]',	'[]',	79,	'2016-03-22 03:00:04',	'2016-03-22 03:00:04'),
-(239,	167,	'App\\Models\\Catalog',	'images',	'Catalog-167-trskapng',	'Catalog-167-trskapng.png',	'media',	56270,	'[]',	'{\"alt\":\"\",\"gallery\":\"\"}',	180,	'2016-03-22 03:18:11',	'2016-03-22 03:18:11'),
 (240,	167,	'App\\Models\\Catalog',	'images',	'Catalog-167-riba-11jpg',	'Catalog-167-riba-11jpg.jpg',	'media',	34585,	'[]',	'[]',	80,	'2016-03-22 03:18:11',	'2016-03-22 03:18:11'),
-(241,	168,	'App\\Models\\Catalog',	'images',	'Catalog-168-trskapng',	'Catalog-168-trskapng.png',	'media',	56270,	'[]',	'{\"alt\":\"\",\"gallery\":\"\"}',	181,	'2016-03-22 03:34:34',	'2016-03-22 03:34:34'),
 (242,	168,	'App\\Models\\Catalog',	'images',	'Catalog-168-riba-11jpg',	'Catalog-168-riba-11jpg.jpg',	'media',	34585,	'[]',	'[]',	81,	'2016-03-22 03:34:34',	'2016-03-22 03:34:34'),
-(243,	169,	'App\\Models\\Catalog',	'images',	'Catalog-169-trskapng',	'Catalog-169-trskapng.png',	'media',	56270,	'[]',	'{\"alt\":\"\",\"gallery\":\"\"}',	182,	'2016-03-22 03:35:33',	'2016-03-22 03:35:33'),
 (244,	170,	'App\\Models\\Catalog',	'images',	'Catalog-170-navagapng',	'Catalog-170-navagapng.png',	'media',	38384,	'[]',	'[]',	83,	'2016-03-22 03:45:50',	'2016-03-22 03:45:50'),
 (245,	171,	'App\\Models\\Catalog',	'images',	'Catalog-171-navagapng',	'Catalog-171-navagapng.png',	'media',	38384,	'[]',	'[]',	84,	'2016-03-22 03:47:17',	'2016-03-22 03:47:17'),
 (246,	172,	'App\\Models\\Catalog',	'images',	'Catalog-172-navagapng',	'Catalog-172-navagapng.png',	'media',	38384,	'[]',	'[]',	85,	'2016-03-22 04:10:17',	'2016-03-22 04:10:17'),
@@ -433,7 +438,6 @@ INSERT INTO `media` (`id`, `model_id`, `model_type`, `collection_name`, `name`, 
 (248,	174,	'App\\Models\\Catalog',	'images',	'Catalog-174-navagapng',	'Catalog-174-navagapng.png',	'media',	38384,	'[]',	'[]',	87,	'2016-03-22 04:11:49',	'2016-03-22 04:11:49'),
 (249,	175,	'App\\Models\\Catalog',	'images',	'Catalog-175-seld-olutpng',	'Catalog-175-seld-olutpng.png',	'media',	59920,	'[]',	'{\"alt\":\"\",\"gallery\":\"\"}',	89,	'2016-03-22 04:15:25',	'2016-03-22 04:15:25'),
 (250,	175,	'App\\Models\\Catalog',	'images',	'Catalog-175-riba-09jpg',	'Catalog-175-riba-09jpg.jpg',	'media',	35258,	'[]',	'[]',	88,	'2016-03-22 04:15:25',	'2016-03-22 04:15:25'),
-(259,	302,	'App\\Models\\Category',	'images',	'Category-302-trskapng',	'Category-302-trskapng.png',	'media',	56270,	'[]',	'[]',	184,	'2016-03-22 06:33:27',	'2016-03-22 06:33:27'),
 (260,	304,	'App\\Models\\Category',	'images',	'Category-304-navagapng',	'Category-304-navagapng.png',	'media',	38384,	'[]',	'[]',	185,	'2016-03-22 06:33:49',	'2016-03-22 06:33:49'),
 (261,	303,	'App\\Models\\Category',	'images',	'Category-303-kambalapng',	'Category-303-kambalapng.png',	'media',	86485,	'[]',	'[]',	186,	'2016-03-22 06:34:12',	'2016-03-22 06:34:12'),
 (262,	305,	'App\\Models\\Category',	'images',	'Category-305-krevedka-obhaiapng',	'Category-305-krevedka-obhaiapng.png',	'media',	46155,	'[]',	'[]',	187,	'2016-03-22 06:35:17',	'2016-03-22 06:35:17'),
@@ -487,7 +491,12 @@ INSERT INTO `media` (`id`, `model_id`, `model_type`, `collection_name`, `name`, 
 (314,	204,	'App\\Models\\Catalog',	'images',	'Catalog-204-greb-2png',	'Catalog-204-greb-2png.png',	'media',	109489,	'[]',	'[]',	237,	'2016-04-07 04:50:00',	'2016-04-07 04:50:00'),
 (315,	308,	'App\\Models\\Category',	'images',	'Category-308-greb-3png',	'Category-308-greb-3png.png',	'media',	79293,	'[]',	'[]',	238,	'2016-04-07 04:50:24',	'2016-04-07 04:50:24'),
 (316,	4,	'App\\Models\\Blocks',	'files',	'Blocks-4-prais-rybadocx',	'Blocks-4-prais-rybadocx.docx',	'media',	23618,	'[]',	'{\"alt\":\"\\u0421\\u043a\\u0430\\u0447\\u0430\\u0442\\u044c \\u043f\\u0440\\u0430\\u0439\\u0441 \\u043d\\u0430 \\u0440\\u044b\\u0431\\u0443\",\"gallery\":\"\"}',	239,	'2016-04-08 06:36:35',	'2016-04-08 06:36:35'),
-(317,	4,	'App\\Models\\Blocks',	'files',	'Blocks-4-prais-moreproduktydocx',	'Blocks-4-prais-moreproduktydocx.docx',	'media',	22449,	'[]',	'{\"alt\":\"\\u0421\\u043a\\u0430\\u0447\\u0430\\u0442\\u044c \\u043f\\u0440\\u0430\\u0439\\u0441 \\u043d\\u0430 \\u043c\\u043e\\u0440\\u0435\\u043f\\u0440\\u043e\\u0434\\u0443\\u043a\\u0442\\u044b\",\"gallery\":\"\"}',	239,	'2016-04-08 06:36:35',	'2016-04-08 06:36:35');
+(317,	4,	'App\\Models\\Blocks',	'files',	'Blocks-4-prais-moreproduktydocx',	'Blocks-4-prais-moreproduktydocx.docx',	'media',	22449,	'[]',	'{\"alt\":\"\\u0421\\u043a\\u0430\\u0447\\u0430\\u0442\\u044c \\u043f\\u0440\\u0430\\u0439\\u0441 \\u043d\\u0430 \\u043c\\u043e\\u0440\\u0435\\u043f\\u0440\\u043e\\u0434\\u0443\\u043a\\u0442\\u044b\",\"gallery\":\"\"}',	239,	'2016-04-08 06:36:35',	'2016-04-08 06:36:35'),
+(318,	302,	'App\\Models\\Category',	'images',	'Category-302-trskapng',	'Category-302-trskapng.png',	'media',	56276,	'[]',	'[]',	240,	'2016-04-11 03:32:22',	'2016-04-11 03:32:22'),
+(319,	153,	'App\\Models\\Catalog',	'images',	'Catalog-153-trskapng',	'Catalog-153-trskapng.png',	'media',	56276,	'[]',	'[]',	241,	'2016-04-11 03:33:22',	'2016-04-11 03:33:22'),
+(320,	167,	'App\\Models\\Catalog',	'images',	'Catalog-167-trskapng',	'Catalog-167-trskapng.png',	'media',	56276,	'[]',	'[]',	242,	'2016-04-11 03:33:29',	'2016-04-11 03:33:29'),
+(321,	168,	'App\\Models\\Catalog',	'images',	'Catalog-168-trskapng',	'Catalog-168-trskapng.png',	'media',	56276,	'[]',	'[]',	243,	'2016-04-11 03:33:35',	'2016-04-11 03:33:35'),
+(322,	169,	'App\\Models\\Catalog',	'images',	'Catalog-169-trskapng',	'Catalog-169-trskapng.png',	'media',	56276,	'[]',	'[]',	244,	'2016-04-11 03:33:41',	'2016-04-11 03:33:41');
 
 DROP TABLE IF EXISTS `menu`;
 CREATE TABLE `menu` (
@@ -694,9 +703,6 @@ CREATE TABLE `seo` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `seo` (`id`, `seo_title`, `seo_description`, `seo_keywords`, `id_connect`, `url_connect`, `type_connect`, `created_at`, `updated_at`) VALUES
-(29,	'tess',	'',	'',	1,	NULL,	'page',	'2016-01-11 05:36:02',	'2016-01-11 05:36:02'),
-(30,	'Доставка. Тарифы на доставку грузов авто-рефрижераторами (22 т.) по России',	'',	'',	25,	NULL,	'page',	'2016-03-21 03:18:26',	'2016-03-21 03:18:26');
 
 DROP TABLE IF EXISTS `templates`;
 CREATE TABLE `templates` (
@@ -883,7 +889,26 @@ INSERT INTO `templates` (`id`, `template`, `template_global`, `type_connect`, `i
 (183,	'Template1',	'Template1',	'catalog',	204,	'2016-04-07 04:48:14',	'2016-04-07 04:48:14'),
 (184,	'Template1',	'Template1',	'category',	308,	'2016-04-07 04:50:29',	'2016-04-07 04:50:29'),
 (185,	'',	'',	'',	4,	'2016-04-08 06:24:56',	'2016-04-08 06:24:56'),
-(186,	'Template1',	'Template1',	'blocks',	4,	'2016-04-08 06:25:42',	'2016-04-08 06:25:42');
+(186,	'Template1',	'Template1',	'blocks',	4,	'2016-04-08 06:25:42',	'2016-04-08 06:25:42'),
+(187,	'Template1',	'Template1',	'category',	302,	'2016-04-11 03:32:26',	'2016-04-11 03:32:26'),
+(188,	'',	'',	'',	11,	'2016-04-11 03:35:53',	'2016-04-11 03:35:53'),
+(189,	'Template1',	'Template1',	'feed',	11,	'2016-04-11 03:36:21',	'2016-04-11 03:36:21'),
+(190,	'',	'',	'',	12,	'2016-04-11 03:36:48',	'2016-04-11 03:36:48'),
+(191,	'Template1',	'Template1',	'feed',	12,	'2016-04-11 03:37:30',	'2016-04-11 03:37:30'),
+(192,	'',	'',	'',	13,	'2016-04-11 03:37:35',	'2016-04-11 03:37:35'),
+(193,	'Template1',	'Template1',	'feed',	13,	'2016-04-11 03:37:59',	'2016-04-11 03:37:59'),
+(194,	'',	'',	'',	14,	'2016-04-11 03:38:54',	'2016-04-11 03:38:54'),
+(195,	'Template1',	'Template1',	'feed',	14,	'2016-04-11 03:43:25',	'2016-04-11 03:43:25'),
+(196,	'',	'',	'',	15,	'2016-04-11 03:43:40',	'2016-04-11 03:43:40'),
+(197,	'Template1',	'Template1',	'feed',	15,	'2016-04-11 03:45:05',	'2016-04-11 03:45:05'),
+(198,	'',	'',	'',	16,	'2016-04-11 03:45:12',	'2016-04-11 03:45:12'),
+(199,	'Template1',	'Template1',	'feed',	16,	'2016-04-11 03:45:41',	'2016-04-11 03:45:41'),
+(200,	'',	'',	'',	17,	'2016-04-11 03:45:49',	'2016-04-11 03:45:49'),
+(201,	'Template1',	'Template1',	'feed',	17,	'2016-04-11 03:46:24',	'2016-04-11 03:46:24'),
+(202,	'',	'',	'',	18,	'2016-04-11 03:46:31',	'2016-04-11 03:46:31'),
+(203,	'Template1',	'Template1',	'feed',	18,	'2016-04-11 03:46:45',	'2016-04-11 03:46:45'),
+(204,	'',	'',	'',	19,	'2016-04-11 03:46:50',	'2016-04-11 03:46:50'),
+(205,	'Template1',	'Template1',	'feed',	19,	'2016-04-11 03:47:28',	'2016-04-11 03:47:28');
 
 DROP TABLE IF EXISTS `throttle`;
 CREATE TABLE `throttle` (
@@ -936,4 +961,4 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `email`, `password`, `permissions`, `last_login`, `first_name`, `last_name`, `created_at`, `updated_at`, `remember_token`) VALUES
 (1,	'fanamurov@ya.ru',	'$2y$10$SJzDIVLhyCdzOMxfnqAADOCoyzVgjwjmBlYaVWQlikchTd67mWPRa',	NULL,	'2016-03-17 06:51:06',	'4234',	'',	'2015-11-19 15:41:49',	'2016-03-24 02:22:14',	'FQqU3jVvLEBaAZfnTXA3Vk2o1l201QE87omXJjkqnFXbFfVQoz1rA6ufauFr');
 
--- 2016-04-08 07:20:00
+-- 2016-04-11 05:00:58

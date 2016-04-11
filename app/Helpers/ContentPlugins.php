@@ -111,6 +111,8 @@ class ContentPlugins implements ContentPluginsInterface
 		}
 		if(Request::get('seo_title', '') !== ''){
 			$seo->fill(Request::all())->save();
+		}else{
+			$seo->delete();
 		}
 	}
 

@@ -18,7 +18,8 @@ class Kernel extends HttpKernel
         \Illuminate\Session\Middleware\StartSession::class,
         \Illuminate\View\Middleware\ShareErrorsFromSession::class,
         \App\Http\Middleware\VerifyCsrfToken::class,
-		\App\Http\Middleware\BeforeLoaderModulesGlobal::class
+		\App\Http\Middleware\BeforeLoaderModulesGlobal::class,
+		\App\Http\Middleware\GetSeo::class
     ];
 
     /**
@@ -33,6 +34,7 @@ class Kernel extends HttpKernel
 		'role' => \App\Http\Middleware\VerifyRole::class,
 		'permission' => \App\Http\Middleware\VerifyPermission::class,
 		'level' => \App\Http\Middleware\VerifyLevel::class,
-		'loaderModules' => \App\Http\Middleware\BeforeLoaderModulesGlobal::class
+		'loaderModules' => \App\Http\Middleware\BeforeLoaderModulesGlobal::class,
+		'getSeo' => \App\Http\Middleware\GetSeo::class
     ];
 }

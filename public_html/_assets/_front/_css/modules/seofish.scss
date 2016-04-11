@@ -5,6 +5,14 @@
 	line-height: 50px;
 	margin-bottom: 35px;
   }
+  .block-seofish-item{
+	margin-bottom: 45px;
+	> h4{
+	  font-weight: 600;
+	  font-size: 20px;
+	  line-height: 22px;
+	}
+  }
   .block-seofish-col{
 	&:nth-child(2n+1){
 	  padding-left: 30px;
@@ -12,10 +20,8 @@
 	&:nth-child(2n){
 	  padding-right: 30px;
 	}
-	> h4{
-	  font-weight: 600;
-	  font-size: 20px;
-	  line-height: 22px;
+	.block-seofish-item:last-child{
+	  margin-bottom: 0;
 	}
   }
 }

@@ -1,4 +1,5 @@
-/vendor
+/vendor/*
+!/vendor/autoload.php
 /node_modules
 Homestead.yaml
 Homestead.json

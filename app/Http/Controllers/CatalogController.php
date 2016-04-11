@@ -3,31 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Modules\ListCatalog;
-use App\Models\Blocks;
 use App\Models\Catalog;
 use App\Models\Category;
 use App\Models\Feed;
-use App\Models\Menu;
 use Breadcrumbs;
 use Cache;
 use Cookie;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Input;
-use URL;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 
 class CatalogController extends Controller
 {
 	protected $config;
+	protected $seo;
 
 	public function __construct()
 	{
 		$this->config = \Config::get('components.catalog');
 		\View::share('config_app', $this->config);
 		$this->middleware('loaderModules');
+		$this->middleware('getSeo');
 
 		Breadcrumbs::register('catalog.index', function($breadcrumbs)
 		{
@@ -62,7 +59,7 @@ class CatalogController extends Controller
 			'query' => $request->query(),
 		]);
 
-		$data['seo']['title'] = 'Все товары каталога';
+		$data['seo']['title'] = 'Вся рыбная продукция';
 
 		return view('front.catalog.items-all', $data);
 	}
@@ -74,13 +71,13 @@ class CatalogController extends Controller
 		});
 		\View::share('seofish', $seofish);
 
-		$data = Cache::remember('getTovars_main', 60, function()
+		$data = Cache::remember('getTovars_main', 60, function() use ($seofish)
 		{
 			$data['data'] = Category::whereType('catalog')->whereLevel(1)->whereActive(1)->with('get_parent')->orderBy('position', 'DESC')->get();
 			foreach($data['data'] as $key => $value){
 				$data['data'][$key]['image'] = $value->getFirstMediaUrl('images');
 			}
-			$data['seo']['title'] = 'Оптовая продажа дальневосточной рыбной продукции';
+			$data['seo']['title'] = $seofish->first()->title . $this->seo['postfix_global'];
 			return $data;
 		});
 
@@ -135,8 +132,6 @@ class CatalogController extends Controller
 			return $data['data']->getMedia('images')->sortByDesc('order_column');
 		});
 
-		$data['seo']['title'] = 'SEO title getCategory';
-
 		return view('front.catalog.categorysListChilds', $data);
 	}
 
@@ -184,12 +179,6 @@ class CatalogController extends Controller
 				'path'  => $request->url(),
 				'query' => $request->query(),
 		]);
-
-		if($data['data']->get_seo){
-			$data['seo']['title'] = $data['data']->get_seo->title;
-		}else{
-			$data['seo']['title'] = $data['data']->title;
-		}
 
 		//Модуль списка разделов справа
 		$data['module_listCatalog'] = $module_listCatalog;

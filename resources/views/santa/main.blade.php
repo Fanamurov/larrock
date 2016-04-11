@@ -67,7 +67,9 @@
                 @endif
                 @yield('rightColomn')
                 @include('santa.modules.list.vidy')
-                @include('santa.modules.list.strany')
+                @if(isset($module_strany))
+                    @include('santa.modules.list.strany')
+                @endif
             </div>
         </section>
         <div class="col-xs-24 col-sm-17">

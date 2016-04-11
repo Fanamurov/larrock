@@ -22,6 +22,7 @@ class SletatController extends Controller
         {
             $breadcrumbs->push('Каталог туров');
         });
+		$this->middleware('loaderModules');
     }
 
     /**

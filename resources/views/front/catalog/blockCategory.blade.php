@@ -4,7 +4,7 @@
             <a class="admin_edit" href="/admin/category/{{ $data->id }}/edit">Edit element</a>
         @endlevel
         @if($data->image)
-            <img src="{{ $data->image }}" class="categoryImage">
+            <img src="{{ $data->image->getUrl() }}" class="categoryImage">
         @else
             <img src="/_assets/_front/_images/empty_big.png" width="125" alt="Нет фото" class="categoryImage categoryImage-empty">
         @endif

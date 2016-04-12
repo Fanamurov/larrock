@@ -9,6 +9,7 @@ use App\Models\Feed;
 use Breadcrumbs;
 use Cache;
 use Cookie;
+use Illuminate\Cookie\CookieJar;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -75,9 +76,9 @@ class CatalogController extends Controller
 		{
 			$data['data'] = Category::whereType('catalog')->whereLevel(1)->whereActive(1)->with('get_parent')->orderBy('position', 'DESC')->get();
 			foreach($data['data'] as $key => $value){
-				$data['data'][$key]['image'] = $value->getFirstMediaUrl('images');
+				$data['data'][$key]['image'] = $value->getMedia('images')->sortByDesc('order_column')->first();
 			}
-			$data['seo']['title'] = $seofish->first()->title . $this->seo['postfix_global'];
+			$data['seo']['title'] = $seofish->first()->title;
 			return $data;
 		});
 

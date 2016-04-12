@@ -169,6 +169,14 @@ a, .link{
   }
 }
 
+.promo_text{
+  font-family: Lobster, sans-serif;
+  color: #f54811;
+  font-size: 30px;
+  line-height: 38px;
+  margin-bottom: 30px;
+}
+
 @import "sections/header";
 @import "sections/footer";
 @import "sections/rightColomn";

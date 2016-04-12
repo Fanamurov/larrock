@@ -88,7 +88,7 @@ class Catalog extends Model implements HasMediaConversions
 
     protected $table = 'catalog';
 
-	protected $fillable = ['title', 'short', 'description', 'url', 'position', 'active', 'what', 'cost', 'cost_old',
+	protected $fillable = ['title', 'short', 'description', 'url', 'position', 'active', 'what', 'cost', 'cost_old', 'cost_promo',
 		'manufacture', 'articul', 'nalicie', 'vid_raz', 'razmer', 'weight', 'vid_up', 'date_vilov', 'sertifikacia', 'mesto', 'min_part'];
 
 	protected $casts = [

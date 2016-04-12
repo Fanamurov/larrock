@@ -22,11 +22,14 @@ class CartController extends Controller
     public function getIndex()
 	{
 		$cart = Cart::content();
+		foreach($cart as $key => $item){
+			$cart[$key]['image'] = $item->catalog->getMedia('images')->sortByDesc('order_column')->first();
+		}
 		if(Cart::count() === 0){
-			\Alert::add('message', 'Ваша корзина пуста');
+			Alert::add('message', 'Ваша корзина пуста');
 			return redirect('/');
 		}
-		$seo = ['title' => 'Cart page'];
+		$seo = ['title' => 'Корзина товаров. Оформление заявки'];
 		return view('front.cart.table', compact('cart', 'seo', ['cart', 'seo']));
 	}
 

@@ -28,6 +28,7 @@
                         <th>URL</th>
                         @if($data->get_tovars)
                             <th width="90">Цена</th>
+                            <th width="90">Цена промо</th>
                         @endif
                         <th width="90">Порядок</th>
                         <th width="93"></th>
@@ -62,6 +63,7 @@
                             <th>URL</th>
                             @if($data->get_tovars)
                                 <th width="90">Цена</th>
+                                <th width="90">Цена промо</th>
                             @endif
                             <th width="90">Порядок</th>
                             <th width="93"></th>

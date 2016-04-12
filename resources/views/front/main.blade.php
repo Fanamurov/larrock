@@ -43,6 +43,11 @@
         <div class="col-xs-17">
             <div class="col-xs-22 col-xs-offset-1">
                 @include('front.errors')
+                @if(isset($promo_text))
+                    @if(Cookie::has('promo') OR Session::has('promo'))
+                        <div class="promo_text">{!! $promo_text->description !!}</div>
+                    @endif
+                @endif
                 @yield('content')
                 @if(isset($seofish))
                     @include('front.modules.seofish.item')
@@ -91,6 +96,8 @@
 </script>
 <script src="{{asset('_assets/_front/_js/front_core.min.js')}}"></script>
 
+<script src="http://callibri.ru/api/module/js/v1/callibri.js" type="text/javascript"></script>
+
 <!-- Laravel Javascript Validation -->
 <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
 @if(isset($validator)) {!! $validator !!} @endif
@@ -103,5 +110,47 @@
 @yield('scripts')
 <script src="/_assets/bower_components/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="/_assets/bower_components/jquery-validation/dist/additional-methods.min.js"></script>
+
+@if(App::environment() !== 'local')
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function (d, w, c) {
+            (w[c] = w[c] || []).push(function() {
+                try {
+                    w.yaCounter36722575 = new Ya.Metrika({
+                        id:36722575,
+                        clickmap:true,
+                        trackLinks:true,
+                        accurateTrackBounce:true,
+                        webvisor:true
+                    });
+                } catch(e) { }
+            });
+
+            var n = d.getElementsByTagName("script")[0],
+                    s = d.createElement("script"),
+                    f = function () { n.parentNode.insertBefore(s, n); };
+            s.type = "text/javascript";
+            s.async = true;
+            s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+            if (w.opera == "[object Opera]") {
+                d.addEventListener("DOMContentLoaded", f, false);
+            } else { f(); }
+        })(document, window, "yandex_metrika_callbacks");
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/36722575" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-76288518-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+@endif
 </body>
 </html>

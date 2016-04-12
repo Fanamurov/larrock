@@ -19,10 +19,10 @@
             @foreach($cart as $row)
                 <tr data-rowid="{{ $row->rowid }}">
                     <td>
-                        @if( !$image = $row->catalog->getFirstMediaUrl('images', '110x110'))
-                            <img src="/_assets/_front/_images/empty_big.png" alt="Not Photo" width="50">
+                        @if($row->image)
+                            <img src="{{ $row->image->getUrl() }}" alt="{{ $row->name }}" width="50">
                         @else
-                            <img src="{{ $image }}" alt="{{ $row->name }}" width="50">
+                            <img src="/_assets/_front/_images/empty_big.png" alt="Not Photo" width="50">
                         @endif
                     </td>
                     <td>

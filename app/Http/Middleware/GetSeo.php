@@ -20,14 +20,23 @@ class GetSeo
      */
     public function handle($request, Closure $next)
     {
-		$get_seo = Seo::whereTypeConnect('custom_main')->first();
-		$this->seo['postfix_global'] = $get_seo->seo_title;
+		if($get_seo = Seo::whereTypeConnect('custom_main')->first()){
+			$this->seo['postfix_global'] = '. '. $get_seo->seo_title;
+		}else{
+			$this->seo['postfix_global'] = '';
+		}
 
-		$get_seo = Seo::whereTypeConnect('catalog_category_postfix')->first();
-		$this->seo['catalog_category_postfix'] = $get_seo->seo_title;
+		if($get_seo = Seo::whereTypeConnect('catalog_category_postfix')->first()){
+			$this->seo['catalog_category_postfix'] = ' '. $get_seo->seo_title;
+		}else{
+			$this->seo['catalog_category_postfix'] = '';
+		}
 
-		$get_seo = Seo::whereTypeConnect('catalog_category_prefix')->first();
-		$this->seo['catalog_category_prefix'] = $get_seo->seo_title;
+		if($get_seo = Seo::whereTypeConnect('catalog_category_prefix')->first()){
+			$this->seo['catalog_category_prefix'] = $get_seo->seo_title .' ';
+		}else{
+			$this->seo['catalog_category_prefix'] = '';
+		}
 
 		/*$current_url = URL::current();
 		$parse_url = parse_url($current_url);

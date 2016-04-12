@@ -102,7 +102,28 @@
 	  }
 	}
   }
-  .add_to_cart{
+  .cost_old{
+	position: relative;
+	text-align: center;
+	width: 81%;
+	z-index: 2;
+	margin-top: -31px;
+	top: -18px;
+	span{
+	  font-family: 'Open Sans Condensed', sans-serif;
+	  line-height: 30px;
+	  font-size: 22px;
+	  font-weight: 500;
+	  font-style: italic;
+	  text-shadow: none;
+	  text-decoration: line-through;
+	}
+  }
+  .cost_promo{
+	color: #b02300;
+  }
+  .add_to_cart,
+  .add_to_cart_fast{
 	position: absolute;
 	top: 5px;
 	right: 40px;

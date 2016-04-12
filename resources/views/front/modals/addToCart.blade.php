@@ -9,8 +9,8 @@
                 <form id="ModalToCart-form">
                     <div class="row">
                         <div class="col-xs-10">
-                            @if($data->image_url)
-                                <img src="{{ $data->image_url }}" alt="Фото товара" class="item-photo all-width">
+                            @if($data->image->getUrl())
+                                <img src="{{ $data->image->getUrl() }}" alt="Фото товара" class="item-photo all-width">
                             @else
                                 <img src="/_assets/_front/_images/empty_big.png" alt="Фото товара" class="item-photo all-width">
                             @endif
@@ -32,6 +32,16 @@
                                        value="@if($data->min_part){{ $data->min_part*1000 }}@else 1 @endif">
                                 <span class="input-group-addon addon-what">кг</span>
                             </div>
+                            <br/>
+                            <div class="total_cost">
+                                <p><strong>Итого:</strong>
+                                    @if(Cookie::has('promo') AND $data->cost_promo > 0)
+                                        <span class="cost" data-cost="{{ $data->cost_promo }}">{{ $data->min_part*1000*$data->cost_promo }}</span> руб.
+                                    @else
+                                        <span class="cost" data-cost="{{ $data->cost }}">{{ $data->min_part*1000*$data->cost }}</span> руб.
+                                    @endif
+                                </p>
+                            </div>
                             <div class="pull-right modal-buttons">
                                 <input type="hidden" name="_token" value="{{csrf_token()}}">
                                 <button type="button" class="btn btn-default submit_to_cart" data-id="{{ $data->id }}">← Продолжить выбор</button>
@@ -46,5 +56,6 @@
 </div>
 <script>
     submit_to_cart();
-    valid_modal_cart(@if($data->min_part) {{$data->min_part*1000}} @else 1 @endif)
+    rebuild_cost();
+    valid_modal_cart(@if($data->min_part) {{$data->min_part*1000}} @else 1 @endif);
 </script>

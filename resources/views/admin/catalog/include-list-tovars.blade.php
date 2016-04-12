@@ -24,6 +24,10 @@
             <input type="text" name="cost" value="{{ $data_value->cost }}" class="ajax_edit_row form-control"
                    data-row_where="id" data-value_where="{{ $data_value->id }}" data-table="catalog">
         </td>
+        <td>
+            <input type="text" name="cost_promo" value="{{ $data_value->cost_promo }}" class="ajax_edit_row form-control"
+                   data-row_where="id" data-value_where="{{ $data_value->id }}" data-table="catalog">
+        </td>
         <td class="row-position">
             <input type="text" name="position" value="{{ $data_value->position }}" class="ajax_edit_row form-control"
                    data-row_where="id" data-value_where="{{ $data_value->id }}" data-table="catalog"

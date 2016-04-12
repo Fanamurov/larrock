@@ -44,6 +44,12 @@ return [
 			'tab' => ['main' => 'Описание товара'],
 			'css_class_group' => 'col-xs-4 col-md-2'
 		],
+		'cost_promo' => [
+			'title' => 'Промо цена',
+			'type' => 'text',
+			'tab' => ['main' => 'Описание товара'],
+			'css_class_group' => 'col-xs-4 col-md-2'
+		],
 		'cost_old' => [
 			'title' => 'Старая цена',
 			'type' => 'text',

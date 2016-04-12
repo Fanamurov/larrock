@@ -35,7 +35,8 @@ class Forms extends Controller
 		}else{
 			Alert::add('danger', 'Форма не отправлена')->flash();
 		}
-		return back();
+		return view('front.thanks.order');
+		//return back();
 	}
 
 	public function send_formGetPrice(Request $request)
@@ -55,6 +56,7 @@ class Forms extends Controller
 		}else{
 			Alert::add('danger', 'Форма не отправлена')->flash();
 		}
-		return back();
+		return view('front.thanks.getPrice');
+		//return back();
 	}
 }

@@ -8,6 +8,7 @@ use Cookie;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Session;
 
 class Ajax extends Controller
 {
@@ -15,6 +16,7 @@ class Ajax extends Controller
 	{
 		$response = new \Illuminate\Http\Response('perPage');
 		$response->withCookie(cookie('perPage', $request->get('q'), 45000));
+		Session::flash('perPage', $request->get('p'));
 		return $response;
 	}
 
@@ -22,6 +24,7 @@ class Ajax extends Controller
 	{
 		$response = new \Illuminate\Http\Response('sort');
 		$response->withCookie(cookie('sort_'. $request->get('type'), $request->get('q'), 45000));
+		Session::flash('sort_'. $request->get('type'), $request->get('q'));
 		return $response;
 	}
 
@@ -29,14 +32,16 @@ class Ajax extends Controller
 	{
 		$response = new \Illuminate\Http\Response('vid');
 		$response->withCookie(cookie('vid', $request->get('q', 'cards'), 45000));
+		Session::flash('vid', $request->get('q', 'cards'));
 		return $response;
 	}
 
 	public function getTovar(Request $request)
 	{
 		if($get_tovar = Catalog::whereId($request->get('id'))->with(['get_category'])->first()){
-			if($image_url = $get_tovar->getFirstMediaUrl('images')){
-				$get_tovar['image_url'] = $image_url;
+			if($image_url = $get_tovar->getMedia('images')->sortByDesc('order_column')->first()){
+				/** @noinspection OffsetOperationsInspection */
+				$get_tovar['image'] = $image_url;
 			}
 			if($request->get('in_template') === 'true'){
 				return view('front.modals.addToCart', ['data' => $get_tovar, 'config_app' => \Config::get('components.catalog')]);
@@ -60,7 +65,18 @@ class Ajax extends Controller
 	public function cartAdd(Request $request)
 	{
 		$get_tovar = Catalog::whereId($request->get('id'))->firstOrFail();
-		Cart::associate('Catalog', 'App\Models')->add($request->get('id'), $get_tovar->title, $request->get('qty', 1), $get_tovar->cost);
+		if($get_tovar->min_part > 0){
+			$qty = $get_tovar->min_part*1000; //ONLY FISHER-DV
+		}else{
+			$qty = $request->get('qty', 1);
+		}
+		if(Cookie::has('promo') AND $get_tovar->cost_promo > 0){
+			/** @noinspection PhpVoidFunctionResultUsedInspection */
+			Cart::associate('Catalog', 'App\Models')->add($request->get('id'), $get_tovar->title, $qty, $get_tovar->cost_promo);
+		}else{
+			/** @noinspection PhpVoidFunctionResultUsedInspection */
+			Cart::associate('Catalog', 'App\Models')->add($request->get('id'), $get_tovar->title, $qty, $get_tovar->cost);
+		}
 		return response(Cart::total());
 	}
 

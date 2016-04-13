@@ -2,6 +2,8 @@
 
 namespace App\Helpers;
 
+use Cache;
+
 class Forecast{
 
     protected $xml_url;
@@ -18,7 +20,14 @@ class Forecast{
 
     public function parse()
     {
-        $xml = simplexml_load_file($this->xml_url); // раскладываем xml на массив
-        return $xml->location;
+        $xml = Cache::remember(sha1('forecast'. $this->xml_url), 60*22, function() {
+            $xml = simplexml_load_file($this->xml_url); // раскладываем xml на массив
+            if(isset($xml->location)){
+                return json_encode($xml->location);
+            }else{
+                return NULL;
+            }
+        });
+        return json_decode($xml, true);
     }
 }

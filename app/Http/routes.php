@@ -125,7 +125,6 @@ Route::post('/forms/contact', [
 	'as' => 'submit.contacts', 'uses' => 'Modules\Forms@send_form'
 ]);
 
-
 // Authentication routes...
 Route::auth();
 

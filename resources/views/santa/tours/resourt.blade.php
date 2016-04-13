@@ -38,10 +38,10 @@
             @endif
         </div>
         <div class="toursPageCountry-short row">
-            <div class="col-sm-12">
-                WEATHER
+            <div class="col-sm-9">
+                @include('santa.modules.forecast.forecast')
             </div>
-            <div class="col-sm-12">
+            <div class="col-sm-15">
                 {!! $data->short !!}
             </div>
         </div>

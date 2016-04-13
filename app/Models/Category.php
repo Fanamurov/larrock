@@ -58,7 +58,7 @@ class Category extends Model implements HasMediaConversions
 
     protected $table = 'category';
 
-	protected $fillable = ['title', 'short', 'description', 'type', 'parent', 'level', 'url', 'sitemap', 'position', 'active'];
+	protected $fillable = ['title', 'short', 'description', 'type', 'parent', 'level', 'forecast_url', 'url', 'sitemap', 'position', 'active'];
 
 	protected $casts = [
 		'position' => 'integer',

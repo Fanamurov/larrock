@@ -7,12 +7,14 @@ use App\Models\Category;
 use App\Models\Tours;
 use Breadcrumbs;
 use Cache;
+use Carbon\Carbon;
 use Cookie;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use App\Helpers\Sletat;
+use App\Helpers\Forecast;
 
 class ToursController extends Controller
 {
@@ -106,7 +108,7 @@ class ToursController extends Controller
 		return view('santa.tours.categorysListChilds', $data);
 	}
 
-	public function getCategory(Sletat $sletat, Request $request, $category, $child = NULL, $grandson = NULL)
+	public function getCategory(Sletat $sletat, Request $request, Forecast $forecast, $category, $child = NULL, $grandson = NULL)
 	{
 		//Смотрим какой раздел выбираем для работы
 		//Первый уровень: /Раздел
@@ -126,7 +128,7 @@ class ToursController extends Controller
 
 		//Редирект на страну
 		if($data['data']->parent === 308){
-			return $this->getCountry($select_category, $sletat);
+			return $this->getCountry($select_category, $sletat, $forecast);
 		}
 
 		Breadcrumbs::register('tours.category', function($breadcrumbs, $data)
@@ -158,7 +160,7 @@ class ToursController extends Controller
 		return view('santa.tours.categorysListChilds', $data);
 	}
 
-	public function getCountry($category, Sletat $sletat)
+	public function getCountry($category, Sletat $sletat, Forecast $forecast)
 	{
 		$data['data'] = Category::whereType('tours')->whereActive(1)->whereUrl($category)->with(['get_toursActive', 'get_childActive'])->first();
 
@@ -178,6 +180,8 @@ class ToursController extends Controller
             }
         }
 
+        $data['forecast'] = $forecast->render($data['data']->forecast_url);
+
 		Breadcrumbs::register('tours.category', function($breadcrumbs, $data)
 		{
 			$breadcrumbs->parent('tours.index');
@@ -195,7 +199,7 @@ class ToursController extends Controller
 		return view('santa.tours.country', $data);
 	}
 
-	public function getResourt($category, $item, Sletat $sletat)
+	public function getResourt($category, $item, Sletat $sletat, Forecast $forecast)
 	{
 		$data['data'] = Category::whereType('tours')->whereActive(1)->whereUrl($item)->with(['get_toursActive', 'get_childActive'])->first();
 
@@ -217,6 +221,8 @@ class ToursController extends Controller
                 Cache::forget('best_cost'. $data['data']->id);
             }
         }
+
+        $data['forecast'] = $forecast->render($data['data']->forecast_url);
 
 		Breadcrumbs::register('tours.category', function($breadcrumbs, $data)
 		{

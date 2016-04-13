@@ -38,45 +38,11 @@ return [
 			'tab' => ['seo' => 'Seo'],
 			'valid' => 'max:155|required|unique:catalog,url,:id'
 		],
-		'cost' => [
-			'title' => 'Цена',
+		'forecast_url' => [
+			'title' => 'URL прогноза погоды (http://api.pogoda.com/)',
 			'type' => 'text',
-			'tab' => ['main' => 'Описание товара'],
-			'css_class_group' => 'col-xs-4 col-md-2'
+			'tab' => ['other' => 'Дополнительные поля']
 		],
-		'cost_old' => [
-			'title' => 'Старая цена',
-			'type' => 'text',
-			'tab' => ['main' => 'Описание товара'],
-			'css_class_group' => 'col-xs-4 col-md-2'
-		],
-		'what' => [
-			'title' => 'Мера измерений',
-			'type' => 'select_row',
-			'options_connect' => ['row' => 'what', 'table' => 'tours', 'selected_search' => 'value'],
-			'tab' => ['main' => 'Описание товара'],
-			'valid' => 'max:55|required',
-			'css_class_group' => 'col-xs-3'
-		],
-
-		'manufacture' => [
-			'title' => 'Производитель',
-			'type' => 'text',
-			'tab' => ['other' => 'Дополнительные поля'],
-		],
-		'articul' => [
-			'title' => 'Артикул',
-			'type' => 'text',
-			'tab' => ['other' => 'Дополнительные поля'],
-			'valid' => 'max:255'
-		],
-		/*'nalichie' => [
-			'title' => 'В наличии',
-			'type' => 'text',
-			'tab' => ['other' => 'Дополнительные поля'],
-			'valid' => 'required|integer',
-			'default' => 999999
-		],*/
 		'position' => [
 			'title' => 'Вес материала',
 			'type' => 'text',
@@ -95,7 +61,6 @@ return [
 	],
 	'menu_category' => 'tours',
 	'admin_menu' => ['type' => 'category_list'],
-	//'admin_menu_push' => ['Wizard' => '/admin/wizard'],
 	'settings' => [],
 	'plugins_backend' => ['seo', 'images', 'files', 'templates'],
 	'plugins_front' => [],

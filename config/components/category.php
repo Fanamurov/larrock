@@ -42,6 +42,11 @@ return [
 			'type' => 'hidden',
 			'tab' => ['main' => 'Заголовок, описание'],
 		],
+        'forecast_url' => [
+            'title' => 'URL прогноза погоды (http://api.pogoda.com/)',
+            'type' => 'text',
+            'tab' => ['other' => 'Дополнительные поля']
+        ],
 		'sitemap' => [
 			'title' => 'Публиковать ли раздел в sitemap',
 			'type' => 'text',

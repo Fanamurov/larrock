@@ -8,6 +8,7 @@
                 <h1 class="inline">Управление пользователями</h1>
                 <div class="add-panel">
                     <a class="btn btn-info pull-right" href="/admin/users/create">Добавить пользователя</a>
+                    <a class="btn btn-info pull-right" href="{{ action('Admin\AdminRolesController@index') }}">Управление ролями</a>
                 </div>
             </div>
         </div>

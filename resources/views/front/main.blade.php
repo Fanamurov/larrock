@@ -8,6 +8,8 @@
     <title>@yield('title')</title>
     <meta name="description" content="@yield('title')">
     <meta name="author" content="MartDS">
+    <meta name="google-site-verification" content="ExmhHkwG1EdndOL-gSv-gs7IYIPYc8uuoBmoHYzw2eU" />
+    <meta name='wmail-verification' content='6003fe329c67370d0606b8f64fabc224' />
 
     <link href="{{asset('ico.png?6v')}}" rel="shortcut icon" />
     <link rel="stylesheet" href="{{asset('_assets/_front/_css/min/bootstrap.min.css')}}"/>
@@ -151,6 +153,32 @@
         ga('send', 'pageview');
 
     </script>
+<!-- Код тега ремаркетинга Google -->
+<!--------------------------------------------------
+С помощью тега ремаркетинга запрещается собирать информацию, по которой можно идентифицировать личность пользователя. Также запрещается размещать тег на страницах с контентом деликатного характера. Подробнее об этих требованиях и о настройке тега читайте на странице http://google.com/ads/remarketingsetup.
+--------------------------------------------------->
+<script type="text/javascript">
+    var google_tag_params = {
+        dynx_itemid: 'REPLACE_WITH_VALUE',
+        dynx_itemid2: 'REPLACE_WITH_VALUE',
+        dynx_pagetype: 'REPLACE_WITH_VALUE',
+        dynx_totalvalue: 'REPLACE_WITH_VALUE',
+    };
+</script>
+<script type="text/javascript">
+    /* <![CDATA[ */
+    var google_conversion_id = 925856723;
+    var google_custom_params = window.google_tag_params;
+    var google_remarketing_only = true;
+    /* ]]> */
+</script>
+<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+    <div style="display:inline;">
+        <img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/925856723/?value=0&amp;guid=ON&amp;script=0"/>
+    </div>
+</noscript>
 @endif
 </body>
 </html>

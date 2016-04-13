@@ -1,4 +1,4 @@
-<form id="form-getPrice" class="form-contact" method="post" action="/forms/contact">
+<form id="form-getPrice" class="form-contact" method="post" action="/forms/getPrice">
     <p class="h3 text-center">Запросить прайс</p>
     <div class="form-group">
         <input type="email" class="form-control" id="form-getPrice-email" placeholder="Введите ваш email" name="email">

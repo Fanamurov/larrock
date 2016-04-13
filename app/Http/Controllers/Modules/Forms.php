@@ -31,6 +31,7 @@ class Forms extends Controller
 		});
 		
 		if($send){
+			\Cart::destroy();
 			Alert::add('success', 'Форма отправлена')->flash();
 		}else{
 			Alert::add('danger', 'Форма не отправлена')->flash();

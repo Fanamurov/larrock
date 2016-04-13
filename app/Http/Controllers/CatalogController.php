@@ -43,9 +43,16 @@ class CatalogController extends Controller
 
 		$data['data'] = Cache::remember('getTovars_all', 60, function()
 		{
-			//Основной запрос для вывода
-			return Catalog::all();
+			return Catalog::where('catalog.active', '=', 1)->OrderByCategoryCost()->get();
 		});
+
+		/*foreach($data['data'] as $key => $value){
+			if($value->cost < 1){
+				$data['data'][] = $value;
+				unset($data['data'][$key]);
+			}
+		}*/
+
 		$data['module_listCatalog'] = $listCatalog->categories();
 		foreach($data['data'] as $key => $value){
 			$data['data'][$key]['images'] = $value->getMedia('images')->sortByDesc('order_column');
@@ -152,13 +159,14 @@ class CatalogController extends Controller
 			return Category::whereUrl($category)->whereActive(1)->with(
 				['get_tovarsActive' => function($query) use ($paginate){
 					//TODO: сортировки и фильтры
-					if(Cookie::get('sort_cost') === 'asc'){
+					/*if(Cookie::get('sort_cost') === 'asc'){
 						$query->orderBy('cost', 'asc')->paginate($paginate);
 					}elseif(Cookie::get('sort_cost') === 'desc'){
 						$query->orderBy('cost', 'desc')->paginate($paginate);
 					}else{
 						$query->paginate($paginate);
-					}
+					}*/
+					$query->orderBy('cost', 'asc')->paginate($paginate);
 				}, 'get_parent', 'get_seo']
 			)->first();
 		});

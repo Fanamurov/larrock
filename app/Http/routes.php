@@ -139,14 +139,6 @@ Route::group(['prefix' => 'admin', 'middleware'=>'level:2'], function(){
 
 	Route::get('cart', 'Admin\AdminCartController@index');
 
-	Route::get('/settings/image', 'Admin\AdminSettings\Image@index');
-	Route::post('/settings/image', 'Admin\AdminSettings\Image@store');
-	Route::post('/settings/image/generate', [
-		'as' => 'admin.image.generate', 'uses' => 'Admin\AdminSettings\Image@generate'
-	]);
-
-	Route::get('/blocks/MenuBlock', 'Admin\AdminBlocks\MenuBlock@index');
-
 	Route::get('/wizard', [
 		'as' => 'admin.wizard', 'uses' => 'Admin\AdminWizardController@aliases'
 	]);

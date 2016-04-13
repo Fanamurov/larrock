@@ -81,11 +81,11 @@ class AdminUsersController extends Controller
 			'password' => bcrypt($request->get('password')),
 		]);
 
-		$user = User::whereEmail($request->input('email'))->first();
-		if($user->attachRole((int) $request->get('role'))){
+		if($user = User::whereEmail($request->input('email'))->first()){
+			$user->attachRole((int) $request->get('role'));
 			Alert::add('success', 'Пользователь '. $request->input('email') .' успешно добавлен')->flash();
 		}else{
-			Alert::add('error', 'Пользователь '. $request->input('email') .' не был добавлен')->flash();
+			Alert::add('danger', 'Пользователь '. $request->input('email') .' не был добавлен')->flash();
 		}
 		return Redirect::to('/admin/users');
     }
@@ -136,7 +136,7 @@ class AdminUsersController extends Controller
 		if($user->update($submit)){
 			Alert::add('success', 'Пользователь изменен');
 		}else{
-			Alert::add('error', 'Не удалось изменить пользователя');
+			Alert::add('danger', 'Не удалось изменить пользователя');
 		}
 
 		return back()->withInput();
@@ -156,7 +156,7 @@ class AdminUsersController extends Controller
         if($user->delete()){
             Alert::add('success', 'Пользователь удален');
         }else{
-			Alert::add('error', 'Не удалось удалить пользователя');
+			Alert::add('danger', 'Не удалось удалить пользователя');
         }
         return Redirect::to('/admin/users');
     }

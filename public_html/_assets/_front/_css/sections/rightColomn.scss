@@ -22,8 +22,15 @@
   }
   .block-banner{
 	padding-top: 50px;
+	img{
+	  max-width: 100%;
+	  height: auto;
+	}
   }
   .btn-to-form{
 	margin-bottom: 15px;
+	@media (max-width: 1145px) {
+	  font-size: 17px;
+	}
   }
 }

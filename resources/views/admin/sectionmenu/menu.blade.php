@@ -29,15 +29,8 @@
                         </li>
                     @endif
                 @endforeach
-                <li class="dropdown @if(in_array('users', $current_uri)) active @endif">
-                    <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Пользователи <span class="caret"></span></a>
-                    <ul role="menu" class="dropdown-menu">
-                        <li><a href="{{ action('Admin\AdminUsersController@index') }}"><i class="fa fa-list"></i> Список пользователей</a></li>
-                        <li><a href="{{ action('Admin\AdminUsersController@create') }}"><i class="fa fa-plus"></i> Добавить пользователя</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="{{ action('Admin\AdminRolesController@index') }}"><i class="fa fa-list"></i> Список ролей</a></li>
-                        <li><a href="{{ action('Admin\AdminRolesController@create') }}"><i class="fa fa-plus"></i> Добавить роль</a></li>
-                    </ul>
+                <li @if(in_array('users', $current_uri)) class="active" @endif>
+                    <a href="{{ action('Admin\AdminUsersController@index') }}">Пользователи</a>
                 </li>
                 <li class="dropdown">
                     <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Настройки <span class="caret"></span></a>
@@ -45,24 +38,18 @@
                         <li><a href="{{ action('Admin\AdminSeoController@index') }}">Seo</a></li>
                         <li><a href="{{ action('Admin\AdminMenuController@index') }}">Меню сайта</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="#">Глобальные настройки</a></li>
-                        <li><a href="#">Компоненты</a></li>
-                        <li><a href="#">Модули</a></li>
-                        <li><a href="#">Блоки шаблона</a></li>
-                        <li><a href="{{ action('Admin\AdminSettings\Image@index') }}">Картинки</a></li>
-                        <li role="separator" class="divider"></li>
                         <li class="hovered">
-                            <a href="#" id="clear_cache"><i class="fa fa-trash-o"></i> Очистить кэш</a>
+                            <a href="#" id="clear_cache"><i class="glyphicon glyphicon-trash"></i> Очистить кэш</a>
                         </li>
                     </ul>
                 </li>
             </ul>
             <ul class="nav navbar-top-links navbar-right">
-                <li>
-                    <button type="button" class="btn btn-outline show-please" data-target="search-form" title="Поиск по сайту"><i class="fa fa-search"></i></button>
-                    <input type="text" class="form-control search-form hidden" placeholder="Поиск...">
+                <li class="hidden">
+                    <button type="button" class="btn btn-outline show-please" data-target="search-form" title="Поиск по сайту"><i class="glyphicon glyphicon-search"></i></button>
+                    <input type="text" class="form-control search-form" placeholder="Поиск...">
                 </li>
-                <li class="dropdown">
+                <li class="dropdown hidden">
                     <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Логи <span class="label label-warning label-outline">5</span></a>
                     <ul role="menu" class="dropdown-menu">
                         <li><a href="#">Не найдено <span class="label label-warning label-outline">5</span></a></li>
@@ -74,9 +61,7 @@
                     <a aria-expanded="false" role="button" href="/" target="_blank">К сайту</a>
                 </li>
                 <li>
-                    <a href="{{ url('/logout') }}">
-                        <i class="fa fa-sign-out"></i> Выйти
-                    </a>
+                    <a href="{{ url('/logout') }}">Выйти</a>
                 </li>
             </ul>
         </div>

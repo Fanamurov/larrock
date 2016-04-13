@@ -10,6 +10,8 @@
 	cursor: pointer;
 	display: inline-block;
 	float: left;
+	padding-left: 0;
+	padding-right: 0;
 	&:hover,
 	&:focus{
 	  //background: url("/_assets/_front/_images/bg/bg_tex.png") repeat -164px top transparent;
@@ -36,7 +38,6 @@
 	padding-bottom: 10px;
   }
   img.categoryImage{
-	width: 100%;
 	max-width: 100%;
 	box-shadow: none;
 	border-radius: inherit;

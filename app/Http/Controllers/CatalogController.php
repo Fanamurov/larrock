@@ -43,15 +43,17 @@ class CatalogController extends Controller
 
 		$data['data'] = Cache::remember('getTovars_all', 60, function()
 		{
-			return Catalog::where('catalog.active', '=', 1)->OrderByCategoryCost()->get();
-		});
+			$get_category = Category::type('catalog')->orderBy('position', 'desc')->with(['get_tovarsActive' => function($query){
+				return $query->orderBy('cost', 'asc');
+			}])->get();
 
-		/*foreach($data['data'] as $key => $value){
-			if($value->cost < 1){
-				$data['data'][] = $value;
-				unset($data['data'][$key]);
+			foreach($get_category as $key => $value){
+				foreach($value->get_tovarsActive as $key_tovar => $value_tovar){
+					$get_category[$key]->get_tovarsActive[$key_tovar]['images'] = $value_tovar->getMedia('images')->sortByDesc('order_column');
+				}
 			}
-		}*/
+			return $get_category;
+		});
 
 		$data['module_listCatalog'] = $listCatalog->categories();
 		foreach($data['data'] as $key => $value){

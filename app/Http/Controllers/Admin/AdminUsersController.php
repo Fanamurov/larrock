@@ -12,11 +12,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use JsValidator;
-use Lang;
 use Route;
 use Validator;
 use Input;
-use Session;
 use Redirect;
 use View;
 

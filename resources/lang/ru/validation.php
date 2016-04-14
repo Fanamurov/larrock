@@ -114,4 +114,5 @@ return [
     |
     */
     'attributes' => [],
+	'recaptcha' => ':attribute указана не верно',
 ];

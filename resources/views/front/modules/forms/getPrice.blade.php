@@ -7,3 +7,4 @@
     <button type="submit" class="btn btn-default pull-right" name="submit_contact">Запросить прайс</button>
     <div class="clearfix"></div>
 </form>
+{!! JsValidator::formRequest('App\Http\Requests\GetPriceRequest', '#form-getPrice') !!}

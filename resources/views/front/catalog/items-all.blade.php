@@ -6,7 +6,9 @@ $seo['title'] }} {{$seo_midd['catalog_category_postfix']}}. {{ $seo_midd['postfi
     {!! Breadcrumbs::render('catalog.all') !!}
 
     <div class="catalogPageCategoryItems row">
-        @each('front.catalog.blockItem', $data, 'data')
+        @foreach($data as $value)
+            @each('front.catalog.blockItem', $value->get_tovarsActive, 'data')
+        @endforeach
     </div>
 
     <div class="Pagination catalogPagination">{!! $paginator->render() !!}</div>

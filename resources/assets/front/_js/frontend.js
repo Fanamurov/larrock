@@ -6,6 +6,9 @@ $(document).ready(function(){
         }
     });
 
+    $('.empty-cost').arctext({radius: 170, dir: -1, rotate: true});
+    $('.default-cost').arctext({radius: 170, dir: -1, rotate: true})
+
     $('.catalogBlockItem').matchHeight();
 
     $(".fancybox").fancybox({
@@ -40,7 +43,7 @@ $(document).ready(function(){
         load: function(query, callback) {
             if (!query.length) return callback();
             $.ajax({
-                url: root+'/search/catalog',
+                url: 'http://'+window.location.hostname+'/search/catalog',
                 type: 'GET',
                 dataType: 'json',
                 data: {

@@ -144,13 +144,4 @@ class Catalog extends Model implements HasMediaConversions
 	{
 		return 'product';
 	}
-
-	public function scopeOrderByCategoryCost($query)
-	{
-		$query->select('catalog.*', 'category.position')
-			->leftJoin('category_catalog', 'catalog.id', '=', 'category_catalog.catalog_id')
-			->leftJoin('category', 'category.id', '=', 'category_catalog.category_id')
-			->orderBy('category.position', 'desc')
-			->orderBy('catalog.cost', 'asc');
-	}
 }

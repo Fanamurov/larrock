@@ -38,7 +38,7 @@ class Otapi extends Controller
         }
 
         $cacheKey = md5($method .'_'.$param_request);
-        //Cache::forget($cacheKey);
+        Cache::forget($cacheKey);
         if(Cache::has($cacheKey)){
             $body = Cache::get($cacheKey, 'NONE');
         }else{
@@ -62,15 +62,18 @@ class Otapi extends Controller
 
     public function get_category($categoryId = 'otc-3035', Request $request)
     {
-        if($getSub = $this->get_subCategoryList($categoryId)){
+        if($getSub = $this->get_subCategoryList($request, $categoryId)){
             return $getSub;
         }else{
             return $this->get_tovarsCategory($request, $categoryId);
         }
     }
 
-    public function get_subCategoryList($parentCategoryId)
+    public function get_subCategoryList(Request $request, $parentCategoryId)
     {
+        if ($request->exists('filter')){
+            return $this->get_tovarsCategoryFilter($request, $parentCategoryId);
+        }
         $body['data'] = $this->create_request('GetCategorySubcategoryInfoList', ['parentCategoryId' => $parentCategoryId]);
         $body['category'] = $this->create_request('GetCategoryInfo', ['categoryId' => $parentCategoryId]);
         if(count($body['data']->CategoryInfoList->Content->Item) > 0){
@@ -89,10 +92,14 @@ class Otapi extends Controller
      */
     public function get_tovarsCategory(Request $request, $categoryId = 'otc-3035')
     {
+        if ($request->exists('filter')){
+            return $this->get_tovarsCategoryFilter($request, $categoryId);
+        }
         //$framePosition = $request->get('framePosition', 0);
         $framePosition = $request->get('page', 0) * 60;
         $frameSize = 60;
 
+        $body['selected_filters'] = ['0' => 'test'];
         $body['category'] = $this->create_request('GetCategoryInfo', ['categoryId' => $categoryId]);
         $body['GetCategorySearchProperties'] = $this->create_request('GetCategorySearchProperties', ['categoryId' => $categoryId]);
         $body['data'] = $this->create_request('GetCategoryItemInfoListFrame', [
@@ -136,15 +143,26 @@ class Otapi extends Controller
         $framePosition = $request->get('page', 0) * 60;
         $frameSize = 60;
 
+        //dd($request->all());
+
         $body['category'] = $this->create_request('GetCategoryInfo', ['categoryId' => $categoryId]);
         $body['GetCategorySearchProperties'] = $this->create_request('GetCategorySearchProperties', ['categoryId' => $categoryId]);
+
+        $search_params = '<SearchParameters><Configurators>';
+        $body['selected_filters'] = ['0' => 'test'];
+        foreach ($request->all() as $key => $filter){
+            if ($key !== '_token' && !empty($filter)){
+                $search_params .= '<Configurator Pid="'. $key .'" Vid="'. $filter .'"/>';
+                $body['selected_filters'][] = $filter;
+            }
+        }
+        $search_params .= '</Configurators></SearchParameters>';
+
         $body['data'] = $this->create_request('FindCategoryItemInfoListFrame', [
             'categoryId' => $categoryId,
-            'categoryItemFilter' => '<CategoryItemFilterParameters><ItemTitle>'. $request->get('search') .'</ItemTitle></CategoryItemFilterParameters>',
+            'categoryItemFilter' => $search_params,
             'framePosition' => $framePosition,
             'frameSize' => $frameSize]);
-
-        dd($body['data']);
 
         if($body['data']->OtapiItemInfoSubList->TotalCount > 0){
             Breadcrumbs::register('otapi.category', function($breadcrumbs, $categoryId)
@@ -166,7 +184,8 @@ class Otapi extends Controller
 
             return view('otapi.categoryTovars', $body);
         }else{
-            abort(404, 'Нет товаров в разделе');
+            \Alert::add('error', 'Товаров по данным параметрам не найдено');
+            return back();
         }
     }
 
@@ -191,20 +210,26 @@ class Otapi extends Controller
 
         $body = json_decode($body, TRUE);
 
-        foreach ($body['data']['OtapiItemFullInfo']['ConfiguredItems']['OtapiConfiguredItem'] as $configured){
-            $vid = $configured['Configurators']['ValuedConfigurator'][0]['@attributes']['Vid'];
-            $pid = $configured['Configurators']['ValuedConfigurator'][0]['@attributes']['Pid'];
-            $body['configured'][$vid]['Price'] = $configured['Price']['ConvertedPriceWithoutSign'];
-            $body['configured'][$vid]['Quantity'] = $configured['Quantity'];
-            $body['configured'][$vid]['Vid'] = $vid;
-            $body['configured'][$vid]['Pid'] = $pid;
+        if(array_key_exists('OtapiConfiguredItem', $body['data']['OtapiItemFullInfo']['ConfiguredItems'])){
+            foreach ($body['data']['OtapiItemFullInfo']['ConfiguredItems']['OtapiConfiguredItem'] as $configured){
+                if(array_key_exists(0, $vid = $configured['Configurators']['ValuedConfigurator'])){
+                    $vid = $configured['Configurators']['ValuedConfigurator'][0]['@attributes']['Vid'];
+                    $pid = $configured['Configurators']['ValuedConfigurator'][0]['@attributes']['Pid'];
+                    $body['configured'][$vid]['Price'] = $configured['Price']['ConvertedPriceWithoutSign'];
+                    $body['configured'][$vid]['Quantity'] = $configured['Quantity'];
+                    $body['configured'][$vid]['Vid'] = $vid;
+                    $body['configured'][$vid]['Pid'] = $pid;
+                }
 
-            $vid = $configured['Configurators']['ValuedConfigurator'][1]['@attributes']['Vid'];
-            $pid = $configured['Configurators']['ValuedConfigurator'][1]['@attributes']['Pid'];
-            $body['configured'][$vid]['Price'] = $configured['Price']['ConvertedPriceWithoutSign'];
-            $body['configured'][$vid]['Quantity'] = $configured['Quantity'];
-            $body['configured'][$vid]['Vid'] = $vid;
-            $body['configured'][$vid]['Pid'] = $pid;
+                if(array_key_exists(0, $vid = $configured['Configurators']['ValuedConfigurator'])){
+                    $vid = $configured['Configurators']['ValuedConfigurator'][1]['@attributes']['Vid'];
+                    $pid = $configured['Configurators']['ValuedConfigurator'][1]['@attributes']['Pid'];
+                    $body['configured'][$vid]['Price'] = $configured['Price']['ConvertedPriceWithoutSign'];
+                    $body['configured'][$vid]['Quantity'] = $configured['Quantity'];
+                    $body['configured'][$vid]['Vid'] = $vid;
+                    $body['configured'][$vid]['Pid'] = $pid;
+                }
+            }
         }
 
         if((string)$body['data']['ErrorCode'] === 'Ok'){
@@ -316,5 +341,11 @@ class Otapi extends Controller
     {
         $body['data'] = $this->create_request('GetVendorRatingList', ['itemRatingTypeId' => 'Popular', 'numberItem' => 6, 'categoryId' => '']);
         return $body;
+    }
+
+    public function categorys()
+    {
+        $data = $this->create_request('GetThreeLevelRootCategoryInfoList', []);
+        dd($data->CategoryInfoList->Content->Item);
     }
 }

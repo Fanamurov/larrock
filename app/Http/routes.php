@@ -104,7 +104,7 @@ Route::get('/otapi/{categoryId}', [
 Route::get('/otapi/{categoryId}/list', [
     'as' => 'otapi.category.tovars', 'uses' => 'Otapi@get_tovarsCategory'
 ]);
-Route::post('/otapi/{categoryId}/list', [
+Route::post('/otapi/{categoryId}', [
     'as' => 'otapi.category.tovars.filter', 'uses' => 'Otapi@get_tovarsCategoryFilter'
 ]);
 Route::get('/otapi/{categoryId}/tovar/{itemId}', [
@@ -181,4 +181,8 @@ Route::group(['prefix' => 'admin', 'middleware'=>'AuthAdmin'], function(){
     ]);
 
     Route::post('/wizard', 'Admin\AdminWizardController@storeConfig');
+
+    Route::get('/otapi/load', [
+        'as' => 'otapi.load', 'uses' => 'Otapi@categorys'
+    ]);
 });

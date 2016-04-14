@@ -32,19 +32,20 @@
                 @if($data['OtapiItemFullInfo']['IsSellAllowed'] === 'false' AND $data['OtapiItemFullInfo']['HasInternalDelivery'] === 'false')
                     Нельзя купить: {{ $data['OtapiItemFullInfo']['SellDisallowReason'] }}
                 @endif
+                    <span class="attributes-config-item">
                 <?$current_conf = ''; $change = NULL;?>
                 @foreach($data['OtapiItemFullInfo']['Attributes']['ItemAttribute'] as $key => $attribute)
                     @if($attribute['IsConfigurator'] === 'true')
-                            <?
-                                if($current_conf !== $attribute['PropertyName']){
-                                    $current_conf = $attribute['PropertyName'];
-                                    $change = TRUE;
-                                }else{
-                                    $change = NULL;
-                                }
-                            ?>
+                        <?if($current_conf !== $attribute['PropertyName']){
+                            $current_conf = $attribute['PropertyName'];
+                            $change = TRUE;
+                        }else{
+                            $change = NULL;
+                        }?>
                         @if($change)
+                            </span>
                             <div class="clearfix"></div><br/>
+                                <span class="attributes-config-item">
                             <label>{{ $attribute['PropertyName'] }}:</label>
                         @endif
                         @if(array_key_exists('MiniImageUrl', $attribute) && $attribute['MiniImageUrl'] !== '')
@@ -99,24 +100,25 @@
                         @for($i=0; $i < ceil($vendor['VendorInfo']['Credit']['Level']/5); $i++)
                             <i class="fa fa-star"></i>
                         @endfor
-                        {{ $vendor['VendorInfo']['Credit']['Level'] }}
                     </p>
                 </li>
             </ul>
 
-            <hr/>
-            <p class="h4 text-center row">Так же продает:</p>
-            <div class="row">
-                @foreach($vendorTovars['OtapiItemInfoSubList']['Content']['Item'] as $tovar)
-                    <a href="/otapi/{{ $tovar['CategoryId'] }}/tovar/{{ $tovar['Id'] }}">
-                        <img src="{{ $tovar['Pictures']['ItemPicture'][0]['Small'] }}" class="col-xs-8" alt="Фото товара">
-                    </a>
-                @endforeach
-                <p class="text-right"><i>
-                        И еще <a href="/otapi/vendor/{{ $data['OtapiItemFullInfo']['VendorId'] }}">
-                            {{ $vendorTovars['OtapiItemInfoSubList']['TotalCount'] }} товаров...</a></i>
-                </p>
-            </div>
+            @if($vendorTovars['OtapiItemInfoSubList']['TotalCount'] > 0)
+                <hr/>
+                <p class="h4 text-center row">Так же продает:</p>
+                <div class="row">
+                    @foreach($vendorTovars['OtapiItemInfoSubList']['Content']['Item'] as $tovar)
+                        <a href="/otapi/{{ $tovar['CategoryId'] }}/tovar/{{ $tovar['Id'] }}">
+                            <img src="{{ $tovar['Pictures']['ItemPicture'][0]['Small'] }}" class="col-xs-8" alt="Фото товара">
+                        </a>
+                    @endforeach
+                    <p class="text-right"><i>
+                            И еще <a href="/otapi/vendor/{{ $data['OtapiItemFullInfo']['VendorId'] }}">
+                                {{ $vendorTovars['OtapiItemInfoSubList']['TotalCount'] }} товаров...</a></i>
+                    </p>
+                </div>
+            @endif
         </div>
     </div>
     <div class="clearfix"></div><br/><br/><br/>
@@ -147,7 +149,19 @@
             </div>
             <div role="tabpanel" class="tab-pane" id="opinions">
                 <div class="col-xs-24">
-
+                    <div id="mc-container"></div>
+                    <script type="text/javascript">
+                        cackle_widget = window.cackle_widget || [];
+                        cackle_widget.push({widget: 'Comment', id: 43706});
+                        (function() {
+                            var mc = document.createElement('script');
+                            mc.type = 'text/javascript';
+                            mc.async = true;
+                            mc.src = ('https:' == document.location.protocol ? 'https' : 'http') + '://cackle.me/widget.js';
+                            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+                        })();
+                    </script>
+                    <a id="mc-link" href="http://cackle.me">Комментарии для сайта <b style="color:#4FA3DA">Cackl</b><b style="color:#F65077">e</b></a>
                 </div>
             </div>
         </div>

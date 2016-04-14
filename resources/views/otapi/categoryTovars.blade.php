@@ -7,13 +7,15 @@
 
 @section('filters')
     <p class="h2">Фильтры для поиска:</p>
-    <form action="" method="post">
+    <form action="" method="get">
         @foreach($GetCategorySearchProperties->SearchPropertyInfoList->Content->Item as $filter)
             <div class="filter-item form-group col-xs-4">
                 <label for="filter{{ (string)$filter->Id }}" class="control-label">{{ (string)$filter->Name }}:</label>
-                <select id="filter{{ (string)$filter->Id }}" class="form-control">
+                <select id="filter{{ (string)$filter->Id }}" class="form-control" name="{{ (string)$filter->Id }}">
+                    <option value="">любое</option>
                     @foreach($filter->Values->PropertyValue as $filter_value)
-                        <option value="{{ (string)$filter_value->Id }}">{{ (string)$filter_value->Name }}</option>
+                        <option @if(array_search((string)$filter_value->Id, $selected_filters)) selected @endif
+                                value="{{ (string)$filter_value->Id }}">{{ (string)$filter_value->Name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -41,7 +43,11 @@
                     <p class="cost">{{ (string)$data_value->Price->ConvertedPriceWithoutSign }} {{ (string)$data_value->Price->CurrencySign }}</p>
                     <p>{{ (string)$data_value->Title }}</p>
                     <p><a href="/otapi/{{ (string)$data_value->CategoryId }}/tovar/{{ (string)$data_value->Id }}">{{ (string)$data_value->OriginalTitle }}</a></p>
-                    <p class="vendor">Продавец: {{ (string)$data_value->VendorName }} (Рейтинг: {{ (string)$data_value->VendorScore }})</p>
+                    <p class="vendor">Продавец: {{ (string)$data_value->VendorName }}
+                        (Рейтинг: @for($i=0; $i < ceil((string)$data_value->VendorScore/5); $i++)
+                            <i class="fa fa-star"></i>
+                        @endfor
+                        )</p>
                 </div>
             @endforeach
         </div>

@@ -99,7 +99,7 @@
     <div class="header-top_menu">
         @include('tbkhv.modules.menu.catalog', $menu)
         <div class="col-xs-6 block-categories pointer show_menu">
-            <span class="text-uppercase"><i class="fa fa-reorder"></i> | Категории товаров</span>
+            <span class="text-uppercase"><i class="fa fa-reorder"></i> Категории товаров</span>
         </div>
         <div class="col-xs-16 col-xs-offset-1">
             <form action="/otapi/search" method="get">
@@ -162,6 +162,7 @@
 <script type="text/javascript">
     var root = '{{url('/')}}';
 </script>
+<script src="/_assets/bower_components/matchHeight/jquery.matchHeight.js" type="text/javascript"></script>
 <script src="{{asset('_assets/_front/_js/front_core.min.js')}}"></script>
 <script type="text/javascript" src="/_assets/bower_components/fancybox/lib/jquery.mousewheel-3.0.6.pack.js"></script>
 <script type="text/javascript" src="/_assets/bower_components/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>

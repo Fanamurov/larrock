@@ -38,43 +38,45 @@
                 @if($data['OtapiItemFullInfo']['IsSellAllowed'] === 'false' AND $data['OtapiItemFullInfo']['HasInternalDelivery'] === 'false')
                     Нельзя купить: {{ $data['OtapiItemFullInfo']['SellDisallowReason'] }}
                 @endif
+                @if(isset($configured))
                     <span class="attributes-config-item">
-                <?$current_conf = ''; $change = NULL;?>
-                @foreach($data['OtapiItemFullInfo']['Attributes']['ItemAttribute'] as $key => $attribute)
-                    @if($attribute['IsConfigurator'] === 'true')
-                        <?if($current_conf !== $attribute['PropertyName']){
-                            $current_conf = $attribute['PropertyName'];
-                            $change = TRUE;
-                        }else{
-                            $change = NULL;
-                        }?>
-                        @if($change)
-                            </span>
-                            <div class="clearfix"></div><br/>
-                                <span class="attributes-config-item">
-                            <label>{{ $attribute['PropertyName'] }}:</label>
-                        @endif
-                        @if(array_key_exists('MiniImageUrl', $attribute) && $attribute['MiniImageUrl'] !== '')
-                            <button type="button" class="btn btn-default fancybox @if($change) active @endif" rel="property" href="{{ $attribute['ImageUrl'] }}"
-                                    data-price="{{ $configured[$attribute['@attributes']['Vid']]['Price'] }}"
-                                    data-quantity="{{ $configured[$attribute['@attributes']['Vid']]['Quantity'] }}"
-                                    data-vid="{{ $configured[$attribute['@attributes']['Vid']]['Vid'] }}"
-                                    data-pid="{{ $configured[$attribute['@attributes']['Vid']]['Pid'] }}">
-                                <img src="{{ $attribute['MiniImageUrl'] }}" alt="{{ $attribute['PropertyName'] }} {{ $attribute['Value'] }}">
-                                {{ $attribute['Value'] }}
-                            </button>
-                        @else
-                            @if(isset($configured[$attribute['@attributes']['Vid']]))
-                                <button type="button" class="btn btn-default @if($change) active @endif" data-price="{{ $configured[$attribute['@attributes']['Vid']]['Price'] }}"
-                                data-quantity="{{ $configured[$attribute['@attributes']['Vid']]['Quantity'] }}"
-                                data-vid="{{ $attribute['@attributes']['Vid'] }}"
-                                data-pid="{{ $attribute['@attributes']['Pid'] }}">
+                    <?$current_conf = ''; $change = NULL;?>
+                    @foreach($data['OtapiItemFullInfo']['Attributes']['ItemAttribute'] as $key => $attribute)
+                        @if($attribute['IsConfigurator'] === 'true')
+                            <?if($current_conf !== $attribute['PropertyName']){
+                                $current_conf = $attribute['PropertyName'];
+                                $change = TRUE;
+                            }else{
+                                $change = NULL;
+                            }?>
+                            @if($change)
+                                </span>
+                                <div class="clearfix"></div><br/>
+                                    <span class="attributes-config-item">
+                                <label>{{ $attribute['PropertyName'] }}:</label>
+                            @endif
+                            @if(array_key_exists('MiniImageUrl', $attribute) && $attribute['MiniImageUrl'] !== '')
+                                <button type="button" class="btn btn-default fancybox @if($change) active @endif" rel="property" href="{{ $attribute['ImageUrl'] }}"
+                                        data-price="{{ $configured[$attribute['@attributes']['Vid']]['Price'] }}"
+                                        data-quantity="{{ $configured[$attribute['@attributes']['Vid']]['Quantity'] }}"
+                                        data-vid="{{ $configured[$attribute['@attributes']['Vid']]['Vid'] }}"
+                                        data-pid="{{ $configured[$attribute['@attributes']['Vid']]['Pid'] }}">
+                                    <img src="{{ $attribute['MiniImageUrl'] }}" alt="{{ $attribute['PropertyName'] }} {{ $attribute['Value'] }}">
                                     {{ $attribute['Value'] }}
                                 </button>
+                            @else
+                                @if(isset($configured[$attribute['@attributes']['Vid']]))
+                                    <button type="button" class="btn btn-default @if($change) active @endif" data-price="{{ $configured[$attribute['@attributes']['Vid']]['Price'] }}"
+                                    data-quantity="{{ $configured[$attribute['@attributes']['Vid']]['Quantity'] }}"
+                                    data-vid="{{ $attribute['@attributes']['Vid'] }}"
+                                    data-pid="{{ $attribute['@attributes']['Pid'] }}">
+                                        {{ $attribute['Value'] }}
+                                    </button>
+                                @endif
                             @endif
                         @endif
-                    @endif
-                @endforeach
+                    @endforeach
+                @endif
             </div>
             <br/>
             <p>В наличии: <span class="quantity-item">{{ $data['OtapiItemFullInfo']['MasterQuantity'] }}</span> шт.</p>

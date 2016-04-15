@@ -9,23 +9,29 @@
     <div class="page-catalog-item">
         <div class="col-xs-7 block-gallery">
             <?$count_picture = 0?>
-            @foreach($data['OtapiItemFullInfo']['Pictures']['ItemPicture'] as $picture)
-                <?++$count_picture?>
-                <a class="fancybox" href="{{ $picture['Large'] }}" rel="fancybox-thumb">
-                    @if($count_picture === 1)
-                        <img src="{{ $picture['Large'] }}" class="all-width fancybox LargeImg" alt="{{ $data['OtapiItemFullInfo']['Title'] }}">
-                    @else
-                        <img src="{{ $picture['Small'] }}" class="fancybox SmallImg" alt="{{ $data['OtapiItemFullInfo']['Title'] }}">
-                    @endif
+            @if( !array_key_exists('Large', $data['OtapiItemFullInfo']['Pictures']['ItemPicture']))
+                @foreach($data['OtapiItemFullInfo']['Pictures']['ItemPicture'] as $picture)
+                    <?++$count_picture?>
+                    <a class="fancybox" href="{{ $picture['Large'] }}" rel="fancybox-thumb">
+                        @if($count_picture === 1)
+                            <img src="{{ $picture['Large'] }}" class="all-width fancybox LargeImg" alt="{{ $data['OtapiItemFullInfo']['Title'] }}">
+                        @else
+                            <img src="{{ $picture['Small'] }}" class="fancybox SmallImg" alt="{{ $data['OtapiItemFullInfo']['Title'] }}">
+                        @endif
+                    </a>
+                @endforeach
+            @else
+                <a class="fancybox" href="{{ $data['OtapiItemFullInfo']['Pictures']['ItemPicture']['Large'] }}" rel="fancybox-thumb">
+                    <img src="{{ $data['OtapiItemFullInfo']['Pictures']['ItemPicture']['Large'] }}" class="all-width fancybox LargeImg" alt="{{ $data['OtapiItemFullInfo']['Title'] }}">
                 </a>
-            @endforeach
+            @endif
         </div>
         <div class="col-xs-10 col-xs-offset-1">
             <h1>{{ $data['OtapiItemFullInfo']['Title'] }}</h1>
             <p class="h4">{{ $data['OtapiItemFullInfo']['OriginalTitle'] }}</p>
             <p><a href="{{ $data['OtapiItemFullInfo']['TaobaoItemUrl'] }}">[этот товар на таобао]</a></p>
             <p class="cost">
-                <span class="strong-heavy">{{ $data['OtapiItemFullInfo']['Price']['ConvertedPriceWithoutSign'] }}</span>
+                <span class="strong-heavy price-item">{{ $data['OtapiItemFullInfo']['Price']['ConvertedPriceWithoutSign'] }}</span>
                 {{ $data['OtapiItemFullInfo']['Price']['CurrencySign'] }}
             </p>
             <div class="attributes-config">
@@ -49,14 +55,20 @@
                             <label>{{ $attribute['PropertyName'] }}:</label>
                         @endif
                         @if(array_key_exists('MiniImageUrl', $attribute) && $attribute['MiniImageUrl'] !== '')
-                            <button type="button" class="btn btn-default fancybox @if($change) active @endif" rel="property" href="{{ $attribute['ImageUrl'] }}">
+                            <button type="button" class="btn btn-default fancybox @if($change) active @endif" rel="property" href="{{ $attribute['ImageUrl'] }}"
+                                    data-price="{{ $configured[$attribute['@attributes']['Vid']]['Price'] }}"
+                                    data-quantity="{{ $configured[$attribute['@attributes']['Vid']]['Quantity'] }}"
+                                    data-vid="{{ $configured[$attribute['@attributes']['Vid']]['Vid'] }}"
+                                    data-pid="{{ $configured[$attribute['@attributes']['Vid']]['Pid'] }}">
                                 <img src="{{ $attribute['MiniImageUrl'] }}" alt="{{ $attribute['PropertyName'] }} {{ $attribute['Value'] }}">
                                 {{ $attribute['Value'] }}
                             </button>
                         @else
                             @if(isset($configured[$attribute['@attributes']['Vid']]))
                                 <button type="button" class="btn btn-default @if($change) active @endif" data-price="{{ $configured[$attribute['@attributes']['Vid']]['Price'] }}"
-                                data-quantity="{{ $configured[$attribute['@attributes']['Vid']]['Quantity'] }}">
+                                data-quantity="{{ $configured[$attribute['@attributes']['Vid']]['Quantity'] }}"
+                                data-vid="{{ $attribute['@attributes']['Vid'] }}"
+                                data-pid="{{ $attribute['@attributes']['Pid'] }}">
                                     {{ $attribute['Value'] }}
                                 </button>
                             @endif
@@ -64,7 +76,9 @@
                     @endif
                 @endforeach
             </div>
-            <p>В наличии: {{ $data['OtapiItemFullInfo']['MasterQuantity'] }} шт.</p>
+            <br/>
+            <p>В наличии: <span class="quantity-item">{{ $data['OtapiItemFullInfo']['MasterQuantity'] }}</span> шт.</p>
+            <input type="hidden" name="configurationId" value="">
             <button class="btn btn-danger btn-lg btn-add-to-cart"
                     data-id="{{ $data['OtapiItemFullInfo']['Id'] }}"
                     data-name="{{ $data['OtapiItemFullInfo']['OriginalTitle'] }}"
@@ -164,6 +178,12 @@
                     <a id="mc-link" href="http://cackle.me">Комментарии для сайта <b style="color:#4FA3DA">Cackl</b><b style="color:#F65077">e</b></a>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-24">
+            @include('tbkhv.modules.catalog.soputka', $moduleLast)
         </div>
     </div>
 @endsection

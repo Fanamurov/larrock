@@ -12,7 +12,7 @@
     </div>
     <div class="form-group">
         <div class="input-group">
-            <span class="input-group-addon" id="form-searchTour-countryId">Куда:&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <span class="input-group-addon" id="form-searchTour-countryId">&nbsp;&nbsp;&nbsp;&nbsp;Куда:</span>
             <select name="countryId" class="form-control" id="form-searchTour-countryId">
                 @foreach($GetCountries as $item)
                     <option value="{{ $item->Id }}">{{ $item->Name }}</option>

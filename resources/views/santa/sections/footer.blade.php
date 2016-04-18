@@ -73,7 +73,7 @@
                 <a rel="nofollow" data-file="sport" href="http://www.freepik.com">Freepik</a></p>
         </div>
         <div class="col-sm-6">
-            <p>Weather api: <a href="http://www.pogoda.com">www.погода.com</a></p>
+            <p>Weather api: <a rel="nofollow" href="http://www.pogoda.com">www.погода.com</a></p>
         </div>
     </section>
 </noindex>

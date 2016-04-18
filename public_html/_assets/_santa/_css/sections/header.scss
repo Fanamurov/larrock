@@ -23,6 +23,9 @@ header{
 	  padding-top: 35px;
 	  color: black;
 	  font-size: 30px;
+	  @media (max-width: 768px) {
+		display: none;
+	  }
 	}
   }
   .header-address{
@@ -58,7 +61,7 @@ header{
 	ul{
 	  margin-bottom: 0;
 	  li{
-		padding: 10px 16px;
+		padding: 1px 16px;
 		&.active{
 		  font-weight: 600;
 		  a{

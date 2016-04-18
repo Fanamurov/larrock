@@ -1,12 +1,13 @@
-.form-searchTour{
-
-}
-
 .form-searchTourShort{
   background: white;
   padding: 10px 15px;
   margin-bottom: 30px;
   .h3{
-	margin-top: 0;
+	font-weight: 600;
+	margin-bottom: 20px;
+  }
+  .input-group-addon{
+	background: transparent;
+	border: none;
   }
 }

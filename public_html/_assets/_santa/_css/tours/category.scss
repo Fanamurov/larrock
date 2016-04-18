@@ -56,8 +56,25 @@
 }
 
 .toursPageCountry{
-  .toursPageCountry-photo{
-	padding-bottom: 30px;
+  .tours_tabs{
+	position: relative;
+	.nav-tabs {
+	  border-bottom: none;
+	  position: relative;
+	  top: -10px;
+	  right: 0;
+	  > li{
+		float: right;
+		&.active a{
+		  background: #F3F3F3;
+		  text-decoration: none;
+		  color: #DF1442;
+		}
+		> a{
+		  border: 1px solid #ddd;
+		}
+	  }
+	}
   }
   .toursPageCountry-short{
 	padding-bottom: 30px;
@@ -70,5 +87,11 @@
     margin-top: 20px;
     margin-bottom: 10px;
     box-shadow: 0 1px 2px #C7C7C7;
+  }
+  .ya-share2{
+	position: absolute;
+	z-index: 5;
+	right: 10px;
+	top: 9px;
   }
 }

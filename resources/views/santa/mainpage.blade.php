@@ -45,7 +45,7 @@
                 <span>Отдыхать - правильно!</span>
             </a>
         </div>
-        <div class="col-sm-6 header-address">
+        <div class="col-sm-8 col-md-6 header-address">
             <p><span class="city">г.Хабаровск</span><br/>
                 <a href="tel:84212454546" class="phone">(4212) 45-45-46</a><br/>
                 пн-пт: 09<sup>00</sup>-19<sup>00</sup>,
@@ -57,7 +57,7 @@
     </header>
 
     <section class="row" id="content">
-        <section id="right_colomn" class="col-xs-24 col-sm-7">
+        <section id="right_colomn" class="col-xs-24 col-sm-8 col-md-7">
             <div class="col-xs-24">
                 @include('santa.modules.forms.searchTourShort', $SearchFormShort)
                 @yield('rightColomn')
@@ -68,7 +68,7 @@
                 @include('santa.modules.forms.subscribe')
             </div>
         </section>
-        <div class="col-xs-24 col-sm-17">
+        <div class="col-xs-24 col-sm-16 col-md-17">
             <div class="col-xs-24">
                 @include('front.errors')
                 @include('santa.modules.slideshow.mainpage')
@@ -88,6 +88,7 @@
 <!-- Mainly scripts -->
 <script src="{{asset('_assets/_santa/_js/bootstrap.min.js')}}"></script>
 <script src="/_assets/bower_components/selectize/dist/js/standalone/selectize.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript">
     var root = '{{url('/')}}';
 </script>
@@ -100,5 +101,9 @@
 @yield('scripts')
 <script src="/_assets/bower_components/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="/_assets/bower_components/jquery-validation/dist/additional-methods.min.js"></script>
+
+<!-- Include Date Range Picker -->
+<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 </body>
 </html>

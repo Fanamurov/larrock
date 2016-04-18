@@ -36,6 +36,15 @@ footer{
   }
 
   section.row-profits{
+	font-size: 14px;
+	line-height: 21px;
+
+	.fi{
+	  font-size: 100px;
+	  float: left;
+	  margin-right: 15px;
+	  margin-bottom: 30px;
+	}
 	&:before{
 	  background: url("/_assets/_santa/_images/bg/bg_footer_up.png") repeat-x left top transparent;
 	  height: 43px;
@@ -53,11 +62,10 @@ footer{
 	background: url("/_assets/_santa/_images/bg/bg_footer.jpg") repeat-x left top transparent;
 	color: white;
 	padding-top: 30px;
-	padding-bottom: 30px;
 	.h1{
 	  font-weight: 600;
 	  margin-bottom: 30px;
-	  margin-top: 10px;
+	  margin-top: 3px;
 	}
 	.h2{
 	  display: inline-block;
@@ -72,6 +80,16 @@ footer{
 
   section.row-sposob{
 	background: url("/_assets/_santa/_images/bg/bg_footer.jpg") repeat-x 0px -250px transparent;
+
+	.fi{
+	  font-size: 64px;
+	  float: left;
+	  margin-right: 15px;
+	  margin-bottom: 30px;
+	}
+	.h2{
+	  font-size: 27px;
+	}
   }
 
   section.row-subscribes{
@@ -85,5 +103,9 @@ footer{
 	  font-size: 14px;
 	  line-height: 20px;
 	}
+  }
+
+  section.row-licence{
+	font-size: 12px;
   }
 }

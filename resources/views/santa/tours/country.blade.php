@@ -2,41 +2,56 @@
 @section('title') {{ $data->title }} @endsection
 
 @section('content')
-    {!! Breadcrumbs::render('tours.category', $data) !!}
     <div class="toursPageCountry row">
-        <h1 class="col-xs-24">{{ $data->title }}</h1>
+        <div class="col-xs-24">
+            {!! Breadcrumbs::render('tours.category', $data) !!}
+            @include('santa.modules.share.sharing')
+        </div>
         <div class="clearfix"></div>
-        <div class="toursPageCountry-photo">
-            @if(count($data->images) > 0)
-                <div id="carousel-country" class="carousel slide" data-ride="carousel">
-                    <!-- Indicators -->
-                    <ol class="carousel-indicators">
-                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                        @for($i=1; $i < count($data->images); $i++)
-                            <li data-target="#carousel-example-generic" data-slide-to="{{ $i }}"></li>
-                        @endfor
-                    </ol>
+        <div class="tours_tabs">
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="tour-photo">
+                    <div class="toursPageCountry-photo">
+                        @if(count($data->images) > 0)
+                            <div id="carousel-country" class="carousel slide" data-ride="carousel">
+                                <!-- Indicators -->
+                                <ol class="carousel-indicators">
+                                    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                                    @for($i=1; $i < count($data->images); $i++)
+                                        <li data-target="#carousel-example-generic" data-slide-to="{{ $i }}"></li>
+                                    @endfor
+                                </ol>
 
-                    <!-- Wrapper for slides -->
-                    <div class="carousel-inner" role="listbox">
-                        @foreach($data->images as $key => $image)
-                            <div class="item @if($key === 0) active @endif">
-                                <img src="{{ $image->getUrl() }}" alt="{{ $data->title }}" class="all-width">
+                                <!-- Wrapper for slides -->
+                                <div class="carousel-inner" role="listbox">
+                                    @foreach($data->images as $key => $image)
+                                        <div class="item @if($key === 0) active @endif">
+                                            <img src="{{ $image->getUrl() }}" alt="{{ $data->title }}" class="all-width">
+                                        </div>
+                                    @endforeach
+                                </div>
+
+                                <!-- Controls -->
+                                <a class="left carousel-control" href="#carousel-country" role="button" data-slide="prev">
+                                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="right carousel-control" href="#carousel-country" role="button" data-slide="next">
+                                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                </a>
                             </div>
-                        @endforeach
+                        @endif
                     </div>
-
-                    <!-- Controls -->
-                    <a class="left carousel-control" href="#carousel-country" role="button" data-slide="prev">
-                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="right carousel-control" href="#carousel-country" role="button" data-slide="next">
-                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
                 </div>
-            @endif
+                <div role="tabpanel" class="tab-pane" id="tour-map">
+                    Карта
+                </div>
+            </div>
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#tour-photo" aria-controls="tour-photo" role="tab" data-toggle="tab">Фото</a></li>
+                <li role="presentation"><a href="#tour-map" aria-controls="tour-map" role="tab" data-toggle="tab">Карта</a></li>
+            </ul>
         </div>
         <div class="toursPageCountry-short row">
             <div class="col-sm-9">

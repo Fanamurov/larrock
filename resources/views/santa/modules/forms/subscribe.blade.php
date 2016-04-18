@@ -1,4 +1,4 @@
-<form id="form-subscribe" class="form-subscribe" method="post" action="/forms/contact">
+<form id="form-subscribe" class="form-subscribe hidden visible-md" method="post" action="/forms/contact">
     <div class="help">
         <p class="h4">Подпишитесь на рассылку и получите подарок</p>
         <ul>

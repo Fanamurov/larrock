@@ -219,7 +219,6 @@ h1, .h1{
 @import "modules/breadcrumbs";
 @import "modules/cart";
 @import "modules/listCatalog";
-//@import "modules/seofish";
 @import "modules/slideshow";
 @import "modules/listHotTours";
 @import "modules/listVidy";
@@ -238,3 +237,8 @@ h1, .h1{
 @import "../../bower_components/pickadate/lib/themes/classic.scss";
 @import "../../bower_components/pickadate/lib/themes/classic.date.scss";
 @import "../../bower_components/pickadate/lib/themes/classic.time.scss";
+@import "/_assets/bower_components/flag-icon-css/css/flag-icon.min.css";
+
+
+//http://www.flaticon.com/
+@import "../_icons-font/flaticon.scss";

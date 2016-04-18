@@ -7,5 +7,15 @@
   h1, h2, h3, h4, h5,
   .h1, .h2, .h3, .h4, .h5{
 	display: inline-block;
+	color: black;
+	margin-top: 10px;
+	margin-bottom: 0;
+  }
+  a{
+	color: #c72800;
+	font-size: 17px;
+  }
+  >li+li:before {
+	padding: 0 2px;
   }
 }

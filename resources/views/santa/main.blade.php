@@ -48,7 +48,7 @@
                 <span>Отдыхать - правильно!</span>
             </a>
         </div>
-        <div class="col-sm-6 header-address">
+        <div class="col-sm-8 col-md-6 header-address">
             <p><span class="city">г.Хабаровск</span><br/>
                 <a href="tel:84212454546" class="phone">(4212) 45-45-46</a><br/>
                 пн-пт: 09<sup>00</sup>-19<sup>00</sup>,
@@ -60,7 +60,7 @@
     </header>
 
     <section class="row" id="content">
-        <section id="right_colomn" class="col-xs-24 col-sm-7">
+        <section id="right_colomn" class="col-xs-24 col-sm-8 col-md-7">
             <div class="col-xs-24">
                 @if(isset($SearchFormShort))
                     @include('santa.modules.forms.searchTourShort', $SearchFormShort)
@@ -72,7 +72,7 @@
                 @endif
             </div>
         </section>
-        <div class="col-xs-24 col-sm-17">
+        <div class="col-xs-24 col-sm-16 col-md-17">
             <div class="col-xs-24">
                 @include('front.errors')
                 <div class="addthis_sharing_toolbox" style="    height: 16px;
@@ -82,9 +82,7 @@
             </div>
             @yield('content')
             @yield('contentBottom')
-            <script type="text/javascript" src="//yastatic.net/es5-shims/0.0.2/es5-shims.min.js" charset="utf-8"></script>
-            <script type="text/javascript" src="//yastatic.net/share2/share.js" charset="utf-8"></script>
-            <div class="ya-share2 ya-share2_big" data-services="vkontakte,facebook,odnoklassniki,moimir,gplus" data-counter=""></div>
+            @include('santa.modules.share.sharing')
         </div>
     </section>
 

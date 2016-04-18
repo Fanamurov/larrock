@@ -1,0 +1,121 @@
+    /*
+    Flaticon icon font: Flaticon
+    Creation date: 18/04/2016 08:46
+    */
+
+    @font-face {
+  font-family: "Flaticon";
+  src: url("/_assets/_santa/_icons-font/Flaticon.eot");
+  src: url("/_assets/_santa/_icons-font/Flaticon.eot?#iefix") format("embedded-opentype"),
+       url("/_assets/_santa/_icons-font/Flaticon.woff") format("woff"),
+       url("/_assets/_santa/_icons-font/Flaticon.ttf") format("truetype"),
+       url("/_assets/_santa/_icons-font/Flaticon.svg#Flaticon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "Flaticon";
+    src: url("/_assets/_santa/_icons-font/Flaticon.svg#Flaticon") format("svg");
+  }
+}
+
+    .fi:before{
+        display: inline-block;
+  font-family: "Flaticon";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  line-height: 1;
+  text-decoration: inherit;
+  text-rendering: optimizeLegibility;
+  text-transform: none;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+    }
+
+    .flaticon-beach:before { content: "\f100"; }
+.flaticon-business:before { content: "\f101"; }
+.flaticon-circle:before { content: "\f102"; }
+.flaticon-circles:before { content: "\f103"; }
+.flaticon-computer:before { content: "\f104"; }
+.flaticon-cup:before { content: "\f105"; }
+.flaticon-hands:before { content: "\f106"; }
+.flaticon-icon-430:before { content: "\f107"; }
+.flaticon-interface:before { content: "\f108"; }
+.flaticon-luxury:before { content: "\f109"; }
+.flaticon-medical:before { content: "\f10a"; }
+.flaticon-people:before { content: "\f10b"; }
+.flaticon-people-1:before { content: "\f10c"; }
+.flaticon-people-2:before { content: "\f10d"; }
+.flaticon-people-3:before { content: "\f10e"; }
+.flaticon-people-4:before { content: "\f10f"; }
+.flaticon-people-5:before { content: "\f110"; }
+.flaticon-phone:before { content: "\f111"; }
+.flaticon-phone-1:before { content: "\f112"; }
+.flaticon-planet:before { content: "\f113"; }
+.flaticon-ribbon:before { content: "\f114"; }
+.flaticon-road:before { content: "\f115"; }
+.flaticon-road-1:before { content: "\f116"; }
+.flaticon-road-2:before { content: "\f117"; }
+.flaticon-shapes:before { content: "\f118"; }
+.flaticon-sport:before { content: "\f119"; }
+.flaticon-summer:before { content: "\f11a"; }
+.flaticon-technology:before { content: "\f11b"; }
+.flaticon-tool:before { content: "\f11c"; }
+.flaticon-transport:before { content: "\f11d"; }
+.flaticon-transport-1:before { content: "\f11e"; }
+.flaticon-transport-2:before { content: "\f11f"; }
+.flaticon-transport-3:before { content: "\f120"; }
+.flaticon-travel:before { content: "\f121"; }
+.flaticon-travel-1:before { content: "\f122"; }
+.flaticon-travel-2:before { content: "\f123"; }
+.flaticon-travel-3:before { content: "\f124"; }
+.flaticon-travel-4:before { content: "\f125"; }
+.flaticon-travel-5:before { content: "\f126"; }
+.flaticon-travel-6:before { content: "\f127"; }
+.flaticon-two:before { content: "\f128"; }
+    
+    $font-Flaticon-beach: "\f100";
+    $font-Flaticon-business: "\f101";
+    $font-Flaticon-circle: "\f102";
+    $font-Flaticon-circles: "\f103";
+    $font-Flaticon-computer: "\f104";
+    $font-Flaticon-cup: "\f105";
+    $font-Flaticon-hands: "\f106";
+    $font-Flaticon-icon-430: "\f107";
+    $font-Flaticon-interface: "\f108";
+    $font-Flaticon-luxury: "\f109";
+    $font-Flaticon-medical: "\f10a";
+    $font-Flaticon-people: "\f10b";
+    $font-Flaticon-people-1: "\f10c";
+    $font-Flaticon-people-2: "\f10d";
+    $font-Flaticon-people-3: "\f10e";
+    $font-Flaticon-people-4: "\f10f";
+    $font-Flaticon-people-5: "\f110";
+    $font-Flaticon-phone: "\f111";
+    $font-Flaticon-phone-1: "\f112";
+    $font-Flaticon-planet: "\f113";
+    $font-Flaticon-ribbon: "\f114";
+    $font-Flaticon-road: "\f115";
+    $font-Flaticon-road-1: "\f116";
+    $font-Flaticon-road-2: "\f117";
+    $font-Flaticon-shapes: "\f118";
+    $font-Flaticon-sport: "\f119";
+    $font-Flaticon-summer: "\f11a";
+    $font-Flaticon-technology: "\f11b";
+    $font-Flaticon-tool: "\f11c";
+    $font-Flaticon-transport: "\f11d";
+    $font-Flaticon-transport-1: "\f11e";
+    $font-Flaticon-transport-2: "\f11f";
+    $font-Flaticon-transport-3: "\f120";
+    $font-Flaticon-travel: "\f121";
+    $font-Flaticon-travel-1: "\f122";
+    $font-Flaticon-travel-2: "\f123";
+    $font-Flaticon-travel-3: "\f124";
+    $font-Flaticon-travel-4: "\f125";
+    $font-Flaticon-travel-5: "\f126";
+    $font-Flaticon-travel-6: "\f127";
+    $font-Flaticon-two: "\f128";

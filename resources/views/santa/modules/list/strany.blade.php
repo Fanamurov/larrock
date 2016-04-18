@@ -10,21 +10,23 @@
                     </a>
                 </p>
             </div>
-            <div id="collapse{{ $item->id }}" class="panel-collapse collapse
-            @if(isset($data->id) && $data->id === $item->id) in @endif @foreach($item->get_childActive as $child) @if(isset($data->id) && $data->id === $child->id) in @endif @endforeach"
-                 role="tabpanel" aria-labelledby="heading{{ $item->id }}">
-                <div class="panel-body">
-                    <ul class="list-unstyled">
-                    @foreach($item->get_childActive as $child)
-                        <li @if(isset($data->id) && $data->id === $child->id) class="active" @endif>
-                            <a href="/tours/strany/{{ $item->url }}/{{ $child->url }}">
-                                {{ $child->title }}
-                            </a>
-                        </li>
-                    @endforeach
-                    </ul>
+            @if(count($item->get_childActive) > 0)
+                <div id="collapse{{ $item->id }}" class="panel-collapse collapse
+                @if(isset($data->id) && $data->id === $item->id) in @endif @foreach($item->get_childActive as $child) @if(isset($data->id) && $data->id === $child->id) in @endif @endforeach"
+                     role="tabpanel" aria-labelledby="heading{{ $item->id }}">
+                    <div class="panel-body">
+                        <ul class="list-unstyled">
+                        @foreach($item->get_childActive as $child)
+                            <li @if(isset($data->id) && $data->id === $child->id) class="active" @endif>
+                                <a href="/tours/strany/{{ $item->url }}/{{ $child->url }}">
+                                    {{ $child->title }}
+                                </a>
+                            </li>
+                        @endforeach
+                        </ul>
+                    </div>
                 </div>
-            </div>
+            @endif
         </div>
     @endforeach
 </div>

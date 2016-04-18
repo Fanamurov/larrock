@@ -45,12 +45,24 @@
                     </div>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="tour-map">
-                    Карта
+                    <div id="map"></div>
+                    @if($data->map_coordinate)
+                        <script>
+                            var map;
+                            function initMap() {
+                                map = new google.maps.Map(document.getElementById('map'), {
+                                    center: {lat: {{ $data->map_coordinate['lat'] }}, lng: {{ $data->map_coordinate['long'] }}},
+                                    zoom: 4
+                                });
+                            }
+                        </script>
+                        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCxKB99A6FyIpROOUAOJSJqZGQEB6bgd2E" async defer></script>
+                    @endif
                 </div>
             </div>
             <ul class="nav nav-tabs" role="tablist">
+                <li class="load-map" role="presentation"><a href="#tour-map" aria-controls="tour-map" role="tab" data-toggle="tab">На карте</a></li>
                 <li role="presentation" class="active"><a href="#tour-photo" aria-controls="tour-photo" role="tab" data-toggle="tab">Фото</a></li>
-                <li role="presentation"><a href="#tour-map" aria-controls="tour-map" role="tab" data-toggle="tab">Карта</a></li>
             </ul>
         </div>
         <div class="toursPageCountry-short row">

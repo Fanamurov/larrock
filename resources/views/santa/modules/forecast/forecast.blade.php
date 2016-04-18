@@ -1,9 +1,6 @@
 <div class="blockForecast">
     <div class="main_icon">
-        <ul class="list-unstyled">
-            <li class="basecloud"></li>
-            <li class="icon-drizzle icon-sunny"></li>
-        </ul>
+        <i class="weather weather-icon-{{ $forecast['var'][3]['data']['forecast'][0]['@attributes']['id'] }}"></i>
     </div>
     <div class="row">
         <div class="col-xs-10 temp_today">
@@ -24,7 +21,7 @@
                         @if($forecast['var'][1]['data']['forecast'][1]['@attributes']['value'] > 0) +@endif
                         {{ $forecast['var'][1]['data']['forecast'][1]['@attributes']['value'] }}<sup>o</sup>
                     </td>
-                    <td><i class="icon-sun"></i></td>
+                    <td><i class="weather weather-icon-{{ $forecast['var'][3]['data']['forecast'][1]['@attributes']['id'] }}"></i></td>
                 </tr>
                 <tr>
                     <td>{{ \Carbon\Carbon::now()->addDay(2)->day }} апреля, {{ $forecast['var'][4]['data']['forecast'][2]['@attributes']['value'] }}</td>
@@ -32,14 +29,14 @@
                         @if($forecast['var'][1]['data']['forecast'][2]['@attributes']['value'] > 0) +@endif
                         {{ $forecast['var'][1]['data']['forecast'][2]['@attributes']['value'] }}<sup>o</sup>
                     </td>
-                    <td><i class="icon-sun"></i></td>
+                    <td><i class="weather weather-icon-{{ $forecast['var'][3]['data']['forecast'][2]['@attributes']['id'] }}"></i></td>
                 </tr><tr>
                     <td>{{ \Carbon\Carbon::now()->addDay(3)->day }} апреля, {{ $forecast['var'][4]['data']['forecast'][3]['@attributes']['value'] }}</td>
                     <td class="temp">
                         @if($forecast['var'][1]['data']['forecast'][2]['@attributes']['value'] > 0) +@endif
                         {{ $forecast['var'][1]['data']['forecast'][2]['@attributes']['value'] }}<sup>o</sup>
                     </td>
-                    <td><i class="icon-sun"></i></td>
+                    <td><i class="weather weather-icon-{{ $forecast['var'][3]['data']['forecast'][3]['@attributes']['id'] }}"></i></td>
                 </tr>
             </table>
         </div>

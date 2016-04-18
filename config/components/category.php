@@ -47,10 +47,15 @@ return [
             'type' => 'text',
             'tab' => ['other' => 'Дополнительные поля']
         ],
+        'map' => [
+            'title' => 'Координаты для карты (https://constructor.maps.yandex.ru/location-tool/)',
+            'type' => 'text',
+            'tab' => ['other' => 'Дополнительные поля']
+        ],
 		'sitemap' => [
 			'title' => 'Публиковать ли раздел в sitemap',
-			'type' => 'text',
-			'tab' => ['other' => 'Дата, вес, активность'],
+			'type' => 'checkbox',
+			'tab' => ['other' => 'Дополнительные поля'],
 			'valid' => 'integer',
 			'default' => 1
 		],
@@ -63,7 +68,7 @@ return [
 		'position' => [
 			'title' => 'Вес материала',
 			'type' => 'text',
-			'tab' => ['other' => 'Дата, вес, активность'],
+			'tab' => ['other' => 'Дополнительные поля'],
 			'valid' => 'integer',
 			'default' => 0
 		],
@@ -71,7 +76,7 @@ return [
 			'title' => 'Опубликован',
 			'type' => 'checkbox',
 			'checked' => 'TRUE',
-			'tab' => ['other' => 'Дата, вес, активность'],
+			'tab' => ['other' => 'Дополнительные поля'],
 			'valid' => 'integer|max:1',
 			'default' => 1
 		],

@@ -58,7 +58,7 @@ class Category extends Model implements HasMediaConversions
 
     protected $table = 'category';
 
-	protected $fillable = ['title', 'short', 'description', 'type', 'parent', 'level', 'forecast_url', 'url', 'sitemap', 'position', 'active'];
+	protected $fillable = ['title', 'short', 'description', 'type', 'parent', 'level', 'forecast_url', 'map', 'url', 'sitemap', 'position', 'active'];
 
 	protected $casts = [
 		'position' => 'integer',
@@ -209,4 +209,16 @@ class Category extends Model implements HasMediaConversions
 			return '/_assets/_santa/_images/empty_big.png';
 		}
 	}
+
+    public function getMapCoordinateAttribute()
+    {
+        $explode = explode(',', $this->map);
+        if(array_key_exists(1, $explode)){
+            $coord['lat'] = $explode[0];
+            $coord['long'] = $explode[1];
+            return collect($coord);
+        }else{
+            return NULL;
+        }
+    }
 }

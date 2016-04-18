@@ -10,27 +10,27 @@ return [
 			'title' => 'Заголовок',
 			'in_table_admin' => 'TRUE',
 			'type' => 'text',
-			'tab' => ['main' => 'Описание товара'],
+			'tab' => ['main' => 'Описание тура'],
 			'valid' => 'max:255|required',
 			'typo' => 'true'
 		],
 		'category' => [
 			'title' => 'Разделы',
 			'type' => 'select_category',
-			'tab' => ['main' => 'Описание товара'],
+			'tab' => ['main' => 'Описание тура'],
 			'valid' => 'max:255|required',
 			'options_connect' => ['row' => 'title', 'table' => 'category', 'where' => ['type' => 'tours']]
 		],
 		'short' => [
 			'title' => 'Короткое описание',
 			'type' => 'textarea',
-			'tab' => ['main' => 'Описание товара'],
+			'tab' => ['main' => 'Описание тура'],
 			//'css_class' => 'not-editor'
 		],
 		'description' => [
 			'title' => 'Полное описание',
 			'type' => 'textarea',
-			'tab' => ['main' => 'Описание товара'],
+			'tab' => ['main' => 'Описание тура'],
 		],
 		'url' => [
 			'title' => 'URL материала',
@@ -43,6 +43,11 @@ return [
 			'type' => 'text',
 			'tab' => ['other' => 'Дополнительные поля']
 		],
+        'map' => [
+            'title' => 'Координаты для карты (https://constructor.maps.yandex.ru/location-tool/)',
+            'type' => 'text',
+            'tab' => ['other' => 'Дополнительные поля']
+        ],
 		'position' => [
 			'title' => 'Вес материала',
 			'type' => 'text',

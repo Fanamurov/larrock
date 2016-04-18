@@ -30,7 +30,7 @@ class Tours extends Model implements HasMediaConversions
 
     protected $table = 'tours';
 
-	protected $fillable = ['title', 'short', 'description', 'url', 'position', 'active'];
+	protected $fillable = ['title', 'short', 'description', 'url', 'position', 'active', 'forecast_url', 'map'];
 
 	protected $guarded = ['user_id'];
 

@@ -18,6 +18,9 @@ $(document).ready(function(){
         }
     });
 
+    $('.load-map').click(function () {
+        initMap();
+    });
     
     /* http://maxoffsky.com/code-blog/laravel-shop-tutorial-3-implementing-smart-search/ */
     /* https://github.com/selectize/selectize.js/blob/master/docs/usage.md */
@@ -75,11 +78,15 @@ $(document).ready(function(){
     });
 
     var today = new Date();
+    var month = today.getMonth()+1;
+    var month_last = today.getMonth()+2;
     $('input.daterange').daterangepicker({
         locale: {
             format: 'DD/MM/YYYY'
         },
-        startDate: today.getDate() +'/'+ today.getMonth() +'/'+ today.getFullYear()
+        startDate: today.getDate() +'/'+ month +'/'+ today.getFullYear(),
+        endDate: today.getDate() +'/'+ month_last +'/'+ today.getFullYear(),
+        minDate: today.getDate() +'/'+ month +'/'+ today.getFullYear()
     });
 
     $('.chosen-select').chosen();

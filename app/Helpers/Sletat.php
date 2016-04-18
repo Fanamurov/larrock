@@ -52,7 +52,7 @@ class Sletat{
             $key_cache .= $value;
         }
         $key_cache = sha1($key_cache);
-        $data['GetTours'] = Cache::remember('GetTours'. $key_cache, 60, function() use ($data, $request) {
+        $data['GetTours'] = Cache::remember('GetTours'. $key_cache, 2, function() use ($data, $request) {
             $cityFromId = $request->get('cityFromId', $data['GetDepartCities']->first()->Id);
             $countryId = $request->get('countryId', $data['GetCountries']->first()->Id);
             $addict_params = [];
@@ -238,7 +238,6 @@ class Sletat{
         }
         //dd($this->url);
         $result = $this->sendRequest();
-        //dd(collect($result->GetToursResult->Data));
         return collect($result->GetToursResult->Data);
     }
 

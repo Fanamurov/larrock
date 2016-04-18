@@ -136,7 +136,7 @@
         @foreach($GetTours['aaData'] as $item)
             <li class="row">
                 <div class="col-xs-24">
-                    <h4 class="h3">{{ $item[7] }} {{ $item[8] }} ({{ $item[19] }})</h4>
+                    <h4 class="h3">{{ $item[7] }} @if($item[8] !== '0.0'){{ $item[8] }}@endif ({{ $item[19] }})</h4>
                     @if($item[8] === '*')
                         <i class="glyphicon glyphicon-star"></i>
                     @elseif($item[8] === '2*')

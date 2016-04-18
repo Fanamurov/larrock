@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="{{asset('_assets/_santa/_css/min/front.min.css')}}"/>
     <link rel="stylesheet" href="/_assets/bower_components/selectize/dist/css/selectize.bootstrap3.css"/>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,700|Open+Sans+Condensed:300,700|Lobster&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
     @yield('styles')
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -70,7 +71,7 @@
         </section>
         <div class="col-xs-24 col-sm-16 col-md-17">
             <div class="col-xs-24">
-                @include('front.errors')
+                @include('santa.errors')
                 @include('santa.modules.slideshow.mainpage')
                 @include('santa.modules.list.news')
                 @yield('slideshow')
@@ -104,6 +105,5 @@
 
 <!-- Include Date Range Picker -->
 <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
-<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 </body>
 </html>

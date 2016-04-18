@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="/_assets/bower_components/fancybox/source/jquery.fancybox.css"/>
     <link rel="stylesheet" href="/_assets/bower_components/fancybox/source/helpers/jquery.fancybox-buttons.css"/>
     <link rel="stylesheet" href="/_assets/bower_components/fancybox/source/helpers/jquery.fancybox-thumbs.css"/>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,700|Open+Sans+Condensed:300,700|Lobster&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
     @yield('styles')
     <!--[if lt IE 9]>
@@ -74,11 +75,7 @@
         </section>
         <div class="col-xs-24 col-sm-16 col-md-17">
             <div class="col-xs-24">
-                @include('front.errors')
-                <div class="addthis_sharing_toolbox" style="    height: 16px;
-    position: absolute;
-    top: -54px;
-    right: 0;"></div>
+                @include('santa.errors')
             </div>
             @yield('content')
             @yield('contentBottom')
@@ -109,8 +106,7 @@
 <script src="/_assets/bower_components/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="/_assets/bower_components/jquery-validation/dist/additional-methods.min.js"></script>
 
-<!-- Include Date Range Picker -->
 <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
-<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+
 </body>
 </html>

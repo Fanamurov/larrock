@@ -52,11 +52,18 @@ header{
 	a{
 	  color: #c72800;
 	  display: inline-block;
+	  font-size: 18px;
 	  &:hover,
 	  &:focus{
 		font-weight: 600;
 		transition: all .2s linear;
 	  }
+	}
+	>ul{
+	  margin: 0 auto;
+	  text-align: center;
+	  float: none;
+	  display: inline-block;
 	}
 	ul{
 	  margin-bottom: 0;

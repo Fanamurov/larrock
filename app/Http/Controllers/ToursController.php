@@ -212,7 +212,7 @@ class ToursController extends Controller
 		});
 
         $data['best_cost'] = Cache::remember('best_cost'. $data['data']->id, 60, function() use ($sletat) {
-            return $sletat->GetTours(1286, 29, [], 8);
+            return $sletat->GetTours(1286, 29, [], 4);
         });
         if( !array_key_exists('best_cost', $data)){
             Cache::forget('best_cost'. $data['data']->id);
@@ -226,7 +226,7 @@ class ToursController extends Controller
 
 		Breadcrumbs::register('tours.category', function($breadcrumbs, $data)
 		{
-			$breadcrumbs->parent('tours.index');
+			//$breadcrumbs->parent('tours.index');
 			if($data->level !== 1 &&
 				$get_parent = Category::whereType('tours')->whereId($data->parent)->first()){
 				if($get_parent->level !== 1

@@ -137,6 +137,9 @@ class AdminToursController extends Controller
 			foreach($data['data']->get_tours as $key => $tovar){
 				$data['data']->get_tours[$key]['image'] = $tovar->getMedia('images')->sortByDesc('order_column')->first();
 			}
+			foreach($data['data']->get_child as $key => $tovar){
+				$data['data']->get_child[$key]['image'] = $tovar->getMedia('images')->sortByDesc('order_column')->first();
+			}
 		    return $data;
 		});
 
@@ -239,7 +242,9 @@ class AdminToursController extends Controller
 			$data->get_category()->detach($category);
 		}
 
-		if($data->fill($request->all())->save()){
+		$data->fill($request->all());
+		$data->active = $request->input('active', 0);
+		if($data->save()){
 			//Присоединяем разделы
 			foreach($request->input('category') as $category){
 				$data->get_category()->attach($category);

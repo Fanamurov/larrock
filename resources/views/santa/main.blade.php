@@ -29,7 +29,7 @@
         <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
     @endif
 </head>
-<body>
+<body class="{{ $app_name or '' }} {{ $app_param or '' }}">
 <div class="container container-body">
     <header class="row">
         <div class="header-redline container-fluid">
@@ -79,7 +79,9 @@
             </div>
             @yield('content')
             @yield('contentBottom')
-            @include('santa.modules.share.sharing')
+            <div class="content_bottom-sharing">
+                <span>Поделитесь материалом с друзьями:</span> @include('santa.modules.share.sharing')
+            </div>
         </div>
     </section>
 

@@ -19,7 +19,7 @@
                     <img src="{{ $item->getFirstMediaUrl('images', '110x110') }}" alt="{{ $item->title }}">
                 </div>
                 <div class="col-sm-20">
-                    <a class="h4" href="/blog/{{ $item->url }}">{{ $item->title }}</a>
+                    <h4><a href="/blog/{{ $item->url }}">{{ $item->title }}</a></h4>
                     <div class="pageBlogCategory-item_short">{!! $item->short !!}</div>
                     <div>
                         <a class="btn btn-default" href="/blog/{{ $item->url }}">Читать далее</a>

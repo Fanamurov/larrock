@@ -26,7 +26,6 @@
             <button type="submit" class="btn btn-default pull-right" name="submit_zakaz">Заказать тур</button>
             <div class="clearfix"></div>
             <br/>
-            <p class="text-muted">* - Поля, обязательные для заполнения</p>
             <p>Так же вы можете заказать тур
                 по телефону: (4212) 45-45-46
                 или заказать <a href="/page/kontakty/">у нас в офисе</a></p>

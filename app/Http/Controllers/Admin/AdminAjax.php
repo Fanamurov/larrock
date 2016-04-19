@@ -8,6 +8,7 @@ use App\Models\Catalog;
 use App\Models\Category;
 use App\Models\Feed;
 use App\Models\Page;
+use App\Models\Slideshow;
 use App\Models\Tours;
 use EMT\EMTypograph;
 use Illuminate\Http\Request;
@@ -69,7 +70,7 @@ class AdminAjax extends Controller
 		$model_id = Input::get('model_id');
 		foreach($images as $images_value){
 			if($images_value->isValid()){
-				$image_name = $model .'-'. $model_id .'-'.str_slug($images_value->getClientOriginalName()) .'.'. $images_value->getClientOriginalExtension();
+				$image_name = mb_strimwidth($model .'-'. $model_id .'-'.str_slug($images_value->getClientOriginalName()), 0, 150) .'.'. $images_value->getClientOriginalExtension();
 				Image::make($images_value->getRealPath())
 					->save(public_path() .'/image_cache/'. $image_name);
 
@@ -96,6 +97,11 @@ class AdminAjax extends Controller
 				}
 				elseif($model === 'Tours'){
 					$content = Tours::find($model_id);
+					//Сохраняем фото под именем имямодели-idмодели-транслит(название картинки)
+					$content->addMedia(public_path() .'/image_cache/'. $image_name)->toMediaLibrary('images');
+				}
+				elseif($model === 'Slideshow'){
+					$content = Slideshow::find($model_id);
 					//Сохраняем фото под именем имямодели-idмодели-транслит(название картинки)
 					$content->addMedia(public_path() .'/image_cache/'. $image_name)->toMediaLibrary('images');
 				}
@@ -164,6 +170,10 @@ class AdminAjax extends Controller
 				$content = Category::whereId(Input::get('model_id'))->first();
 				return view('admin.plugins.getUploadedImages', ['data' => $content->getMedia('images')->sortByDesc('order_column')]);
 			}
+			if($model === 'Slideshow'){
+				$content = Slideshow::whereId(Input::get('model_id'))->first();
+				return view('admin.plugins.getUploadedImages', ['data' => $content->getMedia('images')->sortByDesc('order_column')]);
+			}
 			if($model === 'Feed'){
 				$content = Feed::whereId(Input::get('model_id'))->first();
 				return view('admin.plugins.getUploadedImages', ['data' => $content->getMedia('images')->sortByDesc('order_column')]);
@@ -193,6 +203,10 @@ class AdminAjax extends Controller
 			return response()->json(['status' => 'success', 'message' => 'Файл удален']);
 		}
 		if(Input::get('model') === 'Tours'){
+			Tours::find(Input::get('model_id'))->deleteMedia(Input::get('id'));
+			return response()->json(['status' => 'success', 'message' => 'Файл удален']);
+		}
+		if(Input::get('model') === 'Slideshow'){
 			Tours::find(Input::get('model_id'))->deleteMedia(Input::get('id'));
 			return response()->json(['status' => 'success', 'message' => 'Файл удален']);
 		}
@@ -227,6 +241,10 @@ class AdminAjax extends Controller
 			}
 			if($model === 'Tours'){
 				$content = Tours::whereId(Input::get('model_id'))->first();
+				return view('admin.plugins.getUploadedFiles', ['data' => $content->getMedia('files')->sortByDesc('order_column')]);
+			}
+			if($model === 'Slideshow'){
+				$content = Slideshow::whereId(Input::get('model_id'))->first();
 				return view('admin.plugins.getUploadedFiles', ['data' => $content->getMedia('files')->sortByDesc('order_column')]);
 			}
 			if($model === 'Feed'){
@@ -265,6 +283,10 @@ class AdminAjax extends Controller
 				}
 				elseif($model === 'Blocks'){
 					$content = Blocks::find($model_id);
+					$content->addMedia(public_path() .'/media/'. $file_name)->toMediaLibrary('files');
+				}
+				elseif($model === 'Slideshow'){
+					$content = Slideshow::find($model_id);
 					$content->addMedia(public_path() .'/media/'. $file_name)->toMediaLibrary('files');
 				}
 				elseif($model === 'Tours'){
@@ -311,6 +333,10 @@ class AdminAjax extends Controller
 			Feed::find(Input::get('model_id'))->deleteMedia(Input::get('id'));
 			return response()->json(['status' => 'success', 'message' => 'Файл удален']);
 		}
+		if(Input::get('model') === 'Slideshow'){
+			Slideshow::find(Input::get('model_id'))->deleteMedia(Input::get('id'));
+			return response()->json(['status' => 'success', 'message' => 'Файл удален']);
+		}
 		return response()->json(['status' => 'error', 'message' => 'Model_Type '. Input::get('model') .' не известна'], 300);
 	}
 
@@ -334,6 +360,9 @@ class AdminAjax extends Controller
 				$url = $url .'-'. mt_rand(2, 999);
 			}
 			if(Input::get('table') === 'blocks' && Blocks::whereUrl($url)->first(['url'])){
+				$url = $url .'-'. mt_rand(2, 999);
+			}
+			if(Input::get('table') === 'slideshow' && Slideshow::whereUrl($url)->first(['url'])){
 				$url = $url .'-'. mt_rand(2, 999);
 			}
 		}

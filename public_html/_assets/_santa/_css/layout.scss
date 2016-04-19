@@ -48,6 +48,12 @@ body{
   }
 }
 
+body.page, body.page, body.blog{
+  .block-module_listStrany{
+	display: none;
+  }
+}
+
 .container-body{
   position: relative;
   //box-shadow: 0 0 30px #c2c2c2;
@@ -207,6 +213,11 @@ h1, .h1{
   color: gold;
 }
 
+li.active a{
+  color: black;
+  text-decoration: none;
+  cursor: default;
+}
 
 @import "sections/header";
 @import "sections/footer";
@@ -231,6 +242,7 @@ h1, .h1{
 @import "plugins/gallery";
 
 @import "page/pages";
+@import "blog/blog";
 @import "sletat/search";
 
 @import "../../bower_components/chosen/chosen";

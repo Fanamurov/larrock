@@ -99,7 +99,9 @@ class AdminBlocksController extends Controller
 		}
 
 		$data = Blocks::find($id);
-		if($data->fill($request->all())->save()){
+		$data->fill($request->all());
+		$data->active = $request->input('active', 0);
+		if($data->save()){
 			Alert::add('success', 'Материал '. $request->input('title') .' изменен')->flash();
 			$plugins->update($this->config['plugins_backend']);
 			\Cache::flush();

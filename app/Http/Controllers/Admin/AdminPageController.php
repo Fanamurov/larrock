@@ -54,8 +54,8 @@ class AdminPageController extends Controller
 	public function create(ContentPlugins $ContentPlugins)
 	{
         $test = Request::create('/admin/page', 'POST', [
-            'title' => 'Черновик страницы',
-            'url' => str_slug('Черновик страницы'),
+            'title' => 'Новый материал',
+            'url' => str_slug('Новый материал'),
             'active' => 0
         ]);
         return $this->store($test, $ContentPlugins);
@@ -101,7 +101,9 @@ class AdminPageController extends Controller
 		}
 
 		$data = Page::find($id);
-		if($data->fill($request->all())->save()){
+		$data->fill($request->all());
+		$data->active = $request->input('active', 0);
+		if($data->save()){
 			Alert::add('success', Lang::get('apps.update.success', ['name' => $request->input('title')]))->flash();
 			$plugins->update($this->config['plugins_backend']);
 			return back();

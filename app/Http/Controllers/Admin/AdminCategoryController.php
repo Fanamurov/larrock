@@ -30,16 +30,6 @@ class AdminCategoryController extends Controller
 		}
 	}
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
 	/**
 	 * Show the form for creating a new resource.
 	 *
@@ -145,17 +135,6 @@ class AdminCategoryController extends Controller
 		Alert::add('error', 'Раздел '. $request->input('title') .' не добавлен')->flash();
 		return back()->withInput();
 	}
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
 	/**
 	 * Show the form for editing the specified resource.

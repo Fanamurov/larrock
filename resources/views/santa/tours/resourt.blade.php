@@ -2,9 +2,12 @@
 @section('title') {{ $data->title }} @endsection
 
 @section('content')
-    {!! Breadcrumbs::render('tours.category', $data) !!}
     <div class="toursPageCountry row">
-        <h1>{{ $data->title }}</h1>
+        <div class="col-xs-24">
+            {!! Breadcrumbs::render('tours.category', $data) !!}
+            @include('santa.modules.share.sharing')
+        </div>
+        <div class="clearfix"></div>
         <div class="toursPageCountry-photo">
             @if(count($data->images) > 0)
                 <div id="carousel-country" class="carousel slide" data-ride="carousel">

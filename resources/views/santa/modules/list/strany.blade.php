@@ -6,7 +6,7 @@
                 @foreach($item->get_childActive as $child) @if(isset($data->id) && $data->id === $child->id) active @endif @endforeach">
                     <a role="button" data-toggle="collapse" data-parent="#accordion_listStrany" href="#collapse{{ $item->id }}"
                        aria-expanded="true" aria-controls="collapse{{ $item->id }}">
-                        <span class="flag-icon flag-icon-gr"></span> {{ $item->title }}
+                        <span class="flag-icon flag-icon-{!! mb_strimwidth($item->url, 0, 2) !!}"></span> {{ $item->title }}
                     </a>
                 </p>
             </div>

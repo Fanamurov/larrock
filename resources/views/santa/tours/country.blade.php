@@ -61,8 +61,8 @@
                 </div>
             </div>
             <ul class="nav nav-tabs" role="tablist">
-                <li class="load-map" role="presentation"><a href="#tour-map" aria-controls="tour-map" role="tab" data-toggle="tab">На карте</a></li>
-                <li role="presentation" class="active"><a href="#tour-photo" aria-controls="tour-photo" role="tab" data-toggle="tab">Фото</a></li>
+                <li class="load-map" role="presentation"><a href="#tour-map" aria-controls="tour-map" role="tab" data-toggle="tab"><i class="fi flaticon-travel-5"></i> На карте</a></li>
+                <li role="presentation" class="active"><a href="#tour-photo" aria-controls="tour-photo" role="tab" data-toggle="tab"><i class="fi flaticon-technology"></i> Фото</a></li>
             </ul>
         </div>
         <div class="toursPageCountry-short row">

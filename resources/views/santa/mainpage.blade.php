@@ -72,7 +72,7 @@
         <div class="col-xs-24 col-sm-16 col-md-17">
             <div class="col-xs-24">
                 @include('santa.errors')
-                @include('santa.modules.slideshow.mainpage')
+                @include('santa.modules.slideshow.mainpage', $slideshow)
                 @include('santa.modules.list.news')
                 @yield('slideshow')
                 @yield('content')

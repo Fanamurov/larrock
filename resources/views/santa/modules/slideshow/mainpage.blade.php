@@ -1,55 +1,45 @@
-<div id="carousel-mainpage" class="carousel slide" data-ride="carousel">
-    <!-- Indicators -->
-    <ol class="carousel-indicators">
-        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-    </ol>
+@if(count($slideshow['big']) > 0)
+    <div id="carousel-mainpage" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+            @for($i=1; $i < count($slideshow['big']); $i++)
+                <li data-target="#carousel-example-generic" data-slide-to="{{ $i }}"></li>
+            @endfor
+        </ol>
 
-    <!-- Wrapper for slides -->
-    <div class="carousel-inner" role="listbox">
-        <div class="item active">
-            <a href="http://www.santa-avia.ru/tours/angliyskaya-derevnya/">
-                <img src="/test/slideshow/derevnya.jpg" alt="Английская деревня" class="all-width">
-            </a>
-            <div class="carousel-caption">
-                <p><strong>ENGLISH VILLAGE</strong><br/>
-                    Английская деревня 2016<br/>
-                    С 11 по 25 июня 2016<br/>
-                    Группа с руководителем</p>
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+            @foreach($slideshow['big'] as $key => $value)
+                <div class="item @if($key === 0) active @endif">
+                    <a href="{{ $value->banner_url }}">
+                        <img src="/_assets/_santa/_images/main_big_banner_button.png" class="banner_button" alt="Подробнее">
+                        <img src="{{ $value->images->first()->getUrl() }}" alt="{{ $value->title }}" class="all-width">
+                    </a>
+                </div>
+            @endforeach
+        </div>
+
+        <!-- Controls -->
+        <a class="left carousel-control" href="#carousel-mainpage" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#carousel-mainpage" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+@endif
+@if(count($slideshow['small']) > 0)
+    <div class="row block-akcii">
+        @foreach($slideshow['small'] as $value)
+            <div class="col-sm-8">
+                <a href="{{ $value->banner_url }}">
+                    <img src="{{ $value->images->first()->getUrl() }}" class="all-width">
+                </a>
             </div>
-        </div>
-        <div class="item">
-            <a href="http://www.santa-avia.ru/tours/detskiy-tsentr-orlyenok/">
-                <img src="/test/slideshow/orlenok1.jpg" alt="Детский центр Орленок" class="all-width">
-            </a>
-            <div class="carousel-caption"></div>
-        </div>
+        @endforeach
     </div>
-
-    <!-- Controls -->
-    <a class="left carousel-control" href="#carousel-mainpage" role="button" data-slide="prev">
-        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-    </a>
-    <a class="right carousel-control" href="#carousel-mainpage" role="button" data-slide="next">
-        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-    </a>
-</div>
-<div class="row block-akcii">
-    <div class="col-sm-8">
-        <a href="http://www.santa-avia.ru/tours/angliyskaya-derevnya/">
-            <img src="/test/slideshow/derevnya1.jpg" class="all-width">
-        </a>
-    </div>
-    <div class="col-sm-8 text-center">
-        <a href="http://www.santa-avia.ru/tours/angliyskaya-derevnya/">
-            <img src="/test/slideshow/e4a94b8ac52e23dd7f9e84a1d9905e7d.png" class="all-width">
-        </a>
-    </div>
-    <div class="col-sm-8 text-right">
-        <a href="http://www.santa-avia.ru/tours/angliyskaya-derevnya/">
-            <img src="/test/slideshow/fly.jpg" class="all-width">
-        </a>
-    </div>
-</div>
+@endif
+<div class="clearfix"></div>

@@ -144,7 +144,9 @@ class AdminMenuController extends Controller
         }
 
         $data = Menu::find($id);
-        if($data->fill($request->all())->save()){
+		$data->fill($request->all());
+		$data->active = $request->input('active', 0);
+        if($data->save()){
             Alert::add('success', 'Пункт меню '. $request->input('title') .' изменен')->flash();
             return back();
         }

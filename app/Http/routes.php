@@ -36,6 +36,13 @@ Route::get('/blog/{item}', [
 	'as' => 'blog.item', 'uses' => 'BlogController@getItem'
 ]);
 
+Route::get('/feed/visovaya-podderjka', [
+	'as' => 'visa.main', 'uses' => 'FeedController@index'
+]);
+Route::get('/feed/visovaya-podderjka/{item}', [
+	'as' => 'visa.item', 'uses' => 'FeedController@getItem'
+]);
+
 Route::get('/news', [
     'as' => 'news.main', 'uses' => 'NewsController@index'
 ]);
@@ -135,8 +142,9 @@ Route::group(['prefix' => 'admin', 'middleware'=>'level:2'], function(){
 	Route::resource('seo', 'Admin\AdminSeoController');
 	Route::resource('menu', 'Admin\AdminMenuController');
 	Route::resource('feed', 'Admin\AdminFeedController');
-	Route::resource('catalog', 'Admin\AdminCatalogController');
+	//Route::resource('catalog', 'Admin\AdminCatalogController');
 	Route::resource('tours', 'Admin\AdminToursController');
+	Route::resource('slideshow', 'Admin\AdminSlideshowController');
 
 	Route::resource('category', 'Admin\AdminCategoryController');
 	Route::resource('blocks', 'Admin\AdminBlocksController');
@@ -171,25 +179,5 @@ Route::group(['prefix' => 'admin', 'middleware'=>'level:2'], function(){
 		'as' => 'admin.home', 'uses' => 'Admin\AdminPageController@index'
 	]); //Роут главной страницы админки
 
-	Route::get('cart', 'Admin\AdminCartController@index');
-
-	Route::get('/settings/image', 'Admin\AdminSettings\Image@index');
-	Route::post('/settings/image', 'Admin\AdminSettings\Image@store');
-	Route::post('/settings/image/generate', [
-		'as' => 'admin.image.generate', 'uses' => 'Admin\AdminSettings\Image@generate'
-	]);
-
 	Route::get('/blocks/MenuBlock', 'Admin\AdminBlocks\MenuBlock@index');
-
-	Route::get('/wizard', [
-		'as' => 'admin.wizard', 'uses' => 'Admin\AdminWizardController@aliases'
-	]);
-	Route::get('/wizard/check', [
-		'as' => 'admin.wizard.check', 'uses' => 'Admin\AdminWizardController@check'
-	]);
-	Route::get('/wizard/import', [
-		'as' => 'admin.wizard.import', 'uses' => 'Admin\AdminWizardController@import'
-	]);
-
-	Route::post('/wizard', 'Admin\AdminWizardController@storeConfig');
 });

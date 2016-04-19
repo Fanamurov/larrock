@@ -45,12 +45,6 @@
                         <li><a href="{{ action('Admin\AdminSeoController@index') }}">Seo</a></li>
                         <li><a href="{{ action('Admin\AdminMenuController@index') }}">Меню сайта</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="#">Глобальные настройки</a></li>
-                        <li><a href="#">Компоненты</a></li>
-                        <li><a href="#">Модули</a></li>
-                        <li><a href="#">Блоки шаблона</a></li>
-                        <li><a href="{{ action('Admin\AdminSettings\Image@index') }}">Картинки</a></li>
-                        <li role="separator" class="divider"></li>
                         <li class="hovered">
                             <a href="#" id="clear_cache"><i class="fa fa-trash-o"></i> Очистить кэш</a>
                         </li>

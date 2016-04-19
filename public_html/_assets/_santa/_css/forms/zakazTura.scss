@@ -21,3 +21,8 @@
 	}
   }
 }
+.row-zakazSert{
+  ul{
+	@include list-mart()
+  }
+}

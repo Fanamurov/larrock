@@ -71,8 +71,8 @@ class AdminFeedController extends Controller
 			$category = Category::whereType('feed')->first();
 		}
 		$test = Request::create('/admin/feed', 'POST', [
-			'title' => 'Черновик страницы',
-			'url' => str_slug('Черновик страницы'),
+			'title' => 'Новый материал',
+			'url' => str_slug('Новый материал'),
 			'category' => $request->get('category', $category->id),
 			'active' => 0
 		]);
@@ -210,9 +210,11 @@ class AdminFeedController extends Controller
 		}
 
 		$data = Feed::find($id);
+		$data->fill($request->all());
+		$data->active = $request->input('active', 0);
 		$data->user_id = $this->current_user->id;
 
-		if($data->fill($request->all())->save()){
+		if($data->save()){
 			Alert::add('success', 'Материал '. $request->input('title') .' изменен')->flash();
 			$plugins->update($this->config['plugins_backend']);
 			\Cache::flush();

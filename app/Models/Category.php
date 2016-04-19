@@ -190,15 +190,7 @@ class Category extends Model implements HasMediaConversions
 
 	public function getShortWrapAttribute()
 	{
-		$string = strip_tags($this->short);
-		$string = substr($string, 0, 200);
-		$string = rtrim($string, "!,.-");
-		$string = substr($string, 0, strrpos($string, ' '));
-		if(strlen($string) > 0){
-			return $string .'...';
-		}else{
-			return $string;
-		}
+		return mb_strimwidth($this->short, 0, 200, '...');
 	}
 
 	public function getFirstImageAttribute()

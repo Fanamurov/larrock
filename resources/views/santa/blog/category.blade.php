@@ -29,3 +29,7 @@
         @endforeach
     </div>
 @endsection
+
+@section('contentBottom')
+    @include('santa.modules.html.socialGroups')
+@endsection

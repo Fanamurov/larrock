@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Modules\ListCatalog;
 use App\Models\Category;
 use App\Models\Tours;
 use Breadcrumbs;
@@ -35,11 +34,11 @@ class ToursController extends Controller
         \View::share('SearchFormShort', $sletat->getSearchForm());
 	}
 
-	public function getAllTovars(Request $request, ListCatalog $listCatalog)
+	public function getAllTours(Request $request)
 	{
 		Breadcrumbs::register('tours.all', function($breadcrumbs)
 		{
-			$breadcrumbs->parent('tours.index');
+			//$breadcrumbs->parent('tours.index');
 			$breadcrumbs->push('Все туры');
 		});
 
@@ -48,7 +47,6 @@ class ToursController extends Controller
 			//Основной запрос для вывода
 			return Tours::all();
 		});
-		$data['module_listCatalog'] = $listCatalog->categories();
 		foreach($data['data'] as $key => $value){
 			$data['data'][$key]['images'] = $value->getMedia('images')->sortByDesc('order_column');
 		}
@@ -62,7 +60,7 @@ class ToursController extends Controller
 			'query' => $request->query(),
 		]);
 
-		$data['seo']['title'] = 'Все товары каталога';
+		$data['seo']['title'] = 'Все туры';
 
 		return view('santa.tours.items-all', $data);
 	}
@@ -195,6 +193,8 @@ class ToursController extends Controller
 			}
 			$breadcrumbs->push($data->title);
 		});
+
+		$data['seo']['title'] = 'Страна';
 
 		return view('santa.tours.country', $data);
 	}

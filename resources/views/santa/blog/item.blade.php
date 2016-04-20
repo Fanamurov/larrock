@@ -18,3 +18,8 @@
         </div>
     </div>
 @endsection
+
+@section('contentBottom')
+    @include('santa.modules.cackle.comments')
+    @include('santa.modules.html.socialGroups')
+@endsection

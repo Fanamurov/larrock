@@ -1,17 +1,29 @@
 #carousel-mainpage{
   .carousel-caption{
 	left: 3%;
-	width: 189px;
-	bottom: inherit;
-	top: 10%;
+	width: 211px;
+	bottom: 0;
+	top: 0;
 	text-align: left;
 	font-size: 17px;
 	line-height: 27px;
+	background: red;
+	padding: 15px 0;
   }
   .banner_button{
 	position: absolute;
 	right: 0;
 	bottom: 0;
+  }
+  .carousel-control{
+	width: 5%;
+	&.right, &.left{
+	  background: none;
+	  &:hover{
+		background: linear-gradient(to right, rgba(0,0,0,0.0001) 0, rgba(0,0,0,0.5) 100%);
+		opacity: .5;
+	  }
+	}
   }
 }
 

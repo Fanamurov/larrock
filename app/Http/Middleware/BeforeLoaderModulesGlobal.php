@@ -67,7 +67,7 @@ class BeforeLoaderModulesGlobal
                 foreach($module_vidy as $key => $item){
 					$title = str_replace(' ', '<br/>', $item->title);
 					$title = str_replace('<br/>и', ' и', $title);
-					$title = str_replace('<br/>c', ' c', $title);
+					$title = str_replace('<br/>с', ' c', $title);
                     $sub->url('/tours/vidy-otdykha/'. $item->url, $title, ['icon' => $item->url]);
                 }
             });

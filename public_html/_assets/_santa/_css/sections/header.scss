@@ -29,7 +29,7 @@ header{
 	}
   }
   .header-address{
-	padding-top: 20px;
+	padding-top: 25px;
 	line-height: 30px;
 	.city{
 	  font-size: 25px;
@@ -37,8 +37,15 @@ header{
 	}
 	.phone{
 	  text-decoration: none;
-	  font-size: 30px;
-	  line-height: 33px;
+	  font-size: 37px;
+	  font-weight: 600;
+	  line-height: 43px;
+	  display: inline-block;
+	  margin-bottom: 5px;
+	}
+	.rejim{
+	  font-size: 17px;
+	  line-height: 20px;
 	}
   }
 

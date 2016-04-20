@@ -52,7 +52,7 @@ Route::get('/news/{item}', [
 
 //TOURS
 Route::get('/tours/all', [
-	'as' => 'tours.all', 'uses' => 'ToursController@getAllTovars'
+	'as' => 'tours.all', 'uses' => 'ToursController@getAllTours'
 ]);
 Route::get('/tours/strany', [
 	'as' => 'tours.strany', 'uses' => 'ToursController@getStrany'
@@ -90,11 +90,14 @@ Route::get('/search/tours', [
 Route::any('/sletat', [
 	'as' => 'sletat.form', 'uses' => 'SletatController@getFullSearchForm'
 ]);
-Route::get('/sletat/GetLoadState', [
-    'as' => 'sletat.GetLoadState', 'uses' => 'SletatController@GetLoadState'
+Route::get('/sletat/GetLoadState/{requestId}', [
+    'as' => 'sletat.GetLoadState', 'uses' => 'SletatController@getLoadState'
 ]);
-Route::get('/sletat/ActualizePrice/{sourceId?}/{offerId?}/{countryId?}/{requestId?}', [
-    'as' => 'sletat.ActualizePrice', 'uses' => 'SletatController@ActualizePrice'
+Route::post('/sletat/GetToursUpdated/{requestId}', [
+	'as' => 'sletat.GetToursUpdated', 'uses' => 'SletatController@GetToursUpdated'
+]);
+Route::get('/sletat/ActualizePrice', [
+    'as' => 'sletat.ActualizePrice', 'uses' => 'SletatController@getActualizePrice'
 ]);
 
 Route::post('/ajax/editPerPage', [

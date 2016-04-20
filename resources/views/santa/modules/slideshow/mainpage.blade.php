@@ -13,6 +13,7 @@
             @foreach($slideshow['big'] as $key => $value)
                 <div class="item @if($key === 0) active @endif">
                     <a href="{{ $value->banner_url }}">
+                        <span class="carousel-caption">{!! $value->description !!}</span>
                         <img src="/_assets/_santa/_images/main_big_banner_button.png" class="banner_button" alt="Подробнее">
                         <img src="{{ $value->images->first()->getUrl() }}" alt="{{ $value->title }}" class="all-width">
                     </a>

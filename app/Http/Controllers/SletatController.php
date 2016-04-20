@@ -35,4 +35,23 @@ class SletatController extends Controller
         $data = $sletat->getFullSearchForm($request);
 		return view('santa.sletat.searchForm', $data);
 	}
+
+	public function getLoadState(Sletat $sletat, $requestId)
+	{
+		echo $sletat->GetLoadState($requestId);
+	}
+
+	public function GetToursUpdated(Request $request, Sletat $sletat, $requestId)
+	{
+		$data['GetTours'] = $sletat->GetToursUpdated($request, $requestId);
+		$data['full_load'] = 'TRUE';
+		return view('santa.sletat.searchResult', $data);
+	}
+
+	public function getActualizePrice(Request $request, Sletat $sletat)
+	{
+		return view('santa.sletat.loadTour');
+		//$data['ActualizePrice'] = $sletat->ActualizePrice($request);
+		//dd($data);
+	}
 }

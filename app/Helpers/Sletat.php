@@ -6,6 +6,7 @@ use Cache;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use GuzzleHttp;
+use Session;
 
 class Sletat{
 
@@ -52,7 +53,7 @@ class Sletat{
             $key_cache .= $value;
         }
         $key_cache = sha1($key_cache);
-        $data['GetTours'] = Cache::remember('GetTours'. $key_cache, 2, function() use ($data, $request) {
+        $data['GetTours'] = Cache::remember('GetTours'. $key_cache, 60, function() use ($data, $request) {
             $cityFromId = $request->get('cityFromId', $data['GetDepartCities']->first()->Id);
             $countryId = $request->get('countryId', $data['GetCountries']->first()->Id);
             $addict_params = [];
@@ -241,21 +242,56 @@ class Sletat{
         return collect($result->GetToursResult->Data);
     }
 
+	public function GetToursUpdated(Request $request, $requestId)
+	{
+		$cityFromId = $request->get('cityFromId');
+		$countryId = $request->get('countryId');
+		$addict_params = [];
+		$explode_date = explode(' - ', $request->get('date-int')); //04/11/2016 - 04/22/2016
+		if(array_key_exists(1, $explode_date)){
+			$addict_params['s_departFrom'] = trim($explode_date[0]);
+			$addict_params['s_departTo'] = trim($explode_date[1]);
+		}
+		$addict_params['s_priceMin'] = $request->get('s_priceMin');
+		$addict_params['s_priceMax'] = $request->get('s_priceMax');
+		$addict_params['s_nightsMin'] = $request->get('s_nightsMin', 1);
+		$addict_params['s_nightsMax'] = $request->get('s_nightsMax', 29);
+		$addict_params['s_adults'] = $request->get('s_adults', 2);
+		$addict_params['s_kids'] = $request->get('s_kids', 0);
+
+		$this->url = 'http://module.sletat.ru/Main.svc/GetTours'. $this->login_params .'&countryId='. $countryId
+			.'&cityFromId='. $cityFromId .'&s_hotelIsNotInStop=false&s_hasTickets=true&s_ticketsIncluded=true'
+			.'&updateResult=1&includeDescriptions=1&includeOilTaxesAndVisa=0&pageSize='. $pageSize = 30 .'&pageNumber=1&requestId='. $requestId;
+		foreach ($addict_params as $key => $item){
+			$this->url .= '&'.$key .'='. $item;
+		}
+		$result = $this->sendRequest();
+		return collect($result->GetToursResult->Data);
+	}
+
     /**
      * Метод GetLoadState возвращает статус обработки запроса для каждого туроператора.
      *
      * @param $requestId
-     * @return mixed
+     * @return mixed		Процент выполнения запроса
      */
     public function GetLoadState($requestId = '1658708531')
     {
         $this->url = 'http://module.sletat.ru/Main.svc/GetLoadState'. $this->login_params .'&requestId='. $requestId;
         $result = $this->sendRequest();
         $data = collect($result->GetLoadStateResult->Data);
-        foreach ($data as $value){
-
-        }
-        return collect($result->GetLoadStateResult->Data);
+		if($data[0]->IsError === true){
+			abort('503', 'Некорректный запрос '. $data[0]->ErrorMessage);
+		}
+		$all = count($data); //Общее количество операторов поиска
+		$load = 0; //Сколько загружено
+		foreach($data as $value){
+			if($value->IsProcessed === true){
+				++$load;
+			}
+		}
+		$result = ceil(($load*100)/$all);
+        return $result;
     }
 
     /**

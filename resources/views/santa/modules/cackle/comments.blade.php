@@ -1,16 +1,8 @@
-@extends('santa.main')
-@section('title') Отзывы @endsection
-
-@section('content')
-    <div class="pageOpinions">
-    <h1>Отзывы путешественников о "Санта Авиа"</h1>
-    <div id="mc-review"></div>
-@endsection
-
+<br/><br/><div id="mc-container"></div>
 @section('scripts')
     <script type="text/javascript">
         cackle_widget = window.cackle_widget || [];
-        cackle_widget.push({widget: 'Review', id: '30688', channel: '/otzyvy/',
+        cackle_widget.push({widget: 'Comment', id: '30688', channel: '{!! URL::current() !!}',
         });
         (function() {
             var mc = document.createElement('script');

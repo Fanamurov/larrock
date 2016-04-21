@@ -16,10 +16,17 @@ $(document).ready(function(){
     });
 
     $('.item-catalog').matchHeight();
+    $('.CategoryInfoList-item').matchHeight();
+    $('.filter-item').matchHeight();
 
     $('.attributes-config-item').find('button').click(function () {
         $(this).parent().find('button').removeClass('active');
         $(this).addClass('active');
+        var price = $(this).attr('data-price');
+        var quantity = $(this).attr('data-quantity');
+        $('.btn-add-to-cart').attr('data-price', price);
+        $('.quantity-item').html(quantity);
+        $('.price-item').html(price);
     });
 
     $('.show_menu').click(

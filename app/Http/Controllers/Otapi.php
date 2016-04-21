@@ -25,11 +25,6 @@ class Otapi extends Controller
         View::share('menu', $this->getMenu());
     }
 
-    public function test()
-    {
-        return view('tbkhv.tovarTest', []);
-    }
-
     public function create_request($method, $params = [])
     {
         $param_request = '';
@@ -246,6 +241,7 @@ class Otapi extends Controller
 
                 $breadcrumbs->push('Товар');
             });
+			View::share('moduleLast', $this->ModuleLastTovars());
             return view('otapi.tovarItem', $body);
         }else{
             abort('404', 'Товар не получен');

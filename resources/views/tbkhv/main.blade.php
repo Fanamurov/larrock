@@ -34,7 +34,7 @@
 <div class="header_line row">
     <div class="container">
         <div class="col-xs-24 col-sm-18">
-            <ul class="nav nav-pills">
+            <ul class="nav nav-pills nav-menu">
                 <li>
                     <a href="#">Доставка</a>
                 </li>
@@ -97,7 +97,9 @@
     </header>
 
     <div class="header-top_menu">
-        @include('tbkhv.modules.menu.catalog', $menu)
+        @if(Route::current()->getName() !== 'mainpage')
+            @include('tbkhv.modules.menu.catalog', $menu)
+        @endif
         <div class="col-xs-6 block-categories pointer show_menu">
             <span class="text-uppercase"><i class="fa fa-reorder"></i> Категории товаров</span>
         </div>

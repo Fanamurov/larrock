@@ -101,7 +101,7 @@ Route::get('/otapi/vendor/{vendorId}', [
 Route::get('/otapi/{categoryId}', [
     'as' => 'otapi.category', 'uses' => 'Otapi@get_category'
 ]);
-Route::get('/otapi/{categoryId}/list', [
+Route::get('/otapi/{categoryId}', [
     'as' => 'otapi.category.tovars', 'uses' => 'Otapi@get_tovarsCategory'
 ]);
 Route::post('/otapi/{categoryId}', [

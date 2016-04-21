@@ -142,6 +142,11 @@ a{
   }
 }
 
+.nav>li>a{
+  padding: 2px 15px;
+}
+
+
 @import "sections/header";
 @import "sections/footer";
 @import "catalog/item";

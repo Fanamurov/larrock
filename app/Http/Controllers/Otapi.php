@@ -112,10 +112,10 @@ class Otapi extends Controller
                 $breadcrumbs->parent('otapi.index');
 
                 $GetCategoryRootPath = $this->create_request('GetCategoryRootPath', ['categoryId' => $categoryId]);
-                foreach($GetCategoryRootPath->CategoryInfoList->Content->Item as $item){
-                    $breadcrumbs->push((string)$item->Name,
-                        route('otapi.category.tovars', [
-                            'categoryId' => (string)$item->Id]));
+                $categorys = (array)$GetCategoryRootPath->CategoryInfoList->Content;
+                $categorys = array_reverse($categorys['Item']);
+                foreach($categorys as $item){
+                    $breadcrumbs->push((string)$item->Name, route('otapi.category.tovars', ['categoryId' => (string)$item->Id]));
                 }
             });
 
@@ -170,10 +170,10 @@ class Otapi extends Controller
                 $breadcrumbs->parent('otapi.index');
 
                 $GetCategoryRootPath = $this->create_request('GetCategoryRootPath', ['categoryId' => $categoryId]);
-                foreach($GetCategoryRootPath->CategoryInfoList->Content->Item as $item){
-                    $breadcrumbs->push((string)$item->Name,
-                        route('otapi.category.tovars', [
-                            'categoryId' => (string)$item->Id]));
+                $categorys = (array)$GetCategoryRootPath->CategoryInfoList->Content;
+                $categorys = array_reverse($categorys['Item']);
+                foreach($categorys as $item){
+                    $breadcrumbs->push((string)$item->Name, route('otapi.category.tovars', ['categoryId' => (string)$item->Id]));
                 }
             });
 
@@ -237,16 +237,11 @@ class Otapi extends Controller
             {
                 $breadcrumbs->parent('otapi.index');
 
-                $GetCategoryRootPath = Cache::remember('Breadcrumbs.otapi.tovar'. $categoryId, 60, function() use ($categoryId) {
-                    $GetCategoryRootPath = $this->create_request('GetCategoryRootPath', ['categoryId' => $categoryId]);
-                    return json_encode($GetCategoryRootPath->CategoryInfoList->Content);
-                });
-                $GetCategoryRootPath = json_decode($GetCategoryRootPath);
-
-                foreach($GetCategoryRootPath->Item as $item){
-                    $breadcrumbs->push($item->Name,
-                        route('otapi.category.tovars', [
-                            'categoryId' => $item->Id]));
+                $GetCategoryRootPath = $this->create_request('GetCategoryRootPath', ['categoryId' => $categoryId]);
+                $categorys = (array)$GetCategoryRootPath->CategoryInfoList->Content;
+                $categorys = array_reverse($categorys['Item']);
+                foreach($categorys as $item){
+                    $breadcrumbs->push((string)$item->Name, route('otapi.category.tovars', ['categoryId' => (string)$item->Id]));
                 }
 
                 $breadcrumbs->push('Товар');

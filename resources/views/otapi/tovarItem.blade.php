@@ -23,7 +23,7 @@
         <div class="col-xs-10 col-xs-offset-1">
             <h1>{{ $data['OtapiItemFullInfo']['Title'] }}</h1>
             <p class="h4">{{ $data['OtapiItemFullInfo']['OriginalTitle'] }}</p>
-            <p><a href="{{ $data['OtapiItemFullInfo']['TaobaoItemUrl'] }}">[этот товар на таобао]</a></p>
+            <p><a target="_blank" href="{{ $data['OtapiItemFullInfo']['TaobaoItemUrl'] }}">[этот товар на таобао]</a></p>
             <p class="cost">
                 <span class="strong-heavy">{{ $data['OtapiItemFullInfo']['Price']['ConvertedPriceWithoutSign'] }}</span>
                 {{ $data['OtapiItemFullInfo']['Price']['CurrencySign'] }}
@@ -49,9 +49,8 @@
                             <label>{{ $attribute['PropertyName'] }}:</label>
                         @endif
                         @if(array_key_exists('MiniImageUrl', $attribute) && $attribute['MiniImageUrl'] !== '')
-                            <button type="button" class="btn btn-default fancybox @if($change) active @endif" rel="property" href="{{ $attribute['ImageUrl'] }}">
+                            <button type="button" class="btn btn-default @if($change) active @endif" rel="property" title="{{ $attribute['PropertyName'] }} {{ $attribute['Value'] }}">
                                 <img src="{{ $attribute['MiniImageUrl'] }}" alt="{{ $attribute['PropertyName'] }} {{ $attribute['Value'] }}">
-                                {{ $attribute['Value'] }}
                             </button>
                         @else
                             @if(isset($configured[$attribute['@attributes']['Vid']]))

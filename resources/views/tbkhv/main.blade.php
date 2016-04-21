@@ -74,22 +74,22 @@
                 <div class="col-xs-8">
                     <i class="fa fa-truck"></i>
                     <p>
-                        <span class="strong text-uppercase">Наша доставка из Китая</span><br/>
-                        <span class="color-grey">Везем в собственных грузовиках</span>
+                        <span class="strong text-uppercase">СОБСТВЕННЫЙ ТРАНСПОРТ</span><br/>
+                        <span class="color-grey">мы сами доставляем товары из Китая</span>
                     </p>
                 </div>
                 <div class="col-xs-8">
                     <i class="fa fa-money"></i>
                     <p>
-                        <span class="strong text-uppercase">Без лишних трат</span><br/>
-                        <span class="color-grey">Заказывать через нас выгоднее</span>
+                        <span class="strong text-uppercase">НИЗКИЕ ЦЕНЫ</span><br/>
+                        <span class="color-grey">работаем без посредников </span>
                     </p>
                 </div>
                 <div class="col-xs-8">
                     <i class="fa fa-support"></i>
                     <p>
-                        <span class="strong text-uppercase">Все официально</span><br/>
-                        <span class="color-grey">Работаем честно</span>
+                        <span class="strong text-uppercase">РАБОТАЕМ ОФИЦИАЛЬНО</span><br/>
+                        <span class="color-grey">официальное сотрудничество с Китаем</span>
                     </p>
                 </div>
             </div>

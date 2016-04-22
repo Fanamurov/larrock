@@ -41,10 +41,12 @@
             @endif
         </div>
         <div class="toursPageCountry-short row">
-            <div class="col-sm-9">
-                @include('santa.modules.forecast.forecast')
-            </div>
-            <div class="col-sm-15">
+            @if(isset($forecast['var']))
+                <div class="col-sm-9">
+                    @include('santa.modules.forecast.forecast')
+                </div>
+            @endif
+            <div class="@if(isset($forecast['var'])) col-sm-15 @else col-sm-24 @endif">
                 {!! $data->short !!}
             </div>
         </div>
@@ -54,6 +56,14 @@
             <div class="col-xs-24"><h5 class="title-header">Рекомендуемые туры</h5></div>
             @each('santa.tours.blockTour', $data->get_toursActive, 'data')
         </div>
+        @endif
+
+        @if(count($data->get_parent->get_toursActive) > 0)
+            <div class="toursPageCountry-recommented row">
+                <div class="col-xs-24"><h5 class="title-header">{{ $data->get_parent->title }}. Рекомендуемые туры</h5></div>
+                <div class="alert alert-info">Платный пак</div>
+                @each('santa.tours.blockTour', $data->get_parent->get_toursActive, 'data')
+            </div>
         @endif
 
         @if($best_cost['hotelsCount'] > 0)
@@ -66,5 +76,13 @@
         <div class="toursPageCountry-description">
             {!! $data->description !!}
         </div>
+
+        @if(count($other_resourts) > 0)
+            <div class="toursPageCountry-recommented row">
+                <div class="col-xs-24"><h5 class="title-header">{{ $data->get_parent->title }}. Другие курорты</h5></div>
+                <div class="alert alert-info">Платный пак</div>
+                @each('santa.tours.blockTour', $other_resourts, 'data')
+            </div>
+        @endif
     </div>
 @endsection

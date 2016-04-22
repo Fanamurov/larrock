@@ -66,10 +66,12 @@
             </ul>
         </div>
         <div class="toursPageCountry-short row">
-            <div class="col-sm-9">
-                @include('santa.modules.forecast.forecast')
-            </div>
-            <div class="col-sm-15">
+            @if(isset($forecast['var']))
+                <div class="col-sm-9">
+                    @include('santa.modules.forecast.forecast')
+                </div>
+            @endif
+            <div class="@if(isset($forecast['var'])) col-sm-15 @else col-sm-24 @endif">
                 {!! $data->short !!}
             </div>
         </div>

@@ -258,10 +258,11 @@ class Sletat{
 		$addict_params['s_nightsMax'] = $request->get('s_nightsMax', 29);
 		$addict_params['s_adults'] = $request->get('s_adults', 2);
 		$addict_params['s_kids'] = $request->get('s_kids', 0);
+		$pageNumber = $request->get('pageNumber', 1);
 
 		$this->url = 'http://module.sletat.ru/Main.svc/GetTours'. $this->login_params .'&countryId='. $countryId
 			.'&cityFromId='. $cityFromId .'&s_hotelIsNotInStop=false&s_hasTickets=true&s_ticketsIncluded=true'
-			.'&updateResult=1&includeDescriptions=1&includeOilTaxesAndVisa=0&pageSize='. $pageSize = 30 .'&pageNumber=1&requestId='. $requestId;
+			.'&updateResult=1&includeDescriptions=1&includeOilTaxesAndVisa=0&pageSize='. 30 .'&pageNumber='. $pageNumber .'&requestId='. $requestId;
 		foreach ($addict_params as $key => $item){
 			$this->url .= '&'.$key .'='. $item;
 		}

@@ -16,14 +16,22 @@
             </a>
         </td>
         <td>
-            <a href="/admin/{{ $app['name'] }}/{{ $data_value->id }}">
+            <a class="h4" href="/admin/{{ $app['name'] }}/{{ $data_value->id }}">
                 {{ $data_value->title }}
             </a>
+            <p title="{{ $data_value->updated_at }}"><i class="text-muted">Автор: {{ $current_user->first_name or 'Не известен' }} {{ $current_user->last_name }}<br/>
+            {!! \Carbon\Carbon::createFromTimestamp(strtotime($data_value->updated_at))->diffForHumans(\Carbon\Carbon::now()) !!}</i></p>
         </td>
         <td width="200">
-            <a href="/{{ $app['name'] }}/{{ $data_value->url }}">
-                /{{ $app['name'] }}/{{ $data_value->url }}
-            </a>
+            @if($app['name'] === 'tours')
+                <a href="/strany/{{ $data_value->url }}">
+                    /strany/{{ $data_value->url }}
+                </a>
+            @else
+                <a href="/{{ $app['name'] }}/{{ $data_value->url }}">
+                    /{{ $app['name'] }}/{{ $data_value->url }}
+                </a>
+            @endif
         </td>
         <td class="row-position">
             <input type="text" name="position" value="{{ $data_value->position }}" class="ajax_edit_row form-control"

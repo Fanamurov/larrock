@@ -100,32 +100,6 @@ Route::get('/sletat/ActualizePrice', [
     'as' => 'sletat.ActualizePrice', 'uses' => 'SletatController@getActualizePrice'
 ]);
 
-Route::post('/ajax/editPerPage', [
-	'as' => 'ajax.editPerPage', 'uses' => 'Ajax@editPerPage'
-]);
-Route::post('/ajax/sort', [
-	'as' => 'ajax.sort', 'uses' => 'Ajax@sort'
-]);
-Route::post('/ajax/vid', [
-	'as' => 'ajax.vid', 'uses' => 'Ajax@vid'
-]);
-Route::post('/ajax/cartAdd', [
-	'as' => 'ajax.cartAdd', 'uses' => 'Ajax@cartAdd'
-]);
-Route::post('/ajax/cartRemove', [
-	'as' => 'ajax.cartRemove', 'uses' => 'Ajax@cartRemove'
-]);
-Route::post('/ajax/cartQty', [
-	'as' => 'ajax.cartQty', 'uses' => 'Ajax@cartQty'
-]);
-Route::post('/ajax/getTovar', [
-	'as' => 'ajax.getTovar', 'uses' => 'Ajax@getTovar'
-]);
-
-Route::get('/modules/ListCatalog', [
-	'as' => 'modules.listCatalog', 'uses' => 'Modules\ListCatalog@categories'
-]);
-
 Route::get('/cart', [
 	'as' => 'cart.index', 'uses' => 'CartController@getIndex'
 ]);

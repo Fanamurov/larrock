@@ -73,6 +73,8 @@ class Category extends Model implements HasMediaConversions
 		'class_element'
 	];
 
+	protected $guarded = ['user_id'];
+
 	use Eloquence;
 
 	// no need for this, but you can define default searchable columns:

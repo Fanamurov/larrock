@@ -11,10 +11,11 @@
             </a>
         </td>
         <td>
-            <a href="/admin/tours/{{ $data_value->id }}/edit">
+            <a class="h4" href="/admin/tours/{{ $data_value->id }}/edit">
                 {{ $data_value->title }}
             </a>
-            <p>Автор: {{ $current_user->first_name }} {{ $current_user->last_name }}</p>
+            <p title="{{ $data_value->updated_at }}"><i class="text-muted">Автор: {{ $current_user->first_name or 'Не известен' }} {{ $current_user->last_name }}<br/>
+                    {!! \Carbon\Carbon::createFromTimestamp(strtotime($data_value->updated_at))->diffForHumans(\Carbon\Carbon::now()) !!}</i></p>
         </td>
         <td width="200">
             <a href="/tours/{{ $data_value->get_category()->first()->url }}/{{ $data_value->url }}">

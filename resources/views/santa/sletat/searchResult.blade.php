@@ -87,4 +87,22 @@
             </li>
         @endforeach
     </ul>
+
+    <nav>
+        <ul class="pagination pagination-lg">
+            <li>
+                <a href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            @for($i=1; $i <= $paginator['pages']; $i++)
+                <li @if($i === $paginator['current']) class="active" @endif><a href="{{ URL::route('sletat.form') }}">{{ $i }}</a></li>
+            @endfor
+            <li>
+                <a href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
 @endif

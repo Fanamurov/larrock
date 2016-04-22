@@ -2,10 +2,12 @@
 @section('title') {{ $data->title }} @endsection
 
 @section('content')
-    {!! Breadcrumbs::render('tours.item', $data) !!}
-
     <div class="toursPageItem row">
-        <h1>{{ $data->title }}</h1>
+        <div class="col-xs-24">
+            {!! Breadcrumbs::render('tours.item', $data) !!}
+            @include('santa.modules.share.sharing')
+        </div>
+        <div class="clearfix"></div>
         <div class="row">
             <div class="col-xs-24">
                 <div class="toursImage">

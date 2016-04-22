@@ -33,6 +33,9 @@ class SletatController extends Controller
     public function getFullSearchForm(Request $request, Sletat $sletat)
 	{
         $data = $sletat->getFullSearchForm($request);
+		$data['paginator']['all'] = $data['GetTours']['iTotalDisplayRecords'];
+		$data['paginator']['pages'] = ceil($data['GetTours']['iTotalDisplayRecords']/30);
+		$data['paginator']['current'] = $request->get('pageNumber', 1);
 		return view('santa.sletat.searchForm', $data);
 	}
 
@@ -45,6 +48,9 @@ class SletatController extends Controller
 	{
 		$data['GetTours'] = $sletat->GetToursUpdated($request, $requestId);
 		$data['full_load'] = 'TRUE';
+		$data['paginator']['all'] = $data['GetTours']['iTotalDisplayRecords'];
+		$data['paginator']['pages'] = ceil($data['GetTours']['iTotalDisplayRecords']/30);
+		$data['paginator']['current'] = $request->get('pageNumber', 1);
 		return view('santa.sletat.searchResult', $data);
 	}
 

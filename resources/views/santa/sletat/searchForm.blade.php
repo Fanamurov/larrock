@@ -1,5 +1,14 @@
 @extends('santa.main')
-@section('title') Купить тур @endsection
+@section('title')
+    Купить тур
+    @foreach($GetDepartCities as $item)
+        @if($item->Id == Input::get('cityFromId')) {{ $item->Name }} @endif
+    @endforeach (вылет)
+    =>
+    @foreach($GetCountries as $item)
+        @if($item->Id == Input::get('countryId')) {{ $item->Name }} @endif
+    @endforeach (прилет). Поиск тура, отеля. Горящие путевки
+@endsection
 
 @section('content')
     <div class="pageBlogItem">

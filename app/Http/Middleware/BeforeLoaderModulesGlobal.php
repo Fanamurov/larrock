@@ -60,7 +60,8 @@ class BeforeLoaderModulesGlobal
             });
             $menu->dropdown('Страны', function ($sub) use ($module_strany) {
                 foreach ($module_strany as $item){
-                    $sub->url('/tours/strany/'. $item->url, $item->title, ['icon' => 'flag-icon flag-icon-'. mb_strimwidth($item->url, 0, 2)]);
+                    //$sub->url('/tours/strany/'. $item->url, $item->title, ['icon' => 'flag-icon flag-icon-'. mb_strimwidth($item->url, 0, 2)]);
+                    $sub->url('/tours/strany/'. $item->url, $item->title);
                 }
             });
             $menu->dropdown('Виды отдыха', function ($sub) use ($module_vidy) {

@@ -4,9 +4,7 @@
 @section('content')
     <div class="ibox float-e-margins">
         <div class="ibox-title background-transparent">
-            <h1 class="inline">
-                Раздел: {{ $data->title }}
-            </h1>
+            {!! Breadcrumbs::render('admin.category.edit', $data) !!}
         </div>
 
         <div>

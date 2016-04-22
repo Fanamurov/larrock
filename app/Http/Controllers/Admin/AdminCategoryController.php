@@ -7,6 +7,8 @@ use App\Helpers\Component;
 use App\Helpers\ContentPlugins;
 use App\Http\Controllers\Admin\AdminBlocks\MenuBlock;
 use App\Models\Category;
+use Breadcrumbs;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -21,13 +23,20 @@ use View;
 class AdminCategoryController extends Controller
 {
 	protected $config;
+	protected $current_user;
 
-	public function __construct(MenuBlock $menu)
+	public function __construct(MenuBlock $menu, Guard $guard)
 	{
 		$this->config = \Config::get('components.category');
 		if(Route::current()){
 			View::share('menu', $menu->index(Route::current()->getUri())->render());
 		}
+
+		Breadcrumbs::register('admin.category.index', function($breadcrumbs){
+			$breadcrumbs->push('Разделы', route('admin.category.index'));
+		});
+
+		$this->current_user = $guard->user();
 	}
 
 	/**
@@ -52,6 +61,12 @@ class AdminCategoryController extends Controller
 		return view('admin.category.create', $data);
     }
 
+	public function show($id)
+	{
+		$find_category = Category::findOrFail($id);
+		return redirect('/admin/'. $find_category->type .'/'. $find_category->id);
+	}
+
 	/**
 	 * Store a newly created resource in storage.
 	 *
@@ -71,6 +86,7 @@ class AdminCategoryController extends Controller
 		$data->fill($request->all());
 		$data->active = $request->input('active', 0);
 		$data->position = $request->input('position', 0);
+		$data->user_id = $this->current_user->id;
 
 		if($request->input('parent') !== 0){
 			if($get_parent = Category::find($request->input('parent'))->first()){
@@ -113,6 +129,7 @@ class AdminCategoryController extends Controller
 		$data->active = $request->input('active', 1);
 		$data->position = $request->input('position', 0);
 		$data->url = str_slug($request->input('title'));
+		$data->user_id = $this->current_user->id;
 
 		if(Category::whereUrl($data->url)->first(['url'])){
 			$data->url = $data->url .'-'. mt_rand(2, 999);
@@ -155,6 +172,27 @@ class AdminCategoryController extends Controller
 
 		$data = Component::tabbable($data);
 
+		Breadcrumbs::register('admin.category.edit', function($breadcrumbs, $data)
+		{
+			$breadcrumbs->parent('admin.category.index');
+			//dd($data);
+			if($find_parent = Category::find($data->id)){
+				if($find_parent_2 = Category::find($find_parent->parent)){
+					$find_parent_3 = Category::find($find_parent_2->parent);
+				}
+			}
+
+			if(isset($find_parent_3->title)){
+				$breadcrumbs->push($find_parent_3->title, route('admin.category.show', $find_parent_3->id));
+			}
+			if(isset($find_parent_2->title)){
+				$breadcrumbs->push($find_parent_2->title, route('admin.category.show', $find_parent_2->id));
+			}
+			if(isset($find_parent->title)){
+				$breadcrumbs->push($find_parent->title, route('admin.category.show', $find_parent->id));
+			}
+		});
+
 		$validator = JsValidator::make(Component::_valid_construct($this->config['rows']));
 		View::share('validator', $validator);
 		return view('admin.category.edit', $data);
@@ -177,6 +215,7 @@ class AdminCategoryController extends Controller
 		}
 
 		$data = Category::find($id);
+		$data->user_id = $this->current_user->id;
 
 		if($data->fill($request->all())->save()){
 			Alert::add('success', 'Материал '. $request->input('title') .' изменен')->flash();

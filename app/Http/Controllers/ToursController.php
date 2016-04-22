@@ -27,7 +27,7 @@ class ToursController extends Controller
 
 		Breadcrumbs::register('tours.index', function($breadcrumbs)
 		{
-			$breadcrumbs->push('Каталог туров', '/');
+			$breadcrumbs->push('Каталог туров', '/tours/all');
 		});
 
         /* Краткая форма поиска от sletat */
@@ -168,7 +168,7 @@ class ToursController extends Controller
 
 
         $data['best_cost'] = Cache::remember('best_cost'. $data['data']->id, 60, function() use ($sletat) {
-            return $sletat->GetTours(1286, 29, [], 4);
+            return $sletat->GetTours(1286, 29, [], 3);
         });
         if( !array_key_exists('best_cost', $data)){
             Cache::forget('best_cost'. $data['data']->id);
@@ -201,18 +201,20 @@ class ToursController extends Controller
 
 	public function getResourt($category, $item, Sletat $sletat, Forecast $forecast)
 	{
-		$data['data'] = Category::whereType('tours')->whereActive(1)->whereUrl($item)->with(['get_toursActive', 'get_childActive'])->first();
+		$data['data'] = Category::whereType('tours')->whereActive(1)->whereUrl($item)->with(['get_toursActive', 'get_childActive', 'get_parent.get_toursActive'])->first();
 
 		if( !$data['data']){
 			return $this->getItem($category, $item);
 		}
+
+		$data['other_resourts'] = Category::whereParent($data['data']->parent)->where('id', '!=', $data['data']->id)->get();
 
 		$data['data']['images'] = Cache::remember('ResourtImages'. $data['data']->id, 60, function() use ($data) {
 			return $data['data']->getMedia('images')->sortByDesc('order_column');
 		});
 
         $data['best_cost'] = Cache::remember('best_cost'. $data['data']->id, 60, function() use ($sletat) {
-            return $sletat->GetTours(1286, 29, [], 4);
+            return $sletat->GetTours(1286, 29, [], 3);
         });
         if( !array_key_exists('best_cost', $data)){
             Cache::forget('best_cost'. $data['data']->id);
@@ -233,7 +235,7 @@ class ToursController extends Controller
 					&& $get_granddad = Category::whereType('tours')->whereId($get_parent->parent)->first()){
 					$breadcrumbs->push($get_granddad->title, '/'. $get_granddad->url);
 				}
-				$breadcrumbs->push($get_parent->title, '/strany/'. $get_parent->url);
+				$breadcrumbs->push($get_parent->title, '/tours/strany/'. $get_parent->url);
 			}
 			$breadcrumbs->push($data->title);
 		});
@@ -264,7 +266,7 @@ class ToursController extends Controller
 				}
 			}
 			$breadcrumbs->push($get_category->title, $url .'/'. $get_category->url);
-			$breadcrumbs->push('Тур');
+			$breadcrumbs->push($data->title, '/tours/strany/'. $data->get_category->first()->url .'/'. $data->url);
 		});
 
 		if($data['data']->get_seo){

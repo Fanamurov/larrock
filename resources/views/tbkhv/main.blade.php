@@ -11,7 +11,7 @@
 
     <link href="{{asset('ico.png?6v')}}" rel="shortcut icon" />
     <link rel="stylesheet" href="/_assets/tbkhv/_css/min/bootstrap.min.css"/>
-    <link rel="stylesheet" href="{{asset('_assets/tbkhv/_css/min/front.min.css')}}"/>
+    <link rel="stylesheet" href="{{asset('_assets/tbkhv/_css/min/tbkhv.min.css')}}"/>
     <link rel="stylesheet" href="/_assets/bower_components/font-awesome/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="/_assets/bower_components/selectize/dist/css/selectize.bootstrap3.css"/>
     <link rel="stylesheet" href="/_assets/bower_components/fancybox/source/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
@@ -97,9 +97,6 @@
     </header>
 
     <div class="header-top_menu">
-        @if(Route::current()->getName() !== 'mainpage')
-            @include('tbkhv.modules.menu.catalog', $menu)
-        @endif
         <div class="col-xs-6 block-categories pointer show_menu">
             <span class="text-uppercase"><i class="fa fa-reorder"></i> Категории товаров</span>
         </div>
@@ -116,28 +113,35 @@
     </div>
     <div class="clearfix"></div>
 
-    @if(Route::current()->getName() !== 'otapi.index')
-        @if(Route::current()->getName() !== 'mainpage')
-            <section class="block-breadcrumbs">
+    <div class="row">
+        <div class="col-xs-6" style="padding-right: 0">
+            @include('tbkhv.modules.menu.catalog-left')
+        </div>
+        <div class="col-xs-18">
+            @if(Route::current()->getName() !== 'otapi.index')
+                @if(Route::current()->getName() !== 'mainpage')
+                    <section class="block-breadcrumbs">
+                        <div class="col-xs-24">
+                            @yield('breadcrumbs')
+                        </div>
+                    </section>
+                @endif
+            @endif
+
+            <section class="block-filters">
                 <div class="col-xs-24">
-                    @yield('breadcrumbs')
+                    @yield('filters')
                 </div>
             </section>
-        @endif
-    @endif
 
-    <section class="block-filters">
-        <div class="col-xs-24">
-            @yield('filters')
+            <section class="row" id="content">
+                <div class="col-xs-24">
+                    @include('front.errors')
+                    @yield('content')
+                </div>
+            </section>
         </div>
-    </section>
-
-    <section class="row" id="content">
-        <div class="col-xs-24">
-            @include('front.errors')
-            @yield('content')
-        </div>
-    </section>
+    </div>
 </div>
 
 <footer class="row footer">

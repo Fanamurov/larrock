@@ -86,7 +86,7 @@ Route::get('/otapi', [
 Route::get('/otapi/menu', [
     'as' => 'otapi.menu', 'uses' => 'Otapi@getMenu'
 ]);
-Route::get('/otapi/search', [
+Route::get('/otapi/search/{page?}', [
     'as' => 'otapi.search', 'uses' => 'Otapi@SearchItemsFrame'
 ]);
 Route::get('/otapi/brand/{brandId}', [
@@ -101,9 +101,9 @@ Route::get('/otapi/vendor/{vendorId}', [
 Route::get('/otapi/{categoryId}', [
     'as' => 'otapi.category', 'uses' => 'Otapi@get_category'
 ]);
-Route::get('/otapi/{categoryId}', [
+/*Route::get('/otapi/{categoryId}/list', [
     'as' => 'otapi.category.tovars', 'uses' => 'Otapi@get_tovarsCategory'
-]);
+]);*/
 Route::post('/otapi/{categoryId}', [
     'as' => 'otapi.category.tovars.filter', 'uses' => 'Otapi@get_tovarsCategoryFilter'
 ]);

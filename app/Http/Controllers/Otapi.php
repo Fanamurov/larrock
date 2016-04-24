@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use GuzzleHttp\Client;
 use Cache;
 use View;
+use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 
 class Otapi extends Controller
 {
@@ -40,7 +41,7 @@ class Otapi extends Controller
             $client = new Client();
             $data = $client->request('GET', $this->service_url . $method .'?'. $this->instanceKey .'&'. $this->lang . $param_request);
             $body = $data->getBody();
-            //Cache::add($cacheKey, $body, 60);
+            Cache::add($cacheKey, $body, 60);
         }
 
         return simplexml_load_string($body);
@@ -78,6 +79,18 @@ class Otapi extends Controller
         }
     }
 
+    public function get_GetCategorySubcategoryInfoList(Request $request, $parentCategoryId)
+    {
+        $body = $this->create_request('GetCategorySubcategoryInfoList', ['parentCategoryId' => $parentCategoryId]);
+        return view('tbkhv.modules.menu.catalog-left', $body);
+    }
+
+    public function get_GetThreeLevelRootCategoryInfoList(Request $request)
+    {
+        $body = $this->create_request('GetThreeLevelRootCategoryInfoList');
+        return view('tbkhv.modules.menu.catalog-left', $body);
+    }
+
     /**
      * Получение частичного списка товаров категории
      *
@@ -91,7 +104,7 @@ class Otapi extends Controller
             return $this->get_tovarsCategoryFilter($request, $categoryId);
         }
         //$framePosition = $request->get('framePosition', 0);
-        $framePosition = $request->get('page', 0) * 60;
+        $framePosition = ($request->get('page', 1)-1) * 60;
         $frameSize = 60;
 
         $body['selected_filters'] = ['0' => 'test'];
@@ -110,14 +123,18 @@ class Otapi extends Controller
                 $categorys = (array)$GetCategoryRootPath->CategoryInfoList->Content;
                 $categorys = array_reverse($categorys['Item']);
                 foreach($categorys as $item){
-                    $breadcrumbs->push((string)$item->Name, route('otapi.category.tovars', ['categoryId' => (string)$item->Id]));
+                    $breadcrumbs->push((string)$item->Name, route('otapi.category', ['categoryId' => (string)$item->Id]));
                 }
             });
 
-            //Пагинатор
-            $body['paginator']['total'] = (string)$body['data']->OtapiItemInfoSubList->TotalCount;
-            $body['paginator']['pages'] = ceil($body['paginator']['total']/$frameSize)-1;
-            $body['paginator']['current'] = $request->get('page', 1);
+            $body['paginator'] = new Paginator(
+                $body['data']->OtapiItemInfoSubList->Content->Item,
+                $body['data']->OtapiItemInfoSubList->TotalCount,
+                $limit = 60,
+                $page = $request->get('page'), [
+                'path'  => $request->url(),
+                'query' => $request->query(),
+            ]);
 
             return view('otapi.categoryTovars', $body);
         }else{
@@ -168,7 +185,7 @@ class Otapi extends Controller
                 $categorys = (array)$GetCategoryRootPath->CategoryInfoList->Content;
                 $categorys = array_reverse($categorys['Item']);
                 foreach($categorys as $item){
-                    $breadcrumbs->push((string)$item->Name, route('otapi.category.tovars', ['categoryId' => (string)$item->Id]));
+                    $breadcrumbs->push((string)$item->Name, route('otapi.category', ['categoryId' => (string)$item->Id]));
                 }
             });
 
@@ -197,7 +214,7 @@ class Otapi extends Controller
             $body['GetItemDescription'] = $this->create_request('GetItemDescription', ['itemId' => $itemId]);
             $body['opinions'] = $this->create_request('GetTradeRateInfoListFrame', ['itemId' => $itemId, 'framePosition' => 0, 'frameSize' => 32]);
             $body['vendorTovars'] = $this->create_request('GetVendorItemInfoSortedListFrame',
-                ['vendorId' => (string)$body['data']->OtapiItemFullInfo->VendorId, 'framePosition' => 0, 'frameSize' => 6, 'sortingParameters' => '']);
+                ['vendorId' => (string)$body['data']->OtapiItemFullInfo->VendorId, 'framePosition' => 0, 'frameSize' => 12, 'sortingParameters' => '']);
             $body['vendor'] = $this->create_request('GetVendorInfo', ['vendorId' => (string)$body['data']->OtapiItemFullInfo->VendorId]);
 
             return json_encode($body);
@@ -236,7 +253,7 @@ class Otapi extends Controller
                 $categorys = (array)$GetCategoryRootPath->CategoryInfoList->Content;
                 $categorys = array_reverse($categorys['Item']);
                 foreach($categorys as $item){
-                    $breadcrumbs->push((string)$item->Name, route('otapi.category.tovars', ['categoryId' => (string)$item->Id]));
+                    $breadcrumbs->push((string)$item->Name, route('otapi.category', ['categoryId' => (string)$item->Id]));
                 }
 
                 $breadcrumbs->push('Товар');
@@ -270,13 +287,22 @@ class Otapi extends Controller
         }
     }
 
-    public function SearchItemsFrame(Request $request)
+    public function SearchItemsFrame(Request $request, $page = 1)
     {
         //http://docs.otapi.net/ru/Documentations/Type?name=OtapiSearchItemsParameters
         $body['data'] = $this->create_request('SearchItemsFrame', [
             'xmlParameters' => '<SearchItemsParameters><ItemTitle>'. $request->get('search') .'</ItemTitle></SearchItemsParameters>',
-            'framePosition' => $request->get('framePosition', 0),
+            'framePosition' => $request->get('framePosition', ($request->get('page', $page)-1)*60),
             'frameSize' => $request->get('frameSize', 60)]);
+
+        $body['paginator'] = new Paginator(
+            $body['data']->Result->Items->Content->Item,
+            $body['data']->Result->Items->TotalCount,
+            $limit = 60,
+            $page = $request->get('page', $page), [
+            'path'  => $request->url(),
+            'query' => $request->query(),
+        ]);
 
         if((string)$body['data']->ErrorCode === 'Ok'){
             return view('otapi.search', $body);
@@ -287,8 +313,28 @@ class Otapi extends Controller
 
     public function getMenu()
     {
-        $body['data'] = $this->create_request('GetRootCategoryInfoList');
-        return $body;
+        $tree = Cache::remember('menu_tree', 60, function() {
+            $body = $this->create_request('GetThreeLevelRootCategoryInfoList');
+            $body = json_encode($body->CategoryInfoList->Content);
+            $body = json_decode($body);
+            $tree = array();
+            $exists_ids = array();
+            foreach ($body->Item as $key => $value){
+                if( !isset($value->ParentId)){
+                    $tree[1][$value->Id] = $value;
+                }else{
+                    if(in_array($value->ParentId, $exists_ids)){
+                        $tree[3][$value->ParentId][] = $value;
+                    }else{
+                        $tree[2][$value->ParentId][] = $value;
+                        $exists_ids[] = $value->Id;
+
+                    }
+                }
+            }
+            return $tree;
+        });
+        return $tree;
     }
 
     public function AddToCart(Request $request)

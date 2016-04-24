@@ -7,6 +7,9 @@
 
 @section('content')
     <div class="page-catalog-item">
+        <div class="col-xs-24">
+            <h1>{{ $data['OtapiItemFullInfo']['Title'] }}</h1>
+        </div>
         <div class="col-xs-7 block-gallery">
             <?$count_picture = 0?>
             @if( !array_key_exists('Large', $data['OtapiItemFullInfo']['Pictures']['ItemPicture']))
@@ -27,7 +30,6 @@
             @endif
         </div>
         <div class="col-xs-10 col-xs-offset-1">
-            <h1>{{ $data['OtapiItemFullInfo']['Title'] }}</h1>
             <p class="h4">{{ $data['OtapiItemFullInfo']['OriginalTitle'] }}</p>
             <p><a href="{{ $data['OtapiItemFullInfo']['TaobaoItemUrl'] }}">[этот товар на таобао]</a></p>
             <p class="cost">

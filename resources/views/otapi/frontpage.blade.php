@@ -3,10 +3,7 @@
 
 @section('content')
     <div class="catalog-frontpage">
-        <div class="col-sm-6 menu-items">
-            @include('tbkhv.modules.menu.catalog-left')
-        </div>
-        <div class="col-sm-18 catalog-frontpage-content">
+        <div class="col-sm-24 catalog-frontpage-content">
             @include('tbkhv.modules.catalog.popular', $modulePopular)
 
             <br/><br/>

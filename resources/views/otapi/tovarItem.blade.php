@@ -40,7 +40,7 @@
                 @if($data['OtapiItemFullInfo']['IsSellAllowed'] === 'false' AND $data['OtapiItemFullInfo']['HasInternalDelivery'] === 'false')
                     Нельзя купить: {{ $data['OtapiItemFullInfo']['SellDisallowReason'] }}
                 @endif
-                @if(isset($configured))
+                @if(isset($configured) && isset($data['OtapiItemFullInfo']['Attributes']['ItemAttribute']))
                     <span class="attributes-config-item">
                     <?$current_conf = ''; $change = NULL;?>
                         @foreach($data['OtapiItemFullInfo']['Attributes']['ItemAttribute'] as $key => $attribute)
@@ -158,11 +158,13 @@
             </div>
             <div role="tabpanel" class="tab-pane" id="description">
                 <div class="col-xs-24">
-                    @foreach($data['OtapiItemFullInfo']['Attributes']['ItemAttribute'] as $attribute)
-                        @if($attribute['IsConfigurator'] === 'false')
-                            <p><i>{{ $attribute['PropertyName'] }}: {{ $attribute['Value'] }}</i></p>
-                        @endif
-                    @endforeach
+                    @if(isset($data['OtapiItemFullInfo']['Attributes']['ItemAttribute']))
+                        @foreach($data['OtapiItemFullInfo']['Attributes']['ItemAttribute'] as $attribute)
+                            @if($attribute['IsConfigurator'] === 'false')
+                                <p><i>{{ $attribute['PropertyName'] }}: {{ $attribute['Value'] }}</i></p>
+                            @endif
+                        @endforeach
+                    @endif
                 </div>
             </div>
             <div role="tabpanel" class="tab-pane" id="opinions">

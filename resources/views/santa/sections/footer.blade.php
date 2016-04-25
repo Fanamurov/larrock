@@ -1,80 +1,91 @@
 <section class="row row-profits">
-    <div class="col-xs-22 col-xs-offset-1">
+    <div class="container">
         <div class="col-xs-24">
-            <p class="h1">Наши преимущества:</p>
-        </div>
-        <div class="col-sm-8">
-            <p><i class="fi flaticon-cup"></i> Ежегодно нам доверяют отдых более 10 000 Клиентов. 70% Клиентов обращаются к нам по рекомендации друзей и знакомых.</p>
-        </div>
-        <div class="col-sm-8">
-            <p><i class="fi flaticon-business"></i> Санта-Авиа – крупнейшая туристическая компания в Хабаровске. Более 10 лет на рынке. </p>
-        </div>
-        <div class="col-sm-8">
-            <p><i class="fi flaticon-transport-2"></i> Возможно путешествие в любую точку мира - наши менеджеры подберут самый оптимальный вариант для Вас!</p>
+            <div class="col-xs-24">
+                <p class="h1">Наши преимущества:</p>
+            </div>
+            <div class="col-sm-8">
+                <p><i class="fi flaticon-cup"></i> Ежегодно нам доверяют отдых более 10 000 Клиентов. 70% Клиентов обращаются к нам по рекомендации друзей и знакомых.</p>
+            </div>
+            <div class="col-sm-8">
+                <p><i class="fi flaticon-business"></i> Санта-Авиа – крупнейшая туристическая компания в Хабаровске. Более 10 лет на рынке. </p>
+            </div>
+            <div class="col-sm-8">
+                <p><i class="fi flaticon-transport-2"></i> Возможно путешествие в любую точку мира - наши менеджеры подберут самый оптимальный вариант для Вас!</p>
+            </div>
         </div>
     </div>
 </section>
 
 <section class="row row-sposob">
-    <div class="col-xs-22 col-xs-offset-1">
+    <div class="container">
         <div class="col-xs-24">
-            <p class="h1">Способы забронировать:</p>
-        </div>
-        <div class="col-sm-8">
-            <p><i class="fi flaticon-phone"></i>
-                <span class="h2">По телефону:</span><br/>
-                <a href="tel:84212454546">(4212) 45-45-46</a></p>
-        </div>
-        <div class="col-sm-8">
-            <p><i class="fi flaticon-hands"></i>
-                <span class="h2">У нас в офисе:</span><br/>
-                <a href="#">Показать на карте</a></p>
-        </div>
-        <div class="col-sm-8">
-            <p><i class="fi flaticon-computer"></i>
-                <span class="h2">Через Интернет:</span><br/>
-                <a href="/">http://www.santa-avia.ru/</a> </p>
+            <div class="col-xs-24">
+                <p class="h1">Способы забронировать:</p>
+            </div>
+            <div class="col-sm-8">
+                <p><i class="fi flaticon-phone"></i>
+                    <span class="h2">По телефону:</span><br/>
+                    <a href="tel:84212454546">(4212) 45-45-46</a></p>
+            </div>
+            <div class="col-sm-8">
+                <p><i class="fi flaticon-hands"></i>
+                    <span class="h2">У нас в офисе:</span><br/>
+                    <a href="#">Показать на карте</a></p>
+            </div>
+            <div class="col-sm-8">
+                <p><i class="fi flaticon-computer"></i>
+                    <span class="h2">Через Интернет:</span><br/>
+                    <a href="/">http://www.santa-avia.ru/</a> </p>
+            </div>
         </div>
     </div>
 </section>
 
 <section class="row row-subscribes">
-    <div class="col-xs-22 col-xs-offset-1">
-        <div class="col-sm-6 col-md-6">
-            <p>Мы в социальных сетях:</p>
-            <p>
-                <a href="http://plus.google.com/u/0/108104903033551495415/posts"><img src="/_assets/_santa/_images/icons/social/social-media.png" alt="google+"></a>
-                <a href="#"><img src="/_assets/_santa/_images/icons/social/social-media-1.png" alt="twitter"></a>
-                <a href="http://instagram.com/santa_avia"><img src="/_assets/_santa/_images/icons/social/social-media-2.png" alt="instagram"></a>
-                <a href="http://vk.com/santa_avia"><img src="/_assets/_santa/_images/icons/social/video.png" alt="vk"></a>
-                <a href="https://www.youtube.com/channel/UCgEmrCMTtruwJvAuzWzia5A"><img src="/_assets/_santa/_images/icons/social/youtube.png" alt="social"></a>
-                <a href="http://www.odnoklassniki.ru/group53664952418315" class="not-decorate odnoklassniki"><i class="socicon-odnoklassniki"></i></a>
-            </p>
-        </div>
-        <div class="col-sm-8 col-md-9">
-            <p>Хотите первыми узнавать об акциях и спецпредложениях? Подпишитесь на e-mail рассылку:</p>
-            <form action="" method="post">
-                <div class="input-group">
-                    <input type="email" name="email-to-subscribe" class="form-control" placeholder="Ваш email">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">Подписаться</button>
-                    </span>
-                </div>
-            </form>
+    <div class="container">
+        <div class="col-xs-24">
+            <div class="col-sm-11">
+                <p>Хотите первыми узнавать об акциях и спецпредложениях?</p>
+                <form action="" method="post">
+                    <div class="input-group">
+                        <input type="email" name="email-to-subscribe" class="form-control" placeholder="Ваш email">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Подписаться на рассылку</button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-offset-6 col-sm-7">
+                <p>Мы в социальных сетях:</p>
+                <p>
+                    <a href="http://plus.google.com/u/0/108104903033551495415/posts"><img src="/_assets/_santa/_images/icons/social/social-media.png" alt="google+"></a>
+                    <a href="#"><img src="/_assets/_santa/_images/icons/social/social-media-1.png" alt="twitter"></a>
+                    <a href="http://instagram.com/santa_avia"><img src="/_assets/_santa/_images/icons/social/social-media-2.png" alt="instagram"></a>
+                    <a href="http://vk.com/santa_avia"><img src="/_assets/_santa/_images/icons/social/video.png" alt="vk"></a>
+                    <a href="https://www.youtube.com/channel/UCgEmrCMTtruwJvAuzWzia5A"><img src="/_assets/_santa/_images/icons/social/youtube.png" alt="social"></a>
+                    <a href="http://www.odnoklassniki.ru/group53664952418315" class="not-decorate odnoklassniki"><i class="socicon-odnoklassniki"></i></a>
+                </p>
+            </div>
         </div>
     </div>
 </section>
 
-<noindex>
-    <section class="row row-licence hidden-sm">
-        <div class="col-sm-12">
-            <p>Font generated by <a rel="nofollow" href="http://www.flaticon.com">flaticon.com</a>.
-                Under <a rel="nofollow" href="http://creativecommons.org/licenses/by/3.0/">CC</a>:
-                <a rel="nofollow" data-file="luxury" href="http://www.flaticon.com/authors/epiccoders">EpicCoders</a>,
-                <a rel="nofollow" data-file="sport" href="http://www.freepik.com">Freepik</a></p>
-        </div>
-        <div class="col-sm-6">
-            <p>Weather api: <a rel="nofollow" href="http://www.pogoda.com">www.погода.com</a></p>
-        </div>
-    </section>
-</noindex>
+<div class="container">
+    <noindex>
+        <section class="row row-licence hidden-sm">
+            <div class="col-sm-12">
+                <p>Font generated by <a rel="nofollow" href="http://www.flaticon.com">flaticon.com</a>.
+                    Under <a rel="nofollow" href="http://creativecommons.org/licenses/by/3.0/">CC</a>:
+                    <a rel="nofollow" data-file="luxury" href="http://www.flaticon.com/authors/epiccoders">EpicCoders</a>,
+                    <a rel="nofollow" data-file="sport" href="http://www.freepik.com">Freepik</a></p>
+            </div>
+            <div class="col-sm-6">
+                <p>Weather api: <a rel="nofollow" href="http://www.pogoda.com">www.погода.com</a></p>
+            </div>
+            <div class="col-sm-6">
+                <p class="text-right">Coding by Fanamurov</p>
+            </div>
+        </section>
+    </noindex>
+</div>

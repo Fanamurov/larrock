@@ -1,15 +1,4 @@
 <header class="row">
-    <div class="header-redline container-fluid">
-        <div class="col-sm-7 col-sm-offset-1">
-            <a href="/forms/podbor">Подобрать тур</a>
-        </div>
-        <div class="col-sm-8 text-center">
-            <a href="/page/aviabilety">Найти авиабилет</a>
-        </div>
-        <div class="col-sm-7 text-right">
-            <a href="#uptocall">Заказать звонок</a>
-        </div>
-    </div>
     <div class="col-sm-15 col-sm-offset-1 header-logo">
         <a href="/">
             <img src="/_assets/_santa/_images/logo.png" width="169" height="115" alt="Туристическая компания Санта-Авиа Хабаровск" class="pull-left">

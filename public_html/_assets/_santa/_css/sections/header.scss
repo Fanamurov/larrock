@@ -1,35 +1,41 @@
-header{
-  .header-redline{
-	background: #c72800;
-	color: white;
-	padding: 5px 0;
-	a{
-	  color: white;
-	  font-size: 14px;
-	  &:hover,
-	  &:focus{
-		color: #e0e0e0;
-	  }
-	}
+.header-redline{
+  background: #c72800;
+  color: #fff;
+  padding: 5px 0;
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 8;
+  a{
+    color: white;
+    font-size: 14px;
+    &:hover,
+    &:focus{
+      color: #e0e0e0;
+    }
   }
+}
+
+header{
   .header-logo{
-	padding-top: 30px;
+	padding-top: 50px;
 	padding-bottom: 20px;
 	a{
 	  text-decoration: none;
 	}
 	span{
 	  display: inline-block;
-	  padding-top: 35px;
+	  padding-top: 46px;
 	  color: black;
-	  font-size: 30px;
+	  font-size: 34px;
+      font-weight: 300;
 	  @media (max-width: 768px) {
 		display: none;
 	  }
 	}
   }
   .header-address{
-	padding-top: 25px;
+	padding-top: 50px;
 	line-height: 30px;
 	.city{
 	  font-size: 25px;

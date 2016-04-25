@@ -6,6 +6,7 @@ use App\Helpers\Sletat;
 use App\Helpers\Slideshow;
 use App\Models\Blog;
 use App\Models\News;
+use Cache;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -27,8 +28,15 @@ class MainpageController extends Controller
 	{
 		$data['seo']['title'] = 'Santa-avia';
 
-		View::share('list_news', News::whereActive(1)->orderBy('date', 'desc')->take(2)->get());
-		View::share('list_blog', Blog::whereActive(1)->orderBy('date', 'desc')->take(2)->get());
+        $list_news = Cache::remember('list_news_mainpage', 600, function() {
+            return News::whereActive(1)->orderBy('date', 'desc')->take(4)->get();
+        });
+        $list_blog = Cache::remember('list_blog_mainpage', 600, function() {
+            return Blog::whereActive(1)->orderBy('date', 'desc')->take(4)->get();
+        });
+
+		View::share('list_news', $list_news);
+		View::share('list_blog', $list_blog);
 
 		return view('santa.mainpage', $data);
 	}

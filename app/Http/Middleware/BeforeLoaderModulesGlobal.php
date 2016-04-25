@@ -23,16 +23,6 @@ class BeforeLoaderModulesGlobal
      */
     public function handle($request, Closure $next)
     {
-		$banner = Cache::remember('banners_mod', 60, function() {
-			if($banner = Blocks::whereUrl('banner')->whereActive(1)->first()){
-				return $banner->getFirstMediaUrl('images');
-			}
-			return NULL;
-		});
-		if($banner){
-			View::share('banner', $banner);
-		}
-
 		$current_uri = explode('/', $request->getRequestUri());
 		View::share('app_name', array_get($current_uri, 1));
 		View::share('app_param', array_get($current_uri, 2));

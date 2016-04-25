@@ -8,6 +8,8 @@ $(document).ready(function(){
 
     $('.toursBlockCategory').matchHeight();
     $('.toursBlockTour').matchHeight();
+    $('.blog-item-module').matchHeight();
+    $('.news-item-module').matchHeight();
 
     $(".fancybox").fancybox({
         helpers	: {
@@ -82,7 +84,8 @@ $(document).ready(function(){
     var month_last = today.getMonth()+2;
     $('input.daterange').daterangepicker({
         locale: {
-            format: 'DD/MM/YYYY'
+            format: 'DD/MM/YYYY',
+            applyLabel: 'Выбрать'
         },
         startDate: today.getDate() +'/'+ month +'/'+ today.getFullYear(),
         endDate: today.getDate() +'/'+ month_last +'/'+ today.getFullYear(),

@@ -2,7 +2,7 @@
     <p class="h3">Блог</p>
     <ul class="list-unstyled list-inline">
         @foreach($list_blog as $item)
-            <li class="col-xs-24 col-sm-12">
+            <li class="col-xs-24 col-sm-12 blog-item-module block-module-padding">
                 <div class="row">
                     <div class="col-sm-8">
                         @if($item->getFirstMediaUrl('images', '110x110'))

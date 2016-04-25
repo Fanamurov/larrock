@@ -114,6 +114,9 @@ a, .link, .link_block_this a, .link_block_this .link{
   text-decoration: underline;
   color: #c72800;
   cursor: pointer;
+  &.not-decorate{
+    text-decoration: none;
+  }
   &:hover,
   &:focus{
 	text-decoration: underline;
@@ -219,6 +222,36 @@ li.active a{
   cursor: default;
 }
 
+label{
+  color: grey;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.row-podbor{
+  .list-profits{
+    padding-top: 100px;
+  }
+}
+
+.odnoklassniki{
+  background: orange;
+  display: inline-block;
+  position: relative;
+  top: 6px;
+  height: 33px;
+  padding-top: 5px;
+  &:hover,
+  &:focus{
+    text-decoration: none;
+  }
+  .socicon-odnoklassniki{
+    font-size: 21px;
+    margin: 6px;
+    color: #fff;
+  }
+}
+
 @import "sections/header";
 @import "sections/footer";
 @import "sections/rightColomn";
@@ -253,3 +286,4 @@ li.active a{
 
 //http://www.flaticon.com/
 @import "../_icons-font/flaticon.scss";
+@import "../_icons-font/socicon.scss";

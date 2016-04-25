@@ -117,6 +117,9 @@ Route::post('/forms/zakazTura', [
 Route::post('/forms/zakazSert', [
 	'as' => 'submit.zakazSert', 'uses' => 'Modules\Forms@send_formZakazSert'
 ]);
+Route::get('/forms/podbor', [
+    'as' => 'submit.podbor', 'uses' => 'Modules\Forms@formPodbor'
+]);
 Route::post('/forms/podbor', [
 	'as' => 'submit.podbor', 'uses' => 'Modules\Forms@send_formPodbor'
 ]);

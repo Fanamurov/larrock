@@ -1,7 +1,7 @@
 <header class="row">
     <div class="header-redline container-fluid">
         <div class="col-sm-7 col-sm-offset-1">
-            <a href="#">Подобрать тур</a>
+            <a href="/forms/podbor">Подобрать тур</a>
         </div>
         <div class="col-sm-8 text-center">
             <a href="/page/aviabilety">Найти авиабилет</a>

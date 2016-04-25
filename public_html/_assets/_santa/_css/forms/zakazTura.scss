@@ -6,23 +6,24 @@
 	  font-style: italic;
 	}
   }
-  .list-profits{
-	padding-top: 50px;
-	li{
-	  padding-bottom: 15px;
-	}
-	p{
-	  font-size: 13px;
-	  line-height: 18px;
-	  &.h3{
-		font-size: 18px;
-		margin-top: 5px;
-	  }
-	}
-  }
 }
 .row-zakazSert{
   ul{
 	@include list-mart()
+  }
+}
+
+.list-profits{
+  padding-top: 50px;
+  li{
+    padding-bottom: 15px;
+  }
+  p{
+    font-size: 13px;
+    line-height: 18px;
+    &.h3{
+      font-size: 18px;
+      margin-top: 5px;
+    }
   }
 }

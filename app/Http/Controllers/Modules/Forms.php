@@ -12,9 +12,9 @@ use Mail;
 
 class Forms extends Controller
 {
-    public function contact()
+    public function formPodbor()
 	{
-		return view('front.modules.forms.contact', []);
+		return view('santa.modules.forms.podbor', []);
 	}
 
 	public function send_form(Request $request)

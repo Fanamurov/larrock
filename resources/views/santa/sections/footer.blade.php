@@ -43,11 +43,12 @@
         <div class="col-sm-6 col-md-6">
             <p>Мы в социальных сетях:</p>
             <p>
-                <a href="#"><img src="/_assets/_santa/_images/icons/social/social-media.png" alt="social"></a>
-                <a href="#"><img src="/_assets/_santa/_images/icons/social/social-media-1.png" alt="social"></a>
-                <a href="#"><img src="/_assets/_santa/_images/icons/social/social-media-2.png" alt="social"></a>
-                <a href="#"><img src="/_assets/_santa/_images/icons/social/video.png" alt="social"></a>
-                <a href="#"><img src="/_assets/_santa/_images/icons/social/youtube.png" alt="social"></a>
+                <a href="http://plus.google.com/u/0/108104903033551495415/posts"><img src="/_assets/_santa/_images/icons/social/social-media.png" alt="google+"></a>
+                <a href="#"><img src="/_assets/_santa/_images/icons/social/social-media-1.png" alt="twitter"></a>
+                <a href="http://instagram.com/santa_avia"><img src="/_assets/_santa/_images/icons/social/social-media-2.png" alt="instagram"></a>
+                <a href="http://vk.com/santa_avia"><img src="/_assets/_santa/_images/icons/social/video.png" alt="vk"></a>
+                <a href="https://www.youtube.com/channel/UCgEmrCMTtruwJvAuzWzia5A"><img src="/_assets/_santa/_images/icons/social/youtube.png" alt="social"></a>
+                <a href="http://www.odnoklassniki.ru/group53664952418315" class="not-decorate odnoklassniki"><i class="socicon-odnoklassniki"></i></a>
             </p>
         </div>
         <div class="col-sm-8 col-md-9">
@@ -77,5 +78,3 @@
         </div>
     </section>
 </noindex>
-
-@include('santa.modules.forms.podbor')

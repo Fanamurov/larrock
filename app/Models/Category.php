@@ -90,29 +90,19 @@ class Category extends Model implements HasMediaConversions
 		return $this->hasOne('App\Models\Seo', 'id_connect', 'id');
 	}
 
-	public function get_tovars()
-	{
-		return $this->belongsToMany('App\Models\Catalog', 'category_catalog', 'category_id', 'catalog_id')->orderBy('position', 'DESC');
-	}
-
 	public function get_feedActive()
 	{
 		return $this->hasMany('App\Models\Feed', 'category', 'id')->whereActive(1)->orderBy('position', 'DESC');
 	}
 
-	public function get_tovarsActive()
+	public function get_blogActive()
 	{
-		return $this->belongsToMany('App\Models\Catalog', 'category_catalog', 'category_id', 'catalog_id')->whereActive(1)->orderBy('position', 'DESC');
+		return $this->hasMany('App\Models\Blog', 'category', 'id')->whereActive(1)->orderBy('position', 'DESC');
 	}
 
-	public function get_tovarsAlias()
+	public function get_visaActive()
 	{
-		return $this->belongsToMany('App\Models\Catalog', 'category_catalog', 'category_id', 'catalog_id')->whereActive(1)->orderBy('position', 'DESC');
-	}
-
-	public function get_tovarsCount()
-	{
-		return $this->belongsToMany('App\Models\Catalog', 'category_catalog', 'category_id', 'catalog_id')->count();
+		return $this->hasMany('App\Models\Visa', 'category', 'id')->whereActive(1)->orderBy('position', 'DESC');
 	}
 
 	public function get_child()

@@ -5,7 +5,9 @@
             <li class="col-xs-24 col-sm-12">
                 <div class="row">
                     <div class="col-sm-8">
-                        <img src="{{ $item->getFirstMediaUrl('images', '110x110') }}" alt="{{ $item->title }}" class="all-width">
+                        @if($item->getFirstMediaUrl('images', '110x110'))
+                            <img src="{{ $item->getFirstMediaUrl('images', '110x110') }}" alt="{{ $item->title }}" class="all-width">
+                        @endif
                     </div>
                     <div class="col-sm-16">
                         <a href="#">{{ $item->title }}</a>
@@ -16,6 +18,6 @@
         @endforeach
     </ul>
     <div class="clearfix"></div>
-    <a href="/feed/news" class="btn btn-default btn-small pull-right">Все новости</a>
+    <a href="/news" class="btn btn-default btn-small pull-right">Все новости</a>
 </div>
 <div class="clearfix"></div>

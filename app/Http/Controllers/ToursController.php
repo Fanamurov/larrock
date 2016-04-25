@@ -93,17 +93,26 @@ class ToursController extends Controller
 		return view('santa.tours.categorysListChilds', $data);
 	}
 
-	public function getVidy()
+	public function getVidy(Request $request, $category)
 	{
-		$data['data'] = Category::whereId(377)->whereActive(1)->with(['get_childActive.get_parent'])->first();
+		$data['data'] = Category::whereUrl($category)->whereActive(1)->with(['get_toursActive'])->first();
 
-		Breadcrumbs::register('tours.category', function($breadcrumbs, $data)
+		Breadcrumbs::register('tours.vid', function($breadcrumbs, $data)
 		{
-			$breadcrumbs->parent('tours.index');
 			$breadcrumbs->push('Виды отдыха');
+			$breadcrumbs->push($data->title);
 		});
 
-		return view('santa.tours.categorysListChilds', $data);
+		$data['paginator'] = new Paginator(
+			$data['data']->get_toursActive(),
+			$data['data']->get_toursActive()->count(),
+			$limit = 60,
+			$page = $request->get('page', 1), [
+			'path'  => $request->url(),
+			'query' => $request->query(),
+		]);
+
+		return view('santa.tours.toursVid', $data);
 	}
 
 	public function getCategory(Sletat $sletat, Request $request, Forecast $forecast, $category, $child = NULL, $grandson = NULL)

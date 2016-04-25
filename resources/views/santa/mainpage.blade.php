@@ -21,6 +21,7 @@
                 @include('santa.errors')
                 @include('santa.modules.slideshow.mainpage', $slideshow)
                 @include('santa.modules.list.news')
+                @include('santa.modules.list.blog')
                 @yield('slideshow')
                 @yield('content')
                 @include('santa.modules.html.socialGroups')

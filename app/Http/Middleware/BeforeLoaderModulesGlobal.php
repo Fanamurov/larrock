@@ -76,7 +76,7 @@ class BeforeLoaderModulesGlobal
                 $sub->url('/page/tur-na-zakaz', 'Тур на заказ', ['icon' => 'fi flaticon-road']);
                 $sub->url('/page/aviabilety', 'Авиабилеты', ['icon' => 'fi flaticon-transport-1']);
                 $sub->url('/page/korporativnoe-obsluzhivanie', 'Корпоративное<br/>обслуживание', ['icon' => 'fi flaticon-travel-3']);
-                $sub->url('/feed/visovaya-podderjka', 'Визовая<br/>поддержка', ['icon' => 'fi flaticon-people-1']);
+                $sub->url('/visovaya-podderjka', 'Визовая<br/>поддержка', ['icon' => 'fi flaticon-people-1']);
                 $sub->url('/page/karta-klienta', 'Карта<br/>клиента', ['icon' => 'fi flaticon-ribbon']);
                 $sub->url('/page/podarochnye-sertifikaty', 'Подарочные<br/>сертификаты', ['icon' => 'fi flaticon-shapes']);
             });

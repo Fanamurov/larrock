@@ -32,15 +32,18 @@ Route::get('/otzyvy', [
 Route::get('/blog', [
 	'as' => 'blog.main', 'uses' => 'BlogController@index'
 ]);
-Route::get('/blog/{item}', [
+Route::get('/blog/{category}', [
+	'as' => 'blog.category', 'uses' => 'BlogController@show'
+]);
+Route::get('/blog/{category}/{item}', [
 	'as' => 'blog.item', 'uses' => 'BlogController@getItem'
 ]);
 
-Route::get('/feed/visovaya-podderjka', [
-	'as' => 'visa.main', 'uses' => 'FeedController@index'
+Route::get('/visovaya-podderjka', [
+	'as' => 'visa.main', 'uses' => 'VisaController@index'
 ]);
-Route::get('/feed/visovaya-podderjka/{item}', [
-	'as' => 'visa.item', 'uses' => 'FeedController@getItem'
+Route::get('/visovaya-podderjka/{item}', [
+	'as' => 'visa.item', 'uses' => 'VisaController@getItem'
 ]);
 
 Route::get('/news', [
@@ -68,7 +71,7 @@ Route::get('/tours/vidy-otdykha', [
 	'as' => 'tours.vidy-otdykha', 'uses' => 'ToursController@getVidy'
 ]);
 Route::get('/tours/vidy-otdykha/{category}', [
-	'as' => 'tours.vidy-categories', 'uses' => 'ToursController@getCategory'
+	'as' => 'tours.vidy-categories', 'uses' => 'ToursController@getVidy'
 ]);
 Route::get('/tours/vidy-otdykha/{category}/{item}', [
 	'as' => 'tours.vidy-item', 'uses' => 'ToursController@getResourt'
@@ -108,6 +111,15 @@ Route::get('/cart', [
 Route::post('/forms/contact', [
 	'as' => 'submit.contacts', 'uses' => 'Modules\Forms@send_form'
 ]);
+Route::post('/forms/zakazTura', [
+	'as' => 'submit.zakazTura', 'uses' => 'Modules\Forms@send_formZakazTura'
+]);
+Route::post('/forms/zakazSert', [
+	'as' => 'submit.zakazSert', 'uses' => 'Modules\Forms@send_formZakazSert'
+]);
+Route::post('/forms/podbor', [
+	'as' => 'submit.podbor', 'uses' => 'Modules\Forms@send_formPodbor'
+]);
 
 // Authentication routes...
 Route::auth();
@@ -119,7 +131,9 @@ Route::group(['prefix' => 'admin', 'middleware'=>'level:2'], function(){
 	Route::resource('seo', 'Admin\AdminSeoController');
 	Route::resource('menu', 'Admin\AdminMenuController');
 	Route::resource('feed', 'Admin\AdminFeedController');
-	//Route::resource('catalog', 'Admin\AdminCatalogController');
+	Route::resource('blog', 'Admin\AdminBlogController');
+	Route::resource('news', 'Admin\AdminNewsController');
+	Route::resource('visa', 'Admin\AdminVisaController');
 	Route::resource('tours', 'Admin\AdminToursController');
 	Route::resource('slideshow', 'Admin\AdminSlideshowController');
 

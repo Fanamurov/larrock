@@ -1,7 +1,11 @@
 {{-- Список подразделов --}}
 @if(count($data->get_child) === 0)
     <tr>
-        <div class="alert alert-warning">Подразделов еще нет</div>
+        @if($data->type === 'tours')
+            <div class="alert alert-warning">Курортов еще нет</div>
+        @else
+            <div class="alert alert-warning">Подразделов еще нет</div>
+        @endif
     </tr>
 @endif
 @foreach($data->get_child as $data_value)
@@ -25,7 +29,7 @@
         <td width="200">
             @if($app['name'] === 'tours')
                 <a href="/strany/{{ $data_value->url }}">
-                    /strany/{{ $data_value->url }}
+                    /tours/strany/{{ $data_value->url }}
                 </a>
             @else
                 <a href="/{{ $app['name'] }}/{{ $data_value->url }}">

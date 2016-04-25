@@ -90,7 +90,11 @@ class AdminCategoryController extends Controller
 
 		if($request->input('parent') !== 0){
 			if($get_parent = Category::find($request->input('parent'))->first()){
-				$data->level = (int) $get_parent->level +1;
+				if($get_parent_parent = Category::find($get_parent->parent)->first()){
+					$data->level = (int) $get_parent->level +2;
+				}else{
+					$data->level = (int) $get_parent->level +1;
+				}
 			}
 		}else{
 			$data->level = 0;

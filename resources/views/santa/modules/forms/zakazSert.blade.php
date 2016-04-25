@@ -1,18 +1,18 @@
 <div class="row row-zakazTura row-zakazSert" id="row-zakazSert">
     <div class="col-sm-12">
-        <form id="form-zakaz" class="form-zakaz" method="post" action="/forms/zakazSert">
+        <form id="form-zakazSert" class="form-zakaz" method="post" action="/forms/zakazSert">
             <h2 class="h1">Заказ подарочного сертификата</h2>
             <div class="form-group">
-                <label for="form-contact-phone" class="control-label">Ваш телефон<sup>*</sup>:</label>
-                <input type="text" class="form-control" id="form-contact-phone" placeholder="Номер телефона" name="phone">
+                <label for="form-contact-tel" class="control-label">Ваш телефон<sup>*</sup>:</label>
+                <input type="text" class="form-control" id="form-contact-tel" placeholder="Номер телефона" name="tel">
             </div>
             <div class="form-group">
                 <label for="form-contact-email" class="control-label">Ваш email<sup>*</sup>:</label>
                 <input type="email" class="form-control" id="form-contact-email" placeholder="Email" name="email">
             </div>
             <div class="form-group">
-                <label for="form-contact-email" class="control-label">Номинал сертификата<sup>*</sup>:</label>
-                <input type="email" class="form-control" id="form-contact-email" placeholder="Сумма" name="email">
+                <label for="form-contact-summa" class="control-label">Номинал сертификата<sup>*</sup>:</label>
+                <input type="text" class="form-control" id="form-contact-summa" placeholder="Сумма" name="summa">
             </div>
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <button type="submit" class="btn btn-default pull-right" name="submit_zakaz">Оставить заявку</button>
@@ -38,3 +38,4 @@
         </ul>
     </div>
 </div>
+{!! JsValidator::formRequest('App\Http\Requests\ZakazSertRequest', '#form-zakazSert') !!}

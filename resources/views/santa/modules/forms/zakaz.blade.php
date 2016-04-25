@@ -1,6 +1,6 @@
 <div class="row row-zakazTura" id="row-zakazTura">
     <div class="col-sm-12">
-        <form id="form-zakaz" class="form-zakaz" method="post" action="/forms/zakaz">
+        <form id="form-zakaz" class="form-zakaz" method="post" action="/forms/zakazTura">
             <p class="h1">Заказ тура</p>
             <div class="form-group">
                 <label for="form-contact-email" class="control-label">Как к Вам обращаться?<sup>*</sup>:</label>
@@ -81,3 +81,4 @@
         </ul>
     </div>
 </div>
+{!! JsValidator::formRequest('App\Http\Requests\ZakazRequest', '#form-zakaz') !!}

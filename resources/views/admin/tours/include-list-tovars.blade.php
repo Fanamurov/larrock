@@ -18,7 +18,7 @@
                     {!! \Carbon\Carbon::createFromTimestamp(strtotime($data_value->updated_at))->diffForHumans(\Carbon\Carbon::now()) !!}</i></p>
         </td>
         <td width="200">
-            <a href="/tours/{{ $data_value->get_category()->first()->url }}/{{ $data_value->url }}">
+            <a href="/tours/strany/{{ $data_value->get_category()->first()->url }}/{{ $data_value->url }}">
                 /tours/{{ $data_value->get_category()->first()->url }}/{{ $data_value->url }}
             </a>
         </td>

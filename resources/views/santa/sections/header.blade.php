@@ -4,10 +4,10 @@
             <a href="#">Подобрать тур</a>
         </div>
         <div class="col-sm-8 text-center">
-            <a href="#">Найти авиабилет</a>
+            <a href="/page/aviabilety">Найти авиабилет</a>
         </div>
         <div class="col-sm-7 text-right">
-            <a href="#">Заказать звонок</a>
+            <a href="#uptocall">Заказать звонок</a>
         </div>
     </div>
     <div class="col-sm-15 col-sm-offset-1 header-logo">

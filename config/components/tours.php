@@ -36,7 +36,7 @@ return [
 			'title' => 'URL материала',
 			'type' => 'text',
 			'tab' => ['seo' => 'Seo'],
-			'valid' => 'max:155|required|unique:catalog,url,:id'
+			'valid' => 'max:155|required|unique:tours,url,:id'
 		],
 		'forecast_url' => [
 			'title' => 'URL прогноза погоды (http://api.pogoda.com/)',

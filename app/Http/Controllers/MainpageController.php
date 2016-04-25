@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Sletat;
 use App\Helpers\Slideshow;
-use App\Models\Feed;
+use App\Models\Blog;
+use App\Models\News;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -26,7 +27,8 @@ class MainpageController extends Controller
 	{
 		$data['seo']['title'] = 'Santa-avia';
 
-		View::share('list_news', Feed::whereCategory(1)->take(2)->get());
+		View::share('list_news', News::whereActive(1)->orderBy('date', 'desc')->take(2)->get());
+		View::share('list_blog', Blog::whereActive(1)->orderBy('date', 'desc')->take(2)->get());
 
 		return view('santa.mainpage', $data);
 	}

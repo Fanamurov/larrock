@@ -39,6 +39,7 @@ class Otapi extends Controller
             $body = Cache::get($cacheKey, 'NONE');
         }else{
             $client = new Client();
+            //dd($this->service_url . $method .'?'. $this->instanceKey .'&'. $this->lang . $param_request);
             $data = $client->request('GET', $this->service_url . $method .'?'. $this->instanceKey .'&'. $this->lang . $param_request);
             $body = $data->getBody();
             Cache::add($cacheKey, $body, 60);
@@ -214,7 +215,7 @@ class Otapi extends Controller
             $body['GetItemDescription'] = $this->create_request('GetItemDescription', ['itemId' => $itemId]);
             $body['opinions'] = $this->create_request('GetTradeRateInfoListFrame', ['itemId' => $itemId, 'framePosition' => 0, 'frameSize' => 32]);
             $body['vendorTovars'] = $this->create_request('GetVendorItemInfoSortedListFrame',
-                ['vendorId' => (string)$body['data']->OtapiItemFullInfo->VendorId, 'framePosition' => 0, 'frameSize' => 12, 'sortingParameters' => '']);
+                ['vendorId' => (string)$body['data']->OtapiItemFullInfo->VendorId, 'framePosition' => 0, 'frameSize' => 6, 'sortingParameters' => '']);
             $body['vendor'] = $this->create_request('GetVendorInfo', ['vendorId' => (string)$body['data']->OtapiItemFullInfo->VendorId]);
 
             return json_encode($body);
@@ -288,6 +289,51 @@ class Otapi extends Controller
     }
 
     public function SearchItemsFrame(Request $request, $page = 1)
+    {
+        //&xmlParameters=%3CSearchItemsParameters%3E%3CConfigurators%3E%3CConfigurator%20Pid%3D%2220000%22%20Vid%3D%22126078338%22%3E126078338%3C%2FConfigurator%3E%3C%2FConfigurators%3E%3CItemTitle%3E%D0%9B%D1%8B%D0%B6%D0%B8%3C%2FItemTitle%3E%3C%2FSearchItemsParameters%3E&framePosition=0&frameSize=1&blockList=SearchProperties%2CAvailableSearchMethods
+
+        $search_params = '<SearchItemsParameters><ItemTitle>'. $request->get('search', 'iPhone') .'</ItemTitle><Configurators>';
+        $body['selected_filters'] = ['0' => 'test'];
+        foreach ($request->all() as $key => $filter){
+            if ($key !== '_token' && $key !== 'search' && $key !== 'page' && !empty($filter)){
+                $key = str_replace('TTT', '', $key);
+                $search_params .= '<Configurator Pid="'. $key .'" Vid="'. $filter .'"/>';
+                $body['selected_filters'][] = $filter;
+            }
+        }
+        $search_params .= '</Configurators></SearchItemsParameters>';
+
+        //dd($search_params);
+
+        //http://docs.otapi.net/ru/Documentations/Type?name=OtapiSearchItemsParameters
+        $body['data'] = $this->create_request('BatchSearchItemsFrame', [
+            'xmlParameters' => $search_params,
+            'framePosition' => $request->get('framePosition', ($request->get('page', $page)-1)*60),
+            'frameSize' => $request->get('frameSize', 60),
+            'sessionId' => '242423',
+            'blockList' => 'SearchProperties,AvailableSearchMethods']);
+
+        //dd($body['data']->Result->Items->Items->TotalCount);
+
+        //dd($request->query());
+
+        $body['paginator'] = new Paginator(
+            $body['data']->Result->Items->Items->Content->Item,
+            $body['data']->Result->Items->Items->TotalCount,
+            $limit = 60,
+            $page = $request->get('page', $page), [
+            'path'  => $request->url(),
+            'query' => $request->query(),
+        ]);
+
+        if((string)$body['data']->ErrorCode === 'Ok'){
+            return view('otapi.search', $body);
+        }else{
+            abort('404', 'Товар не получен');
+        }
+    }
+
+    public function SearchItemsFrameOld(Request $request, $page = 1)
     {
         //http://docs.otapi.net/ru/Documentations/Type?name=OtapiSearchItemsParameters
         $body['data'] = $this->create_request('SearchItemsFrame', [

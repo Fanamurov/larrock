@@ -301,7 +301,7 @@
 
   .menu__back:hover,
   .menu__back:focus {
-    color: #fff;
+    color: red;
     outline: none;
   }
 
@@ -328,7 +328,6 @@
     left: 1em;
     display: none;
     color: #fff;
-    position: fixed;
     z-index: 1000;
   }
 

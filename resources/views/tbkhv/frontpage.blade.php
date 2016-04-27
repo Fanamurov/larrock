@@ -114,10 +114,10 @@
     <div class="clearfix"></div>
 
     <div class="row">
-        <div class="menu_hidden hidden">
+        <div class="col-xs-6">
             @include('tbkhv.modules.menu.catalog-left')
         </div>
-        <div class="col-xs-24">
+        <div class="col-xs-18">
             @if(Route::current()->getName() !== 'otapi.index')
                 @if(Route::current()->getName() !== 'mainpage')
                     <section class="block-breadcrumbs">

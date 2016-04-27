@@ -79,6 +79,7 @@
 
 			// set current menu class
 			if( pos === self.current ) {
+                //alert(self.current);
 				//classie.add(menuEl, 'menu__level--current');
 			}
 		});
@@ -87,8 +88,8 @@
 		if( this.options.backCtrl ) {
 			this.backCtrl = document.createElement('button');
 			this.backCtrl.className = 'menu__back menu__back--hidden';
-			this.backCtrl.setAttribute('aria-label', 'Go back');
-			this.backCtrl.innerHTML = '<span class="icon icon--arrow-left"></span>';
+			this.backCtrl.setAttribute('aria-label', 'Назад');
+			this.backCtrl.innerHTML = '<span>ВЕРНУТЬСЯ НАЗАД</span>';
 			this.el.insertBefore(this.backCtrl, this.el.firstChild);
 		}
 		

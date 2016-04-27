@@ -1,4 +1,4 @@
-@extends('tbkhv.main')
+@extends('tbkhv.frontpage')
 @section('title') Category @endsection
 
 @section('content')

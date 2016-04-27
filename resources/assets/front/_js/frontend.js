@@ -35,7 +35,7 @@ $(document).ready(function(){
 
     $('.show_menu').click(
         function(){
-            $('#menu-catalog').toggle('slow');
+            $('.menu_hidden').toggleClass('hidden');
         }
     );
 

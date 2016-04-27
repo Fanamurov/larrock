@@ -81,6 +81,14 @@ a{
   }
 }
 
+.menu_hidden{
+  position: absolute;
+  z-index: 15;
+  width: 290px;
+  padding-left: 9px;
+  background: white;
+}
+
 .menu-catalog{
   background: #fd782d;
   z-index: 10;

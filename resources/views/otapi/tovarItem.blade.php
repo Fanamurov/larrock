@@ -128,13 +128,15 @@
                 <div class="row">
                     @foreach($vendorTovars['OtapiItemInfoSubList']['Content']['Item'] as $tovar)
                         <a href="/otapi/{{ $tovar['CategoryId'] }}/tovar/{{ $tovar['Id'] }}">
-                            <img src="{{ $tovar['Pictures']['ItemPicture'][0]['Small'] }}" class="col-xs-8" alt="Фото товара">
+                            <img src="{{ $tovar['Pictures']['ItemPicture'][0]['Small'] }}" class="col-xs-12" alt="Фото товара">
                         </a>
                     @endforeach
-                    <p class="text-right"><i>
-                            И еще <a href="/otapi/vendor/{{ $data['OtapiItemFullInfo']['VendorId'] }}">
-                                {{ $vendorTovars['OtapiItemInfoSubList']['TotalCount'] }} товаров...</a></i>
-                    </p>
+                    @if($vendorTovars['OtapiItemInfoSubList']['TotalCount'] - 6 > 0)
+                        <p class="text-right"><i>
+                                И еще <a href="/otapi/vendor/{{ $data['OtapiItemFullInfo']['VendorId'] }}">
+                                    {{ $vendorTovars['OtapiItemInfoSubList']['TotalCount']-6 }} товаров...</a></i>
+                        </p>
+                    @endif
                 </div>
             @endif
         </div>

@@ -2,14 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Sofa\Eloquence\Eloquence;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 
 class Tours extends Model implements HasMediaConversions
 {
+	use Eloquence;
     use HasMediaTrait;
 
     public function registerMediaConversions()
@@ -23,20 +24,19 @@ class Tours extends Model implements HasMediaConversions
             ->performOnCollections('images');
     }
 
-	use Eloquence;
-
 	// no need for this, but you can define default searchable columns:
 	protected $searchableColumns = ['title'];
 
     protected $table = 'tours';
 
-	protected $fillable = ['title', 'short', 'description', 'url', 'position', 'active', 'forecast_url', 'map'];
+	protected $fillable = ['title', 'short', 'description', 'url', 'position', 'active', 'forecast_url', 'map', 'cost_notactive'];
 
 	protected $guarded = ['user_id'];
 
 	protected $casts = [
 		'position' => 'integer',
-		'active' => 'integer'
+		'active' => 'integer',
+		'cost_notactive' => 'integer'
 	];
 
 	protected $appends = [

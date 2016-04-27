@@ -8,6 +8,7 @@
                 <h1 class="inline">Управление пользователями</h1>
                 <div class="add-panel">
                     <a class="btn btn-info pull-right" href="/admin/users/create">Добавить пользователя</a>
+                    <a class="btn btn-info pull-right" href="{{ action('Admin\AdminRolesController@index') }}">Управление ролями</a>
                 </div>
             </div>
         </div>
@@ -36,7 +37,11 @@
                         <td>{{ $data_value->first_name or 'n/a' }}</td>
                         <td>{{ $data_value->last_name or 'n/a' }}</td>
                         <td>
-                            {{ $data_value->role->first()->slug }}
+                            @if(count($data_value->role) > 0)
+                                {{ $data_value->role->first()->slug }}
+                            @else
+                                <span class="badge badge-danger">Роль не назначена!</span>
+                            @endif
                         </td>
                         <td>{{ $data_value->updated_at }}</td>
                         <td>

@@ -44,6 +44,13 @@
                 </div>
             </div>
         </div>
+        @if($data->cost_notactive === 1)
+            <div class="clearfix"></div>
+            <div class="block-cost_notactive">
+                <p>Цены не актуальны.<br/>
+                Закажите индивидуальный расчет.</p>
+            </div>
+        @endif
         <div class="clearfix"></div>
         <div class="row-btn-group">
             <div class="btn-group" role="group">

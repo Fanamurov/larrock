@@ -16,6 +16,18 @@
     </div>
 
     <div class="ibox float-e-margins">
+        <form action="/admin/tours/search" method="post">
+            <div class="input-group">
+                <input type="text" class="form-control" name="search" value="" placeholder="Название курорта/тура">
+                    <span class="input-group-btn">
+                        {{ csrf_field() }}
+                        <button type="submit" class="btn btn-default">Поиск</button>
+                  </span>
+            </div>
+        </form>
+    </div>
+
+    <div class="ibox float-e-margins">
         <div class="ibox-content">
             @if(count($data) === 0)
                 <div class="alert alert-warning">Разделов еще нет</div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Alert;
 use App\Helpers\Component;
 use App\Http\Controllers\Admin\AdminBlocks\MenuBlock;
 use App\User;
@@ -11,14 +12,13 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use JsValidator;
-use Lang;
 use Route;
 use Validator;
-use Sentinel;
 use Input;
-use Session;
 use Redirect;
 use View;
+
+/* https://github.com/romanbican/roles */
 
 class AdminUsersController extends Controller
 {
@@ -39,11 +39,6 @@ class AdminUsersController extends Controller
      */
     public function index()
     {
-		/*$roles = Role::all();
-		foreach($roles as $key => $role){
-			$roles[$key]['users'] = $role->users()->get();
-		}
-		dd(Role::all());*/
 		$users = User::with('role')->paginate(15);
 		return view('admin.users.index', array('data' => $users));
     }
@@ -70,48 +65,27 @@ class AdminUsersController extends Controller
     {
 		$validator = Validator::make(
 			Input::all(),
-			[
-				'email' => 'email|min:4|required|unique:users.email',
-				'password' => 'min:5|required',
-				'first_name' => 'max:40',
-				'last_name' => 'max:40',
-			]
+			Component::_valid_construct($this->config['rows'])
 		);
 
 		if($validator->fails()){
 			return back()->withInput(Input::except('password'))->withErrors($validator);
 		}
 
-        dd($request);
-
-		// Register a new user
-		Sentinel::register([
-			'email'    => $request->input('email'),
-			'password' => $request->input('password'),
-			'first_name' => $request->input('first_name'),
-			'last_name' => $request->input('last_name'),
+		User::create([
+			'email' => $request->get('email'),
+			'first_name' => $request->get('first_name'),
+			'last_name' => $request->get('last_name'),
+			'password' => bcrypt($request->get('password')),
 		]);
 
-		$user = User::whereEmail($request->input('email'))->first();
-
-		$role = Sentinel::findRoleByName($request->input('role'));
-
-		if($role->users()->attach($user)){
-			Session::flash('error', Lang::get('apps.change.success'));
+		if($user = User::whereEmail($request->input('email'))->first()){
+			$user->attachRole((int) $request->get('role'));
+			Alert::add('success', 'Пользователь '. $request->input('email') .' успешно добавлен')->flash();
+		}else{
+			Alert::add('danger', 'Пользователь '. $request->input('email') .' не был добавлен')->flash();
 		}
-
 		return Redirect::to('/admin/users');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        return $id;
     }
 
     /**
@@ -123,8 +97,8 @@ class AdminUsersController extends Controller
     public function edit($id)
     {
 		$data['roles'] = Role::all();
-		$data['user'] = User::find($id)->with('role')->first();
-        $validator = JsValidator::make(Component::_valid_construct($this->config['rows']));
+		$data['user'] = User::whereId($id)->with('role')->first();
+        $validator = JsValidator::make(Component::_valid_construct($this->config['rows'], 'update', $id));
         View::share('validator', $validator);
 		return view('admin.users.edit', $data);
     }
@@ -139,22 +113,31 @@ class AdminUsersController extends Controller
     public function update(Request $request, $id)
     {
 		$validator = Validator::make(
-			['email' => $request->get('email')],
-			['email' => 'email|min:4|required']
-		);
+			Input::all(),
+			Component::_valid_construct($this->config['rows'], 'update', $id));
 
 		if($validator->fails()){
 			return back()->withInput()->withErrors($validator);
 		}
 
-		$user = Sentinel::findById($id);
+		$user = User::whereId($id)->first();
+		$user->detachAllRoles();
+		$user->attachRole($request->get('role'));
 
-		if(Sentinel::update($user, $request->all())){
-			return back()->withInput()->with('success', Lang::get('apps.change.success'));
+		$submit = Input::all();
+		if($submit['password'] !== $user->password){
+			$submit['password'] = bcrypt($submit['password']);
 		}else{
-            Session::flash('error', Lang::get('users.change_failed'));
-			return back()->withInput();
+			unset($submit['password']);
 		}
+
+		if($user->update($submit)){
+			Alert::add('success', 'Пользователь изменен');
+		}else{
+			Alert::add('danger', 'Не удалось изменить пользователя');
+		}
+
+		return back()->withInput();
     }
 
     /**
@@ -165,10 +148,13 @@ class AdminUsersController extends Controller
      */
     public function destroy($id)
     {
-        if(Sentinel::findById($id)->delete()){
-            Session::flash('success', Lang::get('apps.delete.success'));
+		$user = User::whereId($id)->first();
+		$user->detachAllRoles();
+
+        if($user->delete()){
+            Alert::add('success', 'Пользователь удален');
         }else{
-            Session::flash('error', Lang::get('apps.delete.success'));
+			Alert::add('danger', 'Не удалось удалить пользователя');
         }
         return Redirect::to('/admin/users');
     }

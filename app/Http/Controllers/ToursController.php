@@ -252,7 +252,7 @@ class ToursController extends Controller
 		return view('santa.tours.resourt', $data);
 	}
 
-	public function getItem($category, $item)
+	public function getItem($category = '', $resourt = '', $item)
 	{
 		$data['data'] = Tours::whereUrl($item)->whereActive(1)->with(['get_seo', 'get_templates', 'get_category'])->firstOrFail();
 		$data['data']['images'] = $data['data']->getMedia('images')->sortByDesc('order_column');

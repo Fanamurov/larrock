@@ -66,6 +66,9 @@ Route::get('/tours/strany/{category}', [
 Route::get('/tours/strany/{category}/{item}', [
 	'as' => 'tours.resourt', 'uses' => 'ToursController@getResourt'
 ]);
+Route::get('/tours/strany/{category}/{resourt}/{tour}', [
+	'as' => 'tours.tour', 'uses' => 'ToursController@getItem'
+]);
 
 Route::get('/tours/vidy-otdykha', [
 	'as' => 'tours.vidy-otdykha', 'uses' => 'ToursController@getVidy'
@@ -138,6 +141,9 @@ Route::group(['prefix' => 'admin', 'middleware'=>'level:2'], function(){
 	Route::resource('news', 'Admin\AdminNewsController');
 	Route::resource('visa', 'Admin\AdminVisaController');
 	Route::resource('tours', 'Admin\AdminToursController');
+	Route::post('/tours/search', [
+		'as' => 'admin.tours.search', 'uses' => 'Admin\AdminToursController@search'
+	]);
 	Route::resource('slideshow', 'Admin\AdminSlideshowController');
 
 	Route::resource('category', 'Admin\AdminCategoryController');

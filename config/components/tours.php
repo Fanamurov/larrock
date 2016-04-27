@@ -48,6 +48,14 @@ return [
             'type' => 'text',
             'tab' => ['other' => 'Дополнительные поля']
         ],
+		'cost_notactive' => [
+			'title' => 'Цены не актуальны',
+			'type' => 'checkbox',
+			'checked' => 'TRUE',
+			'tab' => ['other' => 'Дополнительные поля'],
+			'valid' => 'integer',
+			'default' => 0
+		],
 		'position' => [
 			'title' => 'Вес материала',
 			'type' => 'text',

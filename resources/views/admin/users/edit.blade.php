@@ -22,6 +22,10 @@
                     <input type="text" name="email" value="{{ Input::old('email', $user->email) }}" class="form-control" id="email">
                 </div>
                 <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="text" name="password" value="{{ Input::old('password', $user->password) }}" class="form-control" id="password">
+                </div>
+                <div class="form-group">
                     <label for="first_name">First name</label>
                     <input type="text" name="first_name" value="{{ Input::old('first_name', $user->first_name) }}" class="form-control" id="first_name">
                 </div>
@@ -34,10 +38,10 @@
                     <select class="form-control" name="role" id="role">
                         @foreach($roles as $roles_value)
                             <option
-                                @if($roles_value->id === $user->role->first()->id)
+                                @if(count($user->role) > 0 && $roles_value->id === $user->role->first()->id)
                                 selected
                                 @endif
-                                value="{{ $roles_value->name }}">{{ $roles_value->slug }}</option>
+                                value="{{ $roles_value->id }}">{{ $roles_value->slug }}</option>
                         @endforeach
                     </select>
                 </div>

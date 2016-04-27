@@ -6,7 +6,7 @@
 @endif
 @foreach($data as $data_value)
     <tr>
-        <td><a href="/admin/{{ $app['name'] }}/{{ $data_value->id }}">
+        <td><a class="h4" href="/admin/{{ $app['name'] }}/{{ $data_value->id }}">
                 @if($data_value->getFirstMediaUrl('images', '110x110'))
                     <img src="{{ $data_value->getFirstMediaUrl('images', '110x110') }}">
                 @else

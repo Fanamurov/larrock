@@ -28,12 +28,12 @@ class BeforeLoaderModulesGlobal
 		View::share('app_param', array_get($current_uri, 2));
 
         $module_vidy = Cache::remember('module_vidy', 60, function() {
-            return Category::whereParent(377)->orderBy('position', 'DESC')->get();
+            return Category::whereParent(377)->whereActive(1)->orderBy('position', 'DESC')->get();
         });
 		View::share('module_vidy', $module_vidy);
 
         $module_strany = Cache::remember('module_strany', 60, function() {
-            return Category::whereParent(308)->with(['get_childActive'])->orderBy('position', 'DESC')->get();
+            return Category::whereParent(308)->whereActive(1)->with(['get_childActive'])->orderBy('position', 'DESC')->get();
         });
         View::share('module_strany', $module_strany);
 
@@ -69,6 +69,7 @@ class BeforeLoaderModulesGlobal
                 $sub->url('/visovaya-podderjka', 'Визовая<br/>поддержка', ['icon' => 'fi flaticon-people-1']);
                 $sub->url('/page/karta-klienta', 'Карта<br/>клиента', ['icon' => 'fi flaticon-ribbon']);
                 $sub->url('/page/podarochnye-sertifikaty', 'Подарочные<br/>сертификаты', ['icon' => 'fi flaticon-shapes']);
+                $sub->url('/page/transfer', 'Трансферы', ['icon' => 'fi flaticon-shapes']);
             });
             $menu->url('/page/kontakty', 'Контакты');
             $menu->url('/otzyvy', 'Отзывы');

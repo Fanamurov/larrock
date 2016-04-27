@@ -11,20 +11,19 @@ return [
 			'in_table_admin' => 'TRUE',
 			'type' => 'text',
 			'tab' => ['main' => 'Заголовок, описание'],
-			'valid' => 'email|min:4|required|unique:users,email,:id',
-			'typo' => 'true'
+			'valid' => 'email|min:4|required|unique:users,email,:id'
 		],
-        'password' => [
-            'title' => 'Password',
-            'type' => 'text',
-            'tab' => ['main' => 'Заголовок, описание'],
-            'valid' => 'min:5|required',
-        ],
+		'password' => [
+			'title' => 'Password',
+			'type' => 'text',
+			'tab' => ['main' => 'Заголовок, описание'],
+			'valid' => 'min:5|required',
+		],
 		'first_name' => [
 			'title' => 'First name',
 			'type' => 'text',
 			'tab' => ['main' => 'Заголовок, описание'],
-            'valid' => 'max:155'
+			'valid' => 'max:155'
 		],
 		'last_name' => [
 			'title' => 'Last name',
@@ -39,7 +38,7 @@ return [
 			'valid' => 'integer',
 		]
 	],
-    'admin_menu' => ['type' => 'hidden'],
+	'admin_menu' => ['type' => 'hidden'],
 	'settings' => [],
 	'plugins_backend' => [],
 	'plugins_front' => [],

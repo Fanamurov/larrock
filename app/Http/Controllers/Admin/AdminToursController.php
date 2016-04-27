@@ -14,7 +14,6 @@ use App\Http\Controllers\Controller;
 use App\Helpers\ContentPlugins;
 use App\Helpers\Component;
 use App\Models\Category;
-use DB;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use JsValidator;
 use Alert;
@@ -72,7 +71,8 @@ class AdminToursController extends Controller
 			'url' => str_slug('Новый материал'),
 			'what' => 'руб./шт.',
 			'category' => [$request->get('category')],
-			'active' => 0
+			'active' => 0,
+			'cost_notactive' => 0
 		]);
 		return $this->store($create_data, $ContentPlugins);
 	}
@@ -96,6 +96,7 @@ class AdminToursController extends Controller
 		$data->active = $request->input('active', 0);
 		$data->position = $request->input('position', 0);
 		$data->articul = 'AR'. $request->input('id');
+		$data->cost_notactive = $request->input('cost_notactive', 0);
 		$data->user_id = $this->current_user->id;
 
 		if($data->save()){
@@ -125,7 +126,6 @@ class AdminToursController extends Controller
 	public function show($id, Request $request)
 	{
 		$paginate = 50;
-
 		$data = Cache::remember('admin_cat_tours'. $id, 60, function() use ($paginate, $id){
 			$data['app'] = $this->config;
 			$data['data'] = Category::whereId($id)->with(['get_tours' => function($query) use ($paginate)
@@ -159,12 +159,17 @@ class AdminToursController extends Controller
 		{
 			$breadcrumbs->parent('admin.tours.index');
 			if($find_parent = Category::find($data->parent)){
-				$breadcrumbs->push($find_parent->title, route('admin.tours.show', $find_parent->id));
-				if($find_parent = Category::find($find_parent->parent)){
-					$breadcrumbs->push($find_parent->title, route('admin.tours.show', $find_parent->id));
-					if($find_parent = Category::find($find_parent->parent)){
+				if($find_parent_2 = Category::find($find_parent->parent)){
+					if($find_parent_3 = Category::find($find_parent_2->parent)){
+						$breadcrumbs->push($find_parent_3->title, route('admin.tours.show', $find_parent_3->id));
+						$breadcrumbs->push($find_parent_2->title, route('admin.tours.show', $find_parent_2->id));
+						$breadcrumbs->push($find_parent->title, route('admin.tours.show', $find_parent->id));
+					}else{
+						$breadcrumbs->push($find_parent_2->title, route('admin.tours.show', $find_parent_2->id));
 						$breadcrumbs->push($find_parent->title, route('admin.tours.show', $find_parent->id));
 					}
+				}else{
+					$breadcrumbs->push($find_parent->title, route('admin.tours.show', $find_parent->id));
 				}
 			}
 			$breadcrumbs->push($data->title, route('admin.tours.show', $data->id));
@@ -244,6 +249,7 @@ class AdminToursController extends Controller
 
 		$data->fill($request->all());
 		$data->active = $request->input('active', 0);
+		$data->cost_notactive = $request->input('cost_notactive', 0);
 		if($data->save()){
 			//Присоединяем разделы
 			foreach($request->input('category') as $category){
@@ -284,5 +290,16 @@ class AdminToursController extends Controller
 			Alert::add('error', 'Материал не удален')->flash();
 		}
 		return back();
+	}
+
+	public function search(Request $request)
+	{
+		$data['app'] = $this->config;
+		$data['tours'] = Tours::search($request->get('search'))->get();
+		foreach($data['tours'] as $key => $tovar){
+			$data['tours'][$key]['image'] = $tovar->getMedia('images')->sortByDesc('order_column')->first();
+		}
+		$data['categories'] = Category::search($request->get('search'))->get();
+		return view('admin.tours.search', $data);
 	}
 }

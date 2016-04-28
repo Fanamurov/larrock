@@ -79,7 +79,14 @@ Route::get('/cart', [
     'as' => 'cart.index', 'uses' => 'Otapi@get_cart'
 ]);
 
+Route::post('/form/order', [
+	'as' => 'order.submit', 'uses' => 'Otapi@sendOrder'
+]);
+
 /* Otapi */
+Route::any('/otapi/getConfigItem', [
+	'as' => 'otapi.getConfigItem', 'uses' => 'Otapi@getConfigItem'
+]);
 Route::get('/otapi', [
     'as' => 'otapi.index', 'uses' => 'Otapi@get_index'
 ]);
@@ -107,9 +114,9 @@ Route::get('/otapi/{categoryId}', [
 /*Route::get('/otapi/{categoryId}/list', [
     'as' => 'otapi.category.tovars', 'uses' => 'Otapi@get_tovarsCategory'
 ]);*/
-Route::post('/otapi/{categoryId}', [
+/*Route::post('/otapi/{categoryId}', [
     'as' => 'otapi.category.tovars.filter', 'uses' => 'Otapi@get_tovarsCategoryFilter'
-]);
+]);*/
 Route::get('/otapi/{categoryId}/tovar/{itemId}', [
     'as' => 'otapi.category.tovar', 'uses' => 'Otapi@get_tovar'
 ]);

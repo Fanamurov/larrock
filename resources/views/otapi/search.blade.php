@@ -1,10 +1,10 @@
 @extends('tbkhv.main')
-@section('title') Поиск по магазину @endsection
+@section('title') Поиск по товарам @endsection
 
 @section('content')
     <div class="page-catalog-category">
         <div class="col-xs-24">
-            <h1>Поиск по магазину: {{ Request::get('search') }}</h1>
+            <h1>Поиск по товарам: {{ Request::get('search') }}</h1>
         </div><br/>
 
         <div>

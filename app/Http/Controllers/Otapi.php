@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Alert;
 use Breadcrumbs;
 use Cart;
 use Illuminate\Http\Request;
@@ -9,6 +10,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use GuzzleHttp\Client;
 use Cache;
+use Mail;
 use View;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 
@@ -59,6 +61,9 @@ class Otapi extends Controller
 
     public function get_category($categoryId = 'otc-3035', Request $request)
     {
+		if($request->has('filter')){
+			return $this->get_tovarsCategoryFilter($request, $categoryId);
+		}
         if($getSub = $this->get_subCategoryList($request, $categoryId)){
             return $getSub;
         }else{
@@ -68,7 +73,7 @@ class Otapi extends Controller
 
     public function get_subCategoryList(Request $request, $parentCategoryId)
     {
-        if ($request->exists('filter')){
+        if ($request->exists('_token')){
             return $this->get_tovarsCategoryFilter($request, $parentCategoryId);
         }
         $body['data'] = $this->create_request('GetCategorySubcategoryInfoList', ['parentCategoryId' => $parentCategoryId]);
@@ -164,7 +169,8 @@ class Otapi extends Controller
         $search_params = '<SearchParameters><Configurators>';
         $body['selected_filters'] = ['0' => 'test'];
         foreach ($request->all() as $key => $filter){
-            if ($key !== '_token' && !empty($filter)){
+			$key = str_replace('TTT', '', $key);
+            if ($key !== '_token' && $key !== 'filter' && !empty($filter)){
                 $search_params .= '<Configurator Pid="'. $key .'" Vid="'. $filter .'"/>';
                 $body['selected_filters'][] = $filter;
             }
@@ -190,10 +196,14 @@ class Otapi extends Controller
                 }
             });
 
-            //Пагинатор
-            $body['paginator']['total'] = (string)$body['data']->OtapiItemInfoSubList->TotalCount;
-            $body['paginator']['pages'] = ceil($body['paginator']['total']/$frameSize)-1;
-            $body['paginator']['current'] = $request->get('page', 1);
+			$body['paginator'] = new Paginator(
+				$body['data']->OtapiItemInfoSubList->Content->Item,
+				$body['data']->OtapiItemInfoSubList->TotalCount,
+				$limit = 60,
+				$page = $request->get('page'), [
+				'path'  => $request->url(),
+				'query' => $request->query(),
+			]);
 
             return view('otapi.categoryTovars', $body);
         }else{
@@ -223,27 +233,29 @@ class Otapi extends Controller
 
         $body = json_decode($body, TRUE);
 
-        if(array_key_exists('OtapiConfiguredItem', $body['data']['OtapiItemFullInfo']['ConfiguredItems'])){
-            foreach ($body['data']['OtapiItemFullInfo']['ConfiguredItems']['OtapiConfiguredItem'] as $configured){
-                if(array_key_exists(0, $vid = $configured['Configurators']['ValuedConfigurator'])){
-                    $vid = $configured['Configurators']['ValuedConfigurator'][0]['@attributes']['Vid'];
-                    $pid = $configured['Configurators']['ValuedConfigurator'][0]['@attributes']['Pid'];
-                    $body['configured'][$vid]['Price'] = $configured['Price']['ConvertedPriceWithoutSign'];
-                    $body['configured'][$vid]['Quantity'] = $configured['Quantity'];
-                    $body['configured'][$vid]['Vid'] = $vid;
-                    $body['configured'][$vid]['Pid'] = $pid;
-                }
+		$attributes = $body['data']['OtapiItemFullInfo']['Attributes']['ItemAttribute'];
+		//Все конфигурируемые значения параметров товара
+		$body['item']['attr'] = [];
+		foreach($attributes as $item){
+			if($item['IsConfigurator'] === 'true'){
+				$body['item']['attr'][$item['PropertyName']][] = $item;
+			}
+		}
 
-                if(array_key_exists(0, $vid = $configured['Configurators']['ValuedConfigurator'])){
-                    $vid = $configured['Configurators']['ValuedConfigurator'][1]['@attributes']['Vid'];
-                    $pid = $configured['Configurators']['ValuedConfigurator'][1]['@attributes']['Pid'];
-                    $body['configured'][$vid]['Price'] = $configured['Price']['ConvertedPriceWithoutSign'];
-                    $body['configured'][$vid]['Quantity'] = $configured['Quantity'];
-                    $body['configured'][$vid]['Vid'] = $vid;
-                    $body['configured'][$vid]['Pid'] = $pid;
-                }
-            }
-        }
+		//Собираем конфиги
+		$body['item']['configs'] = $body['data']['OtapiItemFullInfo']['ConfiguredItems']['OtapiConfiguredItem'];
+		foreach($body['item']['configs'] as $key => $config){
+			foreach($config['Configurators']['ValuedConfigurator'] as $val_conf){
+				if(array_key_exists('@attributes', $val_conf)){
+					$body['item']['configs'][$key]['bucket'][$val_conf['@attributes']['Pid']] = $val_conf['@attributes']['Vid'];
+				}else{
+					$body['item']['configs'][$key]['bucket'][$val_conf['Pid']] = $val_conf['Vid'];
+				}
+			}
+			if($config['Quantity'] !== '0' AND !isset($body['item']['config_current'])){
+				$body['item']['config_current'] = $body['item']['configs'][$key];
+			}
+		}
 
         if((string)$body['data']['ErrorCode'] === 'Ok'){
             Breadcrumbs::register('otapi.tovar', function($breadcrumbs, $categoryId)
@@ -265,6 +277,38 @@ class Otapi extends Controller
             abort('404', 'Товар не получен');
         }
     }
+
+	public function getConfigItem(Request $request)
+	{
+		$data['configs'] = json_decode($request->get('configs'));
+		$data['config_current'] = json_decode($request->get('config_current'));
+		$data['Pid'] = $request->get('Pid');
+		$data['Vid'] = $request->get('Vid');
+		$data['title'] = $request->get('title');
+
+		$bucket = $data['config_current']->bucket;
+		if(isset($bucket->$data['Pid'])){
+			$bucket->$data['Pid'] = $data['Vid'];
+		}
+
+		foreach($data['configs'] as $config){
+			if((array)$config->bucket === (array)$bucket){
+				$output = [];
+				$output['Id'] = $config->Id;
+				$output['Quantity'] = $config->Quantity;
+				$output['Price'] = $config->Price->ConvertedPriceWithoutSign;
+				$output['config_current'] = json_encode($data['config_current']);
+				if($output['Quantity'] > 0){
+					echo json_encode(['status' => 'Update', 'data' => $output]);
+				}else{
+					echo json_encode(['status' => 'QuantityZero']);
+				}
+				exit();
+			}
+		}
+
+		echo json_encode(['status' => 'NotFound']);
+	}
 
     public function get_vendor($vendorId)
     {
@@ -385,7 +429,8 @@ class Otapi extends Controller
 
     public function AddToCart(Request $request)
     {
-        $options = [];
+        $options['config'] = $request->get('config');
+        $options['img'] = $request->get('img');
         \Cart::add($request->get('id'), $request->get('name'), 1, $request->get('price'), $options);
         return response(\Cart::total());
     }
@@ -403,6 +448,45 @@ class Otapi extends Controller
         $seo = ['title' => 'Cart page'];
         return view('tbkhv.cart.table', compact('cart', 'seo', 'tao_items', ['cart', 'seo', 'tao_items']));
     }
+
+	/**
+	 * @param Request $request
+	 *
+	 * @return mixed
+	 */
+	public function sendOrder(Request $request)
+	{
+		$cart = Cart::content();
+		$tao_items = [];
+		foreach($cart as $item){
+			$tao_items[$item->id] = $this->create_request('GetItemFullInfo', ['itemId' => $item->id]);
+		}
+
+		/** @noinspection PhpVoidFunctionResultUsedInspection */
+		$send = Mail::send('emails.order',
+			['name' => $request->get('name'),
+				'tel' => $request->get('tel'),
+				'address' => $request->get('address'),
+				'method_pay' => $request->get('method_pay'),
+				'method_delivery' => $request->get('method_delivery'),
+				'cart' => $cart,
+				'tao_items' => $tao_items,
+				'comment' => $request->get('comment')],
+			function($message){
+				$message->from(env('MAIL_TO_ADMIN', 'robot@martds.ru'), env('MAIL_TO_ADMIN_NAME', 'TEST'));
+				$message->to(env('MAIL_TO_ADMIN', 'robot@martds.ru'), env('MAIL_TO_ADMIN_NAME', 'TEST'));
+				$message->subject('Отправлена форма заявки '. array_get($_SERVER, 'SERVER_NAME')
+				);
+			});
+
+		if($send){
+			Alert::add('success', 'Ваш заказ успешно принят нашими менеджерами. После проверки данных с Вами свяжется наш менеджер')->flash();
+			Cart::destroy();
+		}else{
+			Alert::add('danger', 'Форма не отправлена')->flash();
+		}
+		return back();
+	}
 
     public function ModulePopularTovars()
     {

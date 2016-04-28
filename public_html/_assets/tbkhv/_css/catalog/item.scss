@@ -1,17 +1,23 @@
 .page-catalog-item{
   h1, .h1{
     font-weight: 300;
-    margin-bottom: 30px;
+    margin-bottom: 0;
     font-size: 30px;
     margin-top: 0;
-    white-space: nowrap; /* Отменяем перенос текста */
-    overflow: hidden; /* Обрезаем содержимое */
-    padding: 5px; /* Поля */
-    text-overflow: ellipsis; /* Многоточие */
   }
   .cost{
-    color: #FD4E00;
-    font-size: 25px;
+	color: #fd4e00;
+	font-size: 35px;
+	display: block;
+	margin-bottom: 5px;
+	margin-top: 0;
+	text-align: center;
+  }
+  .nalicie{
+	margin-bottom: 20px;
+  }
+  .fa.fa-star{
+	color: #fd4e00;
   }
 
   .list-vendor{
@@ -39,5 +45,42 @@
       height: 65px;
       float: left;
     }
+  }
+  .row-vendorTovars{
+	img{
+	  margin-bottom: 12px;
+	}
+  }
+  .fancybox img{
+	display: inline-block !important;
+  }
+  .btn-default{
+	border: 1px solid #E4E4E4;
+	margin-bottom: 4px;
+	&.active{
+	  background: #FF9A6E;
+	  border-color: transparent;
+	}
+  }
+  .btn-danger{
+	background-color: #FD4E00;
+  }
+  .glyphicon-heart{
+	color: red;
+  }
+  .vendor{
+	padding: 0 25px;
+	border: 1px solid #f1f1f1;
+  }
+  .button_bg{
+	background: #F5F5F5;
+	padding: 20px 0;
+  }
+  .btn-lg{
+	font-size: 16px;
+	font-weight: 300;
+  }
+  .btn-info{
+	font-weight: 300;
   }
 }

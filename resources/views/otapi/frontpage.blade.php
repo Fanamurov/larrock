@@ -1,5 +1,5 @@
 @extends('tbkhv.frontpage')
-@section('title') Category @endsection
+@section('title') Товары с китайских интернет-магазинов в Хабаровске. Доставка @endsection
 
 @section('content')
     <div class="catalog-frontpage">

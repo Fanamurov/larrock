@@ -103,7 +103,7 @@
         <div class="col-xs-16 col-xs-offset-1">
             <form action="/otapi/search" method="get">
                 <div class="input-group block-search">
-                    <input name="search" type="text" class="form-control" placeholder="Поиск товаров по названию или коду...">
+                    <input name="search" type="text" class="form-control" placeholder="Поиск товаров по названию или коду..." value="{{ Request::get('search') }}">
                     <span class="input-group-btn">
                         <button class="btn btn-default" type="submit"><i class="fa fa-search"></i> Искать!</button>
                     </span>
@@ -152,9 +152,8 @@
                 <p>
                     <strong>Общество с ограниченной ответственностью "ХАЙВЕЙ"</strong><br/>
                     ИНН 2724185430 КПП 272401001 ОГРН 1142724000528<br/>
-                    680024, РОССИЯ, Хабаровск, проспект 60-летия Октября, 148Ж
-                </p>
-                <p><a href="mailto:mail@tbkhv.ru">mail@tbkhv.ru</a></p>
+                    680024, РОССИЯ, Хабаровск, проспект 60-летия Октября, 148Ж<br/>
+                    <a href="mailto:tbkhv@mail.ru">tbkhv@mail.ru</a></p>
             </address>
             <script type="text/javascript" charset="utf-8" src="https://api-maps.yandex.ru/services/constructor/1.0/js/?sid=b_6D-D2f45c9m5pJGmxy2uMSC4kf4Dmi&width=100%&height=400&lang=ru_RU&sourceType=constructor"></script>
             <p>Powered by © OT Commerce <a href="http://otcommerce.com/" target="_blank">otcommerce.com</a></p>

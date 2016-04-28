@@ -1,7 +1,7 @@
 .header_line{
   background: #F5F5F5;
   color: #a9afb6;
-  height: 36px;
+  height: 42px;
   margin-bottom: 34px;
   line-height: 33px;
 }
@@ -15,6 +15,10 @@
       opacity: .8;
     }
   }
+}
+
+.moduleCart{
+  padding-top: 5px;
 }
 
 .blockHeader-benefits{
@@ -108,14 +112,13 @@ header{
       margin-left: 6px;
       text-decoration: underline;
       font-weight: 600;
-      padding-top: 0;
+	  padding-top: 3px;
+	  padding-bottom: 5px;
       &:hover,
       &:focus{
         text-decoration: none;
         background-color: #FD4E00;
         color: white;
-        padding-top: 5px;
-        padding-bottom: 5px;
       }
     }
   }

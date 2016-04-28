@@ -14,24 +14,74 @@ $(document).ready(function(){
             }
         }
     });
+    
+    $('.change-config-item').click(function () {
+        $('.change-config-item-'+$(this).attr('data-pid')).removeClass('active');
+        $(this).addClass('active');
+        noty_show('message', 'Обновляем данные о товаре');
+
+        $.ajax({
+            url: '/otapi/getConfigItem',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                configs: $('input[name=configs]').val(),
+                config_current: $('input[name=config_current]').val(),
+                Pid: $(this).attr('data-pid'),
+                Vid: $(this).attr('data-vid'),
+                title: $(this).attr('title')
+            },
+            error: function() {
+                alert('ERROR!');
+            },
+            success: function(res) {
+                if(res.status === 'QuantityZero'){
+                    $('.btn-add-to-cart').attr('disabled', 'disabled');
+                    noty_show('error', 'Извините, такого товара нет в наличии');
+                }
+                if(res.status === 'NotFound'){
+                    $('.btn-add-to-cart').attr('disabled', 'disabled');
+                    noty_show('error', 'Ошибка при выборе товара');
+                }
+                if(res.status === 'Update'){
+                    $('.btn-add-to-cart').removeAttr('disabled');
+                    $('input[name=config_current]').val(res.data.config_current);
+                    $('.price-item').html(res.data.Price);
+                    $('.quantity-item').html(res.data.Quantity);
+                    update_ToCartButton();
+                }
+            }
+        });
+    });
+
+    function update_ToCartButton() {
+        var title = '';
+        var src = '';
+        $('.change-config-item.active').each(function () {
+            title += $(this).attr('data-originalName');
+            if($(this).attr('data-scr') !== undefined){
+                src = $(this).attr('data-scr');
+            }
+        });
+        //var title = $(this).attr('data-originalName');
+        $('.btn-add-to-cart').attr('data-config', title);
+        $('.btn-add-to-cart').attr('data-src', src);
+    }
+    
+    $('.change-bigImageItem').click(function () {
+        var src = $(this).attr('data-scr');
+        $('.bigImageItem').attr('href', src);
+        $('.bigImageItem').find('img').attr('src', src);
+    });
 
     $('.filter-category').change(function () {
+        noty_show('message', 'Выполняем поиск');
         $('#form-filter-category').submit();
     });
 
     $('.item-catalog').matchHeight();
     $('.CategoryInfoList-item').matchHeight();
     $('.filter-item').matchHeight();
-
-    $('.attributes-config-item').find('button').click(function () {
-        $(this).parent().find('button').removeClass('active');
-        $(this).addClass('active');
-        var price = $(this).attr('data-price');
-        var quantity = $(this).attr('data-quantity');
-        $('.btn-add-to-cart').attr('data-price', price);
-        $('.quantity-item').html(quantity);
-        $('.price-item').html(price);
-    });
 
     $('.show_menu').click(
         function(){
@@ -40,18 +90,29 @@ $(document).ready(function(){
     );
 
     $('.btn-add-to-cart').click(function(){
+        var action = $(this).attr('data-action');
+        noty_show('message', 'Обновляем корзину');
         $.ajax({
             url: '/otapi/AddToCart',
             type: 'POST',
             data: {
                 id: $(this).attr('data-id'),
                 name: $(this).attr('data-name'),
-                price: $(this).attr('data-price')
+                price: $(this).attr('data-price'),
+                config: $(this).attr('data-config'),
+                img: $(this).attr('data-src')
             },
             error: function() {
                 alert('ERROR!');
             },
             success: function(res) {
+                if(action !== undefined){
+                    noty_show('message', 'Переходим к корзине...');
+                    $('.total_cart').html(res);
+                    $('.btn-add-to-cart').hide('slow');
+                    $('.btn-to-cart-link').removeClass('hidden').html('Переходим к корзине...');
+                    window.location = '/cart';
+                }
                 //TODO: Обновление модуля при "Корзина пуста"
                 $('.total_cart').html(res);
                 $('.btn-add-to-cart').hide('slow');

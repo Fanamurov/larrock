@@ -6,11 +6,11 @@
 @endsection
 
 @section('filters')
-    <p class="h2">Фильтры для поиска:</p>
-    <form action="" method="post" id="form-filter-category">
+    <p class="h2 col-xs-24">Фильтры для поиска:</p>
+    <form action="" method="get" id="form-filter-category">
         @foreach($GetCategorySearchProperties->SearchPropertyInfoList->Content->Item as $filter)
             <div class="filter-item form-group col-xs-6" title="{{ (string)$filter->Name }}">
-                <select id="filter{{ (string)$filter->Id }}" class="form-control filter-category" name="{{ (string)$filter->Id }}">
+                <select id="filter{{ (string)$filter->Id }}" class="form-control filter-category" name="TTT{{ (string)$filter->Id }}">
                     <option value="">{{ (string)$filter->Name }}</option>
                     @foreach($filter->Values->PropertyValue as $filter_value)
                         <option @if(array_search((string)$filter_value->Id, $selected_filters)) selected @endif
@@ -51,8 +51,9 @@
                         <img class="all-width" src="{{ $data_value->Pictures->ItemPicture->Medium }}" alt="{{ (string)$data_value->Title }}">
                     </div>
                     <p class="cost">{{ (string)$data_value->Price->ConvertedPriceWithoutSign }} {{ (string)$data_value->Price->CurrencySign }}</p>
-                    <p>{{ (string)$data_value->Title }}</p>
-                    <p><a href="/otapi/{{ (string)$data_value->CategoryId }}/tovar/{{ (string)$data_value->Id }}">{{ (string)$data_value->OriginalTitle }}</a></p>
+                    <p><a href="/otapi/{{ (string)$data_value->CategoryId }}/tovar/{{ (string)$data_value->Id }}">
+                            {{ mb_strimwidth($data_value->Title, 0, 70, '...') }}
+                        </a></p>
                     <p class="vendor">{{ (string)$data_value->VendorName }}
                         <br/>@for($i=0; $i < ceil((string)$data_value->VendorScore/5); $i++)
                             <i class="fa fa-star"></i>

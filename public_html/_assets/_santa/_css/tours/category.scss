@@ -14,15 +14,19 @@
 }
 
 .toursBlockTour{
-  padding-bottom: 50px;
+  padding-bottom: 30px;
   > div:nth-child(3n+1){
 	margin-left: 3%;
+  }
+  h3{
+	margin-top: 0;
+	margin-bottom: 0;
   }
   h3 a, h4 a{
     font-size: 17px;
     font-weight: 600;
     padding: 0 7px;
-    line-height: 23px;
+    line-height: 20px;
   }
   .cost{
     background: url("/_assets/_santa/_images/bg/bg_cost.png") no-repeat left top transparent;

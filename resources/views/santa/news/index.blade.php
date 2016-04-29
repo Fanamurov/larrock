@@ -1,5 +1,5 @@
 @extends('santa.main')
-@section('title') Блог @endsection
+@section('title') Новости @endsection
 
 @section('content')
     <div class="pageBlogCategory">
@@ -30,6 +30,7 @@
             </div>
         @endforeach
     </div>
+    {!! $data->render() !!}
 @endsection
 
 @section('contentBottom')

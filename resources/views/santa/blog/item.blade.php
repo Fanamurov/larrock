@@ -1,5 +1,5 @@
 @extends('santa.main')
-@section('title') {{ $data->get_seo->seo_title or $data->title }} @endsection
+@section('title') {{ $data->title }} @endsection
 
 @section('content')
     <div class="pageBlogItem">
@@ -7,9 +7,9 @@
             <h1>{{ $data->title }}</h1>
             <div class="blog-categorys">
                 <ul class="list-unstyled list-inline">
-                    @foreach($category->get_childActive as $child)
-                        <li>
-                            <a href="/blog/{{ $child->url }}">{{ $child->title }}</a>
+                    @foreach($categorys as $category_value)
+                        <li @if($category_value->id === $category->id) class="active" @endif>
+                            <a href="/blog/{{ $category_value->url }}">{{ $category_value->title }}</a>
                         </li>
                     @endforeach
                 </ul>

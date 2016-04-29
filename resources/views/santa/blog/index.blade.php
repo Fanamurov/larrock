@@ -1,5 +1,5 @@
 @extends('santa.main')
-@section('title') Блог @endsection
+@section('title') Блог компании Санта-авиа Хабаровск @endsection
 
 @section('content')
     <div class="pageBlogCategory">
@@ -8,11 +8,12 @@
             <ul class="list-unstyled list-inline">
                 @foreach($category as $category_value)
                     <li>
-                        <a href="/blog/{{ $category_value->url }}">{{ $category_value->title }}</a>
+                        <a href="/blog/{{ $category_value->url }}">{{ $category_value->title }} ({{count($category_value->get_blogActive)}})</a>
                     </li>
                 @endforeach
             </ul>
         </div>
+        <div class="clearfix"></div><br/>
         @foreach($data as $item)
             <div class="pageBlogCategory-item row">
                 <div class="col-sm-4">
@@ -21,15 +22,16 @@
                     @endif
                 </div>
                 <div class="col-sm-20">
-                    <h4><a href="/blog/{{ $item->url }}">{{ $item->title }}</a></h4>
+                    <h4><a href="/blog/{{ $item->get_category->url }}/{{ $item->url }}">{{ $item->title }}</a></h4>
                     <div class="pageBlogCategory-item_short">{!! $item->short !!}</div>
                     <div>
-                        <a class="btn btn-default" href="/blog/{{ $item->url }}">Читать далее</a>
+                        <a class="btn btn-default" href="/blog/{{ $item->get_category->url }}/{{ $item->url }}">Читать далее</a>
                     </div>
                 </div>
             </div>
         @endforeach
     </div>
+    {!! $data->render() !!}
 @endsection
 
 @section('contentBottom')

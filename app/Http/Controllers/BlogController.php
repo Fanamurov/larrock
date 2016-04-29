@@ -23,7 +23,7 @@ class BlogController extends Controller
     public function index()
 	{
 		$data['category'] = Category::whereType('blog')->whereActive(1)->whereLevel(1)->with(['get_blogActive'])->get();
-		$data['data'] = Blog::whereActive(1)->paginate(15);
+		$data['data'] = Blog::whereActive(1)->with('get_category')->paginate(15);
 
 		return view('santa.blog.index', $data);
 	}
@@ -35,12 +35,16 @@ class BlogController extends Controller
 		return view('santa.blog.category', $data);
 	}
 
-	public function getItem($item)
+	public function getItem($category, $item)
 	{
-		$data['seo']['title'] = 'Opinions Santa-avia';
-		$data['data'] = Feed::whereUrl($item)->first();
-		$data['category'] = Category::whereType('blog')->whereActive(1)->whereLevel(1)->with(['get_childActive'])->first();
+		$data['data'] = Blog::whereUrl($item)->first();
+		$data['category'] = Category::whereUrl($category)->whereActive(1)->first();
+		$data['categorys'] = Category::whereType('blog')->whereActive(1)->whereLevel(1)->with(['get_blogActive'])->get();
 
-		return view('santa.blog.item', $data);
+		if(\View::exists('santa.blog.'. $item)){
+			return view('santa.blog.'. $item, $data);
+		}else{
+			return view('santa.blog.item', $data);
+		}
 	}
 }

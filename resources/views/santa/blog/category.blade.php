@@ -13,14 +13,15 @@
                 @endforeach
             </ul>
         </div>
+        <div class="clearfix"></div><br/>
         @foreach($data->get_blogActive as $item)
             <div class="pageBlogCategory-item row">
-                <div class="col-sm-4">
-                    @if($item->getFirstMediaUrl('images', '110x110'))
-                        <img src="{{ $item->getFirstMediaUrl('images', '110x110') }}" alt="{{ $item->title }}">
+                <div class="col-sm-6">
+                    @if($item->getFirstMediaUrl('images', '140x140'))
+                        <img src="{{ $item->getFirstMediaUrl('images', '140x140') }}" alt="{{ $item->title }}">
                     @endif
                 </div>
-                <div class="col-sm-20">
+                <div class="col-sm-18">
                     <h4><a href="/blog/{{ $item->url }}">{{ $item->title }}</a></h4>
                     <div class="pageBlogCategory-item_short">{!! $item->short !!}</div>
                     <div>
@@ -30,6 +31,7 @@
             </div>
         @endforeach
     </div>
+    {!! $data->render() !!}
 @endsection
 
 @section('contentBottom')

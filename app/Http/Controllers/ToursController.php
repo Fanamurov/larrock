@@ -213,7 +213,7 @@ class ToursController extends Controller
 		$data['data'] = Category::whereType('tours')->whereActive(1)->whereUrl($item)->with(['get_toursActive', 'get_childActive', 'get_parent.get_toursActive'])->first();
 
 		if( !$data['data']){
-			return $this->getItem($category, $item);
+			return $this->getItem($category, '', $item);
 		}
 
 		$data['other_resourts'] = Category::whereParent($data['data']->parent)->where('id', '!=', $data['data']->id)->get();

@@ -1,4 +1,4 @@
-@extends('santa.main')
+@extends('santa.sletat')
 @section('title')
     Купить тур
     @foreach($GetDepartCities as $item)
@@ -12,7 +12,7 @@
 
 @section('content')
     <div class="pageBlogItem">
-        <h1 class="text-center h3">Подбор тура</h1>
+        <h1 class="text-center h3">Подбор пакетного тура</h1>
         <form id="form-searchTourShort" class="form-searchTour form-searchTourShort" method="get" action="">
             <div class="row">
                 <div class="col-md-8">

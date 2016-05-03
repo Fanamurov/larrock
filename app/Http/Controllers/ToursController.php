@@ -327,6 +327,23 @@ class ToursController extends Controller
 		return view('santa.tours.items-4-3', $data);
 	}
 
+	public function search(Request $request)
+	{
+		if($request->get('vid')){
+			$get_vid = Category::whereId($request->get('vid'))->first();
+			return redirect('/tours/vidy-otdykha/'. $get_vid->url);
+		}
+		if($request->get('resort')){
+			$get_resort = Category::whereId($request->get('resort'))->with(['get_parent'])->first();
+			return redirect('/tours/strany/'. $get_resort->get_parent->url .'/'. $get_resort->url);
+		}
+		if($request->get('country')){
+			$get_country = Category::whereId($request->get('country'))->first();
+			return redirect('/tours/strany/'. $get_country->url);
+		}
+		return back();
+	}
+
 	public function searchItem(Request $request)
 	{
 		$query = $request->get('q');

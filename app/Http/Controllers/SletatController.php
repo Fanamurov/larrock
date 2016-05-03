@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Tours;
 use Breadcrumbs;
 use Illuminate\Http\Request;
 use GuzzleHttp;
@@ -36,6 +38,26 @@ class SletatController extends Controller
 		$data['paginator']['all'] = $data['GetTours']['iTotalDisplayRecords'];
 		$data['paginator']['pages'] = ceil($data['GetTours']['iTotalDisplayRecords']/30);
 		$data['paginator']['current'] = $request->get('pageNumber', 1);
+		$data['siteSearch'] = '';
+
+		$countryId = $request->get('countryId');
+		foreach($data['GetCountries'] as $value){
+			if($value->Id == $countryId){
+				$countryFind = $value->Name;
+			}
+		}
+
+		if(isset($countryFind)){
+			if($countryFind === 'Таиланд'){
+				$countryFind = 'Тайланд';
+			}
+			$data['siteSearch']['tours'] = Tours::search($countryFind)->get();
+			foreach($data['siteSearch']['tours'] as $key => $tovar){
+				$data['siteSearch']['tours'][$key]['image'] = $tovar->getMedia('images')->sortByDesc('order_column')->first();
+			}
+			$data['siteSearch']['categories'] = Category::search($countryFind)->with(['get_toursActive', 'get_childActive.get_toursActive'])->get();
+		}
+
 		return view('santa.sletat.searchForm', $data);
 	}
 

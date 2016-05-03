@@ -1,8 +1,9 @@
 #content{
   padding: 10px 0 100px;
   > div{
-	background: white;
-	padding: 3px 20px;
+	background: #fff;
+	padding: 10px 5px;
+	border-radius: 5px;
   }
   .content_bottom-sharing{
 	margin-top: 40px;
@@ -14,5 +15,8 @@
 	  color: grey;
 	  font-size: 14px;
 	}
+  }
+  .content-padding{
+
   }
 }

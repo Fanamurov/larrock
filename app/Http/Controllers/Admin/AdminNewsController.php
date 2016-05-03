@@ -50,7 +50,7 @@ class AdminNewsController extends Controller
 	public function index()
 	{
 		$data['app'] = $this->config;
-		$data['data'] = Category::type('news')->level(1)->orderBy('position', 'DESC')->with(['get_child', 'get_parent'])->paginate(30);
+		$data['data'] = Category::type('news')->level(1)->orderBy('updated_at', 'desc')->with(['get_child', 'get_parent'])->paginate(30);
 		View::share('validator', '');
 		return view('admin.news.index', $data);
 	}
@@ -125,7 +125,7 @@ class AdminNewsController extends Controller
 	{
 		$data['app'] = $this->config;
 		$data['category'] = Category::findOrFail($id);
-		$data['data'] = News::whereCategory($id)->paginate(30);
+		$data['data'] = News::whereCategory($id)->orderBy('updated_at', 'desc')->paginate(30);
 		View::share('validator', '');
 
 		Breadcrumbs::register('admin.news.category', function($breadcrumbs, $data)

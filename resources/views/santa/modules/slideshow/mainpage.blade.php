@@ -1,5 +1,5 @@
 @if(count($slideshow['big']) > 0)
-    <div id="carousel-mainpage" class="carousel slide" data-ride="carousel">
+    <div id="carousel-mainpage" class="carousel slide hidden" data-ride="carousel">
         <!-- Indicators -->
         <ol class="carousel-indicators">
             <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
@@ -14,7 +14,6 @@
                 <div class="item @if($key === 0) active @endif">
                     <a href="{{ $value->banner_url }}">
                         <span class="carousel-caption">{!! $value->description !!}</span>
-                        <img src="/_assets/_santa/_images/main_big_banner_button.png" class="banner_button" alt="Подробнее">
                         <img src="{{ $value->images->first()->getUrl() }}" alt="{{ $value->title }}" class="all-width">
                     </a>
                 </div>
@@ -33,7 +32,7 @@
     </div>
 @endif
 @if(count($slideshow['small']) > 0)
-    <div class="row block-akcii">
+    <div class="row block-akcii hidden">
         @foreach($slideshow['small'] as $value)
             <div class="col-sm-8">
                 <a href="{{ $value->banner_url }}">

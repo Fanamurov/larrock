@@ -57,6 +57,9 @@ Route::get('/news/{item}', [
 Route::get('/tours/all', [
 	'as' => 'tours.all', 'uses' => 'ToursController@getAllTours'
 ]);
+Route::post('/tours/search', [
+	'as' => 'tours.search', 'uses' => 'ToursController@search'
+]);
 Route::get('/tours/strany', [
 	'as' => 'tours.strany', 'uses' => 'ToursController@getStrany'
 ]);

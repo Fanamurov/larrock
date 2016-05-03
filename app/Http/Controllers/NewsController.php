@@ -21,7 +21,7 @@ class NewsController extends Controller
 	
     public function index()
 	{
-		$data['data'] = News::whereActive(1)->paginate(30);
+		$data['data'] = News::whereActive(1)->orderBy('updated_at', 'desc')->paginate(20);
 		$data['category'] = Category::whereType('news')->first();
 
 		return view('santa.news.category', $data);

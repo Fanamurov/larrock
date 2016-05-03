@@ -2,19 +2,6 @@
 <html lang="ru">
 @include('santa.sections.head')
 <body class="{{ $app_name or '' }} {{ $app_param or '' }}">
-<div class="header-redline">
-    <div class="container">
-        <div class="col-sm-7 col-sm-offset-1">
-            <a href="/forms/podbor">Подобрать тур</a>
-        </div>
-        <div class="col-sm-8 text-center">
-            <a href="/page/aviabilety">Найти авиабилет</a>
-        </div>
-        <div class="col-sm-7 text-right">
-            <a href="#uptocall">Заказать звонок</a>
-        </div>
-    </div>
-</div>
 <div class="container container-body">
     @include('santa.sections.header')
     <section class="row" id="content">
@@ -31,10 +18,10 @@
             </div>
         </section>
         <div class="col-xs-24 col-sm-16 col-md-17">
-            <div class="col-xs-24">
+            <div class="col-xs-24 content-padding">
                 @include('santa.errors')
+                @yield('content')
             </div>
-            @yield('content')
             <div class="content_bottom-sharing">
                 <span>Поделитесь материалом с друзьями:</span> @include('santa.modules.share.sharing')
             </div>

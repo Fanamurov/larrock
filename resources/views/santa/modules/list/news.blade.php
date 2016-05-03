@@ -1,23 +1,22 @@
 <div class="block-module_listNews">
-    <p class="h3">Новости</p>
+    <p class="h2">Новости</p>
     <ul class="list-unstyled list-inline">
         @foreach($list_news as $item)
-            <li class="col-xs-24 col-sm-12 news-item-module block-module-padding">
+            <li class="col-xs-24 col-sm-8 news-item-module block-module-padding">
                 <div class="row">
-                    <div class="col-sm-8">
-                        @if($item->getFirstMediaUrl('images', '110x110'))
-                            <img src="{{ $item->getFirstMediaUrl('images', '110x110') }}" alt="{{ $item->title }}" class="all-width">
+                    <div class="col-sm-24">
+                        @if($item->getFirstMediaUrl('images'))
+                            <img src="{{ $item->getFirstMediaUrl('images') }}" alt="{{ $item->title }}" class="all-width">
                         @endif
                     </div>
-                    <div class="col-sm-16">
-                        <a href="#">{{ $item->title }}</a>
-                        <p class="text-muted"><small>{{ $item->date }}</small></p>
+                    <div class="col-sm-24">
+                        <a href="/news/{{ $item->get_category->url }}/{{ $item->url }}">{{ $item->title }}</a>
                     </div>
                 </div>
             </li>
         @endforeach
     </ul>
     <div class="clearfix"></div>
-    <a href="/news" class="btn btn-default btn-small pull-right">Все новости</a>
+    <a href="/news" class="btn btn-info btn-small pull-right">Все новости</a>
 </div>
 <div class="clearfix"></div>

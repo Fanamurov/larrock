@@ -1,24 +1,6 @@
-.header-redline{
-  background: #c72800;
-  color: #fff;
-  padding: 5px 0;
-  position: absolute;
-  left: 0;
-  right: 0;
-  z-index: 8;
-  a{
-    color: white;
-    font-size: 14px;
-    &:hover,
-    &:focus{
-      color: #e0e0e0;
-    }
-  }
-}
-
 header{
   .header-logo{
-	padding-top: 50px;
+	padding-top: 26px;
 	padding-bottom: 20px;
 	a{
 	  text-decoration: none;
@@ -35,7 +17,7 @@ header{
 	}
   }
   .header-address{
-	padding-top: 50px;
+	padding-top: 40px;
 	line-height: 30px;
 	.city{
 	  font-size: 25px;
@@ -57,13 +39,24 @@ header{
 
   .div-menu{
 	margin-top: 10px;
+	margin-bottom: 16px;
 	text-align: center;
-	color: #c72800;
+	color: $color_red;
 	font-size: 19px;
 	font-weight: 600;
 	background: linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(241,241,241,1) 22%,rgba(255,255,255,1) 78%,rgba(241,241,241,1) 100%);
+	.dropdown-menu>li>a{
+	  padding: 8px 0;
+	  font-size: 17px;
+	  display: block;
+	  text-decoration: none;
+	  border-bottom: 1px solid #F4F4F4;
+	  &:last-child{
+		border-bottom: none;
+	  }
+	}
 	a{
-	  color: #c72800;
+	  color: $color_red;
 	  display: inline-block;
 	  font-size: 18px;
 	  &:hover,
@@ -74,7 +67,7 @@ header{
 	  }
 	}
 	.nav .open>a, .nav .open>a:hover, .nav .open>a:focus {
-	  background-color: #C72800;
+	  background-color: $color_red;
 	  color: white;
 	  border-color: transparent;
 	  text-decoration: none;
@@ -90,92 +83,6 @@ header{
 		  border-top: none;
 		}
 	  }
-	  li:first-of-type{
-		ul.dropdown-menu{
-		  width: 600%;
-		  li{
-			width: 15.7%;
-			padding-bottom: 20px;
-			display: inline-block;
-			text-align: center;
-			a{
-			  padding: 3px 0 !important;
-			  text-align: center;
-			}
-			i{
-			  display: block;
-			  font-size: 70px;
-			  text-align: center;
-			}
-		  }
-		}
-	  }
-	  li:nth-of-type(2){
-		ul.dropdown-menu{
-		  width: 735%;
-		  left: -126%;
-		  li{
-			width: 19.6%;
-			display: inline-block;
-			padding-bottom: 20px;
-			a{
-			  padding: 3px 0 !important;
-			  width: 100%;
-			  font-size: 15px;
-			  text-decoration: none;
-			}
-			i{
-			  display: inline-block;
-			  font-size: 20px;
-			  position: relative;
-			  top: 2px;
-			}
-		  }
-		}
-	  }
-	  li:nth-of-type(3){
-		ul.dropdown-menu{
-		  width: 535%;
-		  left: -165%;
-		  li{
-			width: 24.2%;
-			display: inline-block;
-			text-align: center;
-			padding-bottom: 20px;
-			a{
-			  padding: 3px 0 !important;
-			  text-align: center;
-			  width: 100%;
-			}
-			i{
-			  display: block;
-			  font-size: 70px;
-			  text-align: center;
-			}
-		  }
-		}
-	  }
-	  li:nth-of-type(4){
-		ul.dropdown-menu{
-		  width: 700%;
-		  left: -343%;
-		  li{
-			width: 16.2%;
-			padding-bottom: 20px;
-			display: inline-block;
-			text-align: center;
-			a{
-			  padding: 3px 0 !important;
-			  text-align: center;
-			}
-			i{
-			  display: block;
-			  font-size: 70px;
-			  text-align: center;
-			}
-		  }
-		}
-	  }
 	}
 	ul{
 	  margin-bottom: 0;
@@ -187,63 +94,6 @@ header{
 			text-decoration: none;
 		  }
 		}
-	  }
-	}
-	i{
-	  &.plyazhnyy-otdykh{
-		background: url("/media/Category/Category-306-81985bcc2a872937a037ed66ee2cc972jpg.jpg") no-repeat center top;
-		width: 100%;
-		height: 108px;
-	  }
-	  &.ekskursionnye-tury{
-		background: url("/media/Category/Category-311-26b5d109ecbe6a021816bbbd0bc52da3jpg.jpg") no-repeat center top;
-		width: 100%;
-		height: 108px;
-	  }
-	  &.kombi-tury{
-		background: url("/media/Category/Category-312-aa356ab2b50a0b2b9fa31eeda66c344ajpg.jpg") no-repeat center top;
-		width: 100%;
-		height: 108px;
-	  }
-	  &.otdykh-s-detmi{
-		background: url("/media/Category/Category-313-7297db630b1ce83940b69b944ef21018jpg.jpg") no-repeat center top;
-		width: 100%;
-		height: 108px;
-	  }
-	  &.uchimsya-i-otdykhaem{
-		background: url("/media/Category/Category-314-b34e01eb02eeba66ca85174dc6512630jpg.jpg") no-repeat center top;
-		width: 100%;
-		height: 108px;
-	  }
-	  &.otdykh-i-zdorove{
-		background: url("/media/Category/Category-315-0127516be49ee687490ea70b096addd9jpg.jpg") no-repeat center top;
-		width: 100%;
-		height: 108px;
-	  }
-	  &.ekzoticheskie-ostrova{
-		background: url("/media/Category/Category-316-ea1ecc696d3b4f4bc14b0690faaef8dajpg.jpg") no-repeat center top;
-		width: 100%;
-		height: 108px;
-	  }
-	  &.luxury{
-		background: url("/media/Category/Category-317-b3d985414f00f164fe5633b5beb67ffbjpg.jpg") no-repeat center top;
-		width: 100%;
-		height: 108px;
-	  }
-	  &.turisticheskie-kruizy{
-		background: url("/media/Category/Category-318-2f3ca3b7fdb41f45e503d31af0f6a71djpg.jpg") no-repeat center top;
-		width: 100%;
-		height: 108px;
-	  }
-	  &.svadebnye-puteshestviya{
-		background: url("/media/Category/Category-319-0fd4bfba6390b7a77b885371226dc096jpg.jpg") no-repeat center top;
-		width: 100%;
-		height: 108px;
-	  }
-	  &.gornolyzhnye-tury{
-		background: url("/media/Category/Category-320-a620baad20bb21593b27ad3ae65eb167jpg.jpg") no-repeat center top;
-		width: 100%;
-		height: 108px;
 	  }
 	}
   }

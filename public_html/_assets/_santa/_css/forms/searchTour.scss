@@ -1,6 +1,8 @@
-.form-searchTourShort{
+.form-searchTourShort,
+.form-siteSearch{
   background: white;
-  padding: 10px 15px;
+  //padding: 10px 15px;
+  padding: 0;
   margin-bottom: 30px;
   .h3{
 	font-weight: 600;
@@ -9,5 +11,11 @@
   .input-group-addon{
 	background: transparent;
 	border: none;
+  }
+}
+#right_colomn{
+  .form-searchTourShort,
+  .form-siteSearch{
+	padding: 10px 15px;
   }
 }

@@ -22,7 +22,7 @@ class BlogController extends Controller
 	
     public function index()
 	{
-		$data['category'] = Category::whereType('blog')->whereActive(1)->whereLevel(1)->with(['get_blogActive'])->get();
+		$data['category'] = Category::whereType('blog')->whereActive(1)->whereLevel(1)->orderBy('updated_at', 'desc')->with(['get_blogActive'])->get();
 		$data['data'] = Blog::whereActive(1)->with('get_category')->paginate(15);
 
 		return view('santa.blog.index', $data);
@@ -30,7 +30,7 @@ class BlogController extends Controller
 
 	public function show($category)
 	{
-		$data['category'] = Category::whereType('blog')->whereActive(1)->whereLevel(1)->with(['get_blogActive'])->get();
+		$data['category'] = Category::whereType('blog')->whereActive(1)->whereLevel(1)->orderBy('updated_at', 'desc')->with(['get_blogActive'])->get();
 		$data['data'] = Category::whereUrl($category)->whereActive(1)->with(['get_blogActive'])->first();
 		return view('santa.blog.category', $data);
 	}

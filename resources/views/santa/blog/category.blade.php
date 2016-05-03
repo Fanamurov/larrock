@@ -24,9 +24,6 @@
                 <div class="col-sm-18">
                     <h4><a href="/blog/{{ $item->url }}">{{ $item->title }}</a></h4>
                     <div class="pageBlogCategory-item_short">{!! $item->short !!}</div>
-                    <div>
-                        <a class="btn btn-default" href="/blog/{{ $item->url }}">Читать далее</a>
-                    </div>
                 </div>
             </div>
         @endforeach

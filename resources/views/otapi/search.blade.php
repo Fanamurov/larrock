@@ -22,6 +22,19 @@
                     </div>
                 @endforeach
                     <div class="clearfix"></div>
+
+                    <div class="filter-item form-group col-xs-6" title="Сортировки">
+                        <label for="sortCost">Сортировка результатов:</label>
+                        <select id="sortCost" class="form-control filter-category" name="sort">
+                            <option @if(Request::get('sort', 'Price:Asc') === 'Default') selected @endif value="Default">Порядок по умолчанию</option>
+                            <option @if(Request::get('sort', 'Price:Asc') === 'Price:Asc') selected @endif value="Price:Asc">Цена: по возрастанию</option>
+                            <option @if(Request::get('sort', 'Price:Asc') === 'Price:Desc') selected @endif value="Price:Desc">Цена: по убываю</option>
+                            <option @if(Request::get('sort', 'Price:Asc') === 'VendorRating:Desc') selected @endif value="VendorRating:Desc">Продавцы с наибольшим рейтингом</option>
+                            <option @if(Request::get('sort', 'Price:Asc') === 'Volume:Desc') selected @endif value="Volume:Desc">Самые продаваемые</option>
+                            <option @if(Request::get('sort', 'Price:Asc') === 'Popularity:Desc') selected @endif value="Popularity:Desc">Самые популярные</option>
+                        </select>
+                    </div>
+
                     <div class="form-group">
                         <input type="hidden" name="_token" value="{{csrf_token()}}">
                         <input type="hidden" name="search" value="{{ Request::get('search') }}">

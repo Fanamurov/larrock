@@ -29,6 +29,18 @@
   padding: 7px 25px;
 }
 
+.mainpage-menus .nav-left .menu__wrap{
+  top: 0;
+}
+
+.mainpage{
+  .header-top_menu .block-categories:focus,
+  .header-top_menu .block-categories:hover{
+    background: #fd4e00;
+    cursor: default;
+  }
+}
+
 .nav-left{
   border: 2px solid #F37137;
   box-sizing: border-box;

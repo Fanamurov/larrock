@@ -35,19 +35,25 @@ class Otapi extends Controller
             $param_request .= '&'. $param_key .'='. $param_value;
         }
 
+        //echo $method .'_'.$param_request .'<br/>';
         $cacheKey = md5($method .'_'.$param_request);
-        Cache::forget($cacheKey);
-        if(Cache::has($cacheKey)){
-            $body = Cache::get($cacheKey, 'NONE');
-        }else{
+        if($method === 'GetThreeLevelRootCategoryInfoList'){
+            //Cache::forget($cacheKey);
+        }
+        //Cache::forget($cacheKey);
+
+        $body = Cache::remember($cacheKey, 240, function() use ($method, $param_request)
+        {
             $client = new Client();
             //dd($this->service_url . $method .'?'. $this->instanceKey .'&'. $this->lang . $param_request);
             $data = $client->request('GET', $this->service_url . $method .'?'. $this->instanceKey .'&'. $this->lang . $param_request);
-            $body = $data->getBody();
-            Cache::add($cacheKey, $body, 60);
-        }
-
-        return simplexml_load_string($body);
+            $body = simplexml_load_string($data->getBody());
+            $body = json_encode($body);
+            $body = json_decode($body);
+            //dd($body->CategoryInfoList->Content->Item);
+            return $body;
+        });
+        return $body;
     }
 
     public function get_index()
@@ -55,8 +61,7 @@ class Otapi extends Controller
         View::share('modulePopular', $this->ModulePopularTovars());
         View::share('moduleLast', $this->ModuleLastTovars());
         View::share('moduleVendorPopular', $this->GetVendorRatingList());
-        $body = $this->create_request('GetRootCategoryInfoList');
-        return view('otapi.frontpage', ['data' => $body->CategoryInfoList->Content]);
+        return view('otapi.frontpage');
     }
 
     public function get_category($categoryId = 'otc-3035', Request $request)
@@ -170,12 +175,12 @@ class Otapi extends Controller
         $body['selected_filters'] = ['0' => 'test'];
         foreach ($request->all() as $key => $filter){
 			$key = str_replace('TTT', '', $key);
-            if ($key !== '_token' && $key !== 'filter' && !empty($filter)){
+            if ($key !== '_token' && $key !== 'filter' && $key !== 'sort' && !empty($filter)){
                 $search_params .= '<Configurator Pid="'. $key .'" Vid="'. $filter .'"/>';
                 $body['selected_filters'][] = $filter;
             }
         }
-        $search_params .= '</Configurators></SearchParameters>';
+        $search_params .= '</Configurators><OrderBy>'. $request->get('sort', 'Price:Asc') .'</OrderBy></SearchParameters>';
 
         $body['data'] = $this->create_request('FindCategoryItemInfoListFrame', [
             'categoryId' => $categoryId,
@@ -198,7 +203,8 @@ class Otapi extends Controller
 
 			$body['paginator'] = new Paginator(
 				$body['data']->OtapiItemInfoSubList->Content->Item,
-				$body['data']->OtapiItemInfoSubList->TotalCount,
+                400*60,
+				//$body['data']->OtapiItemInfoSubList->TotalCount,
 				$limit = 60,
 				$page = $request->get('page'), [
 				'path'  => $request->url(),
@@ -245,16 +251,23 @@ class Otapi extends Controller
 		//Собираем конфиги
 		$body['item']['configs'] = $body['data']['OtapiItemFullInfo']['ConfiguredItems']['OtapiConfiguredItem'];
 		foreach($body['item']['configs'] as $key => $config){
-			foreach($config['Configurators']['ValuedConfigurator'] as $val_conf){
-				if(array_key_exists('@attributes', $val_conf)){
-					$body['item']['configs'][$key]['bucket'][$val_conf['@attributes']['Pid']] = $val_conf['@attributes']['Vid'];
-				}else{
-					$body['item']['configs'][$key]['bucket'][$val_conf['Pid']] = $val_conf['Vid'];
-				}
-			}
-			if($config['Quantity'] !== '0' AND !isset($body['item']['config_current'])){
-				$body['item']['config_current'] = $body['item']['configs'][$key];
-			}
+            if(isset($config['Configurators']['ValuedConfigurator'])){
+                foreach($config['Configurators']['ValuedConfigurator'] as $val_conf){
+                    if(array_key_exists('@attributes', $val_conf)){
+                        $body['item']['configs'][$key]['bucket'][$val_conf['@attributes']['Pid']] = $val_conf['@attributes']['Vid'];
+                    }else{
+                        $body['item']['configs'][$key]['bucket'][$val_conf['Pid']] = $val_conf['Vid'];
+                    }
+                }
+                if($config['Quantity'] !== '0' AND !isset($body['item']['config_current'])){
+                    $body['item']['config_current'] = $body['item']['configs'][$key];
+                }
+            }else{
+                $body['item']['config_current'] = $body['item']['configs'];
+                $Pid = $body['item']['configs']['Configurators']['ValuedConfigurator']['@attributes']['Pid'];
+                $Vid = $body['item']['configs']['Configurators']['ValuedConfigurator']['@attributes']['Vid'];
+                $body['item']['config_current']['bucket'][$Pid] = $Vid;
+            }
 		}
 
         if((string)$body['data']['ErrorCode'] === 'Ok'){
@@ -334,60 +347,37 @@ class Otapi extends Controller
 
     public function SearchItemsFrame(Request $request, $page = 1)
     {
-        //&xmlParameters=%3CSearchItemsParameters%3E%3CConfigurators%3E%3CConfigurator%20Pid%3D%2220000%22%20Vid%3D%22126078338%22%3E126078338%3C%2FConfigurator%3E%3C%2FConfigurators%3E%3CItemTitle%3E%D0%9B%D1%8B%D0%B6%D0%B8%3C%2FItemTitle%3E%3C%2FSearchItemsParameters%3E&framePosition=0&frameSize=1&blockList=SearchProperties%2CAvailableSearchMethods
-
         $search_params = '<SearchItemsParameters><ItemTitle>'. $request->get('search', 'iPhone') .'</ItemTitle><Configurators>';
         $body['selected_filters'] = ['0' => 'test'];
         foreach ($request->all() as $key => $filter){
-            if ($key !== '_token' && $key !== 'search' && $key !== 'page' && !empty($filter)){
+            if ($key !== '_token' && $key !== 'search' && $key !== 'page' && $key !== 'sort' && !empty($filter)){
                 $key = str_replace('TTT', '', $key);
                 $search_params .= '<Configurator Pid="'. $key .'" Vid="'. $filter .'"/>';
                 $body['selected_filters'][] = $filter;
             }
         }
-        $search_params .= '</Configurators></SearchItemsParameters>';
-
-        //dd($search_params);
+        $search_params .= '</Configurators><OrderBy>'. $request->get('sort', 'Price:Asc') .'</OrderBy></SearchItemsParameters>';
 
         //http://docs.otapi.net/ru/Documentations/Type?name=OtapiSearchItemsParameters
+        $framePosition = ($request->get('page', $page)-1)*60;
+        if($framePosition >= 4000){
+            $framePosition = 3999;
+        }
         $body['data'] = $this->create_request('BatchSearchItemsFrame', [
             'xmlParameters' => $search_params,
-            'framePosition' => $request->get('framePosition', ($request->get('page', $page)-1)*60),
+            'framePosition' => $request->get('framePosition', $framePosition),
             'frameSize' => $request->get('frameSize', 60),
             'sessionId' => '242423',
             'blockList' => 'SearchProperties,AvailableSearchMethods']);
 
-        //dd($body['data']->Result->Items->Items->TotalCount);
+        //dd($body['data']);
 
         //dd($request->query());
 
         $body['paginator'] = new Paginator(
             $body['data']->Result->Items->Items->Content->Item,
-            $body['data']->Result->Items->Items->TotalCount,
-            $limit = 60,
-            $page = $request->get('page', $page), [
-            'path'  => $request->url(),
-            'query' => $request->query(),
-        ]);
-
-        if((string)$body['data']->ErrorCode === 'Ok'){
-            return view('otapi.search', $body);
-        }else{
-            abort('404', 'Товар не получен');
-        }
-    }
-
-    public function SearchItemsFrameOld(Request $request, $page = 1)
-    {
-        //http://docs.otapi.net/ru/Documentations/Type?name=OtapiSearchItemsParameters
-        $body['data'] = $this->create_request('SearchItemsFrame', [
-            'xmlParameters' => '<SearchItemsParameters><ItemTitle>'. $request->get('search') .'</ItemTitle></SearchItemsParameters>',
-            'framePosition' => $request->get('framePosition', ($request->get('page', $page)-1)*60),
-            'frameSize' => $request->get('frameSize', 60)]);
-
-        $body['paginator'] = new Paginator(
-            $body['data']->Result->Items->Content->Item,
-            $body['data']->Result->Items->TotalCount,
+            //$body['data']->Result->Items->Items->TotalCount,
+            400*60,
             $limit = 60,
             $page = $request->get('page', $page), [
             'path'  => $request->url(),
@@ -403,27 +393,22 @@ class Otapi extends Controller
 
     public function getMenu()
     {
-        $tree = Cache::remember('menu_tree', 60, function() {
-            $body = $this->create_request('GetThreeLevelRootCategoryInfoList');
-            $body = json_encode($body->CategoryInfoList->Content);
-            $body = json_decode($body);
-            $tree = array();
-            $exists_ids = array();
-            foreach ($body->Item as $key => $value){
-                if( !isset($value->ParentId)){
-                    $tree[1][$value->Id] = $value;
+        $body = $this->create_request('GetThreeLevelRootCategoryInfoList');
+        $tree = array();
+        $exists_ids = array();
+        foreach ($body->CategoryInfoList->Content->Item as $key => $value){
+            if( !isset($value->ParentId)){
+                $tree[1][$value->Id] = $value;
+            }else{
+                if(in_array($value->ParentId, $exists_ids)){
+                    $tree[3][$value->ParentId][] = $value;
                 }else{
-                    if(in_array($value->ParentId, $exists_ids)){
-                        $tree[3][$value->ParentId][] = $value;
-                    }else{
-                        $tree[2][$value->ParentId][] = $value;
-                        $exists_ids[] = $value->Id;
+                    $tree[2][$value->ParentId][] = $value;
+                    $exists_ids[] = $value->Id;
 
-                    }
                 }
             }
-            return $tree;
-        });
+        }
         return $tree;
     }
 

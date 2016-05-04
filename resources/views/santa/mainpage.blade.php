@@ -78,12 +78,32 @@
             <div class="col-xs-24">
                 @include('santa.errors')
                 @include('santa.modules.slideshow.mainpage', $slideshow)
-                @if($best_cost['hotelsCount'] > 0)
-                    <div class="toursPageCountry-bestcost row">
-                        <div class="col-xs-24"><h5 class="title-header">Лучшие цены</h5></div>
-                        @each('santa.tours.blockTourSletat', $best_cost['aaData'], 'item')
-                    </div>
-                @endif
+
+                <div class="sletatResult" data-country-id="{{ $country_id_sletat }}">
+                    @if($GetTours['hotelsCount'] > 0)
+                        @include('santa.sletat.searchResultShort')
+                    @else
+                        <div class="toursPageCountry-bestcost row">
+                            <div class="col-xs-24"><h5 class="title-header">Лучшие цены</h5></div>
+                            <div class="col-xs-24" id="loadState">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-danger progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 10%;">
+                                        <span class="progress-current">0%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="alert alert-warning col-xs-24 alert-progress">Обработка запроса продолжается</div>
+                        </div>
+                        @push('scripts')
+                        <script>
+                            $(document).ready(function(){
+                                GetLoadStateShort({{ $GetTours['requestId'] }}, 20, 3);
+                            });
+                        </script>
+                        @endpush
+                    @endif
+                </div>
+
                 @include('santa.modules.list.news')
                 @include('santa.modules.list.blog')
                 @include('santa.modules.list.tours')
@@ -98,5 +118,6 @@
     @yield('footer')
 </footer>
 @include('santa.sections.bottomScripts')
+@stack('scripts')
 </body>
 </html>

@@ -6,11 +6,17 @@
 @endif
 
 @section('content')
-    {!! Breadcrumbs::render('tours.vid', $data) !!}
+    <div class="toursVid row">
+        <div class="col-xs-24">
+            {!! Breadcrumbs::render('tours.vid', $data) !!}
+            @include('santa.modules.share.sharing')
+        </div>
+        <div class="clearfix"></div>
+        <br/>
+        <div class="catalogPageCategoryItems row">
+            @each('santa.tours.blockTour', $data->get_toursActive, 'data')
+        </div>
 
-    <div class="catalogPageCategoryItems row">
-        @each('santa.tours.blockTour', $data->get_toursActive, 'data')
+        <div class="Pagination catalogPagination">{!! $paginator->render() !!}</div>
     </div>
-
-    <div class="Pagination catalogPagination">{!! $paginator->render() !!}</div>
 @endsection

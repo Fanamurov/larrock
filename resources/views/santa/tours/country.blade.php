@@ -45,26 +45,44 @@
                     </div>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="tour-map">
-                    <div id="map"></div>
-                    @if($data->map_coordinate)
+                    <div id="map" data-place="{{ $data->title }}" data-coord=""></div>
+                    @push('scripts')
                         <script>
-                            var map;
                             function initMap() {
-                                map = new google.maps.Map(document.getElementById('map'), {
-                                    center: {lat: {{ $data->map_coordinate['lat'] }}, lng: {{ $data->map_coordinate['long'] }}},
-                                    zoom: 4
+                                var map = new google.maps.Map(document.getElementById('map'), {
+                                    zoom: 3,
+                                    center: {lat: -34.397, lng: 150.644}
+                                });
+                                var geocoder = new google.maps.Geocoder();
+
+                                geocodeAddress(geocoder, map);
+                            }
+
+                            function geocodeAddress(geocoder, resultsMap) {
+                                var address = $('#map').attr('data-place');
+                                geocoder.geocode({'address': address}, function(results, status) {
+                                    if (status === google.maps.GeocoderStatus.OK) {
+                                        resultsMap.setCenter(results[0].geometry.location);
+                                        $('#map').attr('data-coord', results[0].geometry.location);
+                                        var marker = new google.maps.Marker({
+                                            map: resultsMap,
+                                            position: results[0].geometry.location
+                                        });
+                                    } else {
+                                        alert('Geocode was not successful for the following reason: ' + status);
+                                    }
                                 });
                             }
+
                         </script>
-                        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCxKB99A6FyIpROOUAOJSJqZGQEB6bgd2E" async defer></script>
-                    @endif
+                        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCxKB99A6FyIpROOUAOJSJqZGQEB6bgd2E&callback=initMap"
+                                async defer></script>
+                    @endpush
                 </div>
             </div>
             <ul class="nav nav-tabs" role="tablist">
-                @if($data->map_coordinate)
-                    <li class="load-map" role="presentation"><a href="#tour-map" aria-controls="tour-map" role="tab" data-toggle="tab"><i class="fi flaticon-travel-5"></i> На карте</a></li>
-                    <li role="presentation" class="active"><a href="#tour-photo" aria-controls="tour-photo" role="tab" data-toggle="tab"><i class="fi flaticon-technology"></i> Фото</a></li>
-                @endif
+                <li class="load-map" role="presentation"><a href="#tour-map" aria-controls="tour-map" role="tab" data-toggle="tab"><i class="fi flaticon-travel-5"></i> На карте</a></li>
+                <li role="presentation" class="active"><a href="#tour-photo" aria-controls="tour-photo" role="tab" data-toggle="tab"><i class="fi flaticon-technology"></i> Фото</a></li>
             </ul>
         </div>
         <div class="toursPageCountry-short row">
@@ -87,10 +105,7 @@
 
         <div class="sletatResult" data-country-id="{{ $country_id_sletat }}">
             @if($GetTours['hotelsCount'] > 0)
-                <div class="toursPageCountry-bestcost row">
-                    <div class="col-xs-24"><h5 class="title-header">Лучшие цены</h5></div>
-                    @include('santa.sletat.searchResultShort')
-                </div>
+                @include('santa.sletat.searchResultShort')
             @else
                 <div class="toursPageCountry-bestcost row">
                     <div class="col-xs-24"><h5 class="title-header">Лучшие цены</h5></div>
@@ -103,13 +118,13 @@
                     </div>
                     <div class="alert alert-warning col-xs-24 alert-progress">Обработка запроса продолжается</div>
                 </div>
-                @section('scripts')
+                @push('scripts')
                     <script>
                         $(document).ready(function(){
                             GetLoadStateShort({{ $GetTours['requestId'] }}, 20, 3);
                         });
                     </script>
-                @endsection
+                @endpush
             @endif
         </div>
 

@@ -1,7 +1,6 @@
 @if($GetTours['iTotalDisplayRecords'] > 1)
 <div class="toursPageCountry-bestcost row">
     <div class="col-xs-24"><h5 class="title-header">Лучшие цены <a class="pull-right" href="#">Все туры</a></h5></div>
-    <p class="col-sm-24">Найдено {{ $GetTours['iTotalDisplayRecords'] }} туров в {{ $GetTours['hotelsCount'] }} отелях</p>
     <ul class="list-unstyled search-result">
         @foreach($GetTours['aaData'] as $item)
             <li class="col-sm-8">

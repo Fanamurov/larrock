@@ -45,6 +45,17 @@ header{
 	font-size: 19px;
 	font-weight: 600;
 	background: linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(241,241,241,1) 22%,rgba(255,255,255,1) 78%,rgba(241,241,241,1) 100%);
+
+    li.dropdown:first-of-type{
+      ul{
+        width: 826px;
+        li{
+          width: 200px;
+          display: inline-block;
+        }
+      }
+    }
+
 	.dropdown-menu>li>a{
 	  padding: 8px 0;
 	  font-size: 17px;

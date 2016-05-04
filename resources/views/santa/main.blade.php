@@ -34,5 +34,6 @@
     @yield('footer')
 </footer>
 @include('santa.sections.bottomScripts')
+@stack('scripts')
 </body>
 </html>

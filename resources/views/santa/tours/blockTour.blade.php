@@ -1,5 +1,5 @@
 <div class="toursBlockTour col-xs-8">
-    <div class="link_block_this col-xs-22 col-xs-offset-2" data-href="{{ $data->FullUrl }}">
+    <div class="link_block col-xs-22 col-xs-offset-2">
         @if($data->getMedia('images')->sortByDesc('order_column')->first())
             <img src="{{ $data->getMedia('images')->sortByDesc('order_column')->first()->getUrl() }}" class="categoryImage all-width">
         @else

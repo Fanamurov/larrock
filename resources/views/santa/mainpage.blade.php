@@ -66,18 +66,24 @@
 
         <section id="right_colomn" class="col-xs-24 col-sm-8 col-md-7">
             <div class="col-xs-24 content-padding">
+                @include('santa.modules.forms.subscribe')
                 @yield('rightColomn')
                 @if(isset($banner))
                     @include('front.modules.list.banner')
                 @endif
                 @include('santa.modules.list.vidy')
-                @include('santa.modules.forms.subscribe')
             </div>
         </section>
         <div class="col-xs-24 col-sm-16 col-md-17">
             <div class="col-xs-24">
                 @include('santa.errors')
                 @include('santa.modules.slideshow.mainpage', $slideshow)
+                @if($best_cost['hotelsCount'] > 0)
+                    <div class="toursPageCountry-bestcost row">
+                        <div class="col-xs-24"><h5 class="title-header">Лучшие цены</h5></div>
+                        @each('santa.tours.blockTourSletat', $best_cost['aaData'], 'item')
+                    </div>
+                @endif
                 @include('santa.modules.list.news')
                 @include('santa.modules.list.blog')
                 @include('santa.modules.list.tours')

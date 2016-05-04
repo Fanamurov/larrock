@@ -51,10 +51,6 @@ class SletatController extends Controller
 			if($countryFind === 'Таиланд'){
 				$countryFind = 'Тайланд';
 			}
-			$data['siteSearch']['tours'] = Tours::search($countryFind)->get();
-			foreach($data['siteSearch']['tours'] as $key => $tovar){
-				$data['siteSearch']['tours'][$key]['image'] = $tovar->getMedia('images')->sortByDesc('order_column')->first();
-			}
 			$data['siteSearch']['categories'] = Category::search($countryFind)->with(['get_toursActive', 'get_childActive.get_toursActive'])->get();
 		}
 
@@ -74,6 +70,14 @@ class SletatController extends Controller
 		$data['paginator']['pages'] = ceil($data['GetTours']['iTotalDisplayRecords']/30);
 		$data['paginator']['current'] = $request->get('pageNumber', 1);
 		return view('santa.sletat.searchResult', $data);
+	}
+
+	public function GetToursUpdatedShort(Request $request, Sletat $sletat, $requestId)
+	{
+		$data['GetTours'] = $sletat->GetToursUpdated($request, $requestId, 3);
+		$data['full_load'] = 'TRUE';
+		$data['paginator']['all'] = $data['GetTours']['iTotalDisplayRecords'];
+		return view('santa.sletat.searchResultShort', $data);
 	}
 
 	public function getActualizePrice(Request $request, Sletat $sletat)

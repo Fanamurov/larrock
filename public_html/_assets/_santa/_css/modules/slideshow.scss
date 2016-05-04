@@ -1,4 +1,5 @@
 #carousel-mainpage{
+  padding-bottom: 20px;
   .carousel-caption{
 	left: 3%;
 	width: 211px;
@@ -7,7 +8,6 @@
 	text-align: left;
 	font-size: 17px;
 	line-height: 27px;
-	background: red;
 	padding: 15px 0;
   }
   .banner_button{
@@ -24,6 +24,9 @@
 		opacity: .5;
 	  }
 	}
+  }
+  img{
+	border-radius: 5px 5px 0 0;
   }
 }
 

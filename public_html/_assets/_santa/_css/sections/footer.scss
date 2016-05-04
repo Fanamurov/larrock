@@ -38,6 +38,7 @@ footer{
   section.row-profits{
 	font-size: 14px;
 	line-height: 21px;
+	background: #BF3030;
 
 	.fi{
 	  font-size: 100px;
@@ -45,21 +46,10 @@ footer{
 	  margin-right: 15px;
 	  margin-bottom: 30px;
 	}
-	&:before{
-	  background: url("/_assets/_santa/_images/bg/bg_footer_up.png") repeat-x left top transparent;
-	  height: 43px;
-	  width: 100%;
-	  position: absolute;
-	  left: 0;
-	  right: 0;
-	  z-index: 5;
-	  top: -2px;
-	}
   }
 
   section.row-profits,
   section.row-sposob{
-	background: url("/_assets/_santa/_images/bg/bg_footer.jpg") repeat-x left top transparent;
 	color: white;
 	padding-top: 30px;
 	.h1{
@@ -79,7 +69,7 @@ footer{
   }
 
   section.row-sposob{
-	background: url("/_assets/_santa/_images/bg/bg_footer.jpg") repeat-x 0px -250px transparent;
+	background: #85004B;
 
 	.fi{
 	  font-size: 64px;
@@ -112,5 +102,11 @@ footer{
     a{
       color: grey;
     }
+  }
+
+  .menu_footer{
+	.nav>li>a{
+	  padding: 3px 0;
+	}
   }
 }

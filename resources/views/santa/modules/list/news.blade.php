@@ -1,5 +1,5 @@
 <div class="block-module_listNews">
-    <p class="h2">Новости</p>
+    <p class="h5 title-header">Новости <a href="/news" class="pull-right">Все новости</a></p>
     <ul class="list-unstyled list-inline">
         @foreach($list_news as $item)
             <li class="col-xs-24 col-sm-8 news-item-module block-module-padding">
@@ -17,6 +17,5 @@
         @endforeach
     </ul>
     <div class="clearfix"></div>
-    <a href="/news" class="btn btn-info btn-small pull-right">Все новости</a>
 </div>
 <div class="clearfix"></div>

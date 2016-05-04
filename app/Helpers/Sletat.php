@@ -16,6 +16,13 @@ class Sletat{
     protected $timeout = 30;
     protected $login_params = '?login=paltsev@santa-avia.ru&password=asdfg098';
 
+	public $country_list = [];
+
+	public function __construct()
+	{
+		$this->country_list = $this->GetCountries(1286);
+	}
+
     /**
      * Краткая форма поиска тура
      * @return mixed
@@ -113,9 +120,15 @@ class Sletat{
      */
     protected function GetDepartCities()
     {
-        $this->url = 'http://module.sletat.ru/Main.svc/GetDepartCities'. $this->login_params;
-        $result = $this->sendRequest();
-        return collect($result->GetDepartCitiesResult->Data);
+		$GetDepartCities= Cache::rememberForever('GetDepartCities', function() {
+			$this->url = 'http://module.sletat.ru/Main.svc/GetDepartCities'. $this->login_params;
+			$result = $this->sendRequest();
+			return collect($result->GetDepartCitiesResult->Data);
+		});
+		if(count($GetDepartCities) < 1){
+			Cache::forget('GetDepartCities');
+		}
+		return $GetDepartCities;
     }
 
     /**
@@ -131,9 +144,15 @@ class Sletat{
      */
     public function GetCountries($townFromId = 1286)
     {
-        $this->url = 'http://module.sletat.ru/Main.svc/GetCountries'. $this->login_params .'&townFromId='. $townFromId;
-        $result = $this->sendRequest();
-        return collect($result->GetCountriesResult->Data);
+		$GetCountries = Cache::rememberForever('GetCountries'. $townFromId, function() use ($townFromId) {
+			$this->url = 'http://module.sletat.ru/Main.svc/GetCountries'. $this->login_params .'&townFromId='. $townFromId;
+			$result = $this->sendRequest();
+			return collect($result->GetCountriesResult->Data);
+		});
+		if(count($GetCountries) < 1){
+			Cache::forget('GetCountries'. $townFromId);
+		}
+        return $GetCountries;
     }
 
     /**
@@ -146,9 +165,15 @@ class Sletat{
      */
     public function GetCities($countryId = 3)
     {
-        $this->url = 'http://module.sletat.ru/Main.svc/GetCities'. $this->login_params .'&countryId='. $countryId;
-        $result = $this->sendRequest();
-        return collect($result->GetCitiesResult->Data);
+		$GetCities = Cache::rememberForever('GetCities'. $countryId, function() use ($countryId) {
+			$this->url = 'http://module.sletat.ru/Main.svc/GetCities'. $this->login_params .'&countryId='. $countryId;
+			$result = $this->sendRequest();
+			return collect($result->GetCitiesResult->Data);
+		});
+		if(count($GetCities) < 1){
+			Cache::forget('GetCities'. $countryId);
+		}
+		return $GetCities;
     }
 
     /**
@@ -242,9 +267,9 @@ class Sletat{
         return collect($result->GetToursResult->Data);
     }
 
-	public function GetToursUpdated(Request $request, $requestId)
+	public function GetToursUpdated(Request $request, $requestId, $pageSize = 30)
 	{
-		$cityFromId = $request->get('cityFromId');
+		$cityFromId = $request->get('cityFromId', 1286);
 		$countryId = $request->get('countryId');
 		$addict_params = [];
 		$explode_date = explode(' - ', $request->get('date-int')); //04/11/2016 - 04/22/2016
@@ -252,21 +277,27 @@ class Sletat{
 			$addict_params['s_departFrom'] = trim($explode_date[0]);
 			$addict_params['s_departTo'] = trim($explode_date[1]);
 		}
+		if( !array_key_exists('s_departFrom', $addict_params)){
+			$addict_params['s_departFrom'] = date('d/m/Y');
+			$addict_params['s_departTo'] = date('d/m/Y', mktime(0, 0, 0, date('m')+1, date('d'), date('Y')));
+		}
 		$addict_params['s_priceMin'] = $request->get('s_priceMin');
 		$addict_params['s_priceMax'] = $request->get('s_priceMax');
 		$addict_params['s_nightsMin'] = $request->get('s_nightsMin', 1);
 		$addict_params['s_nightsMax'] = $request->get('s_nightsMax', 29);
 		$addict_params['s_adults'] = $request->get('s_adults', 2);
-		$addict_params['s_kids'] = $request->get('s_kids', 0);
+		$addict_params['s_kids'] = $request->get('s_kids');
 		$pageNumber = $request->get('pageNumber', 1);
 
 		$this->url = 'http://module.sletat.ru/Main.svc/GetTours'. $this->login_params .'&countryId='. $countryId
 			.'&cityFromId='. $cityFromId .'&s_hotelIsNotInStop=false&s_hasTickets=true&s_ticketsIncluded=true'
-			.'&updateResult=1&includeDescriptions=1&includeOilTaxesAndVisa=0&pageSize='. 30 .'&pageNumber='. $pageNumber .'&requestId='. $requestId;
+			.'&updateResult=1&includeDescriptions=1&includeOilTaxesAndVisa=0&pageSize='. $pageSize .'&pageNumber='. $pageNumber .'&requestId='. $requestId;
 		foreach ($addict_params as $key => $item){
 			$this->url .= '&'.$key .'='. $item;
 		}
+		//dd($this->url);
 		$result = $this->sendRequest();
+		//dd($result);
 		return collect($result->GetToursResult->Data);
 	}
 

@@ -102,8 +102,11 @@ Route::any('/sletat', [
 Route::get('/sletat/GetLoadState/{requestId}', [
     'as' => 'sletat.GetLoadState', 'uses' => 'SletatController@getLoadState'
 ]);
-Route::post('/sletat/GetToursUpdated/{requestId}', [
+Route::post('/sletat/GetToursUpdated/{requestId}/{count?}', [
 	'as' => 'sletat.GetToursUpdated', 'uses' => 'SletatController@GetToursUpdated'
+]);
+Route::post('/sletat/GetToursUpdatedShort/{requestId}/{count?}', [
+	'as' => 'sletat.GetToursUpdatedShort', 'uses' => 'SletatController@GetToursUpdatedShort'
 ]);
 Route::get('/sletat/ActualizePrice', [
     'as' => 'sletat.ActualizePrice', 'uses' => 'SletatController@getActualizePrice'

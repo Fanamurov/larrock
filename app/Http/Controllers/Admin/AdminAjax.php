@@ -130,7 +130,7 @@ class AdminAjax extends Controller
 
 	public function DeleteUploadedImage()
 	{
-		$modelName = '\App\Models\/'. Input::get('model_id');
+		$modelName = '\App\Models\/'. Input::get('model');
 		$modelName = str_replace('/', '', $modelName);
 		$modelName::find(Input::get('model_id'))->deleteMedia(Input::get('id'));
 		return response()->json(['status' => 'success', 'message' => 'Файл удален']);

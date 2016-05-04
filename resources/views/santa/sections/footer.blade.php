@@ -45,7 +45,10 @@
 <section class="row row-subscribes">
     <div class="container">
         <div class="col-xs-24">
-            <div class="col-sm-11">
+            <div class="col-sm-5 menu_footer">
+                {!! \MenuApp::render('menu_footer') !!}
+            </div>
+            <div class="col-sm-10 col-sm-offset-2">
                 <p>Хотите первыми узнавать об акциях и спецпредложениях?</p>
                 <form action="" method="post">
                     <div class="input-group">
@@ -56,7 +59,7 @@
                     </div>
                 </form>
             </div>
-            <div class="col-sm-offset-6 col-sm-7">
+            <div class="col-sm-6 col-sm-offset-1">
                 <p>Мы в социальных сетях:</p>
                 <p>
                     <a href="http://plus.google.com/u/0/108104903033551495415/posts"><img src="/_assets/_santa/_images/icons/social/social-media.png" alt="google+"></a>

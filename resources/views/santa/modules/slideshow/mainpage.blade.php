@@ -1,5 +1,5 @@
 @if(count($slideshow['big']) > 0)
-    <div id="carousel-mainpage" class="carousel slide hidden" data-ride="carousel">
+    <div id="carousel-mainpage" class="carousel slide" data-ride="carousel">
         <!-- Indicators -->
         <ol class="carousel-indicators">
             <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>

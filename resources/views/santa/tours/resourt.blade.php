@@ -80,7 +80,6 @@
         @if(count($other_resourts) > 0)
             <div class="toursPageCountry-recommented row">
                 <div class="col-xs-24"><h5 class="title-header">{{ $data->get_parent->title }}. Другие курорты</h5></div>
-                <div class="alert alert-info">Платный пак</div>
                 @each('santa.tours.blockTour', $other_resourts, 'data')
             </div>
         @endif

@@ -50,6 +50,17 @@ class MainpageController extends Controller
 		View::share('list_blog', $list_blog);
 		View::share('list_tours', $list_tours);
 
+		$data['best_cost'] = Cache::remember('best_cost_mainpage', 60, function() use ($sletat) {
+			return $sletat->GetTours(1286, 29, [], 3);
+		});
+		if( !array_key_exists('best_cost', $data)){
+			Cache::forget('best_cost_mainpage');
+		}else{
+			if($data['best_cost']['iTotalRecords'] < 1){
+				Cache::forget('best_cost_mainpage');
+			}
+		}
+
 		return view('santa.mainpage', $data);
 	}
 }

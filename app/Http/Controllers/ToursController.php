@@ -175,9 +175,22 @@ class ToursController extends Controller
 			return $data['data']->getMedia('images')->sortByDesc('order_column');
 		});
 
+		//$country_list = $sletat->country_list;
+		$filtered = $sletat->country_list->filter(function ($value, $key) use ($data) {
+			return $value->Name === $data['data']->title;
+		});
+		$sletat_id = 29;
+		if(count($filtered) > 0){
+			$sletat_id = $filtered->first()->Id;
+		}
+		$data['country_id_sletat'] = $sletat_id;
 
-        $data['best_cost'] = Cache::remember('best_cost'. $data['data']->id, 60, function() use ($sletat) {
-            return $sletat->GetTours(1286, 29, [], 3);
+		//Cache::forget('best_cost'. $data['data']->id);
+        $data['GetTours'] = Cache::remember('best_cost'. $data['data']->id, 60*24, function() use ($sletat, $sletat_id) {
+			$params['s_nightsMin'] = '1';
+			$params['s_nightsMax'] = '29';
+			$params['s_adults'] = '1';
+            return $sletat->GetTours(1286, $sletat_id, $params, 3);
         });
         if( !array_key_exists('best_cost', $data)){
             Cache::forget('best_cost'. $data['data']->id);

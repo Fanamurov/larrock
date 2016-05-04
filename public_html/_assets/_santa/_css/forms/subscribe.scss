@@ -1,20 +1,21 @@
 .form-subscribe{
-  padding-top: 30px;
   padding-bottom: 30px;
   .help{
-	background: url('/_assets/_santa/_images/icons/icon_gift.png') 95% 5% no-repeat #fdf8d2;
-	border: 1px solid #ff4558;
+	border-radius: 5px 5px 0 0;
+	background: url('/_assets/_santa/_images/icons/icon_gift.png') 95% 5% no-repeat #fff;
+	//border: 1px solid #ff4558;
 	font-size: 12px;
-	padding: 15px;
+	padding: 15px 15px 0 15px;
 	ul{
 	  padding-left: 15px;
+	  margin-bottom: 0;
 	}
 	.h4{
 	  padding-right: 30px;
 	}
   }
   .form_div{
-	background: #e8e5ec;
+	background: #fff;
 	padding: 15px;
   }
 }

@@ -2,9 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\Blocks;
 use App\Models\Category;
-use App\Models\Menu;
 use Cache;
 use Closure;
 use View;
@@ -39,15 +37,6 @@ class BeforeLoaderModulesGlobal
 
         MenuApp::create('navbar', function($menu) use ($module_vidy, $module_strany)
         {
-            //$menu->url('/', 'Home');
-            /*$menu->dropdown('Компания', function ($sub) {
-                $sub->url('/page/o-kompanii', 'О компании', ['icon' => 'fi flaticon-circle']);
-                $sub->url('/news', 'Новости', ['icon' => 'fi flaticon-interface']);
-                $sub->url('/page/vakansii-santa-avia', 'Вакансии', ['icon' => 'fi flaticon-hands']);
-                $sub->url('/page/pochemu-pokupat-tury-nado-tolko-u-nas', 'Почему<br/>мы лучшие', ['icon' => 'fi flaticon-business']);
-                $sub->url('settings/design', 'Наша команда', ['icon' => 'fi flaticon-people-5']);
-                $sub->url('/page/zabota-o-klientakh', 'Забота о клиентах', ['icon' => 'fi flaticon-two']);
-            });*/
             $menu->dropdown('Страны', function ($sub) use ($module_strany) {
                 foreach ($module_strany as $item){
                     //$sub->url('/tours/strany/'. $item->url, $item->title, ['icon' => 'flag-icon flag-icon-'. mb_strimwidth($item->url, 0, 2)]);
@@ -70,6 +59,16 @@ class BeforeLoaderModulesGlobal
 			$menu->url('/otzyvy', 'Отзывы');
 			$menu->url('/page/kontakty', 'Контакты');
         });
+
+		MenuApp::create('menu_footer', function($menu)
+		{
+			$menu->style('navmenu');
+			$menu->url('/page/vakansii-santa-avia', 'Вакансии');
+			$menu->url('/page/partnery', 'Партнеры');
+			$menu->url('/page/pochemu-pokupat-tury-nado-tolko-u-nas', 'О компании');
+			$menu->url('/page/bronirovanie-i-oplata-turov-instruktsiya', 'Бронирование и оплата');
+			$menu->url('/page/oplata-on-layn', 'Оплата он-лайн');
+		});
 
         return $next($request);
     }

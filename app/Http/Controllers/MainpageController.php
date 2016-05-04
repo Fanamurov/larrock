@@ -36,14 +36,26 @@ class MainpageController extends Controller
 		    return $siteSearch;
 		});
 
-        $list_news = Cache::remember('list_news_mainpage', 600, function() {
-            return News::whereActive(1)->with(['get_category'])->orderBy('updated_at', 'desc')->take(6)->get();
+        $list_news = Cache::remember('list_news_mainpage', 60*24, function() {
+            $data = News::whereActive(1)->with(['get_category'])->orderBy('updated_at', 'desc')->take(6)->get();
+			foreach($data as $key => $value){
+				$data[$key]['image'] = $value->getFirstMediaUrl('images');
+			}
+			return $data;
         });
-        $list_blog = Cache::remember('list_blog_mainpage', 600, function() {
-            return Blog::whereActive(1)->with(['get_category'])->orderBy('updated_at', 'desc')->take(6)->get();
+        $list_blog = Cache::remember('list_blog_mainpage', 60*24, function() {
+			$data = Blog::whereActive(1)->with(['get_category'])->orderBy('updated_at', 'desc')->take(6)->get();
+			foreach($data as $key => $value){
+				$data[$key]['image'] = $value->getFirstMediaUrl('images');
+			}
+			return $data;
         });
-		$list_tours = Cache::remember('list_tours_mainpage', 600, function() {
-			return Tours::whereActive(1)->with(['get_category'])->orderBy('updated_at', 'desc')->take(6)->get();
+		$list_tours = Cache::remember('list_tours_mainpage', 60*24, function() {
+			$data = Tours::whereActive(1)->with(['get_category'])->orderBy('updated_at', 'desc')->take(6)->get();
+			foreach($data as $key => $value){
+				$data[$key]['image'] = $value->getFirstMediaUrl('images');
+			}
+			return $data;
 		});
 
 		View::share('list_news', $list_news);

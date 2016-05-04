@@ -5,8 +5,8 @@
             <li class="col-xs-24 col-sm-8 news-item-module block-module-padding">
                 <div class="row">
                     <div class="col-sm-24">
-                        @if($item->getFirstMediaUrl('images'))
-                            <img src="{{ $item->getFirstMediaUrl('images') }}" alt="{{ $item->title }}" class="all-width">
+                        @if($item->image)
+                            <img src="{{ $item->image }}" alt="{{ $item->title }}" class="all-width">
                         @endif
                     </div>
                     <div class="col-sm-24">

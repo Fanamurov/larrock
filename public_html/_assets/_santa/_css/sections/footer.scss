@@ -107,6 +107,11 @@ footer{
   .menu_footer{
 	.nav>li>a{
 	  padding: 3px 0;
+	  &:hover,
+	  &:focus{
+		background: none;
+		text-decoration: underline;
+	  }
 	}
   }
 }

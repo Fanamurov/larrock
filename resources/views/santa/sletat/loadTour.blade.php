@@ -126,13 +126,13 @@
                         <div class="row row-buttons">
                             <div class="col-sm-12">
                                 <button type="button" class="btn btn-default btn-block"
-                                        data-toggle="collapse" data-target="#collapsesletatOrderShort" aria-expanded="true"
-                                        aria-controls="collapsesletatOrderShort">Купить онлайн</button>
+                                        data-toggle="collapse" data-target="#collapsesletatOrderFull" aria-expanded="true"
+                                        aria-controls="collapsesletatOrderFull">Купить онлайн</button>
                             </div>
                             <div class="col-sm-12">
                                 <button type="button" class="btn btn-default btn-block"
-                                        data-toggle="collapse" data-target="#collapsesletatOrderFull" aria-expanded="true"
-                                        aria-controls="collapsesletatOrderFull">Купить в офисе</button>
+                                        data-toggle="collapse" data-target="#collapsesletatOrderShort" aria-expanded="true"
+                                        aria-controls="collapsesletatOrderShort">Купить в офисе</button>
                             </div>
                         </div>
                     @endif

@@ -132,6 +132,12 @@ Route::get('/forms/podbor', [
 Route::post('/forms/podbor', [
 	'as' => 'submit.podbor', 'uses' => 'Modules\Forms@send_formPodbor'
 ]);
+Route::post('/forms/sletatOrderShort', [
+	'as' => 'submit.sletatOrderShort', 'uses' => 'Modules\Forms@send_formsletatOrderShort'
+]);
+Route::post('/forms/sletatOrderFull', [
+	'as' => 'submit.sletatOrderFull', 'uses' => 'Modules\Forms@send_formsletatOrderFull'
+]);
 
 // Authentication routes...
 Route::auth();

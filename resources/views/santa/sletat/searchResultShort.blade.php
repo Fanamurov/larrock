@@ -29,6 +29,13 @@
                     @endif
                 </div>
                 <div class="col-sm-24">
+                    @if( !empty($item[29]))
+                        <img src="{{ str_replace('_0.jpg', '_0_250_250.jpg', $item[29]) }}" align="Hotel" class="all-width">
+                    @else
+                        <img src="/_assets/_santa/_images/empty_big.png" alt="Нет фото" class="categoryImage categoryImage-empty all-width">
+                    @endif
+                </div>
+                <div class="col-sm-24">
                     <div><small>Тур:</small> {{ $item[6] }}</div>
                 </div>
                 <div class="col-sm-24">
@@ -38,6 +45,7 @@
                 <div class="col-sm-24">
                     <div><small class="muted">Вылет:</small> {{ $item[12] }} ({{ $item[14] }} ночей)</div>
                     @if($item[22] === '1')
+                        {{ $item[21] }} места
                         <div><strong>Перелет включен в стоимость тура</strong></div>
                     @endif
                     <br/>

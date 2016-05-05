@@ -21,6 +21,51 @@
   }
 }
 
+.page-loadSletatTour{
+  h1{
+	margin-bottom: 10px;
+  }
+  .h3{
+	margin-top: 10px;
+	margin-bottom: 20px;
+  }
+  .h4{
+	margin-bottom: 10px;
+  }
+  .row-photo{
+	padding-bottom: 20px;
+	.addict-photo{
+	  img{
+		padding: 0 3px 5px 0;
+	  }
+	}
+  }
+  .row-description{
+	padding-bottom: 20px;
+  }
+  .row-info{
+	padding-bottom: 20px;
+	small{
+	  font-size: 100%;
+	}
+	.cost{
+	  padding-top: 20px;
+	  font-size: 25px;
+	  font-weight: 700;
+	}
+	.cost-info{
+	  padding-top: 10px;
+	}
+  }
+  .row-buttons{
+	padding-top: 15px;
+	padding-bottom: 20px;
+  }
+  .form-order-sletat{
+
+  }
+}
+
 @-webkit-keyframes progress-bar-stripes {
   from {
 	background-position: 40px 0;

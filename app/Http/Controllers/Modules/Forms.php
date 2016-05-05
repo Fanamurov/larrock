@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Modules;
 
 use Alert;
+use App\Helpers\Sletat;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -19,7 +20,9 @@ class Forms extends Controller
 
 	public function send_form(Request $request)
 	{
-		dd('SEND');
+		Alert::add('danger', 'Отправка форм отключена')->flash();
+		return back();
+
 		/** @noinspection PhpVoidFunctionResultUsedInspection */
 		$send = Mail::send('emails.contact',
 			['name' => $request->get('name'), 
@@ -43,7 +46,9 @@ class Forms extends Controller
 
 	public function send_formZakazTura(Request $request)
 	{
-		dd('SEND');
+		Alert::add('danger', 'Отправка форм отключена')->flash();
+		return back();
+
 		/** @noinspection PhpVoidFunctionResultUsedInspection */
 		$send = Mail::send('emails.ZakazTura',
 			['name' => $request->get('name'),
@@ -69,7 +74,9 @@ class Forms extends Controller
 
 	public function send_formZakazSert(Request $request)
 	{
-		dd('SEND');
+		Alert::add('danger', 'Отправка форм отключена')->flash();
+		return back();
+
 		/** @noinspection PhpVoidFunctionResultUsedInspection */
 		$send = Mail::send('emails.ZakazSert',
 			['name' => $request->get('name'),
@@ -94,7 +101,9 @@ class Forms extends Controller
 
 	public function send_formPodbor(Request $request)
 	{
-		dd('SEND');
+		Alert::add('danger', 'Отправка форм отключена')->flash();
+		return back();
+		
 		/** @noinspection PhpVoidFunctionResultUsedInspection */
 		$send = Mail::send('emails.podbor',
 			['name' => $request->get('name'),
@@ -113,6 +122,62 @@ class Forms extends Controller
 			});
 
 		if($send){
+			Alert::add('success', 'Форма отправлена')->flash();
+		}else{
+			Alert::add('danger', 'Форма не отправлена')->flash();
+		}
+		return back();
+	}
+
+	public function send_formsletatOrderShort(Request $request, Sletat $sletat)
+	{
+		Alert::add('danger', 'Отправка форм отключена')->flash();
+		return back();
+
+		/** @noinspection PhpVoidFunctionResultUsedInspection */
+		$send = Mail::send('emails.podbor',
+			['name' => $request->get('name'),
+				'tel' => $request->get('tel'),
+				'email' => $request->get('email'),
+				'comment' => $request->get('comment'),
+			],
+			function($message){
+				$message->from(env('MAIL_TO_ADMIN', 'robot@martds.ru'), env('MAIL_TO_ADMIN_NAME', 'TEST'));
+				$message->to(env('MAIL_TO_ADMIN', 'robot@martds.ru'), env('MAIL_TO_ADMIN_NAME', 'TEST'));
+				$message->subject('Отправлена форма заявки на бронирование тура от sletat '. Arr::get($_SERVER, 'SERVER_NAME')
+				);
+			});
+
+		if($send){
+			$sletat->SaveTourOrder($request);
+			Alert::add('success', 'Форма отправлена')->flash();
+		}else{
+			Alert::add('danger', 'Форма не отправлена')->flash();
+		}
+		return back();
+	}
+
+	public function send_formsletatOrderFull(Request $request, Sletat $sletat)
+	{
+		Alert::add('danger', 'Отправка форм отключена')->flash();
+		return back();
+
+		/** @noinspection PhpVoidFunctionResultUsedInspection */
+		$send = Mail::send('emails.podbor',
+			['name' => $request->get('name'),
+				'tel' => $request->get('tel'),
+				'email' => $request->get('email'),
+				'comment' => $request->get('comment'),
+			],
+			function($message){
+				$message->from(env('MAIL_TO_ADMIN', 'robot@martds.ru'), env('MAIL_TO_ADMIN_NAME', 'TEST'));
+				$message->to(env('MAIL_TO_ADMIN', 'robot@martds.ru'), env('MAIL_TO_ADMIN_NAME', 'TEST'));
+				$message->subject('Отправлена форма заявки на бронирование тура для оплаты от sletat '. Arr::get($_SERVER, 'SERVER_NAME')
+				);
+			});
+
+		if($send){
+			$sletat->SaveTourOrder($request);
 			Alert::add('success', 'Форма отправлена')->flash();
 		}else{
 			Alert::add('danger', 'Форма не отправлена')->flash();

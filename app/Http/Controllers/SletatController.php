@@ -82,8 +82,14 @@ class SletatController extends Controller
 
 	public function getActualizePrice(Request $request, Sletat $sletat)
 	{
-		return view('santa.sletat.loadTour');
-		//$data['ActualizePrice'] = $sletat->ActualizePrice($request);
-		//dd($data);
+		$data['request'] = $request->all();
+		$data['item'] = $sletat->ActualizePrice($request);
+		return view('santa.sletat.loadTour', $data);
+	}
+
+	public function SaveTourOrder(Request $request, Sletat $sletat)
+	{
+		$data['item'] = $sletat->SaveTourOrder($request);
+		return view('santa.sletat.loadTour', $data);
 	}
 }

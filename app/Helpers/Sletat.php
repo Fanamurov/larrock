@@ -257,13 +257,13 @@ class Sletat{
     public function GetTours($cityFromId, $countryId, $addict_params = [], $pageSize = 30)
     {
         $this->url = 'http://module.sletat.ru/Main.svc/GetTours'. $this->login_params .'&countryId='. $countryId
-            .'&cityFromId='. $cityFromId .'&s_hotelIsNotInStop=false&s_hasTickets=true&s_ticketsIncluded=true'
+            .'&cityFromId='. $cityFromId .'&s_hotelIsNotInStop=true&s_hasTickets=true&s_ticketsIncluded=true'
             .'&updateResult=0&includeDescriptions=1&includeOilTaxesAndVisa=0&pageSize='. $pageSize .'&pageNumber=1';
         foreach ($addict_params as $key => $item){
             $this->url .= '&'.$key .'='. $item;
         }
-        //dd($this->url);
         $result = $this->sendRequest();
+		//dd($result->GetToursResult->Data);
         return collect($result->GetToursResult->Data);
     }
 
@@ -290,8 +290,8 @@ class Sletat{
 		$pageNumber = $request->get('pageNumber', 1);
 
 		$this->url = 'http://module.sletat.ru/Main.svc/GetTours'. $this->login_params .'&countryId='. $countryId
-			.'&cityFromId='. $cityFromId .'&s_hotelIsNotInStop=false&s_hasTickets=true&s_ticketsIncluded=true'
-			.'&updateResult=1&includeDescriptions=1&includeOilTaxesAndVisa=0&pageSize='. $pageSize .'&pageNumber='. $pageNumber .'&requestId='. $requestId;
+			.'&cityFromId='. $cityFromId .'&s_hotelIsNotInStop=true&s_hasTickets=true&s_ticketsIncluded=true'
+			.'&updateResult=1&includeDescriptions=1&includeOilTaxesAndVisa=1&pageSize='. $pageSize .'&pageNumber='. $pageNumber .'&requestId='. $requestId;
 		foreach ($addict_params as $key => $item){
 			$this->url .= '&'.$key .'='. $item;
 		}
@@ -351,7 +351,6 @@ class Sletat{
             .'&sourceId='. $sourceId .'&offerId='. $offerId .'&currencyAlias='. $currencyAlias .'&showcase='. $showcase
             .'&countryId='. $countryId;
         $result = $this->sendRequest();
-        dd(collect($result->ActualizePriceResult->Data));
         return collect($result->ActualizePriceResult->Data);
     }
 
@@ -362,5 +361,45 @@ class Sletat{
         dd($result);
         return collect($result->HotelInformation->Data);
     }
+
+	/**
+	 * Метод SaveTourOrder добавляет заказ тура в систему Слетать.ру. В вашем личном кабинете на сайте sletat.ru вы
+	 * можете настроить SMS- и email-уведомления о новых заказах.
+	 *
+	 * @param Request $request
+	 * @param int     $searchRequestId		Идентификатор поискового запроса
+	 * @param int     $sourceId				Шифрованный идентификатор туроператора
+	 * @param int     $offerId				Идентификатор ценового предложения (тура)
+	 * @param string  $user					Имя заказчика
+	 * @param string  $email				Электронная почта заказчика
+	 * @param string  $phone				Телефон заказчика
+	 * @param string  $info					Комментарий заказчика
+	 * @param string  $countryName			Направление
+	 * @param string  $cityFromName			Город вылета
+	 * @param string  $currencyAlias		Валюта. Допустимые значения: USD, EUR, RUR, BYR.
+	 */
+	public function SaveTourOrder(Request $request, $searchRequestId = 0, $sourceId = 0, $offerId = 0, $user = '', $email = '',
+								  $phone = '', $info = '', $countryName = '', $cityFromName = '', $currencyAlias = 'RUB')
+	{
+		$searchRequestId = $request->get('searchRequestId', $searchRequestId);
+		$sourceId = $request->get('sourceId', $sourceId);
+		$offerId = $request->get('offerId', $offerId);
+		$user = $request->get('name', $user);
+		$email = $request->get('email', $email);
+		$phone = $request->get('tel', $phone);
+		$info = $request->get('comment', $info);
+		$countryName = $request->get('countryName', $countryName);
+		$cityFromName = $request->get('cityFromName', $cityFromName);
+		$currencyAlias = $request->get('currencyAlias', $currencyAlias);
+		//и т.д. прописать
+
+		$this->url = 'http://module.sletat.ru/Main.svc/SaveTourOrder'. $this->login_params .'&searchRequestId='. $searchRequestId
+		.'&sourceId'. $sourceId .'&offerId'. $offerId .'&user'. $user .'&email'. $email .'&phone'. $phone .'&info'. $info
+			.'&countryName'. $countryName .'&cityFromName'. $cityFromName .'&currencyAlias'. $currencyAlias;
+		dd($this->url);
+		$result = $this->sendRequest();
+		dd($result);
+		return collect($result->HotelInformation->Data);
+	}
 
 }

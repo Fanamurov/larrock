@@ -33,7 +33,7 @@
                 </div>
                 <div class="col-sm-4">
                     @if( !empty($item[29]))
-                        <img src="{{ $item[29] }}" align="Hotel" class="all-width">
+                        <img src="{{ str_replace('_0.jpg', '_0_300_300.jpg', $item[29]) }}" align="Hotel" class="all-width">
                     @else
                         <img src="/_assets/_santa/_images/empty_big.png" alt="Нет фото" class="categoryImage categoryImage-empty all-width">
                     @endif

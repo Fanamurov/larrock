@@ -79,10 +79,10 @@
                     <div><small class="muted">Тип питания:</small> {{ $item['data'][11] }} ({{ $item['data'][49] }})</div>
                 </div>
                 <div class="col-sm-12">
-                    @if($item['data'][13] === '0')
+                    @if($item['data'][13] === '1')
                         <div><strong>Нет доступных мест в отеле</strong></div>
                     @else
-                        <div><strong>Есть места</strong> {{ $item['data'][13] }}</div>
+                        <div><strong>Есть свободные номера</strong></div>
                     @endif
 
                     @if($item['data'][14] === '-1')
@@ -122,7 +122,7 @@
 
                     <div class="cost"><small class="muted">Цена:</small> {{ $item['data'][19] }} {{ $item['data'][21] }}</div>
 
-                    @if($item['data'][13] === '0') <!-- Поменять на !== -->
+                    @if($item['data'][13] === '0')
                         <div class="row row-buttons">
                             <div class="col-sm-12">
                                 <button type="button" class="btn btn-default btn-block"

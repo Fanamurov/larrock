@@ -1,4 +1,4 @@
-<ul class="block-module_listVidy list-unstyled colomn-container">
+<ul class="block-module_listVidy list-unstyled colomn-container hidden-xs hidden-sm">
     @foreach($module_vidy as $item)
         <li>
             <a href="/tours/vidy-otdykha/{{ $item->url }}">

@@ -20,7 +20,7 @@
                         <label class="control-label" for="form-searchTour-cityFromId">Откуда:</label>
                         <select name="cityFromId" class="form-control" id="form-searchTour-cityFromId">
                             @foreach($GetDepartCities as $item)
-                                <option @if($item->Id == Input::get('cityFromId')) selected @endif value="{{ $item->Id }}">{{ $item->Name }}</option>
+                                <option @if($item->Id == Input::get('cityFromId', 1286)) selected @endif value="{{ $item->Id }}">{{ $item->Name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -30,7 +30,7 @@
                         <label class="control-label" for="form-searchTour-countryId">Куда:</label>
                         <select name="countryId" class="form-control" id="form-searchTour-countryId">
                             @foreach($GetCountries as $item)
-                                <option @if($item->Id == Input::get('countryId')) selected @endif value="{{ $item->Id }}">{{ $item->Name }}</option>
+                                <option @if($item->Id == Input::get('countryId', 29)) selected @endif value="{{ $item->Id }}">{{ $item->Name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -49,10 +49,10 @@
                         <label class="control-label" for="form-searchTour-s_adults">Взрослых:</label>
                         <select name="s_adults" class="form-control" id="form-searchTour-s_adults">
                             <option value=""></option>
-                            <option @if(Input::get('s_adults') == 1) selected @endif value="1">1</option>
-                            <option @if(Input::get('s_adults') == 2) selected @endif value="2">2</option>
-                            <option @if(Input::get('s_adults') == 3) selected @endif value="3">3</option>
-                            <option @if(Input::get('s_adults') == 4) selected @endif value="4">4</option>
+                            <option @if(Input::get('s_adults', 2) == 1) selected @endif value="1">1</option>
+                            <option @if(Input::get('s_adults', 2) == 2) selected @endif value="2">2</option>
+                            <option @if(Input::get('s_adults', 2) == 3) selected @endif value="3">3</option>
+                            <option @if(Input::get('s_adults', 2) == 4) selected @endif value="4">4</option>
                         </select>
                     </div>
                 </div>
@@ -126,6 +126,17 @@
                             @empty
                                 <option value="">Нет доступных отелей</option>
                             @endforelse
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label class="control-label" for="form-searchTour-hotel">Звездность:</label>
+                        <select name="stars" class="form-control" id="form-searchTour-stars">
+                            <option value="">любая</option>
+                            @foreach($GetStars as $item)
+                                <option @if(Input::get('stars') == $item->Id) selected @endif value="{{ $item->Id }}">{{ $item->Name }}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>

@@ -25,12 +25,12 @@ class BeforeLoaderModulesGlobal
 		View::share('app_name', array_get($current_uri, 1));
 		View::share('app_param', array_get($current_uri, 2));
 
-        $module_vidy = Cache::remember('module_vidy', 60, function() {
+        $module_vidy = Cache::remember('module_vidy', 60*24, function() {
             return Category::whereParent(377)->whereActive(1)->orderBy('position', 'DESC')->get();
         });
 		View::share('module_vidy', $module_vidy);
 
-        $module_strany = Cache::remember('module_strany', 60, function() {
+        $module_strany = Cache::remember('module_strany', 60*24, function() {
             return Category::whereParent(308)->whereActive(1)->with(['get_childActive'])->orderBy('position', 'DESC')->get();
         });
         View::share('module_strany', $module_strany);
@@ -69,6 +69,20 @@ class BeforeLoaderModulesGlobal
 			$menu->url('/page/bronirovanie-i-oplata-turov-instruktsiya', 'Бронирование и оплата');
 			$menu->url('/page/oplata-on-layn', 'Оплата он-лайн');
 		});
+
+		$sletat = new Sletat();
+		$getFullSearchForm = $sletat->getFullSearchForm($request);
+		View::share('GetDepartCities', $getFullSearchForm['GetDepartCities']);
+		View::share('GetCountries', $getFullSearchForm['GetCountries']);
+
+		//Форма поиска туров по сайту
+		$siteSearch = Cache::remember('siteSearch-form', 60, function() {
+			$siteSearch['countries'] = Category::whereType('tours')->whereActive(1)->whereParent(308)->get(['title','id']);
+			$siteSearch['resorts'] = Category::whereType('tours')->whereActive(1)->where('parent', '!=', 308)->where('parent', '!=', 377)->where('parent', '!=', 0)->get(['title','id']);
+			$siteSearch['vidy'] = Category::whereType('tours')->whereActive(1)->whereParent(377)->get(['title','id']);
+			return $siteSearch;
+		});
+		View::share('siteSearch', $siteSearch);
 
         return $next($request);
     }

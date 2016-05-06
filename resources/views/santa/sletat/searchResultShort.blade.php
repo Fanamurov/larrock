@@ -1,34 +1,36 @@
 @if($GetTours['iTotalDisplayRecords'] > 1)
 <div class="toursPageCountry-bestcost row">
-    <div class="col-xs-24"><h5 class="title-header">Лучшие цены <a class="pull-right" href="#">Все туры</a></h5></div>
+    <div class="col-xs-24"><h5 class="title-header">Лучшие цены <a class="pull-right" href="/sletat">Все туры</a></h5></div>
     <ul class="list-unstyled search-result">
         @foreach($GetTours['aaData'] as $item)
-            <li class="col-sm-8">
+            <li class="col-xs-24 col-sm-8">
                 <div class="col-xs-24">
                     <p class="h4">{{ $item[7] }} @if($item[8] !== '0.0'){{ $item[8] }}@endif ({{ $item[19] }})</p>
-                    @if($item[8] === '*')
-                        <i class="glyphicon glyphicon-star"></i>
-                    @elseif($item[8] === '2*')
-                        <i class="glyphicon glyphicon-star"></i>
-                        <i class="glyphicon glyphicon-star"></i>
-                    @elseif($item[8] === '3*')
-                        <i class="glyphicon glyphicon-star"></i>
-                        <i class="glyphicon glyphicon-star"></i>
-                        <i class="glyphicon glyphicon-star"></i>
-                    @elseif($item[8] === '4*')
-                        <i class="glyphicon glyphicon-star"></i>
-                        <i class="glyphicon glyphicon-star"></i>
-                        <i class="glyphicon glyphicon-star"></i>
-                        <i class="glyphicon glyphicon-star"></i>
-                    @elseif($item[8] === '5*')
-                        <i class="glyphicon glyphicon-star"></i>
-                        <i class="glyphicon glyphicon-star"></i>
-                        <i class="glyphicon glyphicon-star"></i>
-                        <i class="glyphicon glyphicon-star"></i>
-                        <i class="glyphicon glyphicon-star"></i>
-                    @endif
+                    <div class="hotel-stars hidden">
+                        @if($item[8] === '*')
+                            <i class="glyphicon glyphicon-star"></i>
+                        @elseif($item[8] === '2*')
+                            <i class="glyphicon glyphicon-star"></i>
+                            <i class="glyphicon glyphicon-star"></i>
+                        @elseif($item[8] === '3*')
+                            <i class="glyphicon glyphicon-star"></i>
+                            <i class="glyphicon glyphicon-star"></i>
+                            <i class="glyphicon glyphicon-star"></i>
+                        @elseif($item[8] === '4*')
+                            <i class="glyphicon glyphicon-star"></i>
+                            <i class="glyphicon glyphicon-star"></i>
+                            <i class="glyphicon glyphicon-star"></i>
+                            <i class="glyphicon glyphicon-star"></i>
+                        @elseif($item[8] === '5*')
+                            <i class="glyphicon glyphicon-star"></i>
+                            <i class="glyphicon glyphicon-star"></i>
+                            <i class="glyphicon glyphicon-star"></i>
+                            <i class="glyphicon glyphicon-star"></i>
+                            <i class="glyphicon glyphicon-star"></i>
+                        @endif
+                    </div>
                 </div>
-                <div class="col-sm-24">
+                <div class="col-sm-24 hidden-xs hidden-sm">
                     @if( !empty($item[29]))
                         <img src="{{ str_replace('_0.jpg', '_0_250_250.jpg', $item[29]) }}" align="Hotel" class="all-width">
                     @else
@@ -45,8 +47,7 @@
                 <div class="col-sm-24">
                     <div><small class="muted">Вылет:</small> {{ $item[12] }} ({{ $item[14] }} ночей)</div>
                     @if($item[22] === '1')
-                        {{ $item[21] }} места
-                        <div><strong>Перелет включен в стоимость тура</strong></div>
+                        <div class="hidden"><strong>Перелет включен в стоимость тура</strong></div>
                     @endif
                     <br/>
                     <p class="cost">{{ $item[42] }} {{ $item[43] }}</p>

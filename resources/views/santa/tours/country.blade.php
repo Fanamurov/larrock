@@ -5,10 +5,10 @@
     <div class="toursPageCountry row">
         <div class="col-xs-24">
             {!! Breadcrumbs::render('tours.category', $data) !!}
-            @include('santa.modules.share.sharing')
         </div>
         <div class="clearfix"></div>
         <div class="tours_tabs">
+            @include('santa.modules.share.sharing')
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="tour-photo">
                     <div class="toursPageCountry-photo">
@@ -87,11 +87,11 @@
         </div>
         <div class="toursPageCountry-short row">
             @if(isset($forecast['var']))
-                <div class="col-sm-9">
+                <div class="col-sm-9 hidden-xs">
                     @include('santa.modules.forecast.forecast')
                 </div>
             @endif
-            <div class="@if(isset($forecast['var'])) col-sm-15 @else col-sm-24 @endif">
+            <div class="@if(isset($forecast['var'])) col-sm-15 @else col-xs-24 @endif">
                 {!! $data->short !!}
             </div>
         </div>
@@ -136,7 +136,9 @@
         @endif
 
         <div class="toursPageCountry-description">
-            {!! $data->description !!}
+            <div class="col-xs-24">
+                {!! $data->description !!}
+            </div>
         </div>
     </div>
 @endsection

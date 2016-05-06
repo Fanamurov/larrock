@@ -1,5 +1,5 @@
 <div class="row row-zakazTura row-zakazSert" id="row-zakazSert">
-    <div class="col-sm-12">
+    <div class="col-xs-24 col-sm-12">
         <form id="form-zakazSert" class="form-zakaz" method="post" action="/forms/zakazSert">
             <h2 class="h1">Заказ подарочного сертификата</h2>
             <div class="form-group">
@@ -23,7 +23,7 @@
                 или заказать <a href="/page/kontakty/">у нас в офисе</a></p>
         </form>
     </div>
-    <div class="col-sm-11 col-sm-offset-1">
+    <div class="col-xs-24 col-sm-11 col-sm-offset-1">
         <br/><br/>
         <p>
             <strong>Пожалуйста, прочитайте правила пользования сертификатом:</strong>

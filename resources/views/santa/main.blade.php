@@ -1,15 +1,13 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" prefix="og: http://ogp.me/ns/article#">
 @include('santa.sections.head')
 <body class="{{ $app_name or '' }} {{ $app_param or '' }}">
 <div class="container container-body">
     @include('santa.sections.header')
     <section class="row" id="content">
+        @include('santa.sections.tabsWhiteLabel')
         <section id="right_colomn" class="col-xs-24 col-sm-8 col-md-7">
             <div class="col-xs-24">
-                @if(isset($SearchFormShort))
-                    @include('santa.modules.forms.searchTourShort', $SearchFormShort)
-                @endif
                 @yield('rightColomn')
                 @include('santa.modules.list.vidy')
                 @if(isset($module_strany))

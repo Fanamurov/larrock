@@ -1,14 +1,14 @@
 @extends('santa.main')
-@section('title') {{ $data->title }} @endsection
+@section('title') {{ $data->title }} {{ $data->get_parent->title }} @endsection
 
 @section('content')
     <div class="toursPageCountry row">
         <div class="col-xs-24">
             {!! Breadcrumbs::render('tours.category', $data) !!}
-            @include('santa.modules.share.sharing')
         </div>
         <div class="clearfix"></div>
         <div class="tours_tabs">
+            @include('santa.modules.share.sharing')
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="tour-photo">
                     <div class="toursPageCountry-photo">
@@ -45,7 +45,7 @@
                     </div>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="tour-map">
-                    <div id="map" data-place="{{ $data->title }}" data-coord=""></div>
+                    <div id="map" data-place="{{ $data->title }}" data-place-country="{{ $data->get_parent->title }}" data-coord=""></div>
                     @push('scripts')
                         <script>
                             function initMap() {
@@ -69,11 +69,25 @@
                                             position: results[0].geometry.location
                                         });
                                     } else {
-                                        alert('Geocode was not successful for the following reason: ' + status);
+                                        geocodeAddress_backup(geocoder, resultsMap);
                                     }
                                 });
                             }
-
+                            function geocodeAddress_backup(geocoder, resultsMap) {
+                                var address = $('#map').attr('data-place-country');
+                                geocoder.geocode({'address': address}, function(results, status) {
+                                    if (status === google.maps.GeocoderStatus.OK) {
+                                        resultsMap.setCenter(results[0].geometry.location);
+                                        $('#map').attr('data-coord', results[0].geometry.location);
+                                        var marker = new google.maps.Marker({
+                                            map: resultsMap,
+                                            position: results[0].geometry.location
+                                        });
+                                    } else {
+                                        //alert('Geocode was not successful for the following reason: ' + status);
+                                    }
+                                });
+                            }
                         </script>
                         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCxKB99A6FyIpROOUAOJSJqZGQEB6bgd2E&callback=initMap"
                                 async defer></script>

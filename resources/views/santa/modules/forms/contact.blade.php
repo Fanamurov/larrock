@@ -1,4 +1,4 @@
-<form id="form-contact" class="form-contact" method="post" action="/forms/contact">
+<form id="form-contact" class="form-contact col-xs-24" method="post" action="/forms/contact">
     <p class="h3 text-center">Задать вопрос</p>
     <div class="form-group">
         <input type="text" class="form-control" id="form-contact-name" placeholder="Как к вам обращаться" name="name">

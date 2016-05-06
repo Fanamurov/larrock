@@ -11,9 +11,15 @@
 	margin-top: 10px;
 	margin-bottom: 0;
   }
+  h1, .h1{
+	font-size: 29px;
+  }
   a{
 	color: #c72800;
 	font-size: 17px;
+  }
+  li:last-of-type{
+	display: inline;
   }
   >li+li:before {
 	padding: 0 2px;

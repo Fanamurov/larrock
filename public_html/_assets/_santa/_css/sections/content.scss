@@ -1,5 +1,8 @@
 #content{
-  padding: 10px 0 100px;
+  padding: 10px 0 60px;
+  @media (max-width: 500px) {
+	padding: 10px 0 20px;
+  }
   > div{
 	background: #fff;
 	padding: 10px 5px;
@@ -15,8 +18,5 @@
 	  color: grey;
 	  font-size: 14px;
 	}
-  }
-  .content-padding{
-
   }
 }

@@ -133,22 +133,28 @@ class Category extends Model implements HasMediaConversions
 	public function getFullUrlAttribute()
 	{
 		if($search_parent = Category::whereId($this->parent)->first()){
+			if($search_parent->type === 'tours'){
+				$prefix = '/tours';
+			}
+			else{
+				$prefix = '';
+			}
 			if($search_parent_2 = Category::whereId($search_parent->parent)->first()){
-				if($search_parent_3 = Category::whereId($search_parent->parent_2)->first()){
+				if($search_parent_3 = Category::whereId($search_parent_2->parent)->first()){
 					if($this->get_category){
-						return '/'. $search_parent_3->url . '/' . $search_parent_2->url . '/' . $search_parent->url . '/' . $this->get_category->first()->url . '/' . $this->url;
+						return $prefix. '/'. $search_parent_3->url . '/' . $search_parent_2->url . '/' . $search_parent->url . '/' . $this->get_category->first()->url . '/' . $this->url;
 					}else{
-						return '/'. $search_parent_3->url . '/' . $search_parent_2->url . '/' . $search_parent->url . '/' . $this->url;
+						return $prefix. '/'. $search_parent_3->url . '/' . $search_parent_2->url . '/' . $search_parent->url . '/' . $this->url;
 					}
 				}else{
 					if($this->get_category){
-						return '/'. $search_parent_2->url . '/' . $search_parent->url . '/' . $this->get_category->first()->url . '/' . $this->url;
+						return $prefix. '/'. $search_parent_2->url . '/' . $search_parent->url . '/' . $this->get_category->first()->url . '/' . $this->url;
 					}else{
-						return '/'. $search_parent_2->url . '/' . $search_parent->url . '/' . $this->url;
+						return $prefix. '/'. $search_parent_2->url . '/' . $search_parent->url . '/' . $this->url;
 					}
 				}
 			}else{
-				return '/'. $search_parent->url . '/' . $this->url;
+				return $prefix. '/'. $search_parent->url . '/' . $this->url;
 			}
 		}else{
 			return $this->url;

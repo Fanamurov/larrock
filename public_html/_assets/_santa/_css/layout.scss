@@ -254,6 +254,9 @@ h1, .h1{
   height: 46px;
   margin-bottom: 20px;
   a{
+	@media (max-width: 500px) {
+	  display: none;
+	}
 	color: white;
 	font-weight: 500;
 	font-size: 17px;
@@ -368,6 +371,9 @@ label{
 	padding: 5px 15px;
   }
   .title-header a{
+	@media (max-width: 500px) {
+	  display: none;
+	}
 	color: white;
 	font-weight: 500;
 	font-size: 17px;
@@ -384,6 +390,27 @@ label{
   }
 }
 
+.social-widjets{
+  padding-top: 60px;
+}
+
+/** TO TOP */
+#toTop {
+  display: none;
+  position: fixed;
+  bottom: 5px;
+  right: 5px;
+  width: 64px;
+  height: 64px;
+  opacity: 0.4;
+  background: url("/_assets/_santa/_images/icons/icon_up.png") no-repeat center top;
+  z-index: 10;
+}
+
+.relative{
+  position: relative;
+}
+
 @import "sections/header";
 @import "sections/footer";
 @import "sections/rightColomn";
@@ -397,7 +424,6 @@ label{
 @import "modules/cart";
 @import "modules/listCatalog";
 @import "modules/slideshow";
-@import "modules/listHotTours";
 @import "modules/listVidy";
 @import "modules/forecast";
 

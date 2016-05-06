@@ -16,6 +16,14 @@ header{
 	  }
 	}
   }
+  @media (max-width: 500px) {
+	background: white;
+	.logo{
+	  max-width: 150%;
+	  width: 150%;
+	  height: inherit;
+	}
+  }
   .header-address{
 	padding-top: 40px;
 	line-height: 30px;
@@ -34,6 +42,16 @@ header{
 	.rejim{
 	  font-size: 17px;
 	  line-height: 20px;
+	}
+	@media (max-width: 500px) {
+	  padding-top: 25px;
+	  .city{
+		font-size: 25px;
+		line-height: 24px;
+	  }
+	  .phone{
+		font-size: 25px;
+	  }
 	}
   }
 
@@ -99,6 +117,9 @@ header{
 	  margin-bottom: 0;
 	  li{
 		padding: 0 16px;
+		@media (max-width: 768px) {
+		  padding: 0 1px;
+		}
 		&.active{
 		  font-weight: 600;
 		  a{

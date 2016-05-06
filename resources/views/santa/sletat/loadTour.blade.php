@@ -72,7 +72,7 @@
                         <div><small class="muted">Сайт отеля:</small> <a href="{{ $item['data'][43] }}">{{ $item['data'][43] }}</a></div>
                     @endif
                     <div><small class="muted">Вылет:</small> {{ $item['data'][4] }}</div>
-                    <div><small class="muted">Номер будет зарезервирован на:</small> {{ $item['data'][10] }}</div>
+                    <div><small class="muted">Обратно:</small> {{ $item['data'][10] }}</div>
                     <div><small class="muted">Ночей:</small> {{ $item['data'][5] }}</div>
                     <div><small class="muted">Тип номера:</small> {{ $item['data'][9] }} ({{ $item['data'][50] }})</div>
                     <div><small class="muted">Тип размещения:</small> {{ $item['data'][22] }} ({{ $item['data'][53] }} взрослых / {{ $item['data'][54] }} детей)</div>

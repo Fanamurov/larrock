@@ -45,6 +45,10 @@ footer{
 	  float: left;
 	  margin-right: 15px;
 	  margin-bottom: 30px;
+	  @media (max-width: 768px) {
+		float: none;
+		display: block;
+	  }
 	}
   }
 
@@ -52,10 +56,17 @@ footer{
   section.row-sposob{
 	color: white;
 	padding-top: 30px;
+	@media (max-width: 768px) {
+	  padding-bottom: 30px;
+	}
 	.h1{
 	  font-weight: 600;
 	  margin-bottom: 30px;
 	  margin-top: 3px;
+	  @media (max-width: 500px) {
+		font-size: 22px;
+		margin-bottom: 20px;
+	  }
 	}
 	.h2{
 	  display: inline-block;
@@ -79,6 +90,9 @@ footer{
 	}
 	.h2{
 	  font-size: 27px;
+	  @media (max-width: 500px) {
+		font-size: 24px;
+	  }
 	}
   }
 
@@ -86,12 +100,24 @@ footer{
 	background: #f4f4f4;
 	padding-top: 30px;
 	padding-bottom: 50px;
+	@media (max-width: 500px) {
+	  padding-bottom: 15px;
+	}
 	input{
 	  height: 42px;
 	}
 	.h4{
 	  font-size: 14px;
 	  line-height: 20px;
+	}
+	.row-subscribes-item{
+	  padding-bottom: 20px;
+	}
+	.input-group-btn-subscribe button{
+	  @media (max-width: 500px) {
+		width: 129px;
+		overflow: hidden;
+	  }
 	}
   }
 

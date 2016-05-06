@@ -25,17 +25,6 @@ class MainpageController extends Controller
 	
     public function index(Request $request, Sletat $sletat)
 	{
-		//Форма от слетать
-		$data = $sletat->getFullSearchForm($request);
-
-		//Форма поиска туров по сайту
-		$data['siteSearch'] = Cache::remember('siteSearch-form', 60, function() {
-			$siteSearch['countries'] = Category::whereType('tours')->whereActive(1)->whereParent(308)->get(['title','id']);
-			$siteSearch['resorts'] = Category::whereType('tours')->whereActive(1)->where('parent', '!=', 308)->where('parent', '!=', 377)->where('parent', '!=', 0)->get(['title','id']);
-			$siteSearch['vidy'] = Category::whereType('tours')->whereActive(1)->whereParent(377)->get(['title','id']);
-		    return $siteSearch;
-		});
-
         $list_news = Cache::remember('list_news_mainpage', 60*24, function() {
             $data = News::whereActive(1)->with(['get_category'])->orderBy('updated_at', 'desc')->take(6)->get();
 			foreach($data as $key => $value){
@@ -66,12 +55,8 @@ class MainpageController extends Controller
         $data['GetTours'] = Cache::remember('best_cost_mainpage', 60*24, function() use ($sletat) {
 			return $sletat->GetTours(1286, 29, [], 3);
 		});
-		if( !array_key_exists('best_cost', $data)){
+		if($data['GetTours']['iTotalRecords'] < 1){
 			Cache::forget('best_cost_mainpage');
-		}else{
-			if($data['GetTours']['iTotalRecords'] < 1){
-				Cache::forget('best_cost_mainpage');
-			}
 		}
 
 		return view('santa.mainpage', $data);

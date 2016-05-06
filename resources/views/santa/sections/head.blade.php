@@ -3,11 +3,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="Mart Larrock CMS" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <title>@yield('title', 'Cанта-авиа')</title>
+    <title>@yield('title', 'Туристическая компания Cанта-авиа Хабаровск')</title>
     <meta name="description" content="@yield('description')">
     <meta name="author" content="MartDS">
     <meta name='yandex-verification' content='409dfa0fa1b91fe7' />
     <link href="{{asset('ico.png?6v')}}" rel="shortcut icon" />
+
+    <meta itemprop="name" content="@yield('title', 'Туристическая компания Cанта-авиа Хабаровск')"/>
+    <meta itemprop="description" content="@yield('description')"/>
+    <meta itemprop="image" content="http://santa-avia.local/media/Tours/Tours-20-7626a760b41079212fc7a852beebd00ejpg.jpg"/>
+
+    <meta name="twitter:card" content="summary"/>  <!-- Тип окна -->
+    <meta name="twitter:site" content="Cанта-авиа Хабаровск"/>
+    <meta name="twitter:title" content="@yield('title', 'Туристическая компания Cанта-авиа Хабаровск')">
+    <meta name="twitter:description" content="@yield('description')"/>
+    <meta name="twitter:image" content="http://santa-avia.local/media/Tours/Tours-20-7626a760b41079212fc7a852beebd00ejpg.jpg"/>
+    <meta name="twitter:domain" content="santa-avia.ru"/>
+
+    <!-- https://developers.facebook.com/docs/sharing/webmasters#markup -->
+    <!-- https://developers.facebook.com/tools/debug/ -->
+    <meta property="og:type" content="article"/>
+    <meta property="og:locale" content="ru_RU"/>
+    <meta property="og:title" content="@yield('title', 'Туристическая компания Cанта-авиа Хабаровск')"/>
+    <meta property="og:description" content="@yield('description')"/>
+    <meta property="og:image" content="http://santa-avia.local/media/Tours/Tours-20-7626a760b41079212fc7a852beebd00ejpg.jpg"/>
+    <meta property="og:url" content="http://santa-avia.ru"/>
+    <meta property="og:site_name" content="Cанта-авиа Хабаровск"/>
+    <meta property="og:see_also" content="http://santa-avia.ru"/>
+
     <link rel="stylesheet" href="{{asset('_assets/_santa/_css/min/bootstrap.min.css')}}"/>
     <link rel="stylesheet" href="{{asset('_assets/_santa/_css/min/front.min.css')}}"/>
     <link rel="stylesheet" href="/_assets/bower_components/selectize/dist/css/selectize.bootstrap3.css"/>

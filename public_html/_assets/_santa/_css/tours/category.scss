@@ -64,6 +64,13 @@
 
 .toursPageCountry,
 .toursVid{
+  .carousel-control{
+	width: 9%;
+	&.right,
+	&.left{
+	  background: none;
+	}
+  }
   .tours_tabs{
 	position: relative;
 	.nav-tabs {
@@ -103,8 +110,14 @@
   }
   .ya-share2{
 	position: absolute;
-	z-index: 5;
-	right: 10px;
-	top: 9px;
+	z-index: 1;
+	right: 0;
+	top: 0;
+	background: #f3f3f3;
+	padding: 8px 5px 6px 6px;
+	border-radius: 5px;
+	@media (max-width: 500px) {
+	  display: none;
+	}
   }
 }

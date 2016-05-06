@@ -82,6 +82,21 @@ class SletatController extends Controller
 
 	public function getActualizePrice(Request $request, Sletat $sletat)
 	{
+		$countryId = $request->get('countryId');
+		$data['GetCountries'] = $sletat->GetCountries($townFromId = 1286);
+		foreach($data['GetCountries'] as $value){
+			if($value->Id == $countryId){
+				$countryFind = $value->Name;
+			}
+		}
+
+		if(isset($countryFind)){
+			if($countryFind === 'Таиланд'){
+				$countryFind = 'Тайланд';
+			}
+			$data['siteSearch']['categories'] = Category::search($countryFind)->with(['get_toursActive', 'get_childActive.get_toursActive'])->get();
+		}
+
 		$data['request'] = $request->all();
 		$data['item'] = $sletat->ActualizePrice($request);
 		return view('santa.sletat.loadTour', $data);

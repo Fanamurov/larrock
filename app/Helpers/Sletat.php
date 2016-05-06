@@ -54,44 +54,39 @@ class Sletat{
         $data['GetHotels'] = Cache::remember('GetHotels', 60, function() use ($data) {
             return $this->GetHotels($data['GetDepartCities']->first()->Id);
         });
+		$data['GetStars'] = Cache::remember('GetStars', 60, function() use ($data) {
+			return $this->GetHotelStars(29, '372,1592,1642');
+		});
 
-        $key_cache = '';
-        foreach ($request->all() as $value){
-            $key_cache .= $value;
-        }
-        $key_cache = sha1($key_cache);
-        $data['GetTours'] = Cache::remember('GetTours'. $key_cache, 60, function() use ($data, $request) {
-            $cityFromId = $request->get('cityFromId', $data['GetDepartCities']->first()->Id);
-            $countryId = $request->get('countryId', $data['GetCountries']->first()->Id);
-            $addict_params = [];
-            $explode_date = explode(' - ', $request->get('date-int')); //04/11/2016 - 04/22/2016
-            if(array_key_exists(1, $explode_date)){
-                $addict_params['s_departFrom'] = trim($explode_date[0]);
-                $addict_params['s_departTo'] = trim($explode_date[1]);
-            }
-            $addict_params['s_priceMin'] = $request->get('s_priceMin');
-            $addict_params['s_priceMax'] = $request->get('s_priceMax');
-            $addict_params['s_nightsMin'] = $request->get('s_nightsMin', 1);
-            $addict_params['s_nightsMax'] = $request->get('s_nightsMax', 29);
-            $addict_params['s_adults'] = $request->get('s_adults', 2);
-            $addict_params['s_kids'] = $request->get('s_kids', 0);
-            return $this->GetTours($cityFromId, $countryId, $addict_params);
-        });
+		if($request->has('cityFromId')){
+			$key_cache = '';
+			foreach ($request->all() as $value){
+				$key_cache .= $value;
+			}
+			$key_cache = sha1($key_cache);
+			$data['GetTours'] = Cache::remember('GetTours'. $key_cache, 60, function() use ($data, $request) {
+				$cityFromId = $request->get('cityFromId', $data['GetDepartCities']->first()->Id);
+				$countryId = $request->get('countryId', $data['GetCountries']->first()->Id);
+				$addict_params = [];
+				$explode_date = explode(' - ', $request->get('date-int')); //04/11/2016 - 04/22/2016
+				if(array_key_exists(1, $explode_date)){
+					$addict_params['s_departFrom'] = trim($explode_date[0]);
+					$addict_params['s_departTo'] = trim($explode_date[1]);
+				}
+				$addict_params['s_priceMin'] = $request->get('s_priceMin');
+				$addict_params['s_priceMax'] = $request->get('s_priceMax');
+				$addict_params['s_nightsMin'] = $request->get('s_nightsMin', 1);
+				$addict_params['s_nightsMax'] = $request->get('s_nightsMax', 29);
+				$addict_params['s_adults'] = $request->get('s_adults', 2);
+				$addict_params['s_kids'] = $request->get('s_kids', 0);
+				$addict_params['stars'] = $request->get('stars');
+				return $this->GetTours($cityFromId, $countryId, $addict_params);
+			});
 
-        if($data['GetTours']['hotelsCount'] < 1){
-            Cache::forget('GetTours'. $key_cache);
-        }
-
-        /*Cache::forget('ActualizePrice');
-        if($request->has('requestId')){
-            $data['ActualizePrice'] = Cache::remember('ActualizePrice', 60, function() use ($data, $request) {
-                $sourceId = $request->get('sourceId', '2110148712');
-                $offerId = $request->get('offerId', '210038070');
-                $countryId = $request->get('countryId', '113');
-                $requestId = $request->get('requestId', '1658015561');
-                return $this->ActualizePrice($sourceId, $offerId, $currencyAlias = 'RUB', $showcase = 0, $countryId, $requestId);
-            });
-        }*/
+			if($data['GetTours']['hotelsCount'] < 1){
+				Cache::forget('GetTours'. $key_cache);
+			}
+		}
 
         return $data;
     }
@@ -244,6 +239,8 @@ class Sletat{
     /** ----  Методы загрузки туров  ----- */
 
     /**
+	 * НЕТ ЛИЦЕНЗИИ
+	 * Поиск горящих туров
      * Метод GetTours используется для создания поискового запроса, а также – если в запросе
      * передаётся параметр requestId и параметр updateResult=1 – для получения результатов
      * поиска по запросу.
@@ -254,18 +251,55 @@ class Sletat{
      * @param   int     $pageSize           Результатов на странице
      * @return
      */
-    public function GetTours($cityFromId, $countryId, $addict_params = [], $pageSize = 30)
+    public function GetToursShowcase($cityFromId, $countryId, $addict_params = [], $pageSize = 30)
     {
         $this->url = 'http://module.sletat.ru/Main.svc/GetTours'. $this->login_params .'&countryId='. $countryId
             .'&cityFromId='. $cityFromId .'&s_hotelIsNotInStop=true&s_hasTickets=true&s_ticketsIncluded=true'
-            .'&updateResult=0&includeDescriptions=1&includeOilTaxesAndVisa=0&pageSize='. $pageSize .'&pageNumber=1';
+            .'&updateResult=0&includeDescriptions=1&includeOilTaxesAndVisa=0&pageSize='. $pageSize .'&pageNumber=1&s_showcase=true&groupBy=ht_minhotelprices';
         foreach ($addict_params as $key => $item){
             $this->url .= '&'.$key .'='. $item;
         }
         $result = $this->sendRequest();
-		//dd($result->GetToursResult->Data);
+		//dd($result);
         return collect($result->GetToursResult->Data);
     }
+
+	/**
+	 * НЕТ ЛИЦЕНЗИИ
+	 * @return mixed
+	 */
+	public function GetTemplates()
+	{
+		$this->url = 'http://module.sletat.ru/Main.svc/GetTemplates'. $this->login_params .'&templatesList=all';
+		$result = $this->sendRequest();
+		//dd($result);
+		return collect($result->GetTemplatesResult->Data);
+	}
+
+	/**
+	 * Метод GetTours используется для создания поискового запроса, а также – если в запросе
+	 * передаётся параметр requestId и параметр updateResult=1 – для получения результатов
+	 * поиска по запросу.
+	 *
+	 * @param   int     $cityFromId *       Идентификатор города вылета
+	 * @param   int     $countryId *        Идентификатор направления перелета
+	 * @param   array   $addict_params      Дополнительные параметры для поиска
+	 * @param   int     $pageSize           Результатов на странице
+	 * @return
+	 */
+	public function GetTours($cityFromId, $countryId, $addict_params = [], $pageSize = 30)
+	{
+		$this->url = 'http://module.sletat.ru/Main.svc/GetTours'. $this->login_params .'&countryId='. $countryId
+			.'&cityFromId='. $cityFromId .'&s_hotelIsNotInStop=true&s_hasTickets=true&s_ticketsIncluded=true'
+			.'&updateResult=0&includeDescriptions=1&includeOilTaxesAndVisa=0&pageSize='. $pageSize .'&pageNumber=1&groupBy=ht_minhotelprices';
+		foreach ($addict_params as $key => $item){
+			$this->url .= '&'.$key .'='. $item;
+		}
+		//dd($this->url);
+		$result = $this->sendRequest();
+		//dd($result->GetToursResult->Data);
+		return collect($result->GetToursResult->Data);
+	}
 
 	public function GetToursUpdated(Request $request, $requestId, $pageSize = 30)
 	{
@@ -283,15 +317,17 @@ class Sletat{
 		}
 		$addict_params['s_priceMin'] = $request->get('s_priceMin');
 		$addict_params['s_priceMax'] = $request->get('s_priceMax');
-		$addict_params['s_nightsMin'] = $request->get('s_nightsMin', 1);
+		$addict_params['s_nightsMin'] = $request->get('s_nightsMin', 7);
 		$addict_params['s_nightsMax'] = $request->get('s_nightsMax', 29);
 		$addict_params['s_adults'] = $request->get('s_adults', 2);
 		$addict_params['s_kids'] = $request->get('s_kids');
+		$addict_params['stars'] = $request->get('stars');
 		$pageNumber = $request->get('pageNumber', 1);
 
 		$this->url = 'http://module.sletat.ru/Main.svc/GetTours'. $this->login_params .'&countryId='. $countryId
 			.'&cityFromId='. $cityFromId .'&s_hotelIsNotInStop=true&s_hasTickets=true&s_ticketsIncluded=true'
-			.'&updateResult=1&includeDescriptions=1&includeOilTaxesAndVisa=1&pageSize='. $pageSize .'&pageNumber='. $pageNumber .'&requestId='. $requestId;
+			.'&updateResult=1&includeDescriptions=1&includeOilTaxesAndVisa=1&groupBy=hotel'
+			.'&pageSize='. $pageSize .'&pageNumber='. $pageNumber .'&requestId='. $requestId;
 		foreach ($addict_params as $key => $item){
 			$this->url .= '&'.$key .'='. $item;
 		}
@@ -352,14 +388,6 @@ class Sletat{
             .'&countryId='. $countryId;
         $result = $this->sendRequest();
         return collect($result->ActualizePriceResult->Data);
-    }
-
-    public function GetHotelInformation($hotelId)
-    {
-        $this->url = 'http://module.sletat.ru/Main.svc/GetHotelInformation'. $this->login_params .'&hotelId='. $hotelId;
-        $result = $this->sendRequest();
-        dd($result);
-        return collect($result->HotelInformation->Data);
     }
 
 	/**

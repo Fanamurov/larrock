@@ -186,18 +186,14 @@ class ToursController extends Controller
 
 		//Cache::forget('best_cost'. $data['data']->id);
         $data['GetTours'] = Cache::remember('best_cost'. $data['data']->id, 60*24, function() use ($sletat, $sletat_id) {
-			$params['s_nightsMin'] = '1';
+			$params['s_nightsMin'] = '7';
 			$params['s_nightsMax'] = '29';
 			$params['s_adults'] = '1';
             return $sletat->GetTours(1286, $sletat_id, $params, 3);
         });
-        if( !array_key_exists('best_cost', $data)){
-            Cache::forget('best_cost'. $data['data']->id);
-        }else{
-            if($data['best_cost']['iTotalRecords'] < 1){
-                Cache::forget('best_cost'. $data['data']->id);
-            }
-        }
+		if($data['GetTours']['iTotalRecords'] < 1){
+			Cache::forget('best_cost'. $data['data']->id);
+		}
 
         $data['forecast'] = $forecast->render($data['data']->forecast_url);
 
@@ -245,18 +241,14 @@ class ToursController extends Controller
 
         //Cache::forget('best_cost'. $data['data']->id);
         $data['GetTours'] = Cache::remember('best_cost'. $data['data']->id, 60*24, function() use ($sletat, $sletat_id) {
-            $params['s_nightsMin'] = '1';
+            $params['s_nightsMin'] = '7';
             $params['s_nightsMax'] = '29';
             $params['s_adults'] = '1';
             return $sletat->GetTours(1286, $sletat_id, $params, 3);
         });
-        if( !array_key_exists('best_cost', $data)){
-            Cache::forget('best_cost'. $data['data']->id);
-        }else{
-            if($data['best_cost']['iTotalRecords'] < 1){
-                Cache::forget('best_cost'. $data['data']->id);
-            }
-        }
+		if($data['GetTours']['iTotalRecords'] < 1){
+			Cache::forget('best_cost'. $data['data']->id);
+		}
 
         $data['forecast'] = $forecast->render($data['data']->get_parent->forecast_url);
 
@@ -286,7 +278,7 @@ class ToursController extends Controller
 		Breadcrumbs::register('tours.item', function($breadcrumbs, $data)
 		{
 			$url = '/tours';
-			$breadcrumbs->parent('tours.index');
+			//$breadcrumbs->parent('tours.index');
 			$get_category = $data->get_category->first();
 			if($get_category->level !== 1){
 				$parent = $get_category->get_parent;

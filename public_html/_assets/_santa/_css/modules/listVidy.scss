@@ -14,13 +14,6 @@
 	  padding: 15px 10px 15px 60px;
 	  box-shadow: 0 2px 2px rgba(9,9,9,0.4);
 	  font-weight: 600;
-	  @media (max-width: 768px) {
-		font-size: 14px;
-		padding: 10px 5px 11px 2px;
-		span{
-		  padding-left: 3px;
-		}
-	  }
 	  &:hover,
 	  &:focus{
 		background: #de0610;
@@ -68,13 +61,6 @@
 	padding: 15px 10px 15px 2px;
 	box-shadow: 0 2px 2px rgba(9,9,9,0.4);
     font-weight: 600;
-	@media (max-width: 768px) {
-	  font-size: 14px;
-	  padding: 10px 5px 11px 2px;
-	  span{
-		padding-left: 3px;
-	  }
-	}
 	&:hover,
 	&:focus{
 	  background: #de0610;

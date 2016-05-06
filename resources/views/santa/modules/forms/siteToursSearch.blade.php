@@ -11,7 +11,7 @@
                 </select>
             </div>
         </div>
-        <div class="col-md-1">
+        <div class="col-md-1 hidden-xs hidden-sm">
             <span class="ili">или</span>
         </div>
         <div class="col-md-5">
@@ -25,7 +25,7 @@
                 </select>
             </div>
         </div>
-        <div class="col-md-1">
+        <div class="col-md-1 hidden-xs hidden-sm">
             <span class="ili">или</span>
         </div>
         <div class="col-md-5">

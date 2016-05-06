@@ -34,46 +34,46 @@
     <div class="col-sm-11 col-sm-offset-1">
         <ul class="list-unstyled list-profits">
             <li class="row">
-                <div class="col-sm-6">
+                <div class="col-xs-6">
                     <img src="/_assets/_santa/_images/labels/1450095405_Discount.png" alt="discount" class="all-width">
                 </div>
-                <div class="col-sm-18">
+                <div class="col-xs-18">
                     <p class="h3">Гарантия лучшей цены</p>
                     <p>Если вы найдете готовый тур дешевле, чем у нас, при одинаковых условиях бронирования, мы предложим его вам по той же или более выгодной цене</p>
                 </div>
             </li>
             <li class="row">
-                <div class="col-sm-6">
+                <div class="col-xs-6">
                     <img src="/_assets/_santa/_images/labels/1450095924_Lock.png" alt="discount" class="all-width">
                 </div>
-                <div class="col-sm-18">
+                <div class="col-xs-18">
                     <p class="h3">100% гарантия отдыха</p>
                     <p>Чтобы вы чувствовали себя спокойно и уверенно на отдыхе — предлагаем уникальные страховые программы</p>
                 </div>
             </li>
             <li class="row">
-                <div class="col-sm-6">
+                <div class="col-xs-6">
                     <img src="/_assets/_santa/_images/labels/1450095369_Like.png" alt="discount" class="all-width">
                 </div>
-                <div class="col-sm-18">
+                <div class="col-xs-18">
                     <p class="h3">Только хорошие отзывы</p>
                     <p>98% наших клиентов оставили положительный отзыв</p>
                 </div>
             </li>
             <li class="row">
-                <div class="col-sm-6">
+                <div class="col-xs-6">
                     <img src="/_assets/_santa/_images/labels/1450095428_Heart.png" alt="discount" class="all-width">
                 </div>
-                <div class="col-sm-18">
+                <div class="col-xs-18">
                     <p class="h3">Проверенные туроператоры</p>
                     <p>Мы предлагаем туры только от проверенных партнеров</p>
                 </div>
             </li>
             <li class="row">
-                <div class="col-sm-6">
+                <div class="col-xs-6">
                     <img src="/_assets/_santa/_images/labels/1450095462_Gift.png" alt="discount" class="all-width">
                 </div>
-                <div class="col-sm-18">
+                <div class="col-xs-18">
                     <p class="h3">Туры ручной сборки</p>
                     <p>Отдых по Вашим правилам. Добавьте экскурсии и VIP трансфер в Вашу путевку</p>
                 </div>

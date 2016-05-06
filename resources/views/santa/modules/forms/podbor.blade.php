@@ -3,7 +3,7 @@
 
 @section('content')
     <div class="row row-podbor" id="row-podbor">
-        <div class="col-sm-12">
+        <div class="col-xs-24 col-md-12">
             <form id="form-podbor" class="form-podbor" method="post" action="/forms/podbor">
                 <p class="h1">Подбор тура</p>
                 <div class="form-group">
@@ -47,7 +47,7 @@
                 <div class="clearfix"></div>
             </form>
         </div>
-        <div class="col-sm-11 col-sm-offset-1">
+        <div class="col-xs-24 col-md-11 col-md-offset-1">
             <ul class="list-unstyled list-profits">
                 <li class="row">
                     <div class="col-sm-6">

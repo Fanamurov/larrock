@@ -1,6 +1,6 @@
 <form id="form-searchTourShort" class="form-searchTour form-searchTourShort" method="get" action="/sletat">
     <div class="row">
-        <div class="col-md-5">
+        <div class="col-sm-5">
             <div class="form-group">
                 <label class="control-label" for="form-searchTour-cityFromId">Откуда:</label>
                 <select name="cityFromId" class="form-control" id="form-searchTour-cityFromId">
@@ -10,7 +10,7 @@
                 </select>
             </div>
         </div>
-        <div class="col-md-5">
+        <div class="col-sm-5">
             <div class="form-group">
                 <label class="control-label" for="form-searchTour-countryId">Куда:</label>
                 <select name="countryId" class="form-control" id="form-searchTour-countryId">
@@ -20,13 +20,13 @@
                 </select>
             </div>
         </div>
-        <div class="col-md-5">
+        <div class="col-sm-8 col-md-5">
             <div class="form-group">
                 <label class="control-label" for="form-searchTour-date-int">Интервал дат вылета:</label>
                 <input type="text" name="date-int" class="form-control daterange" id="form-searchTour-date-int" value="{{ Input::get('date-int') }}">
             </div>
         </div>
-        <div class="col-md-2">
+        <div class="col-sm-3 col-md-2">
             <div class="form-group">
                 <label class="control-label" for="form-searchTour-s_adults">Взрослых:</label>
                 <select name="s_adults" class="form-control" id="form-searchTour-s_adults">
@@ -38,7 +38,7 @@
                 </select>
             </div>
         </div>
-        <div class="col-md-2">
+        <div class="col-sm-3 col-md-2">
             <div class="form-group">
                 <label class="control-label" for="form-searchTour-s_kids">Детей:</label>
                 <select name="s_kids" class="form-control" id="form-searchTour-s_kids">
@@ -50,7 +50,7 @@
                 </select>
             </div>
         </div>
-        <div class="col-md-5">
+        <div class="col-sm-24 col-md-5">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <button type="submit" class="btn btn-default btn-block">Найти тур</button>
         </div>

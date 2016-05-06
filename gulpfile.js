@@ -137,3 +137,14 @@ gulp.task("copyfiles", function() {
     gulp.src("vendor/bower_dl/jquery/dist/jquery.js")
         .pipe(gulp.dest("resources/assets/js/"));
 });
+
+gulp.task('imagemin', function () {
+    return gulp.src('./public_html/media/**/**/*')
+        .pipe(imagemin({
+            progressive: true,
+            svgoPlugins: [{removeViewBox: false}],
+            optimizationLevel: 3,
+            use: [pngquant()]
+        }))
+        .pipe(gulp.dest('./public_html/media/'));
+});

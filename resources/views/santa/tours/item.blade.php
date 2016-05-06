@@ -5,10 +5,10 @@
     <div class="toursPageItem row">
         <div class="col-xs-24">
             {!! Breadcrumbs::render('tours.item', $data) !!}
-            @include('santa.modules.share.sharing')
         </div>
         <div class="clearfix"></div>
-        <div class="row">
+        <div class="row relative">
+            @include('santa.modules.share.sharing')
             <div class="col-xs-24">
                 <div class="toursImage">
                     @if(count($data->images) > 0)
@@ -55,8 +55,8 @@
         <div class="row-btn-group">
             <div class="btn-group" role="group">
                 <button type="button" class="btn btn-default">Забронировать по тел:<br/>+7 (4212) 45-45-46</button>
-                <button type="button" class="btn btn-default">Заказать звонок</button>
-                <button type="button" class="btn btn-default">Заказать тур</button>
+                <a href="#uptocall" class="btn btn-default">Заказать звонок</a>
+                <a href="#form-zakaz" role="button" class="btn btn-default">Заказать тур</a>
             </div>
         </div>
         <div class="row row-description">

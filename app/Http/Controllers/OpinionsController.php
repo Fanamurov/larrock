@@ -12,9 +12,6 @@ class OpinionsController extends Controller
 	public function __construct(Sletat $sletat)
 	{
 		$this->middleware('loaderModules');
-
-        /* Краткая форма поиска от sletat */
-        \View::share('SearchFormShort', $sletat->getSearchForm());
 	}
 
 	public function index()

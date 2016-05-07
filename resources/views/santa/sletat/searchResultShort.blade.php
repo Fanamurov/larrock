@@ -30,11 +30,11 @@
                         @endif
                     </div>
                 </div>
-                <div class="col-sm-24 hidden-xs hidden-sm">
+                <div class="col-sm-24">
                     @if( !empty($item[29]))
                         <img src="{{ str_replace('_0.jpg', '_0_250_250.jpg', $item[29]) }}" align="Hotel" class="all-width">
                     @else
-                        <img src="/_assets/_santa/_images/empty_big.png" alt="Нет фото" class="categoryImage categoryImage-empty all-width">
+                        <img src="/_assets/_santa/_images/empty_big.png" alt="Нет фото" class="categoryImage categoryImage-empty all-width hidden-xs hidden-sm">
                     @endif
                 </div>
                 <div class="col-sm-24">

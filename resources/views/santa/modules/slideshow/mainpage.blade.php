@@ -1,4 +1,4 @@
-<div class="hidden-xs">
+<div>
     @if(count($slideshow['big']) > 0)
         <div id="carousel-mainpage" class="carousel slide" data-ride="carousel">
             <!-- Indicators -->

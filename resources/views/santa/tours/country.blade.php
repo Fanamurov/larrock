@@ -87,11 +87,11 @@
         </div>
         <div class="toursPageCountry-short row">
             @if(isset($forecast['var']))
-                <div class="col-sm-9 hidden-xs">
+                <div class="col-md-9 hidden-xs hidden-sm">
                     @include('santa.modules.forecast.forecast')
                 </div>
             @endif
-            <div class="@if(isset($forecast['var'])) col-sm-15 @else col-xs-24 @endif">
+            <div class="@if(isset($forecast['var'])) col-md-15 @else col-xs-24 @endif">
                 {!! $data->short !!}
             </div>
         </div>

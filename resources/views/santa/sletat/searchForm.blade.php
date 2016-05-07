@@ -97,7 +97,7 @@
                         <label class="control-label" for="form-searchTour-s_nightsMax">Ночей до:</label>
                         <select name="s_nightsMax" class="form-control" id="form-searchTour-s_nightsMax">
                             @for($i=1; $i < 30; $i++)
-                                <option @if(Input::get('s_nightsMax') == $i) selected @endif value="{{ $i }}">{{ $i }}</option>
+                                <option @if(Input::get('s_nightsMax', 18) == $i) selected @endif value="{{ $i }}">{{ $i }}</option>
                             @endfor
                         </select>
                     </div>
@@ -107,10 +107,10 @@
             <div class="row">
                 <div class="col-md-8">
                     <div class="form-group">
-                        <label class="control-label" for="form-searchTour-city">Курорт:</label>
-                        <select name="city" class="form-control chosen-select" id="form-searchTour-city" data-placeholder="Выберите курорты..." multiple>
+                        <label class="control-label" for="form-searchTour-cities">Курорт:</label>
+                        <select name="cities" class="form-control chosen-select" id="form-searchTour-cities" data-placeholder="Выберите курорты..." multiple>
                             @forelse($GetCities as $item)
-                                <option value="{{ $item->Id }}">{{ $item->Name }}</option>
+                                <option @if(Input::get('cities') == $item->Id) selected @endif value="{{ $item->Id }}">{{ $item->Name }}</option>
                             @empty
                                 <option value="">Нет доступных курортов</option>
                             @endforelse
@@ -119,19 +119,30 @@
                 </div>
                 <div class="col-md-8">
                     <div class="form-group">
-                        <label class="control-label" for="form-searchTour-hotel">Отель:</label>
-                        <select name="hotel" class="form-control chosen-select" id="form-searchTour-hotel" data-placeholder="Выберите отели..." multiple>
+                        <label class="control-label" for="form-searchTour-hotels">Отель:</label>
+                        <select name="hotels" class="form-control chosen-select" id="form-searchTour-hotels" data-placeholder="Выберите отели..." multiple>
                             @forelse($GetHotels as $item)
-                                <option value="{{ $item->Id }}">{{ $item->Name }}</option>
+                                <option @if(Input::get('hotels') == $item->Id) selected @endif value="{{ $item->Id }}">{{ $item->Name }}</option>
                             @empty
                                 <option value="">Нет доступных отелей</option>
                             @endforelse
                         </select>
                     </div>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-4">
                     <div class="form-group">
-                        <label class="control-label" for="form-searchTour-hotel">Звездность:</label>
+                        <label class="control-label" for="form-searchTour-meals">Тип питания:</label>
+                        <select name="meals" class="form-control" id="form-searchTour-meals">
+                            <option value="">любая</option>
+                            @foreach($GetMeals as $item)
+                                <option @if(Input::get('meals') == $item->Id) selected @endif value="{{ $item->Id }}">{{ $item->Name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label" for="form-searchTour-stars">Звездность:</label>
                         <select name="stars" class="form-control" id="form-searchTour-stars">
                             <option value="">любая</option>
                             @foreach($GetStars as $item)

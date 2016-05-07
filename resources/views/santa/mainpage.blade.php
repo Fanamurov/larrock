@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru" prefix="og: http://ogp.me/ns/article#">
 @include('santa.sections.head')
-<body>
+<body class="mainpage {{ $app_name or '' }} {{ $app_param or '' }}">
 <div class="container container-body">
     @include('santa.sections.header')
     <section class="row" id="content">

@@ -20,6 +20,17 @@ $(document).ready(function(){
         }
     });
 
+    $('.menu_mobile').find('select').change(function () {
+        window.location = $(this).val();
+    });
+    $('.menu_mobile').find('button').click(function () {
+        window.location = $(this).attr('data-value');
+    });
+    $('.show-mobile-menu').click(function () {
+        $(this).slideUp('slow');
+        $('.menu_mobile').slideDown('slow');
+    });
+
     $('.load-map').click(function () {
         setTimeout(function(){
             initMap();

@@ -6,8 +6,8 @@ use Cache;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use GuzzleHttp;
-use Session;
 
+/* DOCS: http://wiki.sletat.ru/w/Шлюз_поиска_туров_(json) */
 class Sletat{
 
     protected $url = 'http://module.sletat.ru/Main.svc';
@@ -48,14 +48,25 @@ class Sletat{
         $data['GetCountries'] = Cache::remember('GetCountries', 60, function() use ($data){
             return $this->GetCountries($data['GetDepartCities']->first()->Id);
         });
-        $data['GetCities'] = Cache::remember('GetCities', 60, function() {
-            return $this->GetCities();
+        $data['GetCities'] = Cache::remember('GetCities'. $request->get('countryId'), 60, function() use ($request) {
+            return $this->GetCities($request->get('countryId'));
         });
-        $data['GetHotels'] = Cache::remember('GetHotels', 60, function() use ($data) {
-            return $this->GetHotels($data['GetDepartCities']->first()->Id);
+		//Cache::forget('GetHotels_'. $request->get('countryId', $data['GetCountries']->first()->Id));
+        $data['GetHotels'] = Cache::remember('GetHotels_'. $request->get('countryId', $data['GetCountries']->first()->Id), 60, function() use ($data, $request) {
+			$townIds = '';
+			foreach($data['GetCities'] as $key => $item){
+				if($key !== 0){
+					$townIds = ',';
+				}
+				$townIds .= $item->Id;
+			}
+            return $this->GetHotels($request->get('countryId', $data['GetCountries']->first()->Id), $townIds);
         });
-		$data['GetStars'] = Cache::remember('GetStars', 60, function() use ($data) {
+		$data['GetStars'] = Cache::remember('GetStars', 60*24, function() use ($data) {
 			return $this->GetHotelStars(29, '372,1592,1642');
+		});
+		$data['GetMeals'] = Cache::remember('GetMeals', 60*24, function() use ($data) {
+			return $this->GetMeals();
 		});
 
 		if($request->has('cityFromId')){
@@ -76,10 +87,13 @@ class Sletat{
 				$addict_params['s_priceMin'] = $request->get('s_priceMin');
 				$addict_params['s_priceMax'] = $request->get('s_priceMax');
 				$addict_params['s_nightsMin'] = $request->get('s_nightsMin', 1);
-				$addict_params['s_nightsMax'] = $request->get('s_nightsMax', 29);
+				$addict_params['s_nightsMax'] = $request->get('s_nightsMax', 25);
 				$addict_params['s_adults'] = $request->get('s_adults', 2);
 				$addict_params['s_kids'] = $request->get('s_kids', 0);
 				$addict_params['stars'] = $request->get('stars');
+				$addict_params['hotels'] = $request->get('hotels');
+				$addict_params['cities'] = $request->get('cities');
+				$addict_params['meals'] = $request->get('meals');
 				return $this->GetTours($cityFromId, $countryId, $addict_params);
 			});
 
@@ -158,8 +172,11 @@ class Sletat{
      *
      * @return Collection
      */
-    public function GetCities($countryId = 3)
+    public function GetCities($countryId)
     {
+		if( !$countryId){
+			return FALSE;
+		}
 		$GetCities = Cache::rememberForever('GetCities'. $countryId, function() use ($countryId) {
 			$this->url = 'http://module.sletat.ru/Main.svc/GetCities'. $this->login_params .'&countryId='. $countryId;
 			$result = $this->sendRequest();
@@ -185,10 +202,10 @@ class Sletat{
      */
     public function GetHotels($countryId, $towns = '', $stars = '', $filter = '')
     {
-        $this->url = 'http://module.sletat.ru/Main.svc/GetCities'. $this->login_params .'&countryId='. $countryId
+        $this->url = 'http://module.sletat.ru/Main.svc/GetHotels'. $this->login_params .'&countryId='. $countryId
             .'&towns'. $towns .'&stars'. $stars .'&filter'. $filter .'&all=-1';
         $result = $this->sendRequest();
-        return collect($result->GetCitiesResult->Data);
+        return collect($result->GetHotelsResult->Data);
     }
 
     /**
@@ -322,6 +339,9 @@ class Sletat{
 		$addict_params['s_adults'] = $request->get('s_adults', 2);
 		$addict_params['s_kids'] = $request->get('s_kids');
 		$addict_params['stars'] = $request->get('stars');
+		$addict_params['hotels'] = $request->get('hotels');
+		$addict_params['cities'] = $request->get('cities');
+		$addict_params['meals'] = $request->get('meals');
 		$pageNumber = $request->get('pageNumber', 1);
 
 		$this->url = 'http://module.sletat.ru/Main.svc/GetTours'. $this->login_params .'&countryId='. $countryId

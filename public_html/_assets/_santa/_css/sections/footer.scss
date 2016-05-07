@@ -45,9 +45,18 @@ footer{
 	  float: left;
 	  margin-right: 15px;
 	  margin-bottom: 30px;
-	  @media (max-width: 768px) {
-		float: none;
-		display: block;
+	  @media (min-width: 768px) {
+		@media (max-width: 990px) {
+		  font-size: 60px;
+		  margin-bottom: 90px;
+		}
+	  }
+	}
+	@media (min-width: 768px) {
+	  @media (max-width: 990px) {
+		p.h1{
+		  margin-bottom: 15px;
+		}
 	  }
 	}
   }
@@ -87,11 +96,23 @@ footer{
 	  float: left;
 	  margin-right: 15px;
 	  margin-bottom: 30px;
+	  @media (min-width: 768px) {
+		@media (max-width: 990px) {
+			display: none;
+		}
+	  }
 	}
 	.h2{
 	  font-size: 27px;
 	  @media (max-width: 500px) {
 		font-size: 24px;
+	  }
+	}
+	@media (min-width: 768px) {
+	  @media (max-width: 990px) {
+		.h1{
+		  margin-bottom: 15px;
+		}
 	  }
 	}
   }

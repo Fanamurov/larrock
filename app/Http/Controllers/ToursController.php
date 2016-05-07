@@ -29,9 +29,6 @@ class ToursController extends Controller
 		{
 			$breadcrumbs->push('Каталог туров', '/tours/all');
 		});
-
-        /* Краткая форма поиска от sletat */
-        \View::share('SearchFormShort', $sletat->getSearchForm());
 	}
 
 	public function getAllTours(Request $request)
@@ -44,7 +41,6 @@ class ToursController extends Controller
 
 		$data['data'] = Cache::remember('gettours_all', 60, function()
 		{
-			//Основной запрос для вывода
 			return Tours::all();
 		});
 		foreach($data['data'] as $key => $value){

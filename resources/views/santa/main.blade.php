@@ -8,6 +8,7 @@
         @include('santa.sections.tabsWhiteLabel')
         <section id="right_colomn" class="col-xs-24 col-sm-8 col-md-7">
             <div class="col-xs-24">
+                @include('santa.modules.forms.subscribe')
                 @yield('rightColomn')
                 @include('santa.modules.list.vidy')
                 @if(isset($module_strany))
@@ -20,10 +21,12 @@
                 @include('santa.errors')
                 @yield('content')
             </div>
-            <div class="content_bottom-sharing">
+            <div class="col-xs-24 content_bottom-sharing">
                 <span>Поделитесь материалом с друзьями:</span> @include('santa.modules.share.sharing')
             </div>
-            @yield('contentBottom')
+            <div class="col-xs-24 block-contentBottom">
+                @yield('contentBottom')
+            </div>
         </div>
     </section>
 </div>

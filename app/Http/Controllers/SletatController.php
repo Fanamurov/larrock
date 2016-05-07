@@ -3,13 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use App\Models\Tours;
 use Breadcrumbs;
 use Illuminate\Http\Request;
 use GuzzleHttp;
 use App\Helpers\Sletat;
 
-/* DOCS: http://wiki.sletat.ru/w/Шлюз_поиска_туров_(json) */
 class SletatController extends Controller
 {
 	protected $url = 'http://module.sletat.ru/Main.svc';

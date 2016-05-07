@@ -11,7 +11,7 @@ header{
 	  color: black;
 	  font-size: 34px;
       font-weight: 300;
-	  @media (max-width: 768px) {
+	  @media (max-width: 990px) {
 		display: none;
 	  }
 	}
@@ -52,6 +52,14 @@ header{
 	  .phone{
 		font-size: 25px;
 	  }
+	}
+  }
+
+  .menu_mobile{
+	.btn.btn-primary{
+	  background: white;
+	  border-color: #d5d5d5;
+	  color: black;
 	}
   }
 
@@ -117,7 +125,7 @@ header{
 	  margin-bottom: 0;
 	  li{
 		padding: 0 16px;
-		@media (max-width: 768px) {
+		@media (max-width: 990px) {
 		  padding: 0 1px;
 		}
 		&.active{
@@ -127,6 +135,25 @@ header{
 		  }
 		}
 	  }
+	}
+  }
+}
+
+body{
+  @media (min-width: 650px) {
+	.btn.btn-default.show-mobile-menu{
+	  display: none;
+	}
+  }
+  .menu_mobile{
+	display: none;
+  }
+  &.mainpage {
+	.btn.btn-default.show-mobile-menu{
+	  display: none;
+	}
+	.menu_mobile {
+	  display: block;
 	}
   }
 }

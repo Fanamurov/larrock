@@ -9,7 +9,7 @@
                 <ul class="list-unstyled list-inline">
                     @foreach($categorys as $category_value)
                         <li @if($category_value->id === $category->id) class="active" @endif>
-                            <a href="/blog/{{ $category_value->url }}">{{ $category_value->title }}</a>
+                            <a href="/blog/{{ $category_value->url }}">{{ $category_value->title }} ({{count($category_value->get_blogActive)}})</a>
                         </li>
                     @endforeach
                 </ul>

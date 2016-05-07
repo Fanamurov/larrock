@@ -70,13 +70,38 @@ class BeforeLoaderModulesGlobal
 			$menu->url('/page/oplata-on-layn', 'Оплата он-лайн');
 		});
 
+		$menu_mobile = Cache::remember('menu_mobile', 60*24, function() use ($module_strany, $module_vidy) {
+			//Меню для мобильных
+			$menu_mobile['countries'] = [];
+			foreach ($module_strany as $item){
+				$menu_mobile['countries'][$item->title] = $item->url;
+			}
+			$menu_mobile['vidy'] = [];
+			foreach($module_vidy as $key => $item){
+				$menu_mobile['vidy'][$item->title] = $item->url;
+			}
+			$menu_mobile['uslugi'] = [];
+			$menu_mobile['uslugi']['Тур на заказ'] = '/page/tur-na-zakaz';
+			$menu_mobile['uslugi']['Карта клиента'] = '/page/karta-klienta';
+			$menu_mobile['uslugi']['Подарочные сертификаты'] = '/page/podarochnye-sertifikaty';
+			$menu_mobile['uslugi']['Корпоративное обслуживание'] = '/page/korporativnoe-obsluzhivanie';
+			$menu_mobile['uslugi']['Визовая поддержка'] = '/visovaya-podderjka';
+
+			$menu_mobile['other'] = [];
+			$menu_mobile['other']['Блог'] = '/blog';
+			$menu_mobile['other']['Отзывы'] = '/otzyvy';
+			$menu_mobile['other']['Контакты'] = '/page/kontakty';
+			return $menu_mobile;
+		});
+		View::share('menu_mobile', $menu_mobile);
+
 		$sletat = new Sletat();
 		$getFullSearchForm = $sletat->getFullSearchForm($request);
 		View::share('GetDepartCities', $getFullSearchForm['GetDepartCities']);
 		View::share('GetCountries', $getFullSearchForm['GetCountries']);
 
 		//Форма поиска туров по сайту
-		$siteSearch = Cache::remember('siteSearch-form', 60, function() {
+		$siteSearch = Cache::remember('siteSearch-form', 60*24, function() {
 			$siteSearch['countries'] = Category::whereType('tours')->whereActive(1)->whereParent(308)->get(['title','id']);
 			$siteSearch['resorts'] = Category::whereType('tours')->whereActive(1)->where('parent', '!=', 308)->where('parent', '!=', 377)->where('parent', '!=', 0)->get(['title','id']);
 			$siteSearch['vidy'] = Category::whereType('tours')->whereActive(1)->whereParent(377)->get(['title','id']);

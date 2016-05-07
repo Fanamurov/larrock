@@ -7,7 +7,7 @@
 	background: white;
 	padding: 10px 15px;
 	margin-bottom: 10px;
-	@media (max-width: 500px) {
+	@media (max-width: 990px) {
 	  margin-bottom: 10px;
 	}
 	border-radius: 0 5px 5px 5px;
@@ -21,14 +21,14 @@
   .form-searchTourShort,
   .form-siteSearch{
 	margin-bottom: 0;
-	@media (max-width: 768px) {
+	@media (max-width: 990px) {
 	  .form-group{
 		margin-bottom: 0;
 	  }
 	}
 	.btn-block{
 	  margin-top: 22px;
-	  @media (max-width: 768px) {
+	  @media (max-width: 990px) {
 		margin-top: 15px;
 	  }
 	}
@@ -41,7 +41,7 @@
 		background: linear-gradient(180deg,#fff 0,#f1f1f1 22%,#fff 78%,#f1f1f1);
 		margin-right: 4px;
 		text-decoration: none;
-		@media (max-width: 768px) {
+		@media (max-width: 990px) {
 		  font-size: 15px;
 		  padding: 8px 10px;
 		}

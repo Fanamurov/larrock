@@ -1,4 +1,4 @@
-<div class="panel-group block-module_listStrany hidden-xs hidden-sm" id="accordion_listStrany" role="tablist" aria-multiselectable="true">
+<div class="panel-group block-module_listStrany hidden-xs" id="accordion_listStrany" role="tablist" aria-multiselectable="true">
     @foreach($module_strany as $item)
         <div class="panel panel-default">
             <div class="panel-heading" role="tab" id="heading{{ $item->id }}">

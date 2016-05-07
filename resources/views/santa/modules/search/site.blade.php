@@ -2,8 +2,8 @@
     <p class="h3 block-title">Индивидуальные туры</p>
     @foreach($siteSearch['categories'] as $country)
         <div class="block-searchSiteTours-item link_block">
-            @if($country->getFirstMediaUrl('images'))
-                <img class="all-width" src="{{ $country->getFirstMediaUrl('images') }}">
+            @if($country->getFirstMediaUrl('images', '250x250'))
+                <img class="all-width" src="{{ $country->getFirstMediaUrl('images', '250x250') }}">
             @endif
             <p class="h3"><a href="/tours/strany/{{ $country->url }}">{{ $country->title }}</a></p>
             <p>{!! mb_strimwidth($country->short, 0, 200, '...') !!}</p>
@@ -14,8 +14,8 @@
         @endif
         @foreach($country->get_toursActive as $tour)
             <div class="block-searchSiteTours-item link_block">
-                @if($tour->getFirstMediaUrl('images'))
-                    <img class="all-width" src="{{ $tour->getFirstMediaUrl('images') }}">
+                @if($tour->getFirstMediaUrl('images', '250x250'))
+                    <img class="all-width" src="{{ $tour->getFirstMediaUrl('images', '250x250') }}">
                 @endif
                 <p class="h4"><a href="/tours/strany/{{ $country->url }}/{{ $tour->url }}">{{ $tour->title }}</a></p>
             </div>
@@ -26,16 +26,16 @@
         @endif
         @foreach($country->get_childActive as $resort)
             <div class="block-searchSiteTours-item link_block">
-                @if($resort->getFirstMediaUrl('images'))
-                    <img class="all-width" src="{{ $resort->getFirstMediaUrl('images') }}">
+                @if($resort->getFirstMediaUrl('images', '250x250'))
+                    <img class="all-width" src="{{ $resort->getFirstMediaUrl('images', '250x250') }}">
                 @endif
                 <p class="h4"><a href="/tours/strany/{{ $resort->url }}">{{ $resort->title }}</a></p>
             </div>
 
             @foreach($resort->get_toursActive as $tour)
                 <div class="block-searchSiteTours-item link_block">
-                    @if($tour->getFirstMediaUrl('images'))
-                        <img class="all-width" src="{{ $tour->getFirstMediaUrl('images') }}">
+                    @if($tour->getFirstMediaUrl('images', '250x250'))
+                        <img class="all-width" src="{{ $tour->getFirstMediaUrl('images', '250x250') }}">
                     @endif
                     <p class="h4"><a href="/tours/strany/{{ $country->url }}/{{ $resort->url }}/{{ $tour->url }}">{{ $tour->title }}</a></p>
                 </div>

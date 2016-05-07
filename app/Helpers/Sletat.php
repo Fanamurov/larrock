@@ -291,7 +291,7 @@ class Sletat{
 	{
 		$this->url = 'http://module.sletat.ru/Main.svc/GetTours'. $this->login_params .'&countryId='. $countryId
 			.'&cityFromId='. $cityFromId .'&s_hotelIsNotInStop=true&s_hasTickets=true&s_ticketsIncluded=true'
-			.'&updateResult=0&includeDescriptions=1&includeOilTaxesAndVisa=0&pageSize='. $pageSize .'&pageNumber=1&groupBy=ht_minhotelprices';
+			.'&updateResult=0&includeDescriptions=1&includeOilTaxesAndVisa=0&pageSize='. $pageSize .'&pageNumber=1';
 		foreach ($addict_params as $key => $item){
 			$this->url .= '&'.$key .'='. $item;
 		}
@@ -326,7 +326,7 @@ class Sletat{
 
 		$this->url = 'http://module.sletat.ru/Main.svc/GetTours'. $this->login_params .'&countryId='. $countryId
 			.'&cityFromId='. $cityFromId .'&s_hotelIsNotInStop=true&s_hasTickets=true&s_ticketsIncluded=true'
-			.'&updateResult=1&includeDescriptions=1&includeOilTaxesAndVisa=1&groupBy=hotel'
+			.'&updateResult=1&includeDescriptions=1&includeOilTaxesAndVisa=1'
 			.'&pageSize='. $pageSize .'&pageNumber='. $pageNumber .'&requestId='. $requestId;
 		foreach ($addict_params as $key => $item){
 			$this->url .= '&'.$key .'='. $item;

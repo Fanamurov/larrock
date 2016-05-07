@@ -8,7 +8,7 @@ var project = 'santa-avia'; //Название проекта
 
 var gulp = require('gulp');
 var sass = require('gulp-sass');
-//var csso = require('gulp-csso');
+var csso = require('gulp-csso');
 var nano = require('gulp-cssnano');
 var autoprefixer = require('gulp-autoprefixer');
 var bless = require('gulp-bless');
@@ -46,7 +46,8 @@ gulp.task('sass', function () {
             cascade: true
         }))
         .pipe(bless())
-        .pipe(nano())
+        .pipe(csso())
+        //.pipe(nano())
         //.pipe(sourcemaps.write('./maps'))
         .pipe(rename({suffix: '.min'} ))
         .pipe(concat('front.min.css'))
@@ -143,7 +144,7 @@ gulp.task('imagemin', function () {
         .pipe(imagemin({
             progressive: true,
             svgoPlugins: [{removeViewBox: false}],
-            optimizationLevel: 3,
+            optimizationLevel: 4,
             use: [pngquant()]
         }))
         .pipe(gulp.dest('./public_html/media/'));

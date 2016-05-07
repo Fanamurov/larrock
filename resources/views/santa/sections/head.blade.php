@@ -33,17 +33,11 @@
 
     <link rel="stylesheet" href="{{asset('_assets/_santa/_css/min/bootstrap.min.css')}}"/>
     <link rel="stylesheet" href="{{asset('_assets/_santa/_css/min/front.min.css')}}"/>
-    <link rel="stylesheet" href="/_assets/bower_components/selectize/dist/css/selectize.bootstrap3.css"/>
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,700|Open+Sans+Condensed:300,700|Lobster&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
     @yield('styles')
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-    @if(App::environment() === 'local')
-        <script src="{{asset('_assets/_admin/_js/jquery-1.11.1.min.js')}}"></script>
-    @else
-        <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
-    @endif
 </head>

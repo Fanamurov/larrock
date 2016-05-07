@@ -28,21 +28,21 @@ class MainpageController extends Controller
         $list_news = Cache::remember('list_news_mainpage', 60*24, function() {
             $data = News::whereActive(1)->with(['get_category'])->orderBy('updated_at', 'desc')->take(6)->get();
 			foreach($data as $key => $value){
-				$data[$key]['image'] = $value->getFirstMediaUrl('images');
+				$data[$key]['image'] = $value->getFirstMediaUrl('images', '250x250');
 			}
 			return $data;
         });
         $list_blog = Cache::remember('list_blog_mainpage', 60*24, function() {
 			$data = Blog::whereActive(1)->with(['get_category'])->orderBy('updated_at', 'desc')->take(6)->get();
 			foreach($data as $key => $value){
-				$data[$key]['image'] = $value->getFirstMediaUrl('images');
+				$data[$key]['image'] = $value->getFirstMediaUrl('images', '250x250');
 			}
 			return $data;
         });
 		$list_tours = Cache::remember('list_tours_mainpage', 60*24, function() {
 			$data = Tours::whereActive(1)->with(['get_category'])->orderBy('updated_at', 'desc')->take(6)->get();
 			foreach($data as $key => $value){
-				$data[$key]['image'] = $value->getFirstMediaUrl('images');
+				$data[$key]['image'] = $value->getFirstMediaUrl('images', '250x250');
 			}
 			return $data;
 		});

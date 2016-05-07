@@ -22,6 +22,10 @@ class Tours extends Model implements HasMediaConversions
         $this->addMediaConversion('140x140')
             ->setManipulations(['w' => 140, 'h' => 140])
             ->performOnCollections('images');
+
+        $this->addMediaConversion('250x250')
+            ->setManipulations(['w' => 250, 'h' => 250])
+            ->performOnCollections('images');
     }
 
 	// no need for this, but you can define default searchable columns:

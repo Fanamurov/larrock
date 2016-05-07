@@ -1,3 +1,8 @@
+@if(App::environment() === 'local')
+    <script src="{{asset('_assets/_admin/_js/jquery-1.11.1.min.js')}}"></script>
+@else
+    <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+@endif
 <!-- Mainly scripts -->
 <script src="{{asset('_assets/_santa/_js/bootstrap.min.js')}}"></script>
 <script src="/_assets/bower_components/selectize/dist/js/standalone/selectize.min.js"></script>

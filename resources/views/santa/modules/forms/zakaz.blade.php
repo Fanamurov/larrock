@@ -1,4 +1,4 @@
-<div class="row row-zakazTura" id="row-zakazTura">
+<div class="row row-zakazTura col-xs-24" id="row-zakazTura">
     <div class="col-sm-12">
         <form id="form-zakaz" class="form-zakaz" method="post" action="/forms/zakazTura">
             <p class="h1">Заказ тура</p>
@@ -27,7 +27,7 @@
             <div class="clearfix"></div>
             <br/>
             <p>Так же вы можете заказать тур
-                по телефону: (4212) 45-45-46
+                по телефону: <a href="tel:84212454546">(4212) 45-45-46</a>
                 или заказать <a href="/page/kontakty/">у нас в офисе</a></p>
         </form>
     </div>

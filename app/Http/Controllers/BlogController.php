@@ -6,6 +6,7 @@ use App\Helpers\Sletat;
 use App\Models\Blog;
 use App\Models\Category;
 use App\Models\Feed;
+use Breadcrumbs;
 use Cache;
 use Illuminate\Http\Request;
 
@@ -16,6 +17,11 @@ class BlogController extends Controller
 	public function __construct(Sletat $sletat)
 	{
 		$this->middleware('loaderModules');
+
+        Breadcrumbs::register('blog.index', function($breadcrumbs)
+        {
+            $breadcrumbs->push('Блог', '/blog');
+        });
 	}
 	
     public function index()
@@ -25,7 +31,6 @@ class BlogController extends Controller
 			$data['data'] = Blog::whereActive(1)->with('get_category')->orderBy('updated_at', 'desc')->paginate(15);
 			return $data;
 		});
-
 
 		return view('santa.blog.index', $data);
 	}
@@ -38,6 +43,13 @@ class BlogController extends Controller
 			$data['data'] = Blog::whereActive(1)->whereCategory($data['category']->id)->orderBy('updated_at', 'desc')->paginate(15);
 			return $data;
 		});
+
+        Breadcrumbs::register('blog.category', function($breadcrumbs) use ($data)
+        {
+            $breadcrumbs->parent('blog.index');
+            $breadcrumbs->push($data['category']->title);
+        });
+
 		return view('santa.blog.category', $data);
 	}
 
@@ -49,6 +61,13 @@ class BlogController extends Controller
 			$data['categorys'] = Category::whereType('blog')->whereActive(1)->whereLevel(1)->with(['get_blogActive'])->get();
 			return $data;
 		});
+
+        Breadcrumbs::register('blog.item', function($breadcrumbs) use ($data)
+        {
+            $breadcrumbs->parent('blog.index');
+            $breadcrumbs->push($data['category']->title, '/blog/'. $data['category']->url);
+
+        });
 
 		if(\View::exists('santa.blog.'. $item)){
 			return view('santa.blog.'. $item, $data);

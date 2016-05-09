@@ -68,6 +68,17 @@ body.page, body.page, body.blog{
   }
 }
 
+@media (max-width: 990px){
+  .categoryImage-empty{
+    display: none;
+  }
+}
+@media (max-width: 550px){
+  .carousel-control{
+    display: none;
+  }
+}
+
 label.error{
   font-weight: 500;
   color: red;

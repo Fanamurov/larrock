@@ -15,7 +15,7 @@
         <h1 class="text-center h3">Подбор пакетного тура</h1>
         <form id="form-searchTourShort" class="form-searchTour form-searchTourShort" method="get" action="">
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-xs-12 col-md-8">
                     <div class="form-group">
                         <label class="control-label" for="form-searchTour-cityFromId">Откуда:</label>
                         <select name="cityFromId" class="form-control" id="form-searchTour-cityFromId">
@@ -25,7 +25,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-md-8">
+                <div class="col-xs-12 col-md-8">
                     <div class="form-group">
                         <label class="control-label" for="form-searchTour-countryId">Куда:</label>
                         <select name="countryId" class="form-control" id="form-searchTour-countryId">
@@ -35,16 +35,17 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-md-8">
+                <div class="col-xs-24 col-md-8">
                     <div class="form-group">
                         <label class="control-label" for="form-searchTour-date-int">Интервал дат вылета:</label>
                         <input type="text" name="date-int" class="form-control daterange" id="form-searchTour-date-int" value="{{ Input::get('date-int') }}">
                     </div>
                 </div>
             </div>
+            <div class="clearfix"></div>
 
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-xs-12 col-md-4">
                     <div class="form-group">
                         <label class="control-label" for="form-searchTour-s_adults">Взрослых:</label>
                         <select name="s_adults" class="form-control" id="form-searchTour-s_adults">
@@ -56,7 +57,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-xs-12 col-md-4">
                     <div class="form-group">
                         <label class="control-label" for="form-searchTour-s_kids">Детей:</label>
                         <select name="s_kids" class="form-control" id="form-searchTour-s_kids">
@@ -69,20 +70,20 @@
                     </div>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-xs-12 col-md-4">
                     <div class="form-group">
                         <label class="control-label" for="form-searchTour-s_priceMin">Цена от:</label>
                         <input type="text" name="s_priceMin" value="{{ Input::get('s_priceMin') }}" placeholder="любая" id="form-searchTour-s_priceMin" class="form-control">
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-xs-12 col-md-4">
                     <div class="form-group">
                         <label class="control-label" for="form-searchTour-s_priceMax">Цена до:</label>
                         <input type="text" name="s_priceMax" value="{{ Input::get('s_priceMax') }}" placeholder="любая" id="form-searchTour-s_priceMax" class="form-control">
                     </div>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-xs-12 col-md-4">
                     <div class="form-group">
                         <label class="control-label" for="form-searchTour-s_nightsMin">Ночей от:</label>
                         <select name="s_nightsMin" class="form-control" id="form-searchTour-s_nightsMin">
@@ -92,7 +93,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-xs-12 col-md-4">
                     <div class="form-group">
                         <label class="control-label" for="form-searchTour-s_nightsMax">Ночей до:</label>
                         <select name="s_nightsMax" class="form-control" id="form-searchTour-s_nightsMax">
@@ -103,9 +104,10 @@
                     </div>
                 </div>
             </div>
+            <div class="clearfix"></div>
 
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-xs-12 col-md-8">
                     <div class="form-group">
                         <label class="control-label" for="form-searchTour-cities">Курорт:</label>
                         <select name="cities" class="form-control chosen-select" id="form-searchTour-cities" data-placeholder="Выберите курорты..." multiple>
@@ -117,7 +119,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-md-8">
+                <div class="col-xs-12 col-md-8">
                     <div class="form-group">
                         <label class="control-label" for="form-searchTour-hotels">Отель:</label>
                         <select name="hotels" class="form-control chosen-select" id="form-searchTour-hotels" data-placeholder="Выберите отели..." multiple>
@@ -129,18 +131,18 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-xs-12 col-md-4">
                     <div class="form-group">
                         <label class="control-label" for="form-searchTour-meals">Тип питания:</label>
                         <select name="meals" class="form-control" id="form-searchTour-meals">
-                            <option value="">любая</option>
+                            <option value="">любой</option>
                             @foreach($GetMeals as $item)
                                 <option @if(Input::get('meals') == $item->Id) selected @endif value="{{ $item->Id }}">{{ $item->Name }}</option>
                             @endforeach
                         </select>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-xs-12 col-md-4">
                     <div class="form-group">
                         <label class="control-label" for="form-searchTour-stars">Звездность:</label>
                         <select name="stars" class="form-control" id="form-searchTour-stars">
@@ -152,6 +154,7 @@
                     </div>
                 </div>
             </div>
+            <div class="clearfix"></div>
 
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <button type="submit" class="btn btn-default btn-block">Найти</button>
@@ -172,10 +175,10 @@
     </div>
 @endsection
 
-@section('scripts')
+@push('scripts')
     <script>
         $(document).ready(function(){
             GetLoadState({{ $GetTours['requestId'] }}, 20);
         });
     </script>
-@endsection
+@endpush

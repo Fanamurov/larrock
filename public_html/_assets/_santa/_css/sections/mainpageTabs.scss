@@ -1,3 +1,11 @@
+body.mainpage{
+  .mainpage_tabs{
+    display: block !important;
+    @media (max-width: 550px) {
+      padding-top: 20px;
+    }
+  }
+}
 .mainpage_tabs{
   padding-left: 0;
   padding-right: 1px;
@@ -36,6 +44,9 @@
   .nav-tabs{
 	border-bottom: none;
 	li{
+      @media (max-width: 550px) {
+        width: 50%;
+      }
 	  a{
 		font-size: 17px;
 		background: linear-gradient(180deg,#fff 0,#f1f1f1 22%,#fff 78%,#f1f1f1);
@@ -45,6 +56,9 @@
 		  font-size: 15px;
 		  padding: 8px 10px;
 		}
+        @media (max-width: 550px) {
+          text-align: center;
+        }
 	  }
 	  &.active{
 		a{

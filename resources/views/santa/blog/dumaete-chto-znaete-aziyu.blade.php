@@ -4,7 +4,9 @@
 @section('content')
     <div class="pageBlogItem">
         <div class="page-{{ $data->url }}">
-            <h1>{{ $data->title }}</h1>
+            <div class="col-xs-24">
+                {!! Breadcrumbs::render('blog.item', $data) !!}
+            </div>
             <div class="blog-categorys">
                 <ul class="list-unstyled list-inline">
                     @foreach($categorys as $category_value)

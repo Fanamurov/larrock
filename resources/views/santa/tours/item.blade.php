@@ -55,7 +55,7 @@
         <div class="row-btn-group">
             <div class="btn-group" role="group">
                 <button type="button" class="btn btn-default">Забронировать по тел:<br/>+7 (4212) 45-45-46</button>
-                <a href="#uptocall" class="btn btn-default">Заказать звонок</a>
+                <a href="#uptocall" class="btn btn-default btn-uptocall">Заказать звонок</a>
                 <a href="#form-zakaz" role="button" class="btn btn-default">Заказать тур</a>
             </div>
         </div>

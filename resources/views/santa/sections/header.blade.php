@@ -40,7 +40,7 @@
             </div>
             <div class="form-group">
                 @foreach($menu_mobile['other'] as $key => $item)
-                    <button type="button" class="btn btn-primary btn-block" data-value="{{ $item }}">{{ $key }}</button>
+                    <button type="button" class="btn btn-primary col-xs-8" data-value="{{ $item }}">{{ $key }}</button>
                 @endforeach
             </div>
         </form>

@@ -17,7 +17,7 @@ header{
 	}
   }
   @media (max-width: 500px) {
-	background: white;
+	background: #E6E6E6;
 	.logo{
 	  max-width: 150%;
 	  width: 150%;
@@ -60,7 +60,18 @@ header{
 	  background: white;
 	  border-color: #d5d5d5;
 	  color: black;
+      margin-bottom: 14px;
+      padding: 10px 12px;
+      font-size: 15px;
 	}
+    .form-group {
+      margin-bottom: 12px;
+      select{
+        height: 40px;
+        color: black;
+        font-size: 15px;
+      }
+    }
   }
 
   .div-menu{
@@ -152,8 +163,10 @@ body{
 	.btn.btn-default.show-mobile-menu{
 	  display: none;
 	}
-	.menu_mobile {
-	  display: block;
-	}
+    @media (max-width: 550px) {
+      .menu_mobile {
+        display: block;
+      }
+    }
   }
 }

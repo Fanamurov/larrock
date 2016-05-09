@@ -30,7 +30,7 @@
         </div>
     </section>
 </div>
-<footer>
+<footer class="container">
     @include('santa.sections.footer')
     @yield('footer')
 </footer>

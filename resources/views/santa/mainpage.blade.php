@@ -16,7 +16,7 @@
                 @include('santa.modules.list.vidy')
             </div>
         </section>
-        <div class="col-xs-24 col-md-17">
+        <div class="col-xs-24 col-sm-16 col-md-17">
             <div class="col-xs-24">
                 @include('santa.errors')
                 @include('santa.modules.slideshow.mainpage', $slideshow)
@@ -54,7 +54,7 @@
         </div>
     </section>
 </div>
-<footer>
+<footer class="container">
     @include('santa.sections.footer')
     @yield('footer')
 </footer>

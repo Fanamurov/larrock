@@ -175,7 +175,7 @@ return [
         /* https://packagist.org/packages/proengsoft/laravel-jsvalidation */
         Proengsoft\JsValidation\JsValidationServiceProvider::class,
 
-        /* https://packagist.org/packages/roumen/sitemap :: Generate sitenap.xml */
+        /* https://packagist.org/packages/roumen/sitemap :: Generate sitemap.xml */
         //Roumen\Sitemap\SitemapServiceProvider::class,
 
         /* https://packagist.org/packages/gloudemans/shoppingcart :: Корзина для каталога */

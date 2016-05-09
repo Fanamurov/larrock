@@ -5,7 +5,7 @@
 <div class="container container-body">
     @include('santa.sections.header')
     <section class="row" id="content">
-        <section id="right_colomn" class="col-xs-24 col-sm-8 col-md-7">
+        <section id="right_colomn" class="hidden-xs hidden-sm col-md-7">
             <div class="col-xs-24">
                 @if(isset($siteSearch) && is_array($siteSearch))
                     @include('santa.modules.search.site')
@@ -14,7 +14,7 @@
                 @include('santa.modules.list.vidy')
             </div>
         </section>
-        <div class="col-xs-24 col-sm-16 col-md-17">
+        <div class="col-xs-24 col-md-17">
             <div class="col-xs-24 content-padding">
                 @include('santa.errors')
                 @yield('content')
@@ -26,10 +26,11 @@
         </div>
     </section>
 </div>
-<footer>
+<footer class="container">
     @include('santa.sections.footer')
     @yield('footer')
 </footer>
 @include('santa.sections.bottomScripts')
+@stack('scripts')
 </body>
 </html>

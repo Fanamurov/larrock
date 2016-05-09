@@ -41,35 +41,34 @@ class Sletat{
 
     public function getFullSearchForm(Request $request)
     {
-        //Cache::flush();
         $data['GetDepartCities'] = Cache::remember('GetDepartCities', 60, function() {
             return $this->GetDepartCities();
         });
         $data['GetCountries'] = Cache::remember('GetCountries', 60, function() use ($data){
             return $this->GetCountries($data['GetDepartCities']->first()->Id);
         });
-        $data['GetCities'] = Cache::remember('GetCities'. $request->get('countryId'), 60, function() use ($request) {
-            return $this->GetCities($request->get('countryId'));
-        });
-		//Cache::forget('GetHotels_'. $request->get('countryId', $data['GetCountries']->first()->Id));
-        $data['GetHotels'] = Cache::remember('GetHotels_'. $request->get('countryId', $data['GetCountries']->first()->Id), 60, function() use ($data, $request) {
-			$townIds = '';
-			foreach($data['GetCities'] as $key => $item){
-				if($key !== 0){
-					$townIds = ',';
-				}
-				$townIds .= $item->Id;
-			}
-            return $this->GetHotels($request->get('countryId', $data['GetCountries']->first()->Id), $townIds);
-        });
-		$data['GetStars'] = Cache::remember('GetStars', 60*24, function() use ($data) {
-			return $this->GetHotelStars(29, '372,1592,1642');
-		});
-		$data['GetMeals'] = Cache::remember('GetMeals', 60*24, function() use ($data) {
-			return $this->GetMeals();
-		});
 
 		if($request->has('cityFromId')){
+            $data['GetCities'] = Cache::remember('GetCities'. $request->get('countryId'), 60, function() use ($request) {
+                return $this->GetCities($request->get('countryId'));
+            });
+            $data['GetHotels'] = Cache::remember('GetHotels_'. $request->get('countryId', $data['GetCountries']->first()->Id), 60, function() use ($data, $request) {
+                $townIds = '';
+                foreach($data['GetCities'] as $key => $item){
+                    if($key !== 0){
+                        $townIds = ',';
+                    }
+                    $townIds .= $item->Id;
+                }
+                return $this->GetHotels($request->get('countryId', $data['GetCountries']->first()->Id), $townIds);
+            });
+            $data['GetStars'] = Cache::remember('GetStars', 60*24, function() use ($data) {
+                return $this->GetHotelStars(29, '372,1592,1642');
+            });
+            $data['GetMeals'] = Cache::remember('GetMeals', 60*24, function() use ($data) {
+                return $this->GetMeals();
+            });
+            
 			$key_cache = '';
 			foreach ($request->all() as $value){
 				$key_cache .= $value;

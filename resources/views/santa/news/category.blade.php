@@ -3,9 +3,11 @@
 
 @section('content')
     <div class="pageBlogCategory">
-        <h1>{{ $category->title }}</h1>
+        <div class="col-xs-24">
+            {!! Breadcrumbs::render('news.index', $data) !!}
+        </div>
         @foreach($data as $item)
-            <div class="pageBlogCategory-item row">
+            <div class="pageBlogCategory-item row col-xs-24">
                 <div class="col-sm-4">
                     @if($item->getFirstMediaUrl('images', '110x110'))
                         <img src="{{ $item->getFirstMediaUrl('images', '110x110') }}" alt="{{ $item->title }}">
@@ -19,4 +21,8 @@
         @endforeach
         {!! $data->render() !!}
     </div>
+@endsection
+
+@section('contentBottom')
+    @include('santa.modules.html.socialGroups')
 @endsection

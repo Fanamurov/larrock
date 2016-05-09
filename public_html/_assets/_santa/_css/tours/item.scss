@@ -40,7 +40,15 @@
 	> *{
 	  width: 33.3333%;
 	  height: 64px;
+      @media (max-width: 500px) {
+        width: 50%;
+      }
 	}
+    @media (max-width: 500px) {
+      .btn-uptocall{
+        display: none;
+      }
+    }
 	a{
 	  padding-top: 19px;
 	}

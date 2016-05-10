@@ -74,7 +74,7 @@ class Sletat{
 				$key_cache .= $value;
 			}
 			$key_cache = sha1($key_cache);
-			$data['GetTours'] = Cache::remember('GetTours'. $key_cache, 60, function() use ($data, $request) {
+			$data['GetTours'] = Cache::remember('GetTours'. $key_cache, 60*12, function() use ($data, $request) {
 				$cityFromId = $request->get('cityFromId', $data['GetDepartCities']->first()->Id);
 				$countryId = $request->get('countryId', $data['GetCountries']->first()->Id);
 				$addict_params = [];
@@ -96,9 +96,13 @@ class Sletat{
 				return $this->GetTours($cityFromId, $countryId, $addict_params);
 			});
 
-			if($data['GetTours']['hotelsCount'] < 1){
-				Cache::forget('GetTours'. $key_cache);
-			}
+            if( !array_key_exists('hotelsCount', $data['GetTours'])){
+                Cache::forget('GetTours'. $key_cache);
+            }else{
+                if($data['GetTours']['hotelsCount'] < 1){
+                    Cache::forget('GetTours'. $key_cache);
+                }
+            }
 		}
 
         return $data;
@@ -126,7 +130,7 @@ class Sletat{
      *
      * @return Collection
      */
-    protected function GetDepartCities()
+    public function GetDepartCities()
     {
 		$GetDepartCities= Cache::rememberForever('GetDepartCities', function() {
 			$this->url = 'http://module.sletat.ru/Main.svc/GetDepartCities'. $this->login_params;

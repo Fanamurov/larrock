@@ -142,6 +142,10 @@ Route::post('/forms/sletatOrderFull', [
 // Authentication routes...
 Route::auth();
 
+Route::get('sitemap.xml', [
+    'as' => 'generate.sitemap', 'uses' => 'SitemapController@index'
+]);
+
 Route::group(['prefix' => 'admin', 'middleware'=>'level:2'], function(){
 	Route::resource('users', 'Admin\AdminUsersController');
 	Route::resource('roles', 'Admin\AdminRolesController');

@@ -176,7 +176,7 @@ return [
         Proengsoft\JsValidation\JsValidationServiceProvider::class,
 
         /* https://packagist.org/packages/roumen/sitemap :: Generate sitemap.xml */
-        //Roumen\Sitemap\SitemapServiceProvider::class,
+        Roumen\Sitemap\SitemapServiceProvider::class,
 
         /* https://packagist.org/packages/gloudemans/shoppingcart :: Корзина для каталога */
         Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,

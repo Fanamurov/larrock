@@ -13,4 +13,6 @@
     <button type="submit" class="btn btn-default pull-right" name="submit_contact">Отправить</button>
     <div class="clearfix"></div>
 </form>
+@push('scripts')
 {!! JsValidator::formRequest('App\Http\Requests\ContactRequest', '#form-contact') !!}
+@endpush

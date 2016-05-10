@@ -9,6 +9,18 @@ $(document).ready(function(){
         notify_show('message', 'Выполняется...');
     });
 
+    var target = $('.btn-show-full-info').attr('data-target');
+    var data = $('#'+target).html();
+    $('.ItemInfo').find('.ibox-content').html(data);
+
+    $('.btn-show-full-info').click(function () {
+        $('.btn-show-full-info').removeClass('active');
+        $(this).addClass('active');
+        var target = $(this).attr('data-target');
+        var data = $('#'+target).html();
+        $('.ItemInfo').find('.ibox-content').html(data);
+    });
+
     var editor_height = 300;
     tinymce.init({
         selector: "textarea:not(.not-editor)",

@@ -34,4 +34,6 @@
         </div>
     </div>
 </form>
+@push('scripts')
 {!! JsValidator::formRequest('App\Http\Requests\SletatOrderShortRequest', '#form-sletatOrderShort') !!}
+@endpush

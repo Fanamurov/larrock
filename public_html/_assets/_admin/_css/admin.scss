@@ -15,6 +15,30 @@ a{
   }
 }
 
+.btn.btn-novoe{
+  font-weight: 300;
+  text-align: left;
+  background-color: #23c6c8;
+  border-color: #23c6c8;
+  border-radius: 0;
+}
+.btn.btn-otrabotano{
+  background-color: #ffffff;
+  border-color: #e4e4e4;
+  color: grey;
+  font-weight: 300;
+  text-align: left;
+}
+.label.label-otrabotano{
+  background-color: #ffffff;
+  border-color: #e4e4e4;
+  color: grey;
+}
+.panel-dashboard-content{
+  padding: 0;
+  margin-bottom: 35px;
+}
+
 .breadcrumb{
   display: inline;
   padding-left: 8px;

@@ -38,4 +38,6 @@
         </ul>
     </div>
 </div>
+@push('scripts')
 {!! JsValidator::formRequest('App\Http\Requests\ZakazSertRequest', '#form-zakazSert') !!}
+@endpush

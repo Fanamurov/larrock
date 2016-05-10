@@ -11,7 +11,7 @@
 @section('contentBottom')
     <div class="row">
         <div class="col-sm-24">
-            @include('santa.modules.forms.zakaz')
+            @include('santa.modules.forms.podbor')
         </div>
     </div>
     <div class="clearfix"></div>

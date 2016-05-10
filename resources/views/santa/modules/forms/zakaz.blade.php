@@ -22,6 +22,10 @@
                 <label for="form-contact-comment" class="control-label">Ваши пожелания:</label>
                 <textarea class="form-control" name="comment" id="form-contact-comment" placeholder="Текст сообщения"></textarea>
             </div>
+            <input type="hidden" name="tour_url" value="{{ URL::full() }}">
+            <input type="hidden" name="tour_name" value="{{ $data->title }}">
+            <input type="hidden" name="tour_id" value="{{ $data->id }}">
+            <input type="hidden" name="tour_type" value="tour">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <button type="submit" class="btn btn-default pull-right" name="submit_zakaz">Заказать тур</button>
             <div class="clearfix"></div>
@@ -81,4 +85,6 @@
         </ul>
     </div>
 </div>
+@push('scripts')
 {!! JsValidator::formRequest('App\Http\Requests\ZakazRequest', '#form-zakaz') !!}
+@endpush

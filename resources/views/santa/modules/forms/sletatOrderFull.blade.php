@@ -6,19 +6,19 @@
             <div class="col-sm-9">
                 <div class="form-group">
                     <label class="control-label" for="form-sletatOrderFull-name">Имя(латиницей):</label>
-                    <input class="form-control" id="form-sletatOrderFull-name" type="text" name="name[]" value="" placeholder="IVAN">
+                    <input class="form-control" id="form-sletatOrderFull-name" type="text" name="firstname[]" value="" placeholder="IVAN">
                 </div>
             </div>
             <div class="col-sm-9">
                 <div class="form-group">
                     <label class="control-label" for="form-sletatOrderFull-name">Фамилия(латиницей):</label>
-                    <input class="form-control" id="form-sletatOrderFull-name" type="text" name="name[]" value="" placeholder="IVANOV">
+                    <input class="form-control" id="form-sletatOrderFull-name" type="text" name="lastname[]" value="" placeholder="IVANOV">
                 </div>
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
                     <label class="control-label" for="form-sletatOrderFull-name">Гражд-во:</label>
-                    <input class="form-control" id="form-sletatOrderFull-name" type="text" name="name[]" value="RU" placeholder="RU">
+                    <input class="form-control" id="form-sletatOrderFull-name" type="text" name="citizenship[]" value="RU" placeholder="RU">
                 </div>
             </div>
             <div class="col-sm-3">
@@ -116,7 +116,15 @@
         <div class="col-sm-12">
             <div class="form-group">
                 <label class="control-label" for="form-sletatOrderFull-passportDate">Кем выдан и когда:</label>
-                <input class="form-control" id="form-sletatOrderFull-passportDate" type="email" name="passportDate" value="">
+                <input class="form-control" id="form-sletatOrderFull-passportDate" type="text" name="passportDate" value="">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-24">
+            <div class="form-group">
+                <label class="control-label" for="form-sletatOrderFull-comment">Комментарий:</label>
+                <textarea class="form-control" id="form-sletatOrderFull-comment" name="comment"></textarea>
             </div>
         </div>
     </div>
@@ -150,4 +158,6 @@
         </div>
     </div>
 </form>
-{!! JsValidator::formRequest('App\Http\Requests\SletatOrderFullRequest', '#form-sletatOrderFull') !!}
+@push('scripts')
+    {!! JsValidator::formRequest('App\Http\Requests\SletatOrderFullRequest', '#form-sletatOrderFull') !!}
+@endpush

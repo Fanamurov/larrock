@@ -443,10 +443,11 @@ class Sletat{
 		$this->url = 'http://module.sletat.ru/Main.svc/SaveTourOrder'. $this->login_params .'&searchRequestId='. $searchRequestId
 		.'&sourceId'. $sourceId .'&offerId'. $offerId .'&user'. $user .'&email'. $email .'&phone'. $phone .'&info'. $info
 			.'&countryName'. $countryName .'&cityFromName'. $cityFromName .'&currencyAlias'. $currencyAlias;
+		return back();
 		dd($this->url);
 		$result = $this->sendRequest();
 		dd($result);
-		return collect($result->HotelInformation->Data);
+		return collect($result->SaveTourOrderResult);
 	}
 
 }

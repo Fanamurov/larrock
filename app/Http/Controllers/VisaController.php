@@ -19,7 +19,7 @@ class VisaController extends Controller
 	
     public function index()
 	{
-		$data= Cache::remember('visa_index', 60*24, function() {
+		$data= Cache::remember('visa_index', 1440, function() {
 			$data['data'] = Visa::whereActive(1)->paginate(30);
 			$data['category'] = Category::whereType('visa')->first();
 			return $data;
@@ -30,7 +30,7 @@ class VisaController extends Controller
 
 	public function getItem($item)
 	{
-		$data = Cache::remember('visa'. $item, 60*24, function() use ($item) {
+		$data = Cache::remember('visa'. $item, 1440, function() use ($item) {
 			$data['data'] = Visa::whereUrl($item)->first();
 			$data['category'] = Category::whereType('visa')->whereActive(1)->whereLevel(1)->with(['get_visaActive'])->first();
 			return $data;

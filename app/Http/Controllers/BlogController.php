@@ -28,7 +28,7 @@ class BlogController extends Controller
     public function index(Request $request)
 	{
 		$page = $request->get('page', 1);
-		$data = Cache::remember('blog_index'.$page, 60*24, function() use ($page) {
+		$data = Cache::remember('blog_index'.$page, 1440, function() use ($page) {
 			$data['category'] = Category::whereType('blog')->whereActive(1)->whereLevel(1)->orderBy('updated_at', 'desc')->with(['get_blogActive'])->get();
 			$data['data'] = Blog::whereActive(1)->with('get_category')->orderBy('updated_at', 'desc')->skip(($page-1)*20)->paginate(15);
 			return $data;
@@ -40,7 +40,7 @@ class BlogController extends Controller
 	public function show(Request $request, $category)
 	{
 		$page = $request->get('page', 1);
-		$data = Cache::remember('blog_'.$category.'_'.$page, 60*24, function() use ($category, $page) {
+		$data = Cache::remember('blog_'.$category.'_'.$page, 1440, function() use ($category, $page) {
 			$data['categorys'] = Category::whereType('blog')->whereActive(1)->whereLevel(1)->orderBy('updated_at', 'desc')->with(['get_blogActive'])->get();
 			$data['category'] = Category::whereUrl($category)->whereActive(1)->with(['get_blogActive'])->first();
 			$data['data'] = Blog::whereActive(1)->whereCategory($data['category']->id)->orderBy('updated_at', 'desc')->skip(($page-1)*20)->paginate(15);
@@ -59,7 +59,7 @@ class BlogController extends Controller
 	public function getItem(ContentPlugins $contentPlugins, $category, $item)
 	{
         Cache::forget(md5('blog_item_'. $item));
-		$data = Cache::remember(md5('blog_item_'. $item), 60*24, function() use ($item, $category, $contentPlugins) {
+		$data = Cache::remember(md5('blog_item_'. $item), 1440, function() use ($item, $category, $contentPlugins) {
 			$data['data'] = Blog::whereUrl($item)->first();
 			$data['category'] = Category::whereUrl($category)->whereActive(1)->first();
 			$data['categorys'] = Category::whereType('blog')->whereActive(1)->whereLevel(1)->with(['get_blogActive'])->get();

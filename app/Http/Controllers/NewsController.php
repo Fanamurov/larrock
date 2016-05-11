@@ -28,7 +28,7 @@ class NewsController extends Controller
 	{
 		$page = $request->get('page', 1);
 		Cache::forget('news_index'.$page);
-		$data = Cache::remember('news_index'.$page, 60*24, function() use ($page) {
+		$data = Cache::remember('news_index'.$page, 1440, function() use ($page) {
 			$data['data'] = News::whereActive(1)->orderBy('updated_at', 'desc')->skip(($page-1)*20)->paginate(20);
 			$data['category'] = Category::whereType('news')->first();
 		    return $data;
@@ -39,7 +39,7 @@ class NewsController extends Controller
 
 	public function getItem(ContentPlugins $contentPlugins, $item)
 	{
-		$data = Cache::remember(md5('news_item'. $item), 60*24, function() use ($item, $contentPlugins) {
+		$data = Cache::remember(md5('news_item'. $item), 1440, function() use ($item, $contentPlugins) {
 			$data['data'] = News::whereUrl($item)->first();
 			$data['category'] = Category::whereType('news')->whereActive(1)->whereLevel(1)->first();
             $data['data']['images'] = $data['data']->getMedia('images');

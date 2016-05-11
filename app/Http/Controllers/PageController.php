@@ -25,7 +25,7 @@ class PageController extends Controller
 
     public function getItem($url, ContentPlugins $contentPlugins)
 	{
-		$data = Cache::remember(md5('page'. $url), 60*24, function() use ($url, $contentPlugins) {
+		$data = Cache::remember(md5('page'. $url), 1440, function() use ($url, $contentPlugins) {
 			$page = Page::whereUrl($url)->with(['get_seo', 'get_templates'])->firstOrFail();
 			$page['images'] = $page->getMedia('images');
 			$page['files'] = $page->getMedia('files');

@@ -25,21 +25,21 @@ class MainpageController extends Controller
 	
     public function index(Request $request, Sletat $sletat)
 	{
-        $list_news = Cache::remember('list_news_mainpage', 60*24, function() {
+        $list_news = Cache::remember('list_news_mainpage', 1440, function() {
             $data = News::whereActive(1)->with(['get_category'])->orderBy('updated_at', 'desc')->take(6)->get();
 			foreach($data as $key => $value){
 				$data[$key]['image'] = $value->getFirstMediaUrl('images', '250x250');
 			}
 			return $data;
         });
-        $list_blog = Cache::remember('list_blog_mainpage', 60*24, function() {
+        $list_blog = Cache::remember('list_blog_mainpage', 1440, function() {
 			$data = Blog::whereActive(1)->with(['get_category'])->orderBy('updated_at', 'desc')->take(6)->get();
 			foreach($data as $key => $value){
 				$data[$key]['image'] = $value->getFirstMediaUrl('images', '250x250');
 			}
 			return $data;
         });
-		$list_tours = Cache::remember('list_tours_mainpage', 60*24, function() {
+		$list_tours = Cache::remember('list_tours_mainpage', 1440, function() {
 			$data = Tours::whereActive(1)->with(['get_category'])->orderBy('updated_at', 'desc')->take(6)->get();
 			foreach($data as $key => $value){
 				$data[$key]['image'] = $value->getFirstMediaUrl('images', '250x250');
@@ -52,7 +52,7 @@ class MainpageController extends Controller
 		View::share('list_tours', $list_tours);
 
         $data['country_id_sletat'] = 29;
-        $data['GetTours'] = Cache::remember('best_cost_mainpage', 60*24, function() use ($sletat) {
+        $data['GetTours'] = Cache::remember('best_cost_mainpage', 1440, function() use ($sletat) {
 			return $sletat->GetTours(1286, 29, [], 8);
 		});
 		if($data['GetTours']['iTotalRecords'] < 1){

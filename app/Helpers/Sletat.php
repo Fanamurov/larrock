@@ -30,10 +30,10 @@ class Sletat{
     public function getSearchForm()
     {
         //Cache::flush();
-        $data['GetDepartCities'] = Cache::remember('GetDepartCities', 60, function() {
+        $data['GetDepartCities'] = Cache::remember('GetDepartCities', 1440, function() {
             return $this->GetDepartCities();
         });
-        $data['GetCountries'] = Cache::remember('GetCountries', 60, function() use ($data) {
+        $data['GetCountries'] = Cache::remember('GetCountries', 1440, function() use ($data) {
             return $this->GetCountries($data['GetDepartCities']->first()->Id);
         });
         return $data;
@@ -41,18 +41,18 @@ class Sletat{
 
     public function getFullSearchForm(Request $request)
     {
-        $data['GetDepartCities'] = Cache::remember('GetDepartCities', 60, function() {
+        $data['GetDepartCities'] = Cache::remember('GetDepartCities', 1440, function() {
             return $this->GetDepartCities();
         });
-        $data['GetCountries'] = Cache::remember('GetCountries', 60, function() use ($data){
+        $data['GetCountries'] = Cache::remember('GetCountries', 1440, function() use ($data){
             return $this->GetCountries($data['GetDepartCities']->first()->Id);
         });
 
 		if($request->has('cityFromId')){
-            $data['GetCities'] = Cache::remember('GetCities'. $request->get('countryId'), 60, function() use ($request) {
+            $data['GetCities'] = Cache::remember('GetCities'. $request->get('countryId'), 1440, function() use ($request) {
                 return $this->GetCities($request->get('countryId'));
             });
-            $data['GetHotels'] = Cache::remember('GetHotels_'. $request->get('countryId', $data['GetCountries']->first()->Id), 60, function() use ($data, $request) {
+            $data['GetHotels'] = Cache::remember('GetHotels_'. $request->get('countryId', $data['GetCountries']->first()->Id), 1440, function() use ($data, $request) {
                 $townIds = '';
                 foreach($data['GetCities'] as $key => $item){
                     if($key !== 0){
@@ -62,10 +62,10 @@ class Sletat{
                 }
                 return $this->GetHotels($request->get('countryId', $data['GetCountries']->first()->Id), $townIds);
             });
-            $data['GetStars'] = Cache::remember('GetStars', 60*24, function() use ($data) {
+            $data['GetStars'] = Cache::remember('GetStars', 1440, function() use ($data) {
                 return $this->GetHotelStars(29, '372,1592,1642');
             });
-            $data['GetMeals'] = Cache::remember('GetMeals', 60*24, function() use ($data) {
+            $data['GetMeals'] = Cache::remember('GetMeals', 1440, function() use ($data) {
                 return $this->GetMeals();
             });
             
@@ -74,7 +74,7 @@ class Sletat{
 				$key_cache .= $value;
 			}
 			$key_cache = sha1($key_cache);
-			$data['GetTours'] = Cache::remember('GetTours'. $key_cache, 60*12, function() use ($data, $request) {
+			$data['GetTours'] = Cache::remember('GetTours'. $key_cache, 600, function() use ($data, $request) {
 				$cityFromId = $request->get('cityFromId', $data['GetDepartCities']->first()->Id);
 				$countryId = $request->get('countryId', $data['GetCountries']->first()->Id);
 				$addict_params = [];

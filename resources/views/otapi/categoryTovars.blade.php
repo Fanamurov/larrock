@@ -11,7 +11,7 @@
         @foreach($GetCategorySearchProperties->SearchPropertyInfoList->Content->Item as $filter)
             <div class="filter-item form-group col-xs-6" title="{{ (string)$filter->Name }}">
                 <select id="filter{{ (string)$filter->Id }}" class="form-control filter-category" name="TTT{{ (string)$filter->Id }}">
-                    <option value="">{{ (string)$filter->Name }}</option>
+                    <option value="">{{ (string)$filter->Name }}: любой</option>
                     @foreach($filter->Values->PropertyValue as $filter_value)
                         <option @if(array_search((string)$filter_value->Id, $selected_filters)) selected @endif
                                 value="{{ (string)$filter_value->Id }}">{{ (string)$filter_value->Name }}</option>

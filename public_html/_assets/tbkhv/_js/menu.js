@@ -89,7 +89,7 @@
 			this.backCtrl = document.createElement('button');
 			this.backCtrl.className = 'menu__back menu__back--hidden';
 			this.backCtrl.setAttribute('aria-label', 'Назад');
-			this.backCtrl.innerHTML = '<span>ВЕРНУТЬСЯ НАЗАД</span>';
+			this.backCtrl.innerHTML = '<span><i class="glyphicon glyphicon-menu-left"></i> вернуться назад</span>';
 			this.el.insertBefore(this.backCtrl, this.el.firstChild);
 		}
 		

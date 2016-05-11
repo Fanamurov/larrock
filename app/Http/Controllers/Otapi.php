@@ -83,10 +83,10 @@ class Otapi extends Controller
         }
         $body['data'] = $this->create_request('GetCategorySubcategoryInfoList', ['parentCategoryId' => $parentCategoryId]);
         $body['category'] = $this->create_request('GetCategoryInfo', ['categoryId' => $parentCategoryId]);
-        if(count($body['data']->CategoryInfoList->Content->Item) > 0){
+        if(isset($body['data']->CategoryInfoList->Content->Item) && count($body['data']->CategoryInfoList->Content->Item) > 0){
             return view('otapi.categoryList', $body);
         }else{
-            return NULL;
+            return abort(404, 'Товары не найдены');
         }
     }
 
@@ -225,21 +225,22 @@ class Otapi extends Controller
      */
     public function get_tovar($categoryId = 'otc-3035', $itemId = 45199342419)
     {
+		//Cache::forget('catalog'.$categoryId.$itemId);
         $body = Cache::remember('catalog'.$categoryId.$itemId, 60, function() use($categoryId, $itemId){
             $body['category'] = $this->create_request('GetCategoryInfo', ['categoryId' => $categoryId]);
-            $body['data'] = $this->create_request('GetItemFullInfo', ['itemId' => $itemId]);
+            $body['data'] = $this->create_request('BatchGetItemFullInfo', ['itemId' => $itemId, 'blockList' => 'Promotions,RootPath', 'sessionId' => mt_rand(100000,99999999)]);
             $body['GetItemDescription'] = $this->create_request('GetItemDescription', ['itemId' => $itemId]);
             $body['opinions'] = $this->create_request('GetTradeRateInfoListFrame', ['itemId' => $itemId, 'framePosition' => 0, 'frameSize' => 32]);
             $body['vendorTovars'] = $this->create_request('GetVendorItemInfoSortedListFrame',
-                ['vendorId' => (string)$body['data']->OtapiItemFullInfo->VendorId, 'framePosition' => 0, 'frameSize' => 6, 'sortingParameters' => '']);
-            $body['vendor'] = $this->create_request('GetVendorInfo', ['vendorId' => (string)$body['data']->OtapiItemFullInfo->VendorId]);
+                ['vendorId' => (string)$body['data']->Result->Item->VendorId, 'framePosition' => 0, 'frameSize' => 6, 'sortingParameters' => '']);
+            $body['vendor'] = $this->create_request('GetVendorInfo', ['vendorId' => (string)$body['data']->Result->Item->VendorId]);
 
             return json_encode($body);
         });
 
         $body = json_decode($body, TRUE);
 
-		$attributes = $body['data']['OtapiItemFullInfo']['Attributes']['ItemAttribute'];
+		$attributes = $body['data']['Result']['Item']['Attributes']['ItemAttribute'];
 		//Все конфигурируемые значения параметров товара
 		$body['item']['attr'] = [];
 		foreach($attributes as $item){
@@ -249,7 +250,26 @@ class Otapi extends Controller
 		}
 
 		//Собираем конфиги
-		$body['item']['configs'] = $body['data']['OtapiItemFullInfo']['ConfiguredItems']['OtapiConfiguredItem'];
+		$body['item']['promo'] = $body['data']['Result']['Item']['Promotions']['OtapiItemPromotion']['ConfiguredItems'];
+		$body['item']['configs'] = $body['data']['Result']['Item']['ConfiguredItems']['OtapiConfiguredItem'];
+
+
+		if(isset($body['item']['configs']['Id'])){
+			foreach($body['item']['promo'] as $promo_value){
+				if($promo_value['Id'] === $body['item']['configs']['Id']){
+					$body['item']['configs']['Price']['promoPrice'] = $promo_value['Price']['ConvertedPriceWithoutSign'];
+				}
+			}
+		}else{
+			foreach($body['item']['configs'] as $key => $config){
+				foreach($body['item']['promo']['Item'] as $promo_value){
+					if($promo_value['Id'] === $config['Id']){
+						$body['item']['configs'][$key]['Price']['promoPrice'] = $promo_value['Price']['ConvertedPriceWithoutSign'];
+					}
+				}
+			}
+		}
+
 		foreach($body['item']['configs'] as $key => $config){
             if(isset($config['Configurators']['ValuedConfigurator'])){
                 foreach($config['Configurators']['ValuedConfigurator'] as $val_conf){
@@ -284,7 +304,7 @@ class Otapi extends Controller
 
                 $breadcrumbs->push('Товар');
             });
-			View::share('moduleLast', $this->ModuleLastTovars());
+			View::share('moduleLast', $this->ModuleSoputkaTovars($body['data']['Result']['RootPath']['Content']['Item'][1]['Id']));
             return view('otapi.tovarItem', $body);
         }else{
             abort('404', 'Товар не получен');
@@ -309,7 +329,12 @@ class Otapi extends Controller
 				$output = [];
 				$output['Id'] = $config->Id;
 				$output['Quantity'] = $config->Quantity;
-				$output['Price'] = $config->Price->ConvertedPriceWithoutSign;
+				if(isset($config->Price->promoPrice)){
+					$output['promoPrice'] = $config->Price->promoPrice;
+					$output['Price'] = $config->Price->ConvertedPriceWithoutSign;
+				}else{
+					$output['Price'] = $config->Price->ConvertedPriceWithoutSign;
+				}
 				$output['config_current'] = json_encode($data['config_current']);
 				if($output['Quantity'] > 0){
 					echo json_encode(['status' => 'Update', 'data' => $output]);
@@ -475,15 +500,22 @@ class Otapi extends Controller
 
     public function ModulePopularTovars()
     {
-        $body['data'] = $this->create_request('GetItemRatingList', ['itemRatingTypeId' => 'Popular', 'numberItem' => 4, 'categoryId' => '']);
+        $body['data'] = $this->create_request('GetItemRatingList', ['itemRatingTypeId' => 'Popular', 'numberItem' => 12, 'categoryId' => '']);
         return $body;
     }
 
     public function ModuleLastTovars()
     {
-        $body['data'] = $this->create_request('GetItemRatingList', ['itemRatingTypeId' => 'Last', 'numberItem' => 4, 'categoryId' => '']);
-        return $body;
+		$body['data'] = $this->create_request('GetItemRatingList', ['itemRatingTypeId' => 'Last', 'numberItem' => 12, 'categoryId' => '']);
+		return $body;
     }
+
+	public function ModuleSoputkaTovars($categoryId = '')
+	{
+		$body['data'] = $this->create_request('FindCategoryItemInfoListFrame',
+			['framePosition' => 0, 'frameSize' => 16, 'categoryId' => $categoryId, 'categoryItemFilter' => '']);
+		return $body;
+	}
 
     /**
      * Получение подборки продавцов

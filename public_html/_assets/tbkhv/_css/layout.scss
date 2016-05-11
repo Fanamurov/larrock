@@ -33,6 +33,10 @@ a{
   }
 }
 
+.fa.fa-star{
+  color: gold;
+}
+
 .pagination>.active>a,
 .pagination>.active>span,
 .pagination>.active>a:hover,
@@ -152,6 +156,19 @@ a{
 
 .nav>li>a{
   padding: 2px 15px;
+}
+
+/** TO TOP */
+#toTop {
+  display: none;
+  position: fixed;
+  bottom: 5px;
+  right: 5px;
+  width: 64px;
+  height: 64px;
+  opacity: 0.4;
+  background: url("/_assets/tbkhv/_images/icon_up.png") no-repeat center top;
+  z-index: 10;
 }
 
 

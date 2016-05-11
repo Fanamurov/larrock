@@ -1,5 +1,5 @@
 @extends('tbkhv.main')
-@section('title') Купить {{ $data['OtapiItemFullInfo']['Title'] }} в Хабаровске. Товары из Китая @endsection
+@section('title') Купить {{ $data['Result']['Item']['Title'] }} в Хабаровске. Товары из Китая @endsection
 
 @section('breadcrumbs')
     {!! Breadcrumbs::render('otapi.tovar', $category['OtapiCategory']['Id']) !!}
@@ -9,38 +9,48 @@
     <div class="page-catalog-item">
         <div class="col-xs-7 block-gallery">
             <?$count_picture = 0?>
-            @if( !array_key_exists('Large', $data['OtapiItemFullInfo']['Pictures']['ItemPicture']))
-                @foreach($data['OtapiItemFullInfo']['Pictures']['ItemPicture'] as $picture)
+            @if( !array_key_exists('Large', $data['Result']['Item']['Pictures']['ItemPicture']))
+                @foreach($data['Result']['Item']['Pictures']['ItemPicture'] as $picture)
                     <?++$count_picture?>
                     <a class="fancybox @if($count_picture === 1) bigImageItem @endif" href="{{ $picture['Large'] }}" rel="fancybox-thumb">
                         @if($count_picture === 1)
-                            <img src="{{ $picture['Large'] }}" class="all-width fancybox LargeImg" alt="{{ $data['OtapiItemFullInfo']['Title'] }}">
+                            <img src="{{ $picture['Large'] }}" class="all-width fancybox LargeImg" alt="{{ $data['Result']['Item']['Title'] }}">
                         @else
-                            <img src="{{ $picture['Small'] }}" class="fancybox SmallImg" alt="{{ $data['OtapiItemFullInfo']['Title'] }}">
+                            <img src="{{ $picture['Small'] }}" class="fancybox SmallImg" alt="{{ $data['Result']['Item']['Title'] }}">
                         @endif
                     </a>
                 @endforeach
             @else
-                <a class="fancybox" href="{{ $data['OtapiItemFullInfo']['Pictures']['ItemPicture']['Large'] }}" rel="fancybox-thumb">
-                    <img src="{{ $data['OtapiItemFullInfo']['Pictures']['ItemPicture']['Large'] }}" class="all-width fancybox LargeImg" alt="{{ $data['OtapiItemFullInfo']['Title'] }}">
+                <a class="fancybox" href="{{ $data['Result']['Item']['Pictures']['ItemPicture']['Large'] }}" rel="fancybox-thumb">
+                    <img src="{{ $data['Result']['Item']['Pictures']['ItemPicture']['Large'] }}" class="all-width fancybox LargeImg" alt="{{ $data['Result']['Item']['Title'] }}">
                 </a>
             @endif
         </div>
         <div class="col-xs-10 col-xs-offset-1">
             <div>
-                <h1>{{ mb_strimwidth($data['OtapiItemFullInfo']['Title'], 0, 130, '...') }}</h1>
-                <p><a href="{{ $data['OtapiItemFullInfo']['TaobaoItemUrl'] }}">[этот товар на таобао]</a></p>
+                <h1>{{ mb_strimwidth($data['Result']['Item']['Title'], 0, 130, '...') }}</h1>
+                <p><a target="_blank" href="{{ $data['Result']['Item']['TaobaoItemUrl'] }}">[этот товар на таобао]</a></p>
                 <br/>
             </div>
             <div class="clearfix"></div>
-            <p class="cost">
-                Цена:
-                <span class="strong-heavy price-item">{{ $item['config_current']['Price']['ConvertedPriceWithoutSign'] }}</span><small>{{ $item['config_current']['Price']['CurrencySign'] }}</small>
-            </p>
+            @if(isset($item['config_current']['Price']['promoPrice']))
+                <p class="cost" style="text-decoration: line-through">
+                    <span class="strong-heavy price-item">{{ $item['config_current']['Price']['ConvertedPriceWithoutSign'] }}</span><small>{{ $item['config_current']['Price']['CurrencySign'] }}</small>
+                </p>
+                <p class="cost">
+                    Цена:
+                    <span class="strong-heavy pricePromo-item">{{ $item['config_current']['Price']['promoPrice'] }}</span><small>{{ $item['config_current']['Price']['CurrencySign'] }}</small>
+                </p>
+            @else
+                <p class="cost">
+                    Цена:
+                    <span class="strong-heavy price-item">{{ $item['config_current']['Price']['ConvertedPriceWithoutSign'] }}</span><small>{{ $item['config_current']['Price']['CurrencySign'] }}</small>
+                </p>
+            @endif
             <p class="text-center nalicie">В наличии: <span class="quantity-item">{{ $item['config_current']['Quantity'] }}</span> шт.</p>
             <div class="attributes-config">
-                @if($data['OtapiItemFullInfo']['IsSellAllowed'] === 'false' AND $data['OtapiItemFullInfo']['HasInternalDelivery'] === 'false')
-                    Нельзя купить: {{ $data['OtapiItemFullInfo']['SellDisallowReason'] }}
+                @if($data['Result']['Item']['IsSellAllowed'] === 'false' AND $data['Result']['Item']['HasInternalDelivery'] === 'false')
+                    Нельзя купить: {{ $data['Result']['Item']['SellDisallowReason'] }}
                 @endif
 
                 @foreach($item['attr'] as $attr_key => $attr)
@@ -84,16 +94,24 @@
             <input type="hidden" name="configurationId" value="">
             <p class="text-center button_bg">
                 <button class="btn btn-danger btn-lg btn-add-to-cart"
-                    data-id="{{ $data['OtapiItemFullInfo']['Id'] }}"
-                    data-name="{{ $data['OtapiItemFullInfo']['OriginalTitle'] }}"
-                    data-price="{{ $data['OtapiItemFullInfo']['Price']['ConvertedPriceWithoutSign'] }}"
+                    data-id="{{ $data['Result']['Item']['Id'] }}"
+                    data-name="{{ $data['Result']['Item']['OriginalTitle'] }}"
+                    @if(isset($data['Result']['Item']['Price']['promoPrice']))
+                        data-price="{{ $data['Result']['Item']['Price']['promoPrice'] }}"
+                    @else
+                        data-price="{{ $data['Result']['Item']['Price']['ConvertedPriceWithoutSign'] }}"
+                    @endif
                     data-config=""
                     data-src="">
                 <i class="fa fa-cart-plus"></i> Добавить в корзину</button>
                 <button class="btn btn-info btn-lg btn-add-to-cart"
-                        data-id="{{ $data['OtapiItemFullInfo']['Id'] }}"
-                        data-name="{{ $data['OtapiItemFullInfo']['OriginalTitle'] }}"
-                        data-price="{{ $data['OtapiItemFullInfo']['Price']['ConvertedPriceWithoutSign'] }}"
+                        data-id="{{ $data['Result']['Item']['Id'] }}"
+                        data-name="{{ $data['Result']['Item']['OriginalTitle'] }}"
+                        @if(isset($data['Result']['Item']['Price']['promoPrice']))
+                            data-price="{{ $data['Result']['Item']['Price']['promoPrice'] }}"
+                        @else
+                            data-price="{{ $data['Result']['Item']['Price']['ConvertedPriceWithoutSign'] }}"
+                        @endif
                         data-config=""
                         data-src=""
                         data-action="to_cart">
@@ -108,15 +126,16 @@
                 <ul class="list-unstyled row list-vendor">
                     <li class="row">
                         <p class="col-xs-24">
-                            <a href="/otapi/vendor/{{ $data['OtapiItemFullInfo']['VendorId'] }}">{{ $data['OtapiItemFullInfo']['VendorName'] }}</a>
+                            <a href="/otapi/vendor/{{ $data['Result']['Item']['VendorId'] }}">{{ $data['Result']['Item']['VendorName'] }}</a>
+                            <br/>
                             @for($i=0; $i < ceil($vendor['VendorInfo']['Credit']['Level']/5); $i++)
                                 <i class="fa fa-star"></i>
                             @endfor
                         </p>
                     </li>
                     <li class="row">
-                        <p class="col-xs-24">{{ $data['OtapiItemFullInfo']['Location']['City'] }}
-                            ({{ $data['OtapiItemFullInfo']['Location']['State'] }})</p>
+                        <p class="col-xs-24">{{ $data['Result']['Item']['Location']['City'] }}
+                            ({{ $data['Result']['Item']['Location']['State'] }})</p>
                     </li>
                     <li class="row">
                         <p class="col-xs-24">{{ $vendor['VendorInfo']['Credit']['TotalFeedbacks'] }} отзывов
@@ -139,7 +158,7 @@
                     @endforeach
                     @if($vendorTovars['OtapiItemInfoSubList']['TotalCount'] - 6 > 0)
                         <p class="text-right"><i>
-                                И еще <a href="/otapi/vendor/{{ $data['OtapiItemFullInfo']['VendorId'] }}">
+                                И еще <a href="/otapi/vendor/{{ $data['Result']['Item']['VendorId'] }}">
                                     {{ $vendorTovars['OtapiItemInfoSubList']['TotalCount']-6 }} товаров...</a></i>
                         </p>
                     @endif
@@ -166,8 +185,8 @@
             </div>
             <div role="tabpanel" class="tab-pane" id="description">
                 <div class="col-xs-24">
-                    @if(isset($data['OtapiItemFullInfo']['Attributes']['ItemAttribute']))
-                        @foreach($data['OtapiItemFullInfo']['Attributes']['ItemAttribute'] as $attribute)
+                    @if(isset($data['Result']['Item']['Attributes']['ItemAttribute']))
+                        @foreach($data['Result']['Item']['Attributes']['ItemAttribute'] as $attribute)
                             @if($attribute['IsConfigurator'] === 'false')
                                 <p><i>{{ $attribute['PropertyName'] }}: {{ $attribute['Value'] }}</i></p>
                             @endif

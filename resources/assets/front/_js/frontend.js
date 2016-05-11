@@ -14,6 +14,14 @@ $(document).ready(function(){
             }
         }
     });
+
+    /* Кнопка НАВЕРХ */
+    /*jQuery scrollTopTop v1.0 - 2013-03-15*/
+    (function(a){a.fn.scrollToTop=function(c){var d={speed:800};c&&a.extend(d,{speed:c});
+        return this.each(function(){var b=a(this);
+            a(window).scroll(function(){100<a(this).scrollTop()?b.fadeIn():b.fadeOut()});
+            b.click(function(b){b.preventDefault();a("body, html").animate({scrollTop:0},d.speed)})})}})(jQuery);
+    $("#toTop").scrollToTop();
     
     $('.change-config-item').click(function () {
         $('.change-config-item-'+$(this).attr('data-pid')).removeClass('active');
@@ -47,6 +55,7 @@ $(document).ready(function(){
                     $('.btn-add-to-cart').removeAttr('disabled');
                     $('input[name=config_current]').val(res.data.config_current);
                     $('.price-item').html(res.data.Price);
+                    $('.pricePromo-item').html(res.data.promoPrice);
                     $('.quantity-item').html(res.data.Quantity);
                     update_ToCartButton();
                 }
@@ -352,7 +361,7 @@ $(document).ready(function(){
             }else{
                 container.noty({
                     theme: 'relax',
-                    layout: 'topRight',
+                    layout: 'center',
                     text: message,
                     type: type,
                     timeout: 1500
@@ -370,7 +379,7 @@ $(document).ready(function(){
             }else{
                 noty({
                     theme: 'relax',
-                    layout: 'topRight',
+                    layout: 'center',
                     text: message,
                     type: type,
                     timeout: 1500

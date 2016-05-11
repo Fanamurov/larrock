@@ -173,9 +173,13 @@ class FormBuilder implements FormBuilderInterface
 			$selected[] = \Request::input($row_key);
 		}else{
 			if($data->get_category){
-				foreach($data->get_category as $category){
-					$selected[] = $category->id;
-				}
+                if(is_array($data->get_category)){
+                    foreach($data->get_category as $category){
+                        $selected[] = $category->id;
+                    }
+                }else{
+                    $selected[] = $data->get_category->id;
+                }
 			}
 		}
 		if(empty($selected) && isset($data->parent)){

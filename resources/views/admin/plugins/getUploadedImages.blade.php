@@ -6,7 +6,7 @@
         <div class="col-xs-6 col-md-8">
             <div class="form-group">
                 <p class="url_link">
-                    <span>Url:</span> <a href="{{ $image_value->getUrl() }}">{{ $image_value->getUrl() }}</a> [{{ $image_value->humanReadableSize }}]
+                    <span>Url:</span> <a target="_blank" href="{{ $image_value->getUrl() }}">{{ $image_value->getUrl() }}</a> [{{ $image_value->humanReadableSize }}]
                 </p>
             </div>
             <div class="form-group">

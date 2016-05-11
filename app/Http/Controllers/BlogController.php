@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ContentPlugins;
 use App\Helpers\Sletat;
 use App\Models\Blog;
 use App\Models\Category;
@@ -55,12 +56,15 @@ class BlogController extends Controller
 		return view('santa.blog.category', $data);
 	}
 
-	public function getItem($category, $item)
+	public function getItem(ContentPlugins $contentPlugins, $category, $item)
 	{
-		$data = Cache::remember(md5('blog_item_'. $item), 60*24, function() use ($item, $category) {
+        Cache::forget(md5('blog_item_'. $item));
+		$data = Cache::remember(md5('blog_item_'. $item), 60*24, function() use ($item, $category, $contentPlugins) {
 			$data['data'] = Blog::whereUrl($item)->first();
 			$data['category'] = Category::whereUrl($category)->whereActive(1)->first();
 			$data['categorys'] = Category::whereType('blog')->whereActive(1)->whereLevel(1)->with(['get_blogActive'])->get();
+            $data['data']['images'] = $data['data']->getMedia('images');
+            $data['data'] = $contentPlugins->renderGallery($data['data']);
 			return $data;
 		});
 

@@ -16,7 +16,7 @@ return [
 		],
 		'category' => [
 			'title' => 'Раздел',
-			'type' => 'select_row',
+			'type' => 'select_category_once',
 			'tab' => ['main' => 'Заголовок, описание'],
 			'valid' => 'max:255|required',
 			'options_connect' => ['row' => 'title', 'table' => 'category', 'where' => ['type' => 'blog']]

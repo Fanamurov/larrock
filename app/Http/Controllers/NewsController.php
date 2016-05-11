@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ContentPlugins;
 use App\Helpers\Sletat;
 use App\Models\Category;
 use App\Models\News;
@@ -36,11 +37,13 @@ class NewsController extends Controller
 		return view('santa.news.category', $data);
 	}
 
-	public function getItem($item)
+	public function getItem(ContentPlugins $contentPlugins, $item)
 	{
-		$data = Cache::remember(md5('news_item'. $item), 60*24, function() use ($item) {
+		$data = Cache::remember(md5('news_item'. $item), 60*24, function() use ($item, $contentPlugins) {
 			$data['data'] = News::whereUrl($item)->first();
 			$data['category'] = Category::whereType('news')->whereActive(1)->whereLevel(1)->first();
+            $data['data']['images'] = $data['data']->getMedia('images');
+            $data['data'] = $contentPlugins->renderGallery($data['data']);
 		    return $data;
 		});
 

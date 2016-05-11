@@ -1,6 +1,5 @@
 $color_link: #128bc7;
 $color_link_hover: #be1318;
-
 $color_red: #DD1F1A;
 
 body{
@@ -420,6 +419,22 @@ label{
 
 .relative{
   position: relative;
+}
+
+.pagination>.active>a,
+.pagination>.active>span,
+.pagination>.active>a:hover,
+.pagination>.active>span:hover,
+.pagination>.active>a:focus,
+.pagination>.active>span:focus {
+  z-index: 3;
+  color: #fff;
+  background-color: $color_red;
+  border-color: $color_red;
+  cursor: default;
+}
+.pagination>li>a, .pagination>li>span {
+  color: $color_red;
 }
 
 @import "sections/header";

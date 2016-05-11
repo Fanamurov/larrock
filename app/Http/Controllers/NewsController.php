@@ -23,10 +23,12 @@ class NewsController extends Controller
         });
 	}
 	
-    public function index()
+    public function index(Request $request)
 	{
-		$data = Cache::remember('news_index', 60*24, function() {
-			$data['data'] = News::whereActive(1)->orderBy('updated_at', 'desc')->paginate(20);
+		$page = $request->get('page', 1);
+		Cache::forget('news_index'.$page);
+		$data = Cache::remember('news_index'.$page, 60*24, function() use ($page) {
+			$data['data'] = News::whereActive(1)->orderBy('updated_at', 'desc')->skip(($page-1)*20)->paginate(20);
 			$data['category'] = Category::whereType('news')->first();
 		    return $data;
 		});

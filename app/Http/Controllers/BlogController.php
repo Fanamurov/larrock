@@ -24,23 +24,25 @@ class BlogController extends Controller
         });
 	}
 	
-    public function index()
+    public function index(Request $request)
 	{
-		$data = Cache::remember('blog_index', 60*24, function() {
+		$page = $request->get('page', 1);
+		$data = Cache::remember('blog_index'.$page, 60*24, function() use ($page) {
 			$data['category'] = Category::whereType('blog')->whereActive(1)->whereLevel(1)->orderBy('updated_at', 'desc')->with(['get_blogActive'])->get();
-			$data['data'] = Blog::whereActive(1)->with('get_category')->orderBy('updated_at', 'desc')->paginate(15);
+			$data['data'] = Blog::whereActive(1)->with('get_category')->orderBy('updated_at', 'desc')->skip(($page-1)*20)->paginate(15);
 			return $data;
 		});
 
 		return view('santa.blog.index', $data);
 	}
 
-	public function show($category)
+	public function show(Request $request, $category)
 	{
-		$data = Cache::remember('blog_'.$category, 60*24, function() use ($category) {
+		$page = $request->get('page', 1);
+		$data = Cache::remember('blog_'.$category.'_'.$page, 60*24, function() use ($category, $page) {
 			$data['categorys'] = Category::whereType('blog')->whereActive(1)->whereLevel(1)->orderBy('updated_at', 'desc')->with(['get_blogActive'])->get();
 			$data['category'] = Category::whereUrl($category)->whereActive(1)->with(['get_blogActive'])->first();
-			$data['data'] = Blog::whereActive(1)->whereCategory($data['category']->id)->orderBy('updated_at', 'desc')->paginate(15);
+			$data['data'] = Blog::whereActive(1)->whereCategory($data['category']->id)->orderBy('updated_at', 'desc')->skip(($page-1)*20)->paginate(15);
 			return $data;
 		});
 

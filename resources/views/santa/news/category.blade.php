@@ -8,12 +8,12 @@
         </div>
         @foreach($data as $item)
             <div class="pageBlogCategory-item row col-xs-24">
-                <div class="col-sm-4">
-                    @if($item->getFirstMediaUrl('images', '110x110'))
-                        <img src="{{ $item->getFirstMediaUrl('images', '110x110') }}" alt="{{ $item->title }}">
+                <div class="hidden-xs col-sm-6 col-md-8">
+                    @if($item->getFirstMediaUrl('images', '250x250'))
+                        <img class="all-width" src="{{ $item->getFirstMediaUrl('images', '250x250') }}" alt="{{ $item->title }}">
                     @endif
                 </div>
-                <div class="col-sm-20">
+                <div class="col-xs-24 col-sm-18 col-md-16">
                     <a class="h4" href="/news/{{ $item->url }}">{{ $item->title }}</a>
                     <div class="pageBlogCategory-item_short">{!! $item->short !!}</div>
                 </div>

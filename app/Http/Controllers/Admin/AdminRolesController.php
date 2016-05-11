@@ -10,7 +10,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Roles;
 use Route;
 use Validator;
-use Sentinel;
 use Session;
 use Lang;
 use Redirect;
@@ -86,7 +85,7 @@ class AdminRolesController extends Controller
      */
     public function edit($id)
     {
-		$data['roles'] = Sentinel::findRoleById($id);
+		$data['role'] = Roles::whereId($id)->first();
 		return view('admin.roles.edit', $data);
     }
 

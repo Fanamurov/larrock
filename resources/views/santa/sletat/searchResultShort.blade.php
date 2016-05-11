@@ -3,7 +3,7 @@
     <div class="col-xs-24"><h5 class="title-header">Лучшие цены <a class="pull-right" href="/sletat">Все туры</a></h5></div>
     <ul class="list-unstyled search-result">
         @foreach($GetTours['aaData'] as $item)
-            <li class="col-xs-24 col-sm-8">
+            <li class="col-xs-24 col-sm-6 bestcost-row">
                 <div class="col-xs-24">
                     <p class="h4">{{ $item[7] }} @if($item[8] !== '0.0'){{ $item[8] }}@endif ({{ $item[19] }})</p>
                     <div class="hotel-stars hidden">

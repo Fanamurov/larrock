@@ -56,14 +56,6 @@
                     <button type="button" class="btn btn-outline show-please" data-target="search-form" title="Поиск по сайту"><i class="fa fa-search"></i></button>
                     <input type="text" class="form-control search-form hidden" placeholder="Поиск...">
                 </li>
-                <li class="dropdown">
-                    <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Логи <span class="label label-warning label-outline">5</span></a>
-                    <ul role="menu" class="dropdown-menu">
-                        <li><a href="#">Не найдено <span class="label label-warning label-outline">5</span></a></li>
-                        <li><a href="#">Ошибка ядра <span class="label label-warning label-outline">5</span></a></li>
-                        <li><a href="#">Письма <span class="label label-warning label-outline">5</span></a></li>
-                    </ul>
-                </li>
                 <li>
                     <a aria-expanded="false" role="button" href="/" target="_blank">К сайту</a>
                 </li>

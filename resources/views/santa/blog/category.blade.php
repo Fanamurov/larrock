@@ -32,12 +32,12 @@
         <div class="clearfix"></div><br/>
         @foreach($data as $item)
             <div class="pageBlogCategory-item row">
-                <div class="col-sm-6">
-                    @if($item->getFirstMediaUrl('images', '140x140'))
-                        <img src="{{ $item->getFirstMediaUrl('images', '140x140') }}" alt="{{ $item->title }}">
+                <div class="hidden-xs col-sm-6 col-md-8">
+                    @if($item->getFirstMediaUrl('images', '250x250'))
+                        <img class="all-width" src="{{ $item->getFirstMediaUrl('images', '250x250') }}" alt="{{ $item->title }}">
                     @endif
                 </div>
-                <div class="col-sm-18">
+                <div class="col-xs-24 col-sm-18 col-md-16">
                     <h4><a href="/blog/{{ $category->url  }}/{{ $item->url }}">{{ $item->title }}</a></h4>
                     <div class="pageBlogCategory-item_short">{!! $item->short !!}</div>
                 </div>

@@ -80,6 +80,14 @@ return [
 			'valid' => 'integer|max:1',
 			'default' => 1
 		],
+		'to_rss' => [
+			'title' => 'Опубликован в rss (импорт в соц.сети)',
+			'type' => 'checkbox',
+			'checked' => 'TRUE',
+			'tab' => ['other' => 'Дополнительные поля'],
+			'valid' => 'integer|max:1',
+			'default' => 1
+		],
 	],
 	'admin_menu' => ['type' => 'hidden'],
 	'settings' => [],

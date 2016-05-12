@@ -38,7 +38,7 @@ footer{
   section.row-profits{
 	font-size: 14px;
 	line-height: 21px;
-	background: #BF3030;
+	background: #BE0D2D;
 
 	.fi{
 	  font-size: 100px;
@@ -65,13 +65,16 @@ footer{
   section.row-sposob{
 	color: white;
 	padding-top: 30px;
+	margin-left: 0;
+	margin-right: 0;
+	font-weight: 300;
 	@media (max-width: 768px) {
 	  padding-bottom: 30px;
 	}
 	.h1{
-	  font-weight: 600;
-	  margin-bottom: 30px;
-	  margin-top: 3px;
+	  font-weight: 500;
+	  margin-bottom: 20px;
+	  margin-top: 0;
 	  @media (max-width: 500px) {
 		font-size: 22px;
 		margin-bottom: 20px;
@@ -89,8 +92,17 @@ footer{
   }
 
   section.row-sposob{
-	background: #85004B;
+	background: #301934;
 
+	a{
+	  text-decoration: none;
+	  border-bottom: 1px solid rgba(255, 255, 255, 0.21);
+	  &:hover,
+	  &:focus{
+		text-decoration: none;
+		color: #e8e8e8;
+	  }
+	}
 	.fi{
 	  font-size: 64px;
 	  float: left;
@@ -118,9 +130,27 @@ footer{
   }
 
   section.row-subscribes{
-	background: #f4f4f4;
+	background: #301934;
 	padding-top: 30px;
-	padding-bottom: 50px;
+	padding-bottom: 20px;
+	margin-left: 0;
+	margin-right: 0;
+	color: white;
+	border-top: 1px solid #3B233F;
+	font-weight: 300;
+	a{
+	  color: white;
+	  text-decoration: none;
+	  border-bottom: 1px solid rgba(255, 255, 255, 0.21);
+	  display: inline-block;
+	  line-height: 16px;
+	  margin-bottom: 4px;
+	  &:hover,
+	  &:focus{
+		text-decoration: none;
+		color: #e8e8e8;
+	  }
+	}
 	@media (max-width: 500px) {
 	  padding-bottom: 15px;
 	}
@@ -140,24 +170,46 @@ footer{
 		overflow: hidden;
 	  }
 	}
+	.btn.btn-default{
+	  padding: 9px 15px;
+	}
   }
 
   section.row-licence{
+	background: #301934;
 	font-size: 12px;
     color: grey;
     font-style: italic;
+	border-top: 2px solid #3B233F;
+	margin-left: 0;
+	margin-right: 0;
     a{
       color: grey;
     }
   }
 
   .menu_footer{
+	.nav>li:before{
+	  font-family: 'Glyphicons Halflings';
+	  font-style: normal;
+	  font-weight: 400;
+	  line-height: 1;
+	  -webkit-font-smoothing: antialiased;
+	  -moz-osx-font-smoothing: grayscale;
+	  content: "\e258";
+	  color: #BE0D2D;
+	  position: relative;
+	  top: 1px;
+	  font-size: 11px;
+	}
 	.nav>li>a{
 	  padding: 3px 0;
+	  margin-left: 5px;
 	  &:hover,
 	  &:focus{
 		background: none;
-		text-decoration: underline;
+		text-decoration: none;
+		color: #e8e8e8;
 	  }
 	}
   }

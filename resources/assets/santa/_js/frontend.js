@@ -32,6 +32,13 @@ $(document).ready(function(){
         $('.menu_mobile').slideDown('fast');
         $('.mainpage_tabs').removeClass('hidden-xs').removeClass('hidden-sm');
     });
+    
+    $('.btn-show-online').click(function () {
+        $('#collapsesletatOrderShort').collapse('hide');
+    });
+    $('.btn-show-office').click(function () {
+        $('#collapsesletatOrderFull').collapse('hide');
+    });
 
     $('.load-map').click(function () {
         setTimeout(function(){

@@ -90,4 +90,143 @@ class SitemapController extends Controller
         // show your sitemap (options: 'xml' (default), 'html', 'txt', 'ror-rss', 'ror-rdf')
         return $sitemap->render('xml');
 	}
+
+	public function rss()
+	{
+		$feed = App::make("feed");
+		// set cache key (string), duration in minutes (Carbon|Datetime|int), turn on/off (boolean)
+		// by default cache is disabled
+		$feed->setCache('laravel.rss', 3600);
+
+		// check if there is cached feed and build new only if is not
+		if( !$feed->isCached())
+		{
+			// set your feed's title, description, link, pubdate and language
+			$feed->title = 'Santa-avia.ru :: Новости, блог, туры';
+			$feed->description = 'Публикуем свежие новости, статьи из блока и обновления по индивидуальным турам';
+			$feed->logo = 'http://santa-avia.ru/_assets/_santa/_images/logo.png';
+			$feed->link = 'http://santa-avia.ru/feed.rss';
+			$feed->setDateFormat('carbon'); // 'datetime', 'timestamp' or 'carbon'
+			$feed->pubdate = Carbon::now();
+			$feed->lang = 'ru';
+			$feed->setShortening(false); // true or false
+			$feed->setTextLimit(100); // maximum length of description text
+
+			$blog = Blog::whereActive(1)->whereToRss(1)->with(['get_category'])->orderBy('updated_at', 'DESC')->get();
+			foreach ($blog as $value){
+				$enclosure = [];
+				if($value->getMedia('images')->sortByDesc('order_column')->first()){
+					if($img = $value->getMedia('images')->sortByDesc('order_column')->first()->getUrl()){
+						$enclosure = ['url'=> 'http://santa-avia.ru'. $img,'type'=>'image/jpeg'];
+					}
+				}
+				$feed->add(
+					$value->title,
+					$feed->title,
+					URL::to('/blog/'. $value->get_category->url .'/'. $value->url),
+					$value->updated_at,
+					mb_strimwidth(strip_tags($value->short), 0, 200, '...'),
+					mb_strimwidth(strip_tags($value->description), 0, 350, '...'),
+					$enclosure
+				);
+			}
+
+			$news = News::whereActive(1)->whereToRss(1)->with(['get_category'])->orderBy('updated_at', 'DESC')->get();
+			foreach ($news as $value){
+				$enclosure = [];
+				if($value->getMedia('images')->sortByDesc('order_column')->first()){
+					if($img = $value->getMedia('images')->sortByDesc('order_column')->first()->getUrl()){
+						$enclosure = ['url'=> 'http://santa-avia.ru'. $img,'type'=>'image/jpeg'];
+					}
+				}
+				$feed->add(
+					$value->title,
+					$feed->title,
+					URL::to('/news/'. $value->get_category->url .'/'. $value->url),
+					$value->updated_at,
+					mb_strimwidth(strip_tags($value->short), 0, 200, '...'),
+					mb_strimwidth(strip_tags($value->description), 0, 350, '...'),
+					$enclosure
+				);
+			}
+
+			$strany = Category::whereParent(308)->whereActive(1)->whereToRss(1)->with(['get_childActive', 'get_childActive.get_toursActive', 'get_toursActive'])->orderBy('updated_at', 'DESC')->get();
+			foreach ($strany as $value){
+				$enclosure = [];
+				if($value->getMedia('images')->sortByDesc('order_column')->first()){
+					if($img = $value->getMedia('images')->sortByDesc('order_column')->first()->getUrl()){
+						$enclosure = ['url'=> 'http://santa-avia.ru'. $img,'type'=>'image/jpeg'];
+					}
+				}
+				$feed->add(
+					$value->title,
+					$feed->title,
+					URL::to('/tours/strany/'.$value->url),
+					$value->updated_at,
+					mb_strimwidth(strip_tags($value->short), 0, 200, '...'),
+					mb_strimwidth(strip_tags($value->description), 0, 350, '...'),
+					$enclosure
+				);
+				foreach ($value->get_toursActive as $tours){
+					$enclosure = [];
+					if($tours->getMedia('images')->sortByDesc('order_column')->first()){
+						if($img = $tours->getMedia('images')->sortByDesc('order_column')->first()->getUrl()){
+							$enclosure = ['url'=> 'http://santa-avia.ru'. $img,'type'=>'image/jpeg'];
+						}
+					}
+					$feed->add(
+						$value->title,
+						$feed->title,
+						URL::to('/tours/strany/'.$value->url.'/'. $tours->url),
+						$value->updated_at,
+						mb_strimwidth(strip_tags($value->short), 0, 200, '...'),
+						mb_strimwidth(strip_tags($value->description), 0, 350, '...'),
+						$enclosure
+					);
+				}
+				foreach ($value->get_childActive as $child){
+					$enclosure = [];
+					if($child->getMedia('images')->sortByDesc('order_column')->first()){
+						if($img = $child->getMedia('images')->sortByDesc('order_column')->first()->getUrl()){
+							$enclosure = ['url'=> 'http://santa-avia.ru'. $img,'type'=>'image/jpeg'];
+						}
+					}
+					$feed->add(
+						$value->title,
+						$feed->title,
+						URL::to('/tours/strany/'.$value->url.'/'. $child->url),
+						$value->updated_at,
+						mb_strimwidth(strip_tags($value->short), 0, 200, '...'),
+						mb_strimwidth(strip_tags($value->description), 0, 350, '...'),
+						$enclosure
+					);
+					foreach ($child->get_toursActive as $child_tours){
+						$enclosure = [];
+						if($child_tours->getMedia('images')->sortByDesc('order_column')->first()){
+							if($img = $child_tours->getMedia('images')->sortByDesc('order_column')->first()->getUrl()){
+								$enclosure = ['url'=> 'http://santa-avia.ru'. $img,'type'=>'image/jpeg'];
+							}
+						}
+						$feed->add(
+							$value->title,
+							$feed->title,
+							URL::to('/tours/strany/'.$value->url.'/'. $child_tours->url),
+							$value->updated_at,
+							mb_strimwidth(strip_tags($value->short), 0, 200, '...'),
+							mb_strimwidth(strip_tags($value->description), 0, 350, '...'),
+							$enclosure
+						);
+					}
+				}
+			}
+		}
+
+		// first param is the feed format
+		// optional: second param is cache duration (value of 0 turns off caching)
+		// optional: you can set custom cache key with 3rd param as string
+		return $feed->render('atom');
+
+		// to return your feed as a string set second param to -1
+		// $xml = $feed->render('atom', -1);
+	}
 }

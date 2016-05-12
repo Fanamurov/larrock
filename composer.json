@@ -30,7 +30,8 @@
         "guzzlehttp/guzzle": "^6.1",
         "bican/roles": "^2.1",
         "yaro/soc-share": "^1.0",
-        "pingpong/menus": "^2.2"
+        "pingpong/menus": "^2.2",
+        "roumen/feed": "^2.10"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

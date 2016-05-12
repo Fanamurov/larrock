@@ -69,7 +69,7 @@
                     <div><small class="muted">Ночей:</small> {{ $item[14] }}</div>
 
                     <p class="cost">{{ $item[42] }} {{ $item[43] }}</p>
-                    <form action="{{ route('sletat.ActualizePrice') }}" method="get">
+                    <form action="{{ route('sletat.ActualizePrice') }}" method="get" target="_blank">
                         <input type="hidden" name="sourceId" value="{{ $item[1] }}">
                         <input type="hidden" name="offerId" value="{{ $item[0] }}">
                         <input type="hidden" name="countryId" value="{{ $item[30] }}">
@@ -80,9 +80,6 @@
                 <div class="col-xs-24 hotel-description">
                     <div>{{ $item[38] }}</div>
                 </div>
-                <div class="col-xs-24 hotel-full-description" data-id="">
-
-                </div>
                 <div class="clearfix"></div><br/><br/>
             </li>
         @endforeach
@@ -90,19 +87,9 @@
 
     <nav>
         <ul class="pagination pagination-lg">
-            <li>
-                <a href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
             @for($i=1; $i <= $paginator['pages']; $i++)
                 <li @if($i === $paginator['current']) class="active" @endif><a href="{{ URL::route('sletat.form') }}">{{ $i }}</a></li>
             @endfor
-            <li>
-                <a href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
         </ul>
     </nav>
 @endif

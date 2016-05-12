@@ -19,7 +19,7 @@
                 @include('santa.errors')
                 @yield('content')
             </div>
-            <div class="content_bottom-sharing">
+            <div class="content_bottom-sharing col-xs-24">
                 <span>Поделитесь материалом с друзьями:</span> @include('santa.modules.share.sharing')
             </div>
             @yield('contentBottom')

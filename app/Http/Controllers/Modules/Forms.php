@@ -48,6 +48,33 @@ class Forms extends Controller
 		return back();
 	}
 
+	public function send_corporate(Request $request)
+	{
+		if(env('MAIL_STOP') === 'true'){
+			Alert::add('danger', 'Отправка форм отключена')->flash();
+			return back();
+		}
+
+		FormsLog::create(['formname' => 'corporate', 'params' => $request->all(), 'status' => 'Новое']);
+
+		/** @noinspection PhpVoidFunctionResultUsedInspection */
+		$send = Mail::send('emails.corporate',
+			$request->all(),
+			function($message){
+				$message->from(env('MAIL_TO_ADMIN', 'robot@martds.ru'), env('MAIL_TO_ADMIN_NAME', 'TEST'));
+				$message->to(env('MAIL_TO_ADMIN', 'robot@martds.ru'), env('MAIL_TO_ADMIN_NAME', 'TEST'));
+				$message->subject('Отправлена анкета корпоративного обслуживания '. Arr::get($_SERVER, 'SERVER_NAME')
+				);
+			});
+
+		if($send){
+			Alert::add('success', 'Форма отправлена')->flash();
+		}else{
+			Alert::add('danger', 'Форма не отправлена')->flash();
+		}
+		return back();
+	}
+
 	public function send_formZakazTura(Request $request)
 	{
 		if(env('MAIL_STOP') === 'true'){

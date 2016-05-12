@@ -22,7 +22,7 @@
                 @include('santa.modules.slideshow.mainpage', $slideshow)
 
                 <div class="sletatResult" data-country-id="{{ $country_id_sletat }}">
-                    @if($GetTours['hotelsCount'] > 0)
+                    @if($GetTours['iTotalRecords'] > 0)
                         @include('santa.sletat.searchResultShort')
                     @else
                         <div class="toursPageCountry-bestcost row">
@@ -54,7 +54,7 @@
         </div>
     </section>
 </div>
-<footer class="container">
+<footer>
     @include('santa.sections.footer')
     @yield('footer')
 </footer>

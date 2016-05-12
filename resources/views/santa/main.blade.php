@@ -21,16 +21,16 @@
                 @include('santa.errors')
                 @yield('content')
             </div>
-            <div class="col-xs-24 content_bottom-sharing">
-                <span>Поделитесь материалом с друзьями:</span> @include('santa.modules.share.sharing')
-            </div>
             <div class="col-xs-24 block-contentBottom">
                 @yield('contentBottom')
+            </div>
+            <div class="col-xs-24 content_bottom-sharing">
+                <span>Поделитесь материалом с друзьями:</span> @include('santa.modules.share.sharing')
             </div>
         </div>
     </section>
 </div>
-<footer class="container">
+<footer>
     @include('santa.sections.footer')
     @yield('footer')
 </footer>

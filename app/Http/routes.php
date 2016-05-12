@@ -120,6 +120,9 @@ Route::get('/cart', [
 Route::post('/forms/contact', [
 	'as' => 'submit.contacts', 'uses' => 'Modules\Forms@send_form'
 ]);
+Route::post('/forms/corporate', [
+	'as' => 'submit.corporate', 'uses' => 'Modules\Forms@send_corporate'
+]);
 Route::post('/forms/zakazTura', [
 	'as' => 'submit.zakazTura', 'uses' => 'Modules\Forms@send_formZakazTura'
 ]);
@@ -144,6 +147,9 @@ Route::auth();
 
 Route::get('sitemap.xml', [
     'as' => 'generate.sitemap', 'uses' => 'SitemapController@index'
+]);
+Route::get('feed.rss', [
+	'as' => 'generate.ress', 'uses' => 'SitemapController@rss'
 ]);
 
 Route::group(['prefix' => 'admin', 'middleware'=>'level:2'], function(){

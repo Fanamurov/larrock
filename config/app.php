@@ -210,6 +210,9 @@ return [
         /* SoShare https://github.com/Cherry-Pie/SocShare */
         Yaro\SocShare\ServiceProvider::class,
 
+		/* RSS feed https://github.com/RoumenDamianoff/laravel-feed  */
+		Roumen\Feed\FeedServiceProvider::class,
+
     ],
 
     /*
@@ -274,8 +277,9 @@ return [
         'Cart'        	=> Gloudemans\Shoppingcart\Facades\Cart::class,
         'Recaptcha' 	=> Greggilbert\Recaptcha\Facades\Recaptcha::class,
         'Search' 		=> Sofa\Eloquence\ServiceProvider::class,
-        'MenuApp'          => Pingpong\Menus\MenuFacade::class,
+        'MenuApp'       => Pingpong\Menus\MenuFacade::class,
         'SocShare'      => Yaro\SocShare\Facade::class,
+		'RssFeed' 			=> Roumen\Feed\Feed::class,
 
     ],
 

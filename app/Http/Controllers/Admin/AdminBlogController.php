@@ -96,6 +96,7 @@ class AdminBlogController extends Controller
 		$data->fill($request->all());
 		$data->active = $request->input('active', 0);
 		$data->position = $request->input('position', 0);
+		$data->to_rss = $request->input('to_rss', 0);
 		$today = getdate();
 		$data->date = $request->input('position');
 		if(empty($data->date)){
@@ -211,6 +212,7 @@ class AdminBlogController extends Controller
 		$data = Blog::find($id);
 		$data->fill($request->all());
 		$data->active = $request->input('active', 0);
+		$data->to_rss = $request->input('to_rss', 0);
 		$data->user_id = $this->current_user->id;
 
 		if($data->save()){

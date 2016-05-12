@@ -33,14 +33,15 @@ class Tours extends Model implements HasMediaConversions
 
     protected $table = 'tours';
 
-	protected $fillable = ['title', 'short', 'description', 'url', 'position', 'active', 'forecast_url', 'map', 'cost_notactive'];
+	protected $fillable = ['title', 'short', 'description', 'url', 'position', 'active', 'forecast_url', 'map', 'cost_notactive', 'to_rss'];
 
 	protected $guarded = ['user_id'];
 
 	protected $casts = [
 		'position' => 'integer',
 		'active' => 'integer',
-		'cost_notactive' => 'integer'
+		'cost_notactive' => 'integer',
+		'to_rss' => 'integer',
 	];
 
 	protected $appends = [

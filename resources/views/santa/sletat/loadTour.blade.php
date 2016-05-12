@@ -79,10 +79,10 @@
                     <div><small class="muted">Тип питания:</small> {{ $item['data'][11] }} ({{ $item['data'][49] }})</div>
                 </div>
                 <div class="col-sm-12">
-                    @if($item['data'][13] === '0')
+                    @if($item['data'][13] !== '0')
                         <div><strong>Нет доступных мест в отеле</strong></div>
                     @else
-                        <div><strong>Есть свободные номера ({{ $item['data'][13] }})</strong></div>
+                        <div><strong>Есть свободные номера</strong></div>
                     @endif
 
                     @if($item['data'][14] === '-1')
@@ -122,15 +122,15 @@
 
                     <div class="cost"><small class="muted">Цена:</small> {{ $item['data'][19] }} {{ $item['data'][21] }}</div>
 
-                    @if($item['data'][13] > 0)
+                    @if($item['data'][13] === '0')
                         <div class="row row-buttons">
                             <div class="col-sm-12">
-                                <button type="button" class="btn btn-default btn-block"
+                                <button type="button" class="btn btn-default btn-block btn-show-online"
                                         data-toggle="collapse" data-target="#collapsesletatOrderFull" aria-expanded="true"
                                         aria-controls="collapsesletatOrderFull">Купить онлайн</button>
                             </div>
                             <div class="col-sm-12">
-                                <button type="button" class="btn btn-default btn-block"
+                                <button type="button" class="btn btn-default btn-block btn-show-office"
                                         data-toggle="collapse" data-target="#collapsesletatOrderShort" aria-expanded="true"
                                         aria-controls="collapsesletatOrderShort">Купить в офисе</button>
                             </div>
@@ -141,7 +141,7 @@
         </div>
         <div class="clearfix"></div>
 
-        <div class="form-order-sletat">
+        <div class="form-order-sletat container">
             <div class="collapse" id="collapsesletatOrderShort">
                 @include('santa.modules.forms.sletatOrderShort', ['request' => $request, 'countryName' => $item['data'][1],
                 'cityFromName' => $item['data'][0], 'currencyAlias' => $item['data'][21]])

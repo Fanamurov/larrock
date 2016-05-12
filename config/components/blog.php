@@ -58,6 +58,14 @@ return [
 			'valid' => 'integer|max:1',
 			'default' => 1
 		],
+		'to_rss' => [
+			'title' => 'Опубликован в rss (импорт в соц.сети)',
+			'type' => 'checkbox',
+			'checked' => 'TRUE',
+			'tab' => ['other' => 'Дата, вес, активность'],
+			'valid' => 'integer|max:1',
+			'default' => 1
+		],
 	],
 	'menu_category' => 'blog',
 	'admin_menu' => [],

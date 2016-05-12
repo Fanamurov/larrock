@@ -437,6 +437,18 @@ label{
   color: $color_red;
 }
 
+input[type=date],
+input.daterange{
+  background: url('/_assets/_admin/_images/1450955636_office-15.png') no-repeat 10px center;
+  padding-left: 34px;
+}
+
+@media (min-width: 600px){
+  .daterangepicker.dropdown-menu.show-calendar {
+	width: 608px;
+  }
+}
+
 @import "sections/header";
 @import "sections/footer";
 @import "sections/rightColomn";
@@ -456,6 +468,7 @@ label{
 @import "forms/searchTour";
 @import "forms/subscribe";
 @import "forms/zakazTura";
+@import "forms/corporate";
 
 @import "plugins/gallery";
 

@@ -38,20 +38,21 @@
                     @endif
                 </div>
                 <div class="col-sm-24">
-                    <div><small>Тур:</small> {{ $item[6] }}</div>
+                    <div><small>Тур:</small> {{ $item[33] }} - {{ $item[31] }}({{ $item[19] }})</div>
                 </div>
                 <div class="col-sm-24">
                     <div><small class="muted">Тип размещения:</small> {{ $item[11] }} {{ $item[16] }} взрослых</div>
                     <div><small class="muted">Питание:</small> {{ $item[10] }} ({{ $item[36] }})</div>
                 </div>
                 <div class="col-sm-24">
-                    <div><small class="muted">Вылет:</small> {{ $item[12] }} ({{ $item[14] }} ночей)</div>
+                    <div><small class="muted">Вылет:</small> {{ $item[12] }}</div>
+                    <div><small class="muted">Ночей:</small> {{ $item[14] }}</div>
                     @if($item[22] === '1')
                         <div class="hidden"><strong>Перелет включен в стоимость тура</strong></div>
                     @endif
                     <br/>
                     <p class="cost">{{ $item[42] }} {{ $item[43] }}</p>
-                    <form action="{{ route('sletat.ActualizePrice') }}" method="get">
+                    <form action="{{ route('sletat.ActualizePrice') }}" method="get" target="_blank">
                         <input type="hidden" name="sourceId" value="{{ $item[1] }}">
                         <input type="hidden" name="offerId" value="{{ $item[0] }}">
                         <input type="hidden" name="countryId" value="{{ $item[30] }}">

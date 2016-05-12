@@ -64,7 +64,7 @@ class BeforeLoaderModulesGlobal
 		{
 			$menu->style('navmenu');
 			$menu->url('/page/vakansii-santa-avia', 'Вакансии');
-			$menu->url('/page/partnery', 'Партнеры');
+			//$menu->url('/page/partnery', 'Партнеры');
 			$menu->url('/page/pochemu-pokupat-tury-nado-tolko-u-nas', 'О компании');
 			$menu->url('/page/bronirovanie-i-oplata-turov-instruktsiya', 'Бронирование и оплата');
 			$menu->url('/page/oplata-on-layn', 'Оплата он-лайн');

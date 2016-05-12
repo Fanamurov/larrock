@@ -94,6 +94,7 @@ class AdminToursController extends Controller
 		$data = new Tours();
 		$data->fill($request->all());
 		$data->active = $request->input('active', 0);
+		$data->to_rss = $request->input('to_rss', 0);
 		$data->position = $request->input('position', 0);
 		$data->articul = 'AR'. $request->input('id');
 		$data->cost_notactive = $request->input('cost_notactive', 0);
@@ -249,6 +250,7 @@ class AdminToursController extends Controller
 
 		$data->fill($request->all());
 		$data->active = $request->input('active', 0);
+		$data->to_rss = $request->input('to_rss', 0);
 		$data->cost_notactive = $request->input('cost_notactive', 0);
 		if($data->save()){
 			//Присоединяем разделы

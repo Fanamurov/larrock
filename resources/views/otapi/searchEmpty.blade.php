@@ -3,6 +3,10 @@
 
 @section('content')
     <div class="page-catalog-category">
+        <div class="col-xs-24">
+            <h1>Поиск по товарам: {{ Request::get('search') }}</h1>
+        </div><br/>
+
         <div>
             @if(isset($data->Result->SearchProperties))
                 <form action="" method="get" id="form-filter-category">
@@ -23,6 +27,18 @@
                     </div>
                 @endforeach
                     <div class="clearfix"></div>
+
+                    <div class="filter-item form-group col-xs-6" title="Сортировки">
+                        <label for="sortCost">Сортировка результатов:</label>
+                        <select id="sortCost" class="form-control filter-category" name="sort">
+                            <option @if(Request::get('sort', 'Price:Asc') === 'Default') selected @endif value="Default">Порядок по умолчанию</option>
+                            <option @if(Request::get('sort', 'Price:Asc') === 'Price:Asc') selected @endif value="Price:Asc">Цена: по возрастанию</option>
+                            <option @if(Request::get('sort', 'Price:Asc') === 'Price:Desc') selected @endif value="Price:Desc">Цена: по убываю</option>
+                            <option @if(Request::get('sort', 'Price:Asc') === 'VendorRating:Desc') selected @endif value="VendorRating:Desc">Продавцы с наибольшим рейтингом</option>
+                            <option @if(Request::get('sort', 'Price:Asc') === 'Volume:Desc') selected @endif value="Volume:Desc">Самые продаваемые</option>
+                            <option @if(Request::get('sort', 'Price:Asc') === 'Popularity:Desc') selected @endif value="Popularity:Desc">Самые популярные</option>
+                        </select>
+                    </div>
 
                     <div class="col-xs-24">
                         <div class="sorters">
@@ -66,8 +82,6 @@
                         </p>
                     </div>
                 @endforeach
-            @else
-                <div class="alert alert-danger">К сожалению, по данному поисковому запросу ничего не нашлось, попробуйте изменить данные для поиска</div>
             @endif
         </div>
 

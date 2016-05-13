@@ -4,7 +4,7 @@
 //npm install gulp-sass --save-dev
 //npm install gulp-csso gulp-cssnano gulp-autoprefixer gulp-bless gulp-concat gulp-notify gulp-removelogs gulp-uglify gulp-rename gulp-changed gulp-filesize gulp-imagemin imagemin-pngquant --save-dev
 
-var project = 'larrock'; //Название проекта
+var project = 'tbkhv'; //Название проекта
 
 var gulp = require('gulp');
 var sass = require('gulp-sass');

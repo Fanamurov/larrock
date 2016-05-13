@@ -93,10 +93,7 @@ Route::get('/otapi', [
 Route::get('/otapi/menu', [
     'as' => 'otapi.menu', 'uses' => 'Otapi@getMenu'
 ]);
-Route::post('/otapi/search/{page?}', [
-    'as' => 'otapi.search', 'uses' => 'Otapi@SearchItemsFrame'
-]);
-Route::get('/otapi/search/{page?}', [
+Route::any('/otapi/search/{page?}', [
     'as' => 'otapi.search', 'uses' => 'Otapi@SearchItemsFrame'
 ]);
 Route::get('/otapi/brand/{brandId}', [

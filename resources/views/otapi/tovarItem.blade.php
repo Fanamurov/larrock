@@ -34,7 +34,7 @@
             </div>
             <div class="clearfix"></div>
             @if(isset($item['config_current']['Price']['promoPrice']))
-                <p class="cost" style="text-decoration: line-through">
+                <p class="cost priceOld" style="text-decoration: line-through">
                     <span class="strong-heavy price-item">{{ $item['config_current']['Price']['ConvertedPriceWithoutSign'] }}</span><small>{{ $item['config_current']['Price']['CurrencySign'] }}</small>
                 </p>
                 <p class="cost">

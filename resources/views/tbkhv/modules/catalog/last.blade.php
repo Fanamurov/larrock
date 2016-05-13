@@ -16,7 +16,7 @@
                 </a>
             </p>
             @if(isset($data_value->PromotionPrice->OriginalPrice))
-                <p class="cost">{{ (string)$data_value->PromotionPrice->OriginalPrice }} {{ (string)$data_value->Price->CurrencySign }}</p>
+                <p class="cost">{{ (string)$data_value->PromotionPrice->ConvertedPriceList->DisplayedMoneys->Money }} {{ (string)$data_value->Price->CurrencySign }}</p>
             @else
                 <p class="cost">{{ (string)$data_value->Price->ConvertedPriceWithoutSign }} {{ (string)$data_value->Price->CurrencySign }}</p>
             @endif

@@ -17,8 +17,10 @@
     }
   }
   .cost{
-    text-align: center;
-    font-size: 19px;
+	text-align: center;
+	font-size: 19px;
+	line-height: 18px;
+	padding-bottom: 3px;
   }
   .vendor{
     font-style: italic;
@@ -27,10 +29,6 @@
 
 .catalog-frontpage-content{
   padding: 7px 25px;
-  p.cost{
-	padding-bottom: 0;
-	margin-bottom: 0;
-  }
 }
 
 .mainpage-menus .nav-left .menu__wrap{

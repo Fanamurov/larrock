@@ -17,10 +17,11 @@
             </p>
 
             @if(isset($data_value->PromotionPrice->OriginalPrice))
-                <p class="cost">{{ (string)$data_value->PromotionPrice->OriginalPrice }} {{ (string)$data_value->Price->CurrencySign }}</p>
+                <p class="cost">{{ (string)$data_value->PromotionPrice->ConvertedPriceList->DisplayedMoneys->Money }} <small>{{ (string)$data_value->Price->CurrencySign }}</small></p>
             @else
-                <p class="cost">{{ (string)$data_value->Price->ConvertedPriceWithoutSign }} {{ (string)$data_value->Price->CurrencySign }}</p>
+                <p class="cost">{{ (string)$data_value->Price->ConvertedPriceWithoutSign }} <small>{{ (string)$data_value->Price->CurrencySign }}</small></p>
             @endif
+            <p>{{ mb_strimwidth((string)$data_value->Title, 0, 45, '...') }}</p>
 
             <p class="vendor">
                 @for($i=0; $i < ceil((string)$data_value->VendorScore/5); $i++)

@@ -28,9 +28,15 @@
         </td>
         <td width="200">
             @if($app['name'] === 'tours')
-                <a href="/strany/{{ $data_value->url }}">
-                    /tours/strany/{{ $data_value->url }}
-                </a>
+                @if($data_value->parent === 377)
+                    <a href="/strany/{{ $data_value->url }}">
+                        /tours/vidy-otdykha/{{ $data_value->url }}
+                    </a>
+                @else
+                    <a href="/strany/{{ $data_value->url }}">
+                        /tours/strany/{{ $data_value->url }}
+                    </a>
+                @endif
             @else
                 <a href="/{{ $app['name'] }}/{{ $data_value->url }}">
                     /{{ $app['name'] }}/{{ $data_value->url }}

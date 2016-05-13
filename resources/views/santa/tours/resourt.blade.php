@@ -1,5 +1,6 @@
 @extends('santa.main')
 @section('title') {{ $data->title }} {{ $data->get_parent->title }} @endsection
+@section('description') {!! strip_tags($data->short) !!} @endsection
 
 @section('content')
     <div class="toursPageCountry row">
@@ -142,7 +143,7 @@
             @push('scripts')
                 <script>
                     $(document).ready(function(){
-                        GetLoadStateShort({{ $GetTours['requestId'] }}, 20, 3);
+                        GetLoadStateShort({{ $GetTours['requestId'] }}, 20, 4);
                     });
                 </script>
             @endpush

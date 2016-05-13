@@ -1,5 +1,6 @@
 @extends('santa.main')
 @section('title') {{ $data->title }} @endsection
+@section('description') {!! strip_tags($data->short) !!} @endsection
 
 @section('content')
     <div class="pageBlogItem">

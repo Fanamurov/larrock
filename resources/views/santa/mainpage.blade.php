@@ -39,7 +39,7 @@
                         @push('scripts')
                         <script>
                             $(document).ready(function(){
-                                GetLoadStateShort({{ $GetTours['requestId'] }}, 20, 3);
+                                GetLoadStateShort({{ $GetTours['requestId'] }}, 20, 8);
                             });
                         </script>
                         @endpush

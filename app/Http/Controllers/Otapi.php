@@ -197,6 +197,9 @@ class Otapi extends Controller
         $body = Cache::remember('catalog'.$categoryId.$itemId, 60, function() use($categoryId, $itemId){
             $body['category'] = $this->create_request('GetCategoryInfo', ['categoryId' => $categoryId]);
             $body['data'] = $this->create_request('BatchGetItemFullInfo', ['itemId' => $itemId, 'blockList' => 'Promotions,RootPath', 'sessionId' => mt_rand(100000,99999999)]);
+			if( !isset($body['data']->Result)){
+				abort(404, 'Такого такого больше нет :(');
+			}
             $body['GetItemDescription'] = $this->create_request('GetItemDescription', ['itemId' => $itemId]);
             //$body['opinions'] = $this->create_request('GetTradeRateInfoListFrame', ['itemId' => $itemId, 'framePosition' => 0, 'frameSize' => 32]);
             $body['vendorTovars'] = $this->create_request('GetVendorItemInfoSortedListFrame',

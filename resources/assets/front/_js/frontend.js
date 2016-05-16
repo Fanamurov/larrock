@@ -53,6 +53,7 @@ $(document).ready(function(){
                 }
                 if(res.status === 'Update'){
                     $('.btn-add-to-cart').removeAttr('disabled');
+                    $('.btn-add-to-cart').attr('data-price', res.data.Price);
                     $('input[name=config_current]').val(res.data.config_current);
                     $('.price-item').html(res.data.Price);
                     $('.pricePromo-item').html(res.data.promoPrice);
@@ -128,7 +129,8 @@ $(document).ready(function(){
                     $('.btn-to-cart-link').removeClass('hidden').html('Переходим к корзине...');
                     window.location = '/cart';
                 }
-                //TODO: Обновление модуля при "Корзина пуста"
+                $('.empty_cart-text').html('<a href="/cart"><i class="fa fa-shopping-cart"></i> Товаров на сумму '+ res +' руб. (1 шт.)</a>');
+                $('.empty_cart-text').removeClass('.empty_cart-text');
                 $('.total_cart').html(res);
                 $('.btn-add-to-cart').hide('slow');
                 $('.btn-to-cart-link').removeClass('hidden');

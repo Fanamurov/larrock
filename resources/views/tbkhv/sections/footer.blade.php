@@ -9,7 +9,7 @@
                     680024, РОССИЯ, Хабаровск, проспект 60-летия Октября, 148Ж
                 </p>
                 <p>Email: <a href="mailto:tbkhv@mail.ru">tbkhv@mail.ru</a></p>
-                <p>Телефон: 8 914 160-00-02</p>
+                <p>Телефон: 8 914 190-00-02</p>
             </address>
             <script type="text/javascript" charset="utf-8" src="https://api-maps.yandex.ru/services/constructor/1.0/js/?sid=b_6D-D2f45c9m5pJGmxy2uMSC4kf4Dmi&width=100%&height=200&lang=ru_RU&sourceType=constructor"></script>
             <p>Powered by © OT Commerce <a href="http://otcommerce.com/" target="_blank">otcommerce.com</a></p>

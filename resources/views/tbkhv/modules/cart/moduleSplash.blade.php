@@ -1,6 +1,6 @@
 <div class="moduleCart">
     @if(Cart::count() < 1)
-        <p><i class="fa fa-shopping-cart"></i> Корзина пока пуста</p>
+        <p class="empty_cart-text"><i class="fa fa-shopping-cart"></i> Корзина пока пуста</p>
     @else
         <p><a href="/cart">
                 <i class="fa fa-shopping-cart"></i>

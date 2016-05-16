@@ -138,12 +138,13 @@ class Otapi extends Controller
         $body['selected_filters'] = ['0' => 'test'];
         foreach ($request->all() as $key => $filter){
 			$key = str_replace('TTT', '', $key);
-            if ($key !== '_token' && $key !== 'filter' && $key !== 'sort' && !empty($filter)){
+            if ($key !== '_token' && $key !== 'filter' && $key !== 'sort' && $key !== 'page' && !empty($filter)){
                 $search_params .= '<Configurator Pid="'. $key .'" Vid="'. $filter .'"/>';
                 $body['selected_filters'][] = $filter;
             }
         }
         $search_params .= '</Configurators><OrderBy>'. $request->get('sort', 'Price:Asc') .'</OrderBy></SearchParameters>';
+
 
         $body['data'] = $this->create_request('FindCategoryItemInfoListFrame', [
             'categoryId' => $categoryId,
@@ -192,12 +193,12 @@ class Otapi extends Controller
      */
     public function get_tovar($categoryId = 'otc-3035', $itemId = 45199342419)
     {
-		//Cache::forget('catalog'.$categoryId.$itemId);
+		Cache::forget('catalog'.$categoryId.$itemId);
         $body = Cache::remember('catalog'.$categoryId.$itemId, 60, function() use($categoryId, $itemId){
             $body['category'] = $this->create_request('GetCategoryInfo', ['categoryId' => $categoryId]);
             $body['data'] = $this->create_request('BatchGetItemFullInfo', ['itemId' => $itemId, 'blockList' => 'Promotions,RootPath', 'sessionId' => mt_rand(100000,99999999)]);
             $body['GetItemDescription'] = $this->create_request('GetItemDescription', ['itemId' => $itemId]);
-            $body['opinions'] = $this->create_request('GetTradeRateInfoListFrame', ['itemId' => $itemId, 'framePosition' => 0, 'frameSize' => 32]);
+            //$body['opinions'] = $this->create_request('GetTradeRateInfoListFrame', ['itemId' => $itemId, 'framePosition' => 0, 'frameSize' => 32]);
             $body['vendorTovars'] = $this->create_request('GetVendorItemInfoSortedListFrame',
                 ['vendorId' => (string)$body['data']->Result->Item->VendorId, 'framePosition' => 0, 'frameSize' => 6, 'sortingParameters' => '']);
             $body['vendor'] = $this->create_request('GetVendorInfo', ['vendorId' => (string)$body['data']->Result->Item->VendorId]);
@@ -266,9 +267,20 @@ class Otapi extends Controller
                 }
             }else{
                 $body['item']['config_current'] = $body['item']['configs'];
-                $Pid = $body['item']['configs']['Configurators']['ValuedConfigurator']['@attributes']['Pid'];
-                $Vid = $body['item']['configs']['Configurators']['ValuedConfigurator']['@attributes']['Vid'];
-                $body['item']['config_current']['bucket'][$Pid] = $Vid;
+                //dd($Pid = $body['item']['configs']['Configurators']['ValuedConfigurator']);
+                if( !isset($body['item']['configs']['Configurators']['ValuedConfigurator']['@attributes'])){
+                    //dd($body['item']['configs']['Configurators']['ValuedConfigurator']);
+                    //1627207
+                    foreach ($body['item']['configs']['Configurators']['ValuedConfigurator'] as $val){
+                        $Pid = $val['@attributes']['Pid'];
+                        $Vid = $val['@attributes']['Vid'];
+                        $body['item']['config_current']['bucket'][$Pid] = $Vid;
+                    }
+                }else{
+                    $Pid = $body['item']['configs']['Configurators']['ValuedConfigurator']['@attributes']['Pid'];
+                    $Vid = $body['item']['configs']['Configurators']['ValuedConfigurator']['@attributes']['Vid'];
+                    $body['item']['config_current']['bucket'][$Pid] = $Vid;
+                }
             }
 		}
 

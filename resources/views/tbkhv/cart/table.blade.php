@@ -54,7 +54,7 @@
 
         <div class="form-order">
             <h2 class="text-center">Ваши контактные данные для заказа</h2><br/>
-            <form action="/form/order" method="post" class="row">
+            <form action="/form/order" method="post" class="row" id="form-zakaz">
                 <div class="col-sm-8 col-sm-offset-1">
                     <div class="form-group">
                         <label class="control-label">Ваше ФИО:</label>
@@ -118,3 +118,7 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    {!! JsValidator::formRequest('App\Http\Requests\ZakazRequest', '#form-zakaz') !!}
+@endpush

@@ -96,5 +96,6 @@
 <a href="#all" title="Переместиться наверх страницы" id="toTop"></a>
 @include('tbkhv.sections.footer')
 @include('tbkhv.sections.bottomScripts')
+@stack('scripts')
 </body>
 </html>

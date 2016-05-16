@@ -29,7 +29,7 @@ class NewsController extends Controller
 		$page = $request->get('page', 1);
 		Cache::forget('news_index'.$page);
 		$data = Cache::remember('news_index'.$page, 1440, function() use ($page) {
-			$data['data'] = News::whereActive(1)->orderBy('updated_at', 'desc')->skip(($page-1)*20)->paginate(20);
+			$data['data'] = News::whereActive(1)->orderBy('updated_at', 'desc')->skip(($page-1)*8)->paginate(8);
 			$data['category'] = Category::whereType('news')->first();
 		    return $data;
 		});

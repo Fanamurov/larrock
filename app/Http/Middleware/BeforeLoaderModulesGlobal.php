@@ -33,7 +33,7 @@ class BeforeLoaderModulesGlobal
         $module_strany = Cache::remember('module_strany', 60*24, function() {
             return Category::whereParent(308)->whereActive(1)->with(['get_childActive'])->orderBy('position', 'DESC')->get();
         });
-        View::share('module_strany', $module_strany);
+        //View::share('module_strany', $module_strany);
 
         MenuApp::create('navbar', function($menu) use ($module_vidy, $module_strany)
         {

@@ -1,6 +1,6 @@
 @extends('santa.sletat')
 @section('title')
-    Бронирование тура {{ $item['data'][3] }} {{ $item['data'][1] }} - {{ $item['data'][0] }}({{ $item['data'][2] }})
+    Бронирование тура {{ $item['data'][3] }} {{ $item['data'][1] }} - {{ $item['data'][0] }} ({{ $item['data'][2] }})
 @endsection
 
 @section('content')
@@ -68,9 +68,6 @@
                         @endif
                     </div>
 
-                    @if( !empty($item['data'][43]))
-                        <div><small class="muted">Сайт отеля:</small> <a href="{{ $item['data'][43] }}">{{ $item['data'][43] }}</a></div>
-                    @endif
                     <div><small class="muted">Вылет:</small> {{ $item['data'][4] }}</div>
                     <div><small class="muted">Обратно:</small> {{ $item['data'][10] }}</div>
                     <div><small class="muted">Ночей:</small> {{ $item['data'][5] }}</div>
@@ -79,63 +76,25 @@
                     <div><small class="muted">Тип питания:</small> {{ $item['data'][11] }} ({{ $item['data'][49] }})</div>
                 </div>
                 <div class="col-sm-12">
-                    @if($item['data'][13] !== '0')
-                        <div><strong>Нет доступных мест в отеле</strong></div>
-                    @else
-                        <div><strong>Есть свободные номера</strong></div>
-                    @endif
-
-                    @if($item['data'][14] === '-1')
-                        <div><small class="muted">Билеты эконом-класса(туда):</small> нет</div>
-                    @elseif($item['data'][14] === '0')
-                        <div><small class="muted">Билеты эконом-класса(туда):</small> нет</div>
-                    @else
-                        <div><small class="muted">Билеты эконом-класса(туда):</small> {{ $item['data'][14] }}</div>
-                    @endif
-
-                    @if($item['data'][15] === '-1')
-                        <div><small class="muted">Билеты эконом-класса(обратно):</small> нет</div>
-                    @elseif($item['data'][15] === '0')
-                        <div><small class="muted">Билеты эконом-класса(обратно):</small> нет</div>
-                    @else
-                        <div><small class="muted">Билеты эконом-класса(обратно):</small> {{ $item['data'][14] }}</div>
-                    @endif
-
-                    @if($item['data'][16] === '-1')
-                        <div><small class="muted">Билеты бизнес-класса(туда):</small> нет</div>
-                    @elseif($item['data'][16] === '0')
-                        <div><small class="muted">Билеты бизнес-класса(туда):</small> нет</div>
-                    @else
-                        <div><small class="muted">Билеты бизнес-класса(туда):</small> {{ $item['data'][14] }}</div>
-                    @endif
-
-                    @if($item['data'][17] === '-1')
-                        <div><small class="muted">Билеты бизнес-класса(обратно):</small> нет</div>
-                    @elseif($item['data'][17] === '0')
-                        <div><small class="muted">Билеты бизнес-класса(обратно):</small> нет</div>
-                    @else
-                        <div><small class="muted">Билеты бизнес-класса(обратно):</small> {{ $item['data'][14] }}</div>
-                    @endif
+                    <div><strong>Есть свободные номера</strong></div>
 
                     <div class="cost-info">В стоимость входит авиаперелёт, проживание, трансфер, питание, медицинская
                         страховка, услуги гида, страхование ответственности туроператора</div>
 
                     <div class="cost"><small class="muted">Цена:</small> {{ $item['data'][19] }} {{ $item['data'][21] }}</div>
 
-                    @if($item['data'][13] === '0')
-                        <div class="row row-buttons">
-                            <div class="col-sm-12">
-                                <button type="button" class="btn btn-default btn-block btn-show-online"
-                                        data-toggle="collapse" data-target="#collapsesletatOrderFull" aria-expanded="true"
-                                        aria-controls="collapsesletatOrderFull">Купить онлайн</button>
-                            </div>
-                            <div class="col-sm-12">
-                                <button type="button" class="btn btn-default btn-block btn-show-office"
-                                        data-toggle="collapse" data-target="#collapsesletatOrderShort" aria-expanded="true"
-                                        aria-controls="collapsesletatOrderShort">Купить в офисе</button>
-                            </div>
+                    <div class="row row-buttons">
+                        <div class="col-sm-12">
+                            <button type="button" class="btn btn-default btn-block btn-show-online"
+                                    data-toggle="collapse" data-target="#collapsesletatOrderFull" aria-expanded="true"
+                                    aria-controls="collapsesletatOrderFull">Купить онлайн</button>
                         </div>
-                    @endif
+                        <div class="col-sm-12">
+                            <button type="button" class="btn btn-default btn-block btn-show-office"
+                                    data-toggle="collapse" data-target="#collapsesletatOrderShort" aria-expanded="true"
+                                    aria-controls="collapsesletatOrderShort">Купить в офисе</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -31,12 +31,12 @@
             <div class="col-xs-24 col-sm-8">
                 <p><i class="fi flaticon-hands"></i>
                     <span class="h2">У нас в офисе:</span><br/>
-                    <a href="#">Показать на карте</a></p>
+                    <a href="/page/kontakty">Показать на карте</a></p>
             </div>
             <div class="col-xs-24 col-sm-8">
                 <p><i class="fi flaticon-computer"></i>
                     <span class="h2">Через Интернет:</span><br/>
-                    <a href="/">http://www.santa-avia.ru/</a> </p>
+                    <span>http://www.santa-avia.ru/</span>
             </div>
         </div>
     </div>

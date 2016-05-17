@@ -1,12 +1,19 @@
 @if($GetTours['iTotalDisplayRecords'] > 1)
 <div class="toursPageCountry-bestcost row">
-    <div class="col-xs-24"><h5 class="title-header">Лучшие цены <a class="pull-right" href="/sletat">Все туры</a></h5></div>
+    <div class="col-xs-24"><h5 class="title-header">Лучшие цены <a class="pull-right" target="_blank" href="/sletat?cityFromId=1286&countryId=113&s_adults=2&s_kids=">Все туры</a></h5></div>
     <ul class="list-unstyled search-result">
         @foreach($GetTours['aaData'] as $item)
             <li class="col-xs-24 col-sm-6 bestcost-row">
                 <div class="col-xs-24">
-                    <p class="h4">{{ $item[7] }} @if($item[8] !== '0.0'){{ $item[8] }}@endif ({{ $item[19] }})</p>
-                    <div class="hotel-stars hidden">
+                <div class="col-sm-24 search-result-photo">
+                    @if( !empty($item[29]))
+                        <img src="{{ str_replace('_0.jpg', '_0_250_250.jpg', $item[29]) }}" align="Hotel" class="all-width hidden-xs hidden-sm">
+                    @else
+                        <img src="/_assets/_santa/_images/empty_big.png" alt="Нет фото" class="categoryImage categoryImage-empty all-width hidden-xs hidden-sm">
+                    @endif
+                </div>
+                <p class="h4 col-xs-24">{{ $item[7] }}</p>
+                    <div class="hotel-stars col-xs-24">
                         @if($item[8] === '*')
                             <i class="glyphicon glyphicon-star"></i>
                         @elseif($item[8] === '2*')
@@ -31,25 +38,10 @@
                     </div>
                 </div>
                 <div class="col-sm-24">
-                    @if( !empty($item[29]))
-                        <img src="{{ str_replace('_0.jpg', '_0_250_250.jpg', $item[29]) }}" align="Hotel" class="all-width hidden-xs hidden-sm">
-                    @else
-                        <img src="/_assets/_santa/_images/empty_big.png" alt="Нет фото" class="categoryImage categoryImage-empty all-width hidden-xs hidden-sm">
-                    @endif
+                    <div class="col-md-24">{{ $item[33] }} - {{ $item[31] }}</div>
                 </div>
                 <div class="col-sm-24">
-                    <div><small>Тур:</small> {{ $item[33] }} - {{ $item[31] }}({{ $item[19] }})</div>
-                </div>
-                <div class="col-sm-24">
-                    <div><small class="muted">Тип размещения:</small> {{ $item[11] }} {{ $item[16] }} взрослых</div>
-                    <div><small class="muted">Питание:</small> {{ $item[10] }} ({{ $item[36] }})</div>
-                </div>
-                <div class="col-sm-24">
-                    <div><small class="muted">Вылет:</small> {{ $item[12] }}</div>
-                    <div><small class="muted">Ночей:</small> {{ $item[14] }}</div>
-                    @if($item[22] === '1')
-                        <div class="hidden"><strong>Перелет включен в стоимость тура</strong></div>
-                    @endif
+                    <div class="col-md-24">с {{ $item[12] }} на {{ $item[14] }} ночей</div>
                     <br/>
                     <p class="cost">{{ $item[42] }} {{ $item[43] }}</p>
                     <form action="{{ route('sletat.ActualizePrice') }}" method="get" target="_blank">

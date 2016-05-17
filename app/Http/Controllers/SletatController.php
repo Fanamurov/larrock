@@ -46,9 +46,6 @@ class SletatController extends Controller
 		}
 
 		if(isset($countryFind)){
-			if($countryFind === 'Таиланд'){
-				$countryFind = 'Тайланд';
-			}
 			$data['siteSearch']['categories'] = Category::search($countryFind)->with(['get_toursActive', 'get_childActive.get_toursActive'])->get();
 		}
 

@@ -16,11 +16,10 @@
         </div>
         <div class="col-md-5">
             <div class="form-group">
-                <label class="control-label" for="form-searchTour-resort">Курорт:</label>
-                <select name="resort" class="form-control" id="form-searchTour-resort">
-                    <option value="">любой</option>
-                    @foreach($siteSearch['resorts'] as $item)
-                        <option value="{{ $item->id }}">{{ $item->title }}</option>
+                <label class="control-label" for="form-searchTour-country">Страна:</label>
+                <select name="country" class="form-control" id="form-searchTour-country">
+                    @foreach($siteSearch['countries'] as $item)
+                        <option value="{{ $item->id }}" @if($item->id === 376) selected @endif>{{ $item->title }}</option>
                     @endforeach
                 </select>
             </div>
@@ -30,9 +29,10 @@
         </div>
         <div class="col-md-5">
             <div class="form-group">
-                <label class="control-label" for="form-searchTour-country">Страна:</label>
-                <select name="country" class="form-control" id="form-searchTour-country">
-                    @foreach($siteSearch['countries'] as $item)
+                <label class="control-label" for="form-searchTour-resort">Курорт:</label>
+                <select name="resort" class="form-control" id="form-searchTour-resort">
+                    <option value="">любой</option>
+                    @foreach($siteSearch['resorts'] as $item)
                         <option value="{{ $item->id }}">{{ $item->title }}</option>
                     @endforeach
                 </select>

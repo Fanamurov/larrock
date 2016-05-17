@@ -184,8 +184,8 @@ class ToursController extends Controller
         $data['GetTours'] = Cache::remember('best_cost'. $data['data']->id, 1440, function() use ($sletat, $sletat_id) {
 			$params['s_nightsMin'] = '7';
 			$params['s_nightsMax'] = '29';
-			$params['s_adults'] = '1';
-            return $sletat->GetTours(1286, $sletat_id, $params, 3);
+			$params['s_adults'] = '2';
+            return $sletat->GetTours(1286, $sletat_id, $params, 4);
         });
 		if($data['GetTours']['iTotalRecords'] < 1){
 			Cache::forget('best_cost'. $data['data']->id);
@@ -239,8 +239,8 @@ class ToursController extends Controller
         $data['GetTours'] = Cache::remember('best_cost'. $data['data']->id, 1440, function() use ($sletat, $sletat_id) {
             $params['s_nightsMin'] = '7';
             $params['s_nightsMax'] = '29';
-            $params['s_adults'] = '1';
-            return $sletat->GetTours(1286, $sletat_id, $params, 3);
+            $params['s_adults'] = '2';
+            return $sletat->GetTours(1286, $sletat_id, $params, 4);
         });
 		if($data['GetTours']['iTotalRecords'] < 1){
 			Cache::forget('best_cost'. $data['data']->id);

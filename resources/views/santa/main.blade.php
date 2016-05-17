@@ -11,9 +11,6 @@
                 @include('santa.modules.forms.subscribe')
                 @yield('rightColomn')
                 @include('santa.modules.list.vidy')
-                @if(isset($module_strany))
-                    @include('santa.modules.list.strany')
-                @endif
             </div>
         </section>
         <div class="col-xs-24 col-sm-16 col-md-17">

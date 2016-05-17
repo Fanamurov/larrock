@@ -77,9 +77,6 @@
                         <button type="submit" class="btn btn-default btn-block">Подробнее</button>
                     </form>
                 </div>
-                <div class="col-xs-24 hotel-description">
-                    <div>{{ $item[38] }}</div>
-                </div>
                 <div class="clearfix"></div><br/><br/>
             </li>
         @endforeach

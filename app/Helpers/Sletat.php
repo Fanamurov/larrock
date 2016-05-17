@@ -318,6 +318,13 @@ class Sletat{
 		//dd($this->url);
 		$result = $this->sendRequest();
 		//dd($result->GetToursResult->Data);
+		foreach($result->GetToursResult->Data->aaData as $key => $value){
+			$result->GetToursResult->Data->aaData[$key][7] = str_replace('1*', '', $value[7]);
+			$result->GetToursResult->Data->aaData[$key][7] = str_replace('2*', '', $value[7]);
+			$result->GetToursResult->Data->aaData[$key][7] = str_replace('3*', '', $value[7]);
+			$result->GetToursResult->Data->aaData[$key][7] = str_replace('4*', '', $value[7]);
+			$result->GetToursResult->Data->aaData[$key][7] = str_replace('5*', '', $value[7]);
+		}
 		return collect($result->GetToursResult->Data);
 	}
 

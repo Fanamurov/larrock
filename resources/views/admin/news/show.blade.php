@@ -46,13 +46,13 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
+                    <th></th>
                     @foreach($app['rows'] as $rows_name)
                         @if(isset($rows_name['in_table_admin']))
                             <th>{{ $rows_name['title'] }}</th>
                         @endif
                     @endforeach
                     <th>URL</th>
-                    <th width="141">Изменено</th>
                     <th width="90">Порядок</th>
                     <th width="93"></th>
                     <th width="90"></th>
@@ -62,12 +62,25 @@
                 <tbody>
                 @foreach($data as $data_value)
                     <tr>
+                        <td>
+                            @if($data_value->getFirstImage)
+                                <img src="{{ $data_value->getFirstImage->getUrl('110x110') }}">
+                            @else
+                                <i class="icon-padding icon-color glyphicon glyphicon-file"></i>
+                            @endif
+                        </td>
                         @foreach($app['rows'] as $rows_key => $rows_name)
                             @if(isset($rows_name['in_table_admin']))
                                 <td class="row-{{ $rows_key }}">
                                     @if($rows_key === 'title')
-                                        <a href="/admin/{{ $app['name'] }}/{{ $data_value->id }}/edit">{{ $data_value->$rows_key }}</a>
-                                        <p>Автор: {{ $current_user->first_name }} {{ $current_user->last_name }}</p>
+                                        <a class="h4" href="/admin/{{ $app['name'] }}/{{ $data_value->id }}/edit">{{ $data_value->$rows_key }}</a>
+                                        <p title="{{ $data_value->updated_at }}">
+                                            @if($data_value->user)
+                                                <i class="text-muted">Автор:
+                                                    <a href="/admin/tours/author/{{ $data_value->user_id }}">
+                                                        {{ $data_value->user->first_name }} {{ $data_value->user->last_name }}</a><br/>
+                                                    @endif
+                                                    {!! \Carbon\Carbon::createFromTimestamp(strtotime($data_value->updated_at))->diffForHumans(\Carbon\Carbon::now()) !!}</i></p>
                                     @else
                                         {{ $data_value->$rows_key }}
                                     @endif
@@ -79,7 +92,6 @@
                                 /news/{{ $category->url}}/{{ $data_value->url }}
                             </a>
                         </td>
-                        <td class="row-updated_at">{{ $data_value->updated_at }}</td>
                         <td class="row-position">
                             <input type="text" name="position" value="{{ $data_value->position }}" class="ajax_edit_row form-control"
                                    data-row_where="id" data-value_where="{{ $data_value->id }}" data-table="{{ $app['table_content'] }}"

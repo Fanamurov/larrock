@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
@@ -89,5 +90,15 @@ class Blog extends Model implements HasMediaConversions
 	public function get_seo()
 	{
 		return $this->hasOne('App\Models\Seo', 'id_connect', 'id');
+	}
+
+	public function getFirstImage()
+	{
+		return $this->hasOne('Spatie\MediaLibrary\Media', 'model_id', 'id')->where('model_type', '=', 'App\Models\Blog')->orderBy('order_column', 'DESC');
+	}
+
+	public function getUserAttribute()
+	{
+		return User::whereId($this->user_id)->first();
 	}
 }

@@ -24,6 +24,7 @@
                 <table class="table table-striped table-hover">
                     <thead>
                     <tr>
+                        <th></th>
                         <th>Название</th>
                         <th>URL</th>
                         <th width="90">Порядок</th>

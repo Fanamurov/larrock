@@ -6,14 +6,34 @@
 @endif
 @foreach($data as $data_value)
     <tr>
-        <td><a class="h4" href="/admin/{{ $app['name'] }}/{{ $data_value->id }}">
+        <td width="110">
+            <a href="/admin/category/{{ $data_value->id }}">
                 @if($data_value->getFirstMediaUrl('images', '110x110'))
                     <img src="{{ $data_value->getFirstMediaUrl('images', '110x110') }}">
                 @else
                     <i class="icon-padding icon-color glyphicon glyphicon-file"></i>
                 @endif
+            </a>
+        </td>
+        <td>
+            <a class="h4" href="/admin/{{ $app['name'] }}/{{ $data_value->id }}">
                 {{ $data_value->title }}
             </a>
+            @if(count($data_value->get_child) > 0)
+                <p class="text-muted">
+                    @foreach($data_value->get_child as $child)
+                        <span>{{ $child->title }},</span>
+                    @endforeach
+                </p>
+            @endif
+            <p title="{{ $data_value->updated_at }}">
+                @if($data_value->user)
+                    <i class="text-muted">Автор:
+                        <a href="/admin/tours/author/{{ $data_value->user_id }}">
+                            {{ $data_value->user->first_name }} {{ $data_value->user->last_name }}</a><br/>
+                        @endif
+                        {!! \Carbon\Carbon::createFromTimestamp(strtotime($data_value->updated_at))->diffForHumans(\Carbon\Carbon::now()) !!}</i></p>
+            <div class="clearfix"></div>
         </td>
         <td>
             <a href="/{{ $app['name'] }}/{{ $data_value->url }}">

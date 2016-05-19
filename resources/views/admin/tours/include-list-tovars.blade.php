@@ -3,8 +3,8 @@
     <tr>
         <td width="110">
             <a href="/admin/tours/{{ $data_value->id }}/edit">
-                @if($data_value->image)
-                    <img src="{{ $data_value->image->getUrl('110x110') }}">
+                @if($data_value->getFirstImage)
+                    <img src="{{ $data_value->getFirstImage->getUrl('110x110') }}">
                 @else
                     <i class="icon-padding icon-color glyphicon glyphicon-file"></i>
                 @endif
@@ -14,8 +14,13 @@
             <a class="h4" href="/admin/tours/{{ $data_value->id }}/edit">
                 {{ $data_value->title }}
             </a>
-            <p title="{{ $data_value->updated_at }}"><i class="text-muted">Автор: {{ $current_user->first_name or 'Не известен' }} {{ $current_user->last_name }}<br/>
-                    {!! \Carbon\Carbon::createFromTimestamp(strtotime($data_value->updated_at))->diffForHumans(\Carbon\Carbon::now()) !!}</i></p>
+            <p title="{{ $data_value->updated_at }}">
+                @if($data_value->user)
+                    <i class="text-muted">Автор:
+                        <a href="/admin/tours/author/{{ $data_value->user_id }}">
+                            {{ $data_value->user->first_name }} {{ $data_value->user->last_name }}</a><br/>
+                        @endif
+                        {!! \Carbon\Carbon::createFromTimestamp(strtotime($data_value->updated_at))->diffForHumans(\Carbon\Carbon::now()) !!}</i></p>
         </td>
         <td width="200">
             <a href="/tours/strany/{{ $data_value->get_category()->first()->url }}/{{ $data_value->url }}">

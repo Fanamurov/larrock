@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Sofa\Eloquence\Eloquence;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
@@ -169,6 +170,11 @@ class Category extends Model implements HasMediaConversions
 	public function getClassElementAttribute()
 	{
 		return 'category';
+	}
+
+	public function getUserAttribute()
+	{
+		return User::whereId($this->user_id)->first();
 	}
 
 	public function get_tours()

@@ -86,7 +86,7 @@ class AdminCategoryController extends Controller
 		$data->fill($request->all());
 		$data->active = $request->input('active', 0);
 		$data->position = $request->input('position', 0);
-		$data->to_rss = $request->input('to_rss', 0);
+		$data->to_rss = $request->input('to_rss', 1);
 		$data->user_id = $this->current_user->id;
 
 		if($request->input('parent') !== 0){
@@ -223,7 +223,7 @@ class AdminCategoryController extends Controller
 		$data = Category::find($id);
 		$data->user_id = $this->current_user->id;
 		$data->active = $request->input('active', 0);
-		$data->to_rss = $request->input('to_rss', 0);
+		$data->to_rss = $request->input('to_rss', 1);
 
 		if($data->fill($request->all())->save()){
 			Alert::add('success', 'Материал '. $request->input('title') .' изменен')->flash();

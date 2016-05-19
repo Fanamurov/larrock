@@ -162,6 +162,12 @@ Route::group(['prefix' => 'admin', 'middleware'=>'level:2'], function(){
 	Route::resource('blog', 'Admin\AdminBlogController');
 	Route::resource('news', 'Admin\AdminNewsController');
 	Route::resource('visa', 'Admin\AdminVisaController');
+	Route::get('tours/all', [
+		'as' => 'all.tours.admin', 'uses' => 'Admin\AdminToursController@showTours'
+	]);
+	Route::get('tours/author/{userId}', [
+		'as' => 'author.tours.admin', 'uses' => 'Admin\AdminToursController@getAuthor'
+	]);
 	Route::resource('tours', 'Admin\AdminToursController');
 	Route::post('/tours/search', [
 		'as' => 'admin.tours.search', 'uses' => 'Admin\AdminToursController@search'

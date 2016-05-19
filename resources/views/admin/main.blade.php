@@ -56,7 +56,7 @@
 
             <div class="footer">
                 <div class="pull-right">
-                    Проект <a href="http://test.ru">test.ru</a>
+                    Проект <a href="http://santa-avia.ru">santa-avia.ru</a>
                 </div>
                 <div>
                     <strong>Copyright</strong> LarRock v.1 © 2015-{!! date('Y') !!}

@@ -79,9 +79,16 @@ return [
 			'valid' => 'integer|max:1',
 			'default' => 1
 		],
+		'actual' => [
+			'title' => 'Дата конца актуальности',
+			'type' => 'dateDay',
+			'tab' => ['other' => 'Дата, вес, активность'],
+			//'valid' => 'date_format:Y-m-d h:s:i'
+		],
 	],
 	'menu_category' => 'tours',
 	'admin_menu' => ['type' => 'category_list'],
+	'admin_menu_push' => ['Только туры' => '/admin/tours/all'],
 	'settings' => [],
 	'plugins_backend' => ['seo', 'images', 'files', 'templates'],
 	'plugins_front' => [],

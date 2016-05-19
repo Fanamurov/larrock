@@ -56,6 +56,14 @@ class FormBuilder implements FormBuilderInterface
         return View::make('formbuilder.input.date', ['row_key' => $row_key, 'row_settings' => $row_settings, 'data' => $data])->render();
 	}
 
+	public function dateDay($row_key, $row_settings, $data)
+	{
+		if( !isset($data->$row_key) && array_key_exists('default', $row_settings)){
+			$data->$row_key = $row_settings['default'];
+		}
+		return View::make('formbuilder.input.dateDay', ['row_key' => $row_key, 'row_settings' => $row_settings, 'data' => $data])->render();
+	}
+
 	public function checkbox($row_key, $row_settings, $data)
 	{
 		if( !isset($data->$row_key) && array_key_exists('default', $row_settings)){

@@ -69,7 +69,7 @@ class SletatController extends Controller
 
 	public function GetToursUpdatedShort(Request $request, Sletat $sletat, $requestId)
 	{
-		$data['GetTours'] = $sletat->GetToursUpdated($request, $requestId, 3);
+		$data['GetTours'] = $sletat->GetToursUpdated($request, $requestId, 4);
 		$data['full_load'] = 'TRUE';
 		$data['paginator']['all'] = $data['GetTours']['iTotalDisplayRecords'];
 		return view('santa.sletat.searchResultShort', $data);

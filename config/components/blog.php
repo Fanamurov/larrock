@@ -8,7 +8,6 @@ return [
 	'rows' => [
 		'title' => [
 			'title' => 'Заголовок',
-			'in_table_admin' => 'TRUE',
 			'type' => 'text',
 			'tab' => ['main' => 'Заголовок, описание'],
 			'valid' => 'max:255|required',
@@ -68,7 +67,7 @@ return [
 		],
 	],
 	'menu_category' => 'blog',
-	'admin_menu' => [],
+	'admin_menu' => ['type' => 'category_list'],
 	'settings' => [],
 	'plugins_backend' => ['seo', 'images', 'files', 'templates'],
 	'plugins_front' => [],

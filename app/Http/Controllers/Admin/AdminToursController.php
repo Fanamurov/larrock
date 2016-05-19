@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Admin\AdminBlocks\MenuBlock;
 use App\Models\Tours;
+use App\User;
 use Breadcrumbs;
 use Cache;
 use Illuminate\Contracts\Auth\Guard;
@@ -18,6 +19,7 @@ use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use JsValidator;
 use Alert;
 use Route;
+use Spatie\MediaLibrary\Media;
 use Validator;
 use Redirect;
 use View;
@@ -94,7 +96,7 @@ class AdminToursController extends Controller
 		$data = new Tours();
 		$data->fill($request->all());
 		$data->active = $request->input('active', 0);
-		$data->to_rss = $request->input('to_rss', 0);
+		$data->to_rss = $request->input('to_rss', 1);
 		$data->position = $request->input('position', 0);
 		$data->articul = 'AR'. $request->input('id');
 		$data->cost_notactive = $request->input('cost_notactive', 0);
@@ -127,12 +129,13 @@ class AdminToursController extends Controller
 	public function show($id, Request $request)
 	{
 		$paginate = 50;
+		//Cache::forget('admin_cat_tours'. $id);
 		$data = Cache::remember('admin_cat_tours'. $id, 60, function() use ($paginate, $id){
 			$data['app'] = $this->config;
 			$data['data'] = Category::whereId($id)->with(['get_tours' => function($query) use ($paginate)
 			{
-				$query->paginate($paginate);
-			}, 'get_child', 'get_parent'])->first();
+				$query->with('getFirstImage')->paginate($paginate);
+			}, 'get_child.get_parent', 'get_parent'])->first();
 
 			$data['data']['image'] = $data['data']->getMedia('images')->sortByDesc('order_column')->first();
 			foreach($data['data']->get_tours as $key => $tovar){
@@ -177,6 +180,21 @@ class AdminToursController extends Controller
 		});
 
 		return view('admin.tours.show', $data);
+	}
+	
+	public function showTours(Request $request)
+	{
+		$page = $request->get('page');
+		$data['data'] = Cache::remember('admin_all_tours'. $page, 1440, function() {
+		    return Tours::where('id', '>=', 0)->with('getFirstImage')->paginate(25);
+		});
+		$data['app'] = $this->config;
+
+		Breadcrumbs::register('all.tours.admin', function($breadcrumbs){
+			$breadcrumbs->push('Все туры', route('all.tours.admin'));
+		});
+		
+		return view('admin.tours.showTours', $data);
 	}
 
 	/**
@@ -250,7 +268,8 @@ class AdminToursController extends Controller
 
 		$data->fill($request->all());
 		$data->active = $request->input('active', 0);
-		$data->to_rss = $request->input('to_rss', 0);
+		$data->actual = $request->input('actual', '0000-00-00 00:00:00');
+		$data->to_rss = $request->input('to_rss', 1);
 		$data->cost_notactive = $request->input('cost_notactive', 0);
 		if($data->save()){
 			//Присоединяем разделы
@@ -303,5 +322,28 @@ class AdminToursController extends Controller
 		}
 		$data['categories'] = Category::search($request->get('search'))->get();
 		return view('admin.tours.search', $data);
+	}
+
+	/**
+	 * Получение всех материалов автора
+	 * @param Request $request
+	 */
+	public function getAuthor(Request $request, $userId)
+	{
+		Breadcrumbs::register('admin.tours.author', function($breadcrumbs)
+		{
+			$breadcrumbs->push('Лента активности');
+		});
+
+		$page = $request->get('page');
+		$data = Cache::remember('userActive'. $userId .''. $page, 60, function() use ($userId) {
+			$data['user'] = User::whereId($userId)->first();
+			$data['categories'] = Category::whereUserId($userId)->whereType('tours')->paginate(50);
+			$data['tours'] = Tours::whereUserId($userId)->paginate(50);
+			$data['app'] = $this->config;
+			return $data;
+		});
+
+		return view('admin.tours.author', $data);
 	}
 }

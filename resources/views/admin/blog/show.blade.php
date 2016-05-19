@@ -51,8 +51,9 @@
                             <th>{{ $rows_name['title'] }}</th>
                         @endif
                     @endforeach
+                    <th></th>
+                    <th>Название</th>
                     <th>URL</th>
-                    <th width="141">Изменено</th>
                     <th width="90">Порядок</th>
                     <th width="93"></th>
                     <th width="90"></th>
@@ -75,11 +76,31 @@
                             @endif
                         @endforeach
                         <td>
+                            <a href="/admin/{{ $app['name'] }}/{{ $data_value->id }}">
+                                @if($data_value->getFirstMediaUrl('images', '110x110'))
+                                    <img src="{{ $data_value->getFirstMediaUrl('images', '110x110') }}">
+                                @else
+                                    <i class="icon-padding icon-color glyphicon glyphicon-file"></i>
+                                @endif
+                            </a>
+                        </td>
+                        <td>
+                            <a class="h4" href="/admin/{{ $app['name'] }}/{{ $data_value->id }}">
+                                {{ $data_value->title }}
+                            </a>
+                            <p title="{{ $data_value->updated_at }}">
+                                @if($data_value->user)
+                                    <i class="text-muted">Автор:
+                                        <a href="/admin/tours/author/{{ $data_value->user_id }}">
+                                            {{ $data_value->user->first_name }} {{ $data_value->user->last_name }}</a><br/>
+                                        @endif
+                                        {!! \Carbon\Carbon::createFromTimestamp(strtotime($data_value->updated_at))->diffForHumans(\Carbon\Carbon::now()) !!}</i></p>
+                        </td>
+                        <td>
                             <a href="/blog/{{ $category->url}}/{{ $data_value->url }}">
                                 /blog/{{ $category->url}}/{{ $data_value->url }}
                             </a>
                         </td>
-                        <td class="row-updated_at">{{ $data_value->updated_at }}</td>
                         <td class="row-position">
                             <input type="text" name="position" value="{{ $data_value->position }}" class="ajax_edit_row form-control"
                                    data-row_where="id" data-value_where="{{ $data_value->id }}" data-table="{{ $app['table_content'] }}"

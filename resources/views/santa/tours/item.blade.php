@@ -45,7 +45,7 @@
                 </div>
             </div>
         </div>
-        @if($data->cost_notactive === 1)
+        @if($data->cost_notactive === 1 OR (($data->actual > \Carbon\Carbon::createFromFormat('Y-m-d h:s:i', '2015-01-01 00:00:00')) AND ($data->actual < \Carbon\Carbon::now())))
             <div class="clearfix"></div>
             <div class="block-cost_notactive">
                 <p>Цены не актуальны.<br/>

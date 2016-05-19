@@ -3,13 +3,29 @@
 
 @section('content')
     <div class="ibox float-e-margins">
+        <form action="/admin/tours/search" method="post">
+            <div class="input-group">
+                <input type="text" class="form-control" name="search" value="" placeholder="Название курорта/тура">
+                    <span class="input-group-btn">
+                        {{ csrf_field() }}
+                        <button type="submit" class="btn btn-default">Поиск</button>
+                  </span>
+            </div>
+        </form>
+    </div>
+
+    <div class="ibox float-e-margins">
         <div class="ibox-title background-transparent">
             {!! Breadcrumbs::render('admin.tours.edit', $data) !!}
             @if(count($data->get_category) > 1)
                 <div>Так же в разделах:</div>
                 @foreach($data->get_category as $category)
                     <ul>
-                        <li>{{ $category->title }}: <a href="/{{ $app['name'] }}/{{ $category->url }}/{{ $data->url }}">/{{ $app['name'] }}/{{ $category->url }}/{{ $data->url }}</a></li>
+                        @if($category->get_parent()->first()->id === 377)
+                            <li>{{ $category->title }}: <a href="/{{ $app['name'] }}/{{ $category->url }}">/{{ $app['name'] }}/{{ $category->url }}</a></li>
+                        @else
+                            <li>{{ $category->title }}: <a href="/{{ $app['name'] }}/{{ $category->url }}/{{ $data->url }}">/{{ $app['name'] }}/{{ $category->url }}/{{ $data->url }}</a></li>
+                        @endif
                     </ul>
                 @endforeach
             @endif

@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use App\User;
 use Sofa\Eloquence\Eloquence;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
+use Spatie\MediaLibrary\MediaRepository;
 
 class Tours extends Model implements HasMediaConversions
 {
@@ -33,7 +35,7 @@ class Tours extends Model implements HasMediaConversions
 
     protected $table = 'tours';
 
-	protected $fillable = ['title', 'short', 'description', 'url', 'position', 'active', 'forecast_url', 'map', 'cost_notactive', 'to_rss'];
+	protected $fillable = ['title', 'short', 'description', 'url', 'position', 'active', 'forecast_url', 'map', 'cost_notactive', 'to_rss', 'actual'];
 
 	protected $guarded = ['user_id'];
 
@@ -46,8 +48,24 @@ class Tours extends Model implements HasMediaConversions
 
 	protected $appends = [
 		'full_url',
-		'class_element'
+		'class_element',
+		'user'
 	];
+
+	protected $dates = [
+		'created_at',
+		'updated_at',
+		'actual'
+	];
+
+	public function setActualAttribute($value)
+	{
+		if($value === '-0001-11-30 00:00:00'){
+			$this->attributes['actual'] =  '0000-00-00 00:00:00';
+		}else{
+			$this->attributes['actual']  = $value;
+		}
+	}
 
 	public function get_category()
 	{
@@ -88,5 +106,20 @@ class Tours extends Model implements HasMediaConversions
 	public function getClassElementAttribute()
 	{
 		return 'tour';
+	}
+
+	public function getUserAttribute()
+	{
+		return User::whereId($this->user_id)->first();
+	}
+
+	public function getImages()
+	{
+		return $this->hasMany('Spatie\MediaLibrary\Media', 'model_id', 'id')->where('model_type', '=', 'App\Models\Tours');
+	}
+
+	public function getFirstImage()
+	{
+		return $this->hasOne('Spatie\MediaLibrary\Media', 'model_id', 'id')->where('model_type', '=', 'App\Models\Tours')->orderBy('order_column', 'DESC');
 	}
 }

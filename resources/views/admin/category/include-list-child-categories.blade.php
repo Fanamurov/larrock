@@ -23,19 +23,38 @@
             <a class="h4" href="/admin/{{ $app['name'] }}/{{ $data_value->id }}">
                 {{ $data_value->title }}
             </a>
-            <p title="{{ $data_value->updated_at }}"><i class="text-muted">Автор: {{ $current_user->first_name or 'Не известен' }} {{ $current_user->last_name }}<br/>
+            @if(count($data_value->get_child) > 0)
+                <p class="text-muted">
+                    @foreach($data_value->get_child as $child)
+                        <span>{{ $child->title }},</span>
+                    @endforeach
+                </p>
+            @endif
+            <p title="{{ $data_value->updated_at }}">
+                @if($data_value->user)
+                    <i class="text-muted">Автор:
+                        <a href="/admin/tours/author/{{ $data_value->user_id }}">
+                            {{ $data_value->user->first_name }} {{ $data_value->user->last_name }}</a><br/>
+                @endif
             {!! \Carbon\Carbon::createFromTimestamp(strtotime($data_value->updated_at))->diffForHumans(\Carbon\Carbon::now()) !!}</i></p>
+            <div class="clearfix"></div>
         </td>
         <td width="200">
             @if($app['name'] === 'tours')
                 @if($data_value->parent === 377)
-                    <a href="/strany/{{ $data_value->url }}">
+                    <a href="/tours/vidy-otdykha/{{ $data_value->url }}">
                         /tours/vidy-otdykha/{{ $data_value->url }}
                     </a>
                 @else
-                    <a href="/strany/{{ $data_value->url }}">
-                        /tours/strany/{{ $data_value->url }}
-                    </a>
+                    @if($data_value->get_parent->id === 308)
+                        <a href="/strany/{{ $data_value->url }}">
+                            /tours/strany/{{ $data_value->url }}
+                        </a>
+                    @else
+                        <a href="/tours/strany/{{ $data_value->get_parent->url }}/{{ $data_value->url }}">
+                            /tours/strany/{{ $data_value->get_parent->url }}/{{ $data_value->url }}
+                        </a>
+                    @endif
                 @endif
             @else
                 <a href="/{{ $app['name'] }}/{{ $data_value->url }}">

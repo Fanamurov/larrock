@@ -9,7 +9,7 @@
         </div>
         <div class="clearfix"></div>
         <div class="row relative">
-            @include('santa.modules.share.sharing')
+            @include('santa.modules.share.sharing', ['type' => 'tours', 'id' => $data->id])
             <div class="col-xs-24">
                 <div class="toursImage">
                     @if(count($data->images) > 0)

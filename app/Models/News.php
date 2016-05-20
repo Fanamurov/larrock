@@ -58,7 +58,7 @@ class News extends Model implements HasMediaConversions
 
     protected $table = 'news';
 
-	protected $fillable = ['title', 'short', 'description', 'category', 'url', 'date', 'position', 'active'];
+	protected $fillable = ['title', 'short', 'description', 'category', 'url', 'date', 'position', 'active', 'sharing'];
 
     protected $dates = ['created_at', 'updated_at', 'date'];
 
@@ -66,7 +66,8 @@ class News extends Model implements HasMediaConversions
 
 	protected $casts = [
 		'position' => 'integer',
-		'active' => 'integer'
+		'active' => 'integer',
+		'sharing' => 'integer'
 	];
 
 	public function scopeCategoryInfo()

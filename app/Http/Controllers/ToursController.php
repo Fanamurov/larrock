@@ -209,6 +209,9 @@ class ToursController extends Controller
 
 		$data['seo']['title'] = 'Страна';
 
+		\View::share('sharing_type', 'category');
+		\View::share('sharing_id', $data['data']->id);
+
 		return view('santa.tours.country', $data);
 	}
 
@@ -262,6 +265,9 @@ class ToursController extends Controller
 			$breadcrumbs->push($data->title);
 		});
 
+		\View::share('sharing_type', 'category');
+		\View::share('sharing_id', $data['data']->id);
+
 		return view('santa.tours.resourt', $data);
 	}
 
@@ -296,6 +302,9 @@ class ToursController extends Controller
 		}else{
 			$data['seo']['title'] = $data['data']->title;
 		}
+
+		\View::share('sharing_type', 'tours');
+		\View::share('sharing_id', $data['data']->id);
 
 		return view('santa.tours.item', $data);
 	}

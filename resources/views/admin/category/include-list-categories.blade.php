@@ -29,7 +29,7 @@
             <p title="{{ $data_value->updated_at }}">
                 @if($data_value->user)
                     <i class="text-muted">Автор:
-                        <a href="/admin/tours/author/{{ $data_value->user_id }}">
+                        <a href="/admin/users/author/{{ $data_value->user_id }}">
                             {{ $data_value->user->first_name }} {{ $data_value->user->last_name }}</a><br/>
                         @endif
                         {!! \Carbon\Carbon::createFromTimestamp(strtotime($data_value->updated_at))->diffForHumans(\Carbon\Carbon::now()) !!}</i></p>

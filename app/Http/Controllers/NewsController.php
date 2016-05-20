@@ -53,6 +53,9 @@ class NewsController extends Controller
             $breadcrumbs->push($data['data']->title);
         });
 
+		\View::share('sharing_type', 'news');
+		\View::share('sharing_id', $data['data']->id);
+
 		return view('santa.news.item', $data);
 	}
 }

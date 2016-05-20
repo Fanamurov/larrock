@@ -11,6 +11,24 @@ use App\Http\Controllers\Controller;
 
 class Ajax extends Controller
 {
+	public function sharingCounter(Request $request)
+	{
+		$pass_types = ['magic', 'tours', 'category', 'blog', 'news'];
+		$type = $request->get('type', '');
+		$id = $request->get('id', '');
+		if(empty($type) OR empty($id)){
+			return false;
+		}
+		if( !in_array($type, $pass_types)){
+			return false;
+		}
+		if(\DB::table($type)->where('id', $id)->increment('sharing')){
+			echo 'OK';
+		}else{
+			echo 'ERROR DB';
+		}
+	}
+
     public function editPerPage(Request $request)
 	{
 		$response = new \Illuminate\Http\Response('perPage');

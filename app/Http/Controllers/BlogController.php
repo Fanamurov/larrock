@@ -53,12 +53,15 @@ class BlogController extends Controller
             $breadcrumbs->push($data['category']->title);
         });
 
+		\View::share('sharing_type', 'category');
+		\View::share('sharing_id', $data['category']->id);
+
 		return view('santa.blog.category', $data);
 	}
 
 	public function getItem(ContentPlugins $contentPlugins, $category, $item)
 	{
-        Cache::forget(md5('blog_item_'. $item));
+        //Cache::forget(md5('blog_item_'. $item));
 		$data = Cache::remember(md5('blog_item_'. $item), 1440, function() use ($item, $category, $contentPlugins) {
 			$data['data'] = Blog::whereUrl($item)->first();
 			$data['category'] = Category::whereUrl($category)->whereActive(1)->first();
@@ -72,8 +75,12 @@ class BlogController extends Controller
         {
             $breadcrumbs->parent('blog.index');
             $breadcrumbs->push($data['category']->title, '/blog/'. $data['category']->url);
+            $breadcrumbs->push($data['data']->title);
 
         });
+
+		\View::share('sharing_type', 'blog');
+		\View::share('sharing_id', $data['data']->id);
 
 		if(\View::exists('santa.blog.'. $item)){
 			return view('santa.blog.'. $item, $data);

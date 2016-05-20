@@ -142,6 +142,11 @@ Route::post('/forms/sletatOrderFull', [
 	'as' => 'submit.sletatOrderFull', 'uses' => 'Modules\Forms@send_formsletatOrderFull'
 ]);
 
+//Ajax
+Route::post('/ajax/sharingCounter', [
+	'as' => 'ajax.sharingCounter', 'uses' => 'Ajax@sharingCounter'
+]);
+
 // Authentication routes...
 Route::auth();
 
@@ -165,8 +170,8 @@ Route::group(['prefix' => 'admin', 'middleware'=>'level:2'], function(){
 	Route::get('tours/all', [
 		'as' => 'all.tours.admin', 'uses' => 'Admin\AdminToursController@showTours'
 	]);
-	Route::get('tours/author/{userId}', [
-		'as' => 'author.tours.admin', 'uses' => 'Admin\AdminToursController@getAuthor'
+	Route::get('users/author/{userId}', [
+		'as' => 'admin.users.author', 'uses' => 'Admin\AdminUsersController@getAuthor'
 	]);
 	Route::resource('tours', 'Admin\AdminToursController');
 	Route::post('/tours/search', [

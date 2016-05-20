@@ -31,6 +31,10 @@
                     </div>
                 </div>
             </div>
+            <div class="text-center hidden-xs hidden-sm">
+                @include('santa.modules.share.sharing', ['type' => 'blog', 'id' => $data->id])
+            </div>
+            <div class="clearfix"></div><br/>
             <div class="page_description">{!! $data->description !!}</div>
         </div>
     </div>

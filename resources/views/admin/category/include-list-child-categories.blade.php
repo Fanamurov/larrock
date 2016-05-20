@@ -23,6 +23,7 @@
             <a class="h4" href="/admin/{{ $app['name'] }}/{{ $data_value->id }}">
                 {{ $data_value->title }}
             </a>
+            <small class="text-muted">{{ $data_value->sharing }} <i class="glyphicon glyphicon-heart-empty"></i></small>
             @if(count($data_value->get_child) > 0)
                 <p class="text-muted">
                     @foreach($data_value->get_child as $child)

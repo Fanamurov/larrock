@@ -40,6 +40,7 @@ $(document).ready(function(){
         toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright | bullist numlist outdent " +
         "indent | link image media | fullpage | forecolor backcolor | template | code | defis",
         imagetools_toolbar: "rotateleft rotateright | flipv fliph | editimage imageoptions",
+        fontsize_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt',
         style_formats: [
             {title: 'Headers', items: [
                 {title: 'h1', block: 'h1'},
@@ -50,10 +51,18 @@ $(document).ready(function(){
                 {title: 'h6', block: 'h6'}
             ]},
 
+            {title: 'Headers-text', items: [
+                {title: 'стиль H1', block: 'p', classes: 'h1'},
+                {title: 'стиль H2', block: 'p', classes: 'h2'},
+                {title: 'стиль H3', block: 'p', classes: 'h3'},
+                {title: 'стиль H4', block: 'p', classes: 'h4'},
+                {title: 'стиль H5', block: 'p', classes: 'h5'},
+                {title: 'стиль H6', block: 'p', classes: 'h6'}
+            ]},
+
             {title: 'Blocks', items: [
                 {title: 'p', block: 'p'},
-                {title: 'div', block: 'div'},
-                {title: 'pre', block: 'pre'}
+                {title: 'Увеличенный блок', block: 'blockquote'}
             ]}
         ],
         setup: function(editor) {

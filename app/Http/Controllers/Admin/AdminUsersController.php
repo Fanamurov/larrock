@@ -5,8 +5,14 @@ namespace App\Http\Controllers\Admin;
 use Alert;
 use App\Helpers\Component;
 use App\Http\Controllers\Admin\AdminBlocks\MenuBlock;
+use App\Models\Blog;
+use App\Models\Category;
+use App\Models\News;
+use App\Models\Tours;
 use App\User;
 use Bican\Roles\Models\Role;
+use Breadcrumbs;
+use Cache;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -158,4 +164,32 @@ class AdminUsersController extends Controller
         }
         return Redirect::to('/admin/users');
     }
+
+	/**
+	 * Получение всех материалов автора
+	 * @param Request $request
+	 */
+	public function getAuthor(Request $request, $userId)
+	{
+		Breadcrumbs::register('admin.author', function($breadcrumbs, $data)
+		{
+			$breadcrumbs->push('Лента активности');
+			$breadcrumbs->push($data->first_name .' '. $data->last_name);
+		});
+
+		$page = $request->get('page');
+		//Cache::forget('userActive'. $userId .'_'. $page);
+		$data = Cache::remember('userActive'. $userId .'_'. $page, 60, function() use ($userId) {
+			$data['users'] = User::all();
+			$data['user'] = User::whereId($userId)->first();
+			$data['categories'] = Category::whereUserId($userId)->whereType('tours')->paginate(20);
+			$data['tours'] = Tours::whereUserId($userId)->with(['getFirstImage', 'get_category'])->paginate(20);
+			$data['news'] = News::whereUserId($userId)->with(['getFirstImage'])->paginate(20);
+			$data['blog'] = Blog::whereUserId($userId)->with(['getFirstImage', 'get_category'])->paginate(20);
+			$data['app'] = $this->config;
+			return $data;
+		});
+
+		return view('admin.users.activity', $data);
+	}
 }

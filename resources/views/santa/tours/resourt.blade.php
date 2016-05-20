@@ -9,7 +9,7 @@
         </div>
         <div class="clearfix"></div>
         <div class="tours_tabs">
-            @include('santa.modules.share.sharing')
+            @include('santa.modules.share.sharing', ['type' => 'category', 'id' => $data->id])
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="tour-photo">
                     <div class="toursPageCountry-photo">

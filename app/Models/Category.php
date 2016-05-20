@@ -63,7 +63,7 @@ class Category extends Model implements HasMediaConversions
 
     protected $table = 'category';
 
-	protected $fillable = ['title', 'short', 'description', 'type', 'parent', 'level', 'forecast_url', 'map', 'url', 'sitemap', 'position', 'active', 'to_rss'];
+	protected $fillable = ['title', 'short', 'description', 'type', 'parent', 'level', 'forecast_url', 'map', 'url', 'sitemap', 'position', 'active', 'to_rss', 'sharing'];
 
 	protected $casts = [
 		'position' => 'integer',
@@ -71,7 +71,8 @@ class Category extends Model implements HasMediaConversions
 		'sitemap' => 'integer',
 		'level' => 'integer',
 		'parent' => 'integer',
-		'to_rss' => 'integer'
+		'to_rss' => 'integer',
+		'sharing' => 'integer'
 	];
 
 	protected $appends = [

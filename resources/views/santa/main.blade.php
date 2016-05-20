@@ -22,7 +22,7 @@
                 @yield('contentBottom')
             </div>
             <div class="col-xs-24 content_bottom-sharing">
-                <span>Поделитесь материалом с друзьями:</span> @include('santa.modules.share.sharing')
+                <span>Поделитесь материалом с друзьями:</span> @include('santa.modules.share.sharing', ['type' => $sharing_type, 'id' => $sharing_id])
             </div>
         </div>
     </section>

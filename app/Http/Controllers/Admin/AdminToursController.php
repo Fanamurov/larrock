@@ -323,27 +323,4 @@ class AdminToursController extends Controller
 		$data['categories'] = Category::search($request->get('search'))->get();
 		return view('admin.tours.search', $data);
 	}
-
-	/**
-	 * Получение всех материалов автора
-	 * @param Request $request
-	 */
-	public function getAuthor(Request $request, $userId)
-	{
-		Breadcrumbs::register('admin.tours.author', function($breadcrumbs)
-		{
-			$breadcrumbs->push('Лента активности');
-		});
-
-		$page = $request->get('page');
-		$data = Cache::remember('userActive'. $userId .''. $page, 60, function() use ($userId) {
-			$data['user'] = User::whereId($userId)->first();
-			$data['categories'] = Category::whereUserId($userId)->whereType('tours')->paginate(50);
-			$data['tours'] = Tours::whereUserId($userId)->paginate(50);
-			$data['app'] = $this->config;
-			return $data;
-		});
-
-		return view('admin.tours.author', $data);
-	}
 }

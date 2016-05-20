@@ -25,6 +25,9 @@ class BeforeLoaderModulesGlobal
 		View::share('app_name', array_get($current_uri, 1));
 		View::share('app_param', array_get($current_uri, 2));
 
+		\View::share('sharing_type', '');
+		\View::share('sharing_id', '');
+
         $module_vidy = Cache::remember('module_vidy', 60*24, function() {
             return Category::whereParent(377)->whereActive(1)->orderBy('position', 'DESC')->get();
         });

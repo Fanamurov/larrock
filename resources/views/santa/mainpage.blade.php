@@ -50,6 +50,9 @@
                 @include('santa.modules.list.tours')
                 @yield('content')
                 @include('santa.modules.html.socialGroups')
+                <div class="col-xs-24 content_bottom-sharing">
+                    <span>Поделитесь с друзьями:</span> @include('santa.modules.share.sharing')
+                </div>
             </div>
         </div>
     </section>

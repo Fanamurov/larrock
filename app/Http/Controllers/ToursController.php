@@ -98,7 +98,7 @@ class ToursController extends Controller
 			\View::share('selected_country', $country);
 			$filtered = $data['data']->get_toursActive->filter(function ($value, $key) use ($country, $data) {
 				foreach($value->get_category as $category){
-					if($category->parent === 308 AND $category->id === 324){
+					if($category->parent === 308 AND $category->id == $country){
 						//echo $category->id .'<br/>';
 						return $value;
 					}

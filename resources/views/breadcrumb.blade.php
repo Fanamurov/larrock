@@ -4,7 +4,11 @@
             @if ($breadcrumb->url && !$breadcrumb->last)
                 <li><a href="{{ $breadcrumb->url }}">{{ $breadcrumb->title }}</a></li>
             @else
-                <li class="active"><h1>{{ $breadcrumb->title }}</h1></li>
+                @if($breadcrumb->last)
+                    <li class="active"><h1>{{ $breadcrumb->title }}</h1></li>
+                @else
+                    <li class="active">{{ $breadcrumb->title }}</li>
+                @endif
             @endif
         @endforeach
     </ol>

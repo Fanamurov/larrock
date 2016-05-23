@@ -89,14 +89,38 @@ class ToursController extends Controller
 		return view('santa.tours.categorysListChilds', $data);
 	}
 
-	public function getVidy(Request $request, $category)
+	public function getVidy(Request $request, $category, $country)
 	{
-		$data['data'] = Category::whereUrl($category)->whereActive(1)->with(['get_toursActive'])->first();
+		$data['data'] = Category::whereUrl($category)->whereActive(1)->with(['get_toursActive.get_category'])->first();
+		\View::share('selected_vid', $category);
 
-		Breadcrumbs::register('tours.vid', function($breadcrumbs, $data)
+		if($country){
+			\View::share('selected_country', $country);
+			$filtered = $data['data']->get_toursActive->filter(function ($value, $key) use ($country, $data) {
+				foreach($value->get_category as $category){
+					if($category->parent === 308 AND $category->id === 324){
+						//echo $category->id .'<br/>';
+						return $value;
+					}
+				}
+				return false;
+			});
+
+			$data['data']->get_toursActive = $filtered->all();
+		}
+
+		Breadcrumbs::register('tours.vid', function($breadcrumbs, $data) use ($country)
 		{
-			$breadcrumbs->push('Виды отдыха');
-			$breadcrumbs->push($data->title);
+			if($country){
+				$breadcrumbs->push('Виды отдыха');
+				$breadcrumbs->push($data->title, '/tours/vidy-otdykha/'. $data->url);
+
+				$get_country = Category::whereId($country)->first();
+				$breadcrumbs->push($get_country->title, $get_country->url);
+			}else{
+				$breadcrumbs->push('Виды отдыха');
+				$breadcrumbs->push($data->title);
+			}
 		});
 
 		$data['paginator'] = new Paginator(
@@ -353,15 +377,19 @@ class ToursController extends Controller
 	{
 		if($request->get('vid')){
 			$get_vid = Category::whereId($request->get('vid'))->first();
+			if($request->get('country')){
+				$get_country = Category::whereId($request->get('country'))->first();
+				return redirect('/tours/vidy-otdykha/'. $get_vid->url .'/'. $get_country->url);
+			}
 			return redirect('/tours/vidy-otdykha/'. $get_vid->url);
-		}
-		if($request->get('resort')){
-			$get_resort = Category::whereId($request->get('resort'))->with(['get_parent'])->first();
-			return redirect('/tours/strany/'. $get_resort->get_parent->url .'/'. $get_resort->url);
 		}
 		if($request->get('country')){
 			$get_country = Category::whereId($request->get('country'))->first();
 			return redirect('/tours/strany/'. $get_country->url);
+		}
+		if($request->get('resort')){
+			$get_resort = Category::whereId($request->get('resort'))->with(['get_parent'])->first();
+			return redirect('/tours/strany/'. $get_resort->get_parent->url .'/'. $get_resort->url);
 		}
 		return back();
 	}

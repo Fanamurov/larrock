@@ -80,7 +80,7 @@ Route::get('/tours/vidy-otdykha/{category}', [
 	'as' => 'tours.vidy-categories', 'uses' => 'ToursController@getVidy'
 ]);
 Route::get('/tours/vidy-otdykha/{category}/{item}', [
-	'as' => 'tours.vidy-item', 'uses' => 'ToursController@getResourt'
+	'as' => 'tours.vidy-item', 'uses' => 'ToursController@getVidy'
 ]);
 
 /*Route::get('/tours/{category}/{child}', [

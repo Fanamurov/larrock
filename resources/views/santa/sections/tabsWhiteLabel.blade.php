@@ -1,8 +1,8 @@
 <section class="mainpage_tabs col-xs-24 row hidden-xs">
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active"><a href="#sletat" aria-controls="sletat" role="tab" data-toggle="tab">Пакетные туры</a></li>
-        <li role="presentation"><a href="#indiv" aria-controls="indiv" role="tab" data-toggle="tab">Индивидуальные туры</a></li>
+        <li role="presentation" class="@if( !isset($selected_country)) active @endif"><a href="#sletat" aria-controls="sletat" role="tab" data-toggle="tab">Пакетные туры</a></li>
+        <li role="presentation" class="@if(isset($selected_country)) active @endif"><a href="#indiv" aria-controls="indiv" role="tab" data-toggle="tab">Индивидуальные туры</a></li>
         <li role="presentation" class="hidden hidden-xs hidden-sm"><a href="#avia" aria-controls="avia" role="tab" data-toggle="tab">Авиабилеты</a></li>
         <li role="presentation" class="hidden hidden-xs hidden-sm"><a href="#hotels" aria-controls="hotels" role="tab" data-toggle="tab">Отели</a></li>
         <li role="presentation" class="hidden-xs hidden-sm"><a href="#transfers" aria-controls="transfers" role="tab" data-toggle="tab">Трансферы</a></li>
@@ -10,10 +10,10 @@
     </ul>
     <!-- Tab panes -->
     <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="sletat">
+        <div role="tabpanel" class="tab-pane @if( !isset($selected_country)) active @endif" id="sletat">
             @include('santa.modules.forms.sletatShortSearch')
         </div>
-        <div role="tabpanel" class="tab-pane" id="indiv">
+        <div role="tabpanel" class="tab-pane @if(isset($selected_country)) active @endif" id="indiv">
             @include('santa.modules.forms.siteToursSearch')
         </div>
         <div role="tabpanel" class="tab-pane" id="avia">

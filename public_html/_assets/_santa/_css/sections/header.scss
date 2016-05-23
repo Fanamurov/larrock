@@ -102,6 +102,11 @@ header{
 	  &:last-child{
 		border-bottom: none;
 	  }
+	  color: #333;
+	  &:hover,
+	  &:focus{
+		color: $color_red;
+	  }
 	}
 	a{
 	  color: $color_red;
@@ -136,6 +141,10 @@ header{
 	  margin-bottom: 0;
 	  li{
 		padding: 0 16px;
+		border-bottom: 1px #F0F0F0 solid;
+		&:last-of-type{
+		  border-bottom: none;
+		}
 		@media (max-width: 990px) {
 		  padding: 0 1px;
 		}

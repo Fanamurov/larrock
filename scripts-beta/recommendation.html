@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">  
+    <title>Обучайщий шаблон</title>
+    <link type="text/css" rel="stylesheet" href="css/style.css">    
+    <link href="http://allfont.ru/allfont.css?fonts=pt-sans-narrow-bold" rel="stylesheet" type="text/css" />
+</head>
+<style>
+  
+@font-face {
+    font-family: "HelveticaNeueCyrMedium";
+    font-stretch: normal;
+    font-style: normal;
+    font-weight: 700;
+    src: url("../fonts/helveticaneuecyr-medium.otf");
+}
+@font-face {
+    font-family: "HelveticaNeueCyrRoman";
+    font-stretch: normal;
+    font-style: normal;
+    font-weight: 700;
+    src: url("../fonts/helveticaneuecyr-roman.otf");
+}
+@font-face {
+    font-family: "HelveticaNeueCyrBold";
+    font-stretch: normal;
+    font-style: normal;
+    font-weight: 900;
+    src: url("../fonts/helveticaneuecyr-bold.otf");
+}
+body {
+    margin: 0;
+    padding: 0;
+}
+#script-manager a {
+    border-radius: 5px;
+    color: #fff;
+    display: block;
+    font-family: "PT Sans Narrow Bold",arial;
+    font-size: 18px;
+    height: 135px;
+    margin-bottom: 29px;
+    text-align: center;
+    text-decoration: none;
+    width: 135px;
+}
+#script-manager a:hover {
+    background: #fff none repeat scroll 0 0;
+    height: 131px;
+    width: 131px;
+}
+.manager-entering {
+    background: #2b3a8f none repeat scroll 0 0;
+}
+.manager-entering span {
+    display: inline-block;
+    margin-top: 43px;
+}
+#script-manager a.manager-entering:hover {
+    border: 2px solid #2b3a8f;
+    color: #2b3a8f;
+}
+.manager-outgoing {
+    background: #1c74bb none repeat scroll 0 0;
+}
+.manager-outgoing span {
+    display: inline-block;
+    margin-top: 43px;
+}
+#script-manager a.manager-outgoing:hover {
+    border: 2px solid #1c74bb;
+    color: #1c74bb;
+}
+.manager-advice {
+    background: #01afd2 none repeat scroll 0 0;
+}
+.manager-advice span {
+    display: inline-block;
+    margin-top: 31px;
+}
+#script-manager a.manager-advice:hover {
+    border: 2px solid #01afd2;
+    color: #01afd2;
+}
+.manager-reactivation {
+    background: #52c9df none repeat scroll 0 0;
+}
+.manager-reactivation span {
+    display: inline-block;
+    margin-top: 31px;
+}
+#script-manager a.manager-reactivation:hover {
+    border: 2px solid #52c9df;
+    color: #52c9df;
+}
+.manager-meeting {
+    background: #7f3f96 none repeat scroll 0 0;
+    height: 135px !important;
+    width: 456px !important;
+}
+.manager-meeting span {
+    display: inline-block;
+    margin-top: 53px;
+}
+#script-manager a.manager-meeting:hover {
+    border: 2px solid #7f3f96;
+    color: #7f3f96;
+    height: 131px !important;
+    width: 452px !important;
+}
+.manager-postbridge {
+    background: #d3316a none repeat scroll 0 0;
+}
+.manager-postbridge span {
+    display: inline-block;
+    margin-top: 41px;
+}
+#script-manager a.manager-postbridge:hover {
+    border: 2px solid #d3316a;
+    color: #d3316a;
+}
+.managers {
+    align-content: space-between;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 93px auto 0;
+    width: 616px;
+}
+#content {
+    margin: auto;
+    padding-bottom: 165px;
+    position: relative;
+    width: 1000px;
+}
+#script-manager {
+    border: 1px solid #f0f2f1;
+    border-radius: 15px;
+    margin: 93px auto 0;
+    text-align: center;
+    width: 750px;
+}
+#script-manager h1 {
+    background: #fff none repeat scroll 0 0;
+    color: #a8c0c1;
+    display: inline;
+    font-family: "PT Sans Narrow Bold",arial;
+    font-size: 38px;
+    padding: 0 32px;
+    position: relative;
+    top: -29px;
+}
+.logo {
+    bottom: 0;
+    position: absolute;
+    right: 0;
+}
+.phone-email {
+    bottom: 25px;
+    font-family: "HelveticaNeueCyrMedium";
+    font-size: 13px;
+    font-weight: bold;
+    left: 0;
+    position: absolute;
+}
+.phone-email a {
+    color: #2d7dc4;
+    font-size: 13px;
+}
+#heading {
+    display: block;
+    margin-top: 40px;
+    width: 1000px;
+}
+#heading * {
+    cursor: pointer;
+    display: inline;
+    padding: 4px;
+    vertical-align: middle;
+}
+#heading span {
+    color: #929497;
+    font-family: "HelveticaNeueCyrBold";
+    font-size: 12px;
+    line-height: 45px;
+}
+#panes {
+    border-radius: 5px;
+    margin-left: 195px;
+    margin-top: -45px;
+    width: 612px;
+}
+.title_pane {
+    background: #d1d7e0 none repeat scroll 0 0;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    color: #58595b;
+    font-family: "PT Sans Narrow Bold",arial;
+    font-size: 22px;
+    font-weight: bold;
+    height: 54px;
+    line-height: 54px;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+.text_pane {
+    background: #f0f1f1 none repeat scroll 0 0;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    font-family: "HelveticaNeueCyrRoman";
+    line-height: 20px;
+    padding: 15px 25px;
+}
+.text_pane p {
+    color: #000000;
+    font-size: 17px;
+    width: 570px;
+}
+.text_pane span {
+    color: #f05a29;
+    font-size: 17px;
+}
+.text_pane a {
+    color: #f05a29;
+    font-size: 17px;
+    text-decoration: none;
+}
+.text_pane a:hover {
+    color: #f05a29;
+    text-decoration: underline;
+}
+#previous {
+    cursor: pointer;
+    float: left;
+}
+#next, #menu {
+    cursor: pointer;
+    float: right;
+}
+#script-manager2 {
+    margin: 10px 0;
+}
+#script-manager2 h1 {
+    color: #4d5b5b;
+    font-family: "PT Sans Narrow Bold",arial;
+    font-size: 38px;
+    text-align: center;
+}
+.line_bottom {
+    border-radius: 10px;
+    border-top: 3px solid #1bc1c1;
+    margin: -20px auto;
+    width: 150px;
+}
+#answers {
+    font-family: "PT Sans Narrow Bold",arial;
+    margin: 40px auto;
+    width: 610px;
+}
+#answers h2 {
+    color: #4d5b5b;
+    font-size: 28px;
+    text-align: center;
+}
+.blue {
+    background: #caf0fe none repeat scroll 0 0;
+}
+.green {
+    background: #d2e2c0 none repeat scroll 0 0;
+}
+.red {
+    background: #f9d9d9 none repeat scroll 0 0;
+}
+.linkall {
+    border-radius: 5px;
+    height: 54px;
+    line-height: 54px;
+    margin-bottom: 7px;
+    text-align: center;
+    width: 610px;
+}
+.link {
+    color: #231f20;
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+</style>
+<body> 
+
+<div id="content">
+
+<div id="script-manager2">    
+    <h1>Ваши действия на этом шаге</h1>
+    <div class="line_bottom"></div>
+</div>    
+
+<!-- Карусель -->
+<div id="heading">
+    <a href="javascript: void(0);"  onclick="hrefClk(this, 'prev')" page="n1055108810801089108610771076108010851077108510801077" sback><img src="img/slider/left.png" alt="" id="previous" /> <span style="float: left">Шаг назад</span></a> 
+        <ul id="buttons">
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    <a href="index.html" title="На главную"><img src="img/slider/menu.png" alt="" id="menu" /></a> 
+    <a href="javascript: void(0);"  onclick="hrefClk(this, 'next')" page="n1055108810801089108610771076108010851077108510801077" tomain><img src="img/slider/right.png" alt="" id="next" /> <span id="nextText" style="float: right">В начало</span></a> 
+</div>
+<div id="pages"><div id="panes"><div><div class="pane script_content" id="n1053107210951072108311001085107211033210891090108810721085108010941072" style="display: none;"><div class="title_pane block main_header">Сбор потребностей Хургада</div><div class="text_pane"><p>Здравствуйте, <span>#имя клиента</span>! Меня зовут <span>#ваше имя</span>. Я менеджер <br>по работе с клиентами турагентства <span>#название вашего ТА</span>.<br>.... <br>Или еще выбираете?<br></p></div><div id="answers"><h2>Варианты ответов клиента</h2><a href="javascript: void(0)" class="link" page="n1042109010861088107211033210951072108910901100" onclick="hrefClk(this)"><div class="linkall green">переход на вторую часть</div></a><a href="javascript: void(0)" class="link" page="n107210831100109010771088108510721090108010741085107211033210951072108910901100" onclick="hrefClk(this)"><div class="linkall red">переход на альтернативную часть</div></a></div></div><div class="pane script_content" id="n1055108810801089108610771076108010851077108510801077"><div class="title_pane block main_header">Звонок по рекомендации: присоединение</div><div class="text_pane"><p><span>#имя клиента</span>? - Да<br><br>Меня зовут <span>#имя менеджера</span>, турагентство <span>#навзание агентства</span>. Уделите мне буквально полторы минуты? - Да / Нет<br></p></div><div id="answers"><h2></h2><a href="javascript: void(0)" class="link" page="n10541092109210771088" onclick="hrefClk(this)"><div class="linkall green">клиент согласен поговорить</div></a><a href="javascript: void(0)" class="link" page="n104410881091107510861077951074108810771084110395107910741086108510821072" onclick="hrefClk(this)"><div class="linkall red">клиенту некогда</div></a></div></div><div class="pane script_content" id="n10541092109210771088" style="display: none;"><div class="title_pane block main_header">Обозначьте цель звонка</div><div class="text_pane"><p><span>#имя клиента</span>, мы с Вами не знакомы лично. Ваши контакты мне дал Ваш друг / хороший знакомый <span>#имя друга</span>, который является нашим постоянным клиентом.<br><br>Мы очень любим делать подарки друзьям наших постоянных клиентов :), и у нас есть подарок для Вас - купон на сумму <span>#сумма купона</span>, которым Вы сможете воспользоваться при организации Вашей следующей туристической поездки.<br><br>Забрать и активировать купон Вы можете в течение полугода в нашем агентстве по адресу: <span>#адрес агентства</span>. Приедете? :) - Да<br><br>...и еще, хотела поинтересоваться: Вы на когда примерно планируете Вашу следующую туристическую поездку? Уже думали о том, куда хотите поехать?<br></p></div><div id="answers"><h2></h2><a href="javascript: void(0)" class="link" page="n107410991103107410831103107710843210871086109010881077107310851086108910901080" onclick="hrefClk(this)"><div class="linkall green">клиент рассказывает о планах</div></a><a href="javascript: void(0)" class="link" page="n10871086108210723210851077321087108310721085108010881086107410721083" onclick="hrefClk(this)"><div class="linkall red">"пока не планировал"</div></a></div></div><div class="pane script_content" id="n104410881091107510861077951074108810771084110395107910741086108510821072" style="display: none;"><div class="title_pane block main_header">Договоритесь о другом времени звонка</div><div class="text_pane"><p>Ок. Нет проблем. Когда и во сколько мне Вам перезвонить, чтобы Вам было удобно общаться?<br><br><span>#Напоминание</span>: обязательно внесите дату и время в CRM-систему, чтобы связаться с клиентом тогда, когда ему удобно, и в итоге отработать по контактам из рекомендации.<br></p></div><div id="answers"><h2></h2><a href="javascript: void(0)" class="link" page="n1055108810801089108610771076108010851077108510801077" onclick="hrefClk(this)"><div class="linkall blue">вернуться в начало скрипта</div></a></div></div><div class="pane script_content" id="n107410991103107410831103107710843210871086109010881077107310851086108910901080" style="display: none;"><div class="title_pane block main_header">Выявите потребности</div><div class="text_pane"><p>Базовые вопросы:<br>- Куда хотите поехать?<br>- На какие даты планируете поездку?<br>- В каком составе и с кем поедете?<br><br>Вопросы для выявления потребностей:<br>- Какие-то конкретные отели уже рассматривали? А почему именно на этом варианте решили остановиться, если не секрет?<br>- А до этого где-то уже отдыхали? Вам там понравилось? А что запомнилось больше всего?<br>- Чем вообще планируете заниматься на отдыхе?<br><br>- А что хотелось бы получить от поездки? -> Если клиент затрудняется с ответом, предложите альтернативы -> У моря позагорать / достопримечательности посмотреть / потусоваться?<br><br>- И еще, пожалуйста, сориентируйте меня по бюджету.<br><br>Отлично. <span>#имя клиента</span>, может быть есть что-то еще, что касается предстоящего тура, отеля, поездки, что важно для Вас, или, может быть, что нежелательно, что-то, что мы еще с Вами не обсудили?<br><br>Резюмируем: Вас интересует тур в <span>#направление</span> на <span>#даты</span>, едут <span>#состав</span>. Для Вас важно, чтобы <span>#перечисляем выявленные потребности</span>. Все верно? Или есть что-то еще?<br><br></p></div><div id="answers"><h2></h2><a href="javascript: void(0)" class="link" page="n10871086107710791076108210729510891082108610881086" onclick="hrefClk(this)"><div class="linkall blue">дата поездки в течение 2 месяцев</div></a><a href="javascript: void(0)" class="link" page="n1087108610771079107610821072951085107710891082108610881086" onclick="hrefClk(this)"><div class="linkall blue">дата поездки отложена во времени</div></a></div></div><div class="pane script_content" id="n10871086108210723210851077321087108310721085108010881086107410721083" style="display: none;"><div class="title_pane block main_header">Договоритесь о следующем контакте</div><div class="text_pane"><p>Понятно. А как думаете, когда примерно тема поездки может стать актуальной?<br></p></div><div id="answers"><h2></h2><a href="javascript: void(0)" class="link" page="n10841086107810851086951087108610791074108610851102" onclick="hrefClk(this)"><div class="linkall green">клиент называет примерные даты</div></a><a href="javascript: void(0)" class="link" page="n10871088108610971072108510801077" onclick="hrefClk(this)"><div class="linkall red">"не знаю"</div></a></div></div><div class="pane script_content" id="n10871088108610971072108510801077" style="display: none;"><div class="title_pane block main_header">Позитивно попрощайтесь</div><div class="text_pane"><p>Ок. Нет проблем. :) Не буду Вас мучать.<br>Было очень приятно пообщаться. До свидания!<br><br>И помните, что мы ждем Вас к нам в гости за Вашим подарком! ^_^<br></p></div><div id="answers"><h2></h2><a href="javascript: void(0)" class="link" page="n1055108810801089108610771076108010851077108510801077" onclick="hrefClk(this)"><div class="linkall blue">вернуться в начало скрипта</div></a></div></div><div class="pane script_content" id="n10841086107810851086951087108610791074108610851102" style="display: none;"><div class="title_pane block main_header">Договоритесь о следующем звонке</div><div class="text_pane"><p>Хорошо. Тогда давайте я ближе к этим датам Вас наберу и тогда уже обсудим Ваши пожелания по поездке. Было очень приятно пообщаться. До свидания!<br><br>И помните, что мы ждем Вас к нам в гости за Вашим подарком! ^_^<br><br><br><span>#Напоминание</span>: обязательно внесите дату и время в CRM-систему, чтобы связаться с клиентом тогда, когда ему удобно, и в итоге отработать по контактам из рекомендации.<br></p></div><div id="answers"><h2></h2><a href="javascript: void(0)" class="link" page="n1055108810801089108610771076108010851077108510801077" onclick="hrefClk(this)"><div class="linkall blue">вернуться в начало скрипта</div></a></div></div><div class="pane script_content" id="n10871086107710791076108210729510891082108610881086" style="display: none;"><div class="title_pane block main_header">Назначьте встречу</div><div class="text_pane"><p><span>#имя клиента</span>, учитывая Ваши пожелания, могу сказать, что у нас есть для Вас несколько хороших вариантов, но поскольку сейчас сезон, ситуация постоянно меняется и лучшие предложения уходят очень быстро!<br><br>Если не успеем, будет обидно, поэтому давайте назначим конкретное время, в которое Вам будет удобно подъехать к нам в офис; к Вашему приезду я подготовлю все необходимые материалы по этим вариантам, Вы приедете и мы вместе выберем лучший для Вас. Заодно и подарок Ваш получите! ^_^<br><br>Вам удобно будет сегодня или завтра? В #ХХ:ХХ удобно? Отлично! <span>#опциональная вставка</span> Супер! До встречи. :)<br><br><span>#опционально</span>:<br>Тогда буду Вас ждать <span>#дата</span> + <span>#день недели</span> + <span>#время</span>.<br>И обязательно возьмите документы, деньги для предоплаты и <span>#ЛПР</span>.<br><br></p></div><div id="answers"><h2></h2><a href="javascript: void(0)" class="link" page="n1055108810801089108610771076108010851077108510801077" onclick="hrefClk(this)"><div class="linkall blue">вернуться в начало скрипта</div></a></div></div><div class="pane script_content" id="n1087108610771079107610821072951085107710891082108610881086" style="display: none;"><div class="title_pane block main_header">Договоритесь о следующем звонке</div><div class="text_pane"><p>Хорошо. Тогда давайте я уже ближе к датам поездки Вас наберу и поговорим о том, как мы можем помочь Вам с организацией самого великолепного путешествия. :) Было очень приятно пообщаться. До свидания!<br><br>И помните, что мы ждем Вас к нам в гости за Вашим подарком! ^_^<br><br><br><span>#Напоминание</span>: обязательно внесите дату и время в CRM-систему, чтобы связаться с клиентом тогда, когда ему удобно, и в итоге отработать по контактам из рекомендации.<br></p></div><div id="answers"><h2></h2><a href="javascript: void(0)" class="link" page="n1055108810801089108610771076108010851077108510801077" onclick="hrefClk(this)"><div class="linkall blue">вернуться в начало скрипта</div></a></div></div><script>var historyS = ["n1055108810801089108610771076108010851077108510801077"];var lastPage = "n1055108810801089108610771076108010851077108510801077";function hrefClk (e, move) {var toPage = move == "back" ? lastPage : e.getAttribute("page");if(move!="prev"){historyS.push(toPage);}if ( move == "prev" ) {if ( historyS[historyS.length - 2] ) {toPage = historyS[historyS.length - 2];historyS.pop();}}var divs = document.querySelectorAll(".script_content");for (var i = 0; i < divs.length; i++) {divs[i].setAttribute("style", "display:none;");};document.querySelector("#" + toPage).setAttribute("style", "");}</script></div></div></div pages>
+        
+
+</div>
+
+
+
+</body>
+</html><!-------{"Начальная страница":"Сбор потребностей Хургада\\n=========================\\nЗдравствуйте, <имя клиента>! Меня зовут <ваше имя>. Я менеджер \\nпо работе с клиентами турагентства <название вашего ТА>.\\n.... \\nИли еще выбираете?\\nВарианты ответов клиента\\n------------------------\\n[ переход на вторую часть | Вторая часть | green ]\\n[ переход на альтернативную часть | альтернативная часть | red ]","Присоединение":"Звонок по рекомендации: присоединение\\n=========================\\n<имя клиента>? - Да\\n\\nМеня зовут <имя менеджера>, турагентство <навзание агентства>. Уделите мне буквально полторы минуты? - Да / Нет\\n\\n------------------------\\n[ клиент согласен поговорить | Оффер | green ]\\n[ клиенту некогда | Другое_время_звонка | red ]","Оффер":"Обозначьте цель звонка\\n=========================\\n<имя клиента>, мы с Вами не знакомы лично. Ваши контакты мне дал Ваш друг / хороший знакомый <имя друга>, который является нашим постоянным клиентом.\\n\\nМы очень любим делать подарки друзьям наших постоянных клиентов :), и у нас есть подарок для Вас - купон на сумму <сумма купона>, которым Вы сможете воспользоваться при организации Вашей следующей туристической поездки.\\n\\nЗабрать и активировать купон Вы можете в течение полугода в нашем агентстве по адресу: <адрес агентства>. Приедете? :) - Да\\n\\n...и еще, хотела поинтересоваться: Вы на когда примерно планируете Вашу следующую туристическую поездку уже думали о том, куда хотите поехать?\\n\\n------------------------\\n[ клиент рассказывает о планах | выявляем потребности | green ]\\n[ \"пока не планировал\" | пока не планировал | red ]","Другое_время_звонка":"Договоритесь о другом времени звонка\\n=========================\\nОк. Нет проблем. Когда и во сколько мне Вам перезвонить, чтобы Вам было удобно общаться?\\n\\n<Напоминание>: обязательно внесите дату и время в CRM-систему, чтобы связаться с клиентом тогда, когда ему удобно, и в итоге отработать по контактам из рекомендации.\\n\\n------------------------\\n[ вернуться в начало скрипта | Присоединение | blue ]","выявляем потребности":"Выявите потребности\\n=========================\\nБазовые вопросы:\\n- Куда хотите поехать?\\n- На какие даты планируете поездку?\\n- В каком составе и с кем поедете?\\n\\nВопросы для выявления потребностей:\\n- Какие-то конкретные отели уже рассматривали? А почему именно на этом варианте решили остановиться, если не секрет?\\n- А до этого где-то уже отдыхали? Вам там понравилось? А что запомнилось больше всего?\\n- Чем вообще планируете заниматься на отдыхе?\\n\\n- А что хотелось бы получить от поездки? -> Если клиент затрудняется с ответом, предложите альтернативы -> У моря позагорать / достопримечательности посмотреть / потусоваться?\\n\\n- И еще, пожалуйста, сориентируйте меня по бюджету.\\n\\nОтлично. <имя клиента>, может быть есть что-то еще, что касается предстоящего тура, отеля, поездки, что важно для Вас, или, может быть, что нежелательно, что-то, что мы еще с Вами не обсудили?\\n\\nРезюмируем: Вас интересует тур в <направление> на <даты>, едут <состав>. Для Вас важно, чтобы <перечисляем выявленные потребности>. Все верно? Или есть что-то еще?\\n\\n\\n------------------------\\n[ дата поездки в течение 2 месяцев | поездка_скоро | blue ]\\n[ дата поездки отложена во времени | поездка_нескоро | blue ]","пока не планировал":"Договоритесь о следующем контакте\\n=========================\\nПонятно. А как думаете, когда примерно тема поездки может стать актуальной?\\n\\n------------------------\\n[ клиент называет примерные даты | можно_позвоню | green ]\\n[ \"не знаю\" | прощание | red ]","прощание":"Позитивно попрощайтесь\\n=========================\\nОк. Нет проблем. :) Не буду Вас мучать.\\nБыло очень приятно пообщаться. До свидания!\\n\\nИ помните, что мы ждем Вас к нам в гости за Вашим подарком! ^_^\\n\\n------------------------\\n[ вернуться в начало скрипта | Присоединение | blue ]","можно_позвоню":"Договоритесь о следующем звонке\\n=========================\\nХорошо. Тогда давайте я ближе к этим датам Вас наберу и тогда уже обсудим Ваши пожелания по поездке. Было очень приятно пообщаться. До свидания!\\n\\nИ помните, что мы ждем Вас к нам в гости за Вашим подарком! ^_^\\n\\n\\n<Напоминание>: обязательно внесите дату и время в CRM-систему, чтобы связаться с клиентом тогда, когда ему удобно, и в итоге отработать по контактам из рекомендации.\\n\\n------------------------\\n[ вернуться в начало скрипта | Присоединение | blue ]","поездка_скоро":"Назначьте встречу\\n=========================\\n<имя клиента>, учитывая Ваши пожелания, могу сказать, что у нас есть для Вас несколько хороших вариантов, но поскольку сейчас сезон, ситуация постоянно меняется и лучшие предложения уходят очень быстро!\\n\\nЕсли не успеем, будет обидно, поэтому давайте назначим конкретное время, в которое Вам будет удобно подъехать к нам в офис; к Вашему приезду я подготовлю все необходимые материалы по этим вариантам, Вы приедете и мы вместе выберем лучший для Вас. Заодно и подарок Ваш получите! ^_^\\n\\nВам удобно будет сегодня или завтра? В #ХХ:ХХ удобно? Отлично! <опциональная вставка> Супер! До встречи. :)\\n\\n<опционально>:\\nТогда буду Вас ждать <дата> + <день недели> + <время>.\\nИ обязательно возьмите документы, деньги для предоплаты и <ЛПР>.\\n\\n\\n------------------------\\n[ вернуться в начало скрипта | Присоединение | blue ]","поездка_нескоро":"Договоритесь о следующем звонке\\n=========================\\nХорошо. Тогда давайте я уже ближе к датам поездки Вас наберу и поговорим о том, как мы можем помочь Вам с организацией самого великолепного путешествия. :) Было очень приятно пообщаться. До свидания!\\n\\nИ помните, что мы ждем Вас к нам в гости за Вашим подарком! ^_^\\n\\n\\n<Напоминание>: обязательно внесите дату и время в CRM-систему, чтобы связаться с клиентом тогда, когда ему удобно, и в итоге отработать по контактам из рекомендации.\\n\\n------------------------\\n[ вернуться в начало скрипта | Присоединение | blue ]"}------->

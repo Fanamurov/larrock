@@ -28,12 +28,12 @@ class BeforeLoaderModulesGlobal
 		\View::share('sharing_type', '');
 		\View::share('sharing_id', '');
 
-        $module_vidy = Cache::remember('module_vidy', 60*24, function() {
+        $module_vidy = Cache::remember('module_vidy', 1440, function() {
             return Category::whereParent(377)->whereActive(1)->orderBy('position', 'DESC')->get();
         });
 		View::share('module_vidy', $module_vidy);
 
-        $module_strany = Cache::remember('module_strany', 60*24, function() {
+        $module_strany = Cache::remember('module_strany', 1440, function() {
             return Category::whereParent(308)->whereActive(1)->with(['get_childActive'])->orderBy('position', 'DESC')->get();
         });
         //View::share('module_strany', $module_strany);
@@ -41,8 +41,10 @@ class BeforeLoaderModulesGlobal
         MenuApp::create('navbar', function($menu) use ($module_vidy, $module_strany)
         {
             $menu->dropdown('Страны', function ($sub) use ($module_strany) {
-                foreach ($module_strany as $item){
-                    //$sub->url('/tours/strany/'. $item->url, $item->title, ['icon' => 'flag-icon flag-icon-'. mb_strimwidth($item->url, 0, 2)]);
+                foreach ($module_strany as $key => $item){
+					if($key){
+
+					}
                     $sub->url('/tours/strany/'. $item->url, $item->title);
                 }
             });
@@ -73,7 +75,7 @@ class BeforeLoaderModulesGlobal
 			$menu->url('/page/oplata-on-layn', 'Оплата он-лайн');
 		});
 
-		$menu_mobile = Cache::remember('menu_mobile', 60*24, function() use ($module_strany, $module_vidy) {
+		$menu_mobile = Cache::remember('menu_mobile', 1440, function() use ($module_strany, $module_vidy) {
 			//Меню для мобильных
 			$menu_mobile['countries'] = [];
 			foreach ($module_strany as $item){
@@ -104,10 +106,10 @@ class BeforeLoaderModulesGlobal
 		View::share('GetCountries', $getFullSearchForm['GetCountries']);
 
 		//Форма поиска туров по сайту
-		$siteSearch = Cache::remember('siteSearch-form', 60*24, function() {
+		$siteSearch = Cache::remember('siteSearch-form', 1440, function() {
 			$siteSearch['countries'] = Category::whereType('tours')->whereActive(1)->whereParent(308)->get(['title','id']);
 			$siteSearch['resorts'] = Category::whereType('tours')->whereActive(1)->where('parent', '!=', 308)->where('parent', '!=', 377)->where('parent', '!=', 0)->get(['title','id']);
-			$siteSearch['vidy'] = Category::whereType('tours')->whereActive(1)->whereParent(377)->get(['title','id']);
+			$siteSearch['vidy'] = Category::whereType('tours')->whereActive(1)->whereParent(377)->get(['title','id', 'url']);
 			return $siteSearch;
 		});
 		View::share('siteSearch', $siteSearch);

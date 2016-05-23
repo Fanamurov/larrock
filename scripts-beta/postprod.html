@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">  
+    <title>Обучайщий шаблон</title>
+    <link type="text/css" rel="stylesheet" href="css/style.css">    
+    <link href="http://allfont.ru/allfont.css?fonts=pt-sans-narrow-bold" rel="stylesheet" type="text/css" />
+</head>
+<style>
+  
+@font-face {
+    font-family: "HelveticaNeueCyrMedium";
+    font-stretch: normal;
+    font-style: normal;
+    font-weight: 700;
+    src: url("../fonts/helveticaneuecyr-medium.otf");
+}
+@font-face {
+    font-family: "HelveticaNeueCyrRoman";
+    font-stretch: normal;
+    font-style: normal;
+    font-weight: 700;
+    src: url("../fonts/helveticaneuecyr-roman.otf");
+}
+@font-face {
+    font-family: "HelveticaNeueCyrBold";
+    font-stretch: normal;
+    font-style: normal;
+    font-weight: 900;
+    src: url("../fonts/helveticaneuecyr-bold.otf");
+}
+body {
+    margin: 0;
+    padding: 0;
+}
+#script-manager a {
+    border-radius: 5px;
+    color: #fff;
+    display: block;
+    font-family: "PT Sans Narrow Bold",arial;
+    font-size: 18px;
+    height: 135px;
+    margin-bottom: 29px;
+    text-align: center;
+    text-decoration: none;
+    width: 135px;
+}
+#script-manager a:hover {
+    background: #fff none repeat scroll 0 0;
+    height: 131px;
+    width: 131px;
+}
+.manager-entering {
+    background: #2b3a8f none repeat scroll 0 0;
+}
+.manager-entering span {
+    display: inline-block;
+    margin-top: 43px;
+}
+#script-manager a.manager-entering:hover {
+    border: 2px solid #2b3a8f;
+    color: #2b3a8f;
+}
+.manager-outgoing {
+    background: #1c74bb none repeat scroll 0 0;
+}
+.manager-outgoing span {
+    display: inline-block;
+    margin-top: 43px;
+}
+#script-manager a.manager-outgoing:hover {
+    border: 2px solid #1c74bb;
+    color: #1c74bb;
+}
+.manager-advice {
+    background: #01afd2 none repeat scroll 0 0;
+}
+.manager-advice span {
+    display: inline-block;
+    margin-top: 31px;
+}
+#script-manager a.manager-advice:hover {
+    border: 2px solid #01afd2;
+    color: #01afd2;
+}
+.manager-reactivation {
+    background: #52c9df none repeat scroll 0 0;
+}
+.manager-reactivation span {
+    display: inline-block;
+    margin-top: 31px;
+}
+#script-manager a.manager-reactivation:hover {
+    border: 2px solid #52c9df;
+    color: #52c9df;
+}
+.manager-meeting {
+    background: #7f3f96 none repeat scroll 0 0;
+    height: 135px !important;
+    width: 456px !important;
+}
+.manager-meeting span {
+    display: inline-block;
+    margin-top: 53px;
+}
+#script-manager a.manager-meeting:hover {
+    border: 2px solid #7f3f96;
+    color: #7f3f96;
+    height: 131px !important;
+    width: 452px !important;
+}
+.manager-postbridge {
+    background: #d3316a none repeat scroll 0 0;
+}
+.manager-postbridge span {
+    display: inline-block;
+    margin-top: 41px;
+}
+#script-manager a.manager-postbridge:hover {
+    border: 2px solid #d3316a;
+    color: #d3316a;
+}
+.managers {
+    align-content: space-between;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 93px auto 0;
+    width: 616px;
+}
+#content {
+    margin: auto;
+    padding-bottom: 165px;
+    position: relative;
+    width: 1000px;
+}
+#script-manager {
+    border: 1px solid #f0f2f1;
+    border-radius: 15px;
+    margin: 93px auto 0;
+    text-align: center;
+    width: 750px;
+}
+#script-manager h1 {
+    background: #fff none repeat scroll 0 0;
+    color: #a8c0c1;
+    display: inline;
+    font-family: "PT Sans Narrow Bold",arial;
+    font-size: 38px;
+    padding: 0 32px;
+    position: relative;
+    top: -29px;
+}
+.logo {
+    bottom: 0;
+    position: absolute;
+    right: 0;
+}
+.phone-email {
+    bottom: 25px;
+    font-family: "HelveticaNeueCyrMedium";
+    font-size: 13px;
+    font-weight: bold;
+    left: 0;
+    position: absolute;
+}
+.phone-email a {
+    color: #2d7dc4;
+    font-size: 13px;
+}
+#heading {
+    display: block;
+    margin-top: 40px;
+    width: 1000px;
+}
+#heading * {
+    cursor: pointer;
+    display: inline;
+    padding: 4px;
+    vertical-align: middle;
+}
+#heading span {
+    color: #929497;
+    font-family: "HelveticaNeueCyrBold";
+    font-size: 12px;
+    line-height: 45px;
+}
+#panes {
+    border-radius: 5px;
+    margin-left: 195px;
+    margin-top: -45px;
+    width: 612px;
+}
+.title_pane {
+    background: #d1d7e0 none repeat scroll 0 0;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    color: #58595b;
+    font-family: "PT Sans Narrow Bold",arial;
+    font-size: 22px;
+    font-weight: bold;
+    height: 54px;
+    line-height: 54px;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+.text_pane {
+    background: #f0f1f1 none repeat scroll 0 0;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    font-family: "HelveticaNeueCyrRoman";
+    line-height: 20px;
+    padding: 15px 25px;
+}
+.text_pane p {
+    color: #000000;
+    font-size: 17px;
+    width: 570px;
+}
+.text_pane span {
+    color: #f05a29;
+    font-size: 17px;
+}
+.text_pane a {
+    color: #f05a29;
+    font-size: 17px;
+    text-decoration: none;
+}
+.text_pane a:hover {
+    color: #f05a29;
+    text-decoration: underline;
+}
+#previous {
+    cursor: pointer;
+    float: left;
+}
+#next, #menu {
+    cursor: pointer;
+    float: right;
+}
+#script-manager2 {
+    margin: 10px 0;
+}
+#script-manager2 h1 {
+    color: #4d5b5b;
+    font-family: "PT Sans Narrow Bold",arial;
+    font-size: 38px;
+    text-align: center;
+}
+.line_bottom {
+    border-radius: 10px;
+    border-top: 3px solid #1bc1c1;
+    margin: -20px auto;
+    width: 150px;
+}
+#answers {
+    font-family: "PT Sans Narrow Bold",arial;
+    margin: 40px auto;
+    width: 610px;
+}
+#answers h2 {
+    color: #4d5b5b;
+    font-size: 28px;
+    text-align: center;
+}
+.blue {
+    background: #caf0fe none repeat scroll 0 0;
+}
+.green {
+    background: #d2e2c0 none repeat scroll 0 0;
+}
+.red {
+    background: #f9d9d9 none repeat scroll 0 0;
+}
+.linkall {
+    border-radius: 5px;
+    height: 54px;
+    line-height: 54px;
+    margin-bottom: 7px;
+    text-align: center;
+    width: 610px;
+}
+.link {
+    color: #231f20;
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+</style>
+<body> 
+
+<div id="content">
+
+<div id="script-manager2">    
+    <h1>Ваши действия на этом шаге</h1>
+    <div class="line_bottom"></div>
+</div>    
+
+<!-- Карусель -->
+<div id="heading">
+    <a href="javascript: void(0);"  onclick="hrefClk(this, 'prev')" page="n1053107210951072108311001085107211033210891090108810721085108010941072" sback><img src="img/slider/left.png" alt="" id="previous" /> <span style="float: left">Шаг назад</span></a> 
+        <ul id="buttons">
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    <a href="index.html" title="На главную"><img src="img/slider/menu.png" alt="" id="menu" /></a> 
+    <a href="javascript: void(0);"  onclick="hrefClk(this, 'next')" page="n1053107210951072108311001085107211033210891090108810721085108010941072" tomain><img src="img/slider/right.png" alt="" id="next" /> <span id="nextText" style="float: right">В начало</span></a> 
+</div>
+<div id="pages"><div id="panes"><div><div class="pane script_content" id="n1053107210951072108311001085107211033210891090108810721085108010941072"><div class="title_pane block main_header">Подведите итоги поездки</div><div class="text_pane"><p><span>#имя_клиента</span>, здравствуйте! С приездом. Еще раз спасибо Вам за то, что Вы выбрали нас в качестве Вашего турагентства.<br><br>Чай / кофе?<br><br>Хочу задать Вам несколько вопросов о том, как Вы отдохнули - для нас очень важно мнение наших клиентов. Расскажите, пожалуйста, как прошла поездка? Что понравилось, что не понравилось? Что запомнилось больше всего?<br><br><span>#работайте в режиме активного слушания - задавайте уточняющие вопросы!</span><br></p></div><div id="answers"><h2></h2><a href="javascript: void(0)" class="link" page="n1042108810911095107210771084321087108610761072108810861082" onclick="hrefClk(this)"><div class="linkall blue">клиент рассказывает о поездке...</div></a></div></div><div class="pane script_content" id="n1042108810911095107210771084321087108610761072108810861082" style="display: none;"><div class="title_pane block main_header">Вручите подарок</div><div class="text_pane"><p><span>#имя_клиента</span>, большое спасибо за подробный рассказ. Как я и обещала, у меня для Вас подарок от нашего агентства. <span>#улыбаясь, вручите подарок клиенту</span><br><br><span>#имя_клиента</span>, а как вообще, в целом, оцениваете работу нашего агентства?<br></p></div><div id="answers"><h2></h2><a href="javascript: void(0)" class="link" page="n104110771088107710843210861090107910991074" onclick="hrefClk(this)"><div class="linkall blue">клиент рассказывает о впечатлениях об агентстве...</div></a></div></div><div class="pane script_content" id="n104110771088107710843210861090107910991074" style="display: none;"><div class="title_pane block main_header">Возьмите отзыв</div><div class="text_pane"><p><span>#имя_клиента</span>, а можно попросить Вас это записать? <span>#положите перед клиентом бланк сбора отзывов и ручку</span><br><br>Мы собираем отзывы от наших клиентов и будем очень благодарны Вам, если Вы напишите нам о своих впечатлениях от отдыха и от взаимодействия с нашим агентством.<br></p></div><div id="answers"><h2></h2><a href="javascript: void(0)" class="link" page="n1041107710881077108432108810771082108610841077108510761072109410801080" onclick="hrefClk(this)"><div class="linkall blue">клиент пишет отзыв...</div></a></div></div><div class="pane script_content" id="n1041107710881077108432108810771082108610841077108510761072109410801080" style="display: none;"><div class="title_pane block main_header">Возьмите рекомендации</div><div class="text_pane"><p><span>#имя_клиента</span>, как Вы знаете, у нас небольшое агентство, и практически все наши клиенты приходят к нам, благодаря “сарафанному радио” - по рекомендациям тех наших туристов, которые уже знают нас и уже куда-то ездили с нами.<br><br>Скажите, пожалуйста, у Вас есть друзья, или знакомые, которые собираются в отпуск в ближайшее время, или, может быть, часто путешествуют - люди, которым Вы могли бы нас порекомендовать?<br><br>ОЦЕНИТЕ РЕАКЦИЮ КЛИЕНТА:<br><span>#если он настроен позитивно - следуйте варианту HARD, а если не очень - LIGHT</span><br></p></div><div id="answers"><h2></h2><a href="javascript: void(0)" class="link" page="n72658268" onclick="hrefClk(this)"><div class="linkall green">вариант HARD (клиент очень позитивен)</div></a><a href="javascript: void(0)" class="link" page="n7673717284" onclick="hrefClk(this)"><div class="linkall red">вариант LIGHT (клиент не очень позитивен)</div></a></div></div><div class="pane script_content" id="n7673717284" style="display: none;"><div class="title_pane block main_header">LIGHT-вариант</div><div class="text_pane"><p>Здорово! Я буду очень признательна Вам, если Вы расскажете о Вашей поездке и о нашем агентстве Вашим друзьям и знакомым. :)<br></p></div><div id="answers"><h2></h2><a href="javascript: void(0)" class="link" page="n104310861090108610741080108432108910831077107610911102109710911102321087108810861076107210781091" onclick="hrefClk(this)"><div class="linkall blue">переходим к подготовке следующей продажи</div></a></div></div><div class="pane script_content" id="n72658268" style="display: none;"><div class="title_pane block main_header">HARD-вариант</div><div class="text_pane"><p><span>#имя_клиента</span>, а можете написать нам их имена и телефоны в этом бланке?<br><br><span>#положите перед клиентом бланк сбора рекомендаций и ручку</span><br><br>Я понимаю, что Вам важно, чтобы Ваши отношения с этими людьми никак не пострадали из-за того, что Вы оставили нам их контакты.<br><br>Поэтому я расскажу, как мы будем действовать: мы позвоним каждому человеку, контакты которого Вы нам оставили только один раз, чтобы предложить ему получить от нашего агентства <span>#подарочный_купон / карту</span>.<br><br>За каждого, кто после этого через нас куда-то поедет, Вы получите дополнительные баллы на Ваш накопительный счет в нашем агентстве.<br><br>Если же человек скажет, что <span>#подарочный_купон / карта</span> ему не нужна, то мы больше никогда ему не позвоним, не будем ему слать sms - в общем, никоим образом не побеспокоим его.<br><br><span>#клиент пишет рекомендации</span><br><br>Спасибо большое!<br></p></div><div id="answers"><h2></h2><a href="javascript: void(0)" class="link" page="n104310861090108610741080108432108910831077107610911102109710911102321087108810861076107210781091" onclick="hrefClk(this)"><div class="linkall blue">переходим к подготовке следующей продажи</div></a></div></div><div class="pane script_content" id="n104310861090108610741080108432108910831077107610911102109710911102321087108810861076107210781091" style="display: none;"><div class="title_pane block main_header">Подготовьте следующую продажу</div><div class="text_pane"><p><span>#имя_клиента</span>, на последок, хочу поинтересоваться: а на какое, примерно, время, планируете Вашу следующую поездку?<br><br><span>#занесите в CRM дату следующего контакта с клиентом!</span><br></p></div><div id="answers"><h2></h2><a href="javascript: void(0)" class="link" page="n105510881086109710721077108410891103" onclick="hrefClk(this)"><div class="linkall blue">клиент рассказывает о планах на будущее</div></a></div></div><div class="pane script_content" id="n105510881086109710721077108410891103" style="display: none;"><div class="title_pane block main_header">Скажите "до свиданния" :)</div><div class="text_pane"><p><span>#имя_клиента</span>, спасибо за то, что уделили мне время и подробно рассказали о Ваших впечатлениях  от поездки и от взаимодействия с нами. Спасибо за отзыв и за контакты Ваших друзей! Буду рада организовать для Вас Вашу следующую поездку!<br></p></div><div id="answers"><h2></h2><a href="javascript: void(0)" class="link" page="n1053107210951072108311001085107211033210891090108810721085108010941072" onclick="hrefClk(this)"><div class="linkall blue">вернуться в начало скрипта</div></a></div></div><script>var historyS = ["n1053107210951072108311001085107211033210891090108810721085108010941072"];var lastPage = "n1053107210951072108311001085107211033210891090108810721085108010941072";function hrefClk (e, move) {var toPage = move == "back" ? lastPage : e.getAttribute("page");if(move!="prev"){historyS.push(toPage);}if ( move == "prev" ) {if ( historyS[historyS.length - 2] ) {toPage = historyS[historyS.length - 2];historyS.pop();}}var divs = document.querySelectorAll(".script_content");for (var i = 0; i < divs.length; i++) {divs[i].setAttribute("style", "display:none;");};document.querySelector("#" + toPage).setAttribute("style", "");}</script></div></div></div pages>
+        
+
+</div>
+
+
+</body>
+</html><!-------{"Начальная страница":"Подведите итоги поездки\\n=========================\\n<имя_клиента>, здравствуйте! С приездом. Еще раз спасибо Вам за то, что Вы выбрали нас в качестве Вашего турагентства.\\n\\nЧай / кофе?\\n\\nХочу задать Вам несколько вопросов о том, как Вы отдохнули - для нас очень важно мнение наших клиентов. Расскажите, пожалуйста, как прошла поездка? Что понравилось, что не понравилось? Что запомнилось больше всего?\\n\\n<работайте в режиме активного слушания - задавайте уточняющие вопросы!>\\n\\n------------------------\\n[ клиент рассказывает о поездке... | Вручаем подарок | blue ]","Вручаем подарок":"Вручите подарок\\n=========================\\n<имя_клиента>, большое спасибо за подробный рассказ. Как я и обещала, у меня для Вас подарок от нашего агентства. <улыбаясь, вручите подарок клиенту>\\n\\n<имя_клиента>, а как вообще, в целом, оцениваете работу нашего агентства?\\n\\n------------------------\\n[ клиент рассказывает о впечатлениях об агентстве... | Берем отзыв | blue ]","Берем отзыв":"Возьмите отзыв\\n=========================\\n<имя_клиента>, а можно попросить Вас это записать? <положите перед клиентом бланк сбора отзывов и ручку>\\n\\nМы собираем отзывы от наших клиентов и будем очень благодарны Вам, если Вы напишите нам о своих впечатлениях от отдыха и от взаимодействия с нашим агентством.\\n\\n------------------------\\n[ клиент пишет отзыв... | Берем рекомендации | blue ]","Берем рекомендации":"Возьмите рекомендации\\n=========================\\n<имя_клиента>, как Вы знаете, у нас небольшое агентство, и практически все наши клиенты приходят к нам, благодаря “сарафанному радио” - по рекомендациям тех наших туристов, которые уже знают нас и уже куда-то ездили с нами.\\n\\nСкажите, пожалуйста, у Вас есть друзья, или знакомые, которые собираются в отпуск в ближайшее время, или, может быть, часто путешествуют - люди, которым Вы могли бы нас порекомендовать?\\n\\nОЦЕНИТЕ РЕАКЦИЮ КЛИЕНТА:\\n<если он настроен позитивно - следуйте варианту HARD, а если не очень - LIGHT>\\n\\n------------------------\\n[ вариант HARD (клиент очень позитивен) | HARD | green ]\\n[ вариант LIGHT (клиент не очень позитивен) | LIGHT | red ]","LIGHT":"LIGHT-вариант\\n=========================\\nЗдорово! Я буду очень признательна Вам, если Вы расскажете о Вашей поездке и о нашем агентстве Вашим друзьям и знакомым. :)\\n\\n------------------------\\n[ переходим к подготовке следующей продажи | Готовим следующую продажу | blue ]","HARD":"HARD-вариант\\n=========================\\n<имя_клиента>, а можете написать нам их имена и телефоны в этом бланке?\\n\\n<положите перед клиентом бланк сбора рекомендаций и ручку>\\n\\nЯ понимаю, что Вам важно, чтобы Ваши отношения с этими людьми никак не пострадали из-за того, что Вы оставили нам их контакты.\\n\\nПоэтому я расскажу, как мы будем действовать: мы позвоним каждому человеку, контакты которого Вы нам оставили только один раз, чтобы предложить ему получить от нашего агентства <подарочный_купон / карту>.\\n\\nЗа каждого, кто после этого через нас куда-то поедет, Вы получите дополнительные баллы на Ваш накопительный счет в нашем агентстве.\\n\\nЕсли же человек скажет, что <подарочный_купон / карта> ему не нужна, то мы больше никогда ему не позвоним, не будем ему слать sms - в общем, никоим образом не побеспокоим его.\\n\\n<клиент пишет рекомендации>\\n\\nСпасибо большое!\\n\\n------------------------\\n[ переходим к подготовке следующей продажи | Готовим следующую продажу | blue ]","Готовим следующую продажу":"Подготовьте следующую продажу\\n=========================\\n<имя_клиента>, на последок, хочу поинтересоваться: а на какое, примерно, время, планируете Вашу следующую поездку?\\n\\n<занесите в CRM дату следующего контакта с клиентом!>\\n\\n------------------------\\n[ клиент рассказывает о планах на будущее | Прощаемся | blue ]","Прощаемся":"Скажите \"до свиданния\" :)\\n=========================\\n<имя_клиента>, спасибо за то, что уделили мне время и подробно рассказали о Ваших впечатлениях  от поездки и от взаимодействия с нами. Спасибо за отзыв и за контакты Ваших друзей! Буду рада организовать для Вас Вашу следующую поездку!\\n\\n------------------------\\n[ вернуться в начало скрипта | Начальная страница | blue ]"}------->

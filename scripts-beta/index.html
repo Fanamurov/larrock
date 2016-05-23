@@ -1,0 +1,311 @@
+<html><head>
+  <style>
+    
+@font-face {
+    font-family: "HelveticaNeueCyrMedium";
+    font-stretch: normal;
+    font-style: normal;
+    font-weight: 700;
+    src: url("../fonts/helveticaneuecyr-medium.otf");
+}
+@font-face {
+    font-family: "HelveticaNeueCyrRoman";
+    font-stretch: normal;
+    font-style: normal;
+    font-weight: 700;
+    src: url("../fonts/helveticaneuecyr-roman.otf");
+}
+@font-face {
+    font-family: "HelveticaNeueCyrBold";
+    font-stretch: normal;
+    font-style: normal;
+    font-weight: 900;
+    src: url("../fonts/helveticaneuecyr-bold.otf");
+}
+body {
+    margin: 0;
+    padding: 0;
+}
+#script-manager a {
+    border-radius: 5px;
+    color: #fff;
+    display: block;
+    font-family: "PT Sans Narrow Bold",arial;
+    font-size: 18px;
+    height: 135px;
+    margin-bottom: 29px;
+    text-align: center;
+    text-decoration: none;
+    width: 135px;
+}
+#script-manager a:hover {
+    background: #fff none repeat scroll 0 0;
+    height: 131px;
+    width: 131px;
+}
+.manager-entering {
+    background: #2b3a8f none repeat scroll 0 0;
+}
+.manager-entering span {
+    display: inline-block;
+    margin-top: 43px;
+}
+#script-manager a.manager-entering:hover {
+    border: 2px solid #2b3a8f;
+    color: #2b3a8f;
+}
+.manager-outgoing {
+    background: #1c74bb none repeat scroll 0 0;
+}
+.manager-outgoing span {
+    display: inline-block;
+    margin-top: 43px;
+}
+#script-manager a.manager-outgoing:hover {
+    border: 2px solid #1c74bb;
+    color: #1c74bb;
+}
+.manager-advice {
+    background: #01afd2 none repeat scroll 0 0;
+}
+.manager-advice span {
+    display: inline-block;
+    margin-top: 31px;
+}
+#script-manager a.manager-advice:hover {
+    border: 2px solid #01afd2;
+    color: #01afd2;
+}
+.manager-reactivation {
+    background: #52c9df none repeat scroll 0 0;
+}
+.manager-reactivation span {
+    display: inline-block;
+    margin-top: 31px;
+}
+#script-manager a.manager-reactivation:hover {
+    border: 2px solid #52c9df;
+    color: #52c9df;
+}
+.manager-meeting {
+    background: #7f3f96 none repeat scroll 0 0;
+    height: 135px !important;
+    width: 456px !important;
+}
+.manager-meeting span {
+    display: inline-block;
+    margin-top: 53px;
+}
+#script-manager a.manager-meeting:hover {
+    border: 2px solid #7f3f96;
+    color: #7f3f96;
+    height: 131px !important;
+    width: 452px !important;
+}
+.manager-postbridge {
+    background: #d3316a none repeat scroll 0 0;
+}
+.manager-postbridge span {
+    display: inline-block;
+    margin-top: 41px;
+}
+#script-manager a.manager-postbridge:hover {
+    border: 2px solid #d3316a;
+    color: #d3316a;
+}
+.managers {
+    align-content: space-between;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 93px auto 0;
+    width: 616px;
+}
+#content {
+    margin: auto;
+    padding-bottom: 165px;
+    position: relative;
+    width: 1000px;
+}
+#script-manager {
+    border: 1px solid #f0f2f1;
+    border-radius: 15px;
+    margin: 93px auto 0;
+    text-align: center;
+    width: 750px;
+}
+#script-manager h1 {
+    background: #fff none repeat scroll 0 0;
+    color: #a8c0c1;
+    display: inline;
+    font-family: "PT Sans Narrow Bold",arial;
+    font-size: 38px;
+    padding: 0 32px;
+    position: relative;
+    top: -29px;
+}
+.logo {
+    bottom: 0;
+    position: absolute;
+    right: 0;
+}
+.phone-email {
+    bottom: 25px;
+    font-family: "HelveticaNeueCyrMedium";
+    font-size: 13px;
+    font-weight: bold;
+    left: 0;
+    position: absolute;
+}
+.phone-email a {
+    color: #2d7dc4;
+    font-size: 13px;
+}
+#heading {
+    display: block;
+    margin-top: 40px;
+    width: 1000px;
+}
+#heading * {
+    cursor: pointer;
+    display: inline;
+    padding: 4px;
+    vertical-align: middle;
+}
+#heading span {
+    color: #929497;
+    font-family: "HelveticaNeueCyrBold";
+    font-size: 12px;
+    line-height: 45px;
+}
+#panes {
+    border-radius: 5px;
+    margin-left: 195px;
+    margin-top: -45px;
+    width: 612px;
+}
+.title_pane {
+    background: #d1d7e0 none repeat scroll 0 0;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    color: #58595b;
+    font-family: "PT Sans Narrow Bold",arial;
+    font-size: 22px;
+    font-weight: bold;
+    height: 54px;
+    line-height: 54px;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+.text_pane {
+    background: #f0f1f1 none repeat scroll 0 0;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    font-family: "HelveticaNeueCyrRoman";
+    line-height: 20px;
+    padding: 15px 25px;
+}
+.text_pane p {
+    color: #000000;
+    font-size: 17px;
+    width: 570px;
+}
+.text_pane span {
+    color: #f05a29;
+    font-size: 17px;
+}
+.text_pane a {
+    color: #f05a29;
+    font-size: 17px;
+    text-decoration: none;
+}
+.text_pane a:hover {
+    color: #f05a29;
+    text-decoration: underline;
+}
+#previous {
+    cursor: pointer;
+    float: left;
+}
+#next, #menu {
+    cursor: pointer;
+    float: right;
+}
+#script-manager2 {
+    margin: 10px 0;
+}
+#script-manager2 h1 {
+    color: #4d5b5b;
+    font-family: "PT Sans Narrow Bold",arial;
+    font-size: 38px;
+    text-align: center;
+}
+.line_bottom {
+    border-radius: 10px;
+    border-top: 3px solid #1bc1c1;
+    margin: -20px auto;
+    width: 150px;
+}
+#answers {
+    font-family: "PT Sans Narrow Bold",arial;
+    margin: 40px auto;
+    width: 610px;
+}
+#answers h2 {
+    color: #4d5b5b;
+    font-size: 28px;
+    text-align: center;
+}
+.blue {
+    background: #caf0fe none repeat scroll 0 0;
+}
+.green {
+    background: #d2e2c0 none repeat scroll 0 0;
+}
+.red {
+    background: #f9d9d9 none repeat scroll 0 0;
+}
+.linkall {
+    border-radius: 5px;
+    height: 54px;
+    line-height: 54px;
+    margin-bottom: 7px;
+    text-align: center;
+    width: 610px;
+}
+.link {
+    color: #231f20;
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+  </style>
+    <meta charset="utf-8">  
+	<title>Обучайщий шаблон</title>
+	<link href="css/style.css" rel="stylesheet" type="text/css">	
+	<link type="text/css" rel="stylesheet" href="http://allfont.ru/allfont.css?fonts=pt-sans-narrow-bold"> 
+</head>
+<body> 
+
+<div id="content">
+
+    <div id="script-manager">
+		<h1>Скрипты для менеджеров</h1>
+		<div class="managers">
+			<a class="manager-entering" href="vhod_zv.html"><span>ВХОДЯЩИЙ ЗВОНОК</span></a>
+			<a class="manager-outgoing" href="ishod_zv.html"><span>ИСХОДЯЩИЙ ЗВОНОК</span></a>
+			<a class="manager-advice" href="recommendation.html"><span>ЗВОНОК <br>ПО РЕКОМЕНДАЦИИ</span></a>
+			<a class="manager-reactivation" href="reactivation.html"><span>ЗВОНОК <br>ПО<br>РЕАКТИВАЦИИ</span></a>
+			
+			<a class="manager-meeting" href="vstrecha.html"><span>ВСТРЕЧИ</span></a>
+			<a class="manager-postbridge" href="postprod.html"><span>ВСТРЕЧИ:<br>ПОСТПРОДАЖИ</span></a>
+		</div>
+	</div>
+	
+	
+</div>
+	
+
+
+</body></html>

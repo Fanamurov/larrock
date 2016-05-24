@@ -18,9 +18,12 @@
                     <i class="text-muted">
                         {!! \Carbon\Carbon::createFromTimestamp(strtotime($data_value->updated_at))->diffForHumans(\Carbon\Carbon::now()) !!}</i></p>
         </td>
-        <td width="200">
+        <td width="35">
+            {{ $data_value->sharing }} <i class="glyphicon glyphicon-heart-empty"></i>
+        </td>
+        <td width="35">
             <a href="/blog/{{ $data_value->get_category->url }}/{{ $data_value->url }}">
-                /blog/{{ $data_value->get_category->url }}/{{ $data_value->url }}
+                <i class="glyphicon glyphicon-link"></i>
             </a>
         </td>
         <td class="row-position">

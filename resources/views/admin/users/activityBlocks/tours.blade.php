@@ -20,13 +20,13 @@
                     <i class="text-muted">
                         {!! \Carbon\Carbon::createFromTimestamp(strtotime($data_value->updated_at))->diffForHumans(\Carbon\Carbon::now()) !!}</i></p>
         </td>
-        <td>
-            0 <i class="glyphicon glyphicon-envelope"></i>
+        <td width="35">
+            {{ $data_value->getCountForms->count() }} <i class="glyphicon glyphicon-envelope"></i>
         </td>
-        <td>
+        <td width="35">
             {{ $data_value->sharing }} <i class="glyphicon glyphicon-heart-empty"></i>
         </td>
-        <td width="30">
+        <td width="35">
             <a href="/tours/strany/{{ $data_value->get_category()->first()->url }}/{{ $data_value->url }}">
                 <i class="glyphicon glyphicon-link"></i>
             </a>

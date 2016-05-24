@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Admin\AdminBlocks\MenuBlock;
+use App\Models\UsersLogger;
 use Breadcrumbs;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
@@ -108,6 +109,12 @@ class AdminBlogController extends Controller
 			Alert::add('success', 'Материал '. $request->input('title') .' добавлен')->flash();
 			Input::merge(['id_connect' => $data->id, 'stash_id' => $request->input('id')]);
 			$plugins->update($this->config['plugins_backend']);
+
+			$logger = new UsersLogger();
+			$logger->user_id = $this->current_user->id;
+			$logger->action = 'Add data in '. $this->config['name'] .': '. $data->title;
+			$logger->type_action = 'Add';
+			$logger->save();
 
 			return Redirect::to('/admin/'. $this->config['name'] .'/'. $data->id .'/edit')->withInput();
 		}
@@ -219,6 +226,13 @@ class AdminBlogController extends Controller
 			Alert::add('success', 'Материал '. $request->input('title') .' изменен')->flash();
 			$plugins->update($this->config['plugins_backend']);
 			\Cache::flush();
+
+			$logger = new UsersLogger();
+			$logger->user_id = $this->current_user->id;
+			$logger->action = 'Update data in '. $this->config['name'] .': '. $data->title;
+			$logger->type_action = 'Update';
+			$logger->save();
+
 			return back();
 		}
 
@@ -241,6 +255,13 @@ class AdminBlogController extends Controller
 			Alert::add('success', 'Материал успешно удален')->flash();
 			//уничтожение данные от плагинов фото, файлы
 			$plugins->destroy($this->config['plugins_backend']);
+
+			$logger = new UsersLogger();
+			$logger->user_id = $this->current_user->id;
+			$logger->action = 'Delete data in '. $this->config['name'] .': '. $data->title;
+			$logger->type_action = 'Delete';
+			$logger->save();
+
 			\Cache::flush();
 		}else{
 			Alert::add('error', 'Материал не удален')->flash();

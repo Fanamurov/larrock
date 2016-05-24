@@ -24,7 +24,10 @@
                     {!! \Carbon\Carbon::createFromTimestamp(strtotime($data_value->updated_at))->diffForHumans(\Carbon\Carbon::now()) !!}</i></p>
             <div class="clearfix"></div>
         </td>
-        <td>
+        <td width="35">
+            {{ $data_value->sharing }} <i class="glyphicon glyphicon-heart-empty"></i>
+        </td>
+        <td width="35">
             <a href="/tours/{{ $data_value->url }}">
                 <i class="glyphicon glyphicon-link"></i>
             </a>

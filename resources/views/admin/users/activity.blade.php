@@ -49,7 +49,7 @@
                         </div>
                         <div role="tabpanel" class="tab-pane" id="profile">
                             @if(count($categories) === 0)
-                                <div class="alert alert-warning">У автора нет материалов</div>
+                                <div class="alert alert-warning">У автора нет стран/курортов/разделов</div>
                             @else
                                 <table class="table table-striped table-hover">
                                     <tbody>
@@ -61,7 +61,7 @@
                         </div>
                         <div role="tabpanel" class="tab-pane" id="messages">
                             @if(count($news) === 0)
-                                <div class="alert alert-warning">У автора нет материалов</div>
+                                <div class="alert alert-warning">У автора нет новостей</div>
                             @else
                                 <table class="table table-striped table-hover">
                                     <tbody>
@@ -73,7 +73,7 @@
                         </div>
                         <div role="tabpanel" class="tab-pane" id="settings">
                             @if(count($blog) === 0)
-                                <div class="alert alert-warning">У автора нет материалов</div>
+                                <div class="alert alert-warning">У автора нет материалов в блоге</div>
                             @else
                                 <table class="table table-striped table-hover">
                                     <tbody>
@@ -94,8 +94,8 @@
                         <div class="widget style1">
                             <div class="row">
                                 <div class="col-xs-12 text-right">
-                                    <span> Заполнено туров </span>
-                                    <h2 class="font-bold">{{ $tours->total() }}</h2>
+                                    <span> Заполнено стран/курортов </span>
+                                    <h2 class="font-bold">{{ $categories->total() }}</h2>
                                 </div>
                             </div>
                         </div>
@@ -103,7 +103,7 @@
                     <div class="col-xs-4">
                         <div class="widget style1 text-center">
                             <span> место </span>
-                            <h2 class="font-bold">1</h2>
+                            <h2 class="font-bold">1<i class="glyphicon glyphicon-fire"></i></h2>
                         </div>
                     </div>
                 </div>
@@ -115,8 +115,8 @@
                                 <h5>Туры</h5>
                             </div>
                             <div class="ibox-content">
-                                <h1 class="no-margins">86,200</h1>
-                                <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div>
+                                <h1 class="no-margins">{{ $counter['categories']['loads']['user'] }}</h1>
+                                <div class="stat-percent font-bold text-success">{{ $counter['categories']['loads']['perst'] }}%</div>
                                 <small>От общего</small>
                             </div>
                         </div>
@@ -128,9 +128,56 @@
                                 <h5>Туры</h5>
                             </div>
                             <div class="ibox-content">
-                                <h1 class="no-margins">2,200</h1>
-                                <div class="stat-percent font-bold text-success">4% <i class="fa fa-bolt"></i></div>
-                                <small>От просмотров</small>
+                                <h1 class="no-margins">{{ $counter['categories']['share']['user'] }}</h1>
+                                <div class="stat-percent font-bold text-success">{{ $counter['categories']['share']['perst'] }}%</div>
+                                <small>От общего</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-8">
+                        <div class="widget style1">
+                            <div class="row">
+                                <div class="col-xs-12 text-right">
+                                    <span> Заполнено туров </span>
+                                    <h2 class="font-bold">{{ $tours->total() }}</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="widget style1 text-center">
+                            <span> место </span>
+                            <h2 class="font-bold">1<i class="glyphicon glyphicon-fire"></i></h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <span class="label label-success pull-right">views</span>
+                                <h5>Туры</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <h1 class="no-margins">{{ $counter['tours']['loads']['user'] }}</h1>
+                                <div class="stat-percent font-bold text-success">{{ $counter['tours']['loads']['perst'] }}%</div>
+                                <small>От общего</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <span class="label label-success pull-right">sharing</span>
+                                <h5>Туры</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <h1 class="no-margins">{{ $counter['tours']['share']['user'] }}</h1>
+                                <div class="stat-percent font-bold text-success">{{ $counter['tours']['share']['perst'] }}%</div>
+                                <small>От общего</small>
                             </div>
                         </div>
                     </div>
@@ -150,7 +197,7 @@
                     <div class="col-xs-4">
                         <div class="widget style1 text-center">
                             <span> место </span>
-                            <h2 class="font-bold">1</h2>
+                            <h2 class="font-bold">1<i class="glyphicon glyphicon-fire"></i></h2>
                         </div>
                     </div>
                 </div>
@@ -162,8 +209,8 @@
                                 <h5>Новости</h5>
                             </div>
                             <div class="ibox-content">
-                                <h1 class="no-margins">86,200</h1>
-                                <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div>
+                                <h1 class="no-margins">{{ $counter['news']['loads']['user'] }}</h1>
+                                <div class="stat-percent font-bold text-success">{{ $counter['news']['loads']['perst'] }}%</div>
                                 <small>От общего</small>
                             </div>
                         </div>
@@ -175,9 +222,9 @@
                                 <h5>Новости</h5>
                             </div>
                             <div class="ibox-content">
-                                <h1 class="no-margins">2,200</h1>
-                                <div class="stat-percent font-bold text-success">4% <i class="fa fa-bolt"></i></div>
-                                <small>От просмотров</small>
+                                <h1 class="no-margins">{{ $counter['news']['share']['user'] }}</h1>
+                                <div class="stat-percent font-bold text-success">{{ $counter['news']['share']['perst'] }}%</div>
+                                <small>От общего</small>
                             </div>
                         </div>
                     </div>
@@ -198,7 +245,7 @@
                         <div class="col-xs-4">
                             <div class="widget style1 text-center">
                                 <span> место </span>
-                                <h2 class="font-bold">1</h2>
+                                <h2 class="font-bold">1<i class="glyphicon glyphicon-fire"></i></h2>
                             </div>
                         </div>
                     </div>
@@ -210,8 +257,8 @@
                                     <h5>Блог</h5>
                                 </div>
                                 <div class="ibox-content">
-                                    <h1 class="no-margins">26,241</h1>
-                                    <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div>
+                                    <h1 class="no-margins">{{ $counter['blog']['loads']['user'] }}</h1>
+                                    <div class="stat-percent font-bold text-success">{{ $counter['blog']['loads']['perst'] }}%</div>
                                     <small>От общего</small>
                                 </div>
                             </div>
@@ -223,9 +270,9 @@
                                     <h5>Блог</h5>
                                 </div>
                                 <div class="ibox-content">
-                                    <h1 class="no-margins">8,299</h1>
-                                    <div class="stat-percent font-bold text-success">11% <i class="fa fa-bolt"></i></div>
-                                    <small>От просмотров</small>
+                                    <h1 class="no-margins">{{ $counter['blog']['share']['user'] }}</h1>
+                                    <div class="stat-percent font-bold text-success">{{ $counter['blog']['share']['perst'] }}%</div>
+                                    <small>От общего</small>
                                 </div>
                             </div>
                         </div>
@@ -234,56 +281,27 @@
                 <div class="ibox-content">
                     <strong>Последние действия</strong>
                     <div id="vertical-timeline" class="vertical-container dark-timeline">
-                        <div class="vertical-timeline-block">
-                            <div class="vertical-timeline-icon gray-bg">
-                                <i class="glyphicon glyphicon-text-size"></i>
+                        @foreach($logger as $logger_value)
+                            <div class="vertical-timeline-block">
+                                @if($logger_value->type_action === 'Add')
+                                    <div class="vertical-timeline-icon lazur-bg">
+                                        <i class="glyphicon glyphicon-certificate"></i>
+                                    </div>
+                                @elseif($logger_value->type_action === 'Update')
+                                    <div class="vertical-timeline-icon yellow-bg">
+                                        <i class="glyphicon glyphicon-pencil"></i>
+                                    </div>
+                                @elseif($logger_value->type_action === 'Delete')
+                                    <div class="vertical-timeline-icon red-bg">
+                                        <i class="glyphicon glyphicon-trash"></i>
+                                    </div>
+                                @endif
+                                <div class="vertical-timeline-content">
+                                    <p>{{ $logger_value->action }}</p>
+                                    <span class="vertical-date small text-muted"> {{ $logger_value->updated_at }} </span>
+                                </div>
                             </div>
-                            <div class="vertical-timeline-content">
-                                <p>Conference on the sales results for the previous year.
-                                </p>
-                                <span class="vertical-date small text-muted"> 2:10 pm - 12.06.2014 </span>
-                            </div>
-                        </div>
-                        <div class="vertical-timeline-block">
-                            <div class="vertical-timeline-icon gray-bg">
-                                <i class="glyphicon glyphicon-text-size"></i>
-                            </div>
-                            <div class="vertical-timeline-content">
-                                <p>Many desktop publishing packages and web page editors now use Lorem.
-                                </p>
-                                <span class="vertical-date small text-muted"> 4:20 pm - 10.05.2014 </span>
-                            </div>
-                        </div>
-                        <div class="vertical-timeline-block">
-                            <div class="vertical-timeline-icon gray-bg">
-                                <i class="glyphicon glyphicon-text-size"></i>
-                            </div>
-                            <div class="vertical-timeline-content">
-                                <p>There are many variations of passages of Lorem Ipsum available.
-                                </p>
-                                <span class="vertical-date small text-muted"> 06:10 pm - 11.03.2014 </span>
-                            </div>
-                        </div>
-                        <div class="vertical-timeline-block">
-                            <div class="vertical-timeline-icon navy-bg">
-                                <i class="glyphicon glyphicon-text-size"></i>
-                            </div>
-                            <div class="vertical-timeline-content">
-                                <p>The generated Lorem Ipsum is therefore.
-                                </p>
-                                <span class="vertical-date small text-muted"> 02:50 pm - 03.10.2014 </span>
-                            </div>
-                        </div>
-                        <div class="vertical-timeline-block">
-                            <div class="vertical-timeline-icon gray-bg">
-                                <i class="glyphicon glyphicon-text-size"></i>
-                            </div>
-                            <div class="vertical-timeline-content">
-                                <p>Conference on the sales results for the previous year.
-                                </p>
-                                <span class="vertical-date small text-muted"> 2:10 pm - 12.06.2014 </span>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>

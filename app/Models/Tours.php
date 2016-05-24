@@ -123,4 +123,10 @@ class Tours extends Model implements HasMediaConversions
 	{
 		return $this->hasOne('Spatie\MediaLibrary\Media', 'model_id', 'id')->where('model_type', '=', 'App\Models\Tours')->orderBy('order_column', 'DESC');
 	}
+
+	//Получение количества заявок по туру
+	public function getCountForms()
+	{
+		return $this->hasMany('App\Models\FormsLog', 'tour_id', 'id');
+	}
 }

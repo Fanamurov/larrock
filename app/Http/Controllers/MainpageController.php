@@ -52,12 +52,6 @@ class MainpageController extends Controller
 		View::share('list_tours', $list_tours);
 
         $data['country_id_sletat'] = 29;
-        $data['GetTours'] = Cache::remember('best_cost_mainpage', 1440, function() use ($sletat) {
-			return $sletat->GetTours(1286, 29, [], 8);
-		});
-		if($data['GetTours']['iTotalRecords'] < 1){
-			Cache::forget('best_cost_mainpage');
-		}
 
 		return view('santa.mainpage', $data);
 	}

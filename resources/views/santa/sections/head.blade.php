@@ -5,7 +5,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>@yield('title', 'Туристическая компания Cанта-авиа Хабаровск')</title>
     <meta name="description" content="@yield('description')">
-    <meta name="author" content="MartDS">
+    <meta name="author" content="Santa-avia.ru Санта-авиа">
     <meta name='yandex-verification' content='409dfa0fa1b91fe7' />
     <link href="{{asset('ico.png?6v')}}" rel="shortcut icon" />
 

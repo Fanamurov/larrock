@@ -22,6 +22,9 @@
                 </select>
             </div>
         </div>
+        <div class="col-md-1 hidden-xs hidden-sm">
+            <span class="ili">или</span>
+        </div>
         <div class="col-md-6">
             <div class="form-group">
                 <label class="control-label" for="form-searchTour-resort">Курорт:</label>

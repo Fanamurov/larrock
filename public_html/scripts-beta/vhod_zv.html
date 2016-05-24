@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">  
+    <title>Обучайщий шаблон</title>
+    <link type="text/css" rel="stylesheet" href="css/style.css">    
+    <link href="http://allfont.ru/allfont.css?fonts=pt-sans-narrow-bold" rel="stylesheet" type="text/css" />
+</head>
+<style>
+
+@font-face {
+    font-family: "HelveticaNeueCyrMedium";
+    font-stretch: normal;
+    font-style: normal;
+    font-weight: 700;
+    src: url("../fonts/helveticaneuecyr-medium.otf");
+}
+@font-face {
+    font-family: "HelveticaNeueCyrRoman";
+    font-stretch: normal;
+    font-style: normal;
+    font-weight: 700;
+    src: url("../fonts/helveticaneuecyr-roman.otf");
+}
+@font-face {
+    font-family: "HelveticaNeueCyrBold";
+    font-stretch: normal;
+    font-style: normal;
+    font-weight: 900;
+    src: url("../fonts/helveticaneuecyr-bold.otf");
+}
+body {
+    margin: 0;
+    padding: 0;
+}
+#script-manager a {
+    border-radius: 5px;
+    color: #fff;
+    display: block;
+    font-family: "PT Sans Narrow Bold",arial;
+    font-size: 18px;
+    height: 135px;
+    margin-bottom: 29px;
+    text-align: center;
+    text-decoration: none;
+    width: 135px;
+}
+#script-manager a:hover {
+    background: #fff none repeat scroll 0 0;
+    height: 131px;
+    width: 131px;
+}
+.manager-entering {
+    background: #2b3a8f none repeat scroll 0 0;
+}
+.manager-entering span {
+    display: inline-block;
+    margin-top: 43px;
+}
+#script-manager a.manager-entering:hover {
+    border: 2px solid #2b3a8f;
+    color: #2b3a8f;
+}
+.manager-outgoing {
+    background: #1c74bb none repeat scroll 0 0;
+}
+.manager-outgoing span {
+    display: inline-block;
+    margin-top: 43px;
+}
+#script-manager a.manager-outgoing:hover {
+    border: 2px solid #1c74bb;
+    color: #1c74bb;
+}
+.manager-advice {
+    background: #01afd2 none repeat scroll 0 0;
+}
+.manager-advice span {
+    display: inline-block;
+    margin-top: 31px;
+}
+#script-manager a.manager-advice:hover {
+    border: 2px solid #01afd2;
+    color: #01afd2;
+}
+.manager-reactivation {
+    background: #52c9df none repeat scroll 0 0;
+}
+.manager-reactivation span {
+    display: inline-block;
+    margin-top: 31px;
+}
+#script-manager a.manager-reactivation:hover {
+    border: 2px solid #52c9df;
+    color: #52c9df;
+}
+.manager-meeting {
+    background: #7f3f96 none repeat scroll 0 0;
+    height: 135px !important;
+    width: 456px !important;
+}
+.manager-meeting span {
+    display: inline-block;
+    margin-top: 53px;
+}
+#script-manager a.manager-meeting:hover {
+    border: 2px solid #7f3f96;
+    color: #7f3f96;
+    height: 131px !important;
+    width: 452px !important;
+}
+.manager-postbridge {
+    background: #d3316a none repeat scroll 0 0;
+}
+.manager-postbridge span {
+    display: inline-block;
+    margin-top: 41px;
+}
+#script-manager a.manager-postbridge:hover {
+    border: 2px solid #d3316a;
+    color: #d3316a;
+}
+.managers {
+    align-content: space-between;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 93px auto 0;
+    width: 616px;
+}
+#content {
+    margin: auto;
+    padding-bottom: 165px;
+    position: relative;
+    width: 1000px;
+}
+#script-manager {
+    border: 1px solid #f0f2f1;
+    border-radius: 15px;
+    margin: 93px auto 0;
+    text-align: center;
+    width: 750px;
+}
+#script-manager h1 {
+    background: #fff none repeat scroll 0 0;
+    color: #a8c0c1;
+    display: inline;
+    font-family: "PT Sans Narrow Bold",arial;
+    font-size: 38px;
+    padding: 0 32px;
+    position: relative;
+    top: -29px;
+}
+.logo {
+    bottom: 0;
+    position: absolute;
+    right: 0;
+}
+.phone-email {
+    bottom: 25px;
+    font-family: "HelveticaNeueCyrMedium";
+    font-size: 13px;
+    font-weight: bold;
+    left: 0;
+    position: absolute;
+}
+.phone-email a {
+    color: #2d7dc4;
+    font-size: 13px;
+}
+#heading {
+    display: block;
+    margin-top: 40px;
+    width: 1000px;
+}
+#heading * {
+    cursor: pointer;
+    display: inline;
+    padding: 4px;
+    vertical-align: middle;
+}
+#heading span {
+    color: #929497;
+    font-family: "HelveticaNeueCyrBold";
+    font-size: 12px;
+    line-height: 45px;
+}
+#panes {
+    border-radius: 5px;
+    margin-left: 195px;
+    margin-top: -45px;
+    width: 612px;
+}
+.title_pane {
+    background: #d1d7e0 none repeat scroll 0 0;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    color: #58595b;
+    font-family: "PT Sans Narrow Bold",arial;
+    font-size: 22px;
+    font-weight: bold;
+    height: 54px;
+    line-height: 54px;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+.text_pane {
+    background: #f0f1f1 none repeat scroll 0 0;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    font-family: "HelveticaNeueCyrRoman";
+    line-height: 20px;
+    padding: 15px 25px;
+}
+.text_pane p {
+    color: #000000;
+    font-size: 17px;
+    width: 570px;
+}
+.text_pane span {
+    color: #f05a29;
+    font-size: 17px;
+}
+.text_pane a {
+    color: #f05a29;
+    font-size: 17px;
+    text-decoration: none;
+}
+.text_pane a:hover {
+    color: #f05a29;
+    text-decoration: underline;
+}
+#previous {
+    cursor: pointer;
+    float: left;
+}
+#next, #menu {
+    cursor: pointer;
+    float: right;
+}
+#script-manager2 {
+    margin: 10px 0;
+}
+#script-manager2 h1 {
+    color: #4d5b5b;
+    font-family: "PT Sans Narrow Bold",arial;
+    font-size: 38px;
+    text-align: center;
+}
+.line_bottom {
+    border-radius: 10px;
+    border-top: 3px solid #1bc1c1;
+    margin: -20px auto;
+    width: 150px;
+}
+#answers {
+    font-family: "PT Sans Narrow Bold",arial;
+    margin: 40px auto;
+    width: 610px;
+}
+#answers h2 {
+    color: #4d5b5b;
+    font-size: 28px;
+    text-align: center;
+}
+.blue {
+    background: #caf0fe none repeat scroll 0 0;
+}
+.green {
+    background: #d2e2c0 none repeat scroll 0 0;
+}
+.red {
+    background: #f9d9d9 none repeat scroll 0 0;
+}
+.linkall {
+    border-radius: 5px;
+    height: 54px;
+    line-height: 54px;
+    margin-bottom: 7px;
+    text-align: center;
+    width: 610px;
+}
+.link {
+    color: #231f20;
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+</style>
+<body> 
+
+<div id="content">
+
+<div id="script-manager2">    
+    <h1>Ваши действия на этом шаге</h1>
+    <div class="line_bottom"></div>
+</div>    
+
+<!-- Карусель -->
+<div id="heading">
+    <a href="javascript: void(0);"  onclick="hrefClk(this, 'prev')" page="n1055107710881074108010951085109910813210801089109310861076110310971080108132107910741086108510861082" sback><img src="img/slider/left.png" alt="" id="previous" /> <span style="float: left">Шаг назад</span></a> 
+        <ul id="buttons">
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    <a href="index.html" title="На главную"><img src="img/slider/menu.png" alt="" id="menu" /></a> 
+    <a href="javascript: void(0);"  onclick="hrefClk(this, 'next')" page="n1055107710881074108010951085109910813210801089109310861076110310971080108132107910741086108510861082" tomain><img src="img/slider/right.png" alt="" id="next" /> <span id="nextText" style="float: right">В начало</span></a> 
+</div>
+<div id="pages"><div id="panes"><div><div class="pane script_content" id="n1053107210951072108311001085107211033210891090108810721085108010941072" style="display: none;"><div class="title_pane block main_header">Сбор потребностей Хургада</div><div class="text_pane"><p>Здравствуйте, <span>#имя клиента</span>! Меня зовут <span>#ваше имя</span>. Я менеджер <br>по работе с клиентами турагентства <span>#название вашего ТА</span>.<br>.... <br>Или еще выбираете?<br></p></div><div id="answers"><h2>Варианты ответов клиента</h2><a href="javascript: void(0)" class="link" page="n1042109010861088107211033210951072108910901100" onclick="hrefClk(this)"><div class="linkall green">переход на вторую часть</div></a><a href="javascript: void(0)" class="link" page="n107210831100109010771088108510721090108010741085107211033210951072108910901100" onclick="hrefClk(this)"><div class="linkall red">переход на альтернативную часть</div></a></div></div><div class="pane script_content" id="n1055107710881074108010951085109910813210801089109310861076110310971080108132107910741086108510861082"><div class="title_pane block main_header">Первичный входящий звонок: приветствие</div><div class="text_pane"><p>Здравствуйте, <span>#название агентства</span>, <span>#имя менеджера</span>.<br></p></div><div id="answers"><h2></h2><a href="javascript: void(0)" class="link" page="n105410871088107710761077108311031077108432109010801087321079107210871088108610891072" onclick="hrefClk(this)"><div class="linkall blue">клиент формирует запрос</div></a></div></div><div class="pane script_content" id="n104410861075108610741072108810801074107210771084108911033210863210761088109110751086108432107410881077108410771085108032107910741086108510821072" style="display: none;"><div class="title_pane block main_header">Договоритесь о другом времени звонка</div><div class="text_pane"><p>Ок. Нет проблем. Когда и во сколько мне Вам перезвонить, чтобы Вам было удобно общаться и мы могли обсудить предстоящую поездку?<br><br><br><span>#Напоминание:</span> обязательно внесите дату и время в CRM-систему, чтобы связаться с клиентом тогда, когда ему удобно, и в итоге отработать по заявке.<br></p></div><div id="answers"><h2></h2><a href="javascript: void(0)" class="link" page="n1055107710881074108010951085109910813210801089109310861076110310971080108132107910741086108510861082" onclick="hrefClk(this)"><div class="linkall blue">вернуться в начало скрипта</div></a></div></div><div class="pane script_content" id="n105410871088107710761077108311031077108432109010801087321079107210871088108610891072" style="display: none;"><div class="title_pane block main_header">Определите тип запроса</div><div class="text_pane"><p>Для того, чтобы продолжить общение с клиентом, выберите тип его запроса, исходя из того, что он рассказал Вам.<br><br><br><span>#Примечание:</span><br><br><span>#Нужен подбор тура / отеля</span> - клиент еще не знает, в какой отель / тур он хочет поехать, и Вам необходимо разобраться в его потребностях, после чего закрыть его на встречу в офисе, где Вы осуществите продажу.<br><br><span>#Отель известен - интересует цена</span> - клиент уже знает, в какой отель / тур он хочет поехать, и Вам необходимо сделать все, чтобы он купил именно в Вашем агентстве.<br></p></div><div id="answers"><h2></h2><a href="javascript: void(0)" class="link" page="n105310911078107710853210871086107610731086108832109010911088107232473210861090107710831103" onclick="hrefClk(this)"><div class="linkall green">нужен подбор тура / отеля</div></a><a href="javascript: void(0)" class="link" page="n1054109010771083110032108010791074107710891090107710853245321080108510901077108810771089109110771090321094107710851072" onclick="hrefClk(this)"><div class="linkall red">отель известен - интересует цена</div></a></div></div><div class="pane script_content" id="n105310911078107710853210871086107610731086108832109010911088107232473210861090107710831103" style="display: none;"><div class="title_pane block main_header">Выявите потребности</div><div class="text_pane"><p><span>#имя клиента</span>, давайте поступим так: чтобы сэкономить наше с Вами время и подобрать наиболее подходящий вариант, я задам Вам несколько уточняющих вопросов, а потом уже поговорим об отелях, хорошо?<br><br>Базовые вопросы:<br>- Куда хотите поехать?<br>- На какие даты планируете поездку?<br>- В каком составе и с кем поедете?<br><br>Вопросы для выявления потребностей:<br>- Какие-то конкретные отели уже рассматривали? А почему именно на этом варианте решили остановиться, если не секрет?<br>- А до этого где-то уже отдыхали? Вам там понравилось? А что запомнилось больше всего?<br>- Чем вообще планируете заниматься на отдыхе?<br><br>- А что хотелось бы получить от поездки? -> Если клиент затрудняется с ответом, предложите альтернативы -> У моря позагорать / достопримечательности посмотреть / потусоваться?<br><br>- И еще, пожалуйста, сориентируйте меня по бюджету.<br><br>Отлично. <span>#имя клиента</span>, может быть есть что-то еще, что касается предстоящего тура, отеля, поездки, что важно для Вас, или, может быть, что нежелательно, что-то, что мы еще с Вами не обсудили?<br><br>Резюмируем: Вас интересует тур в <span>#направление</span> на <span>#даты</span>, едут <span>#состав</span>. Для Вас важно, чтобы <span>#перечисляем выявленные потребности</span>. Все верно? Или есть что-то еще?<br></p></div><div id="answers"><h2></h2><a href="javascript: void(0)" class="link" page="n10441072109010723210871086107710791076108210803210743210901077109510771085108010773250321084107710891103109410771074" onclick="hrefClk(this)"><div class="linkall blue">дата поездки в течение 2 месяцев</div></a><a href="javascript: void(0)" class="link" page="n104410721090107232108710861077107910761082108032108610901083108610781077108510723210741086321074108810771084107710851080" onclick="hrefClk(this)"><div class="linkall blue">дата поездки отложена во времени</div></a></div></div><div class="pane script_content" id="n10441072109010723210871086107710791076108210803210743210901077109510771085108010773250321084107710891103109410771074" style="display: none;"><div class="title_pane block main_header">Назначьте встречу</div><div class="text_pane"><p><span>#имя клиента</span>, учитывая Ваши пожелания, могу сказать, что у нас есть для Вас несколько хороших вариантов, но поскольку сейчас сезон, ситуация постоянно меняется и лучшие предложения уходят очень быстро!<br><br>Если не успеем, будет обидно, поэтому давайте назначим конкретное время, в которое Вам будет удобно подъехать к нам в офис; к Вашему приезду я подготовлю все необходимые материалы по этим вариантам, Вы приедете и мы вместе выберем лучший для Вас.<br><br>Вам удобно будет сегодня или завтра? В <span>#ХХ:ХХ</span> удобно? Отлично! Продиктуйте мне, пожалуйста, Ваш контактный телефон (на всякий случай). <span>#опциональная вставка</span> Супер! До встречи. :)<br><br><span>#опционально:</span><br>Тогда буду Вас ждать <span>#дата</span> + <span>#день недели</span> + <span>#время</span>.<br>И обязательно возьмите документы, деньги для предоплаты и <span>#ЛПР</span>.<br></p></div><div id="answers"><h2></h2><a href="javascript: void(0)" class="link" page="n1055107710881074108010951085109910813210801089109310861076110310971080108132107910741086108510861082" onclick="hrefClk(this)"><div class="linkall green">клиент согласен - вернуться в начало скрипта</div></a><a href="javascript: void(0)" class="link" page="n10561072107310861090107232108932107410861079108810721078107710851080110310841080" onclick="hrefClk(this)"><div class="linkall red">клиент не согласен - перейти к работе с возражениями</div></a></div></div><div class="pane script_content" id="n104410721090107232108710861077107910761082108032108610901083108610781077108510723210741086321074108810771084107710851080" style="display: none;"><div class="title_pane block main_header">Назначьте встречу</div><div class="text_pane"><p><span>#имя клиента</span>, хорошо, что Вы позвонили заранее! У нас сейчас как-раз идет раннее бронирование на туры в <span>#направление</span>. Лучше действовать оперативно, потому что пока еще есть возможность получить самые лучшие варианты с хорошей скидкой.<br><br>Дальше будет дороже, да и таких вариантов уже не будет, поэтому давайте назначим конкретное время, в которое Вам будет удобно подъехать к нам в офис; к Вашему приезду я подготовлю все необходимые материалы по этим вариантам, Вы приедете и мы вместе выберем лучший для Вас.<br><br>Вам удобно будет сегодня или завтра? В <span>#ХХ:ХХ</span> удобно? Отлично! Продиктуйте мне, пожалуйста, Ваш контактный телефон (на всякий случай). <span>#опциональная вставка</span> Супер! До встречи. :)<br><br><span>#опционально:</span><br>Тогда буду Вас ждать <span>#дата</span> + <span>#день недели</span> + <span>#время</span>.<br>И обязательно возьмите документы, деньги для предоплаты и <span>#ЛПР</span>.<br></p></div><div id="answers"><h2></h2><a href="javascript: void(0)" class="link" page="n1055107710881074108010951085109910813210801089109310861076110310971080108132107910741086108510861082" onclick="hrefClk(this)"><div class="linkall green">клиент согласен - вернуться в начало скрипта</div></a><a href="javascript: void(0)" class="link" page="n10561072107310861090107232108932107410861079108810721078107710851080110310841080" onclick="hrefClk(this)"><div class="linkall red">клиент не согласен - перейти к работе с возражениями</div></a></div></div><div class="pane script_content" id="n10561072107310861090107232108932107410861079108810721078107710851080110310841080" style="display: none;"><div class="title_pane block main_header">Выберите возражение, с которым Вы столкнулись</div><div class="text_pane"><p>Выберите возражение клиента, чтобы увидеть ответ на него.<br></p></div><div id="answers"><h2></h2><a href="javascript: void(0)" class="link" page="n1087108810801096108310801090107732108410851077321074108910773210851072321101108310771082109010881086108510821091" onclick="hrefClk(this)"><div class="linkall red">"пришлите мне все на электропочту"</div></a><a href="javascript: void(0)" class="link" page="n1088107210891089108210721078108010901077321084108510773210741089107732108710863210901077108310771092108610851091" onclick="hrefClk(this)"><div class="linkall red">"расскажите мне все по телефону"</div></a><a href="javascript: void(0)" class="link" page="n1076107710851077107532108510771090" onclick="hrefClk(this)"><div class="linkall red">"а чего ехать? денег еще нет..."</div></a><a href="javascript: void(0)" class="link" page="n1087108810801077107610913210871086109010861084" onclick="hrefClk(this)"><div class="linkall red">"ок. приеду, но потом..."</div></a><a href="javascript: void(0)" class="link" page="n1089108210801076108210913210891076107710831072107710901077" onclick="hrefClk(this)"><div class="linkall red">"а скидку сделаете?"</div></a></div></div><div class="pane script_content" id="n1087108810801096108310801090107732108410851077321074108910773210851072321101108310771082109010881086108510821091" style="display: none;"><div class="title_pane block main_header">РсВ: "пришлите мне все на электропочту"</div><div class="text_pane"><p><span>#имя клиента</span>, я конечно могу прислать Вам варианты туров на электронку, но тут вот какая ситуация: у нас есть более 16000 вариантов туров в #направление и отправить Вам их все по e-mail’у у меня не получится. :) То есть, мне нужно будет сделать подборку.<br><br><br>Но ситуация с местами в отелях и курсом <span>#валюта</span> меняется теперь так часто, что та подборка, которую я Вам пришлю, может стать неактуальной уже в тот момент, когда вы ее откроете.<br><br>И самое главное: самые лучшие варианты сейчас только под запрос. То есть, реальную доступность мест на конкретные даты и реальные цены можно обсуждать только после созвона с туроператором.<br><br><br>Поэтому, повторюсь, подборку сделать могу, но смысла в этом особого нет. Будет гораздо лучше, если Вы подъедете к нам в офис, и мы на месте вместе с Вами подберем Вам самый лучший вариант по лучшей цене. Вам когда удобно к нам подъехать?<br></p></div><div id="answers"><h2></h2><a href="javascript: void(0)" class="link" page="n10741088107710841103951074108910901088107710951080" onclick="hrefClk(this)"><div class="linkall green">клиент согласен на встречу - договариваемся о времени</div></a><a href="javascript: void(0)" class="link" page="n10561072107310861090107232108932107410861079108810721078107710851080110310841080" onclick="hrefClk(this)"><div class="linkall red">клиент не согласен - перейти к работе с возражениями</div></a></div></div><div class="pane script_content" id="n1088107210891089108210721078108010901077321084108510773210741089107732108710863210901077108310771092108610851091" style="display: none;"><div class="title_pane block main_header">РсВ: "расскажите мне все по телефону"</div><div class="text_pane"><p>Ок. Мне нужно 15-20 минут, чтобы узнать, какие именно варианты сейчас доступны для бронирования и по каким конкретно ценам. Продиктуйте мне Ваш контактный телефон. Я перезвоню.<br></p></div><div id="answers"><h2></h2><a href="javascript: void(0)" class="link" page="n1055107710881074108010951085109910813210801089109310861076110310971080108132107910741086108510861082" onclick="hrefClk(this)"><div class="linkall green">клиент согласен - вернуться в начало скрипта</div></a><a href="javascript: void(0)" class="link" page="n10561072107310861090107232108932107410861079108810721078107710851080110310841080" onclick="hrefClk(this)"><div class="linkall red">клиент не согласен - перейти к работе с возражениями</div></a></div></div><div class="pane script_content" id="n1076107710851077107532108510771090" style="display: none;"><div class="title_pane block main_header">РсВ: "а чего ехать? денег еще нет..."</div><div class="text_pane"><p><span>#имя клиента</span>, не переживайте по поводу денежного вопроса – это нормальная ситуация, для разрешения которой у нас с Вами есть несколько вариантов:<br><br>на встрече мы с Вами выберем тот вариант поездки, который будет для Вас максимально интересным и получим точную калькуляцию стоимости, после чего можно будет ЛИБО внести предоплату, и тогда у Вас будет еще время для того, чтобы довнести остаток, ЛИБО можно будет рассмотреть вариант оформления туристической̆ рассрочки, в итоге по деньгам вы все равно выиграете.<br><br>Что скажете?<br></p></div><div id="answers"><h2></h2><a href="javascript: void(0)" class="link" page="n10741088107710841103951074108910901088107710951080" onclick="hrefClk(this)"><div class="linkall green">клиент согласен на встречу - договариваемся о времени</div></a><a href="javascript: void(0)" class="link" page="n10561072107310861090107232108932107410861079108810721078107710851080110310841080" onclick="hrefClk(this)"><div class="linkall red">клиент не согласен - перейти к работе с возражениями</div></a></div></div><div class="pane script_content" id="n1087108810801077107610913210871086109010861084" style="display: none;"><div class="title_pane block main_header">РсВ: "ок. приеду, но потом..."</div><div class="text_pane"><p><span>#имя клиента</span>, знаете, я уже давно работаю по этому направлению и знаю, что многие клиенты склонны откладывать встречу с агентством на последний момент. В результате им приходится либо переплачивать, либо выбирать отель из не самых лучших вариантов. <br><br>Поскольку моя главная задача, как Вашего персонального менеджера, сделать так, чтобы Вы получили лучший отдых в лучшем отеле по лучшей цене, я буду рада, если Вы согласитесь заранее встретиться со мной, чтобы мы вместе подобрали для Вас самый лучший вариант.<br><br>Что скажете?<br></p></div><div id="answers"><h2></h2><a href="javascript: void(0)" class="link" page="n10741088107710841103951074108910901088107710951080" onclick="hrefClk(this)"><div class="linkall green">клиент согласен на встречу - договариваемся о времени</div></a><a href="javascript: void(0)" class="link" page="n10561072107310861090107232108932107410861079108810721078107710851080110310841080" onclick="hrefClk(this)"><div class="linkall red">клиент не согласен - перейти к работе с возражениями</div></a></div></div><div class="pane script_content" id="n1089108210801076108210913210891076107710831072107710901077" style="display: none;"><div class="title_pane block main_header">РсВ: "а скидку сделаете?"</div><div class="text_pane"><p><span>#имя клиента</span>, 3 момента по поводу цен и скидок:<br><br>Во-первых, мы сейчас с вами обсуждаем сферический тур в вакууме. Приезжайте, все вместе посмотрим, выберете то, что Вам подходит больше всего - по цене договоримся.<br><br>Во-вторых, сами понимаете: все агентства работают с +/- одними и теми же ТО, поэтому цены у всех одинаковые. Да, конечно, есть ТА, которые делают еще сверху свою наценку, но это не про нас. Мы продаем туры по ценам туроператоров.<br>Придете - сами убедитесь.<br><br>И в-третьих, с некоторыми туроператорами у нашего агентства эксклюзивные условия, поэтому мы сможем предложить Вам лучшую цену.<br><br>Поэтому, <span>#имя клиента</span>, приезжайте - вместе все посмотрим-подтвердим и получите тур по лучшей цене в городе.<br></p></div><div id="answers"><h2></h2><a href="javascript: void(0)" class="link" page="n10741088107710841103951074108910901088107710951080" onclick="hrefClk(this)"><div class="linkall green">клиент согласен на встречу - договариваемся о времени</div></a><a href="javascript: void(0)" class="link" page="n10561072107310861090107232108932107410861079108810721078107710851080110310841080" onclick="hrefClk(this)"><div class="linkall red">клиент не согласен - перейти к работе с возражениями</div></a></div></div><div class="pane script_content" id="n1054109010771083110032108010791074107710891090107710853245321080108510901077108810771089109110771090321094107710851072" style="display: none;"><div class="title_pane block main_header">Уточните детали</div><div class="text_pane"><p><span>#имя клиента</span>, давайте все проверим: страна? точное название отеля? на какие даты планируется поездка? в каком составе и с кем поедете? что по визам и документам? есть ли специальные пожелания по питанию, типу номеров и тому, чем планируете заниматься в поездке?<br></p></div><div id="answers"><h2></h2><a href="javascript: void(0)" class="link" page="n1082108310801077108510903210861090107410771095107210771090" onclick="hrefClk(this)"><div class="linkall blue">клиент отвечает</div></a></div></div><div class="pane script_content" id="n1082108310801077108510903210861090107410771095107210771090" style="display: none;"><div class="title_pane block main_header">Попробуйте уйти от разговора о цене</div><div class="text_pane"><p>Отлично. <span>#имя клиента</span>, пока я смотрю цены, можно задам еще буквально пару уточняющих вопросов, хорошо?<br></p></div><div id="answers"><h2></h2><a href="javascript: void(0)" class="link" page="n10911096108310803210861090108810721079107510861074108610881072321086321094107710851077" onclick="hrefClk(this)"><div class="linkall green">да. спрашивайте...</div></a><a href="javascript: void(0)" class="link" page="n10851077321091109610831080321086109032108810721079107510861074108610881072321086321094107710851077" onclick="hrefClk(this)"><div class="linkall red">нет. сколько стоит?!</div></a></div></div><div class="pane script_content" id="n1089108210881080108710903210801075108810801082" style="display: none;"><div class="title_pane block main_header">Закройте на встречу через намеренное занижение цены</div><div class="text_pane"><p>Хорошо. <span>#отель</span> + <span>#состав</span> + <span>#даты</span>, + <span>#дней/ночей</span> + <span>#тип размещения</span>...получается <span>#ХХХ</span> т.р. (называем себестоимость отеля!).<br><br>Когда мне Вас ждать? Не забудьте взять документы, деньги и <span>#ЛПР</span>.<br></p></div><div id="answers"><h2></h2><a href="javascript: void(0)" class="link" page="n1055107710881074108010951085109910813210801089109310861076110310971080108132107910741086108510861082" onclick="hrefClk(this)"><div class="linkall green">клиент согласен - вернуться в начало скрипта</div></a></div></div><div class="pane script_content" id="n10911096108310803210861090108810721079107510861074108610881072321086321094107710851077" style="display: none;"><div class="title_pane block main_header">Узнайте, почему клиент выбрал именно этот отель</div><div class="text_pane"><p>Почему, если не секрет, этот отель выбрали?<br></p></div><div id="answers"><h2></h2><a href="javascript: void(0)" class="link" page="n1087108610871099109010821072321089108410911090108010901100" onclick="hrefClk(this)"><div class="linkall green">клиент рассказывает...</div></a><a href="javascript: void(0)" class="link" page="n10851077321091109610831080321086109032108810721079107510861074108610881072321086321094107710851077" onclick="hrefClk(this)"><div class="linkall red">отель необсуждается. сколько стоит?!</div></a></div></div><div class="pane script_content" id="n1087108610871099109010821072321089108410911090108010901100" style="display: none;"><div class="title_pane block main_header">Постарайтесь переключить клиента на другой отель</div><div class="text_pane"><p>Я, собственно, почему спрашиваю... <span>#обоснование</span>.<br><br>Вы точно уверены, что это тот отель, который Вам нужен?...все же на отдых не каждую неделю отправляетесь...может, все же обсудим альтернативные варианты?<br><br><br><span>#обоснования</span> (выберите один из вариантов):<br><br>1. негативный опыт другого туриста (со схожими потребностями);<br><br>2. не лучшее предложение по цене / качеству (в этом году дороже / за эти деньги есть варианты лучше);<br><br>3. места на эти даты только под запрос, поэтому сейчас можем с вами посмотреть только ориентировочную цену - итоговая будет понятна только когда сделаем заявку туроператору.<br></p></div><div id="answers"><h2></h2><a href="javascript: void(0)" class="link" page="n10791072108210881099109010801077321095107710881077107932107210831100109010771088108510721090108010741099" onclick="hrefClk(this)"><div class="linkall green">ну хорошо...давайте обсудим альтернативы...</div></a><a href="javascript: void(0)" class="link" page="n1089108210881080108710903210801075108810801082" onclick="hrefClk(this)"><div class="linkall red">нет. сколько стоит?!</div></a></div></div><div class="pane script_content" id="n10791072108210881099109010801077321095107710881077107932107210831100109010771088108510721090108010741099" style="display: none;"><div class="title_pane block main_header">Дособерите потребности</div><div class="text_pane"><p><span>#имя клиента</span>, чтобы говорить о конкретном лучшем варианте, сперва уточню: что для Вас в туре / отеле / поездке важно, а что не очень. Расскажите подробно, пожалуйста.<br></p></div><div id="answers"><h2></h2><a href="javascript: void(0)" class="link" page="n1079107210821088109910741072107710843210851072321074108910901088107710951091" onclick="hrefClk(this)"><div class="linkall blue">клиент рассказывает</div></a></div></div><div class="pane script_content" id="n1079107210821088109910741072107710843210851072321074108910901088107710951091" style="display: none;"><div class="title_pane block main_header">Закройте клиента на встречу</div><div class="text_pane"><p><span>#имя клиента</span>, варианты есть, но они только под запрос. Давайте выберем время, когда Вам будет удобно подъехать к нам в офис. Я перед встречей свяжусь с ТО и узнаю, что именно и по каким ценам еще доступно.<br><br>Вам удобно будет сегодня или завтра? В <span>#ХХ:ХХ</span> удобно? Отлично! Продиктуйте мне, пожалуйста, Ваш контактный телефон (на всякий случай). <span>#опциональная вставка</span> Супер! До встречи. :)<br><br><span>#опционально:</span><br>Тогда буду Вас ждать <span>#дата</span> + <span>#день недели</span> + <span>#время</span>.<br>И обязательно возьмите документы, деньги для предоплаты и <span>#ЛПР</span>.<br></p></div><div id="answers"><h2></h2><a href="javascript: void(0)" class="link" page="n1055107710881074108010951085109910813210801089109310861076110310971080108132107910741086108510861082" onclick="hrefClk(this)"><div class="linkall green">клиент согласен - вернуться в начало скрипта</div></a><a href="javascript: void(0)" class="link" page="n110110831077108210901088108610851082107250" onclick="hrefClk(this)"><div class="linkall red">"нет, пришлите мне все на электропочту"</div></a><a href="javascript: void(0)" class="link" page="n109010771083107710921086108550" onclick="hrefClk(this)"><div class="linkall red">"нет, расскажите мне все сейчас"</div></a></div></div><div class="pane script_content" id="n110110831077108210901088108610851082107250" style="display: none;"><div class="title_pane block main_header">РсВ: "пришлите мне все на электропочту"</div><div class="text_pane"><p><span>#имя клиента</span>, я же говорю, мы с вами обсуждаем лучшие варианты. Они только под запрос. Любая подборка отелей может стать неактуальной уже в тот момент, когда я Вам ее пришлю. Поэтому давайте выберем время, когда Вам удобно будет к нам подъехать, Вы приедете и мы в режиме реального времени подберем Вам лучший вариант...<br><br>Когда мне Вас ждать? И не забудьте документы, деньги и <span>#ЛПР</span>.<br></p></div><div id="answers"><h2></h2><a href="javascript: void(0)" class="link" page="n1055107710881074108010951085109910813210801089109310861076110310971080108132107910741086108510861082" onclick="hrefClk(this)"><div class="linkall green">клиент согласен - вернуться в начало скрипта</div></a></div></div><div class="pane script_content" id="n109010771083107710921086108550" style="display: none;"><div class="title_pane block main_header">РсВ: "расскажите мне все по телефону"</div><div class="text_pane"><p>Хорошо. Мне нужно 15-20 минут, чтобы узнать, какие варианты точно доступны для бронирования. Продиктуйте мне Ваш контактный телефон - я перезвоню.<br></p></div><div id="answers"><h2></h2><a href="javascript: void(0)" class="link" page="n1055107710881074108010951085109910813210801089109310861076110310971080108132107910741086108510861082" onclick="hrefClk(this)"><div class="linkall green">клиент согласен - вернуться в начало скрипта</div></a></div></div><div class="pane script_content" id="n10851077321091109610831080321086109032108810721079107510861074108610881072321086321094107710851077" style="display: none;"><div class="title_pane block main_header">Постарайтесь переключить клиента на другой отель</div><div class="text_pane"><p><span>#имя клиента</span>, я просто открыла несколько сайтов туроператоров, потому что там могут быть цены ниже и пока смотрю, хотела уточнить: Вы по отелю какие-то альтернативы рассматривали? Да / Нет?<br><br>Я, собственно, почему спрашиваю... <span>#обоснование</span>.<br><br>Вы точно уверены, что это тот отель, который Вам нужен?...все же на отдых не каждую неделю отправляетесь...может, все же обсудим альтернативные варианты?<br><br><br><span>#обоснования</span> (выберите один из вариантов):<br><br>1. негативный опыт другого туриста (со схожими потребностями);<br><br>2. не лучшее предложение по цене / качеству (в этом году дороже / за эти деньги есть варианты лучше);<br><br>3. места на эти даты только под запрос, поэтому сейчас можем с вами посмотреть только ориентировочную цену - итоговая будет понятна только когда сделаем заявку туроператору.<br></p></div><div id="answers"><h2></h2><a href="javascript: void(0)" class="link" page="n10791072108210881099109010801077321095107710881077107932107210831100109010771088108510721090108010741099" onclick="hrefClk(this)"><div class="linkall green">ну хорошо...давайте обсудим альтернативы...</div></a><a href="javascript: void(0)" class="link" page="n1089108210881080108710903210801075108810801082" onclick="hrefClk(this)"><div class="linkall red">нет. сколько стоит?!</div></a></div></div><div class="pane script_content" id="n10741088107710841103951074108910901088107710951080" style="display: none;"><div class="title_pane block main_header">Договоритесь о времени встречи</div><div class="text_pane"><p>Вам удобно будет сегодня или завтра? В <span>#ХХ:ХХ</span> удобно? Отлично! <span>#опциональная вставка</span> Супер! До встречи. :)<br><br><span>#опционально:</span><br>Тогда буду Вас ждать <span>#дата</span> + <span>#день недели</span> + <span>#время</span>.<br>И обязательно возьмите документы, деньги для предоплаты и <span>#ЛПР</span>.<br></p></div><div id="answers"><h2></h2><a href="javascript: void(0)" class="link" page="n1055107710881074108010951085109910813210801089109310861076110310971080108132107910741086108510861082" onclick="hrefClk(this)"><div class="linkall green">клиент согласен - вернуться в начало скрипта</div></a></div></div><script>var historyS = ["n1055107710881074108010951085109910813210801089109310861076110310971080108132107910741086108510861082"];var lastPage = "n1055107710881074108010951085109910813210801089109310861076110310971080108132107910741086108510861082";function hrefClk (e, move) {var toPage = move == "back" ? lastPage : e.getAttribute("page");if(move!="prev"){historyS.push(toPage);}if ( move == "prev" ) {if ( historyS[historyS.length - 2] ) {toPage = historyS[historyS.length - 2];historyS.pop();}}var divs = document.querySelectorAll(".script_content");for (var i = 0; i < divs.length; i++) {divs[i].setAttribute("style", "display:none;");};document.querySelector("#" + toPage).setAttribute("style", "");}</script></div></div></div pages>
+        
+
+</div>
+
+
+
+</body>
+</html><!-------{"Начальная страница":"Сбор потребностей Хургада\\n=========================\\nЗдравствуйте, <имя клиента>! Меня зовут <ваше имя>. Я менеджер \\nпо работе с клиентами турагентства <название вашего ТА>.\\n.... \\nИли еще выбираете?\\nВарианты ответов клиента\\n------------------------\\n[ переход на вторую часть | Вторая часть | green ]\\n[ переход на альтернативную часть | альтернативная часть | red ]","Первичный исходящий звонок":"Первичный входящий звонок: приветствие\\n=========================\\nЗдравствуйте, <название агентства>, <имя менеджера>.\\n\\n------------------------\\n[ клиент формирует запрос | Определяем тип запроса | blue ]","Договариваемся о другом времени звонка":"Договоритесь о другом времени звонка\\n=========================\\nОк. Нет проблем. Когда и во сколько мне Вам перезвонить, чтобы Вам было удобно общаться и мы могли обсудить предстоящую поездку?\\n\\n\\n<Напоминание:> обязательно внесите дату и время в CRM-систему, чтобы связаться с клиентом тогда, когда ему удобно, и в итоге отработать по заявке.\\n\\n------------------------\\n[ вернуться в начало скрипта | Первичный исходящий звонок | blue ]","Определяем тип запроса":"Определите тип запроса\\n=========================\\nДля того, чтобы продолжить общение с клиентом, выберите тип его запроса, исходя из того, что он рассказал Вам.\\n\\n\\n<Примечание:>\\n\\n<Нужен подбор тура / отеля> - клиент еще не знает, в какой отель / тур он хочет поехать, и Вам необходимо разобраться в его потребностях, после чего закрыть его на встречу в офисе, где Вы осуществите продажу.\\n\\n<Отель известен - интересует цена> - клиент уже знает, в какой отель / тур он хочет поехать, и Вам необходимо сделать все, чтобы он купил именно в Вашем агентстве.\\n\\n------------------------\\n[ нужен подбор тура / отеля | Нужен подбор тура / отеля | green ]\\n[ отель известен - интересует цена | Отель известен - интересует цена | red ]","Нужен подбор тура / отеля":"Выявите потребности\\n=========================\\n<имя клиента>, давайте поступим так: чтобы сэкономить наше с Вами время и подобрать наиболее подходящий вариант, я задам Вам несколько уточняющих вопросов, а потом уже поговорим об отелях, хорошо?\\n\\nБазовые вопросы:\\n- Куда хотите поехать?\\n- На какие даты планируете поездку?\\n- В каком составе и с кем поедете?\\n\\nВопросы для выявления потребностей:\\n- Какие-то конкретные отели уже рассматривали? А почему именно на этом варианте решили остановиться, если не секрет?\\n- А до этого где-то уже отдыхали? Вам там понравилось? А что запомнилось больше всего?\\n- Чем вообще планируете заниматься на отдыхе?\\n\\n- А что хотелось бы получить от поездки? -> Если клиент затрудняется с ответом, предложите альтернативы -> У моря позагорать / достопримечательности посмотреть / потусоваться?\\n\\n- И еще, пожалуйста, сориентируйте меня по бюджету.\\n\\nОтлично. <имя клиента>, может быть есть что-то еще, что касается предстоящего тура, отеля, поездки, что важно для Вас, или, может быть, что нежелательно, что-то, что мы еще с Вами не обсудили?\\n\\nРезюмируем: Вас интересует тур в <направление> на <даты>, едут <состав>. Для Вас важно, чтобы <перечисляем выявленные потребности>. Все верно? Или есть что-то еще?\\n\\n------------------------\\n[ дата поездки в течение 2 месяцев | Дата поездки в течение 2 месяцев | blue ]\\n[ дата поездки отложена во времени | Дата поездки отложена во времени | blue ]","Дата поездки в течение 2 месяцев":"Назначьте встречу\\n=========================\\n<имя клиента>, учитывая Ваши пожелания, могу сказать, что у нас есть для Вас несколько хороших вариантов, но поскольку сейчас сезон, ситуация постоянно меняется и лучшие предложения уходят очень быстро!\\n\\nЕсли не успеем, будет обидно, поэтому давайте назначим конкретное время, в которое Вам будет удобно подъехать к нам в офис; к Вашему приезду я подготовлю все необходимые материалы по этим вариантам, Вы приедете и мы вместе выберем лучший для Вас.\\n\\nВам удобно будет сегодня или завтра? В <ХХ:ХХ> удобно? Отлично! Продиктуйте мне, пожалуйста, Ваш контактный телефон (на всякий случай). <опциональная вставка> Супер! До встречи. :)\\n\\n<опционально:>\\nТогда буду Вас ждать <дата> + <день недели> + <время>.\\nИ обязательно возьмите документы, деньги для предоплаты и <ЛПР>.\\n\\n------------------------\\n[ клиент согласен - вернуться в начало скрипта | Первичный исходящий звонок | green ]\\n[ клиент не согласен - перейти к работе с возражениями | Работа с возражениями | red ]","Дата поездки отложена во времени":"Назначьте встречу\\n=========================\\n<имя клиента>, хорошо, что Вы позвонили заранее! У нас сейчас как-раз идет раннее бронирование на туры в <направление>. Лучше действовать оперативно, потому что пока еще есть возможность получить самые лучшие варианты с хорошей скидкой.\\n\\nДальше будет дороже, да и таких вариантов уже не будет, поэтому давайте назначим конкретное время, в которое Вам будет удобно подъехать к нам в офис; к Вашему приезду я подготовлю все необходимые материалы по этим вариантам, Вы приедете и мы вместе выберем лучший для Вас.\\n\\nВам удобно будет сегодня или завтра? В <ХХ:ХХ> удобно? Отлично! Продиктуйте мне, пожалуйста, Ваш контактный телефон (на всякий случай). <опциональная вставка> Супер! До встречи. :)\\n\\n<опционально:>\\nТогда буду Вас ждать <дата> + <день недели> + <время>.\\nИ обязательно возьмите документы, деньги для предоплаты и <ЛПР>.\\n\\n------------------------\\n[ клиент согласен - вернуться в начало скрипта | Первичный исходящий звонок | green ]\\n[ клиент не согласен - перейти к работе с возражениями | Работа с возражениями | red ]","Работа с возражениями":"Выберите возражение, с которым Вы столкнулись\\n=========================\\nВыберите возражение клиента, чтобы увидеть ответ на него.\\n\\n------------------------\\n[ \"пришлите мне все на электропочту\" | пришлите мне все на электронку | red ]\\n[ \"расскажите мне все по телефону\" | расскажите мне все по телефону | red ]\\n[ \"а чего ехать? денег еще нет...\" | денег нет | red ]\\n[ \"ок. приеду, но потом...\" | приеду потом | red ]\\n[ \"а скидку сделаете?\" | скидку сделаете | red ]","пришлите мне все на электронку":"РсВ: \"пришлите мне все на электропочту\"\\n=========================\\n<имя клиента>, я конечно могу прислать Вам варианты туров на электронку, но тут вот какая ситуация: у нас есть более 16000 вариантов туров в #направление и отправить Вам их все по e-mail’у у меня не получится. :) То есть, мне нужно будет сделать подборку.\\n\\n\\nНо ситуация с местами в отелях и курсом <валюта> меняется теперь так часто, что та подборка, которую я Вам пришлю, может стать неактуальной уже в тот момент, когда вы ее откроете.\\n\\nИ самое главное: самые лучшие варианты сейчас только под запрос. То есть, реальную доступность мест на конкретные даты и реальные цены можно обсуждать только после созвона с туроператором.\\n\\n\\nПоэтому, повторюсь, подборку сделать могу, но смысла в этом особого нет. Будет гораздо лучше, если Вы подъедете к нам в офис, и мы на месте вместе с Вами подберем Вам самый лучший вариант по лучшей цене. Вам когда удобно к нам подъехать?\\n\\n------------------------\\n[ клиент согласен на встречу - договариваемся о времени | время_встречи | green ]\\n[ клиент не согласен - перейти к работе с возражениями | Работа с возражениями | red ]","расскажите мне все по телефону":"РсВ: \"расскажите мне все по телефону\"\\n=========================\\nОк. Мне нужно 15-20 минут, чтобы узнать, какие именно варианты сейчас доступны для бронирования и по каким конкретно ценам. Продиктуйте мне Ваш контактный телефон. Я перезвоню.\\n\\n------------------------\\n[ клиент согласен - вернуться в начало скрипта | Первичный исходящий звонок | green ]\\n[ клиент не согласен - перейти к работе с возражениями | Работа с возражениями | red ]","денег нет":"РсВ: \"а чего ехать? денег еще нет...\"\\n=========================\\n<имя клиента>, не переживайте по поводу денежного вопроса – это нормальная ситуация, для разрешения которой у нас с Вами есть несколько вариантов:\\n\\nна встрече мы с Вами выберем тот вариант поездки, который будет для Вас максимально интересным и получим точную калькуляцию стоимости, после чего можно будет ЛИБО внести предоплату, и тогда у Вас будет еще время для того, чтобы довнести остаток, ЛИБО можно будет рассмотреть вариант оформления туристической̆ рассрочки, в итоге по деньгам вы все равно выиграете.\\n\\nЧто скажете?\\n\\n------------------------\\n[ клиент согласен на встречу - договариваемся о времени | время_встречи | green ]\\n[ клиент не согласен - перейти к работе с возражениями | Работа с возражениями | red ]","приеду потом":"РсВ: \"ок. приеду, но потом...\"\\n=========================\\n<имя клиента>, знаете, я уже давно работаю по этому направлению и знаю, что многие клиенты склонны откладывать встречу с агентством на последний момент. В результате им приходится либо переплачивать, либо выбирать отель из не самых лучших вариантов. \\n\\nПоскольку моя главная задача, как Вашего персонального менеджера, сделать так, чтобы Вы получили лучший отдых в лучшем отеле по лучшей цене, я буду рада, если Вы согласитесь заранее встретиться со мной, чтобы мы вместе подобрали для Вас самый лучший вариант.\\n\\nЧто скажете?\\n\\n------------------------\\n[ клиент согласен на встречу - договариваемся о времени | время_встречи | green ]\\n[ клиент не согласен - перейти к работе с возражениями | Работа с возражениями | red ]","скидку сделаете":"РсВ: \"а скидку сделаете?\"\\n=========================\\n<имя клиента>, 3 момента по поводу цен и скидок:\\n\\nВо-первых, мы сейчас с вами обсуждаем сферический тур в вакууме. Приезжайте, все вместе посмотрим, выберете то, что Вам подходит больше всего - по цене договоримся.\\n\\nВо-вторых, сами понимаете: все агентства работают с +/- одними и теми же ТО, поэтому цены у всех одинаковые. Да, конечно, есть ТА, которые делают еще сверху свою наценку, но это не про нас. Мы продаем туры по ценам туроператоров.\\nПридете - сами убедитесь.\\n\\nИ в-третьих, с некоторыми туроператорами у нашего агентства эксклюзивные условия, поэтому мы сможем предложить Вам лучшую цену.\\n\\nПоэтому, <имя клиента>, приезжайте - вместе все посмотрим-подтвердим и получите тур по лучшей цене в городе.\\n\\n------------------------\\n[ клиент согласен на встречу - договариваемся о времени | время_встречи | green ]\\n[ клиент не согласен - перейти к работе с возражениями | Работа с возражениями | red ]","Отель известен - интересует цена":"Уточните детали\\n=========================\\n<имя клиента>, давайте все проверим: страна? точное название отеля? на какие даты планируется поездка? в каком составе и с кем поедете? что по визам и документам? есть ли специальные пожелания по питанию, типу номеров и тому, чем планируете заниматься в поездке?\\n\\n------------------------\\n[ клиент отвечает | клиент отвечает | blue ]","клиент отвечает":"Попробуйте уйти от разговора о цене\\n=========================\\nОтлично. <имя клиента>, пока я смотрю цены, можно задам еще буквально пару уточняющих вопросов, хорошо?\\n\\n------------------------\\n[ да. спрашивайте... | ушли отразговора о цене | green ]\\n[ нет. сколько стоит?! | не ушли от разговора о цене | red ]","скрипт игрик":"Закройте на встречу через намеренное занижение цены\\n=========================\\nХорошо. <отель> + <состав> + <даты>, + <дней/ночей> + <тип размещения>...получается <ХХХ> т.р. (называем себестоимость отеля!).\\n\\nКогда мне Вас ждать? Не забудьте взять документы, деньги и <ЛПР>.\\n\\n------------------------\\n[ клиент согласен - вернуться в начало скрипта | Первичный исходящий звонок | green ]","ушли отразговора о цене":"Узнайте, почему клиент выбрал именно этот отель\\n=========================\\nПочему, если не секрет, этот отель выбрали?\\n\\n------------------------\\n[ клиент рассказывает... | попытка смутить | green ]\\n[ отель необсуждается. сколько стоит?! | не ушли от разговора о цене | red ]","попытка смутить":"Постарайтесь переключить клиента на другой отель\\n=========================\\nЯ, собственно, почему спрашиваю... <обоснование>.\\n\\nВы точно уверены, что это тот отель, который Вам нужен?...все же на отдых не каждую неделю отправляетесь...может, все же обсудим альтернативные варианты?\\n\\n\\n<обоснования> (выберите один из вариантов):\\n\\n1. негативный опыт другого туриста (со схожими потребностями);\\n\\n2. не лучшее предложение по цене / качеству (в этом году дороже / за эти деньги есть варианты лучше);\\n\\n3. места на эти даты только под запрос, поэтому сейчас можем с вами посмотреть только ориентировочную цену - итоговая будет понятна только когда сделаем заявку туроператору.\\n\\n------------------------\\n[ ну хорошо...давайте обсудим альтернативы... | закрытие через альтернативы | green ]\\n[ нет. сколько стоит?! | скрипт игрик | red ]","закрытие через альтернативы":"Дособерите потребности\\n=========================\\n<имя клиента>, чтобы говорить о конкретном лучшем варианте, сперва уточню: что для Вас в туре / отеле / поездке важно, а что не очень. Расскажите подробно, пожалуйста.\\n\\n------------------------\\n[ клиент рассказывает | закрываем на встречу | blue ]","закрываем на встречу":"Закройте клиента на встречу\\n=========================\\n<имя клиента>, варианты есть, но они только под запрос. Давайте выберем время, когда Вам будет удобно подъехать к нам в офис. Я перед встречей свяжусь с ТО и узнаю, что именно и по каким ценам еще доступно.\\n\\nВам удобно будет сегодня или завтра? В <ХХ:ХХ> удобно? Отлично! Продиктуйте мне, пожалуйста, Ваш контактный телефон (на всякий случай). <опциональная вставка> Супер! До встречи. :)\\n\\n<опционально:>\\nТогда буду Вас ждать <дата> + <день недели> + <время>.\\nИ обязательно возьмите документы, деньги для предоплаты и <ЛПР>.\\n\\n------------------------\\n[ клиент согласен - вернуться в начало скрипта | Первичный исходящий звонок | green ]\\n[ \"нет, пришлите мне все на электропочту\" | электронка2 | red ]\\n[ \"нет, расскажите мне все сейчас\" | телефон2 | red ]","электронка2":"РсВ: \"пришлите мне все на электропочту\"\\n=========================\\n<имя клиента>, я же говорю, мы с вами обсуждаем лучшие варианты. Они только под запрос. Любая подборка отелей может стать неактуальной уже в тот момент, когда я Вам ее пришлю. Поэтому давайте выберем время, когда Вам удобно будет к нам подъехать, Вы приедете и мы в режиме реального времени подберем Вам лучший вариант...\\n\\nКогда мне Вас ждать? И не забудьте документы, деньги и <ЛПР>.\\n\\n------------------------\\n[ клиент согласен - вернуться в начало скрипта | Первичный исходящий звонок | green ]","телефон2":"РсВ: \"расскажите мне все по телефону\"\\n=========================\\nХорошо. Мне нужно 15-20 минут, чтобы узнать, какие варианты точно доступны для бронирования. Продиктуйте мне Ваш контактный телефон - я перезвоню.\\n\\n------------------------\\n[ клиент согласен - вернуться в начало скрипта | Первичный исходящий звонок | green ]","не ушли от разговора о цене":"Постарайтесь переключить клиента на другой отель\\n=========================\\n<имя клиента>, я просто открыла несколько сайтов туроператоров, потому что там могут быть цены ниже и пока смотрю, хотела уточнить: Вы по отелю какие-то альтернативы рассматривали? Да / Нет?\\n\\nЯ, собственно, почему спрашиваю... <обоснование>.\\n\\nВы точно уверены, что это тот отель, который Вам нужен?...все же на отдых не каждую неделю отправляетесь...может, все же обсудим альтернативные варианты?\\n\\n\\n<обоснования> (выберите один из вариантов):\\n\\n1. негативный опыт другого туриста (со схожими потребностями);\\n\\n2. не лучшее предложение по цене / качеству (в этом году дороже / за эти деньги есть варианты лучше);\\n\\n3. места на эти даты только под запрос, поэтому сейчас можем с вами посмотреть только ориентировочную цену - итоговая будет понятна только когда сделаем заявку туроператору.\\n\\n------------------------\\n[ ну хорошо...давайте обсудим альтернативы... | закрытие через альтернативы | green ]\\n[ нет. сколько стоит?! | скрипт игрик | red ]","время_встречи":"Договоритесь о времени встречи\\n=========================\\nВам удобно будет сегодня или завтра? В <ХХ:ХХ> удобно? Отлично! <опциональная вставка> Супер! До встречи. :)\\n\\n<опционально:>\\nТогда буду Вас ждать <дата> + <день недели> + <время>.\\nИ обязательно возьмите документы, деньги для предоплаты и <ЛПР>.\\n\\n------------------------\\n[ клиент согласен - вернуться в начало скрипта | Первичный исходящий звонок | green ]"}------->

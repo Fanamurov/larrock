@@ -1,5 +1,5 @@
 <br/><br/><div id="mc-container"></div>
-@section('scripts')
+@push('scripts')
     <script type="text/javascript">
         cackle_widget = window.cackle_widget || [];
         cackle_widget.push({widget: 'Comment', id: '30688', channel: '{!! URL::current() !!}',
@@ -12,4 +12,4 @@
             var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
         })();
     </script>
-@endsection
+@endpush

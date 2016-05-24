@@ -16,11 +16,11 @@
             </div>
             <div class="form-group">
                 <label class="control-label" for="form-podbor-country">Страна отдыха</label>
-                <input type="text" class="form-control" id="form-podbor-country" name="country">
+                <input type="text" class="form-control" id="form-podbor-country" name="country" value="{{ $countryFind or '' }}">
             </div>
             <div class="form-group">
                 <label for="form-podbor-date">Предполагаемая дата начала поездки</label>
-                <input type="date" name="date" class="form-control" id="form-podbor-date">
+                <input type="text" name="date" class="form-control daterange" id="form-podbor-date" value="{{ Input::get('date-int', '') }}">
             </div>
             <div class="form-group">
                 <label for="form-podbor-time">Когда с Вами удобнее связаться?</label>

@@ -7,7 +7,7 @@
     <section class="row" id="content">
         <section id="right_colomn" class="hidden-xs hidden-sm col-md-7">
             <div class="col-xs-24">
-                @if(isset($siteSearch) && is_array($siteSearch))
+                @if(isset($siteSearch) && is_array($siteSearch) && count($siteSearch['categories']) > 0)
                     @include('santa.modules.search.site')
                 @endif
                 @yield('rightColomn')

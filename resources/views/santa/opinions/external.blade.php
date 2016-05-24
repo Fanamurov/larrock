@@ -7,7 +7,7 @@
     <div id="mc-review"></div>
 @endsection
 
-@section('scripts')
+@push('scripts')
     <script type="text/javascript">
         cackle_widget = window.cackle_widget || [];
         cackle_widget.push({widget: 'Review', id: '30688', channel: '/otzyvy/',
@@ -20,4 +20,4 @@
             var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
         })();
     </script>
-@endsection
+@endpush

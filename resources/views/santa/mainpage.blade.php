@@ -21,30 +21,18 @@
                 @include('santa.errors')
                 @include('santa.modules.slideshow.mainpage', $slideshow)
 
-                <div class="sletatResult" data-country-id="{{ $country_id_sletat }}">
-                    @if($GetTours['iTotalRecords'] > 0)
-                        @include('santa.sletat.searchResultShort')
-                    @else
-                        <div class="toursPageCountry-bestcost row">
-                            <div class="col-xs-24"><h5 class="title-header">Лучшие цены</h5></div>
-                            <div class="col-xs-24" id="loadState">
-                                <div class="progress">
-                                    <div class="progress-bar progress-bar-danger progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 10%;">
-                                        <span class="progress-current">0%</span>
-                                    </div>
-                                </div>
+                <div class="toursPageCountry-bestcost row">
+                    <div class="col-xs-24"><h5 class="title-header">Горящие туры</h5></div>
+                    <div class="col-xs-24">
+                        @if(App::environment() !== 'local')
+                            <div class="tv-hot-tours tv-moduleid-932987"></div>
+                                <script type="text/javascript" src="//tourvisor.ru/module/init.js"></script>
                             </div>
-                            <div class="alert alert-warning col-xs-24 alert-progress">Обработка запроса продолжается</div>
-                        </div>
-                        @push('scripts')
-                        <script>
-                            $(document).ready(function(){
-                                GetLoadStateShort({{ $GetTours['requestId'] }}, 20, 8);
-                            });
-                        </script>
-                        @endpush
-                    @endif
+                        @else
+                            <p>Модуль отключен на локали</p>
+                        @endif
                 </div>
+                <div class="clearfix"></div>
                 @include('santa.modules.list.news')
                 @include('santa.modules.list.blog')
                 @include('santa.modules.list.tours')

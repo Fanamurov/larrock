@@ -3,7 +3,7 @@ $color_link_hover: #be1318;
 $color_red: #DD1F1A;
 
 body{
-  background: url("/_assets/_santa/_images/bg.jpg") no-repeat 0 0 #ffffff;
+  background: url("/_assets/_santa/_images/bg.jpg") no-repeat 0 100px #ffffff;
   background-size: contain;
   font-family: 'Open Sans', Calibri, sans-serif;
   font-size: 15px;
@@ -378,7 +378,7 @@ label{
 	text-decoration: none;
 	line-height: 21px;
 	display: inline-block;
-	padding: 5px 15px;
+	padding: 0 15px;
   }
   .title-header a{
 	@media (max-width: 500px) {
@@ -447,6 +447,20 @@ input.daterange{
   .daterangepicker.dropdown-menu.show-calendar {
 	width: 608px;
   }
+}
+
+.TVMFilterBlock .TVSimpleSwitch {
+  display: inline-block;
+  box-shadow: none;
+  border: 1px solid #ddd;
+}
+.TVSeasonFilter .TVSSwitchWrap{
+  box-shadow: none;
+}
+.TVMultyFilter .TVTextBox,
+.TVMultyFilter .TVStandartBox{
+  box-shadow: none;
+  border: 1px solid #ddd;
 }
 
 @import "sections/header";

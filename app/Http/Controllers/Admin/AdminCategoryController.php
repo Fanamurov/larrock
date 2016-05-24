@@ -7,6 +7,7 @@ use App\Helpers\Component;
 use App\Helpers\ContentPlugins;
 use App\Http\Controllers\Admin\AdminBlocks\MenuBlock;
 use App\Models\Category;
+use App\Models\UsersLogger;
 use Breadcrumbs;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
@@ -106,6 +107,12 @@ class AdminCategoryController extends Controller
 			Input::merge(['id_connect' => $data->id, 'stash_id' => $request->input('id')]);
 			$plugins->update($this->config['plugins_backend']);
 
+			$logger = new UsersLogger();
+			$logger->user_id = $this->current_user->id;
+			$logger->action = 'Add data in '. $this->config['name'] .': '. $data->title;
+			$logger->type_action = 'Add';
+			$logger->save();
+
 			return Redirect::to('/admin/'. $this->config['name'] .'/'. $data->id .'/edit')->withInput();
 		}
 
@@ -151,6 +158,13 @@ class AdminCategoryController extends Controller
 
 		if($data->save()){
 			\Cache::flush();
+
+			$logger = new UsersLogger();
+			$logger->user_id = $this->current_user->id;
+			$logger->action = 'Add data in '. $this->config['name'] .': '. $data->title;
+			$logger->type_action = 'Add';
+			$logger->save();
+
 			Alert::add('success', 'Раздел '. $request->input('title') .' добавлен')->flash();
 			return back()->withInput();
 		}
@@ -229,6 +243,13 @@ class AdminCategoryController extends Controller
 			Alert::add('success', 'Материал '. $request->input('title') .' изменен')->flash();
 			$plugins->update($this->config['plugins_backend']);
 			\Cache::flush();
+
+			$logger = new UsersLogger();
+			$logger->user_id = $this->current_user->id;
+			$logger->action = 'Update data in '. $this->config['name'] .': '. $data->title;
+			$logger->type_action = 'Update';
+			$logger->save();
+
 			return back();
 		}
 
@@ -251,6 +272,13 @@ class AdminCategoryController extends Controller
 			Alert::add('success', 'Раздел успешно удален')->flash();
 			//уничтожение данные от плагинов фото, файлы
 			$plugins->destroy($this->config['plugins_backend']);
+
+			$logger = new UsersLogger();
+			$logger->user_id = $this->current_user->id;
+			$logger->action = 'Delete data in '. $this->config['name'] .': '. $data->title;
+			$logger->type_action = 'Delete';
+			$logger->save();
+
 			\Cache::flush();
 		}else{
 			Alert::add('error', 'Раздел не удален')->flash();

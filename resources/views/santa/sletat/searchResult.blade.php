@@ -1,6 +1,8 @@
 @if($GetTours['iTotalDisplayRecords'] < 1)
     @if(isset($full_load))
-        <p id="empty-results" class="alert alert-danger">Туров по данным параметрам не найдено, попробуйте изменить данные для поиска.</p>
+        <p id="empty-results" class="alert alert-danger">Пакетных туров по данным параметрам не найдено, попробуйте изменить данные для поиска.</p>
+        <p class="alert alert-success"><span class="h3">Не нашли подходящего тура в базе туроператоров?</span><br/> Мы с удовольствием подберем для вас свой собственный тур!</p>
+        @include('santa.modules.forms.podbor')
     @endif
 @else
     <p>Найдено {{ $GetTours['iTotalDisplayRecords'] }} туров в {{ $GetTours['hotelsCount'] }} отелях</p>

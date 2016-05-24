@@ -89,31 +89,52 @@ class ToursController extends Controller
 		return view('santa.tours.categorysListChilds', $data);
 	}
 
-	public function getVidy(Request $request, $category, $country)
+	public function getVidy(Request $request, $category, $country = '')
 	{
-		$data['data'] = Category::whereUrl($category)->whereActive(1)->with(['get_toursActive.get_category'])->first();
-		\View::share('selected_vid', $category);
+		$page = $request->get('page');
+		if($category === 'all'){
+			$data['data'] = Cache::remember('search_vid_all_'.$country.'_'.$page, 1440, function() use ($country) {
+				$data['data'] = Category::whereId($country)->whereActive(1)->with(['get_toursActive.get_category', 'get_child.get_toursActive.get_category'])->first();
+				$data['data']->title = 'Все виды отдыха';
 
-		if($country){
-			\View::share('selected_country', $country);
-			$filtered = $data['data']->get_toursActive->filter(function ($value, $key) use ($country, $data) {
-				foreach($value->get_category as $category){
-					if($category->parent === 308 AND $category->id == $country){
-						//echo $category->id .'<br/>';
-						return $value;
-					}
+				foreach($data['data']->get_child as $child){
+					$data['data']->get_toursActive = $data['data']->get_toursActive->merge($child->get_toursActive);
 				}
-				return false;
+				return $data['data'];
+			});
+			\View::share('selected_country', $country);
+		}else{
+			$data['data'] = Cache::remember('search_vid'.$category .'_'. $country .'_'. $page, 1440, function() use ($country, $category) {
+				$data['data'] = Category::whereUrl($category)->whereActive(1)->with(['get_toursActive.get_category'])->first();
+
+				if($country !== ''){
+					$filtered = $data['data']->get_toursActive->filter(function ($value, $key) use ($country, $data) {
+						foreach($value->get_category as $category){
+							if($category->parent === 308 AND $category->id == $country){
+								return $value;
+							}
+						}
+						return false;
+					});
+
+					$data['data']->get_toursActive = $filtered->all();
+				}
+				return $data['data'];
 			});
 
-			$data['data']->get_toursActive = $filtered->all();
+			\View::share('selected_vid', $category);
+			\View::share('selected_country', $country);
 		}
 
 		Breadcrumbs::register('tours.vid', function($breadcrumbs, $data) use ($country)
 		{
 			if($country){
 				$breadcrumbs->push('Виды отдыха');
-				$breadcrumbs->push($data->title, '/tours/vidy-otdykha/'. $data->url);
+				if($data->title === 'Все виды отдыха'){
+					$breadcrumbs->push($data->title);
+				}else{
+					$breadcrumbs->push($data->title, '/tours/vidy-otdykha/'. $data->url);
+				}
 
 				$get_country = Category::whereId($country)->first();
 				$breadcrumbs->push($get_country->title, $get_country->url);
@@ -131,6 +152,9 @@ class ToursController extends Controller
 			'path'  => $request->url(),
 			'query' => $request->query(),
 		]);
+
+		\View::share('sharing_type', 'category');
+		\View::share('sharing_id', $data['data']->id);
 
 		return view('santa.tours.toursVid', $data);
 	}
@@ -310,10 +334,10 @@ class ToursController extends Controller
 				$parent = $get_category->get_parent;
 				if($parent->level !== 1){
 					$grandpa = $parent->get_parent;
-					$breadcrumbs->push($grandpa->title, '/tours/'. $grandpa->url .'/'. $parent->url);
+					$breadcrumbs->push($grandpa->title);
 					$url = '/tours/'. $grandpa->url .'/'. $parent->url;
 				}else{
-					$breadcrumbs->push($parent->title, '/tours/'. $parent->url);
+					$breadcrumbs->push($parent->title);
 					$url = '/tours/'. $parent->url;
 				}
 			}
@@ -385,7 +409,7 @@ class ToursController extends Controller
 		}
 		if($request->get('country')){
 			$get_country = Category::whereId($request->get('country'))->first();
-			return redirect('/tours/strany/'. $get_country->url);
+			return redirect('/tours/vidy-otdykha/all/'. $get_country->id);
 		}
 		if($request->get('resort')){
 			$get_resort = Category::whereId($request->get('resort'))->with(['get_parent'])->first();

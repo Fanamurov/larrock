@@ -26,7 +26,7 @@
                                 <!-- Wrapper for slides -->
                                 <div class="carousel-inner" role="listbox">
                                     @foreach($data->images as $key => $image)
-                                        <div class="item @if($key === 0) active @endif">
+                                        <div class="item @if($key === 0) active @endif" @if($key === 0) rel="image_src" @endif>
                                             <img src="{{ $image->getUrl() }}" alt="{{ $data->title }}" class="all-width">
                                         </div>
                                     @endforeach

@@ -9,6 +9,7 @@ use App\Models\Blog;
 use App\Models\Category;
 use App\Models\News;
 use App\Models\Tours;
+use App\Models\UsersLogger;
 use App\User;
 use Bican\Roles\Models\Role;
 use Breadcrumbs;
@@ -183,10 +184,48 @@ class AdminUsersController extends Controller
 			$data['users'] = User::all();
 			$data['user'] = User::whereId($userId)->first();
 			$data['categories'] = Category::whereUserId($userId)->whereType('tours')->paginate(20);
-			$data['tours'] = Tours::whereUserId($userId)->with(['getFirstImage', 'get_category'])->paginate(20);
+			$data['tours'] = Tours::whereUserId($userId)->with(['getFirstImage', 'get_category', 'getCountForms'])->paginate(20);
 			$data['news'] = News::whereUserId($userId)->with(['getFirstImage'])->paginate(20);
 			$data['blog'] = Blog::whereUserId($userId)->with(['getFirstImage', 'get_category'])->paginate(20);
 			$data['app'] = $this->config;
+
+			$data['counter']['categories']['share']['all'] = Category::all()->sum('sharing');
+			$data['counter']['categories']['share']['user'] = Category::whereUserId($userId)->sum('sharing');
+
+			$data['counter']['categories']['loads']['all'] = Category::all()->sum('loads');
+			$data['counter']['categories']['loads']['user'] = Category::whereUserId($userId)->sum('loads');
+
+			$data['counter']['tours']['share']['all'] = Tours::all()->sum('sharing');
+			$data['counter']['tours']['share']['user'] = Tours::whereUserId($userId)->sum('sharing');
+
+			$data['counter']['tours']['loads']['all'] = Tours::all()->sum('loads');
+			$data['counter']['tours']['loads']['user'] = Tours::whereUserId($userId)->sum('loads');
+
+			$data['counter']['blog']['share']['all'] = Blog::all()->sum('sharing');
+			$data['counter']['blog']['share']['user'] = Blog::whereUserId($userId)->sum('sharing');
+
+			$data['counter']['blog']['loads']['all'] = Blog::all()->sum('loads');
+			$data['counter']['blog']['loads']['user'] = Blog::whereUserId($userId)->sum('loads');
+
+			$data['counter']['news']['share']['all'] = News::all()->sum('sharing');
+			$data['counter']['news']['share']['user'] = News::whereUserId($userId)->sum('sharing');
+
+			$data['counter']['news']['loads']['all'] = News::all()->sum('loads');
+			$data['counter']['news']['loads']['user'] = News::whereUserId($userId)->sum('loads');
+
+			$stat_type = ['blog', 'news', 'tours', 'categories'];
+			$stat_metrics = ['share', 'loads'];
+			foreach($stat_type as $type){
+				foreach($stat_metrics as $metric){
+					if($data['counter'][$type][$metric]['all'] > 0){
+						$data['counter'][$type][$metric]['perst'] = ceil(($data['counter'][$type][$metric]['user']*100)/$data['counter'][$type][$metric]['all']);
+					}else{
+						$data['counter'][$type][$metric]['perst'] = 100;
+					}
+				}
+			}
+
+			$data['logger'] = UsersLogger::whereUserId($userId)->orderBy('updated_at', 'desc')->take(6)->get();
 			return $data;
 		});
 

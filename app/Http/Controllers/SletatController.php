@@ -41,12 +41,12 @@ class SletatController extends Controller
 		$countryId = $request->get('countryId');
 		foreach($data['GetCountries'] as $value){
 			if($value->Id == $countryId){
-				$countryFind = $value->Name;
+				$data['countryFind'] = $value->Name;
 			}
 		}
 
-		if(isset($countryFind)){
-			$data['siteSearch']['categories'] = Category::search($countryFind)->with(['get_toursActive', 'get_childActive.get_toursActive'])->get();
+		if(array_key_exists('countryFind', $data)){
+			$data['siteSearch']['categories'] = Category::search($data['countryFind'])->with(['get_toursActive', 'get_childActive.get_toursActive'])->get();
 		}
 
 		return view('santa.sletat.searchForm', $data);
@@ -60,6 +60,14 @@ class SletatController extends Controller
 	public function GetToursUpdated(Request $request, Sletat $sletat, $requestId)
 	{
 		$data['GetTours'] = $sletat->GetToursUpdated($request, $requestId);
+		$get_country = $sletat->country_list;
+		foreach($get_country as $value){
+			if($value->Id == $request->get('countryId')){
+				$data['countryFind'] = $value->Name;
+			}
+		}
+		$data['date_start'] = explode(' - ', $request->get('date-int'));
+		$data['date_start'] = $data['date_start'][0];
 		$data['full_load'] = 'TRUE';
 		$data['paginator']['all'] = $data['GetTours']['iTotalDisplayRecords'];
 		$data['paginator']['pages'] = ceil($data['GetTours']['iTotalDisplayRecords']/30);

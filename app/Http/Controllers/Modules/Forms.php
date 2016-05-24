@@ -82,7 +82,7 @@ class Forms extends Controller
 			return back();
 		}
 		
-		FormsLog::create(['formname' => 'zakazTura', 'params' => $request->all(), 'status' => 'Новое']);
+		FormsLog::create(['formname' => 'zakazTura', 'params' => $request->all(), 'status' => 'Новое', 'tour_id' => $request->get('tour_id')]);
 
 		/** @noinspection PhpVoidFunctionResultUsedInspection */
 		$send = Mail::send('emails.zakazTura',

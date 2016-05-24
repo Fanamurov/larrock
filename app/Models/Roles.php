@@ -21,6 +21,11 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Roles whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Roles find($value)
  * @property-read \App\Models\Users $user
+ * @property string $description
+ * @property integer $level
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Roles whereDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Roles whereLevel($value)
+ * @mixin \Eloquent
  */
 class Roles extends Model
 {

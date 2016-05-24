@@ -20,6 +20,18 @@ use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
  * @property integer $active
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\MediaLibrary\Media[] $media
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Slideshow whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Slideshow whereTitle($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Slideshow whereDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Slideshow whereBannerUrl($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Slideshow whereView($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Slideshow whereUrl($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Slideshow wherePosition($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Slideshow whereActive($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Slideshow whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Slideshow whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class Slideshow extends Model implements HasMediaConversions
 {

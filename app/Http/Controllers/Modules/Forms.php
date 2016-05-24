@@ -108,6 +108,44 @@ class Forms extends Controller
 		return back();
 	}
 
+    public function send_formZakazHotel(Request $request)
+    {
+        if(env('MAIL_STOP') === 'true'){
+            Alert::add('danger', 'Отправка форм отключена')->flash();
+            return back();
+        }
+
+        FormsLog::create(['formname' => 'zakazHotel', 'params' => $request->all(), 'status' => 'Новое', 'hotel_id' => $request->get('hotel_id')]);
+
+        /** @noinspection PhpVoidFunctionResultUsedInspection */
+        $send = Mail::send('emails.zakazTura',
+            ['name' => $request->get('name'),
+                'tel' => $request->get('tel'),
+                'email' => $request->get('email'),
+                'date' => $request->get('date'),
+                'date-out' => $request->get('date-out'),
+                'comment' => $request->get('comment'),
+                'hotel_name' => $request->get('hotel_name'),
+                'adult' => $request->get('adult', 2),
+                'kids' => $request->get('kids', 0),
+                'baby' => $request->get('baby', 0),
+                'city' => $request->get('city'),
+            ],
+            function($message){
+                $message->from(env('MAIL_TO_ADMIN', 'robot@martds.ru'), env('MAIL_TO_ADMIN_NAME', 'TEST'));
+                $message->to(env('MAIL_TO_ADMIN', 'robot@martds.ru'), env('MAIL_TO_ADMIN_NAME', 'TEST'));
+                $message->subject('Отправлена форма бронирования отеля '. Arr::get($_SERVER, 'SERVER_NAME')
+                );
+            });
+
+        if($send){
+            Alert::add('success', 'Форма отправлена')->flash();
+        }else{
+            Alert::add('danger', 'Форма не отправлена')->flash();
+        }
+        return back();
+    }
+
 	public function send_formZakazSert(Request $request)
 	{
 		if(env('MAIL_STOP') === 'true'){

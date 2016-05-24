@@ -70,7 +70,7 @@ return [
 	'menu_category' => 'news',
 	'admin_menu' => [],
 	'settings' => [],
-	'plugins_backend' => ['seo', 'images', 'files', 'templates'],
+	'plugins_backend' => ['seo', 'images', 'files'],
 	'plugins_front' => [],
 	'version' => 1
 ];

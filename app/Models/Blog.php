@@ -36,6 +36,17 @@ use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Feed whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Feed find($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Feed categoryInfo()
+ * @property integer $user_id
+ * @property integer $to_rss
+ * @property integer $sharing
+ * @property integer $loads
+ * @property-read mixed $user
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\MediaLibrary\Media[] $media
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Blog whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Blog whereToRss($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Blog whereSharing($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Blog whereLoads($value)
+ * @mixin \Eloquent
  */
 class Blog extends Model implements HasMediaConversions
 {

@@ -41,6 +41,26 @@ use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Category whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Category type($type)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Category level($level)
+ * @property string $forecast_url
+ * @property string $map
+ * @property integer $user_id
+ * @property integer $to_rss
+ * @property integer $sharing
+ * @property integer $loads
+ * @property-read mixed $full_url
+ * @property-read mixed $class_element
+ * @property-read mixed $user
+ * @property-read mixed $short_wrap
+ * @property-read mixed $first_image
+ * @property-read mixed $map_coordinate
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\MediaLibrary\Media[] $media
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Category whereForecastUrl($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Category whereMap($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Category whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Category whereToRss($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Category whereSharing($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Category whereLoads($value)
+ * @mixin \Eloquent
  */
 class Category extends Model implements HasMediaConversions
 {
@@ -197,6 +217,26 @@ class Category extends Model implements HasMediaConversions
 	{
 		return $this->belongsToMany('App\Models\Tours', 'category_tours', 'category_id', 'tour_id')->count();
 	}
+
+    public function get_hotels()
+    {
+        return $this->belongsToMany('App\Models\Hotels', 'category_hotels', 'category_id', 'hotel_id')->orderBy('position', 'DESC');
+    }
+
+    public function get_hotelsActive()
+    {
+        return $this->belongsToMany('App\Models\Hotels', 'category_hotels', 'category_id', 'hotel_id')->whereActive(1)->orderBy('position', 'DESC');
+    }
+
+    public function get_hotelsAlias()
+    {
+        return $this->belongsToMany('App\Models\Hotels', 'category_hotels', 'category_id', 'hotel_id')->whereActive(1)->orderBy('position', 'DESC');
+    }
+
+    public function get_hotelsCount()
+    {
+        return $this->belongsToMany('App\Models\Hotels', 'category_hotels', 'category_id', 'hotel_id')->count();
+    }
 
 	public function getShortWrapAttribute()
 	{

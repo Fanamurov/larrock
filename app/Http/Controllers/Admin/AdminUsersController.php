@@ -7,6 +7,7 @@ use App\Helpers\Component;
 use App\Http\Controllers\Admin\AdminBlocks\MenuBlock;
 use App\Models\Blog;
 use App\Models\Category;
+use App\Models\Hotels;
 use App\Models\News;
 use App\Models\Tours;
 use App\Models\UsersLogger;
@@ -185,6 +186,7 @@ class AdminUsersController extends Controller
 			$data['user'] = User::whereId($userId)->first();
 			$data['categories'] = Category::whereUserId($userId)->whereType('tours')->paginate(20);
 			$data['tours'] = Tours::whereUserId($userId)->with(['getFirstImage', 'get_category', 'getCountForms'])->paginate(20);
+			$data['hotels'] = Hotels::whereUserId($userId)->with(['getFirstImage', 'get_category', 'getCountForms'])->paginate(20);
 			$data['news'] = News::whereUserId($userId)->with(['getFirstImage'])->paginate(20);
 			$data['blog'] = Blog::whereUserId($userId)->with(['getFirstImage', 'get_category'])->paginate(20);
 			$data['app'] = $this->config;
@@ -213,7 +215,13 @@ class AdminUsersController extends Controller
 			$data['counter']['news']['loads']['all'] = News::all()->sum('loads');
 			$data['counter']['news']['loads']['user'] = News::whereUserId($userId)->sum('loads');
 
-			$stat_type = ['blog', 'news', 'tours', 'categories'];
+            $data['counter']['hotels']['share']['all'] = Hotels::all()->sum('sharing');
+            $data['counter']['hotels']['share']['user'] = Hotels::whereUserId($userId)->sum('sharing');
+
+            $data['counter']['hotels']['loads']['all'] = Hotels::all()->sum('loads');
+            $data['counter']['hotels']['loads']['user'] = Hotels::whereUserId($userId)->sum('loads');
+
+			$stat_type = ['blog', 'news', 'tours', 'categories', 'hotels'];
 			$stat_metrics = ['share', 'loads'];
 			foreach($stat_type as $type){
 				foreach($stat_metrics as $metric){

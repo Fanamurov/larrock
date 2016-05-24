@@ -54,9 +54,9 @@ Route::get('/news/{item}', [
 ]);
 
 //TOURS
-Route::get('/tours/all', [
+/*Route::get('/tours/all', [
 	'as' => 'tours.all', 'uses' => 'ToursController@getAllTours'
-]);
+]);*/
 Route::post('/tours/search', [
 	'as' => 'tours.search', 'uses' => 'ToursController@search'
 ]);
@@ -95,6 +95,15 @@ Route::get('/search/tours', [
 	'as' => 'search.tours', 'uses' => 'ToursController@searchItem'
 ]);
 //TOURS END
+
+//HOTELS
+Route::get('/hotels', [
+    'as' => 'hotels.all', 'uses' => 'HotelsController@getHotels'
+]);
+Route::get('/hotels/{item}', [
+    'as' => 'hotels.item', 'uses' => 'HotelsController@getItem'
+]);
+//HOTELS_END
 
 Route::any('/sletat', [
 	'as' => 'sletat.form', 'uses' => 'SletatController@getFullSearchForm'
@@ -177,6 +186,15 @@ Route::group(['prefix' => 'admin', 'middleware'=>'level:2'], function(){
 	Route::post('/tours/search', [
 		'as' => 'admin.tours.search', 'uses' => 'Admin\AdminToursController@search'
 	]);
+
+    Route::post('/hotels/search', [
+        'as' => 'admin.hotels.search', 'uses' => 'Admin\AdminHotelsController@search'
+    ]);
+    Route::get('hotels/all', [
+        'as' => 'all.hotels.admin', 'uses' => 'Admin\AdminHotelsController@showHotels'
+    ]);
+    Route::resource('hotels', 'Admin\AdminHotelsController');
+
 	Route::resource('slideshow', 'Admin\AdminSlideshowController');
 
 	Route::resource('category', 'Admin\AdminCategoryController');

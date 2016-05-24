@@ -90,7 +90,7 @@ return [
 	'admin_menu' => ['type' => 'category_list'],
 	'admin_menu_push' => ['Только туры' => '/admin/tours/all'],
 	'settings' => [],
-	'plugins_backend' => ['seo', 'images', 'files', 'templates'],
+	'plugins_backend' => ['seo', 'images', 'files'],
 	'plugins_front' => [],
 	'version' => 1
 ];

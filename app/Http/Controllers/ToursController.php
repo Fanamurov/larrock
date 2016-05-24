@@ -19,7 +19,7 @@ class ToursController extends Controller
 {
 	protected $config;
 
-	public function __construct(Sletat $sletat)
+	public function __construct()
 	{
 		$this->config = \Config::get('components.tours');
 		\View::share('config_app', $this->config);
@@ -27,7 +27,7 @@ class ToursController extends Controller
 
 		Breadcrumbs::register('tours.index', function($breadcrumbs)
 		{
-			$breadcrumbs->push('Каталог туров', '/tours/all');
+			$breadcrumbs->push('Каталог туров');
 		});
 	}
 
@@ -60,21 +60,6 @@ class ToursController extends Controller
 
 		return view('santa.tours.items-all', $data);
 	}
-
-    public function getMainCategory()
-	{
-		$data = Cache::remember('getTours_main', 60, function()
-		{
-			$data['data'] = Category::whereType('tours')->whereLevel(1)->whereActive(1)->with('get_parent')->orderBy('position', 'DESC')->get();
-			foreach($data['data'] as $key => $value){
-				$data['data'][$key]['image'] = $value->getFirstMediaUrl('images');
-			}
-			$data['seo']['title'] = 'Оптовая продажа дальневосточной рыбной продукции';
-			return $data;
-		});
-
-		return view('santa.tours.categorys', $data);
-	}
 	
 	public function getStrany()
 	{
@@ -92,17 +77,27 @@ class ToursController extends Controller
 	public function getVidy(Request $request, $category, $country = '')
 	{
 		$page = $request->get('page');
-		if($category === 'all'){
-			$data['data'] = Cache::remember('search_vid_all_'.$country.'_'.$page, 1440, function() use ($country) {
-				$data['data'] = Category::whereId($country)->whereActive(1)->with(['get_toursActive.get_category', 'get_child.get_toursActive.get_category'])->first();
-				$data['data']->title = 'Все виды отдыха';
+		if($category === 'all') {
+            $data['data'] = Cache::remember('search_vid_all_' . $country . '_' . $page, 1440, function () use ($country) {
+                $data['data'] = Category::whereId($country)->whereActive(1)->with(['get_toursActive.get_category', 'get_child.get_toursActive.get_category'])->first();
+                $data['data']->title = 'Все виды отдыха';
 
-				foreach($data['data']->get_child as $child){
-					$data['data']->get_toursActive = $data['data']->get_toursActive->merge($child->get_toursActive);
-				}
-				return $data['data'];
-			});
-			\View::share('selected_country', $country);
+                foreach ($data['data']->get_child as $child) {
+                    $data['data']->get_toursActive = $data['data']->get_toursActive->merge($child->get_toursActive);
+                }
+                return $data['data'];
+            });
+            \View::share('selected_country', $country);
+        }elseif($category === 'luxury'){
+            //Cache::forget('search_vid_luxury_' . $country . '_' . $page);
+            $data['data'] = Cache::remember('search_vid_luxury_' . $country . '_' . $page, 1440, function () use ($country, $category) {
+                $data['data'] = Category::whereUrl($category)->whereActive(1)->with(['get_hotelsActive.get_category', 'get_child.get_hotelsActive.get_category'])->first();
+                foreach ($data['data']->get_child as $child) {
+                    $data['data']->get_hotelsActive = $data['data']->get_hotelsActive->merge($child->get_hotelsActive);
+                }
+                return $data['data'];
+            });
+            \View::share('selected_vid', $category);
 		}else{
 			$data['data'] = Cache::remember('search_vid'.$category .'_'. $country .'_'. $page, 1440, function() use ($country, $category) {
 				$data['data'] = Category::whereUrl($category)->whereActive(1)->with(['get_toursActive.get_category'])->first();
@@ -156,7 +151,11 @@ class ToursController extends Controller
 		\View::share('sharing_type', 'category');
 		\View::share('sharing_id', $data['data']->id);
 
-		return view('santa.tours.toursVid', $data);
+        if($category === 'luxury'){
+            return view('santa.hotels.luxury', $data);
+        }else{
+            return view('santa.tours.toursVid', $data);
+        }
 	}
 
 	public function getCategory(Sletat $sletat, Request $request, Forecast $forecast, $category, $child = NULL, $grandson = NULL)

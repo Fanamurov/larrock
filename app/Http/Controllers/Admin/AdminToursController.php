@@ -72,7 +72,6 @@ class AdminToursController extends Controller
 		$create_data = Request::create('/admin/tours', 'POST', [
 			'title' => 'Новый материал',
 			'url' => str_slug('Новый материал'),
-			'what' => 'руб./шт.',
 			'category' => [$request->get('category')],
 			'active' => 0,
 			'cost_notactive' => 0
@@ -99,7 +98,6 @@ class AdminToursController extends Controller
 		$data->active = $request->input('active', 0);
 		$data->to_rss = $request->input('to_rss', 1);
 		$data->position = $request->input('position', 0);
-		$data->articul = 'AR'. $request->input('id');
 		$data->cost_notactive = $request->input('cost_notactive', 0);
 		$data->user_id = $this->current_user->id;
 
@@ -225,22 +223,23 @@ class AdminToursController extends Controller
 		Breadcrumbs::register('admin.tours.edit', function($breadcrumbs, $data)
 		{
 			$breadcrumbs->parent('admin.tours.index');
-			//dd($data);
-			if($find_parent = Category::find($data->get_category[0]->id)){
-				if($find_parent_2 = Category::find($find_parent->parent)){
-					$find_parent_3 = Category::find($find_parent_2->parent);
-				}
-			}
+			if(isset($data->get_category[0])){
+                if($find_parent = Category::find($data->get_category[0]->id)){
+                    if($find_parent_2 = Category::find($find_parent->parent)){
+                        $find_parent_3 = Category::find($find_parent_2->parent);
+                    }
+                }
 
-			if(isset($find_parent_3->title)){
-				$breadcrumbs->push($find_parent_3->title, route('admin.tours.show', $find_parent_3->id));
-			}
-			if(isset($find_parent_2->title)){
-				$breadcrumbs->push($find_parent_2->title, route('admin.tours.show', $find_parent_2->id));
-			}
-			if(isset($find_parent->title)){
-				$breadcrumbs->push($find_parent->title, route('admin.tours.show', $find_parent->id));
-			}
+                if(isset($find_parent_3->title)){
+                    $breadcrumbs->push($find_parent_3->title, route('admin.tours.show', $find_parent_3->id));
+                }
+                if(isset($find_parent_2->title)){
+                    $breadcrumbs->push($find_parent_2->title, route('admin.tours.show', $find_parent_2->id));
+                }
+                if(isset($find_parent->title)){
+                    $breadcrumbs->push($find_parent->title, route('admin.tours.show', $find_parent->id));
+                }
+            }
 
 			$breadcrumbs->push($data->title, route('admin.tours.show', $data->id));
 		});

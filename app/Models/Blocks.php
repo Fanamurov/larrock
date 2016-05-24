@@ -18,6 +18,16 @@ use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
  * @property integer $active
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\MediaLibrary\Media[] $media
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Blocks whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Blocks whereTitle($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Blocks whereDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Blocks whereUrl($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Blocks wherePosition($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Blocks whereActive($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Blocks whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Blocks whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class Blocks extends Model implements HasMediaConversions
 {

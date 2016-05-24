@@ -30,6 +30,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Menu whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Menu whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Menu find($value)
+ * @mixin \Eloquent
  */
 class Menu extends Model
 {

@@ -42,7 +42,7 @@ return [
 		],
 	],
 	'settings' => [],
-	'plugins_backend' => ['images', 'files', 'templates'],
+	'plugins_backend' => ['images', 'files'],
 	'plugins_front' => [],
 	'version' => 1
 ];

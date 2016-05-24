@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App;
 use App\Models\Blog;
 use App\Models\Category;
-use App\Models\Feed;
+use App\Models\Hotels;
 use App\Models\News;
 use App\Models\Page;
 use Cache;
@@ -70,6 +70,11 @@ class SitemapController extends Controller
                         $sitemap->add(URL::to('/tours/strany/'.$value->url.'/'. $child_tours->url), $value->updated_at, '1.0', 'monthly');
                     }
                 }
+            }
+
+            $hotels = Hotels::whereActive(1)->get();
+            foreach ($hotels as $value){
+                $sitemap->add(URL::to('/hotels/'.$value->url), $value->updated_at, '1.0', 'monthly');
             }
 
             $sletat = new App\Helpers\Sletat;

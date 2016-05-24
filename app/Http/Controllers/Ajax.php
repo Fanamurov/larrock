@@ -13,7 +13,7 @@ class Ajax extends Controller
 {
 	public function sharingCounter(Request $request)
 	{
-		$pass_types = ['magic', 'tours', 'category', 'blog', 'news'];
+		$pass_types = ['magic', 'tours', 'category', 'blog', 'news', 'hotels'];
 		$type = $request->get('type', '');
 		$id = $request->get('id', '');
 		if(empty($type) OR empty($id)){

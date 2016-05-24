@@ -8,7 +8,7 @@
                 {!! Breadcrumbs::render('admin.visa.index') !!}
                 <a href="/{{ $app['name'] }}/">/{{ $app['name'] }}/</a>
                 <div class="add-panel">
-                    <a class="btn btn-info pull-right" href="/admin/{{ $app['name'] }}/create?category=0">Добавить материал</a>
+                    <a class="btn btn-info pull-right" href="/admin/{{ $app['name'] }}/create">Добавить материал</a>
                     <span class="btn btn-info show-please" data-target="create-category" data-focus="create-category-title">Добавить раздел</span>
                 </div>
             </div>

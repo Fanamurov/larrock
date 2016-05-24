@@ -35,6 +35,10 @@ use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Feed whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Feed find($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Feed categoryInfo()
+ * @property integer $user_id
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\MediaLibrary\Media[] $media
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Visa whereUserId($value)
+ * @mixin \Eloquent
  */
 class Visa extends Model implements HasMediaConversions
 {

@@ -7,6 +7,7 @@ use App\Helpers\ContentPlugins;
 use App\Http\Controllers\Admin\AdminBlocks\MenuBlock;
 use App\Models\Blocks;
 use Component;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -21,10 +22,15 @@ use View;
 class AdminBlocksController extends Controller
 {
 	protected $config;
+    protected $current_user;
 
-	public function __construct(MenuBlock $menu)
+	public function __construct(MenuBlock $menu, Guard $guard)
 	{
 		$this->config = \Config::get('components.blocks');
+        $this->current_user = $guard->user();
+        if( !$this->current_user->is(array_get($this->config, 'role', 'admin'))) {
+            abort(403, 'У вас нет прав доступа к этому разделу');
+        }
 		if(Route::current()){
 			View::share('menu', $menu->index(Route::current()->getUri())->render());
 		}

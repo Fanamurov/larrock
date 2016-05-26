@@ -41,6 +41,10 @@ class AdminBlogController extends Controller
 
 		$this->current_user = $guard->user();
 		View::share('current_user', $this->current_user);
+
+        if( !$this->current_user->is(array_get($this->config, 'role', 'admin'))) {
+            abort(403, 'У вас нет прав доступа к этому разделу');
+        }
 	}
 
 	/**

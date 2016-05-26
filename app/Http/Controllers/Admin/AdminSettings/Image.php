@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\AdminSettings;
 
 use App\Http\Controllers\Admin\AdminBlocks\MenuBlock;
 use Config;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -19,12 +20,17 @@ use Illuminate\Support\Arr;
 class Image extends Controller
 {
     protected $config;
+    protected $current_user;
 
-    public function __construct(MenuBlock $menu)
+    public function __construct(MenuBlock $menu, Guard $guard)
     {
 		if(Route::current()){
 			View::share('menu', $menu->index(Route::current()->getUri())->render());
 		}
+        $this->current_user = $guard->user();
+        if( !$this->current_user->is(array_get($this->config, 'role', 'admin'))) {
+            abort(403, 'У вас нет прав доступа к этому разделу');
+        }
     }
 
     /**

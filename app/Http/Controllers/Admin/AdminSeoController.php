@@ -6,6 +6,7 @@ use Alert;
 use App\Helpers\Component;
 use App\Helpers\ContentPlugins;
 use App\Http\Controllers\Admin\AdminBlocks\MenuBlock;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -20,13 +21,18 @@ use JsValidator;
 class AdminSeoController extends Controller
 {
 	protected $config;
+    protected $current_user;
 
-	public function __construct(MenuBlock $menu)
+	public function __construct(MenuBlock $menu, Guard $guard)
 	{
 		$this->config = \Config::get('components.seo');
 		if(Route::current()){
 			View::share('menu', $menu->index(Route::current()->getUri())->render());
 		}
+        $this->current_user = $guard->user();
+        if( !$this->current_user->is(array_get($this->config, 'role', 'admin'))) {
+            abort(403, 'У вас нет прав доступа к этому разделу');
+        }
 	}
 
     /**

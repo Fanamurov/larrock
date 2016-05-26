@@ -44,5 +44,5 @@ return [
 	'settings' => [],
 	'plugins_backend' => ['images', 'files'],
 	'plugins_front' => [],
-	'version' => 1
+	'version' => 1,
 ];

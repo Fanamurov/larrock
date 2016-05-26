@@ -55,7 +55,7 @@ class SitemapController extends Controller
 
             $vidy = Category::whereParent(377)->whereActive(1)->get();
             foreach ($vidy as $value){
-                $sitemap->add(URL::to('/tours/vidy-otdykha/'.$value->url), $value->updated_at, '2.0', 'monthly');
+                $sitemap->add(URL::to('/tours/vidy-otdykha/'.$value->url), $value->updated_at, '1.0', 'monthly');
             }
 
             $strany = Category::whereParent(308)->whereActive(1)->with(['get_childActive', 'get_childActive.get_toursActive', 'get_toursActive'])->get();

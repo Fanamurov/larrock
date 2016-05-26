@@ -92,5 +92,6 @@ return [
 	'settings' => [],
 	'plugins_backend' => ['seo', 'images', 'files'],
 	'plugins_front' => [],
-	'version' => 1
+	'version' => 1,
+    'role' => 'admin|moderator'
 ];

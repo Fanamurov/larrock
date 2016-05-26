@@ -38,6 +38,9 @@ class AdminCategoryController extends Controller
 		});
 
 		$this->current_user = $guard->user();
+        if( !$this->current_user->is(array_get($this->config, 'role', 'admin'))) {
+            abort(403, 'У вас нет прав доступа к этому разделу');
+        }
 	}
 
 	/**

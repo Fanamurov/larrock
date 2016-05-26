@@ -42,6 +42,10 @@ class AdminUsersController extends Controller
 			View::share('menu', $menu->index(Route::current()->getUri())->render());
 		}
 		$this->current_user = $guard->user();
+        $this->current_user = $guard->user();
+        if( !$this->current_user->is('admin|moderator')) {
+            abort(403, 'У вас нет прав доступа к этому разделу');
+        }
 	}
 
     /**
@@ -62,6 +66,9 @@ class AdminUsersController extends Controller
      */
     public function create()
     {
+        if( !$this->current_user->is('admin')) {
+            abort(403, 'У вас нет прав доступа к этому разделу');
+        }
         $validator = JsValidator::make(Component::_valid_construct($this->config['rows']));
         View::share('validator', $validator);
 		return view('admin.users.create', array('roles' => Role::all()));
@@ -75,6 +82,9 @@ class AdminUsersController extends Controller
      */
     public function store(Request $request)
     {
+        if( !$this->current_user->is('admin')) {
+            abort(403, 'У вас нет прав доступа к этому разделу');
+        }
 		$validator = Validator::make(
 			Input::all(),
 			Component::_valid_construct($this->config['rows'])
@@ -108,6 +118,9 @@ class AdminUsersController extends Controller
      */
     public function edit($id)
     {
+        if( !$this->current_user->is('admin')) {
+            abort(403, 'У вас нет прав доступа к этому разделу');
+        }
 		$data['roles'] = Role::all();
 		$data['user'] = User::whereId($id)->with('role')->first();
         $validator = JsValidator::make(Component::_valid_construct($this->config['rows'], 'update', $id));
@@ -124,6 +137,9 @@ class AdminUsersController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if( !$this->current_user->is('admin')) {
+            abort(403, 'У вас нет прав доступа к этому разделу');
+        }
 		$validator = Validator::make(
 			Input::all(),
 			Component::_valid_construct($this->config['rows'], 'update', $id));
@@ -160,6 +176,9 @@ class AdminUsersController extends Controller
      */
     public function destroy($id)
     {
+        if( !$this->current_user->is('admin')) {
+            abort(403, 'У вас нет прав доступа к этому разделу');
+        }
 		$user = User::whereId($id)->first();
 		$user->detachAllRoles();
 

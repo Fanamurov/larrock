@@ -179,7 +179,7 @@ return [
         Roumen\Sitemap\SitemapServiceProvider::class,
 
         /* https://packagist.org/packages/gloudemans/shoppingcart :: Корзина для каталога */
-        Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
+        //Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
 
         /* https://packagist.org/packages/greggilbert/recaptcha :: Каптча */
         Greggilbert\Recaptcha\RecaptchaServiceProvider::class,
@@ -188,7 +188,7 @@ return [
 		DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
 
 		/* http://www.maatwebsite.nl/laravel-excel/docs/import */
-		Maatwebsite\Excel\ExcelServiceProvider::class,
+		//Maatwebsite\Excel\ExcelServiceProvider::class,
 
 		/* https://github.com/jarektkaczyk/eloquence :: Поиск по сайту */
 		Sofa\Eloquence\ServiceProvider::class,

@@ -62,7 +62,7 @@ $(document).ready(function(){
             google.maps.event.trigger(map, 'resize');
         }, 50);
     });
-    $('#category_blog').find('select').change(function () {
+    $('select#category_blog').change(function () {
         window.location = $(this).val();
     });
 

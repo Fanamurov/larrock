@@ -42,7 +42,9 @@ class HotelsController extends Controller
             $breadcrumbs->push($data->title);
         });
 
-        $data['data'] = Hotels::whereUrl($item)->with(['get_category', 'getImages'])->first();
+        if( !$data['data'] = Hotels::whereUrl($item)->with(['get_category', 'getImages'])->first()){
+            abort(404, 'Такого отеля в нашей базе нет');
+        }
         \View::share('sharing_type', 'hotels');
         \View::share('sharing_id', $data['data']->id);
         return view('santa.hotels.item', $data);

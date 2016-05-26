@@ -117,6 +117,10 @@ class ToursController extends Controller
 				return $data['data'];
 			});
 
+            if( !$data['data']){
+                abort(404, 'Такого раздела нет');
+            }
+
 			\View::share('selected_vid', $category);
 			\View::share('selected_country', $country);
 		}

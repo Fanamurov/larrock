@@ -19,8 +19,8 @@
 Route::get('/vidy-otdykha/{item?}', function ($item) {
 	return redirect('/tours/vidy-otdykha/'.$item , 301);
 });
-Route::get('/strany/{item?}', function ($item) {
-	return redirect('/tours/strany/'.$item , 301);
+Route::get('/strany/{item}', function ($item) {
+    return redirect('/tours/strany/'.$item , 301);
 });
 Route::get('/resort/{item?}', function ($item) {
 	if($get_category = \App\Models\Category::whereUrl($item)->with('get_parent')->first()){
@@ -33,14 +33,17 @@ Route::get('/articles', function () {
 	return redirect('/blog', 301);
 });
 Route::get('/articles/{item}', function ($item) {
-	if($get_category = \App\Models\Blog::whereUrl($item)->with('get_parent')->first()){
-		return redirect('/blog/'.$get_category->get_parent->first()->url .'/'. $item , 301);
+	if($get_item = \App\Models\Blog::whereUrl($item)->with('get_category')->first()){
+		return redirect('/blog/'.$get_item->get_category->url .'/'. $item , 301);
 	}else{
 		abort(404, 'Такой страницы больше нет');
 	}
 });
 Route::get('/goryashchie-tury', function () {
 	return redirect('/sletat', 301);
+});
+Route::get('/o-kompanii/novosti', function () {
+    return redirect('/news', 301);
 });
 //END REDIRECTS OLD SITE
 

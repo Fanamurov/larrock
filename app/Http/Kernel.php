@@ -33,6 +33,6 @@ class Kernel extends HttpKernel
 		'role' => \App\Http\Middleware\VerifyRole::class,
 		'permission' => \App\Http\Middleware\VerifyPermission::class,
 		'level' => \App\Http\Middleware\VerifyLevel::class,
-		'loaderModules' => \App\Http\Middleware\BeforeLoaderModulesGlobal::class
+		'loaderModules' => \App\Http\Middleware\BeforeLoaderModulesGlobal::class,
     ];
 }

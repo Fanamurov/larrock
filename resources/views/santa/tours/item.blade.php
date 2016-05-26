@@ -1,5 +1,5 @@
 @extends('santa.main')
-@section('title') {{ $data->title }} @endsection
+@section('title') {{ $data->title }}. Заказ тура, путевки с вылетом из Хабаровска. Цены, стоимость проживания, авиаперелета @endsection
 @section('description') {!! strip_tags($data->short) !!} @endsection
 
 @section('content')

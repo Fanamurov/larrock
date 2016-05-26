@@ -438,7 +438,8 @@ label{
 }
 
 input[type=date],
-input.daterange{
+input.daterange,
+.picker__input{
   background: url('/_assets/_admin/_images/1450955636_office-15.png') no-repeat 10px center;
   padding-left: 34px;
 }
@@ -461,6 +462,11 @@ input.daterange{
 .TVMultyFilter .TVStandartBox{
   box-shadow: none;
   border: 1px solid #ddd;
+}
+
+.picker__holder {
+  width: 400px !important;
+  height: 320px !important;
 }
 
 @import "sections/header";

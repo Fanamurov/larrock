@@ -264,6 +264,14 @@ class ToursController extends Controller
 
 	public function getResourt($category, $item, Sletat $sletat, Forecast $forecast)
 	{
+		if( !Category::whereUrl($category)->whereType('tours')->whereActive(1)->first()){
+			if($get_resort = Category::whereUrl($item)->whereType('tours')->with(['get_parent'])->whereActive(1)->first()){
+				//dd($get_resort);
+				return redirect('/tours/strany/'. $get_resort->get_parent->url .'/'. $item);
+			}
+			abort(404, 'Такой страны на сайте нет');
+		}
+
 		$data['data'] = Category::whereType('tours')->whereActive(1)->whereUrl($item)->with(['get_toursActive', 'get_childActive', 'get_parent.get_toursActive'])->first();
 
 		if( !$data['data']){
@@ -323,6 +331,14 @@ class ToursController extends Controller
 		$data['data'] = Tours::whereUrl($item)->whereActive(1)->with(['get_seo', 'get_templates', 'get_category'])->firstOrFail();
 		$data['data']['images'] = $data['data']->getMedia('images')->sortByDesc('order_column');
 		$data['data']['files'] = $data['data']->getMedia('files')->sortByDesc('order_column');
+
+		if( !empty($category) && !Category::whereUrl($category)->whereType('tours')->whereActive(1)->first()){
+			abort(404, 'Такой страны на сайте нет');
+		}
+
+		if( !empty($resourt) && !Category::whereUrl($resourt)->whereActive(1)->first()){
+			abort(404, 'Такого курорта на сайте нет');
+		}
 
 		Breadcrumbs::register('tours.item', function($breadcrumbs, $data)
 		{

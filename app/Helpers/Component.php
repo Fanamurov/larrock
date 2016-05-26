@@ -120,7 +120,7 @@ class Component implements ComponentInterface
 			$data['form'][$tab_key] = $formBuilder->render($data['app'], $data['data'], $tab_key);
 		}
 		if(count($data['tabs']) < 2){
-			$data['form'] = $formBuilder->render($data['app'], $data['data']);
+			$data['form']['main'] = $formBuilder->render($data['app'], $data['data']);
 		}
 		return $data;
 	}

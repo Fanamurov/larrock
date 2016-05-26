@@ -15,6 +15,35 @@
 	'as' => 'mainpage', 'uses' => 'CatalogController@getMainCategory'
 ]);*/
 
+//REDIRECTS OLD SITE
+Route::get('/vidy-otdykha/{item?}', function ($item) {
+	return redirect('/tours/vidy-otdykha/'.$item , 301);
+});
+Route::get('/strany/{item?}', function ($item) {
+	return redirect('/tours/strany/'.$item , 301);
+});
+Route::get('/resort/{item?}', function ($item) {
+	if($get_category = \App\Models\Category::whereUrl($item)->with('get_parent')->first()){
+		return redirect('/tours/strany/'.$get_category->get_parent->first()->url .'/'. $item , 301);
+	}else{
+		abort(404, 'Такой страницы больше нет');
+	}
+});
+Route::get('/articles', function () {
+	return redirect('/blog', 301);
+});
+Route::get('/articles/{item}', function ($item) {
+	if($get_category = \App\Models\Blog::whereUrl($item)->with('get_parent')->first()){
+		return redirect('/blog/'.$get_category->get_parent->first()->url .'/'. $item , 301);
+	}else{
+		abort(404, 'Такой страницы больше нет');
+	}
+});
+Route::get('/goryashchie-tury', function () {
+	return redirect('/sletat', 301);
+});
+//END REDIRECTS OLD SITE
+
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->middleware('level:2');
 
 Route::get('/page/{url}', [
@@ -135,6 +164,9 @@ Route::post('/forms/corporate', [
 Route::post('/forms/zakazTura', [
 	'as' => 'submit.zakazTura', 'uses' => 'Modules\Forms@send_formZakazTura'
 ]);
+Route::post('/forms/zakazHotel', [
+	'as' => 'submit.zakazHotel', 'uses' => 'Modules\Forms@send_formZakazHotel'
+]);
 Route::post('/forms/zakazSert', [
 	'as' => 'submit.zakazSert', 'uses' => 'Modules\Forms@send_formZakazSert'
 ]);
@@ -159,7 +191,7 @@ Route::post('/ajax/sharingCounter', [
 // Authentication routes...
 Route::auth();
 
-Route::get('sitemap.xml', [
+Route::get('/sitemap_generate', [
     'as' => 'generate.sitemap', 'uses' => 'SitemapController@index'
 ]);
 Route::get('feed.rss', [
@@ -179,7 +211,7 @@ Route::group(['prefix' => 'admin', 'middleware'=>'level:2'], function(){
 	Route::get('tours/all', [
 		'as' => 'all.tours.admin', 'uses' => 'Admin\AdminToursController@showTours'
 	]);
-	Route::get('users/author/{userId}', [
+	Route::get('users/author/{userId?}', [
 		'as' => 'admin.users.author', 'uses' => 'Admin\AdminUsersController@getAuthor'
 	]);
 	Route::resource('tours', 'Admin\AdminToursController');
@@ -227,8 +259,12 @@ Route::group(['prefix' => 'admin', 'middleware'=>'level:2'], function(){
 	Route::post('ajax/UploadFile', 'Admin\AdminAjax@UploadFile');
 
 	Route::get('/', [
-		'as' => 'admin.index', 'uses' => 'Admin\AdminDashboardController@index'
+		'as' => 'admin.index', 'uses' => 'Admin\AdminUsersController@getAuthor'
 	]); //Роут главной страницы админки
+
+	Route::get('/mails', [
+		'as' => 'admin.mails', 'uses' => 'Admin\AdminDashboardController@index'
+	]);
 
 	Route::get('/blocks/MenuBlock', 'Admin\AdminBlocks\MenuBlock@index');
 });

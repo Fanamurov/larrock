@@ -40,6 +40,10 @@ class AdminDashboardController extends Controller
 		$data['count']['all']['zakazTura'] = FormsLog::whereFormname('zakazTura')->count();
 		$data['count']['new']['zakazTura'] = FormsLog::whereFormname('zakazTura')->whereStatus('Новое')->count();
 
+		$data['zakazHotel'] = FormsLog::whereFormname('zakazHotel')->orderBy('created_at', 'DESC')->take(5)->get();
+		$data['count']['all']['zakazHotel'] = FormsLog::whereFormname('zakazHotel')->count();
+		$data['count']['new']['zakazHotel'] = FormsLog::whereFormname('zakazHotel')->whereStatus('Новое')->count();
+
 		$data['contact'] = FormsLog::whereFormname('contact')->orderBy('created_at', 'DESC')->take(5)->get();
 		$data['count']['all']['contact'] = FormsLog::whereFormname('contact')->count();
 		$data['count']['new']['contact'] = FormsLog::whereFormname('contact')->whereStatus('Новое')->count();

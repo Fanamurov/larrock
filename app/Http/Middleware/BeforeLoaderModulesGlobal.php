@@ -42,9 +42,6 @@ class BeforeLoaderModulesGlobal
         {
             $menu->dropdown('Страны', function ($sub) use ($module_strany) {
                 foreach ($module_strany as $key => $item){
-					if($key){
-
-					}
                     $sub->url('/tours/strany/'. $item->url, $item->title);
                 }
             });

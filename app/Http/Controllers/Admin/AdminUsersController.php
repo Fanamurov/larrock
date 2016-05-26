@@ -7,6 +7,7 @@ use App\Helpers\Component;
 use App\Http\Controllers\Admin\AdminBlocks\MenuBlock;
 use App\Models\Blog;
 use App\Models\Category;
+use App\Models\FormsLog;
 use App\Models\Hotels;
 use App\Models\News;
 use App\Models\Tours;
@@ -15,6 +16,7 @@ use App\User;
 use Bican\Roles\Models\Role;
 use Breadcrumbs;
 use Cache;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -31,13 +33,15 @@ use View;
 class AdminUsersController extends Controller
 {
 	protected $config;
+	protected $current_user;
 
-	public function __construct(MenuBlock $menu)
+	public function __construct(MenuBlock $menu, Guard $guard)
 	{
 		$this->config = \Config::get('components.users');
 		if(Route::current()){
 			View::share('menu', $menu->index(Route::current()->getUri())->render());
 		}
+		$this->current_user = $guard->user();
 	}
 
     /**
@@ -171,8 +175,11 @@ class AdminUsersController extends Controller
 	 * Получение всех материалов автора
 	 * @param Request $request
 	 */
-	public function getAuthor(Request $request, $userId)
+	public function getAuthor(Request $request, $userId = null)
 	{
+		if( !$userId){
+			$userId = $this->current_user->id;
+		}
 		Breadcrumbs::register('admin.author', function($breadcrumbs, $data)
 		{
 			$breadcrumbs->push('Лента активности');
@@ -236,6 +243,10 @@ class AdminUsersController extends Controller
 			$data['logger'] = UsersLogger::whereUserId($userId)->orderBy('updated_at', 'desc')->take(6)->get();
 			return $data;
 		});
+
+		$data['forms']['zakazTura']['data'] = FormsLog::whereFormname('zakazTura')->whereStatus('Новое')->orderBy('created_at', 'DESC')->take(10)->get();
+		$data['forms']['zakazTura']['count']['all'] = FormsLog::whereFormname('zakazTura')->count();
+		$data['forms']['zakazTura']['count']['new'] = FormsLog::whereFormname('zakazTura')->whereStatus('Новое')->count();
 
 		return view('admin.users.activity', $data);
 	}

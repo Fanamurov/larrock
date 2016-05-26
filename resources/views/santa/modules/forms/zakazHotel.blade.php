@@ -29,7 +29,7 @@
             </div>
             <div class="form-group">
                 <label for="form-zakazHotel-date-out" class="control-label">Дата отъезда<sup>*</sup>:</label>
-                <input type="date" class="form-control" id="form-zakazHotel-date-out" name="date-out">
+                <input type="date" class="form-control" id="form-zakazHotel-date-out" name="date_out">
             </div>
             <div class="form-group">
                 <div class="row">

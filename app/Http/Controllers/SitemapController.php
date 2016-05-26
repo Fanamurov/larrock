@@ -22,7 +22,7 @@ class SitemapController extends Controller
         $sitemap = App::make("sitemap");
         // set cache key (string), duration in minutes (Carbon|Datetime|int), turn on/off (boolean)
         // by default cache is disabled
-        $sitemap->setCache('laravel.sitemap', 3600);
+        //$sitemap->setCache('laravel.sitemap', 3600);
 
         // check if there is cached sitemap and build new only if is not
         if (!$sitemap->isCached())
@@ -60,7 +60,7 @@ class SitemapController extends Controller
 
             $strany = Category::whereParent(308)->whereActive(1)->with(['get_childActive', 'get_childActive.get_toursActive', 'get_toursActive'])->get();
             foreach ($strany as $value){
-                $sitemap->add(URL::to('/tours/strany/'.$value->url), $value->updated_at, '2.0', 'monthly');
+                $sitemap->add(URL::to('/tours/strany/'.$value->url), $value->updated_at, '1.0', 'monthly');
                 foreach ($value->get_toursActive as $tours){
                     $sitemap->add(URL::to('/tours/strany/'.$value->url.'/'. $tours->url), $value->updated_at, '1.0', 'monthly');
                 }
@@ -93,7 +93,8 @@ class SitemapController extends Controller
         }
 
         // show your sitemap (options: 'xml' (default), 'html', 'txt', 'ror-rss', 'ror-rdf')
-        return $sitemap->render('xml');
+		$sitemap->store('xml', 'sitemap');
+        echo 'OK';
 	}
 
 	public function rss()

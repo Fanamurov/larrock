@@ -2,7 +2,7 @@
 @if($data->get_seo)
     @section('title') {{ $data->get_seo->title }} @endsection
 @else
-    @section('title') {{ $data->title }} @endsection
+    @section('title') {{ $data->title }}. Туры с вылетом из Хабаровска @endsection
 @endif
 
 @section('content')

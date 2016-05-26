@@ -21,7 +21,7 @@
                         {!! \Carbon\Carbon::createFromTimestamp(strtotime($data_value->updated_at))->diffForHumans(\Carbon\Carbon::now()) !!}</i></p>
         </td>
         <td width="35">
-            {{ $data_value->getCountForms->count() }} <i class="glyphicon glyphicon-envelope"></i>
+            <a href="/admin/mails">{{ $data_value->getCountForms->count() }} <i class="glyphicon glyphicon-envelope"></i></a>
         </td>
         <td width="35">
             {{ $data_value->sharing }} <i class="glyphicon glyphicon-heart-empty"></i>

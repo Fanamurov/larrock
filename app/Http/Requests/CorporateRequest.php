@@ -31,8 +31,7 @@ class CorporateRequest extends Request
 			'tel' => 'required',
 			'email' => 'required|email',
 			'peoples' => 'required',
-			'peoples_active' => 'required',
-			'comment' => 'required',
+			'peoples_active' => 'required'
         ];
     }
 }

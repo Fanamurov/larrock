@@ -32,6 +32,9 @@ class SletatController extends Controller
      */
     public function getFullSearchForm(Request $request, Sletat $sletat)
 	{
+		if( !$request->has('cityFromId')){
+			return redirect('/sletat?cityFromId=1286&countryId=113&s_adults=2&s_kids=');
+		}
         $data = $sletat->getFullSearchForm($request);
 		$data['paginator']['all'] = $data['GetTours']['iTotalDisplayRecords'];
 		$data['paginator']['pages'] = ceil($data['GetTours']['iTotalDisplayRecords']/30);

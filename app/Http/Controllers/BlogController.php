@@ -43,6 +43,9 @@ class BlogController extends Controller
 		$data = Cache::remember('blog_'.$category.'_'.$page, 1440, function() use ($category, $page) {
 			$data['categorys'] = Category::whereType('blog')->whereActive(1)->whereLevel(1)->orderBy('updated_at', 'desc')->with(['get_blogActive'])->get();
 			$data['category'] = Category::whereUrl($category)->whereActive(1)->with(['get_blogActive'])->first();
+			if( !$data['category']){
+				abort('404', 'Такого раздела в блоге нет');
+			}
 			$data['data'] = Blog::whereActive(1)->whereCategory($data['category']->id)->orderBy('updated_at', 'desc')->skip(($page-1)*8)->paginate(8);
 			return $data;
 		});

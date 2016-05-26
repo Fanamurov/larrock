@@ -1,5 +1,5 @@
 @extends('santa.main')
-@section('title') {{ $data->title }} {{ $data->get_parent->title }} @endsection
+@section('title') {{ $data->title }} {{ $data->get_parent->title }}. Туры с вылетом из Хабаровска @endsection
 @section('description') {!! strip_tags($data->short) !!} @endsection
 
 @section('content')

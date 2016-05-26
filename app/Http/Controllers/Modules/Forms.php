@@ -19,6 +19,29 @@ class Forms extends Controller
 		return view('santa.modules.forms.podbor', []);
 	}
 
+	protected function sender(Request $request, $subject, $email_template){
+		$to_email = $this->getEmailArray();
+		$send = FALSE;
+		foreach($to_email as $email_value){
+			/** @noinspection PhpVoidFunctionResultUsedInspection */
+			$send = Mail::send($email_template,
+				$request->all(),
+				function($message) use ($email_value, $subject){
+					$message->from($email_value, env('MAIL_TO_ADMIN_NAME', 'TEST'));
+					$message->to($email_value, env('MAIL_TO_ADMIN_NAME', 'TEST'));
+					$message->subject($subject. ' '. Arr::get($_SERVER, 'SERVER_NAME')
+					);
+				});
+		}
+		return $send;
+	}
+
+	protected function getEmailArray(){
+		$to_email = env('MAIL_TO_ADMIN', 'robot@martds.ru');
+		$to_email = explode(',', $to_email);
+		return array_map('trim', $to_email);
+	}
+
 	public function send_form(Request $request)
 	{
 		if(env('MAIL_STOP') === 'true'){
@@ -27,18 +50,7 @@ class Forms extends Controller
 		}
 
 		FormsLog::create(['formname' => 'contact', 'params' => $request->all(), 'status' => 'Новое']);
-
-		/** @noinspection PhpVoidFunctionResultUsedInspection */
-		$send = Mail::send('emails.contact',
-			['name' => $request->get('name'),
-				'contact' => $request->get('contact'),
-				'comment' => $request->get('comment')],
-			function($message){
-				$message->from(env('MAIL_TO_ADMIN', 'robot@martds.ru'), env('MAIL_TO_ADMIN_NAME', 'TEST'));
-				$message->to(env('MAIL_TO_ADMIN', 'robot@martds.ru'), env('MAIL_TO_ADMIN_NAME', 'TEST'));
-				$message->subject('Отправлена форма заявки '. Arr::get($_SERVER, 'SERVER_NAME')
-				);
-		});
+		$send = $this->sender($request, 'Отправлена форма заявки', 'emails.contact');
 		
 		if($send){
 			Alert::add('success', 'Форма отправлена')->flash();
@@ -56,16 +68,7 @@ class Forms extends Controller
 		}
 
 		FormsLog::create(['formname' => 'corporate', 'params' => $request->all(), 'status' => 'Новое']);
-
-		/** @noinspection PhpVoidFunctionResultUsedInspection */
-		$send = Mail::send('emails.corporate',
-			$request->all(),
-			function($message){
-				$message->from(env('MAIL_TO_ADMIN', 'robot@martds.ru'), env('MAIL_TO_ADMIN_NAME', 'TEST'));
-				$message->to(env('MAIL_TO_ADMIN', 'robot@martds.ru'), env('MAIL_TO_ADMIN_NAME', 'TEST'));
-				$message->subject('Отправлена анкета корпоративного обслуживания '. Arr::get($_SERVER, 'SERVER_NAME')
-				);
-			});
+		$send = $this->sender($request, 'Отправлена анкета корпоративного обслуживания', 'emails.corporate');
 
 		if($send){
 			Alert::add('success', 'Форма отправлена')->flash();
@@ -83,22 +86,7 @@ class Forms extends Controller
 		}
 		
 		FormsLog::create(['formname' => 'zakazTura', 'params' => $request->all(), 'status' => 'Новое', 'tour_id' => $request->get('tour_id')]);
-
-		/** @noinspection PhpVoidFunctionResultUsedInspection */
-		$send = Mail::send('emails.zakazTura',
-			['name' => $request->get('name'),
-				'tel' => $request->get('tel'),
-				'email' => $request->get('email'),
-				'date' => $request->get('date'),
-				'comment' => $request->get('comment'),
-				'tour_name' => $request->get('tour_name'),
-			],
-			function($message){
-				$message->from(env('MAIL_TO_ADMIN', 'robot@martds.ru'), env('MAIL_TO_ADMIN_NAME', 'TEST'));
-				$message->to(env('MAIL_TO_ADMIN', 'robot@martds.ru'), env('MAIL_TO_ADMIN_NAME', 'TEST'));
-				$message->subject('Отправлена форма заказа тура '. Arr::get($_SERVER, 'SERVER_NAME')
-				);
-			});
+		$send = $this->sender($request, 'Отправлена форма заказа тура', 'emails.zakazTura');
 
 		if($send){
 			Alert::add('success', 'Форма отправлена')->flash();
@@ -116,27 +104,7 @@ class Forms extends Controller
         }
 
         FormsLog::create(['formname' => 'zakazHotel', 'params' => $request->all(), 'status' => 'Новое', 'hotel_id' => $request->get('hotel_id')]);
-
-        /** @noinspection PhpVoidFunctionResultUsedInspection */
-        $send = Mail::send('emails.zakazTura',
-            ['name' => $request->get('name'),
-                'tel' => $request->get('tel'),
-                'email' => $request->get('email'),
-                'date' => $request->get('date'),
-                'date-out' => $request->get('date-out'),
-                'comment' => $request->get('comment'),
-                'hotel_name' => $request->get('hotel_name'),
-                'adult' => $request->get('adult', 2),
-                'kids' => $request->get('kids', 0),
-                'baby' => $request->get('baby', 0),
-                'city' => $request->get('city'),
-            ],
-            function($message){
-                $message->from(env('MAIL_TO_ADMIN', 'robot@martds.ru'), env('MAIL_TO_ADMIN_NAME', 'TEST'));
-                $message->to(env('MAIL_TO_ADMIN', 'robot@martds.ru'), env('MAIL_TO_ADMIN_NAME', 'TEST'));
-                $message->subject('Отправлена форма бронирования отеля '. Arr::get($_SERVER, 'SERVER_NAME')
-                );
-            });
+		$send = $this->sender($request, 'Отправлена форма бронирования отеля', 'emails.zakazHotel');
 
         if($send){
             Alert::add('success', 'Форма отправлена')->flash();
@@ -154,19 +122,7 @@ class Forms extends Controller
 		}
 
 		FormsLog::create(['formname' => 'zakazSert', 'params' => $request->all(), 'status' => 'Новое']);
-
-		/** @noinspection PhpVoidFunctionResultUsedInspection */
-		$send = Mail::send('emails.zakazSert',
-			['tel' => $request->get('tel'),
-				'email' => $request->get('email'),
-				'summa' => $request->get('summa'),
-			],
-			function($message){
-				$message->from(env('MAIL_TO_ADMIN', 'robot@martds.ru'), env('MAIL_TO_ADMIN_NAME', 'TEST'));
-				$message->to(env('MAIL_TO_ADMIN', 'robot@martds.ru'), env('MAIL_TO_ADMIN_NAME', 'TEST'));
-				$message->subject('Отправлена форма заказа сертификата '. Arr::get($_SERVER, 'SERVER_NAME')
-				);
-			});
+		$send = $this->sender($request, 'Отправлена форма заказа сертификата', 'emails.zakazSert');
 
 		if($send){
 			Alert::add('success', 'Форма отправлена')->flash();
@@ -184,23 +140,7 @@ class Forms extends Controller
 		}
 
 		FormsLog::create(['formname' => 'formPodbor', 'params' => $request->all(), 'status' => 'Новое']);
-		
-		/** @noinspection PhpVoidFunctionResultUsedInspection */
-		$send = Mail::send('emails.podborTura',
-			['name' => $request->get('name'),
-				'tel' => $request->get('tel'),
-				'email' => $request->get('email'),
-				'country' => $request->get('country'),
-				'date' => $request->get('date'),
-				'time' => $request->get('time'),
-				'comment' => $request->get('comment'),
-			],
-			function($message){
-				$message->from(env('MAIL_TO_ADMIN', 'robot@martds.ru'), env('MAIL_TO_ADMIN_NAME', 'TEST'));
-				$message->to(env('MAIL_TO_ADMIN', 'robot@martds.ru'), env('MAIL_TO_ADMIN_NAME', 'TEST'));
-				$message->subject('Отправлена форма заявки '. Arr::get($_SERVER, 'SERVER_NAME')
-				);
-			});
+		$send = $this->sender($request, 'Отправлена форма подбора тура', 'emails.podborTura');
 
 		if($send){
 			Alert::add('success', 'Форма отправлена')->flash();
@@ -221,26 +161,30 @@ class Forms extends Controller
 
 		FormsLog::create(['formname' => 'formsletatOrderShort', 'params' => $request->all(), 'addict' => $ActualizePrice, 'status' => 'Новое']);
 
-		/** @noinspection PhpVoidFunctionResultUsedInspection */
-		$send = Mail::send('emails.sletatOrderShort',
-			['name' => $request->get('name'),
-				'tel' => $request->get('tel'),
-				'email' => $request->get('email'),
-				'sourceId' => $request->get('sourceId'),
-				'offerId' => $request->get('offerId'),
-				'countryId' => $request->get('countryId'),
-				'requestId' => $request->get('requestId'),
-				'cityFromName' => $request->get('cityFromName'),
-				'countryName' => $request->get('countryName'),
-				'comment' => $request->get('comment'),
-				'sletat' => $ActualizePrice
-			],
-			function($message){
-				$message->from(env('MAIL_TO_ADMIN', 'robot@martds.ru'), env('MAIL_TO_ADMIN_NAME', 'TEST'));
-				$message->to(env('MAIL_TO_ADMIN', 'robot@martds.ru'), env('MAIL_TO_ADMIN_NAME', 'TEST'));
-				$message->subject('Отправлена форма заявки на бронирование тура от sletat '. Arr::get($_SERVER, 'SERVER_NAME')
-				);
-			});
+		$emails = $this->getEmailArray();
+		$send = FALSE;
+		foreach($emails as $email){
+			/** @noinspection PhpVoidFunctionResultUsedInspection */
+			$send = Mail::send('emails.sletatOrderShort',
+				['name' => $request->get('name'),
+					'tel' => $request->get('tel'),
+					'email' => $request->get('email'),
+					'sourceId' => $request->get('sourceId'),
+					'offerId' => $request->get('offerId'),
+					'countryId' => $request->get('countryId'),
+					'requestId' => $request->get('requestId'),
+					'cityFromName' => $request->get('cityFromName'),
+					'countryName' => $request->get('countryName'),
+					'comment' => $request->get('comment'),
+					'sletat' => $ActualizePrice
+				],
+				function($message) use ($email){
+					$message->from($email, env('MAIL_TO_ADMIN_NAME', 'TEST'));
+					$message->to($email, env('MAIL_TO_ADMIN_NAME', 'TEST'));
+					$message->subject('Отправлена форма заявки на бронирование тура от sletat '. Arr::get($_SERVER, 'SERVER_NAME')
+					);
+				});
+		}
 
 		if($send){
 			Alert::add('success', 'Форма отправлена')->flash();
@@ -261,41 +205,45 @@ class Forms extends Controller
 
 		FormsLog::create(['formname' => 'formsletatOrderFull', 'params' => $request->all(), 'addict' => $ActualizePrice, 'status' => 'Новое']);
 
-		/** @noinspection PhpVoidFunctionResultUsedInspection */
-		$send = Mail::send('emails.sletatOrderFull',
-			['fio' => $request->get('fio'),
-				'tel' => $request->get('tel'),
-				'email' => $request->get('email'),
-				'address' => $request->get('address'),
-				'passport' => $request->get('passport'),
-				'passportDate' => $request->get('passportDate'),
+		$emails = $this->getEmailArray();
+		$send = FALSE;
+		foreach($emails as $email){
+			/** @noinspection PhpVoidFunctionResultUsedInspection */
+			$send = Mail::send('emails.sletatOrderFull',
+				['fio' => $request->get('fio'),
+					'tel' => $request->get('tel'),
+					'email' => $request->get('email'),
+					'address' => $request->get('address'),
+					'passport' => $request->get('passport'),
+					'passportDate' => $request->get('passportDate'),
 
-				'firstname' => $request->get('firstname'),
-				'lastname' => $request->get('lastname'),
-				'citizenship' => $request->get('citizenship'),
-				'gender' => $request->get('gender'),
-				'birthday' => array_values(array_unique($request->get('birthday'))),
-				'seriaZagran' => $request->get('seriaZagran'),
-				'numberZagran' => $request->get('numberZagran'),
-				'dateZagran' => array_values(array_unique($request->get('dateZagran'))),
-				'srokZagran' => array_values(array_unique($request->get('srokZagran'))),
-				'ktoZagran' => $request->get('ktoZagran'),
+					'firstname' => $request->get('firstname'),
+					'lastname' => $request->get('lastname'),
+					'citizenship' => $request->get('citizenship'),
+					'gender' => $request->get('gender'),
+					'birthday' => array_values(array_unique($request->get('birthday'))),
+					'seriaZagran' => $request->get('seriaZagran'),
+					'numberZagran' => $request->get('numberZagran'),
+					'dateZagran' => array_values(array_unique($request->get('dateZagran'))),
+					'srokZagran' => array_values(array_unique($request->get('srokZagran'))),
+					'ktoZagran' => $request->get('ktoZagran'),
 
-				'sourceId' => $request->get('sourceId'),
-				'offerId' => $request->get('offerId'),
-				'countryId' => $request->get('countryId'),
-				'requestId' => $request->get('requestId'),
-				'cityFromName' => $request->get('cityFromName'),
-				'countryName' => $request->get('countryName'),
-				'comment' => $request->get('comment'),
-				'sletat' => $ActualizePrice
-			],
-			function($message){
-				$message->from(env('MAIL_TO_ADMIN', 'robot@martds.ru'), env('MAIL_TO_ADMIN_NAME', 'TEST'));
-				$message->to(env('MAIL_TO_ADMIN', 'robot@martds.ru'), env('MAIL_TO_ADMIN_NAME', 'TEST'));
-				$message->subject('Отправлена форма заявки на бронирование тура для оплаты от sletat '. Arr::get($_SERVER, 'SERVER_NAME')
-				);
-			});
+					'sourceId' => $request->get('sourceId'),
+					'offerId' => $request->get('offerId'),
+					'countryId' => $request->get('countryId'),
+					'requestId' => $request->get('requestId'),
+					'cityFromName' => $request->get('cityFromName'),
+					'countryName' => $request->get('countryName'),
+					'comment' => $request->get('comment'),
+					'sletat' => $ActualizePrice
+				],
+				function($message) use ($email){
+					$message->from($email, env('MAIL_TO_ADMIN_NAME', 'TEST'));
+					$message->to($email, env('MAIL_TO_ADMIN_NAME', 'TEST'));
+					$message->subject('Отправлена форма заявки на бронирование тура для оплаты от sletat '. Arr::get($_SERVER, 'SERVER_NAME')
+					);
+				});
+		}
 
 		if($send){
 			$saveOrder = $sletat->SaveTourOrder($request);

@@ -3,7 +3,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="Mart Larrock CMS" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <title>@yield('title', 'Туристическая компания Cанта-авиа Хабаровск')</title>
+    <title>@yield('title', 'Туры, горящие путевки в Тайланд, Китай, Вьетнам, Турцию, отдых из Хабаровска 2016. Туристическая компания Cанта-авиа Хабаровск')</title>
     <meta name="description" content="@yield('description')">
     <meta name="author" content="Santa-avia.ru Санта-авиа">
     <meta name='yandex-verification' content='409dfa0fa1b91fe7' />

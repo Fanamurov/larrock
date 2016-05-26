@@ -103,6 +103,42 @@
         <div class="col-sm-4">
             <div class="ibox float-e-margins">
                 <div class="row">
+                    <div class="col-xs-24">
+                        <h1 class="text-center">Заказы туров: {{ $forms['zakazTura']['count']['new'] }}</h1>
+                        @foreach($forms['zakazTura']['data'] as $key => $form_value)
+                            <button class="btn btn-danger" data-toggle="modal" data-target="#myModal{{$key}}">
+                                <i class="glyphicon glyphicon-envelope"></i> {{ $form_value->params['tour_name'] }}
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="myModal{{$key}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h1 class="modal-title text-center" id="myModalLabel">Заказ тура</h1>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Имя: {{ $form_value->params['name'] }}</p>
+                                            <p>Телефон: {{ $form_value->params['tel'] }}</p>
+                                            <p>Email: <a href="mailto:{{ $form_value->params['email'] }}">{{ $form_value->params['email'] }}</a></p>
+                                            <p>Примерная дата вылета: {{ $form_value->params['date'] }}</p>
+                                            <p>Комментарий: {{ $form_value->params['comment'] }}</p>
+                                            <p><a href="{{ $form_value->params['tour_url'] }}">Ссылка на тур</a></p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+
+            <div class="ibox float-e-margins">
+                <div class="row">
                     <div class="col-xs-8">
                         <div class="widget style1">
                             <div class="row">
@@ -129,7 +165,7 @@
                             </div>
                             <div class="ibox-content">
                                 <h1 class="no-margins">{{ $counter['categories']['loads']['user'] }}</h1>
-                                <div class="stat-percent font-bold text-success">{{ $counter['categories']['loads']['perst'] }}%</div>
+                                <span class="stat-percent font-bold text-success">{{ $counter['categories']['loads']['perst'] }}%</span>
                                 <small>От общего</small>
                             </div>
                         </div>

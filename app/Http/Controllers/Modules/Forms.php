@@ -29,7 +29,7 @@ class Forms extends Controller
 				function($message) use ($email_value, $subject){
 					$message->from($email_value, env('MAIL_TO_ADMIN_NAME', 'TEST'));
 					$message->to($email_value, env('MAIL_TO_ADMIN_NAME', 'TEST'));
-					$message->subject($subject. ' '. Arr::get($_SERVER, 'SERVER_NAME')
+					$message->subject($subject. ' '. array_get($_SERVER, 'SERVER_NAME')
 					);
 				});
 		}
@@ -203,7 +203,7 @@ class Forms extends Controller
 
 		$ActualizePrice = $sletat->ActualizePrice($request);
 
-		FormsLog::create(['formname' => 'formsletatOrderFull', 'params' => $request->all(), 'addict' => $ActualizePrice, 'status' => 'Новое']);
+		//FormsLog::create(['formname' => 'formsletatOrderFull', 'params' => $request->all(), 'addict' => $ActualizePrice, 'status' => 'Новое']);
 
 		$emails = $this->getEmailArray();
 		$send = FALSE;
@@ -221,11 +221,11 @@ class Forms extends Controller
 					'lastname' => $request->get('lastname'),
 					'citizenship' => $request->get('citizenship'),
 					'gender' => $request->get('gender'),
-					'birthday' => array_values(array_unique($request->get('birthday'))),
+					'birthday' => $request->get('birthday'),
 					'seriaZagran' => $request->get('seriaZagran'),
 					'numberZagran' => $request->get('numberZagran'),
-					'dateZagran' => array_values(array_unique($request->get('dateZagran'))),
-					'srokZagran' => array_values(array_unique($request->get('srokZagran'))),
+					'dateZagran' => $request->get('dateZagran'),
+					'srokZagran' => $request->get('srokZagran'),
 					'ktoZagran' => $request->get('ktoZagran'),
 
 					'sourceId' => $request->get('sourceId'),
@@ -247,7 +247,7 @@ class Forms extends Controller
 
 		if($send){
 			$saveOrder = $sletat->SaveTourOrder($request);
-			if($saveOrder->isError === 'false'){
+			if($saveOrder->IsError === false){
 				Alert::add('success', 'Заказ помещен в базу туроператора')->flash();
 			}
 			Alert::add('success', 'Форма отправлена')->flash();

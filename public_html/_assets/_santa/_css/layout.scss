@@ -469,6 +469,11 @@ input.daterange,
   height: 320px !important;
 }
 
+.picker__box .picker__select--month,
+.picker__box .picker__select--year{
+  height: 2.5em;
+}
+
 @import "sections/header";
 @import "sections/footer";
 @import "sections/rightColomn";

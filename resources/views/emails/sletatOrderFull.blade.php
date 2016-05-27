@@ -1,12 +1,12 @@
 <h1 style="font:26px/32px Calibri,Helvetica,Arial,sans-serif;">Заявка на покупку тура на сайте santa-avia.ru</h1>
 <h3 style="font:20px/36px Calibri,Helvetica,Arial,sans-serif;">Информация о заказчике:</h3>
-<p style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;"><strong>Имя:</strong> {{ $fio }}</p>
-<p style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;"><strong>Телефон:</strong> {{ $tel }}</p>
-<p style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;"><strong>Email:</strong> {{ $email }}</p>
-<p style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;"><strong>Адрес:</strong> {{ $address }}</p>
-<p style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;"><strong>Паспорт:</strong> {{ $passport }} {{ $passportDate }}</p>
-<p style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;"><strong>Комментарий:</strong> {{ $comment }}</p>
-<p style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;"><strong>Тур {{ $countryName }} - {{ $cityFromName }}:</strong>
+<p style="font:14px/16px Calibri,Helvetica,Arial,sans-serif;"><strong>Имя:</strong> {{ $fio }}</p>
+<p style="font:14px/16px Calibri,Helvetica,Arial,sans-serif;"><strong>Телефон:</strong> {{ $tel }}</p>
+<p style="font:14px/16px Calibri,Helvetica,Arial,sans-serif;"><strong>Email:</strong> {{ $email }}</p>
+<p style="font:14px/16px Calibri,Helvetica,Arial,sans-serif;"><strong>Адрес:</strong> {{ $address }}</p>
+<p style="font:14px/16px Calibri,Helvetica,Arial,sans-serif;"><strong>Паспорт:</strong> {{ $passport }} {{ $passportDate }}</p>
+<p style="font:14px/16px Calibri,Helvetica,Arial,sans-serif;"><strong>Комментарий:</strong> {{ $comment }}</p>
+<p style="font:14px/16px Calibri,Helvetica,Arial,sans-serif;"><strong>Тур {{ $countryName }} - {{ $cityFromName }}:</strong>
     <a href="http://santa-avia.ru/sletat/ActualizePrice?sourceId={{ $sourceId }}&offerId={{ $offerId }}&countryId={{ $countryId }}&requestId={{ $requestId }}">Результат поиска на сайте</a>
 </p>
 <hr/>
@@ -20,12 +20,12 @@
             <td style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;">Фамилия(латиницей): {{ $lastname[$key] }}</td>
             <td style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;">Гражд-во: {{ $citizenship[$key] }}</td>
             <td style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;">Пол: {{ $gender[$key] }}</td>
-            <td style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;">Дата рождения: {{ $birthday[$key] }}</td>
+            <td style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;">Дата рождения: {{ $birthday[$key*2] }}</td>
         </tr>
         <tr>
             <td style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;">Серия и номер загранпаспорта: {{ $seriaZagran[$key] }} {{ $numberZagran[$key] }}</td>
-            <td style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;">Дата выдачи: {{ $dateZagran[$key] }}</td>
-            <td style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;">Срок действия: {{ $srokZagran[$key] }}</td>
+            <td style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;">Дата выдачи: {{ $dateZagran[$key*2] }}</td>
+            <td style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;">Срок действия: {{ $srokZagran[$key*2] }}</td>
             <td colspan="2" style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;">Кем выдан: {{ $ktoZagran[$key] }}</td>
         </tr>
         </tbody>

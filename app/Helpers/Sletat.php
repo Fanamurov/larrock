@@ -452,13 +452,11 @@ class Sletat{
 		//и т.д. прописать
 
 		$this->url = 'http://module.sletat.ru/Main.svc/SaveTourOrder'. $this->login_params .'&searchRequestId='. $searchRequestId
-		.'&sourceId'. $sourceId .'&offerId'. $offerId .'&user'. $user .'&email'. $email .'&phone'. $phone .'&info'. $info
-			.'&countryName'. $countryName .'&cityFromName'. $cityFromName .'&currencyAlias'. $currencyAlias;
-		return back();
-		dd($this->url);
+		.'&sourceId='. $sourceId .'&offerId='. $offerId .'&user='. $user .'&email='. $email .'&phone='. $phone .'&info='. $info
+			.'&countryName='. $countryName .'&cityFromName='. $cityFromName .'&currencyAlias='. $currencyAlias;
+
 		$result = $this->sendRequest();
-		dd($result);
-		return collect($result->SaveTourOrderResult);
+		return $result->SaveTourOrderResult;
 	}
 
 }

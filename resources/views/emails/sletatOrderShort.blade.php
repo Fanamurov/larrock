@@ -1,9 +1,9 @@
 <h1 style="font:26px/32px Calibri,Helvetica,Arial,sans-serif;">Заявка на бронирование тура на сайте santa-avia.ru</h1>
-<p style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;"><strong>Имя:</strong> {{ $name }}</p>
-<p style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;"><strong>Телефон:</strong> {{ $tel }}</p>
-<p style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;"><strong>Email:</strong> {{ $email }}</p>
-<p style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;"><strong>Комментарий:</strong> {{ $comment }}</p>
-<p style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;"><strong>Тур {{ $countryName }} - {{ $cityFromName }}:</strong>
+<p style="font:14px/16px Calibri,Helvetica,Arial,sans-serif;"><strong>Имя:</strong> {{ $name }}</p>
+<p style="font:14px/16px Calibri,Helvetica,Arial,sans-serif;"><strong>Телефон:</strong> {{ $tel }}</p>
+<p style="font:14px/16px Calibri,Helvetica,Arial,sans-serif;"><strong>Email:</strong> {{ $email }}</p>
+<p style="font:14px/16px Calibri,Helvetica,Arial,sans-serif;"><strong>Комментарий:</strong> {{ $comment }}</p>
+<p style="font:14px/16px Calibri,Helvetica,Arial,sans-serif;"><strong>Тур {{ $countryName }} - {{ $cityFromName }}:</strong>
     <a href="http://santa-avia.ru/sletat/ActualizePrice?sourceId={{ $sourceId }}&offerId={{ $offerId }}&countryId={{ $countryId }}&requestId={{ $requestId }}">Результат поиска на сайте</a>
 </p>
 <hr/>

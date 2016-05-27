@@ -269,6 +269,13 @@ class AdminHotelsController extends Controller
 			return back()->withInput($request->except('password'))->withErrors($validator);
 		}
 
+		foreach($request->input('category') as $category){
+			if($category === '0'){
+				Alert::add('error', 'Материалы нельзя помещать в корневой раздел');
+				return back()->withInput()->withErrors(['Материалы нельзя помещать в корневой раздел']);
+			}
+		}
+
 		$data = Hotels::find($id);
 		$data->user_id = $this->current_user->id;
 

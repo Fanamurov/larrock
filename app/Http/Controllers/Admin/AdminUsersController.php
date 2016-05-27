@@ -22,6 +22,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use JsValidator;
+use Mail;
 use Route;
 use Validator;
 use Input;
@@ -104,6 +105,20 @@ class AdminUsersController extends Controller
 		if($user = User::whereEmail($request->input('email'))->first()){
 			$user->attachRole((int) $request->get('role'));
 			Alert::add('success', 'Пользователь '. $request->input('email') .' успешно добавлен')->flash();
+			/** @noinspection PhpVoidFunctionResultUsedInspection */
+			$send = Mail::send('emails.newUser',
+				$request->all(),
+				function($message) use ($request){
+					$message->from('no-reply@santa-avia.ru', env('MAIL_TO_ADMIN_NAME', 'TEST'));
+					$message->to($request->get('email'), env('MAIL_TO_ADMIN_NAME', 'TEST'));
+					$message->subject('На сайте santa-avia.ru вам создана персональная учетная запись '. array_get($_SERVER, 'SERVER_NAME')
+					);
+				});
+			if($send){
+				Alert::add('success', 'Уведомление на почту отправлено')->flash();
+			}else{
+				Alert::add('danger', 'Уведомление отправлено')->flash();
+			}
 		}else{
 			Alert::add('danger', 'Пользователь '. $request->input('email') .' не был добавлен')->flash();
 		}

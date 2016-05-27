@@ -57,7 +57,18 @@
                 @endrole
             </ul>
             <ul class="nav navbar-top-links navbar-right">
-                <li>
+                <li class="dropdown">
+                    <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Помощь <span class="caret"></span></a>
+                    <ul role="menu" class="dropdown-menu">
+                        <li><a href="javascript:void(0);" onclick="startIntro();">Навигация</a></li>
+                        <li><a href="javascript:void(0);" onclick="startIntro();">Добавление тура</a></li>
+                        <li><a href="javascript:void(0);" onclick="startIntro();">Добавление отеля</a></li>
+                        <li><a href="javascript:void(0);" onclick="startIntro();">Добавление блога</a></li>
+                        <li><a href="javascript:void(0);" onclick="startIntro();">Добавление новости</a></li>
+                        <li><a href="javascript:void(0);" onclick="startIntro();">Добавление слайдшоу</a></li>
+                        <li class="help_crm"><a href="javascript:void(0);">CRM</a></li>
+                    </ul>
+                </li>
                     <button type="button" class="btn btn-outline show-please" data-target="search-form" title="Поиск по сайту"><i class="fa fa-search"></i></button>
                     <input type="text" class="form-control search-form hidden" placeholder="Поиск...">
                 </li>

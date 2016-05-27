@@ -26,7 +26,7 @@
         </div>
     </section>
 </div>
-<footer class="container">
+<footer>
     @include('santa.sections.footer')
     @yield('footer')
 </footer>

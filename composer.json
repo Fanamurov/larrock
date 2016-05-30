@@ -31,7 +31,8 @@
         "bican/roles": "^2.1",
         "yaro/soc-share": "^1.0",
         "pingpong/menus": "^2.2",
-        "roumen/feed": "^2.10"
+        "roumen/feed": "^2.10",
+        "fitztrev/query-tracer": "^1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f3383a0f875c1cf367727a18ab1f9559",
-    "content-hash": "cc023841af28fd5ba6f7e76c3131bf4c",
+    "hash": "e22b933c9724eacd4b408abd25bc946e",
+    "content-hash": "95f07f05a629fb08d0cf7d911b837754",
     "packages": [
         {
             "name": "anahkiasen/underscore-php",
@@ -823,6 +823,48 @@
                 "parser"
             ],
             "time": "2014-09-09 13:34:57"
+        },
+        {
+            "name": "fitztrev/query-tracer",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fitztrev/query-tracer.git",
+                "reference": "351fff26cec4962e414864fd9c376923a94ace28"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fitztrev/query-tracer/zipball/351fff26cec4962e414864fd9c376923a94ace28",
+                "reference": "351fff26cec4962e414864fd9c376923a94ace28",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^5.2",
+                "php": ">=5.5.9"
+            },
+            "require-dev": {
+                "illuminate/database": "5.2.*",
+                "orchestra/testbench": "~3.0",
+                "phpunit/phpunit": "~4.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Fitztrev\\QueryTracer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Backtrace database queries",
+            "keywords": [
+                "database",
+                "debug",
+                "eloquent",
+                "laravel"
+            ],
+            "time": "2016-05-22 13:30:05"
         },
         {
             "name": "gloudemans/shoppingcart",

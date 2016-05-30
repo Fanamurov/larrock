@@ -213,6 +213,9 @@ return [
 		/* RSS feed https://github.com/RoumenDamianoff/laravel-feed  */
 		Roumen\Feed\FeedServiceProvider::class,
 
+        /* https://github.com/fitztrev/query-tracer */
+        Fitztrev\QueryTracer\Providers\QueryTracerServiceProvider::class,
+
     ],
 
     /*

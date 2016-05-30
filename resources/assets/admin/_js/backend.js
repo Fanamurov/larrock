@@ -21,6 +21,19 @@ $(document).ready(function(){
         $('.ItemInfo').find('.ibox-content').html(data);
     });
 
+    function strip_tags (input, allowed) {
+
+        // making sure the allowed arg is a string containing only tags in lowercase (<a><b><c>)
+        allowed = (((allowed || '') + '').toLowerCase().match(/<[a-z][a-z0-9]*>/g) || []).join('')
+
+        var tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi
+        var commentsAndPhpTags = /<!--[\s\S]*?-->|<\?(?:php)?[\s\S]*?\?>/gi
+
+        return input.replace(commentsAndPhpTags, '').replace(tags, function ($0, $1) {
+            return allowed.indexOf('<' + $1.toLowerCase() + '>') > -1 ? $0 : ''
+        })
+    }
+
     var editor_height = 300;
     tinymce.init({
         selector: "textarea:not(.not-editor)",
@@ -30,6 +43,13 @@ $(document).ready(function(){
             "searchreplace visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
             "save table contextmenu directionality template paste textcolor importcss wordcount"
         ],
+        paste_preprocess : function(pl, o) {
+            o.content = strip_tags(o.content, '<p><br><a><h1><h2><h3><h4><h5><h6><table><tr><td><th><span><blockquote>');
+        },
+        extended_valid_elements : "table[cellpadding|cellspacing],td[class],tr[class]",
+        paste_remove_styles: true,
+        paste_remove_spans: true,
+        paste_auto_cleanup_on_paste: true,
         theme: 'modern',
         image_advtab: true,
         content_css: "/_assets/_admin/_css/min/bootstrap.min.css",

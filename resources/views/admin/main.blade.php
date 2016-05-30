@@ -9,7 +9,6 @@
     <link href="{{asset('ico.png?6v')}}" rel="shortcut icon" />
     <link rel="stylesheet" href="{{asset('_assets/_admin/_css/min/bootstrap.min.css')}}"/>
     <link rel="stylesheet" href="{{asset('_assets/_admin/_css/min/admin.min.css')}}"/>
-    <link rel="stylesheet" href="/_assets/bower_components/intro.js/minified/introjs.min.css"/>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,400italic,500,500italic,600,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>

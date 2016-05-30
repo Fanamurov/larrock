@@ -92,6 +92,13 @@ class AdminVisaController extends Controller
 	{
 		$validator = Validator::make($request->all(), Component::_valid_construct($this->config['rows']));
 		if($validator->fails()){
+			if($validator->errors()->get('url')){
+				$get_data = Visa::whereUrl($request->input('url'))->first();
+				Alert::add('danger', 'В базе есть незаполненный элемент. 
+				Нажмите на "Создать url" у заголовка и пересохраните материал. Затем можете повторить попытку создания материала. 
+				Материалы нельзя оставлять с заголовком Новый материал')->flash();
+				return Redirect::to('/admin/'. $this->config['name'] .'/'. $get_data->id .'/edit')->withInput();
+			}
 			return back()->withInput($request->except('password'))->withErrors($validator);
 		}
 

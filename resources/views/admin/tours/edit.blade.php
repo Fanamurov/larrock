@@ -22,9 +22,9 @@
                 @foreach($data->get_category as $category)
                     <ul>
                         @if($category->get_parent()->first()->id === 377)
-                            <li>{{ $category->title }}: <a href="/{{ $app['name'] }}/{{ $category->url }}">/{{ $app['name'] }}/{{ $category->url }}</a></li>
+                            <li>{{ $category->title }}: <a href="/{{ $app['name'] }}/vidy-otdykha/{{ $category->url }}">/{{ $app['name'] }}/vidy-otdykha/{{ $category->url }}</a></li>
                         @else
-                            <li>{{ $category->title }}: <a href="/{{ $app['name'] }}/{{ $category->url }}/{{ $data->url }}">/{{ $app['name'] }}/{{ $category->url }}/{{ $data->url }}</a></li>
+                            <li>{{ $category->title }}: <a href="/{{ $app['name'] }}/strany/{{ $category->url }}/{{ $data->url }}">/{{ $app['name'] }}/strany/{{ $category->url }}/{{ $data->url }}</a></li>
                         @endif
                     </ul>
                 @endforeach

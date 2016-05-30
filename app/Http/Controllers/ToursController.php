@@ -106,13 +106,13 @@ class ToursController extends Controller
 		}else{
 			if($resort !== ''){
 				$data['data'] = Category::whereUrl($resort)->whereActive(1)->with(['get_toursActive.get_category'])->first();
-			}else{
+			}elseif($country !== ''){
 				$data['data'] = Cache::remember('search_vid'.$category .'_'. $country .'_'. $resort .'_'. $page, 1440, function() use ($country, $category, $resort) {
-					if($country !== ''){
-						$data['data'] = Category::whereUrl($country)->whereActive(1)->with(['get_toursActive.get_category', 'get_child.get_toursActive.get_category'])->first();
+					$data['data'] = Category::whereUrl($country)->whereActive(1)->with(['get_toursActive.get_category', 'get_child.get_toursActive.get_category'])->first();
 						$get_vid = Category::whereUrl($category)->whereActive(1)->first();
 						$data['data']->description = $get_vid->description;
 						$data['data']->title = $get_vid->title;
+						//dd($data['data']);
 						$filtered = $data['data']->get_toursActive->filter(function ($value, $key) use ($category, $data) {
 							foreach($value->get_category as $category_value){
 								//echo $category_value->url .'-'. $category .'<br/>';
@@ -128,6 +128,7 @@ class ToursController extends Controller
 						foreach($data['data']->get_child as $child){
 							$filtered = $child->get_toursActive->filter(function ($value, $key) use ($category, $data) {
 								foreach($value->get_category as $category_value){
+									//echo $category_value->url .'<br/>';
 									if($category_value->url == $category){
 										//$data['data']->get_toursActive->push = $value;
 										$data['data']->get_toursActive[] = $value;
@@ -139,11 +140,10 @@ class ToursController extends Controller
 							//dd($data['data']->get_toursActive());
 							//$data['data']->get_toursActive[] = $filtered->all();
 						}
-					}else{
-						$data['data'] = Category::whereUrl($category)->whereActive(1)->with(['get_toursActive.get_category', 'get_child.get_toursActive.get_category'])->first();
-					}
+						return $data['data'];
 				});
-				return $data['data'];
+			}else{
+				$data['data'] = Category::whereUrl($category)->whereActive(1)->with(['get_toursActive.get_category', 'get_child.get_toursActive.get_category'])->first();
 			}
 
             if( !$data['data']){

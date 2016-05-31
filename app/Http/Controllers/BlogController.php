@@ -15,7 +15,7 @@ use App\Http\Requests;
 
 class BlogController extends Controller
 {
-	public function __construct(Sletat $sletat)
+	public function __construct()
 	{
 		$this->middleware('loaderModules');
 

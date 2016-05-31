@@ -153,6 +153,7 @@ return [
         /* http://image.intervention.io/getting_started/installation */
         Intervention\Image\ImageServiceProvider::class,
 
+
 		/* https://github.com/romanbican/roles */
 		Bican\Roles\RolesServiceProvider::class,
 
@@ -168,9 +169,6 @@ return [
 
         /* https://packagist.org/packages/rap2hpoutre/laravel-log-viewer */
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
-
-        /* https://packagist.org/packages/mccool/laravel-auto-presenter :: A system for auto-decorating models with presenter objects. */
-        //McCool\LaravelAutoPresenter\AutoPresenterServiceProvider::class,
 
         /* https://packagist.org/packages/proengsoft/laravel-jsvalidation */
         Proengsoft\JsValidation\JsValidationServiceProvider::class,

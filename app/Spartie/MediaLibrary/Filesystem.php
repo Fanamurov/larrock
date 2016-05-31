@@ -1,4 +1,5 @@
 <?php
+
 namespace Spatie\MediaLibrary;
 
 use Illuminate\Contracts\Config\Repository as ConfigRepository;
@@ -8,7 +9,7 @@ use Spatie\MediaLibrary\Events\MediaHasBeenAdded;
 use Spatie\MediaLibrary\Helpers\File;
 use Spatie\MediaLibrary\PathGenerator\PathGeneratorFactory;
 
-class FilesystemMedia extends Filesystem
+class Filesystem
 {
 	/**
 	 * @var \Illuminate\Contracts\Filesystem\Factory
@@ -121,6 +122,8 @@ class FilesystemMedia extends Filesystem
 		$pathGenerator = PathGeneratorFactory::create();
 		$this->filesystem->disk($media->disk)->deleteDirectory($pathGenerator->getPathForConversions($media));
 		$this->filesystem->disk($media->disk)->delete($pathGenerator->getPath($media) .'/'. $media->file_name);
+
+		//$this->filesystem->disk($media->disk)->deleteDirectory($this->getMediaDirectory($media));
 	}
 
 	/**
@@ -150,6 +153,7 @@ class FilesystemMedia extends Filesystem
 	 */
 	public function getMediaDirectory(Media $media, $conversion = false)
 	{
+		dd('1');
 		$pathGenerator = PathGeneratorFactory::create();
 
 		$directory = $conversion ?

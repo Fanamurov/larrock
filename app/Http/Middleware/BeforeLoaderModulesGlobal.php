@@ -42,7 +42,7 @@ class BeforeLoaderModulesGlobal
         {
             $menu->dropdown('Страны', function ($sub) use ($module_strany) {
                 foreach ($module_strany as $key => $item){
-                    $sub->url('/tours/strany/'. $item->url, $item->title);
+                    $sub->url('/tours/strany/'. $item->url, $item->title, ['icon' => 'flag-icon flag-icon-'.$item->url]);
                 }
             });
             $menu->dropdown('Виды отдыха', function ($sub) use ($module_vidy) {

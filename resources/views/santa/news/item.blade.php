@@ -4,6 +4,9 @@
 
 @section('content')
     <div class="pageBlogItem">
+        @role('admin|moderator')
+            <a class="editAdmin" href="/admin/news/{{ $data->id }}/edit">Редактировать новость</a>
+        @endrole
         <div class="col-xs-24">
             {!! Breadcrumbs::render('news.item', $data) !!}
         </div>

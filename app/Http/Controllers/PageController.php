@@ -17,7 +17,7 @@ class PageController extends Controller
 {
 	protected $config;
 
-	public function __construct(Sletat $sletat)
+	public function __construct()
 	{
 		$this->config = \Config::get('components.page');
 		$this->middleware('loaderModules');

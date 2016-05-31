@@ -49,6 +49,22 @@ body{
   }
 }
 
+.editAdmin{
+  padding: 5px 10px;
+  background: red;
+  color: white;
+  border: 1px dotted white;
+  position: absolute;
+  right: 0;
+  top: -25px;
+  z-index: 15;
+  &:hover,
+  &:focus{
+	color: white;
+	background: #ff3c5f;
+  }
+}
+
 body.page, body.page, body.blog{
   .block-module_listStrany{
 	display: none;
@@ -509,6 +525,7 @@ input.daterange,
 @import "../../bower_components/fancybox/source/helpers/jquery.fancybox-buttons.scss";
 @import "../../bower_components/fancybox/source/helpers/jquery.fancybox-thumbs.scss";
 @import "../../bower_components/flag-icon-css/sass/flag-icon.scss";
+@import "tours/flags";
 
 //http://www.flaticon.com/
 @import "../_icons-font/flaticon.scss";

@@ -1,3 +1,4 @@
+
 <section class="mainpage_tabs col-xs-24 row hidden-xs">
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
@@ -6,7 +7,7 @@
         <li role="presentation" class="hidden hidden-xs hidden-sm"><a href="#avia" aria-controls="avia" role="tab" data-toggle="tab">Авиабилеты</a></li>
         <li role="presentation" class="hidden hidden-xs hidden-sm"><a href="#hotels" aria-controls="hotels" role="tab" data-toggle="tab">Отели</a></li>
         <li role="presentation" class="hidden-xs hidden-sm"><a href="#transfers" aria-controls="transfers" role="tab" data-toggle="tab">Трансферы</a></li>
-        <li role="presentation" class="hidden"><a href="#strahovki" aria-controls="strahovki" role="tab" data-toggle="tab">Страховки</a></li>
+        <li role="presentation" class="strahovki hidden-xs hidden-sm"><a href="#strahovki" aria-controls="strahovki" role="tab" data-toggle="tab">Страховки</a></li>
     </ul>
     <!-- Tab panes -->
     <div class="tab-content">
@@ -17,8 +18,7 @@
             @include('santa.modules.forms.siteToursSearch')
         </div>
         <div role="tabpanel" class="tab-pane" id="avia">
-            <!--<script charset="utf-8" src="//www.travelpayouts.com/widgets/f099c6c9e3ea04e03b82d2df6290a130.js?v=743" async defer></script>-->
-            <p></p>
+            <!--<script type="text/javascript" src="http://avia.santa-avia.ru/assets/js/iframe.js"></script>-->
         </div>
         <div role="tabpanel" class="tab-pane" id="hotels">
             <!--<script charset="utf-8" src="//www.travelpayouts.com/widgets/8ca5194b48c7502b0b9aac93d3c05541.js?v=743" async defer></script>-->
@@ -57,6 +57,19 @@
             @endpush
             <div id="kiwitaxi_widget_wrapper"></div>
         </div>
-        <div role="tabpanel" class="tab-pane" id="strahovki">...</div>
+        <div role="tabpanel" class="tab-pane" id="strahovki"></div>
     </div>
 </section>
+
+@push('scripts')
+<script type="text/javascript">
+    $('.strahovki').click(function () {
+        $('#strahovki').append('<iframe ' +
+        'src="https://konti.travel/embed/?key=a000312a038941a6c3421af70486450d7b838d77' +
+        '&successUrl=http://santa-avia.ru/strahovki/success&failUrl=http://santa-avia.ru/strahovki/fail' +
+        '&returnUrl=http://santa-avia.ru' +
+        '&partnerLogo=http://santa-avia.ru/_assets/_santa/_images/logo.png" ' +
+        'width="100%" height="800" style="border:none"></iframe>');
+    })
+    </script>
+@endpush

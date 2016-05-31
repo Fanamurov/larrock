@@ -16,35 +16,27 @@
 ]);*/
 
 //REDIRECTS OLD SITE
-Route::get('/vidy-otdykha/{item?}', function ($item) {
-	return redirect('/tours/vidy-otdykha/'.$item , 301);
-});
-Route::get('/strany/{item}', function ($item) {
-    return redirect('/tours/strany/'.$item , 301);
-});
-Route::get('/resort/{item?}', function ($item) {
-	if($get_category = \App\Models\Category::whereUrl($item)->with('get_parent')->first()){
-		return redirect('/tours/strany/'.$get_category->get_parent->first()->url .'/'. $item , 301);
-	}else{
-		abort(404, 'Такой страницы больше нет');
-	}
-});
-Route::get('/articles', function () {
-	return redirect('/blog', 301);
-});
-Route::get('/articles/{item}', function ($item) {
-	if($get_item = \App\Models\Blog::whereUrl($item)->with('get_category')->first()){
-		return redirect('/blog/'.$get_item->get_category->url .'/'. $item , 301);
-	}else{
-		abort(404, 'Такой страницы больше нет');
-	}
-});
-Route::get('/goryashchie-tury', function () {
-	return redirect('/sletat', 301);
-});
-Route::get('/o-kompanii/novosti', function () {
-    return redirect('/news', 301);
-});
+Route::get('/vidy-otdykha/{item?}', [
+	'as' => 'redirect.vidy', 'uses' => 'OldSiteController@redirectVidy'
+]);
+Route::get('/strany/{item}', [
+	'as' => 'redirect.strany', 'uses' => 'OldSiteController@redirectStrany'
+]);
+Route::get('/resort/{item?}', [
+	'as' => 'redirect.resort', 'uses' => 'OldSiteController@redirectResort'
+]);
+Route::get('/articles', [
+	'as' => 'redirect.article', 'uses' => 'OldSiteController@redirectArticles'
+]);
+Route::get('/articles/{item}', [
+	'as' => 'redirect.article.item', 'uses' => 'OldSiteController@redirectArticle'
+]);
+Route::get('/goryashchie-tury', [
+	'as' => 'redirect.sletat', 'uses' => 'OldSiteController@redirectSletat'
+]);
+Route::get('/o-kompanii/novosti', [
+	'as' => 'redirect.news', 'uses' => 'OldSiteController@redirectNews'
+]);
 //END REDIRECTS OLD SITE
 
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->middleware('level:2');
@@ -114,10 +106,6 @@ Route::get('/tours/vidy-otdykha/{category}/{country?}/{resort?}', [
 	'as' => 'tours.vidy-item', 'uses' => 'ToursController@getVidy'
 ]);
 
-/*Route::get('/tours/{category}/{child}', [
-	'as' => 'tours.category.child', 'uses' => 'ToursController@getCountry'
-]);*/
-
 Route::get('/tours/{category}/{item}', [
 	'as' => 'tours.category.item', 'uses' => 'ToursController@getItem'
 ]);
@@ -185,6 +173,13 @@ Route::post('/forms/sletatOrderFull', [
 //Ajax
 Route::post('/ajax/sharingCounter', [
 	'as' => 'ajax.sharingCounter', 'uses' => 'Ajax@sharingCounter'
+]);
+
+Route::get('/strahovki/success', [
+	'as' => 'strahovki.success', 'uses' => 'StrahovkiController@success'
+]);
+Route::get('/strahovki/fail', [
+	'as' => 'strahovki.fail', 'uses' => 'StrahovkiController@fail'
 ]);
 
 // Authentication routes...

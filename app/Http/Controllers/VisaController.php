@@ -12,7 +12,7 @@ use App\Http\Requests;
 
 class VisaController extends Controller
 {
-	public function __construct(Sletat $sletat)
+	public function __construct()
 	{
 		$this->middleware('loaderModules');
 	}

@@ -4,6 +4,9 @@
 
 @section('content')
     <div class="toursPageItem row">
+        @role('admin|moderator')
+            <a class="editAdmin" href="/admin/hotels/{{ $data->id }}/edit">Редактировать отель</a>
+        @endrole
         <div class="col-xs-24">
             {!! Breadcrumbs::render('hotels.item', $data) !!}
         </div>

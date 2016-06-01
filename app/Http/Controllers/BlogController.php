@@ -64,13 +64,14 @@ class BlogController extends Controller
 
 	public function getItem(ContentPlugins $contentPlugins, $category, $item)
 	{
-        //Cache::forget(md5('blog_item_'. $item));
+        Cache::forget(md5('blog_item_'. $item));
 		$data = Cache::remember(md5('blog_item_'. $item), 1440, function() use ($item, $category, $contentPlugins) {
 			$data['data'] = Blog::whereUrl($item)->first();
 			$data['category'] = Category::whereUrl($category)->whereActive(1)->first();
 			$data['categorys'] = Category::whereType('blog')->whereActive(1)->whereLevel(1)->with(['get_blogActive'])->get();
             $data['data']['images'] = $data['data']->getMedia('images');
             $data['data'] = $contentPlugins->renderGallery($data['data']);
+            $data['data'] = $contentPlugins->renderTour($data['data']);
 			return $data;
 		});
 

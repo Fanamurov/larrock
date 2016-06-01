@@ -4,7 +4,7 @@ return [
 	'name' => 'blog',
 	'title' => 'Блог',
 	'description' => 'Страницы с привязкой к определенным разделам',
-	'table_content' => 'feed',
+	'table_content' => 'blog',
 	'rows' => [
 		'title' => [
 			'title' => 'Заголовок',

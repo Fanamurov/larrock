@@ -54,7 +54,8 @@
                     <div class="input-group">
                         <input type="email" name="email-to-subscribe" class="form-control" placeholder="Ваш email">
                         <span class="input-group-btn input-group-btn-subscribe">
-                            <button class="btn btn-default" type="button">Подписаться на рассылку</button>
+                            <button class="btn btn-default hidden-xs hidden-sm" type="button">Подписаться на рассылку</button>
+                            <button class="btn btn-default hidden-md hidden-lg" type="button">Подписаться</button>
                         </span>
                     </div>
                 </form>

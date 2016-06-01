@@ -33,5 +33,9 @@
         </div>
 
         <div class="Pagination catalogPagination">{!! $paginator->render() !!}</div>
+
+        <div class="col-xs-24">
+            @include('santa.modules.forms.podbor')
+        </div>
     </div>
 @endsection

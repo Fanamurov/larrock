@@ -190,9 +190,6 @@ class AdminAjax extends Controller
 			if(Input::get('table') === 'tours' && Tours::whereUrl($url)->first(['url'])){
 				$url = $url .'-'. mt_rand(2, 999);
 			}
-			if(Input::get('table') === 'feed' && Feed::whereUrl($url)->first(['url'])){
-				$url = $url .'-'. mt_rand(2, 999);
-			}
 			if(Input::get('table') === 'page' && Page::whereUrl($url)->first(['url'])){
 				$url = $url .'-'. mt_rand(2, 999);
 			}

@@ -391,10 +391,15 @@ label{
 	padding: 0 15px;
   }
   a{
-	text-decoration: none;
 	line-height: 21px;
 	display: inline-block;
 	padding: 0 15px;
+	color: #2b2b2b;
+	text-decoration: underline;
+	&:hover,
+	&:focus{
+	  color: $color_red;
+	}
   }
   .title-header a{
 	@media (max-width: 500px) {

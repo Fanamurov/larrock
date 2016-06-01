@@ -5,6 +5,7 @@ namespace App\Helpers;
 use App\Helpers\ContentPlugins\ContentPluginsInterface;
 use App\Models\Seo;
 use App\Models\Templates;
+use App\Models\Tours;
 use Request;
 use Illuminate\Support\Arr;
 use Spatie\MediaLibrary\Media;
@@ -157,6 +158,7 @@ class ContentPlugins implements ContentPluginsInterface
 		$re = "/{Фото\\[(?P<type>\\w+)]=(?P<name>\\w+)}/";
 		preg_match_all($re, $modelResult->description, $matches);
 		foreach($matches['type'] as $key => $match){
+			$name = $matches['name'][$key];
 			//Собираем изображения под каждую найденную галерею
 			$matched_images['images'] = [];
 			foreach($modelResult['images'] as $image){
@@ -164,7 +166,20 @@ class ContentPlugins implements ContentPluginsInterface
 					$matched_images['images'][] = $image;
 				}
 			}
-			$modelResult->description = preg_replace('/{Фото\\[[a-zA-z]*]=[a-zA-Z0-9]*}/', view('santa.plugins.'. $match, $matched_images)->render(), $modelResult->description);
+			$modelResult->description = preg_replace('/{Фото\\[[a-zA-z]*]='.$name.'}/', view('santa.plugins.photo-'. $match, $matched_images)->render(), $modelResult->description);
+		}
+		return $modelResult;
+	}
+
+	public function renderTour($modelResult)
+	{
+		$re = "/{Тур\\[(?P<type>\\w+)]=(?P<name>[a-z0-9-]*)}/";
+		preg_match_all($re, $modelResult->description, $matches);
+		foreach($matches['type'] as $key => $match){
+			$name = $matches['name'][$key];
+			//Достаем тур по url
+			$get_tour['data'] = Tours::whereUrl($name)->whereActive(1)->with(['getFirstImage'])->first();
+			$modelResult->description = preg_replace('/{Тур\\[[a-zA-z]*]='.$name.'}/', view('santa.plugins.tour-'. $match, $get_tour)->render(), $modelResult->description);
 		}
 		return $modelResult;
 	}

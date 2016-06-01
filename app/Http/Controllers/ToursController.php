@@ -309,6 +309,9 @@ class ToursController extends Controller
 			return $this->getItem($category, '', $item);
 		}
 
+		\View::share('selected_resort', $data['data']->id);
+		\View::share('selected_country', $data['data']->get_parent->url);
+
 		$data['other_resourts'] = Category::whereParent($data['data']->parent)->where('id', '!=', $data['data']->id)->get();
 
 		$data['data']['images'] = Cache::remember('ResourtImages'. $data['data']->id, 60, function() use ($data) {
@@ -372,6 +375,7 @@ class ToursController extends Controller
 				foreach($matches[0] as $value){
 					$cost = explode('$', $value);
 					$data['data']->description = preg_replace("/>$cost[0]*\\$/m", '>'.$this->Cbrf($cost[0]) .' руб.', $data['data']->description);
+					$data['data']->description = preg_replace("/ $cost[0]*\\$/m", ' '.$this->Cbrf($cost[0]) .' руб.', $data['data']->description);
 				}
 			}
 
@@ -395,9 +399,10 @@ class ToursController extends Controller
 			$get_category = $data->get_category->first();
 			if($get_category->level !== 1){
 				$parent = $get_category->get_parent;
-				if($parent->level !== 1){
+				if($parent->parent === 308){
 					$grandpa = $parent->get_parent;
 					$breadcrumbs->push($grandpa->title);
+					$breadcrumbs->push($parent->title, '/tours/'. $grandpa->url .'/'. $parent->url);
 					$url = '/tours/'. $grandpa->url .'/'. $parent->url;
 				}else{
 					$breadcrumbs->push($parent->title);
@@ -474,13 +479,13 @@ class ToursController extends Controller
 			}
 			return redirect('/tours/vidy-otdykha/'. $get_vid->url);
 		}
-		if($request->get('country')){
-			$get_country = Category::whereUrl($request->get('country'))->first();
-			return redirect('/tours/vidy-otdykha/all/'. $get_country->url);
-		}
 		if($request->get('resort')){
 			$get_resort = Category::whereId($request->get('resort'))->with(['get_parent'])->first();
 			return redirect('/tours/strany/'. $get_resort->get_parent->url .'/'. $get_resort->url);
+		}
+		if($request->get('country')){
+			$get_country = Category::whereUrl($request->get('country'))->first();
+			return redirect('/tours/vidy-otdykha/all/'. $get_country->url);
 		}
 		return back();
 	}

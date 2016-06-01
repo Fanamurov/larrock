@@ -174,6 +174,9 @@ Route::post('/forms/sletatOrderFull', [
 Route::post('/ajax/sharingCounter', [
 	'as' => 'ajax.sharingCounter', 'uses' => 'Ajax@sharingCounter'
 ]);
+Route::post('/ajax/getResortsByCountry', [
+	'as' => 'ajax.getResortsByCountry', 'uses' => 'Ajax@getResortsByCountry'
+]);
 
 Route::get('/strahovki/success', [
 	'as' => 'strahovki.success', 'uses' => 'StrahovkiController@success'

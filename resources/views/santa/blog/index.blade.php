@@ -21,6 +21,7 @@
                     </div>
                     <div class="col-xs-24">
                         <select name="category_blog" class="form-control" id="category_blog">
+                            <option value="/blog">Все разделы</option>
                             @foreach($category as $category_value)
                                 <option value="/blog/{{ $category_value->url }}">{{ $category_value->title }} ({{count($category_value->get_blogActive)}})</option>
                             @endforeach

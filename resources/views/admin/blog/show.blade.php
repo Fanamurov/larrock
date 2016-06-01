@@ -76,7 +76,7 @@
                             @endif
                         @endforeach
                         <td>
-                            <a href="/admin/{{ $app['name'] }}/{{ $data_value->id }}">
+                            <a href="/admin/{{ $app['name'] }}/{{ $data_value->id }}/edit">
                                 @if($data_value->getFirstMediaUrl('images', '110x110'))
                                     <img src="{{ $data_value->getFirstMediaUrl('images', '110x110') }}">
                                 @else
@@ -85,7 +85,7 @@
                             </a>
                         </td>
                         <td>
-                            <a class="h4" href="/admin/{{ $app['name'] }}/{{ $data_value->id }}">
+                            <a class="h4" href="/admin/{{ $app['name'] }}/{{ $data_value->id }}/edit">
                                 {{ $data_value->title }}
                             </a>
                             <p title="{{ $data_value->updated_at }}">

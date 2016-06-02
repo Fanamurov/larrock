@@ -1,4 +1,4 @@
-<form action="/forms/sletatOrderFull" method="post" id="form-sletatOrderFull" class="form-sletatOrderFull">
+<form action="/forms/sletatOrderFull" method="post" id="form-sletatOrderFull" class="form-sletatOrderFull" onsubmit="yaCounter27992118.reachGoal('SletatOrder'); return true;">
     <p class="h1">Отправить заявку на приобретение тура</p>
     <p class="h2">Туристы:</p>
     @for($i=0; $i < $people+$kids; $i++)

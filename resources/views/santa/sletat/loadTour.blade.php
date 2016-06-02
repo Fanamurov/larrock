@@ -87,12 +87,12 @@
                         <div class="col-sm-12">
                             <button type="button" class="btn btn-default btn-block btn-show-online"
                                     data-toggle="collapse" data-target="#collapsesletatOrderFull" aria-expanded="true"
-                                    aria-controls="collapsesletatOrderFull">Купить онлайн</button>
+                                    aria-controls="collapsesletatOrderFull" onclick="yaCounter27992118.reachGoal('SletatShowForm'); return true;">Купить онлайн</button>
                         </div>
                         <div class="col-sm-12">
                             <button type="button" class="btn btn-default btn-block btn-show-office"
                                     data-toggle="collapse" data-target="#collapsesletatOrderShort" aria-expanded="true"
-                                    aria-controls="collapsesletatOrderShort">Купить в офисе</button>
+                                    aria-controls="collapsesletatOrderShort" onclick="yaCounter27992118.reachGoal('SletatShowForm'); return true;">Купить в офисе</button>
                         </div>
                     </div>
                 </div>

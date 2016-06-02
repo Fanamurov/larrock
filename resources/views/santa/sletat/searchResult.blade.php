@@ -76,7 +76,7 @@
                         <input type="hidden" name="offerId" value="{{ $item[0] }}">
                         <input type="hidden" name="countryId" value="{{ $item[30] }}">
                         <input type="hidden" name="requestId" value="{{ $GetTours['requestId'] }}">
-                        <button type="submit" class="btn btn-default btn-block">Подробнее</button>
+                        <button type="submit" class="btn btn-default btn-block" onclick="yaCounter27992118.reachGoal('SletatDescription'); return true;">Подробнее</button>
                     </form>
                 </div>
                 <div class="clearfix"></div><br/><br/>

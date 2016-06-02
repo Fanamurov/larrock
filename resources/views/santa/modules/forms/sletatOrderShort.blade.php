@@ -1,4 +1,4 @@
-<form action="/forms/sletatOrderShort" method="post" id="form-sletatOrderShort" class="form-sletatOrderShort">
+<form action="/forms/sletatOrderShort" method="post" id="form-sletatOrderShort" class="form-sletatOrderShort" onsubmit="yaCounter27992118.reachGoal('SletatOrder'); return true;">
     <p class="h1">Отправить заявку на бронирование тура</p>
     <div class="row">
         <div class="col-sm-12">

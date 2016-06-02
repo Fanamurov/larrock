@@ -1,4 +1,4 @@
-<div class="row row-zakazTura col-xs-24" id="row-zakazTura">
+<div class="row row-zakazTura col-xs-24" id="row-zakazTura" onsubmit="yaCounter27992118.reachGoal('ZakazTura'); return true;">
     <div class="col-sm-12">
         <form id="form-zakaz" class="form-zakaz" method="post" action="/forms/zakazTura">
             <p class="h1">Заказ тура</p>

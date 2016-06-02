@@ -1,4 +1,4 @@
-<form id="form-searchTourShort" class="form-searchTour form-searchTourShort" method="get" action="/sletat">
+<form id="form-searchTourShort" class="form-searchTour form-searchTourShort" method="get" action="/sletat" onsubmit="yaCounter27992118.reachGoal('ShortSearchSletat'); return true;">
     <div class="row">
         <div class="col-xs-12 col-sm-5">
             <div class="form-group">

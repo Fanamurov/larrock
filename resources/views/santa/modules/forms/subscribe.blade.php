@@ -1,5 +1,5 @@
 <form id="form-subscribe" class="form-subscribe hidden-xs hidden-sm" method="post" name="mc-embedded-subscribe-form"
-      action="//santa-avia.us4.list-manage.com/subscribe/post?u=93b8240d924f6cc1bb2600c52&amp;id=5450a06f28">
+      action="//santa-avia.us4.list-manage.com/subscribe/post?u=93b8240d924f6cc1bb2600c52&amp;id=5450a06f28" onsubmit="yaCounter27992118.reachGoal('SubscribeList'); return true;">
     <div class="help">
         <p class="h4">Подпишитесь на рассылку и получите подарок</p>
         <ul>

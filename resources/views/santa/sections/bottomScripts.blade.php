@@ -6,16 +6,12 @@
 <!-- Mainly scripts -->
 <script src="/_assets/bower_components/matchHeight/jquery.matchHeight.js" type="text/javascript"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-<script src="/_assets/bower_components/selectize/dist/js/standalone/selectize.min.js"></script>
 <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript">
     var root = '{{url('/')}}';
 </script>
-<script src="{{asset('_assets/_santa/_js/santa_core.min.js')}}"></script>
-<script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
+<script src="/_assets/_santa/_js/santa_core.min.js"></script>
 @if(isset($validator)) {!! $validator !!} @endif
-<script src="/_assets/bower_components/jquery-validation/dist/jquery.validate.min.js"></script>
-<script src="/_assets/bower_components/jquery-validation/dist/additional-methods.min.js"></script>
 <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
 
 @if(App::environment() !== 'local')
@@ -57,6 +53,7 @@
 
         <script type="text/javascript">
             /* init Call Service */
+            /*
             var CallSiteId = "f48bce31ae6868ac9906030623b40fa4";
             var CallBaseUrl = "//uptocall.com";
             (function() {
@@ -68,7 +65,7 @@
                 var sc = document.getElementsByTagName("script")[0];
                 if (sc) sc.parentNode.insertBefore(lt, sc);
                 else document.documentElement.firstChild.appendChild(lt);
-            })();
+            })();*/
         </script>
 
     <script type="text/javascript">(window.Image ? (new Image()) : document.createElement('img')).src = location.protocol + '//vk.com/rtrg?r=sXMlCvbczZH2HR9yylv5qbaxpIP7G4KSep35gT8Pme59Fg81A/FwozpoG3bGhq*v7KI6D/DAME2iQ7gl1wpwy0EZ0wU3eO5GKSrtDA0KNd5yAR4JVF9S6bT4rvpQ41L2H3wsGDm3NrMW4mwP*8MJr9vUgYenIyd1WpYCdr5gF7o-';</script>

@@ -114,6 +114,11 @@ gulp.task('javascript_front', function() {
             './public_html/_assets/bower_components/fancybox/source/helpers/jquery.fancybox-thumbs.js',
             './public_html/_assets/bower_components/fancybox/source/helpers/jquery.fancybox-media.js',
             './public_html/_assets/bower_components/fancybox/source/helpers/jquery.fancybox-buttons.js',
+            './public_html/_assets/bower_components/jquery-validation/dist/jquery.validate.min.js',
+            './public_html/_assets/bower_components/jquery-validation/dist/jquery.validate.min.js',
+            './public_html/_assets/bower_components/jquery-validation/dist/additional-methods.min.js"',
+            './public_html/vendor/jsvalidation/js/jsvalidation.js"',
+            './public_html/_assets/bower_components/selectize/dist/js/standalone/selectize.min.js"',
             './resources/assets/santa/_js/frontend.js'
         ])
         //.pipe(uglify())

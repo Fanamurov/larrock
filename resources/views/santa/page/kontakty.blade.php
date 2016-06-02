@@ -1,5 +1,5 @@
 @extends('santa.main')
-@section('title') {{ $data->get_seo->seo_title or $data->title }} @endsection
+@section('title') Контакты туристической компании «Санта Авиа» г. Хабаровск, ул. Шеронова, 115 тел:+7 (4212) 45-99-05 @endsection
 
 @section('content')
     <div class="page-{{ $data->url }} pagePage">

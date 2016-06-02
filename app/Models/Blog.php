@@ -63,8 +63,12 @@ class Blog extends Model implements HasMediaConversions
             ->performOnCollections('images');
 
         $this->addMediaConversion('250x250')
-            ->setManipulations(['w' => 250, 'h' => 250])
+            ->setManipulations(['w' => 250, 'h' => 250, 'fit' => 'crop'])
             ->performOnCollections('images');
+		
+		$this->addMediaConversion('250x130crop')
+			->setManipulations(['w' => 250, 'h' => 130, 'fit' => 'crop'])
+			->performOnCollections('images');
     }
 
     protected $table = 'blog';

@@ -65,6 +65,10 @@ class News extends Model implements HasMediaConversions
         $this->addMediaConversion('250x250')
             ->setManipulations(['w' => 250, 'h' => 250])
             ->performOnCollections('images');
+
+		$this->addMediaConversion('250x130crop')
+			->setManipulations(['w' => 250, 'h' => 130, 'fit' => 'crop'])
+			->performOnCollections('images');
     }
 
     protected $table = 'news';

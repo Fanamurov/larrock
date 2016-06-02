@@ -6,7 +6,6 @@ use App\Helpers\ContentPlugins;
 use App\Helpers\Sletat;
 use App\Models\Blog;
 use App\Models\Category;
-use App\Models\Feed;
 use Breadcrumbs;
 use Cache;
 use Illuminate\Http\Request;

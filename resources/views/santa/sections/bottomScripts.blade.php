@@ -55,21 +55,22 @@
         <noscript><div><img src="https://mc.yandex.ru/watch/27992118" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
         <!-- /Yandex.Metrika counter -->
 
-    <script type="text/javascript">
-        /* init Call Service */
-        var CallSiteId = 'f48bce31ae6868ac9906030623b40fa4';
-        var CallBaseUrl = '//uptocall.com';
-        (function() {
-            var lt = document.createElement('script');
-            lt.type ='text/javascript';
-            lt.charset = 'utf-8';
-            lt.async = true;
-            lt.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + CallBaseUrl + '/widget/client.js';
-            var sc = document.getElementsByTagName('script')[0];
-            if (sc) sc.parentNode.insertBefore(lt, sc);
-            else document.documentElement.firstChild.appendChild(lt);
-        })();
-    </script>
+        <script type="text/javascript">
+            /* init Call Service */
+            var CallSiteId = "f48bce31ae6868ac9906030623b40fa4";
+            var CallBaseUrl = "//uptocall.com";
+            (function() {
+                var lt = document.createElement("script");
+                lt.type ="text/javascript";
+                lt.charset = "utf-8";
+                lt.async = true;
+                lt.src = (document.location.protocol == "https:" ? "https:" : "http:") + CallBaseUrl + "/widget/client.js";
+                var sc = document.getElementsByTagName("script")[0];
+                if (sc) sc.parentNode.insertBefore(lt, sc);
+                else document.documentElement.firstChild.appendChild(lt);
+            })();
+        </script>
+
     <script type="text/javascript">(window.Image ? (new Image()) : document.createElement('img')).src = location.protocol + '//vk.com/rtrg?r=sXMlCvbczZH2HR9yylv5qbaxpIP7G4KSep35gT8Pme59Fg81A/FwozpoG3bGhq*v7KI6D/DAME2iQ7gl1wpwy0EZ0wU3eO5GKSrtDA0KNd5yAR4JVF9S6bT4rvpQ41L2H3wsGDm3NrMW4mwP*8MJr9vUgYenIyd1WpYCdr5gF7o-';</script>
 
     <script>

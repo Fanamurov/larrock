@@ -78,9 +78,6 @@ Route::get('/news/{item}', [
 ]);
 
 //TOURS
-/*Route::get('/tours/all', [
-	'as' => 'tours.all', 'uses' => 'ToursController@getAllTours'
-]);*/
 Route::post('/tours/search', [
 	'as' => 'tours.search', 'uses' => 'ToursController@search'
 ]);
@@ -88,7 +85,7 @@ Route::get('/tours/strany', [
 	'as' => 'tours.strany', 'uses' => 'ToursController@getStrany'
 ]);
 Route::get('/tours/strany/{category}', [
-	'as' => 'tours.strany', 'uses' => 'ToursController@getCategory'
+	'as' => 'tours.strany', 'uses' => 'ToursController@getCountry'
 ]);
 Route::get('/tours/strany/{category}/{item}', [
 	'as' => 'tours.resourt', 'uses' => 'ToursController@getResourt'

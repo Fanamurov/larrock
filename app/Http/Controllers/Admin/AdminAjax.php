@@ -6,7 +6,6 @@ use App\Helpers\ContentPlugins;
 use App\Models\Blocks;
 use App\Models\Blog;
 use App\Models\Category;
-use App\Models\Feed;
 use App\Models\News;
 use App\Models\Page;
 use App\Models\Slideshow;

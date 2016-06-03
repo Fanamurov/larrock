@@ -11,6 +11,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Arr;
 use Mail;
+use Validator;
 
 class Forms extends Controller
 {
@@ -49,6 +50,17 @@ class Forms extends Controller
 			return back();
 		}
 
+		$validator = Validator::make($request->all(), [
+			'name' => 'required|max:255',
+			'contact' => 'required|max:255',
+			'comment' => 'required',
+		]);
+
+		if ($validator->fails()) {
+			Alert::add('danger', 'Ошибка при заполнении формы, проверьте данные')->flash();
+			return back()->withErrors($validator)->withInput();
+		}
+
 		FormsLog::create(['formname' => 'contact', 'params' => $request->all(), 'status' => 'Новое']);
 		$send = $this->sender($request, 'Отправлена форма заявки', 'emails.contact');
 		
@@ -67,6 +79,22 @@ class Forms extends Controller
 			return back();
 		}
 
+		$validator = Validator::make($request->all(), [
+			'name' => 'required|max:255',
+			'address' => 'required',
+			'fio' => 'required',
+			'place' => 'required',
+			'tel' => 'required',
+			'email' => 'required|email',
+			'peoples' => 'required',
+			'peoples_active' => 'required'
+		]);
+
+		if ($validator->fails()) {
+			Alert::add('danger', 'Ошибка при заполнении формы, проверьте данные')->flash();
+			return back()->withErrors($validator)->withInput();
+		}
+
 		FormsLog::create(['formname' => 'corporate', 'params' => $request->all(), 'status' => 'Новое']);
 		$send = $this->sender($request, 'Отправлена анкета корпоративного обслуживания', 'emails.corporate');
 
@@ -83,6 +111,18 @@ class Forms extends Controller
 		if(env('MAIL_STOP') === 'true'){
 			Alert::add('danger', 'Отправка форм отключена')->flash();
 			return back();
+		}
+
+		$validator = Validator::make($request->all(), [
+			'name' => 'required|max:255',
+			'tel' => 'required|max:255',
+			'email' => 'required|max:255|email',
+			'date' => 'required|max:255'
+		]);
+
+		if ($validator->fails()) {
+			Alert::add('danger', 'Ошибка при заполнении формы, проверьте данные')->flash();
+			return back()->withErrors($validator)->withInput();
 		}
 		
 		FormsLog::create(['formname' => 'zakazTura', 'params' => $request->all(), 'status' => 'Новое', 'tour_id' => $request->get('tour_id')]);
@@ -103,6 +143,21 @@ class Forms extends Controller
             return back();
         }
 
+		$validator = Validator::make($request->all(), [
+			'name' => 'required|max:255',
+			'tel' => 'required|max:255',
+			'email' => 'required|max:255|email',
+			'city' => 'required|max:155',
+			'adult' => 'required|max:15',
+			'kids' => 'required|max:15',
+			'baby' => 'required|max:15',
+		]);
+
+		if ($validator->fails()) {
+			Alert::add('danger', 'Ошибка при заполнении формы, проверьте данные')->flash();
+			return back()->withErrors($validator)->withInput();
+		}
+
         FormsLog::create(['formname' => 'zakazHotel', 'params' => $request->all(), 'status' => 'Новое', 'hotel_id' => $request->get('hotel_id')]);
 		$send = $this->sender($request, 'Отправлена форма бронирования отеля', 'emails.zakazHotel');
 
@@ -121,6 +176,17 @@ class Forms extends Controller
 			return back();
 		}
 
+		$validator = Validator::make($request->all(), [
+			'tel' => 'required|max:255',
+			'email' => 'required|max:255|email',
+			'summa' => 'required|max:255'
+		]);
+
+		if ($validator->fails()) {
+			Alert::add('danger', 'Ошибка при заполнении формы, проверьте данные')->flash();
+			return back()->withErrors($validator)->withInput();
+		}
+
 		FormsLog::create(['formname' => 'zakazSert', 'params' => $request->all(), 'status' => 'Новое']);
 		$send = $this->sender($request, 'Отправлена форма заказа сертификата', 'emails.zakazSert');
 
@@ -137,6 +203,20 @@ class Forms extends Controller
 		if(env('MAIL_STOP') === 'true'){
 			Alert::add('danger', 'Отправка форм отключена')->flash();
 			return back();
+		}
+
+		$validator = Validator::make($request->all(), [
+			'name' => 'required|max:255',
+			'tel' => 'required|max:255',
+			'email' => 'required|max:255|email',
+			'country' => 'required|max:255',
+			'date' => 'required|max:255',
+			'time' => 'required|max:255'
+		]);
+
+		if ($validator->fails()) {
+			Alert::add('danger', 'Ошибка при заполнении формы, проверьте данные')->flash();
+			return back()->withErrors($validator)->withInput();
 		}
 
 		FormsLog::create(['formname' => 'formPodbor', 'params' => $request->all(), 'status' => 'Новое']);
@@ -160,6 +240,17 @@ class Forms extends Controller
 		$ActualizePrice = $sletat->ActualizePrice($request);
 
 		FormsLog::create(['formname' => 'formsletatOrderShort', 'params' => $request->all(), 'addict' => $ActualizePrice, 'status' => 'Новое']);
+
+		$validator = Validator::make($request->all(), [
+			'name' => 'required|max:255',
+			'tel' => 'required|max:255',
+			'email' => 'required|max:255|email'
+		]);
+
+		if ($validator->fails()) {
+			Alert::add('danger', 'Ошибка при заполнении формы, проверьте данные')->flash();
+			return back()->withErrors($validator)->withInput();
+		}
 
 		$emails = $this->getEmailArray();
 		$send = FALSE;
@@ -203,7 +294,22 @@ class Forms extends Controller
 
 		$ActualizePrice = $sletat->ActualizePrice($request);
 
-		//FormsLog::create(['formname' => 'formsletatOrderFull', 'params' => $request->all(), 'addict' => $ActualizePrice, 'status' => 'Новое']);
+		FormsLog::create(['formname' => 'formsletatOrderFull', 'params' => $request->all(), 'addict' => $ActualizePrice, 'status' => 'Новое']);
+
+		$validator = Validator::make($request->all(), [
+			'fio' => 'required|max:255',
+			'address' => 'required',
+			'tel' => 'required|max:255',
+			'email' => 'required|max:255|email',
+			'passport' => 'required|max:255',
+			'passportDate' => 'required',
+			'oferta' => 'required'
+		]);
+
+		if ($validator->fails()) {
+			Alert::add('danger', 'Ошибка при заполнении формы, проверьте данные')->flash();
+			return back()->withErrors($validator)->withInput();
+		}
 
 		$emails = $this->getEmailArray();
 		$send = FALSE;

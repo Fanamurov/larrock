@@ -1,5 +1,6 @@
 <div class="toursBlockTour toursBlockTourSletat col-xs-8">
-    <div class="link_block_this col-xs-22 col-xs-offset-2" data-href="/sletat?cityFromId=1286&countryId=29&s_adults=2&s_nightsMin=1&s_nightsMax=28">
+    <div class="link_block_this col-xs-22 col-xs-offset-2" data-href="/sletat?cityFromId=1286&countryId=29&s_adults=2&s_nightsMin=1&s_nightsMax=28"
+         onclick="yaCounter27992118.reachGoal('blockTourSletat'); return true;">
         <h4 class="text-center">
             <a href="#">{{ $item[7] }} {{ $item[8] }} ({{ $item[19] }})</a>
         </h4>

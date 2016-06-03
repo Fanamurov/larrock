@@ -43,6 +43,11 @@ class OldSiteController extends Controller
 		return redirect('/blog', 301);
 	}
 
+	public function redirectNewsnews($item)
+	{
+		return redirect('/news/'. $item, 301);
+	}
+
 	public function redirectSletat()
 	{
 		return redirect('/sletat', 301);

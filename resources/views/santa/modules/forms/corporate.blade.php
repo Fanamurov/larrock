@@ -1,4 +1,4 @@
-<form id="form-corporate" class="form-corporate" method="post" action="/forms/corporate">
+<form id="form-corporate" class="form-corporate" method="post" action="/forms/corporate" onsubmit="yaCounter27992118.reachGoal('Corporate'); return true;">
     <p class="h2">Анкета для заключения договора</p>
     <p class="h4">Информация о компании:</p>
     <div class="row">

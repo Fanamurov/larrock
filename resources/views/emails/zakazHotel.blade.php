@@ -9,5 +9,5 @@
 <p style="font:14px/16px Calibri,Helvetica,Arial,sans-serif;"><strong>Взрослых:</strong> {{ $adult }}</p>
 <p style="font:14px/16px Calibri,Helvetica,Arial,sans-serif;"><strong>Детей:</strong> {{ $kids }}</p>
 <p style="font:14px/16px Calibri,Helvetica,Arial,sans-serif;"><strong>Младенцев:</strong> {{ $baby }}</p>
-<p style="font:14px/16px Calibri,Helvetica,Arial,sans-serif;"><strong>Страница отеля:</strong> {{ $hotel_name }} <a href="{{ $hotel_url }}">{{ $hotel_url }}</a></p>
+<p style="font:14px/16px Calibri,Helvetica,Arial,sans-serif;"><strong>Страница отеля:</strong> {{ $hotel_name }} <a target="_blank" href="{{ $hotel_url }}">{{ $hotel_url }}</a></p>
 <p style="font:14px/16px Calibri,Helvetica,Arial,sans-serif;"><strong>Комментарий:</strong> {{ $comment }}</p>

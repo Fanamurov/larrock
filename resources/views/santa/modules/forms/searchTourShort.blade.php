@@ -1,4 +1,4 @@
-<form id="form-searchTourShort" class="form-searchTour form-searchTourShort" method="get" action="/sletat">
+<form id="form-searchTourShort" class="form-searchTour form-searchTourShort" method="get" action="/sletat" onsubmit="yaCounter27992118.reachGoal('ShortSearchSletat'); return true;">
     <p class="h3 text-center">Подбор тура</p>
     <div class="form-group">
         <div class="input-group">

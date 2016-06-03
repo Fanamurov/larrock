@@ -28,6 +28,9 @@ Route::get('/resort/{item?}', [
 Route::get('/articles', [
 	'as' => 'redirect.article', 'uses' => 'OldSiteController@redirectArticles'
 ]);
+Route::get('/news/news/{item}', [
+	'as' => 'redirect.article', 'uses' => 'OldSiteController@redirectNewsnews'
+]);
 Route::get('/articles/{item}', [
 	'as' => 'redirect.article.item', 'uses' => 'OldSiteController@redirectArticle'
 ]);

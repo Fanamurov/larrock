@@ -3,7 +3,7 @@
     <ul class="list-unstyled list-inline">
         @foreach($list_tours as $item)
             <li class="col-xs-12 col-sm-8 blog-item-module block-module-padding">
-                <div class="row link_block">
+                <div class="row link_block" onclick="yaCounter27992118.reachGoal('toursIndivModule'); return true;">
                     <div class="col-sm-24">
                         @if($item->image)
                             <img src="{{ $item->image }}" alt="{{ $item->title }}" class="all-width">

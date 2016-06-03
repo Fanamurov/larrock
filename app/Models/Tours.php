@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\User;
+use Cache;
 use Sofa\Eloquence\Eloquence;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
@@ -132,23 +133,26 @@ class Tours extends Model implements HasMediaConversions
 
 	public function getFullUrlAttribute()
 	{
-		if($this->get_category->first()){
-			if($search_parent = Category::whereId($this->get_category->first()->parent)->first()){
-				if($search_parent_2 = Category::whereId($search_parent->parent)->first()){
-					if($search_parent_3 = Category::whereId($search_parent->parent_2)->first()){
-						return '/tours/'. $search_parent_3->url .'/'. $search_parent_2->url .'/' . $search_parent->url .'/'. $this->get_category->first()->url .'/'. $this->url;
+		$FullUrl = Cache::remember('getFullUrlTour_'. $this->id, 1440, function() {
+			if($this->get_category->first()){
+				if($search_parent = Category::whereId($this->get_category->first()->parent)->first(['id', 'parent', 'url'])){
+					if($search_parent_2 = Category::whereId($search_parent->parent)->first(['id', 'parent', 'url'])){
+						if($search_parent_3 = Category::whereId($search_parent->parent_2)->first(['id', 'parent', 'url'])){
+							return '/tours/'. $search_parent_3->url .'/'. $search_parent_2->url .'/' . $search_parent->url .'/'. $this->get_category->first()->url .'/'. $this->url;
+						}else{
+							return '/tours/'. $search_parent_2->url .'/' . $search_parent->url .'/'. $this->get_category->first()->url .'/'. $this->url;
+						}
 					}else{
-						return '/tours/'. $search_parent_2->url .'/' . $search_parent->url .'/'. $this->get_category->first()->url .'/'. $this->url;
+						return '/tours/' . $search_parent->url .'/'. $this->get_category->first()->url .'/'. $this->url;
 					}
 				}else{
-					return '/tours/' . $search_parent->url .'/'. $this->get_category->first()->url .'/'. $this->url;
+					return '/tours/'. $this->get_category->first()->url .'/'. $this->url;
 				}
 			}else{
-				return '/tours/'. $this->get_category->first()->url .'/'. $this->url;
+				return '/tours/'. $this->url;
 			}
-		}else{
-			return '/tours/'. $this->url;
-		}
+		});
+		return $FullUrl;
 	}
 
 	public function getClassElementAttribute()

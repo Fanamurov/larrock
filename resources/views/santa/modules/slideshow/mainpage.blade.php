@@ -13,7 +13,7 @@
             <div class="carousel-inner" role="listbox">
                 @foreach($slideshow['big'] as $key => $value)
                     <div class="item @if($key === 0) active @endif">
-                        <a href="{{ $value->banner_url }}">
+                        <a href="{{ $value->banner_url }}" onclick="yaCounter27992118.reachGoal('SlideshowClick'); return true;">
                             <span class="carousel-caption">{!! $value->description !!}</span>
                             <img src="{{ $value->images->first()->getUrl() }}" alt="{{ $value->title }}" class="all-width">
                         </a>
@@ -36,7 +36,7 @@
         <div class="row block-akcii hidden">
             @foreach($slideshow['small'] as $value)
                 <div class="col-sm-8">
-                    <a href="{{ $value->banner_url }}">
+                    <a href="{{ $value->banner_url }}" onclick="yaCounter27992118.reachGoal('SlideshowClick'); return true;">
                         <img src="{{ $value->images->first()->getUrl() }}" class="all-width">
                     </a>
                 </div>

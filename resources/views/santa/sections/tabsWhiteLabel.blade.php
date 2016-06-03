@@ -3,11 +3,11 @@
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="@if( !isset($selected_country)) active @endif"><a href="#sletat" aria-controls="sletat" role="tab" data-toggle="tab">Пакетные туры</a></li>
-        <li role="presentation" class="@if(isset($selected_country)) active @endif"><a href="#indiv" aria-controls="indiv" role="tab" data-toggle="tab">Индивидуальные туры</a></li>
-        <li role="presentation" class="hidden-xs hidden-sm"><a href="#avia" aria-controls="avia" role="tab" data-toggle="tab">Авиабилеты</a></li>
+        <li role="presentation" onclick="yaCounter27992118.reachGoal('OpenIndivTab'); return true;" class="@if(isset($selected_country)) active @endif"><a href="#indiv" aria-controls="indiv" role="tab" data-toggle="tab">Индивидуальные туры</a></li>
+        <li role="presentation" onclick="yaCounter27992118.reachGoal('OpenAviaTab'); return true;" class="hidden-xs hidden-sm"><a href="#avia" aria-controls="avia" role="tab" data-toggle="tab">Авиабилеты</a></li>
         <li role="presentation" class="hidden hidden-xs hidden-sm"><a href="#hotels" aria-controls="hotels" role="tab" data-toggle="tab">Отели</a></li>
-        <li role="presentation" class="hidden-xs hidden-sm"><a href="#transfers" aria-controls="transfers" role="tab" data-toggle="tab">Трансферы</a></li>
-        <li role="presentation" class="strahovki hidden-xs hidden-sm"><a href="#strahovki" aria-controls="strahovki" role="tab" data-toggle="tab">Страховки</a></li>
+        <li role="presentation" onclick="yaCounter27992118.reachGoal('OpenTransfersTab'); return true;" class="hidden-xs hidden-sm"><a href="#transfers" aria-controls="transfers" role="tab" data-toggle="tab">Трансферы</a></li>
+        <li role="presentation" onclick="yaCounter27992118.reachGoal('OpenStrahovkiTab'); return true;" class="strahovki hidden-xs hidden-sm"><a href="#strahovki" aria-controls="strahovki" role="tab" data-toggle="tab">Страховки</a></li>
     </ul>
     <!-- Tab panes -->
     <div class="tab-content">

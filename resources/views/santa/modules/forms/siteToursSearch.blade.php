@@ -1,4 +1,4 @@
-<form class="form-searchTour form-siteSearch" action="/tours/search" method="post">
+<form class="form-searchTour form-siteSearch" action="/tours/search" method="post" onsubmit="yaCounter27992118.reachGoal('SiteSearchTour'); return true;">
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">

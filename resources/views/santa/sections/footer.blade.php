@@ -50,7 +50,7 @@
             </div>
             <div class="col-sm-16 col-md-10 col-md-offset-2 row-subscribes-item">
                 <p>Хотите первыми узнавать об акциях и спецпредложениях?</p>
-                <form action="" method="post">
+                <form action="" method="post" onsubmit="yaCounter27992118.reachGoal('SubscribeList'); return true;">
                     <div class="input-group">
                         <input type="email" name="email-to-subscribe" class="form-control" placeholder="Ваш email">
                         <span class="input-group-btn input-group-btn-subscribe">

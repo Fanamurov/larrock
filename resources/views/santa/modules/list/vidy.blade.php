@@ -1,7 +1,7 @@
 <ul class="block-module_listVidy list-unstyled colomn-container hidden-xs">
     @foreach($module_vidy as $item)
         <li>
-            <a href="/tours/vidy-otdykha/{{ $item->url }}">
+            <a href="/tours/vidy-otdykha/{{ $item->url }}" onclick="yaCounter27992118.reachGoal('VidModule'); return true;">
                 @if($item->title === 'Пляжный отдых')
                     <span class="fi flaticon-summer"></span>
                 @elseif($item->title === 'Экскурсионные туры')

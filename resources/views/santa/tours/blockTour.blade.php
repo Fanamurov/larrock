@@ -1,5 +1,5 @@
 <div class="toursBlockTour col-xs-12 col-md-8">
-    <div class="link_block col-xs-22 col-xs-offset-2">
+    <div class="link_block_this col-xs-22 col-xs-offset-2" data-href="{{ $data->FullUrl }}" onclick="yaCounter27992118.reachGoal('blockTour'); return true;">
         @if($data->getMedia('images')->sortByDesc('order_column')->first())
             <img src="{{ $data->getMedia('images')->sortByDesc('order_column')->first()->getUrl() }}" class="categoryImage all-width">
         @else

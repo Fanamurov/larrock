@@ -34,8 +34,8 @@
                 </div>
                 <div class="clearfix"></div>
                 @include('santa.modules.list.news')
-                @include('santa.modules.list.blog')
                 @include('santa.modules.list.tours')
+                @include('santa.modules.list.blog')
                 @yield('content')
                 @include('santa.modules.html.socialGroups')
                 <div class="col-xs-24 content_bottom-sharing">

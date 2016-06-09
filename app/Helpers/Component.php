@@ -35,53 +35,6 @@ class Component implements ComponentInterface
 	}
 
 	/**
-	 * Вывод списка установленных компонентов
-	 *
-	 * @param int   $onlyActive		Вернуть только активные
-	 * @param array $rows			Какие поля вернуть
-	 *
-	 * @return array|\Illuminate\Database\Eloquent\Collection|mixed|static[]
-	 */
-	public static function list_apps($onlyActive = 1, $rows = [])
-	{
-		$cache_key = sha1('list_apps'. $onlyActive . serialize($rows));
-		if(Cache::has($cache_key)){
-			return Cache::get($cache_key);
-		}else{
-			if($onlyActive){
-				$app = Apps::whereActive($onlyActive)->get();
-			}else{
-				$app = Apps::all();
-			}
-
-			Cache::forever($cache_key, $app);
-			return $app;
-		}
-	}
-
-	/**
-	 * Проверка, включен ли плагин у компонента
-	 *
-	 * @param string $app_name			Название компонента
-	 * @param string $search_plugin		Название плагина для поиска
-	 * @param string $plugin_type		Тип плагина plugins_backend|plugins_front
-	 *
-	 * @return bool|mixed
-	 */
-	public static function search_plugin_apply($app_name, $search_plugin, $plugin_type = 'plugins_backend')
-	{
-		$cache_key = sha1('search_plugin_apply'. $app_name . $search_plugin . $plugin_type);
-		if(Cache::has($cache_key)){
-			return Cache::get($cache_key);
-		}else{
-			$get_app = Apps::whereName($app_name)->first()->toArray();
-			$result = in_array($search_plugin, unserialize($get_app[$plugin_type]), TRUE);
-			Cache::forever($cache_key, $result);
-			return $result;
-		}
-	}
-
-	/**
 	 * Вспомогательный метод построения правил валидации из конфига полей компонента
 	 *
 	 * @param array $rows

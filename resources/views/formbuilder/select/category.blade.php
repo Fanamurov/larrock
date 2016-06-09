@@ -1,10 +1,10 @@
 <div class="form-group form-group-{{ $row_key }} {{ \Illuminate\Support\Arr::get($row_settings, 'css_class_group') }}">
     <label for="{{ $row_key }}" class="control-label">{{ $row_settings['title'] }}</label>
     <select name="{{ $row_key }}[]" id="{{ $row_key }}" data-placeholder="Выберите раздел..." style="width: 100%" class="chosen-select" multiple>
-        <option value="0" @if(count($selected) === 0) selected @endif>Корневой раздел</option>
+        <option value="0" @if(count($selected) === 0) selected @endif  @if(count($row_settings['options']) > 0) disabled @endif>Корневой раздел</option>
         @foreach($row_settings['options'] as  $options_value)
             <option value="{{ $options_value->id }}"
-                    {{--@if ($data->id === $options_value->id) disabled @endif--}}
+                    @if(isset($options_value->children)) disabled @endif
                     @if(in_array($options_value->id, $selected, FALSE)) selected @endif>
                 {{ $options_value->title }}
             </option>

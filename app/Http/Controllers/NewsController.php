@@ -40,7 +40,7 @@ class NewsController extends Controller
 	public function getItem(ContentPlugins $contentPlugins, $item)
 	{
 		$data = Cache::remember(md5('news_item'. $item), 1440, function() use ($item, $contentPlugins) {
-			$data['data'] = News::whereUrl($item)->first();
+			$data['data'] = News::whereUrl($item)->firstOrFail();
 			$data['category'] = Category::whereType('news')->whereActive(1)->whereLevel(1)->first();
             $data['data']['images'] = $data['data']->getMedia('images');
             $data['data'] = $contentPlugins->renderGallery($data['data']);

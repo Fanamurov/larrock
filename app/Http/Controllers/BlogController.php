@@ -70,7 +70,7 @@ class BlogController extends Controller
 			$data['categorys'] = Category::whereType('blog')->whereActive(1)->whereLevel(1)->with(['get_blogActive'])->get();
             $data['data']['images'] = $data['data']->getMedia('images');
             $data['data'] = $contentPlugins->renderGallery($data['data']);
-            $data['data'] = $contentPlugins->renderTour($data['data']);
+            //$data['data'] = $contentPlugins->renderTour($data['data']);
 			return $data;
 		});
 

@@ -1,13 +1,13 @@
 @extends('santa.sletat')
 @section('title')
-    Купить тур
+    Поиск горящего тура, купить тур
     @foreach($GetDepartCities as $item)
         @if($item->Id == Input::get('cityFromId')) {{ $item->Name }} @endif
     @endforeach (вылет)
     =>
     @foreach($GetCountries as $item)
         @if($item->Id == Input::get('countryId')) {{ $item->Name }} @endif
-    @endforeach (прилет). Поиск тура, отеля. Горящие путевки
+    @endforeach (прилет). Цены, условия, экскурсии
 @endsection
 
 @section('content')

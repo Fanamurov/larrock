@@ -2,7 +2,7 @@
 @foreach($data as $data_value)
     <tr @if($data_value->cost_notactive === 1 OR
     (($data_value->actual > \Carbon\Carbon::createFromFormat('Y-m-d h:s:i', '2015-01-01 00:00:00'))
-    AND ($data_value->actual < \Carbon\Carbon::now()))) class="danger" title="Тур не актуален" @endif>
+    AND ($data_value->actual < \Carbon\Carbon::now()))) class="danger" title="Тур не актуален. {{ $data_value->actual }}" @endif>
         <td width="110">
             <a href="/admin/tours/{{ $data_value->id }}/edit">
                 @if($data_value->getFirstImage)
@@ -22,8 +22,8 @@
                     <i class="text-muted">Автор:
                         <a href="/admin/users/author/{{ $data_value->user_id }}">
                             {{ $data_value->user->first_name }} {{ $data_value->user->last_name }}</a><br/>
-                        @endif
-                        {!! \Carbon\Carbon::createFromTimestamp(strtotime($data_value->updated_at))->diffForHumans(\Carbon\Carbon::now()) !!}</i></p>
+                @endif
+                {!! \Carbon\Carbon::createFromTimestamp(strtotime($data_value->updated_at))->diffForHumans(\Carbon\Carbon::now()) !!}</i></p>
         </td>
         <td width="200">
             <a href="{{ $data_value->FullUrl }}">

@@ -30,6 +30,16 @@ class ToursController extends Controller
 		{
 			$breadcrumbs->push('Каталог туров');
 		});
+
+		/*$data = Category::whereParent(308)->get();
+		foreach($data as $value){
+			echo 'Туры в '. $value->title .';http://santa-avia.ru'. $value->full_url .'<br/>';
+
+			$resort = Category::whereParent($value->id)->get();
+			foreach($resort as $resort_value){
+				echo 'Туры в '. $resort_value->title .';http://santa-avia.ru'. $resort_value->full_url .'<br/>';
+			}
+		}*/
 	}
 	
 	public function getStrany()
@@ -358,7 +368,7 @@ class ToursController extends Controller
 			return redirect('/tours/vidy-otdykha/'. $get_vid->url);
 		}
 		if($request->get('resort')){
-			$get_resort = Category::whereId($request->get('resort'))->with(['get_parent'])->first();
+			$get_resort = Category::whereUrl($request->get('resort'))->with(['get_parent'])->first();
 			return redirect('/tours/strany/'. $get_resort->get_parent->url .'/'. $get_resort->url);
 		}
 		if($request->get('country')){

@@ -162,7 +162,10 @@ class Tours extends Model implements HasMediaConversions
 
 	public function getUserAttribute()
 	{
-		return User::whereId($this->user_id)->first();
+		$user = Cache::remember('get_user_'.$this->user_id, 1440, function() {
+		    return User::whereId($this->user_id)->first();
+		});
+		return $user;
 	}
 
 	public function getImages()

@@ -16,17 +16,17 @@
     <table lang="ru" style="width: 100%; padding-top: 15px" cellspacing="0" cellpadding="5">
         <tbody>
         <tr>
-            <td style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;">Имя(латиницей): {{ $firstname[$key] }}</td>
-            <td style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;">Фамилия(латиницей): {{ $lastname[$key] }}</td>
-            <td style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;">Гражд-во: {{ $citizenship[$key] }}</td>
-            <td style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;">Пол: {{ $gender[$key] }}</td>
-            <td style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;">Дата рождения: {{ $birthday[$key*2] }}</td>
+            <td style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;">Имя(латиницей): @if(isset($firstname[$key])) {{ $firstname[$key] }} @endif</td>
+            <td style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;">Фамилия(латиницей): @if(isset($lastname[$key])) {{ $lastname[$key] }} @endif</td>
+            <td style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;">Гражд-во: @if(isset($citizenship[$key])) {{ $citizenship[$key] }} @endif</td>
+            <td style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;">Пол: @if(isset($gender[$key])) {{ $gender[$key] }} @endif</td>
+            <td style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;">Дата рождения: @if(isset($birthday[$key*2])) {{ $birthday[$key*2] }} @endif</td>
         </tr>
         <tr>
-            <td style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;">Серия и номер загранпаспорта: {{ $seriaZagran[$key] }} {{ $numberZagran[$key] }}</td>
-            <td style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;">Дата выдачи: {{ $dateZagran[$key*2] }}</td>
-            <td style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;">Срок действия: {{ $srokZagran[$key*2] }}</td>
-            <td colspan="2" style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;">Кем выдан: {{ $ktoZagran[$key] }}</td>
+            <td style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;">Серия и номер загранпаспорта: @if(isset($seriaZagran[$key])) {{ $seriaZagran[$key] }} @endif  @if(isset($numberZagran[$key])) {{ $numberZagran[$key] }} @endif</td>
+            <td style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;">Дата выдачи: @if(isset($dateZagran[$key*2])) {{ $dateZagran[$key*2] }} @endif</td>
+            <td style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;">Срок действия: @if(isset($srokZagran[$key*2])) {{ $srokZagran[$key*2] }} @endif</td>
+            <td colspan="2" style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;">Кем выдан: @if(isset($ktoZagran[$key*2])) {{ $ktoZagran[$key] }} @endif</td>
         </tr>
         </tbody>
     </table>

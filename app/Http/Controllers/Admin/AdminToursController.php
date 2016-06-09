@@ -199,15 +199,92 @@ class AdminToursController extends Controller
 	
 	public function showTours(Request $request)
 	{
+		$vid = $request->get('vid');
+		$country = $request->get('country');
+		$resort = $request->get('resort');
 		$page = $request->get('page');
+		$sort = $request->get('sort', 'updated_at');
+
+		Cache::forget('admin_all_tours'. $page);
 		$data['data'] = Cache::remember('admin_all_tours'. $page, 1440, function() {
-		    return Tours::where('id', '>=', 0)->with('getFirstImage')->paginate(25);
+		    //return Tours::where('id', '>=', 0)->with(['getFirstImage', 'get_category'])->paginate(25);
+		    return Tours::where('id', '>=', 0)->with(['getFirstImage', 'get_category'])->get();
 		});
+
+		if($vid){
+			$data['data'] = $data['data']->filter(function ($item) use ($vid) {
+				foreach($item->get_category as $category){
+					if($category->id == $vid){
+						return $item;
+					}
+				}
+			});
+		}
+		if($country AND !$resort){
+			$get_country = Category::whereUrl($request->get('country'))->first();
+			$get_childs = Category::whereParent($get_country->id)->get();
+			foreach($get_childs as $child){
+				$get_tours = $child->get_tours()->get();
+				$data['data'] = collect($data['data']);
+				$merged = $data['data']->merge($get_tours);
+				$data['data'] = collect($merged->all());
+			}
+			$data['data'] = $data['data']->filter(function ($item) use ($country, $resort, $get_country) {
+				foreach($item->get_category as $category){
+					if($category->url === $country OR $category->parent == $get_country->id){
+						return $item;
+					}
+				}
+			});
+		}
+		if($resort){
+			$get_resort = Category::whereUrl($request->get('resort'))->with(['get_parent'])->first();
+			$data['data'] = $data['data']->filter(function ($item) use ($get_resort) {
+				foreach($item->get_category as $category){
+					if($category->id === $get_resort->id){
+						return $item;
+					}
+				}
+			});
+		}
+
+		if($sort){
+			$data['data'] = $data['data']->sortByDesc($sort);
+		}
+		$data['data'] = $data['data']->unique('id');
+
+		$data['paginator'] = new Paginator(
+			$data['data'],
+			$data['data']->count(),
+			$limit = 25,
+			$page = $request->get('page', 1), [
+			'path'  => $request->url(),
+			'query' => $request->query(),
+		]);
+
 		$data['app'] = $this->config;
 
-		Breadcrumbs::register('all.tours.admin', function($breadcrumbs){
+		Breadcrumbs::register('all.tours.admin', function($breadcrumbs) use ($vid, $country, $resort){
 			$breadcrumbs->push('Все туры', route('all.tours.admin'));
+			if($vid){
+				$breadcrumbs->push($vid);
+			};
+			if($country){
+				$breadcrumbs->push($country);
+			}
+			if($resort){
+				$breadcrumbs->push($resort);
+			}
 		});
+
+		//Форма поиска туров по сайту
+		$siteSearch = Cache::remember('siteSearch-form', 1440, function() {
+			$siteSearch['countries'] = Category::whereType('tours')->whereActive(1)->whereParent(308)->get(['title','id', 'url']);
+			$siteSearch['resorts'] = Category::whereType('tours')->whereActive(1)->where('parent', '!=', 308)->where('parent', '!=', 377)->where('parent', '!=', 0)->get(['title','id', 'url']);
+			$siteSearch['vidy'] = Category::whereType('tours')->whereActive(1)->whereParent(377)->get(['title','id', 'url']);
+			return $siteSearch;
+		});
+		View::share('siteSearch', $siteSearch);
 		
 		return view('admin.tours.showTours', $data);
 	}

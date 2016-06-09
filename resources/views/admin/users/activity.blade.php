@@ -23,11 +23,11 @@
         <div class="col-sm-8">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Туры</a></li>
-                <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Разделы</a></li>
-                <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Блог</a></li>
-                <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Новости</a></li>
-                <li role="presentation"><a href="#hotels" aria-controls="hotels" role="tab" data-toggle="tab">Отели</a></li>
+                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Туры {{ $tours->total() }}</a></li>
+                <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Страны, курорты {{ $categories->total() }}</a></li>
+                <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Блог {{ $blog->total() }}</a></li>
+                <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Новости {{ $news->total() }}</a></li>
+                <li role="presentation"><a href="#hotels" aria-controls="hotels" role="tab" data-toggle="tab">Отели {{ $hotels->total() }}</a></li>
             </ul>
             <div class="clearfix"></div>
             <div class="ibox float-e-margins">
@@ -105,57 +105,48 @@
                 <div class="row">
                     <div class="col-xs-24">
                         <h1 class="text-center">Заказы туров: {{ $forms['zakazTura']['count']['new'] }}</h1>
-                        @foreach($forms['zakazTura']['data'] as $key => $form_value)
-                            <button class="btn btn-danger" data-toggle="modal" data-target="#myModal{{$key}}">
-                                <i class="glyphicon glyphicon-envelope"></i> {{ $form_value->params['tour_name'] }}
-                            </button>
+                        <div class="col-xs-12">
+                            @foreach($forms['zakazTura']['data'] as $key => $form_value)
+                                <button class="btn btn-danger btn-block" data-toggle="modal" data-target="#myModal{{$key}}">
+                                    <i class="glyphicon glyphicon-envelope"></i> {{ $form_value->params['tour_name'] }}
+                                </button>
 
-                            <!-- Modal -->
-                            <div class="modal fade" id="myModal{{$key}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                            <h1 class="modal-title text-center" id="myModalLabel">Заказ тура</h1>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p>Имя: {{ $form_value->params['name'] }}</p>
-                                            <p>Телефон: {{ $form_value->params['tel'] }}</p>
-                                            <p>Email: <a href="mailto:{{ $form_value->params['email'] }}">{{ $form_value->params['email'] }}</a></p>
-                                            <p>Примерная дата вылета: {{ $form_value->params['date'] }}</p>
-                                            <p>Комментарий: {{ $form_value->params['comment'] }}</p>
-                                            <p><a href="{{ $form_value->params['tour_url'] }}">Ссылка на тур</a></p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                                <!-- Modal -->
+                                <div class="modal fade" id="myModal{{$key}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h1 class="modal-title text-center" id="myModalLabel">Заказ тура</h1>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Имя: {{ $form_value->params['name'] }}</p>
+                                                <p>Телефон: {{ $form_value->params['tel'] }}</p>
+                                                <p>Email: <a href="mailto:{{ $form_value->params['email'] }}">{{ $form_value->params['email'] }}</a></p>
+                                                <p>Примерная дата вылета: {{ $form_value->params['date'] }}</p>
+                                                <p>Комментарий: {{ $form_value->params['comment'] }}</p>
+                                                <p><a href="{{ $form_value->params['tour_url'] }}">Ссылка на тур</a></p>
+                                                <select name="status" class="form-control">
+                                                    <option value="Новый">Статус заявки: Новый</option>
+                                                    <option value="Просмотрено">Статус заявки: Просмотрено</option>
+                                                    <option value="Заказ сделан">Статус заявки: Заказ сделан</option>
+                                                    <option value="Заказ отменен">Статус заявки: Заказ отменен</option>
+                                                    <option value="Удалено">Статус заявки: Удалено</option>
+                                                </select>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        @endforeach
+                            @endforeach
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="ibox float-e-margins">
-                <div class="row">
-                    <div class="col-xs-8">
-                        <div class="widget style1">
-                            <div class="row">
-                                <div class="col-xs-12 text-right">
-                                    <span> Заполнено стран/курортов </span>
-                                    <h2 class="font-bold">{{ $categories->total() }}</h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-4">
-                        <div class="widget style1 text-center">
-                            <span> место </span>
-                            <h2 class="font-bold">1<i class="glyphicon glyphicon-fire"></i></h2>
-                        </div>
-                    </div>
-                </div>
                 <div class="row">
                     <div class="col-xs-6">
                         <div class="ibox float-e-margins">
@@ -186,24 +177,6 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-xs-8">
-                        <div class="widget style1">
-                            <div class="row">
-                                <div class="col-xs-12 text-right">
-                                    <span> Заполнено туров </span>
-                                    <h2 class="font-bold">{{ $tours->total() }}</h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-4">
-                        <div class="widget style1 text-center">
-                            <span> место </span>
-                            <h2 class="font-bold">1<i class="glyphicon glyphicon-fire"></i></h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
                     <div class="col-xs-6">
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
@@ -233,24 +206,6 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-xs-8">
-                        <div class="widget style1">
-                            <div class="row">
-                                <div class="col-xs-12 text-right">
-                                    <span> Заполнено новостей </span>
-                                    <h2 class="font-bold">{{ $news->total() }}</h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-4">
-                        <div class="widget style1 text-center">
-                            <span> место </span>
-                            <h2 class="font-bold">1<i class="glyphicon glyphicon-fire"></i></h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
                     <div class="col-xs-6">
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
@@ -279,25 +234,6 @@
                     </div>
                 </div>
 
-
-                <div class="row">
-                    <div class="col-xs-8">
-                        <div class="widget style1">
-                            <div class="row">
-                                <div class="col-xs-12 text-right">
-                                    <span> Заполнено блога </span>
-                                    <h2 class="font-bold">{{ $blog->total() }}</h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-4">
-                        <div class="widget style1 text-center">
-                            <span> место </span>
-                            <h2 class="font-bold">1<i class="glyphicon glyphicon-fire"></i></h2>
-                        </div>
-                    </div>
-                </div>
                 <div class="row">
                     <div class="col-xs-6">
                         <div class="ibox float-e-margins">
@@ -327,24 +263,6 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-xs-8">
-                        <div class="widget style1">
-                            <div class="row">
-                                <div class="col-xs-12 text-right">
-                                    <span> Заполнено отелей </span>
-                                    <h2 class="font-bold">{{ $hotels->total() }}</h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-4">
-                        <div class="widget style1 text-center">
-                            <span> место </span>
-                            <h2 class="font-bold">1<i class="glyphicon glyphicon-fire"></i></h2>
-                        </div>
-                    </div>
-                </div>
                 <div class="row">
                     <div class="col-xs-6">
                         <div class="ibox float-e-margins">

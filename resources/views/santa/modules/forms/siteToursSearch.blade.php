@@ -31,7 +31,7 @@
                 <select name="resort" class="form-control" id="form-searchTour-resort">
                     <option value="">любой</option>
                     @foreach($siteSearch['resorts'] as $item)
-                        <option value="{{ $item->id }}" @if(isset($selected_resort))@if($item->url == $selected_resort) selected @endif @endif>{{ $item->title }}</option>
+                        <option value="{{ $item->url }}" @if(isset($selected_resort))@if($item->url == $selected_resort) selected @endif @endif>{{ $item->title }}</option>
                     @endforeach
                 </select>
             </div>

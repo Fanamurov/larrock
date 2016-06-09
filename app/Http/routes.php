@@ -16,7 +16,7 @@
 ]);*/
 
 //REDIRECTS OLD SITE
-Route::get('/vidy-otdykha/{item?}', [
+Route::get('/vidy-otdykha/{item}', [
 	'as' => 'redirect.vidy', 'uses' => 'OldSiteController@redirectVidy'
 ]);
 Route::get('/strany/{item}', [

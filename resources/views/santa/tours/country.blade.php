@@ -1,5 +1,5 @@
 @extends('santa.main')
-@section('title') {{ $data->title }}. Туры с вылетом из Хабаровска @endsection
+@section('title') {{ $data->title }}. Цены на туры с вылетом из Хабаровска. Подбор горящих туров, путевки {!! \Carbon\Carbon::now()->year !!} @endsection
 @section('description') {!! strip_tags($data->short) !!} @endsection
 
 @section('content')

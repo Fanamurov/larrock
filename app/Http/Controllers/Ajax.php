@@ -33,6 +33,11 @@ class Ajax extends Controller
 	public function getResortsByCountry(Request $request)
 	{
 		$get_resorts = Category::whereUrl($request->get('country'))->with(['get_childActive'])->first();
-		return response()->json($get_resorts->get_childActive);
+		if(isset($get_resorts->get_childActive)){
+			return response()->json($get_resorts->get_childActive);
+		}else{
+			$get_resorts = Category::whereId(308)->with(['get_childActive'])->first();
+			return response()->json($get_resorts->get_childActive);
+		}
 	}
 }

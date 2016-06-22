@@ -77,7 +77,8 @@ class AdminNewsController extends Controller
 			'title' => 'Новый материал',
 			'url' => str_slug('Новый материал'),
 			'category' => $request->get('category', $category->id),
-			'active' => 0
+			'active' => 0,
+			'to_rss' => 0,
 		]);
 		return $this->store($test, $ContentPlugins);
 	}
@@ -229,7 +230,7 @@ class AdminNewsController extends Controller
 		$data = News::find($id);
 		$data->fill($request->all());
 		$data->active = $request->input('active', 0);
-		$data->to_rss = $request->input('to_rss', 1);
+		$data->to_rss = $request->input('to_rss', 0);
 		$data->user_id = $this->current_user->id;
 
 		if($data->save()){

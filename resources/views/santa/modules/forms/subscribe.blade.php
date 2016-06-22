@@ -17,6 +17,7 @@
         </div>
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <input type="hidden" name="b_93b8240d924f6cc1bb2600c52_427130e105" tabindex="-1" value="">
+        <input type="hidden" name="MERGE3" id="MERGE3" size="25" value="Cold">
         <button type="submit" class="btn btn-default btn-block" name="subscribe" onClick="ga('send','event','formSubmit','FORM_SUBSCRIBE');">Подписаться</button>
     </div>
     <div class="clearfix"></div>

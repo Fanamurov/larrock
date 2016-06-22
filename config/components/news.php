@@ -64,7 +64,7 @@ return [
 			'checked' => 'TRUE',
 			'tab' => ['other' => 'Дата, вес, активность'],
 			'valid' => 'integer|max:1',
-			'default' => 1
+			'default' => 0
 		],
 	],
 	'menu_category' => 'news',

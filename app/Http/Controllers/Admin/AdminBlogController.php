@@ -55,7 +55,7 @@ class AdminBlogController extends Controller
 	public function index()
 	{
 		$data['app'] = $this->config;
-		$data['data'] = Category::type('blog')->level(1)->orderBy('updated_at', 'desc')->with(['get_child', 'get_parent'])->paginate(30);
+		$data['data'] = Category::type('blog')->level(1)->orderBy('created_at', 'desc')->with(['get_child', 'get_parent'])->paginate(30);
 		View::share('validator', '');
 		return view('admin.blog.index', $data);
 	}
@@ -78,7 +78,8 @@ class AdminBlogController extends Controller
 			'title' => 'Новый материал',
 			'url' => str_slug('Новый материал'),
 			'category' => $request->get('category', $category->id),
-			'active' => 0
+			'active' => 0,
+			'to_rss' => 0,
 		]);
 		return $this->store($test, $ContentPlugins);
 	}
@@ -144,7 +145,8 @@ class AdminBlogController extends Controller
 	{
 		$data['app'] = $this->config;
 		$data['category'] = Category::findOrFail($id);
-		$data['data'] = Blog::whereCategory($id)->orderBy('updated_at', 'desc')->paginate(30);
+		$data['data'] = Blog::whereCategory($id)->with(['getFirstImage'])->orderBy('created_at', 'desc')->paginate(30);
+		//dd($data['data']->first()->getFirstImage);
 		View::share('validator', '');
 
 		Breadcrumbs::register('admin.blog.category', function($breadcrumbs, $data)
@@ -230,7 +232,7 @@ class AdminBlogController extends Controller
 		$data = Blog::find($id);
 		$data->fill($request->all());
 		$data->active = $request->input('active', 0);
-		$data->to_rss = $request->input('to_rss', 1);
+		$data->to_rss = $request->input('to_rss', 0);
 		$data->user_id = $this->current_user->id;
 
 		if($data->save()){

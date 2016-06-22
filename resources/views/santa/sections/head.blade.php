@@ -42,4 +42,5 @@
     <![endif]-->
 
     <link rel="alternate" type="application/rss+xml" title="Santa-avia.ru :: Новости, блог, туры" href="http://santa-avia.ru/feed.rss">
+    <script charset="UTF-8" src="//cdn.sendpulse.com/js/push/fc36d3f858210b2d9e8fe1288fab4cce_0.js" async></script>
 </head>

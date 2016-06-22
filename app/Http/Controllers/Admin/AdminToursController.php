@@ -77,7 +77,8 @@ class AdminToursController extends Controller
 			'url' => str_slug('Новый материал'),
 			'category' => [$request->get('category')],
 			'active' => 0,
-			'cost_notactive' => 0
+			'cost_notactive' => 0,
+			'to_rss' => 0,
 		]);
 		return $this->store($create_data, $ContentPlugins);
 	}
@@ -369,7 +370,7 @@ class AdminToursController extends Controller
 		$data->fill($request->all());
 		$data->active = $request->input('active', 0);
 		$data->actual = $request->input('actual', '0000-00-00 00:00:00');
-		$data->to_rss = $request->input('to_rss', 1);
+		$data->to_rss = $request->input('to_rss', 0);
 		$data->cost_notactive = $request->input('cost_notactive', 0);
 		if($data->save()){
 			//Присоединяем разделы

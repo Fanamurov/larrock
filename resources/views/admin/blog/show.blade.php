@@ -55,7 +55,8 @@
                     <th>Название</th>
                     <th>URL</th>
                     <th width="90">Порядок</th>
-                    <th width="93"></th>
+                    <th class="text-center" width="73">Публ.</th>
+                    <th class="text-center" width="93">Импорт</th>
                     <th width="90"></th>
                     <th width="90"></th>
                 </tr>
@@ -77,8 +78,8 @@
                         @endforeach
                         <td>
                             <a href="/admin/{{ $app['name'] }}/{{ $data_value->id }}/edit">
-                                @if($data_value->getFirstMediaUrl('images', '110x110'))
-                                    <img src="{{ $data_value->getFirstMediaUrl('images', '110x110') }}">
+                                @if(isset($data_value->getFirstImage))
+                                    <img src="{{ $data_value->getFirstImage->getUrl('110x110') }}">
                                 @else
                                     <i class="icon-padding icon-color glyphicon glyphicon-file"></i>
                                 @endif
@@ -114,6 +115,16 @@
                                 <button type="button" class="btn btn-xs btn-danger @if($data_value->active === 1) btn-outline @endif"
                                         data-row_where="id" data-value_where="{{ $data_value->id }}" data-table="{{ $app['table_content'] }}"
                                         data-row="active" data-value="0">off</button>
+                            </div>
+                        </td>
+                        <td class="row-to_rss">
+                            <div class="btn-group pull-right btn-group_switch_ajax" role="group">
+                                <button type="button" class="btn btn-xs btn-info @if($data_value->to_rss === 0) btn-outline @endif"
+                                        data-row_where="id" data-value_where="{{ $data_value->id }}" data-table="{{ $app['table_content'] }}"
+                                        data-row="to_rss" data-value="1">rss</button>
+                                <button type="button" class="btn btn-xs btn-danger @if($data_value->to_rss === 1) btn-outline @endif"
+                                        data-row_where="id" data-value_where="{{ $data_value->id }}" data-table="{{ $app['table_content'] }}"
+                                        data-row="to_rss" data-value="0">local</button>
                             </div>
                         </td>
                         <td class="row-edit">

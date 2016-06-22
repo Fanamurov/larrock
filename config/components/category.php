@@ -86,7 +86,7 @@ return [
 			'checked' => 'TRUE',
 			'tab' => ['other' => 'Дополнительные поля'],
 			'valid' => 'integer|max:1',
-			'default' => 1
+			'default' => 0
 		],
 	],
 	'admin_menu' => ['type' => 'hidden'],

@@ -73,7 +73,7 @@ class Blog extends Model implements HasMediaConversions
 
     protected $table = 'blog';
 
-	protected $fillable = ['title', 'short', 'description', 'category', 'url', 'date', 'position', 'active', 'to_rss', 'sharing'];
+	protected $fillable = ['title', 'short', 'description', 'category', 'url', 'date', 'position', 'active', 'to_rss', 'sharing', 'serial'];
 
     protected $dates = ['created_at', 'updated_at', 'date'];
 
@@ -84,6 +84,10 @@ class Blog extends Model implements HasMediaConversions
 		'active' => 'integer',
 		'to_rss' => 'integer',
 		'sharing' => 'integer'
+	];
+
+	protected $appends = [
+		'first_image',
 	];
 
 	public function scopeCategoryInfo()

@@ -63,7 +63,13 @@ return [
 			'checked' => 'TRUE',
 			'tab' => ['other' => 'Дата, вес, активность'],
 			'valid' => 'integer|max:1',
-			'default' => 1
+			'default' => 0
+		],
+		'serial' => [
+			'title' => 'Название цикла статей',
+			'type' => 'select_row',
+			'options_connect' => ['row' => 'serial', 'table' => 'blog', 'selected_search' => 'value'],
+			'tab' => ['main' => 'Заголовок, описание'],
 		],
 	],
 	'menu_category' => 'blog',

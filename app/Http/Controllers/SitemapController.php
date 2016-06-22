@@ -102,7 +102,9 @@ class SitemapController extends Controller
 		$feed = App::make("feed");
 		// set cache key (string), duration in minutes (Carbon|Datetime|int), turn on/off (boolean)
 		// by default cache is disabled
-		$feed->setCache('laravel.rss', 3600);
+		$feed->setCache('laravel.rss', 600);
+		//$feed->clearCache();
+		//Cache::flush();
 
 		// check if there is cached feed and build new only if is not
 		if( !$feed->isCached())
@@ -118,31 +120,35 @@ class SitemapController extends Controller
 			$feed->setShortening(false); // true or false
 			$feed->setTextLimit(100); // maximum length of description text
 
-			$blog = Blog::whereActive(1)->whereToRss(1)->with(['get_category'])->orderBy('updated_at', 'DESC')->get();
+			$blog = Blog::whereActive(1)->whereToRss(1)->with(['get_category', 'getFirstImage'])->orderBy('updated_at', 'DESC')->get();
 			foreach ($blog as $value){
 				$enclosure = [];
-				if($value->getMedia('images')->sortByDesc('order_column')->first()){
-					if($img = $value->getMedia('images')->sortByDesc('order_column')->first()->getUrl()){
-						$enclosure = ['url'=> 'http://santa-avia.ru'. $img,'type'=>'image/jpeg'];
-					}
+				$value->description = mb_strimwidth(strip_tags($value->description), 0, 350, '...');
+				if(isset($value->getFirstImage->id)){
+					$enclosure = ['url'=> 'http://santa-avia.ru'. $value->getFirstImage->getUrl(), 'type'=>'image/jpeg'];
+					//echo 'http://santa-avia.ru'. $value->getFirstImage->getUrl() .'<br/>';
+					$value->description = '<img src="http://santa-avia.ru'. $value->getFirstImage->getUrl() .'"/>'. $value->description;
 				}
+
 				$feed->add(
 					$value->title,
 					$feed->title,
 					URL::to('/blog/'. $value->get_category->url .'/'. $value->url),
 					$value->updated_at,
 					mb_strimwidth(strip_tags($value->short), 0, 200, '...'),
-					mb_strimwidth(strip_tags($value->description), 0, 350, '...'),
+					$value->description,
 					$enclosure
 				);
 			}
 
-			$news = News::whereActive(1)->whereToRss(1)->with(['get_category'])->orderBy('updated_at', 'DESC')->get();
+			$news = News::whereActive(1)->whereToRss(1)->with(['get_category', 'getFirstImage'])->orderBy('updated_at', 'DESC')->get();
 			foreach ($news as $value){
 				$enclosure = [];
+				$value->description = mb_strimwidth(strip_tags($value->description), 0, 350, '...');
 				if($value->getMedia('images')->sortByDesc('order_column')->first()){
 					if($img = $value->getMedia('images')->sortByDesc('order_column')->first()->getUrl()){
 						$enclosure = ['url'=> 'http://santa-avia.ru'. $img,'type'=>'image/jpeg'];
+						$value->description = '<img src="http://santa-avia.ru'. $img .'"/>'. $value->description;
 					}
 				}
 				$feed->add(
@@ -151,7 +157,7 @@ class SitemapController extends Controller
 					URL::to('/news/'. $value->get_category->url .'/'. $value->url),
 					$value->updated_at,
 					mb_strimwidth(strip_tags($value->short), 0, 200, '...'),
-					mb_strimwidth(strip_tags($value->description), 0, 350, '...'),
+					$value->description,
 					$enclosure
 				);
 			}
@@ -159,9 +165,11 @@ class SitemapController extends Controller
 			$strany = Category::whereParent(308)->whereActive(1)->whereToRss(1)->with(['get_childActive', 'get_childActive.get_toursActive', 'get_toursActive'])->orderBy('updated_at', 'DESC')->get();
 			foreach ($strany as $value){
 				$enclosure = [];
+				$value->description = $description = mb_strimwidth(strip_tags($value->description), 0, 350, '...');
 				if($value->getMedia('images')->sortByDesc('order_column')->first()){
 					if($img = $value->getMedia('images')->sortByDesc('order_column')->first()->getUrl()){
 						$enclosure = ['url'=> 'http://santa-avia.ru'. $img,'type'=>'image/jpeg'];
+						$value->description = '<img src="http://santa-avia.ru'. $img .'"/>'. $description;
 					}
 				}
 				$feed->add(
@@ -170,56 +178,62 @@ class SitemapController extends Controller
 					URL::to('/tours/strany/'.$value->url),
 					$value->updated_at,
 					mb_strimwidth(strip_tags($value->short), 0, 200, '...'),
-					mb_strimwidth(strip_tags($value->description), 0, 350, '...'),
+					$value->description,
 					$enclosure
 				);
 				foreach ($value->get_toursActive as $tours){
 					$enclosure = [];
+					$tours->description = mb_strimwidth(strip_tags($tours->description), 0, 350, '...');
 					if($tours->getMedia('images')->sortByDesc('order_column')->first()){
 						if($img = $tours->getMedia('images')->sortByDesc('order_column')->first()->getUrl()){
 							$enclosure = ['url'=> 'http://santa-avia.ru'. $img,'type'=>'image/jpeg'];
+							$tours->description = '<img src="http://santa-avia.ru'. $img .'"/>'. $tours->description;
 						}
 					}
 					$feed->add(
-						$value->title,
+						$tours->title,
 						$feed->title,
 						URL::to('/tours/strany/'.$value->url.'/'. $tours->url),
-						$value->updated_at,
-						mb_strimwidth(strip_tags($value->short), 0, 200, '...'),
-						mb_strimwidth(strip_tags($value->description), 0, 350, '...'),
+						$tours->updated_at,
+						mb_strimwidth(strip_tags($tours->short), 0, 200, '...'),
+						$tours->description,
 						$enclosure
 					);
 				}
 				foreach ($value->get_childActive as $child){
 					$enclosure = [];
+					$child->description = mb_strimwidth(strip_tags($child->description), 0, 350, '...');
 					if($child->getMedia('images')->sortByDesc('order_column')->first()){
 						if($img = $child->getMedia('images')->sortByDesc('order_column')->first()->getUrl()){
 							$enclosure = ['url'=> 'http://santa-avia.ru'. $img,'type'=>'image/jpeg'];
+							$child->description = '<img src="http://santa-avia.ru'. $img .'"/>'. $child->descriptionn;
 						}
 					}
 					$feed->add(
-						$value->title,
+						$child->title,
 						$feed->title,
 						URL::to('/tours/strany/'.$value->url.'/'. $child->url),
-						$value->updated_at,
-						mb_strimwidth(strip_tags($value->short), 0, 200, '...'),
-						mb_strimwidth(strip_tags($value->description), 0, 350, '...'),
+						$child->updated_at,
+						mb_strimwidth(strip_tags($child->short), 0, 200, '...'),
+						$child->description,
 						$enclosure
 					);
 					foreach ($child->get_toursActive as $child_tours){
 						$enclosure = [];
+						$child_tours->description = mb_strimwidth(strip_tags($child_tours->description), 0, 350, '...');
 						if($child_tours->getMedia('images')->sortByDesc('order_column')->first()){
 							if($img = $child_tours->getMedia('images')->sortByDesc('order_column')->first()->getUrl()){
 								$enclosure = ['url'=> 'http://santa-avia.ru'. $img,'type'=>'image/jpeg'];
+								$child_tours->description = '<img src="http://santa-avia.ru'. $img .'"/>'. $child_tours->description;
 							}
 						}
 						$feed->add(
-							$value->title,
+							$child_tours->title .'33',
 							$feed->title,
 							URL::to('/tours/strany/'.$value->url.'/'. $child_tours->url),
-							$value->updated_at,
-							mb_strimwidth(strip_tags($value->short), 0, 200, '...'),
-							mb_strimwidth(strip_tags($value->description), 0, 350, '...'),
+							$child_tours->updated_at,
+							mb_strimwidth(strip_tags($child_tours->short), 0, 200, '...'),
+							$child_tours->description,
 							$enclosure
 						);
 					}

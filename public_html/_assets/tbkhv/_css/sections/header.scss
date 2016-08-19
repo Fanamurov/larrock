@@ -4,6 +4,9 @@
   height: 42px;
   margin-bottom: 34px;
   line-height: 33px;
+  @media (max-width: 600px) {
+	height: auto;
+  }
 }
 
 .logo{
@@ -105,12 +108,33 @@ header{
   }
 }
 
+.row .nav-menu{
+  @media (max-width: 600px) {
+	width: 100%;
+  }
+}
+@media (max-width: 600px) {
+  .block-headerCart{
+	text-align: center;
+	margin-top: 10px;
+	margin-bottom: 15px;
+  }
+  header{
+	text-align: center;
+  }
+  .block-breadcrumbs{
+	display: none;
+  }
+}
 .nav-menu.nav-pills{
   > li{
     float: left;
     background: rgb(245, 245, 245);
     border-radius: 3px;
     margin-right: 3px;
+	@media (max-width: 600px) {
+	  width: 31.5%;
+	}
     a {
       border-radius: 4px;
       background-color: whitesmoke;

@@ -18,7 +18,7 @@
                     <a href="#">Документы</a>
                 </li>
                 <li>
-                    <a href="#">Контакты</a>
+                    <a href="/contact">Контакты</a>
                 </li>
             </ul>
         </div>

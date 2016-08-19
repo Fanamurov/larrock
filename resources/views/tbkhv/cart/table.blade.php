@@ -52,7 +52,10 @@
 
         <br/><br/>
 
-        <div class="form-order">
+        <div class="alert alert-warning">Заказы через онлайн-отправку отключен, для совершения заказа свяжитесь с нами по телефону 
+        8 914 190-00-02 или отправляйте ссылки на товары на почту: <a href="mailto:tbkhv@mail.ru">tbkhv@mail.ru</a></div>
+
+        <div class="form-order hidden">
             <h2 class="text-center">Ваши контактные данные для заказа</h2><br/>
             <form action="/form/order" method="post" class="row" id="form-zakaz">
                 <div class="col-sm-8 col-sm-offset-1">

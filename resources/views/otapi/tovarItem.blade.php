@@ -1,56 +1,62 @@
 @extends('tbkhv.main')
-@section('title') Купить {{ $data['Result']['Item']['Title'] }} в Хабаровске. Товары из Китая @endsection
+@section('title') Купить {{ $data->Title }} в Хабаровске. Товары из Китая @endsection
 
 @section('breadcrumbs')
-    {!! Breadcrumbs::render('otapi.tovar', $category['OtapiCategory']['Id']) !!}
+    {!! Breadcrumbs::render('otapi.tovar', $data->RootPath) !!}
 @endsection
 
 @section('content')
     <div class="page-catalog-item">
-        <div class="col-xs-7 block-gallery">
+        <div class="col-xs-24 col-sm-12 col-md-7 block-gallery">
+        @if(isset($data->Pictures))
             <?$count_picture = 0?>
-            @if( !array_key_exists('Large', $data['Result']['Item']['Pictures']['ItemPicture']))
-                @foreach($data['Result']['Item']['Pictures']['ItemPicture'] as $picture)
+            @if(count($data->Pictures->ItemPicture) > 0)
+                @foreach($data->Pictures->ItemPicture as $picture)
                     <?++$count_picture?>
-                    <a class="fancybox @if($count_picture === 1) bigImageItem @endif" href="{{ $picture['Large'] }}" rel="fancybox-thumb">
+                    <a class="fancybox @if($count_picture === 1) bigImageItem @endif" href="{{ $picture->Large }}" rel="fancybox-thumb">
                         @if($count_picture === 1)
-                            <img src="{{ $picture['Large'] }}" class="all-width fancybox LargeImg" alt="{{ $data['Result']['Item']['Title'] }}">
+                            <img src="{{ $picture->Large }}" class="all-width fancybox LargeImg" alt="{{ $data->Title }}">
                         @else
-                            <img src="{{ $picture['Small'] }}" class="fancybox SmallImg" alt="{{ $data['Result']['Item']['Title'] }}">
+                            <img src="{{ $picture->Small }}" class="fancybox SmallImg" alt="{{ $data->Title }}">
                         @endif
                     </a>
                 @endforeach
             @else
-                <a class="fancybox" href="{{ $data['Result']['Item']['Pictures']['ItemPicture']['Large'] }}" rel="fancybox-thumb">
-                    <img src="{{ $data['Result']['Item']['Pictures']['ItemPicture']['Large'] }}" class="all-width fancybox LargeImg" alt="{{ $data['Result']['Item']['Title'] }}">
+                <a class="fancybox" href="{{ $data->Pictures->ItemPicture->Large }}" rel="fancybox-thumb">
+                    <img src="{{ $data->Pictures->ItemPicture->Large }}" class="all-width fancybox LargeImg" alt="{{ $data->Title }}">
                 </a>
             @endif
+        @endif
         </div>
-        <div class="col-xs-10 col-xs-offset-1">
+        <div class="col-xs-24 @if( !isset($vendor->Credit->Level)) col-sm-12 col-md-16 col-md-offset-1 @else col-sm-12 col-md-10 col-md-offset-1 @endif">
             <div>
-                <h1>{{ mb_strimwidth($data['Result']['Item']['Title'], 0, 130, '...') }}</h1>
-                <p><a target="_blank" href="{{ $data['Result']['Item']['TaobaoItemUrl'] }}">[этот товар на таобао]</a></p>
+                <h1>{{ mb_strimwidth($data->Title, 0, 130, '...') }}</h1>
+                <p><a target="_blank" href="{{ $data->TaobaoItemUrl }}">[этот товар на таобао]</a></p>
                 <br/>
             </div>
             <div class="clearfix"></div>
-            @if(isset($item['config_current']['Price']['promoPrice']))
+            @if(isset($item['config_current']->Price->promoPrice))
                 <p class="cost priceOld" style="text-decoration: line-through">
-                    <span class="strong-heavy price-item">{{ $item['config_current']['Price']['ConvertedPriceWithoutSign'] }}</span><small>{{ $item['config_current']['Price']['CurrencySign'] }}</small>
+                    <span class="strong-heavy price-item">{{ $item['config_current']->Price->ConvertedPriceWithoutSign }}</span><small>{{ $item['config_current']->Price->CurrencySign }}</small>
                 </p>
                 <p class="cost">
                     Цена:
-                    <span class="strong-heavy pricePromo-item">{{ $item['config_current']['Price']['promoPrice'] }}</span><small>{{ $item['config_current']['Price']['CurrencySign'] }}</small>
+                    <span class="strong-heavy pricePromo-item">{{ $item['config_current']->Price->promoPrice }}</span><small>{{ $item['config_current']->Price->CurrencySign }}</small>
                 </p>
             @else
                 <p class="cost">
                     Цена:
-                    <span class="strong-heavy price-item">{{ $item['config_current']['Price']['ConvertedPriceWithoutSign'] }}</span><small>{{ $item['config_current']['Price']['CurrencySign'] }}</small>
+                    <span class="strong-heavy price-item">{{ $item['config_current']->Price->ConvertedPriceWithoutSign }}</span><small>{{ $item['config_current']->Price->CurrencySign }}</small>
                 </p>
             @endif
-            <p class="text-center nalicie">В наличии: <span class="quantity-item">{{ $item['config_current']['Quantity'] }}</span> шт.</p>
+            <p class="alert alert-warning text-center" data-toggle="tooltip" data-placement="bottom" title="1кг=250 руб"><sup>*</sup>без учета таможенной пошлины<p>
+            <p class="text-center nalicie">В наличии: <span class="quantity-item">{{ $item['config_current']->Quantity }}</span> шт.</p>
+            <?if(isset($category->ApproxWeight)){?>
+                <p class="text-center">Примерный вес: <span>{{ $category->ApproxWeight }}</span> кг.</p><br/>
+            <?}?>
             <div class="attributes-config">
-                @if($data['Result']['Item']['IsSellAllowed'] === 'false' AND $data['Result']['Item']['HasInternalDelivery'] === 'false')
-                    Нельзя купить: {{ $data['Result']['Item']['SellDisallowReason'] }}
+                @if($data->IsSellAllowed === 'false' AND $data->HasInternalDelivery === 'false')
+                    Нельзя купить: {{ $data->SellDisallowReason }}
                 @endif
 
                 @foreach($item['attr'] as $attr_key => $attr)
@@ -58,27 +64,28 @@
                         <div class="col-xs-6" style="padding-left: 0"><i>{{ $attr_key }}:</i></div>
                         <div class="col-xs-18">
                             @foreach($attr as $key => $attr_value)
-                                @if(array_key_exists('MiniImageUrl', $attr_value) && $attr_value['MiniImageUrl'] !== '')
-                                    <button type="button" class="change-bigImageItem change-config-item change-config-item-{{ $attr_value['@attributes']['Pid'] }} btn btn-default
-                                    @if($item['config_current']['bucket'][$attr_value['@attributes']['Pid']] === $attr_value['@attributes']['Vid']) active @endif" rel="property"
-                                            title="{{ $attr_value['PropertyName'] }} {{ $attr_value['Value'] }}"
-                                            data-vid="{{ $attr_value['@attributes']['Vid'] }}"
-                                            data-pid="{{ $attr_value['@attributes']['Pid'] }}"
-                                            data-originalName="{{ $attr_value['OriginalPropertyName'] }}:{{ $attr_value['OriginalValue'] }}
-                                                    ({{ $attr_value['PropertyName'] }} {{ $attr_value['Value'] }})
-                                        {{ mb_strimwidth($attr_value['Value'], 0, 10, '...') }}"
-                                            data-scr="{{ $attr_value['ImageUrl'] }}">
-                                        <img src="{{ $attr_value['MiniImageUrl'] }}" alt="{{ $attr_value['PropertyName'] }} {{ $attr_value['Value'] }}">
+                                @php($attributeKey = '@attributes')
+                                @if(isset($attr_value->MiniImageUrl) && $attr_value->MiniImageUrl !== '')
+                                    <button type="button" class="change-bigImageItem change-config-item change-config-item-{{ $attr_value->$attributeKey->Pid }} btn btn-default
+                                    @if($item['config_current']->bucket->get($attr_value->$attributeKey->Pid) === $attr_value->$attributeKey->Vid) active @endif" rel="property"
+                                            title="{{ $attr_value->PropertyName }} {{ $attr_value->Value }}"
+                                            data-vid="{{ $attr_value->$attributeKey->Vid }}"
+                                            data-pid="{{ $attr_value->$attributeKey->Pid }}"
+                                            data-originalName="{{ $attr_value->OriginalPropertyName }}:{{ $attr_value->OriginalValue }}
+                                                    ({{ $attr_value->PropertyName }} {{ $attr_value->Value }})
+                                        {{ mb_strimwidth($attr_value->Value, 0, 10, '...') }}"
+                                            data-scr="{{ $attr_value->ImageUrl }}">
+                                        <img src="{{ $attr_value->MiniImageUrl }}" alt="{{ $attr_value->PropertyName }} {{ $attr_value->Value }}">
                                     </button>
                                 @else
-                                    <button type="button" class="change-config-item change-config-item-{{ $attr_value['@attributes']['Pid'] }} btn btn-default
-                                @if($item['config_current']['bucket'][$attr_value['@attributes']['Pid']] === $attr_value['@attributes']['Vid']) active @endif"
-                                            title="{{ $attr_value['PropertyName'] }} {{ $attr_value['Value'] }}"
-                                            data-vid="{{ $attr_value['@attributes']['Vid'] }}"
-                                            data-pid="{{ $attr_value['@attributes']['Pid'] }}"
-                                            data-originalName="{{ $attr_value['OriginalPropertyName'] }}:{{ $attr_value['OriginalValue'] }}
-                                                    ({{ $attr_value['PropertyName'] }} {{ $attr_value['Value'] }}) ">
-                                        {{ mb_strimwidth($attr_value['Value'], 0, 10, '...') }}
+                                    <button type="button" class="change-config-item change-config-item-{{ $attr_value->$attributeKey->Pid }} btn btn-default
+                                @if($item['config_current']->bucket->get($attr_value->$attributeKey->Pid) === $attr_value->$attributeKey->Vid) active @endif"
+                                            title="{{ $attr_value->PropertyName }} {{ $attr_value->Value }}"
+                                            data-vid="{{ $attr_value->$attributeKey->Vid }}"
+                                            data-pid="{{ $attr_value->$attributeKey->Pid }}"
+                                            data-originalName="{{ $attr_value->OriginalPropertyName }}:{{ $attr_value->OriginalValue }}
+                                                    ({{ $attr_value->PropertyName }} {{ $attr_value->Value }}) ">
+                                        {{ mb_strimwidth($attr_value->Value, 0, 10, '...') }}
                                     </button>
                                 @endif
                             @endforeach
@@ -92,79 +99,88 @@
             </div>
             <br/>
             <input type="hidden" name="configurationId" value="">
-            <p class="text-center button_bg">
-                <button class="btn btn-danger btn-lg btn-add-to-cart"
-                    data-id="{{ $data['Result']['Item']['Id'] }}"
-                    data-name="{{ $data['Result']['Item']['OriginalTitle'] }}"
-                    @if(isset($data['Result']['Item']['Price']['promoPrice']))
-                        data-price="{{ $data['Result']['Item']['Price']['promoPrice'] }}"
-                    @else
-                        data-price="{{ $data['Result']['Item']['Price']['ConvertedPriceWithoutSign'] }}"
-                    @endif
-                    data-config=""
-                    data-src="">
-                <i class="fa fa-cart-plus"></i> Добавить в корзину</button>
-                <button class="btn btn-info btn-lg btn-add-to-cart"
-                        data-id="{{ $data['Result']['Item']['Id'] }}"
-                        data-name="{{ $data['Result']['Item']['OriginalTitle'] }}"
-                        @if(isset($data['Result']['Item']['Price']['promoPrice']))
-                            data-price="{{ $data['Result']['Item']['Price']['promoPrice'] }}"
+            @if($item['config_current']->Quantity > 0)
+                <p class="text-center button_bg">
+                    <button class="btn btn-danger btn-lg btn-add-to-cart"
+                        data-id="{{ $data->Id }}"
+                        data-name="{{ $data->OriginalTitle }}"
+                        @if(isset($item['config_current']->Price->promoPrice))
+                            data-price="{{ $item['config_current']->Price->promoPrice }}"
                         @else
-                            data-price="{{ $data['Result']['Item']['Price']['ConvertedPriceWithoutSign'] }}"
+                            data-price="{{ $data->Price->ConvertedPriceWithoutSign }}"
                         @endif
                         data-config=""
-                        data-src=""
-                        data-action="to_cart">
-                    <i class="fa fa-shopping-cart"></i> Купить в один клик</button>
-            <a href="/cart" class="btn btn-success btn-lg hidden btn-to-cart-link"><i class="fa fa-shopping-cart"></i> К корзине</a>
-            </p>
+                        data-src="">
+                    <i class="fa fa-cart-plus"></i> Добавить в корзину</button>
+                    <button class="btn btn-info btn-lg btn-add-to-cart"
+                            data-id="{{ $data->Id }}"
+                            data-name="{{ $data->OriginalTitle }}"
+                            @if(isset($data->Price->promoPrice))
+                                data-price="{{ $data->Price->promoPrice }}"
+                            @else
+                                data-price="{{ $data->Price->ConvertedPriceWithoutSign }}"
+                            @endif
+                            data-config=""
+                            data-src=""
+                            data-action="to_cart">
+                        <i class="fa fa-shopping-cart"></i> Купить в один клик</button>
+                    <a href="/cart" class="btn btn-success btn-lg hidden btn-to-cart-link"><i class="fa fa-shopping-cart"></i> К корзине</a>
+                </p>
+            @else
+                <p class="text-center button_bg"><span class="h2">Товара нет в наличии</span></p>
+            @endif
             <div class="clearfix"></div>
         </div>
-        <div class="col-xs-5 col-xs-offset-1">
-            <div class="vendor">
-                <p class="h4 row">Продавец:</p>
-                <ul class="list-unstyled row list-vendor">
-                    <li class="row">
-                        <p class="col-xs-24">
-                            <a href="/otapi/vendor/{{ $data['Result']['Item']['VendorId'] }}">{{ $data['Result']['Item']['VendorName'] }}</a>
-                            <br/>
-                            @for($i=0; $i < ceil($vendor['VendorInfo']['Credit']['Level']/5); $i++)
-                                <i class="fa fa-star"></i>
-                            @endfor
-                        </p>
-                    </li>
-                    <li class="row">
-                        <p class="col-xs-24">{{ $data['Result']['Item']['Location']['City'] }}
-                            ({{ $data['Result']['Item']['Location']['State'] }})</p>
-                    </li>
-                    <li class="row">
-                        <p class="col-xs-24">{{ $vendor['VendorInfo']['Credit']['TotalFeedbacks'] }} отзывов
-                            <i class="glyphicon glyphicon-heart"></i>
-                        {{ mb_strimwidth(($vendor['VendorInfo']['Credit']['PositiveFeedbacks'] * 100) / $vendor['VendorInfo']['Credit']['TotalFeedbacks'], 0, 5, '') }}%
-                        </p>
-                    </li>
-                </ul>
-            </div>
-
-            @if($vendorTovars['OtapiItemInfoSubList']['TotalCount'] > 0)
-                <p class="h4 text-center row">Так же продает:</p>
-                <div class="row row-vendorTovars">
-                    @foreach($vendorTovars['OtapiItemInfoSubList']['Content']['Item'] as $tovar)
-                        @if(isset($tovar['Pictures']['ItemPicture'][0]['Small']))
-                        <a href="/otapi/{{ $tovar['CategoryId'] }}/tovar/{{ $tovar['Id'] }}">
-                            <img src="{{ $tovar['Pictures']['ItemPicture'][0]['Small'] }}" class="col-xs-12" alt="Фото товара">
-                        </a>
-                        @endif
-                    @endforeach
-                    @if($vendorTovars['OtapiItemInfoSubList']['TotalCount'] - 6 > 0)
-                        <p class="text-right"><i>
-                                И еще <a href="/otapi/vendor/{{ $data['Result']['Item']['VendorId'] }}">
-                                    {{ $vendorTovars['OtapiItemInfoSubList']['TotalCount']-6 }} товаров...</a></i>
-                        </p>
-                    @endif
+        @if(isset($vendor->Credit->Level))
+            <div class="col-xs-24 col-md-5 col-md-offset-1">
+                <div class="vendor">
+                    <p class="h4 row">Продавец:</p>
+                    <ul class="list-unstyled row list-vendor">
+                        <li class="row">
+                            <p class="col-xs-24">
+                                <a href="/otapi/vendor/{{ $data->VendorId }}">{{ $data->VendorName }}</a>
+                                <br/>
+                                @php($count_it = ceil($vendor->Credit->Level/5))
+                                @for($i=0; $i < $count_it; $i++)
+                                    <i class="fa fa-star"></i>
+                                @endfor
+                            </p>
+                        </li>
+                        <li class="row">
+                            <p class="col-xs-24">{{ $data->Location->City }}
+                                ({{ $data->Location->State }})</p>
+                        </li>
+                        <li class="row">
+                            <p class="col-xs-24">{{ $vendor->VendorInfo->Credit->TotalFeedbacks }} отзывов
+                                <i class="glyphicon glyphicon-heart"></i>
+                                @if($vendor->VendorInfo->Credit->TotalFeedbacks > 0)
+                                    {{ mb_strimwidth(($vendor->VendorInfo->Credit->PositiveFeedbacks * 100) / $vendor->VendorInfo->Credit->TotalFeedbacks, 0, 5, '') }}%
+                                @endif
+                            </p>
+                        </li>
+                    </ul>
                 </div>
-            @endif
-        </div>
+
+                @if($vendorTovars->TotalCount > 0)
+                    <p class="h4 text-center row">Так же продает:</p>
+                    <div class="row row-vendorTovars">
+                        @foreach($vendorTovars->Content->Item as $tovar)
+                            @if(isset($tovar->Pictures->ItemPicture[0]->Small))
+                            <a href="/otapi/{{ $tovar->CategoryId }}/tovar/{{ $tovar->Id }}">
+                                <img src="{{ $tovar->Pictures->ItemPicture[0]->Small }}" class="col-xs-12" alt="Фото товара">
+                            </a>
+                            @endif
+                        @endforeach
+                        @if($vendorTovars->TotalCount - 6 > 0)
+                            <p class="text-right"><i>
+                                    И еще <a href="/otapi/vendor/{{ $data->VendorId }}">
+                                        {{ $vendorTovars->TotalCount-6 }} товаров...</a></i>
+                            </p>
+                        @endif
+                    </div>
+                @endif
+            </div>
+        @endif
     </div>
     <div class="clearfix"></div><br/><br/><br/>
 
@@ -180,15 +196,15 @@
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="photo-description">
                 <div class="col-xs-24">
-                    {!! $GetItemDescription['OtapiItemDescription']['ItemDescription'] !!}
+                    {!! $data->Description !!}
                 </div>
             </div>
             <div role="tabpanel" class="tab-pane" id="description">
                 <div class="col-xs-24">
-                    @if(isset($data['Result']['Item']['Attributes']['ItemAttribute']))
-                        @foreach($data['Result']['Item']['Attributes']['ItemAttribute'] as $attribute)
-                            @if($attribute['IsConfigurator'] === 'false')
-                                <p><i>{{ $attribute['PropertyName'] }}: {{ $attribute['Value'] }}</i></p>
+                    @if(isset($data->Attributes->ItemAttribute))
+                        @foreach($data->Attributes->ItemAttribute as $attribute)
+                            @if(isset($attribute->IsConfigurator) && $attribute->IsConfigurator === 'false')
+                                <p><i>{{ $attribute->PropertyName }}: {{ $attribute->Value }}</i></p>
                             @endif
                         @endforeach
                     @endif
@@ -196,10 +212,17 @@
             </div>
             <div role="tabpanel" class="tab-pane" id="opinions">
                 <div class="col-xs-24">
+                    @foreach($opinions as $item)
+                        <div>{{ $item->Content }}</div>
+                        <div>{{ $item->CreatedDate }}</div>
+                        <div>{{ $item->UserNick }}</div>
+                        <div>{{ $item->Result }}</div>
+                        <div>{{ $item->Images }}</div>
+                    @endforeach
                     <div id="mc-container"></div>
                     <script type="text/javascript">
                         cackle_widget = window.cackle_widget || [];
-                        cackle_widget.push({widget: 'Comment', id: 43706});
+                        cackle_widget.push({widget: 'Comment', id: {{ $data->Id }});
                         (function() {
                             var mc = document.createElement('script');
                             mc.type = 'text/javascript';

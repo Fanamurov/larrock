@@ -24,6 +24,7 @@ Route::get('auth/logout', 'Auth\AuthController@getLogout');
 Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
 
+Route::get('contact', 'PageController@getContact');
 Route::get('/page/{url}', 'PageController@getItem');
 
 Route::get('/catalog', [

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Alert;
+use App\Helpers\Otapi\OtapiCategory;
+use App\Helpers\Otapi\OtapiItem;
+use App\Helpers\Otapi\OtapiReview;
 use Breadcrumbs;
 use Cart;
 use Illuminate\Http\Request;
@@ -13,6 +16,7 @@ use Cache;
 use Mail;
 use View;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
+use App\Helpers\Otapi\OtapiVendor;
 
 class Otapi extends Controller
 {
@@ -37,12 +41,13 @@ class Otapi extends Controller
 
         //echo $method .'_'.$param_request .'<br/>';
         $cacheKey = md5($method .'_'.$param_request);
-        if($method === 'GetThreeLevelRootCategoryInfoList'){
+        if($method === 'FindCategoryItemInfoListFrame'){
+			//dd($this->service_url . $method .'?'. $this->instanceKey .'&'. $this->lang . $param_request);
             //Cache::forget($cacheKey);
         }
         //Cache::forget($cacheKey);
 
-        $body = Cache::remember($cacheKey, 240, function() use ($method, $param_request)
+        $body = Cache::remember($cacheKey, 1440, function() use ($method, $param_request)
         {
             $client = new Client();
             //dd($this->service_url . $method .'?'. $this->instanceKey .'&'. $this->lang . $param_request);
@@ -123,7 +128,7 @@ class Otapi extends Controller
 
 		$body['sort_active'] = 'Price:Asc';
 		foreach($body['sorters'] as $sort_key => $sort){
-			if($request->get('sort', '') === $sort_key){
+			if($request->get('sort', 'Default') === $sort_key){
 				$body['sorters'][$sort_key]['active'] = 1;
 				$body['sort_active'] = $sort_key;
 			}
@@ -138,12 +143,25 @@ class Otapi extends Controller
         $body['selected_filters'] = ['0' => 'test'];
         foreach ($request->all() as $key => $filter){
 			$key = str_replace('TTT', '', $key);
-            if ($key !== '_token' && $key !== 'filter' && $key !== 'sort' && $key !== 'page' && !empty($filter)){
+            if ($key !== '_token' && $key !== 'filter' && $key !== 'sort' && $key !== 'page' && $key !== 'MinPrice' && $key !== 'MaxPrice' && !empty($filter)){
                 $search_params .= '<Configurator Pid="'. $key .'" Vid="'. $filter .'"/>';
                 $body['selected_filters'][] = $filter;
             }
         }
-        $search_params .= '</Configurators><OrderBy>'. $request->get('sort', 'Price:Asc') .'</OrderBy></SearchParameters>';
+        $search_params .= '</Configurators><OrderBy>'. $request->get('sort', 'Default') .'</OrderBy>';
+
+        foreach ($request->all() as $key => $filter){
+            if($key === 'MinPrice'){
+                $search_params .= '<MinPrice>100</MinPrice>';
+            }
+            if($key === 'MaxPrice'){
+                $search_params .= '<MaxPrice>100</MaxPrice>';
+            }
+        }
+
+        $search_params .= '</SearchParameters>';
+
+        //dd($search_params);
 
 
         $body['data'] = $this->create_request('FindCategoryItemInfoListFrame', [
@@ -170,14 +188,16 @@ class Otapi extends Controller
 				$total = 400*60;
 			}
 
-			$body['paginator'] = new Paginator(
-				$body['data']->OtapiItemInfoSubList->Content->Item,
-				$total,
-				$limit = 60,
-				$page = $request->get('page'), [
-				'path'  => $request->url(),
-				'query' => $request->query(),
-			]);
+            if(isset($body['data']->OtapiItemInfoSubList->Content->Item)){
+                $body['paginator'] = new Paginator(
+                $body['data']->OtapiItemInfoSubList->Content->Item,
+                $total,
+                $limit = 60,
+                $page = $request->get('page'), [
+                'path'  => $request->url(),
+                'query' => $request->query(),
+            ]);
+            }
 
             return view('otapi.categoryTovars', $body);
         }else{
@@ -191,65 +211,62 @@ class Otapi extends Controller
      * @param int $itemId
      * @return mixed
      */
-    public function get_tovar($categoryId = 'otc-3035', $itemId = 45199342419)
+    public function get_tovar($categoryId = 'otc-3035', $itemId = 45199342419, OtapiVendor $otapiVendor, OtapiCategory $otapiCategory, OtapiItem $otapiItem, OtapiReview $otapiReview)
     {
-		Cache::forget('catalog'.$categoryId.$itemId);
-        $body = Cache::remember('catalog'.$categoryId.$itemId, 60, function() use($categoryId, $itemId){
-            $body['category'] = $this->create_request('GetCategoryInfo', ['categoryId' => $categoryId]);
-            $body['data'] = $this->create_request('BatchGetItemFullInfo', ['itemId' => $itemId, 'blockList' => 'Promotions,RootPath', 'sessionId' => mt_rand(100000,99999999)]);
-			if( !isset($body['data']->Result)){
-				abort(404, 'Такого такого больше нет :(');
-			}
-            $body['GetItemDescription'] = $this->create_request('GetItemDescription', ['itemId' => $itemId]);
-            //$body['opinions'] = $this->create_request('GetTradeRateInfoListFrame', ['itemId' => $itemId, 'framePosition' => 0, 'frameSize' => 32]);
-            $body['vendorTovars'] = $this->create_request('GetVendorItemInfoSortedListFrame',
-                ['vendorId' => (string)$body['data']->Result->Item->VendorId, 'framePosition' => 0, 'frameSize' => 6, 'sortingParameters' => '']);
-            $body['vendor'] = $this->create_request('GetVendorInfo', ['vendorId' => (string)$body['data']->Result->Item->VendorId]);
-
-            return json_encode($body);
+		//Cache::forget('catalog'.$categoryId.$itemId);
+        $body = Cache::remember('catalog'.$categoryId.$itemId, 1440, function() use($categoryId, $itemId, $otapiVendor, $otapiCategory, $otapiItem, $otapiReview){
+            $body['category'] = $otapiCategory->get($categoryId);
+            $body['data'] = $otapiItem->get($itemId, TRUE);
+            //$body['opinions'] = $otapiReview->get($itemId, 0, 10); //Бажно
+			$body['opinions'] = collect();
+            $body['vendorTovars'] = $otapiVendor->tovars($body['data']->VendorId);
+			$body['vendor'] = $otapiVendor->get($body['data']->VendorId);
+            return $body;
         });
 
-        $body = json_decode($body, TRUE);
+        if(isset($body['data']->Attributes->ItemAttribute)){
+            $attributes = $body['data']->Attributes->ItemAttribute;
+        }else{
+            $attributes = [];
+        }
 
-		$attributes = $body['data']['Result']['Item']['Attributes']['ItemAttribute'];
 		//Все конфигурируемые значения параметров товара
 		$body['item']['attr'] = [];
 		foreach($attributes as $item){
-			if($item['IsConfigurator'] === 'true'){
-				$body['item']['attr'][$item['PropertyName']][] = $item;
+			if(isset($item->IsConfigurator) && $item->IsConfigurator === 'true'){
+				$body['item']['attr'][$item->PropertyName][] = $item;
 			}
 		}
 
 		//Собираем конфиги
 		$body['item']['promo'] = [];
-		if(isset($body['data']['Result']['Item']['Promotions'])){
-			$body['item']['promo'] = $body['data']['Result']['Item']['Promotions']['OtapiItemPromotion']['ConfiguredItems'];
+		if(isset($body['data']->Promotions->ConfiguredItems)){
+			$body['item']['promo'] = $body['data']->Promotions->ConfiguredItems;
 		}
 
 		$body['item']['configs'] = [];
-		if(isset($body['data']['Result']['Item']['ConfiguredItems']['OtapiConfiguredItem'])){
-			$body['item']['configs'] = $body['data']['Result']['Item']['ConfiguredItems']['OtapiConfiguredItem'];
+		if(isset($body['data']->ConfiguredItems)){
+			$body['item']['configs'] = $body['data']->ConfiguredItems;
 		}else{
 			//Нет конфигуратора
 			//dd($body['data']['Result']['Item']);
-			$body['item']['config_current']['Price']['ConvertedPriceWithoutSign'] = $body['data']['Result']['Item']['Price']['ConvertedPriceWithoutSign'];
-			$body['item']['config_current']['Price']['CurrencySign'] = $body['data']['Result']['Item']['Price']['CurrencySign'];
-			$body['item']['config_current']['Quantity'] = $body['data']['Result']['Item']['MasterQuantity'];
+			$body['item']['config_current']['Price']['ConvertedPriceWithoutSign'] = $body['data']->Price->ConvertedPriceWithoutSign;
+			$body['item']['config_current']['Price']['CurrencySign'] = $body['data']->Price->CurrencySign;
+			$body['item']['config_current']['Quantity'] = $body['data']->MasterQuantity;
 		}
-
 
 		if(isset($body['item']['configs']['Id'])){
 			foreach($body['item']['promo'] as $promo_value){
-				if($promo_value['Id'] === $body['item']['configs']['Id']){
-					$body['item']['configs']['Price']['promoPrice'] = $promo_value['Price']['ConvertedPriceWithoutSign'];
+				if($promo_value->Id === $body['item']['configs']->Id){
+					$body['item']['configs']->Price->promoPrice = $promo_value->Price->ConvertedPriceWithoutSign;
 				}
 			}
 		}else{
 			foreach($body['item']['configs'] as $key => $config){
-				if(isset($body['item']['promo']['Item'])){
-					foreach($body['item']['promo']['Item'] as $promo_value){
-						if($promo_value['Id'] === $config['Id']){
-							$body['item']['configs'][$key]['Price']['promoPrice'] = $promo_value['Price']['ConvertedPriceWithoutSign'];
+				if(isset($body['item']['promo']->Item)){
+					foreach($body['item']['promo']->Item as $promo_value){
+						if($promo_value->Id === $config->Id){
+							$body['item']['configs'][$key]->Price->promoPrice = $promo_value->Price->ConvertedPriceWithoutSign;
 						}
 					}
 				}
@@ -257,55 +274,64 @@ class Otapi extends Controller
 		}
 
 		foreach($body['item']['configs'] as $key => $config){
-            if(isset($config['Configurators']['ValuedConfigurator'])){
-                foreach($config['Configurators']['ValuedConfigurator'] as $val_conf){
-                    if(array_key_exists('@attributes', $val_conf)){
-                        $body['item']['configs'][$key]['bucket'][$val_conf['@attributes']['Pid']] = $val_conf['@attributes']['Vid'];
+			$attribute = '@attributes';
+            if(isset($config->Configurators->ValuedConfigurator)){
+                foreach($config->Configurators->ValuedConfigurator as $val_conf){
+                    if(isset($val_conf->$attribute)){
+						$body['item']['configs'][$key]->bucket = collect();
+                        $body['item']['configs'][$key]->bucket->put($val_conf->$attribute->Pid, $val_conf->$attribute->Vid);
                     }else{
-                        $body['item']['configs'][$key]['bucket'][$val_conf['Pid']] = $val_conf['Vid'];
+                        $body['item']['configs'][$key]->bucket->put($val_conf->Pid, $val_conf->Vid);
                     }
                 }
-                if($config['Quantity'] !== '0' AND !isset($body['item']['config_current'])){
+                //dd($body['item']);
+                if($config->Quantity !== '0' AND !isset($body['item']['config_current'])){
                     $body['item']['config_current'] = $body['item']['configs'][$key];
                 }
             }else{
                 $body['item']['config_current'] = $body['item']['configs'];
-                //dd($Pid = $body['item']['configs']['Configurators']['ValuedConfigurator']);
-                if( !isset($body['item']['configs']['Configurators']['ValuedConfigurator']['@attributes'])){
-                    //dd($body['item']['configs']['Configurators']['ValuedConfigurator']);
+				$body['item']['config_current']->bucket = collect();
+                //dd($Pid = $body['item']['configs']->Configurators->ValuedConfigurator);
+                if( !isset($body['item']['configs']->Configurators->ValuedConfigurator->$attribute)){
+                    //dd($body['item']['configs']->Configurators->ValuedConfigurator);
                     //1627207
-                    foreach ($body['item']['configs']['Configurators']['ValuedConfigurator'] as $val){
-                        $Pid = $val['@attributes']['Pid'];
-                        $Vid = $val['@attributes']['Vid'];
-                        $body['item']['config_current']['bucket'][$Pid] = $Vid;
+                    foreach ($body['item']['configs']->Configurators->ValuedConfigurator as $val){
+                        $Pid = $val->$attribute->Pid;
+                        $Vid = $val->$attribute->Vid;
+                        $body['item']['config_current']->bucket->put($Pid, $Vid);
                     }
                 }else{
-                    $Pid = $body['item']['configs']['Configurators']['ValuedConfigurator']['@attributes']['Pid'];
-                    $Vid = $body['item']['configs']['Configurators']['ValuedConfigurator']['@attributes']['Vid'];
-                    $body['item']['config_current']['bucket'][$Pid] = $Vid;
+                    $Pid = $body['item']['configs']->Configurators->ValuedConfigurator->$attribute->Pid;
+                    $Vid = $body['item']['configs']->Configurators->ValuedConfigurator->$attribute->Vid;
+                    $body['item']['config_current']->bucket->put($Pid, $Vid);
                 }
             }
 		}
 
-        if((string)$body['data']['ErrorCode'] === 'Ok'){
-            Breadcrumbs::register('otapi.tovar', function($breadcrumbs, $categoryId)
-            {
-                $breadcrumbs->parent('otapi.index');
-
-                $GetCategoryRootPath = $this->create_request('GetCategoryRootPath', ['categoryId' => $categoryId]);
-                $categorys = (array)$GetCategoryRootPath->CategoryInfoList->Content;
-                $categorys = array_reverse($categorys['Item']);
-                foreach($categorys as $item){
-                    $breadcrumbs->push((string)$item->Name, route('otapi.category', ['categoryId' => (string)$item->Id]));
+        if( !isset($body['item']['config_current'])){
+            foreach ($body['item']['configs'] as $key => $value) {
+                if($value['Quantity'] > 0){
+                    $body['item']['config_current'] = $value;
                 }
-
-                $breadcrumbs->push('Товар');
-            });
-			View::share('moduleLast', $this->ModuleSoputkaTovars($body['data']['Result']['RootPath']['Content']['Item'][1]['Id']));
-            return view('otapi.tovarItem', $body);
-        }else{
-            abort('404', 'Товар не получен');
+            }
         }
+
+        if( !isset($body['item']['config_current'])){
+            $body['item']['config_current'] = $body['item']['configs'][0];
+        }
+
+		Breadcrumbs::register('otapi.tovar', function($breadcrumbs, $rootPath)
+		{
+			$breadcrumbs->parent('otapi.index');
+
+			$rootPath = $rootPath->reverse();
+			foreach($rootPath as $item){
+				$breadcrumbs->push($item->Name, route('otapi.category', ['categoryId' => $item->Id]));
+			}
+			//$breadcrumbs->push('Товар');
+		});
+		View::share('moduleLast', $this->ModuleSoputkaTovars($body['data']->RootPath->first()->Id));
+		return view('otapi.tovarItem', $body);
     }
 
 	public function getConfigItem(Request $request)
@@ -345,10 +371,25 @@ class Otapi extends Controller
 		echo json_encode(['status' => 'NotFound']);
 	}
 
-    public function get_vendor($vendorId)
+    public function get_vendor($vendorId, Request $request)
     {
         $body['data'] = $this->create_request('GetVendorItemInfoSortedListFrame',
             ['vendorId' => $vendorId, 'framePosition' => 0, 'frameSize' => 60, 'sortingParameters' => '']);
+
+        $total = $body['data']->OtapiItemInfoSubList->TotalCount;
+        if($total > 400*60){
+            $total = 400*60;
+        }
+
+        $body['paginator'] = new Paginator(
+            $body['data']->OtapiItemInfoSubList->Content->Item,
+            $total,
+            $limit = 60,
+            $page = $request->get('page'), [
+            'path'  => $request->url(),
+            'query' => $request->query(),
+        ]);
+
         return view('otapi.vendorTovars', $body);
     }
 
@@ -431,25 +472,47 @@ class Otapi extends Controller
 		}
     }
 
-    public function getMenu()
+	/**
+	 * @return mixed
+	 */
+	public function getMenu()
     {
-        $body = $this->create_request('GetThreeLevelRootCategoryInfoList');
-        $tree = array();
-        $exists_ids = array();
-        foreach ($body->CategoryInfoList->Content->Item as $key => $value){
-            if( !isset($value->ParentId)){
-                $tree[1][$value->Id] = $value;
-            }else{
-                if(in_array($value->ParentId, $exists_ids)){
-                    $tree[3][$value->ParentId][] = $value;
-                }else{
-                    $tree[2][$value->ParentId][] = $value;
-                    $exists_ids[] = $value->Id;
-
-                }
-            }
-        }
-        return $tree;
+    	//Cache::forget('menu_tree');
+        $tree = Cache::rememberForever('menu_tree', function() {
+			$body = $this->create_request('GetThreeLevelRootCategoryInfoList');
+			$tree = collect();
+			$tree->level1 = collect();
+			$tree->level2 = collect();
+			$tree->level3 = collect();
+			$exists_ids = array();
+			//dd($body->CategoryInfoList->Content->Item);
+			$saved_parent_id = '';
+			foreach ($body->CategoryInfoList->Content->Item as $key => $value){
+				$item = collect();
+				foreach($value as $value_key => $value_value){
+					$item->$value_key = $value_value;
+					if($value_key === 'IsHidden'){
+						$item->Active = $value_value;
+					}
+				}
+				if( !isset($value->ParentId)){
+					$item->Parents = collect();
+					$tree->level1->put($value->Id, $item);
+					//$tree[1][$value->Id] = collect($value);
+				}else{
+					$parent_id = $value->ParentId;
+					if(isset($tree->level1[$parent_id])){
+						$item->Parents = collect();
+						$tree->level1[$parent_id]->Parents->put($value->Id, $item);
+						$saved_parent_id = $parent_id;
+					}else{
+						$tree->level1[$saved_parent_id]->Parents[$parent_id]->Parents->put($value->Id, $item);
+					}
+				}
+			}
+            return $tree;
+        });
+		return $tree;
     }
 
     public function AddToCart(Request $request)

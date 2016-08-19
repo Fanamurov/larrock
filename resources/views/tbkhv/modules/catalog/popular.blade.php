@@ -3,6 +3,7 @@
     @foreach($data->Content->Content->Item as $data_value)
         <div class="col-xs-12 col-sm-4 item-catalog">
             <div class="div-img">
+            @if(isset($data_value->Pictures))
                 <a href="/otapi/{{ (string)$data_value->CategoryId }}/tovar/{{ (string)$data_value->Id }}">
                     @if(is_array($data_value->Pictures->ItemPicture))
                         <img class="all-width" src="{{ $data_value->Pictures->ItemPicture[0]->Medium }}" alt="{{ (string)$data_value->Title }}">
@@ -10,6 +11,7 @@
                         <img class="all-width" src="{{ $data_value->Pictures->ItemPicture->Medium }}" alt="{{ (string)$data_value->Title }}">
                     @endif
                 </a>
+                @endif
             </div>
             <p><a href="/otapi/{{ (string)$data_value->CategoryId }}/tovar/{{ (string)$data_value->Id }}">
                     {{ mb_strimwidth((string)$data_value->OriginalTitle, 0, 15, '...') }}

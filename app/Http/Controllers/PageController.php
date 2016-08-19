@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blocks;
+use Breadcrumbs;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Page;
+use View;
 
 class PageController extends Controller
 {
@@ -16,10 +18,14 @@ class PageController extends Controller
 	public function __construct()
 	{
 		$this->config = \Config::get('components.page');
-
-		\View::share('header_email', Blocks::whereUrl('header-email')->first());
-		\View::share('header_slogan', Blocks::whereUrl('header-slogan')->first());
-		\View::share('contentBottom', Blocks::whereUrl('header-slogan')->first());
+		Breadcrumbs::register('otapi.index', function($breadcrumbs){
+			$breadcrumbs->push('Контакты', route('otapi.index'));
+		});
+	}
+	
+	public function getContact()
+	{
+		return view('tbkhv.page.contact');
 	}
 
     public function getItem($url = 'test')

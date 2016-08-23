@@ -30,4 +30,14 @@ class OtapiVendor
 		}
 		return collect();
 	}
+
+	public function GetVendorRatingList($itemRatingTypeId = 'Popular', $numberItem = 6, $categoryId = '')
+	{
+		$otapiConnection = new OtapiConnection;
+		$data = $otapiConnection->create_request('FindCategoryItemInfoListFrame', [
+			'itemRatingTypeId' => $itemRatingTypeId, 'numberItem' => $numberItem, 'categoryId' => $categoryId]);
+		abort('404', 'method GetVendorRatingList in progress');
+		dd($data);
+		return $data;
+	}
 }

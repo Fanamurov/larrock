@@ -35,91 +35,107 @@
                 <br/>
             </div>
             <div class="clearfix"></div>
-            @if(isset($item['config_current']->Price->promoPrice))
-                <p class="cost priceOld" style="text-decoration: line-through">
-                    <span class="strong-heavy price-item">{{ $item['config_current']->Price->ConvertedPriceWithoutSign }}</span><small>{{ $item['config_current']->Price->CurrencySign }}</small>
-                </p>
-                <p class="cost">
-                    Цена:
-                    <span class="strong-heavy pricePromo-item">{{ $item['config_current']->Price->promoPrice }}</span><small>{{ $item['config_current']->Price->CurrencySign }}</small>
-                </p>
+            @if($data->MasterQuantity > 0)
+                @if(isset($data->Promotions[0]->Price->Quantity))
+                    <p class="cost priceOld" style="text-decoration: line-through">
+                        <span class="strong-heavy price-item">{{ $data->Price->ConvertedPriceWithoutSign }}</span>
+                        <small>{{ $data->Price->CurrencySign }}</small>
+                    </p>
+                    <p class="cost">
+                        Цена:
+                        <span class="strong-heavy pricePromo-item">{{ $data->Promotions[0]->Price->ConvertedPriceWithoutSign }}</span>
+                        <small>{{ $data->Promotions[0]->Price->CurrencySign }}</small>
+                    </p>
+                    <p class="alert alert-warning text-center" data-toggle="tooltip" data-placement="bottom" title="1кг=250 руб"><sup>*</sup>без учета таможенной пошлины<p>
+                    <p class="text-center nalicie">В наличии: <span class="quantity-item">{{ $data->MasterQuantity }}</span> шт.</p>
+                @elseif(isset($data->Promotions->Price->Quantity))
+                    <p class="cost priceOld" style="text-decoration: line-through">
+                        <span class="strong-heavy price-item">{{ $data->Price->ConvertedPriceWithoutSign }}</span>
+                        <small>{{ $data->Price->CurrencySign }}</small>
+                    </p>
+                    <p class="cost">
+                        Цена:
+                        <span class="strong-heavy pricePromo-item">{{ $data->Promotions->Price->ConvertedPriceWithoutSign }}</span>
+                        <small>{{ $data->Promotions->Price->CurrencySign }}</small>
+                    </p>
+                    <p class="alert alert-warning text-center" data-toggle="tooltip" data-placement="bottom" title="1кг=250 руб"><sup>*</sup>без учета таможенной пошлины<p>
+                    <p class="text-center nalicie">В наличии: <span class="quantity-item">{{ $data->MasterQuantity }}</span> шт.</p>
+                @else
+                    <p class="cost">
+                        Цена:
+                        <span class="strong-heavy pricePromo-item">{{ $data->Price->ConvertedPriceWithoutSign }}</span>
+                        <small>{{ $data->Price->CurrencySign }}</small>
+                    </p>
+                    <p class="alert alert-warning text-center" data-toggle="tooltip" data-placement="bottom" title="1кг=250 руб"><sup>*</sup>без учета таможенной пошлины<p>
+                    <p class="text-center nalicie">В наличии: <span class="quantity-item">{{ $data->MasterQuantity }}</span> шт.</p>
+                @endif
             @else
-                <p class="cost">
-                    Цена:
-                    <span class="strong-heavy price-item">{{ $item['config_current']->Price->ConvertedPriceWithoutSign }}</span><small>{{ $item['config_current']->Price->CurrencySign }}</small>
-                </p>
+                <p class="alert alert-warning text-center">Товара нет в наличии</p>
             @endif
-            <p class="alert alert-warning text-center" data-toggle="tooltip" data-placement="bottom" title="1кг=250 руб"><sup>*</sup>без учета таможенной пошлины<p>
-            <p class="text-center nalicie">В наличии: <span class="quantity-item">{{ $item['config_current']->Quantity }}</span> шт.</p>
-            <?if(isset($category->ApproxWeight)){?>
+
+            @if(isset($category->ApproxWeight))
                 <p class="text-center">Примерный вес: <span>{{ $category->ApproxWeight }}</span> кг.</p><br/>
-            <?}?>
+            @endif
+            <form id="ItemConfig">
             <div class="attributes-config">
                 @if($data->IsSellAllowed === 'false' AND $data->HasInternalDelivery === 'false')
                     Нельзя купить: {{ $data->SellDisallowReason }}
                 @endif
 
-                @foreach($item['attr'] as $attr_key => $attr)
-                    <div class="col-xs-24 row">
-                        <div class="col-xs-6" style="padding-left: 0"><i>{{ $attr_key }}:</i></div>
-                        <div class="col-xs-18">
-                            @foreach($attr as $key => $attr_value)
-                                @php($attributeKey = '@attributes')
-                                @if(isset($attr_value->MiniImageUrl) && $attr_value->MiniImageUrl !== '')
-                                    <button type="button" class="change-bigImageItem change-config-item change-config-item-{{ $attr_value->$attributeKey->Pid }} btn btn-default
-                                    @if($item['config_current']->bucket->get($attr_value->$attributeKey->Pid) === $attr_value->$attributeKey->Vid) active @endif" rel="property"
-                                            title="{{ $attr_value->PropertyName }} {{ $attr_value->Value }}"
-                                            data-vid="{{ $attr_value->$attributeKey->Vid }}"
-                                            data-pid="{{ $attr_value->$attributeKey->Pid }}"
-                                            data-originalName="{{ $attr_value->OriginalPropertyName }}:{{ $attr_value->OriginalValue }}
-                                                    ({{ $attr_value->PropertyName }} {{ $attr_value->Value }})
-                                        {{ mb_strimwidth($attr_value->Value, 0, 10, '...') }}"
-                                            data-scr="{{ $attr_value->ImageUrl }}">
-                                        <img src="{{ $attr_value->MiniImageUrl }}" alt="{{ $attr_value->PropertyName }} {{ $attr_value->Value }}">
-                                    </button>
-                                @else
-                                    <button type="button" class="change-config-item change-config-item-{{ $attr_value->$attributeKey->Pid }} btn btn-default
-                                @if($item['config_current']->bucket->get($attr_value->$attributeKey->Pid) === $attr_value->$attributeKey->Vid) active @endif"
-                                            title="{{ $attr_value->PropertyName }} {{ $attr_value->Value }}"
-                                            data-vid="{{ $attr_value->$attributeKey->Vid }}"
-                                            data-pid="{{ $attr_value->$attributeKey->Pid }}"
-                                            data-originalName="{{ $attr_value->OriginalPropertyName }}:{{ $attr_value->OriginalValue }}
-                                                    ({{ $attr_value->PropertyName }} {{ $attr_value->Value }}) ">
-                                        {{ mb_strimwidth($attr_value->Value, 0, 10, '...') }}
-                                    </button>
-                                @endif
-                            @endforeach
-                        </div>
-                    </div>
-                    <div class="clearfix"></div>
-                    <br/>
+                @php($attributeKey = '@attributes')
+                @php($current_line_attribute = '')
+                @foreach($data->Attributes->ItemAttribute as $attr_key => $attr_value)
+                    @if($attr_value->IsConfigurator === 'true')
+                        @if($current_line_attribute !== $attr_value->PropertyName)
+                            @php($current_line_attribute = $attr_value->PropertyName)
+                            <p>{{ $attr_value->PropertyName }}:</p>
+                        @endif
+                        @if(isset($attr_value->MiniImageUrl) && $attr_value->MiniImageUrl !== '')
+                            <button type="button" class="change-bigImageItem change-config-item change-config-item-{{ $attr_value->$attributeKey->Pid }} btn btn-default" rel="property"
+                                    title="{{ $attr_value->PropertyName }} {{ $attr_value->Value }}"
+                                    data-vid="{{ $attr_value->$attributeKey->Vid }}"
+                                    data-pid="{{ $attr_value->$attributeKey->Pid }}"
+                                    data-originalName="{{ $attr_value->OriginalPropertyName }}:{{ $attr_value->OriginalValue }}
+                                            ({{ $attr_value->PropertyName }} {{ $attr_value->Value }})
+                                    {{ mb_strimwidth($attr_value->Value, 0, 10, '...') }}"
+                                    data-scr="{{ $attr_value->ImageUrl }}">
+                                <img src="{{ $attr_value->MiniImageUrl }}" alt="{{ $attr_value->PropertyName }} {{ $attr_value->Value }}">
+                            </button>
+                        @else
+                            <button type="button" class="change-config-item change-config-item-{{ $attr_value->$attributeKey->Pid }} btn btn-default"
+                                    title="{{ $attr_value->PropertyName }} {{ $attr_value->Value }}"
+                                    data-vid="{{ $attr_value->$attributeKey->Vid }}"
+                                    data-pid="{{ $attr_value->$attributeKey->Pid }}"
+                                    data-originalName="{{ $attr_value->OriginalPropertyName }}:{{ $attr_value->OriginalValue }}
+                                            ({{ $attr_value->PropertyName }} {{ $attr_value->Value }}) ">
+                                {{ mb_strimwidth($attr_value->Value, 0, 10, '...') }}
+                            </button>
+                        @endif
+                        @if($current_line_attribute !== $data->Attributes->ItemAttribute[$attr_key+1]->PropertyName)
+                                <input type="hidden" class="current_config" id="config-{{ $attr_value->$attributeKey->Pid }}" name="{{ $attr_value->$attributeKey->Pid }}" value="">
+                            <div class="clearfix"></div><br/>
+                        @endif
+                    @endif
                 @endforeach
-                <input type="hidden" name="configs" value='{!! json_encode($item['configs']) !!}'>
-                <input type="hidden" name="config_current" value='{!! json_encode($item['config_current']) !!}'>
+                <input type="hidden" name="configs" value='{!! json_encode($data->ConfiguredItems) !!}'>
+                <input type="hidden" name="configs_promo" value='{!! json_encode($data->Promotions) !!}'>
             </div>
+            </form>
             <br/>
             <input type="hidden" name="configurationId" value="">
-            @if($item['config_current']->Quantity > 0)
+            @if($data->MasterQuantity > 0)
                 <p class="text-center button_bg">
-                    <button class="btn btn-danger btn-lg btn-add-to-cart"
+                    <button class="btn btn-danger btn-lg btn-add-to-cart" disabled
                         data-id="{{ $data->Id }}"
                         data-name="{{ $data->OriginalTitle }}"
-                        @if(isset($item['config_current']->Price->promoPrice))
-                            data-price="{{ $item['config_current']->Price->promoPrice }}"
-                        @else
-                            data-price="{{ $data->Price->ConvertedPriceWithoutSign }}"
-                        @endif
+                        data-price=""
                         data-config=""
                         data-src="">
                     <i class="fa fa-cart-plus"></i> Добавить в корзину</button>
-                    <button class="btn btn-info btn-lg btn-add-to-cart"
+                    <button class="btn btn-info btn-lg btn-add-to-cart" disabled
                             data-id="{{ $data->Id }}"
                             data-name="{{ $data->OriginalTitle }}"
-                            @if(isset($data->Price->promoPrice))
-                                data-price="{{ $data->Price->promoPrice }}"
-                            @else
-                                data-price="{{ $data->Price->ConvertedPriceWithoutSign }}"
-                            @endif
+                            data-price=""
                             data-config=""
                             data-src=""
                             data-action="to_cart">
@@ -196,42 +212,17 @@
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="photo-description">
                 <div class="col-xs-24">
-                    {!! $data->Description !!}
+                    <!--{!! $data->Description !!}-->
                 </div>
             </div>
             <div role="tabpanel" class="tab-pane" id="description">
                 <div class="col-xs-24">
-                    @if(isset($data->Attributes->ItemAttribute))
-                        @foreach($data->Attributes->ItemAttribute as $attribute)
-                            @if(isset($attribute->IsConfigurator) && $attribute->IsConfigurator === 'false')
-                                <p><i>{{ $attribute->PropertyName }}: {{ $attribute->Value }}</i></p>
-                            @endif
-                        @endforeach
-                    @endif
+                    @include('otapi.item.attribute-list')
                 </div>
             </div>
             <div role="tabpanel" class="tab-pane" id="opinions">
                 <div class="col-xs-24">
-                    @foreach($opinions as $item)
-                        <div>{{ $item->Content }}</div>
-                        <div>{{ $item->CreatedDate }}</div>
-                        <div>{{ $item->UserNick }}</div>
-                        <div>{{ $item->Result }}</div>
-                        <div>{{ $item->Images }}</div>
-                    @endforeach
-                    <div id="mc-container"></div>
-                    <script type="text/javascript">
-                        cackle_widget = window.cackle_widget || [];
-                        cackle_widget.push({widget: 'Comment', id: {{ $data->Id }});
-                        (function() {
-                            var mc = document.createElement('script');
-                            mc.type = 'text/javascript';
-                            mc.async = true;
-                            mc.src = ('https:' == document.location.protocol ? 'https' : 'http') + '://cackle.me/widget.js';
-                            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
-                        })();
-                    </script>
-                    <a id="mc-link" href="http://cackle.me">Комментарии для сайта <b style="color:#4FA3DA">Cackl</b><b style="color:#F65077">e</b></a>
+                    @include('otapi.item.opinions')
                 </div>
             </div>
         </div>
@@ -239,7 +230,7 @@
 
     <div class="row">
         <div class="col-xs-24">
-            @include('tbkhv.modules.catalog.soputka', $moduleLast)
+            @include('tbkhv.modules.catalog.soputka', ['data' => $moduleLast->Items->Content->Item, 'totalCount' => $moduleLast->Items->TotalCount])
         </div>
     </div>
 @endsection

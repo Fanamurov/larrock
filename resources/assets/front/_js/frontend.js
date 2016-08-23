@@ -34,42 +34,59 @@ $(document).ready(function(){
         }
     );
     
+    $('.btn-add-to-cart:disabled').hover(function () {
+        $('.attributes-config').addClass('please-select');
+    });
+    
     $('.change-config-item').click(function () {
         $('.change-config-item-'+$(this).attr('data-pid')).removeClass('active');
         $(this).addClass('active');
 
-        $.ajax({
-            url: '/otapi/getConfigItem',
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                configs: $('input[name=configs]').val(),
-                config_current: $('input[name=config_current]').val(),
-                Pid: $(this).attr('data-pid'),
-                Vid: $(this).attr('data-vid'),
-                title: $(this).attr('title')
-            },
-            error: function() {
-                alert('ERROR!');
-            },
-            success: function(res) {
-                if(res.status === 'QuantityZero'){
-                    $('.btn-add-to-cart').attr('disabled', 'disabled');
-                    noty_show('error', 'Извините, такого товара нет в наличии');
-                }
-                if(res.status === 'NotFound'){
-                    $('.btn-add-to-cart').attr('disabled', 'disabled');
-                    noty_show('error', 'Ошибка при выборе товара');
-                }
-                if(res.status === 'Update'){
-                    $('.btn-add-to-cart').removeAttr('disabled');
-                    $('input[name=config_current]').val(res.data.config_current);
-                    $('.price-item').html(res.data.Price);
-                    $('.quantity-item').html(res.data.Quantity);
-                    update_ToCartButton();
-                }
+        var Vid = $(this).attr('data-vid');
+        var Pid = $(this).attr('data-pid');
+        $('input#config-'+Pid).val(Vid);
+
+        var all_complete = true;
+        $('.current_config').each(function () {
+            if ($(this).val() === ''){
+                all_complete = false;
             }
         });
+        if(all_complete === true){
+            $('.btn-add-to-cart').removeAttr('disabled');
+            $('.attributes-config').removeClass('please-select');
+
+            $.ajax({
+                url: '/otapi/getConfigItem',
+                type: 'POST',
+                dataType: 'json',
+                data: $('form#ItemConfig').serialize(),
+                error: function() {
+                    alert('ERROR!');
+                },
+                success: function(res) {
+                    if(res.status === 'QuantityZero'){
+                        $('.btn-add-to-cart').attr('disabled', 'disabled');
+                        noty_show('error', 'Извините, такого товара нет в наличии');
+                    }
+                    if(res.status === 'NotFound'){
+                        $('.btn-add-to-cart').attr('disabled', 'disabled');
+                        noty_show('error', 'Ошибка при выборе товара');
+                    }
+                    if(res.status === 'Update'){
+                        $('.btn-add-to-cart').removeAttr('disabled');
+                        $('input[name=config_current]').val(res.data.config_current);
+                        $('.pricePromo-item').html(res.data.promoPrice); //А что если скидки нет?
+                        $('.price-item').html(res.data.Price);
+                        $('.quantity-item').html(res.data.Quantity);
+                        update_ToCartButton();
+                    }
+                }
+            });
+
+        }else{
+            $('.attributes-config').addClass('please-select');
+        }
     });
 
     function update_ToCartButton() {
@@ -99,16 +116,6 @@ $(document).ready(function(){
     $('.item-catalog').matchHeight();
     $('.CategoryInfoList-item').matchHeight();
     $('.filter-item').matchHeight();
-
-    $('.attributes-config-item').find('button').click(function () {
-        $(this).parent().find('button').removeClass('active');
-        $(this).addClass('active');
-        var price = $(this).attr('data-price');
-        var quantity = $(this).attr('data-quantity');
-        $('.btn-add-to-cart').attr('data-price', price);
-        $('.quantity-item').html(quantity);
-        $('.price-item').html(price);
-    });
 
     $('.show_menu').click(
         function(){

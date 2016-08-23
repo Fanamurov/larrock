@@ -53,10 +53,11 @@ class OtapiConnection
 			//dd($this->service_url . $method .'?'. $this->instanceKey .'&'. $this->lang . $param_request);
 			//Cache::forget($cacheKey);
 		}
-		Cache::forget($cacheKey);
+		//Cache::forget($cacheKey);
 
 		$body = Cache::remember($cacheKey, $this->cacheTime, function() use ($method, $param_request)
 		{
+			echo $method;
 			$client = new Client();
 			//dd($this->service_url . $method .'?'. $this->instanceKey .'&'. $this->lang . $param_request);
 			$data = $client->request('GET', $this->service_url . $method .'?'. $this->instanceKey .'&'. $this->lang . $param_request);

@@ -4,20 +4,20 @@
 @section('content')
     <div class="page-catalog-category">
         <div>
-            @if(isset($data->Result->SearchProperties))
+            @if(isset($data->SearchProperties))
                 <form action="" method="get" id="form-filter-category">
-                @foreach($data->Result->SearchProperties->Content->Item as $filter)
-                        <div class="filter-item form-group col-xs-6" title="{{ (string)$filter->Name }}">
-                        <select id="filter{{ (string)$filter->Id }}" class="form-control filter-category" name="{{ (string)$filter->Id }}">
-                            <option value="">{{ (string)$filter->Name }}</option>
+                @foreach($data->SearchProperties->Content->Item as $filter)
+                        <div class="filter-item form-group col-xs-6" title="{{ $filter->Name }}">
+                        <select id="filter{{ $filter->Id }}" class="form-control filter-category" name="{{ $filter->Id }}">
+                            <option value="">{{ $filter->Name }}</option>
                             @if(is_array($filter->Values->PropertyValue))
                                 @foreach($filter->Values->PropertyValue as $filter_value)
-                                    <option @if(array_search((string)$filter_value->Id, $selected_filters)) selected @endif
-                                    value="{{ (string)$filter_value->Id }}">{{ (string)$filter_value->Name }}</option>
+                                    <option @if(array_search($filter_value->Id, $selected_filters)) selected @endif
+                                    value="{{ $filter_value->Id }}">{{ $filter_value->Name }}</option>
                                 @endforeach
                             @else
-                                <option @if(array_search((string)$filter->Values->PropertyValue->Id, $selected_filters)) selected @endif
-                                value="{{ (string)$filter->Values->PropertyValue->Id }}">{{ (string)$filter->Values->PropertyValue->Name }}</option>
+                                <option @if(array_search($filter->Values->PropertyValue->Id, $selected_filters)) selected @endif
+                                value="{{ $filter->Values->PropertyValue->Id }}">{{ $filter->Values->PropertyValue->Name }}</option>
                             @endif
                         </select>
                     </div>
@@ -44,49 +44,51 @@
         </div>
 
         <div class="row">
-            @if($data->Result->Items->Items->TotalCount > 0)
+            @if($data->Items->Items->TotalCount > 0)
                 <div class="col-xs-24"><h2 class="col-xs-24">Товары:</h2></div>
-                @if( !isset($data->Result->Items->Items->Content->Item->Id))
-                    @foreach($data->Result->Items->Items->Content->Item as $data_value)
-                        <div class="col-xs-12 col-sm-6 col-md-4 item-catalog link_block_this" data-href='/otapi/{{ (string)$data_value->CategoryId }}/tovar/{{ (string)$data_value->Id }}'>
+                @if( !isset($data->Items->Items->Content->Item->Id))
+                    @foreach($data->Items->Items->Content->Item as $data_value)
+                        <div class="col-xs-12 col-sm-6 col-md-4 item-catalog link_block_this" data-href='/otapi/{{ $data_value->CategoryId }}/tovar/{{ $data_value->Id }}'>
                             <div class="div-img">
                                 @if(isset($data_value->Pictures))
                                     @if(is_array($data_value->Pictures->ItemPicture))
-                                        <img class="all-width" src="{{ $data_value->Pictures->ItemPicture[0]->Medium }}" alt="{{ (string)$data_value->OriginalTitle }}">
+                                        <img class="all-width" src="{{ $data_value->Pictures->ItemPicture[0]->Medium }}" alt="{{ $data_value->OriginalTitle }}">
                                     @else
-                                        <img class="all-width" src="{{ $data_value->Pictures->ItemPicture->Medium }}" alt="{{ (string)$data_value->OriginalTitle }}">
+                                        <img class="all-width" src="{{ $data_value->Pictures->ItemPicture->Medium }}" alt="{{ $data_value->OriginalTitle }}">
                                     @endif
                                 @endif
                             </div>
-                            <p class="cost">{{ (string)$data_value->Price->ConvertedPriceWithoutSign }} {{ (string)$data_value->Price->CurrencySign }}</p>
-                            <p><a href="/otapi/{{ (string)$data_value->CategoryId }}/tovar/{{ (string)$data_value->Id }}">
+                            <p class="cost">{{ $data_value->Price->ConvertedPriceWithoutSign }} {{ $data_value->Price->CurrencySign }}</p>
+                            <p><a href="/otapi/{{ $data_value->CategoryId }}/tovar/{{ $data_value->Id }}">
                                     {{ mb_strimwidth($data_value->Title, 0, 70, '...') }}
                                 </a></p>
-                            <p class="vendor">{{ (string)$data_value->VendorName }}
-                                <br/>@for($i=0; $i < ceil((string)$data_value->VendorScore/5); $i++)
+                            <p class="vendor">{{ $data_value->VendorName }}
+                                @php($score_delim = ceil($data_value->VendorScore/5))
+                                <br/>@for($i=0; $i < $score_delim; $i++)
                                     <i class="fa fa-star"></i>
                                 @endfor
                             </p>
                         </div>
                     @endforeach
                 @else
-                <?$data_value = $data->Result->Items->Items->Content->Item;?>
-                    <div class="col-xs-12 col-sm-6 col-md-4 item-catalog link_block_this" data-href='/otapi/{{ (string)$data_value->CategoryId }}/tovar/{{ (string)$data_value->Id }}'>
+                @php($data_value = $data->Items->Items->Content->Item)
+                    <div class="col-xs-12 col-sm-6 col-md-4 item-catalog link_block_this" data-href='/otapi/{{ $data_value->CategoryId }}/tovar/{{ $data_value->Id }}'>
                         <div class="div-img">
                             @if(isset($data_value->Pictures))
                                 @if(is_array($data_value->Pictures->ItemPicture))
-                                    <img class="all-width" src="{{ $data_value->Pictures->ItemPicture[0]->Medium }}" alt="{{ (string)$data_value->OriginalTitle }}">
+                                    <img class="all-width" src="{{ $data_value->Pictures->ItemPicture[0]->Medium }}" alt="{{ $data_value->OriginalTitle }}">
                                 @else
-                                    <img class="all-width" src="{{ $data_value->Pictures->ItemPicture->Medium }}" alt="{{ (string)$data_value->OriginalTitle }}">
+                                    <img class="all-width" src="{{ $data_value->Pictures->ItemPicture->Medium }}" alt="{{ $data_value->OriginalTitle }}">
                                 @endif
                             @endif
                         </div>
-                        <p class="cost">{{ (string)$data_value->Price->ConvertedPriceWithoutSign }} {{ (string)$data_value->Price->CurrencySign }}</p>
-                        <p><a href="/otapi/{{ (string)$data_value->CategoryId }}/tovar/{{ (string)$data_value->Id }}">
+                        <p class="cost">{{ $data_value->Price->ConvertedPriceWithoutSign }} {{ $data_value->Price->CurrencySign }}</p>
+                        <p><a href="/otapi/{{ $data_value->CategoryId }}/tovar/{{ $data_value->Id }}">
                                 {{ mb_strimwidth($data_value->Title, 0, 70, '...') }}
                             </a></p>
-                        <p class="vendor">{{ (string)$data_value->VendorName }}
-                            <br/>@for($i=0; $i < ceil((string)$data_value->VendorScore/5); $i++)
+                        <p class="vendor">{{ $data_value->VendorName }}
+                            @php($score_delim = ceil($data_value->VendorScore/5))
+                            <br/>@for($i=0; $i < $score_delim; $i++)
                                 <i class="fa fa-star"></i>
                             @endfor
                         </p>

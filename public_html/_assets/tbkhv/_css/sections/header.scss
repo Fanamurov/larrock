@@ -49,21 +49,22 @@
 }
 
 header{
-  margin-bottom: 15px;
+  margin-bottom: 25px;
 }
 
 .header-top_menu{
-  height: 54px;
+  height: 67px;
   border-radius: 3px 3px 0 0;
-  background: #383d40;
+  background: #e0e0e0;
   .block-categories{
-    background: #FD4E00;
-    height: 54px;
-    line-height: 54px;
-    color: white;
-    font-size: 16px;
-    padding-left: 21px;
-    font-weight: 600;
+	background: #fd4e00;
+	height: 67px;
+	line-height: 68px;
+	color: #fff;
+	font-size: 17px;
+	padding-left: 21px;
+	font-weight: 600;
+	border-right: 3px solid #e0e0e0;
     &:hover,
     &:focus{
       background: #fd782d;
@@ -75,7 +76,7 @@ header{
   }
 
   .block-search{
-    padding-top: 10px;
+    padding-top: 11px;
     .form-control{
       border-radius: 0;
     }
@@ -85,27 +86,42 @@ header{
       font-style: italic;
     }
 
+	input{
+	  height: 44px;
+	  &[type=text]{
+		font-size: 15px;
+		font-weight: 300;
+		font-style: normal;
+	  }
+	}
+
     .form-control:-ms-input-placeholder {
       color: #999;
-      font-style: italic;
+      font-style: normal;
     }
 
     .form-control::-webkit-input-placeholder {
       color: #999;
-      font-style: italic;
+	  font-style: normal;
     }
     .btn.btn-default{
       background: #807A7A;
       color: white;
       border: #807A7A;
-      height: 34px;
+      height: 44px;
       width: 120px;
+	  font-size: 17px;
       &:hover,
       &:focus{
         background: #FD4E00;
       }
     }
   }
+}
+
+.form-search-block{
+  padding-left: 20px;
+  padding-right: 13px;
 }
 
 .row .nav-menu{

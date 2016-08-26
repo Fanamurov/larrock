@@ -111,7 +111,7 @@
                                 {{ mb_strimwidth($attr_value->Value, 0, 10, '...') }}
                             </button>
                         @endif
-                        @if($current_line_attribute !== $data->Attributes->ItemAttribute[$attr_key+1]->PropertyName)
+                        @if(isset($data->Attributes->ItemAttribute[$attr_key+1]) && $current_line_attribute !== $data->Attributes->ItemAttribute[$attr_key+1]->PropertyName)
                                 <input type="hidden" class="current_config" id="config-{{ $attr_value->$attributeKey->Pid }}" name="{{ $attr_value->$attributeKey->Pid }}" value="">
                             <div class="clearfix"></div><br/>
                         @endif
@@ -124,7 +124,7 @@
             <br/>
             <input type="hidden" name="configurationId" value="">
             @if($data->MasterQuantity > 0)
-                <p class="text-center button_bg">
+                <p class="text-center button_bg button_bg-disabled">
                     <button class="btn btn-danger btn-lg btn-add-to-cart" disabled
                         data-id="{{ $data->Id }}"
                         data-name="{{ $data->OriginalTitle }}"
@@ -205,14 +205,15 @@
         <ul class="nav nav-tabs nav-tabs-description" role="tablist">
             <li role="presentation" class="active"><a href="#photo-description" aria-controls="photo-description" role="tab" data-toggle="tab">Фото и описание</a></li>
             <li role="presentation"><a href="#description" aria-controls="description" role="tab" data-toggle="tab">Характеристики товара</a></li>
-            <li role="presentation"><a href="#opinions" aria-controls="opinions" role="tab" data-toggle="tab">Отзывы</a></li>
+            <li role="presentation"><a href="#opinions" aria-controls="opinions" role="tab"
+                                                      data-toggle="tab">Отзывы @if(isset($opinions->TotalCount))({{ $opinions->TotalCount }})@endif</a></li>
         </ul>
 
         <!-- Tab panes -->
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="photo-description">
                 <div class="col-xs-24">
-                    <!--{!! $data->Description !!}-->
+                    {!! $data->Description !!}
                 </div>
             </div>
             <div role="tabpanel" class="tab-pane" id="description">
@@ -228,7 +229,8 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="clearfix"></div>
+    <div class="row soputka-page-item">
         <div class="col-xs-24">
             @include('tbkhv.modules.catalog.soputka', ['data' => $moduleLast->Items->Content->Item, 'totalCount' => $moduleLast->Items->TotalCount])
         </div>

@@ -15,6 +15,12 @@ $(document).ready(function(){
         }
     });
 
+    $('.btn-group-sorters').find('button').click(function () {
+        var sort = $(this).attr('data-sort');
+        $('input[name=sort]').val(sort);
+        $('form#form-filter-category').submit();
+    });
+
     $('li.first-level').hover(
         function () {
             $('li.first-level').removeClass('current');
@@ -34,8 +40,9 @@ $(document).ready(function(){
         }
     );
     
-    $('.btn-add-to-cart:disabled').hover(function () {
-        $('.attributes-config').addClass('please-select');
+    $('.button_bg-disabled').click(function () {
+        //$('.attributes-config').addClass('please-select');
+        //alert('2');
     });
     
     $('.change-config-item').click(function () {
@@ -53,9 +60,6 @@ $(document).ready(function(){
             }
         });
         if(all_complete === true){
-            $('.btn-add-to-cart').removeAttr('disabled');
-            $('.attributes-config').removeClass('please-select');
-
             $.ajax({
                 url: '/otapi/getConfigItem',
                 type: 'POST',
@@ -67,14 +71,18 @@ $(document).ready(function(){
                 success: function(res) {
                     if(res.status === 'QuantityZero'){
                         $('.btn-add-to-cart').attr('disabled', 'disabled');
+                        $('.button_bg').addClass('button_bg-disabled');
                         noty_show('error', 'Извините, такого товара нет в наличии');
                     }
                     if(res.status === 'NotFound'){
                         $('.btn-add-to-cart').attr('disabled', 'disabled');
+                        $('.button_bg').addClass('button_bg-disabled');
                         noty_show('error', 'Ошибка при выборе товара');
                     }
                     if(res.status === 'Update'){
                         $('.btn-add-to-cart').removeAttr('disabled');
+                        $('.attributes-config').removeClass('please-select');
+                        $('.button_bg').removeClass('button_bg-disabled');
                         $('input[name=config_current]').val(res.data.config_current);
                         $('.pricePromo-item').html(res.data.promoPrice); //А что если скидки нет?
                         $('.price-item').html(res.data.Price);
@@ -83,7 +91,6 @@ $(document).ready(function(){
                     }
                 }
             });
-
         }else{
             $('.attributes-config').addClass('please-select');
         }
@@ -107,10 +114,6 @@ $(document).ready(function(){
         var src = $(this).attr('data-scr');
         $('.bigImageItem').attr('href', src);
         $('.bigImageItem').find('img').attr('src', src);
-    });
-
-    $('.filter-category').change(function () {
-        $('#form-filter-category').submit();
     });
 
     $('.item-catalog').matchHeight();

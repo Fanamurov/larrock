@@ -1,24 +1,42 @@
-@extends('tbkhv.main')
-@section('title') {{ (string)$category->OtapiCategory->Name }} @endsection
+@extends('tbkhv.two-colomn')
+@section('title') {{ $category->Name }} @endsection
 
 @section('breadcrumbs')
     <div class="hidden-xs hidden-sm">
-        {!! Breadcrumbs::render('otapi.category', (string)$category->OtapiCategory->Id) !!}
+        {!! Breadcrumbs::render('otapi.category', $category->Id) !!}
     </div>
 @endsection
 
 @section('filters')
-    <p class="h2 col-xs-24">Фильтры для поиска:</p>
+    <div class="panel panel-default">
+        Найдено товаров: <br/>{{ $data->TotalCount }} шт.
+    </div>
     <form action="" method="get" id="form-filter-category">
-        @foreach($GetCategorySearchProperties->SearchPropertyInfoList->Content->Item as $filter)
-        @if(isset($filter->Name))
-            <div class="filter-item form-group col-xs-12 col-md-6" title="{{ (string)$filter->Name }}">
-                <select id="filter{{ (string)$filter->Id }}" class="form-control filter-category" name="TTT{{ (string)$filter->Id }}">
-                    <option value="">{{ (string)$filter->Name }}: любой</option>
+        <div class="row">
+            <div class="col-xs-24">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <input type="text" class="form-control" value="{{ Input::get('MinPrice', '') }}" name="MinPrice" placeholder="цена от">
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <input type="text" class="form-control" value="{{ Input::get('MaxPrice', '') }}" name="MaxPrice" placeholder="цена до">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @foreach($GetCategorySearchProperties as $filter)
+            @if(isset($filter->Name))
+            <div class="filter-item form-group col-xs-24" title="{{ $filter->Name }}">
+                <label for="filter{{ $filter->Id }}">{{ $filter->Name }}:</label>
+                <select id="filter{{ $filter->Id }}" class="form-control filter-category" name="TTT{{ $filter->Id }}">
+                    <option value="">любой</option>
                     @foreach($filter->Values->PropertyValue as $filter_value)
                         @if(isset($filter_value->Id))
-                        <option 
-                                value="{{ (string)$filter_value->Id }}">{{ (string)$filter_value->Name }}</option>
+                        <option @if(in_array($filter_value->Id, $selected_filters)) selected @endif
+                                value="{{ $filter_value->Id }}">{{ $filter_value->Name }}</option>
                         @endif
                     @endforeach
                 </select>
@@ -27,35 +45,13 @@
         @endforeach
         <div class="clearfix"></div>
 
-            <div class="row">
-                <div class="col-xs-24">
-                    <div class="col-xs-12 col-md-6">
-                        <div class="form-group">
-                            <input type="text" class="form-control" value="{{ Input::get('MinPrice', '') }}" name="MinPrice" placeholder="цена от">
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-md-6">
-                        <div class="form-group">
-                            <input type="text" class="form-control" value="{{ Input::get('MaxPrice', '') }}" name="MaxPrice" placeholder="цена до">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         <div class="col-xs-24">
             <div class="form-group">
                 <input type="hidden" name="_token" value="{{csrf_token()}}">
-                <button type="submit" class="btn btn-lg btn-success" name="filter"><i class="fa fa-sort"></i> Применить фильтры</button>
-            </div>
-            <div class="clearfix"></div><br/>
-            
-            <div class="sorters">
-                <span>Сортировки:</span>
-                @foreach($sorters as $sort_key => $sort_value)
-                    <a href="#" class="change-sort-vid btn btn-link @if(isset($sort_value['active'])) active @endif" data-sort="{{ $sort_key }}">{{ $sort_value['name'] }}</a>
-                @endforeach
                 <input type="hidden" name="sort" value="{{ $sort_active }}">
+                <button type="submit" class="btn btn-lg btn-success btn-block" name="filter"><i class="fa fa-sort"></i> Применить фильтры</button>
             </div>
+            <div class="clearfix"></div>
         </div>
     </form>
 @endsection
@@ -63,27 +59,52 @@
 @section('content')
     <div class="page-catalog-category">
         <div class="col-xs-24">
-            <h1>{{ (string)$category->OtapiCategory->Name }}</h1>
-            <p>Всего товаров в разделе: {{ (string)$data->OtapiItemInfoSubList->TotalCount }}</p>
+            <div class="sorters">
+                <div class="btn-group btn-group-sorters" role="group">
+                    <button type="button" class="btn btn-default @if($sort_active === 'Default') active @endif" data-sort="Default">Лучший выбор</button>
+                    <button type="button" class="btn btn-default @if($sort_active === 'Popularity:Desc') active @endif" data-sort="Popularity:Desc">Популярные товары</button>
+                    <button type="button" class="btn btn-default @if($sort_active === 'VendorRating:Desc') active @endif" data-sort="VendorRating:Desc">Лучшие продавцы</button>
+                    <button type="button" class="btn btn-default @if($sort_active === 'Price:Desc' OR $sort_active === 'Price:Asc') active @endif"
+                            @if($sort_active !== 'Price:Desc' AND $sort_active !== 'Price:Asc')
+                            data-sort="Price:Desc"
+                            @elseif($sort_active === 'Price:Desc')
+                            data-sort="Price:Asc"
+                            @elseif($sort_active === 'Price:Asc')
+                            data-sort="Default"
+                            @endif>
+                        Цена
+                        @if($sort_active === 'Price:Desc')
+                            <i class="glyphicon glyphicon-chevron-down"></i>
+                        @elseif($sort_active === 'Price:Asc')
+                            <i class="glyphicon glyphicon-chevron-up"></i>
+                        @else
+                            <i class="glyphicon glyphicon-resize-vertical"></i>
+                        @endif
+                    </button>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <h1 class="col-xs-24">{{ $category->Name }}</h1>
         </div>
         <div class="row">
-            @foreach($data->OtapiItemInfoSubList->Content->Item as $data_value)
-                <div class="col-xs-12 col-sm-6 col-md-4 item-catalog link_block_this" data-href='/otapi/{{ (string)$data_value->CategoryId }}/tovar/{{ (string)$data_value->Id }}'>
+            @foreach($data->Content->Item as $data_value)
+                <div class="col-xs-12 col-sm-6 item-catalog link_block_this" data-href='/otapi/{{ $data_value->CategoryId }}/tovar/{{ $data_value->Id }}'>
                     <div class="div-img">
                     @if(isset($data_value->Pictures))
                         @if(is_array($data_value->Pictures->ItemPicture))
-                            <img class="all-width" src="{{ $data_value->Pictures->ItemPicture[0]->Medium }}" alt="{{ (string)$data_value->Title }}">
+                            <img class="all-width" src="{{ $data_value->Pictures->ItemPicture[0]->Medium }}" alt="{{ $data_value->Title }}">
                         @else
-                            <img class="all-width" src="{{ $data_value->Pictures->ItemPicture->Medium }}" alt="{{ (string)$data_value->Title }}">
+                            <img class="all-width" src="{{ $data_value->Pictures->ItemPicture->Medium }}" alt="{{ $data_value->Title }}">
                         @endif
                         @endif
                     </div>
-                    <p class="cost">{{ (string)$data_value->Price->ConvertedPriceWithoutSign }} {{ (string)$data_value->Price->CurrencySign }}</p>
-                    <p><a href="/otapi/{{ (string)$data_value->CategoryId }}/tovar/{{ (string)$data_value->Id }}">
+                    <p class="cost">{{ $data_value->Price->ConvertedPrice }}</p>
+                    <p><a class="title-tovar" href="/otapi/{{ $data_value->CategoryId }}/tovar/{{ $data_value->Id }}">
                             {{ mb_strimwidth($data_value->Title, 0, 70, '...') }}
                         </a></p>
-                    <p class="vendor">{{ (string)$data_value->VendorName }}
-                        <br/>@for($i=0; $i < ceil((string)$data_value->VendorScore/5); $i++)
+                    <p class="vendor">{{ $data_value->VendorName }}
+                        @php($score_delim = ceil($data_value->VendorScore/5))
+                        <br/>@for($i=0; $i < $score_delim; $i++)
                             <i class="fa fa-star"></i>
                         @endfor
                         </p>

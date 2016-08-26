@@ -1,8 +1,8 @@
 @if($totalCount > 0)
     <div class="modulePopular">
-        <p class="h1 container-fluid">Сопутствующие товары</p><hr/>
+        <p class="h1 container-fluid">Другие товары раздела</p><hr/>
         @foreach($data as $data_value)
-            <div class="col-xs-12 col-sm-4 col-md-3 item-catalog">
+            <div class="col-xs-12 col-sm-4 item-catalog">
                 <div class="div-img">
                     <a href="/otapi/{{ $data_value->CategoryId }}/tovar/{{ (string)$data_value->Id }}">
                         @if(is_array($data_value->Pictures->ItemPicture))
@@ -12,10 +12,6 @@
                         @endif
                     </a>
                 </div>
-                <p><a href="/otapi/{{ $data_value->CategoryId }}/tovar/{{ $data_value->Id }}">
-                        {{ mb_strimwidth($data_value->OriginalTitle, 0, 15, '...') }}
-                    </a>
-                </p>
                 <p class="cost">{{ $data_value->Price->ConvertedPriceWithoutSign }} {{ $data_value->Price->CurrencySign }}</p>
                 <p class="vendor">{{ $data_value->VendorName }}<br/>
                     @php($vendor_score = ceil($data_value->VendorScore/5))

@@ -91,3 +91,34 @@
 	color: grey;
   }
 }
+
+.tabs{
+  .nav-tabs>li{
+	&.active a{
+	  background: whitesmoke;
+	}
+	>a{
+	  font-size: 21px;
+	  padding: 8px 15px;
+	}
+  }
+}
+.tab-pane{
+  > div{
+	background: whitesmoke;
+	padding-top: 20px;
+  }
+}
+
+.block-otapi-review{
+  .row-review{
+	margin-bottom: 30px;
+  }
+  .review-images{
+	padding-top: 15px;
+  }
+}
+
+.soputka-page-item{
+  padding-top: 30px;
+}

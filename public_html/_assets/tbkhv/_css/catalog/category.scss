@@ -1,14 +1,14 @@
 .page-catalog-category{
   .div-img{
-    height: 153px;
+    height: 180px;
     overflow: hidden;
   }
   .item-catalog{
     padding: 10px 20px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
   }
   .cost{
-	color: #646464;
+	color: #fd4e00;
 	font-weight: 600;
 	padding: 4px 5px;
 	text-align: center;
@@ -26,11 +26,38 @@
     opacity: .7;
     transition: .3s linear all;
   }
+
+  h1{
+	margin-top: 10px;
+	margin-bottom: 20px;
+  }
+
+  .sorters{
+	margin-bottom: 10px;
+	margin-top: 10px;
+	.btn{
+	  color: #313131;
+	  font-weight: 300;
+	  &.active{
+		background-color: #f5f5f5;
+	  }
+	}
+  }
+  a.title-tovar{
+	color: #383838;
+  }
+}
+
+.panel.panel-default{
+  text-align: center;
+  font-weight: 600;
+  font-size: 20px;
+  margin-bottom: 10px;
 }
 
 .filter-item{
   label{
-    font-weight: 500;
+    font-weight: 300;
     color: grey;
   }
 }
@@ -44,4 +71,8 @@
 	  margin-bottom: 10px;
 	}
   }
+}
+
+.block-filters{
+  padding-top: 15px;
 }

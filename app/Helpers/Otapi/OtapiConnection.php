@@ -57,7 +57,7 @@ class OtapiConnection
 
 		$body = Cache::remember($cacheKey, $this->cacheTime, function() use ($method, $param_request)
 		{
-			echo $method;
+			echo $method .' not cached<br/>';
 			$client = new Client();
 			//dd($this->service_url . $method .'?'. $this->instanceKey .'&'. $this->lang . $param_request);
 			$data = $client->request('GET', $this->service_url . $method .'?'. $this->instanceKey .'&'. $this->lang . $param_request);
@@ -129,7 +129,7 @@ class OtapiConnection
 				return collect();
 			}else{
 				if($this->if_error === 'exception'){
-					return abort(500, 'Ошибка API', $context->toArray());
+					return abort(500, 'Ошибка API метода '. $this->method, $context->toArray());
 				}else{
 					return FALSE;
 				}

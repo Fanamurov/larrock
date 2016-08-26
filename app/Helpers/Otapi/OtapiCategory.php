@@ -16,7 +16,7 @@ class OtapiCategory
 	public function get($categoryId)
 	{
 		$otapiConnection = new OtapiConnection;
-		$data = $otapiConnection->create_request('GetCategoryInfo', ['categoryId' => $categoryId]);
+		$data = $otapiConnection->create_request('GetCategoryInfo', ['categoryId' => $categoryId], $this->allow_safe_mode);
 		return $data->OtapiCategory;
 	}
 
@@ -27,7 +27,23 @@ class OtapiCategory
 	public function GetThreeLevelRootCategoryInfoList()
 	{
 		$otapiConnection = new OtapiConnection;
-		$data = $otapiConnection->create_request('GetThreeLevelRootCategoryInfoList', []);
+		$data = $otapiConnection->create_request('GetThreeLevelRootCategoryInfoList', [], $this->allow_safe_mode);
 		return $data->OtapiCategory;
+	}
+
+	/**
+	 * Получение списка доступных методов поиска для раздела
+	 * @param $categoryId
+	 *
+	 * @return mixed
+	 */
+	public function GetCategorySearchProperties($categoryId)
+	{
+		$otapiConnection = new OtapiConnection;
+		$data = $otapiConnection->create_request('GetCategorySearchProperties', ['categoryId' => $categoryId], $this->allow_safe_mode);
+		if(isset($data->SearchPropertyInfoList->Content->Item)){
+			return $data->SearchPropertyInfoList->Content->Item;
+		}
+		return collect();
 	}
 }

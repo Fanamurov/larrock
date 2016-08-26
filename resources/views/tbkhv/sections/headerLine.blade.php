@@ -1,4 +1,4 @@
-<div class="header_line row">
+<div class="header_line">
     <div class="container">
         <div class="col-xs-24 col-sm-18">
             <ul class="nav nav-pills nav-menu">

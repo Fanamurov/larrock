@@ -15,20 +15,27 @@ class OtapiItem
 			$blockList .= ',Description';
 		}
 		$otapiConnection = new OtapiConnection;
-		$data = $otapiConnection->create_request('BatchGetItemFullInfo', ['itemId' => $itemId, 'blockList' => $blockList, 'sessionId' => mt_rand(100000,99999999)]);
+		$data = $otapiConnection->create_request('BatchGetItemFullInfo',
+			['itemId' => $itemId, 'blockList' => $blockList, 'sessionId' => mt_rand(100000,99999999)],
+			$this->allow_safe_mode);
 		$data = $this->find_relations($data->Result);
 		if(isset($data->ConfiguredItems->OtapiConfiguredItem)){
 			$data->ConfiguredItems = collect($data->ConfiguredItems->OtapiConfiguredItem);
+		}
+		if( !isset($data->Promotions)){
+			$data->Promotions = collect();
 		}
 		return $data;
 	}
 
 	/**
 	 * Поиск товаров по Id раздела
+	 *
 	 * @param        $categoryId
 	 * @param int    $framePosition
 	 * @param int    $frameSize
-	 * @param string $blockList
+	 * @param string $blockList Список дополнительных блоков. Допустимые блоки: SubCategories, SearchProperties,
+	 *                          RootPath, Vendor, Brand, Category, HintCategories, AvailableSearchMethods
 	 *
 	 * @return mixed
 	 */
@@ -39,7 +46,7 @@ class OtapiItem
 			$xmlParameters = '<SearchItemsParameters><IsClearItemTitles>false</IsClearItemTitles><CategoryId>'. $categoryId .'</CategoryId></SearchItemsParameters>';
 			$otapiConnection = new OtapiConnection;
 			$data = $otapiConnection->create_request('BatchSearchItemsFrame', ['xmlParameters' => $xmlParameters, 'blockList' => $blockList,
-				'sessionId' => mt_rand(100000,99999999), 'framePosition' => $framePosition, 'frameSize' => $frameSize]);
+				'sessionId' => mt_rand(100000,99999999), 'framePosition' => $framePosition, 'frameSize' => $frameSize], $this->allow_safe_mode);
 			return $data->Result->Items;
 		});
 		return $data;
@@ -63,11 +70,30 @@ class OtapiItem
 			$OrderBy .'</OrderBy></SearchItemsParameters>';
 		$otapiConnection = new OtapiConnection;
 		$data = $otapiConnection->create_request('BatchSearchItemsFrame', ['xmlParameters' => $xmlParameters, 'blockList' => $blockList,
-			'sessionId' => mt_rand(100000,99999999), 'framePosition' => $framePosition, 'frameSize' => $frameSize]);
-		abort('404', 'method BatchSearchItemsFrame in progress');
-		dd($data);
-		//return $data->Result->Items;
-		return $data;
+			'sessionId' => mt_rand(100000,99999999), 'framePosition' => $framePosition, 'frameSize' => $frameSize], $this->allow_safe_mode);
+		return $data->Result;
+	}
+
+	/**
+	 * Глобальный поиск товаров по разделу
+	 * @param        $itemTitle
+	 * @param        $search_params
+	 * @param string $OrderBy
+	 * @param int    $framePosition
+	 * @param int    $frameSize
+	 * @param string $blockList
+	 *
+	 * @return mixed
+	 */
+	public function BatchSearchItemsFrameCategory($itemTitle, $search_params, $OrderBy = 'Default', $framePosition = 0, $frameSize = 16, $blockList = 'SearchProperties,AvailableSearchMethods')
+	{
+		$xmlParameters = '<SearchItemsParameters><IsClearItemTitles>false</IsClearItemTitles><ItemTitle>'.
+			$itemTitle .'</ItemTitle><Configurators>'. $search_params .'</Configurators><OrderBy>'.
+			$OrderBy .'</OrderBy></SearchItemsParameters>';
+		$otapiConnection = new OtapiConnection;
+		$data = $otapiConnection->create_request('BatchSearchItemsFrame', ['xmlParameters' => $xmlParameters, 'blockList' => $blockList,
+			'sessionId' => mt_rand(100000,99999999), 'framePosition' => $framePosition, 'frameSize' => $frameSize], $this->allow_safe_mode);
+		return $data->Result;
 	}
 
 	/**
@@ -123,12 +149,20 @@ class OtapiItem
 	public function popularTovars($itemRatingTypeId = 'Popular', $numberItem = 12, $categoryId = '')
 	{
 		$otapiConnection = new OtapiConnection;
-		$data = $otapiConnection->create_request('GetItemRatingList', ['itemRatingTypeId' => $itemRatingTypeId, 'numberItem' => $numberItem, 'categoryId' => $categoryId]);
-		abort('404', 'method popularTovars in progress');
-		dd($data);
-		return $data;
+		$data = $otapiConnection->create_request('GetItemRatingList', ['itemRatingTypeId' => $itemRatingTypeId, 'numberItem' => $numberItem, 'categoryId' => $categoryId], TRUE);
+		//abort('404', 'method popularTovars in progress');
+		return $data->Content->Content->Item;
 	}
 
+	/**
+	 * Получение списка товаров по id раздела, упрощенный и более быстрый метод
+	 * @param        $categoryId
+	 * @param string $categoryItemFilter
+	 * @param int    $framePosition
+	 * @param int    $frameSize
+	 *
+	 * @return mixed
+	 */
 	public function categoryTovars($categoryId, $categoryItemFilter = '', $framePosition = 0, $frameSize = 16)
 	{
 		$otapiConnection = new OtapiConnection;
@@ -136,9 +170,32 @@ class OtapiItem
 			'framePosition' => $framePosition,
 			'frameSize' => $frameSize,
 			'categoryId' => $categoryId,
-			'categoryItemFilter' => $categoryItemFilter]);
-		abort('404', 'method categoryTovars in progress');
-		dd($data);
-		return $data;
+			'categoryItemFilter' => $categoryItemFilter], $this->allow_safe_mode);
+		return $data->OtapiItemInfoSubList;
+	}
+
+	/**
+	 * Получение частичного списка товаров категории
+	 * @see http://docs.otapi.net/ru/Documentations/Method?name=GetCategoryItemInfoListFrame
+	 *
+	 * @param     $categoryId
+	 * @param int $framePosition
+	 * @param int $frameSize
+	 *
+	 * @return \Illuminate\Support\Collection
+	 */
+	public function GetCategoryItemInfoListFrame($categoryId, $framePosition = 0, $frameSize = 6)
+	{
+		$otapiConnection = new OtapiConnection;
+		$data = $otapiConnection->create_request('GetCategoryItemInfoListFrame', [
+			'framePosition' => $framePosition,
+			'frameSize' => $frameSize,
+			'categoryId' => $categoryId], $this->allow_safe_mode);
+		if(isset($data->OtapiItemInfoSubList->Content->Item)){
+			return $data->OtapiItemInfoSubList->Content->Item;
+		}else{
+			echo $categoryId .'not found <br/>';
+		}
+		return collect();
 	}
 }

@@ -13,7 +13,7 @@ class OtapiReview
 		$data = $otapiConnection->create_request('GetTradeRateInfoListFrame', [
 			'itemId' => $itemId,
 			'framePosition' => $framePosition,
-			'frameSize' => $frameSize]);
+			'frameSize' => $frameSize], $this->allow_safe_mode);
 		return $data->TradeRateInfoList;
 	}
 }

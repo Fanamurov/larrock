@@ -1,4 +1,4 @@
-<footer class="row footer">
+<footer class="footer">
     <div class="container">
         <div class="col-xs-24">
             @yield('footer')

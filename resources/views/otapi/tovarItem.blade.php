@@ -211,8 +211,12 @@
         <ul class="nav nav-tabs nav-tabs-description" role="tablist">
             <li role="presentation" class="active"><a href="#photo-description" aria-controls="photo-description" role="tab" data-toggle="tab">Фото и описание</a></li>
             <li role="presentation"><a href="#description" aria-controls="description" role="tab" data-toggle="tab">Характеристики товара</a></li>
-            <li role="presentation"><a href="#opinions" aria-controls="opinions" role="tab"
-                                                      data-toggle="tab">Отзывы @if(isset($opinions->TotalCount))({{ $opinions->TotalCount }})@endif</a></li>
+            @if(isset($opinions->TotalCount) && $opinions->TotalCount > 0)
+            <li role="presentation">
+                <a href="#opinions" aria-controls="opinions" role="tab"
+                   data-toggle="tab">Отзывы @if(isset($opinions->TotalCount))({{ $opinions->TotalCount }})@endif</a>
+            </li>
+            @endif
         </ul>
 
         <!-- Tab panes -->

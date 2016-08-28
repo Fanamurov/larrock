@@ -179,10 +179,18 @@
                     <p class="h4 text-center row">Так же продает:</p>
                     <div class="row row-vendorTovars">
                         @foreach($vendorTovars->Content->Item as $tovar)
-                            @if(isset($tovar->Pictures->ItemPicture[0]->Small))
-                            <a href="/otapi/{{ $tovar->CategoryId }}/tovar/{{ $tovar->Id }}">
-                                <img src="{{ $tovar->Pictures->ItemPicture[0]->Medium }}" class="col-xs-12" alt="Фото товара">
-                            </a>
+                            @if(is_array($tovar->Pictures->ItemPicture))
+                                @if(isset($tovar->Pictures->ItemPicture[0]->Small))
+                                <a href="/otapi/{{ $tovar->CategoryId }}/tovar/{{ $tovar->Id }}">
+                                    <img src="{{ $tovar->Pictures->ItemPicture[0]->Medium }}" class="col-xs-12" alt="Фото товара">
+                                </a>
+                                @endif
+                            @else
+                                @if(isset($tovar->Pictures->ItemPicture->Medium))
+                                    <a href="/otapi/{{ $tovar->CategoryId }}/tovar/{{ $tovar->Id }}">
+                                        <img src="{{ $tovar->Pictures->ItemPicture->Medium }}" class="col-xs-12" alt="Фото товара">
+                                    </a>
+                                @endif
                             @endif
                         @endforeach
                         @if($vendorTovars->TotalCount - 10 > 0)

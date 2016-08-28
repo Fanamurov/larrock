@@ -71,7 +71,10 @@ class OtapiConnection
 	protected function encodeResult(Stream $data, $method = '')
 	{
         if($method === 'GetTradeRateInfoListFrame'){
-            $body = simplexml_load_string(str_replace('&#x2;', '2', $data));
+            $bad_words = ['&#x1', '&#x2', '&#x3', '&#x4', '&#x5']; //Эти символы ломают парсер
+            $good_words = ['1', '2', '3', '4', '5']; //Эти символы ломают парсер
+            $data = str_replace($bad_words, $good_words, $data);
+            $body = simplexml_load_string($data);
         }else{
             $body = simplexml_load_string($data);
         }

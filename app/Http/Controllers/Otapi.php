@@ -115,8 +115,7 @@ class Otapi extends Controller
     {
 		$otapiCategory = new OtapiCategory();
 		$otapiItem = new OtapiItem();
-        //$framePosition = $request->get('framePosition', 0);
-        $framePosition = $request->get('page', 0) * 60;
+        $framePosition = ($request->get('page', 1)-1) * 60;
         $frameSize = 60;
 
 		$body['sorters'] = [
@@ -128,7 +127,7 @@ class Otapi extends Controller
 			'Popularity:Desc' => ['name' => 'Популярные']
 		];
 
-		$body['sort_active'] = 'Price:Asc';
+		$body['sort_active'] = 'Default';
 		foreach($body['sorters'] as $sort_key => $sort){
 			if($request->get('sort', 'Default') === $sort_key){
 				$body['sorters'][$sort_key]['active'] = 1;
@@ -136,7 +135,6 @@ class Otapi extends Controller
 			}
 		}
 
-        //dd($request->all());
 		$body['category'] = $otapiCategory->get($categoryId);
         $body['GetCategorySearchProperties'] = $otapiCategory->GetCategorySearchProperties($categoryId);
 
@@ -178,9 +176,9 @@ class Otapi extends Controller
             });
 
 			$total = $body['data']->TotalCount;
-			if($total > 400*60){
-				$total = 400*60;
-			}
+            if($total > 65*60){
+                $total = 65*60;
+            }
 
             if(isset($body['data']->Content->Item)){
                 $body['paginator'] = new Paginator(
@@ -216,8 +214,8 @@ class Otapi extends Controller
             $body['category'] = $otapiCategory->get($categoryId);
             $body['data'] = $otapiItem->get($itemId, TRUE);
             $body['opinions'] = $otapiReview->get($itemId, 0, 10);
-            $body['vendorTovars'] = $otapiVendor->tovars($body['data']->VendorId);
-			$body['vendor'] = $otapiVendor->get($body['data']->VendorId);
+            $body['vendorTovars'] = $otapiVendor->tovars($body['data']->VendorId, 0, 6);
+			//$body['vendor'] = $otapiVendor->get($body['data']->VendorId);
             return $body;
         });
 
@@ -260,13 +258,19 @@ class Otapi extends Controller
 					$output['Quantity'] = $item->Quantity;
 					$output['Price'] = $output['promoPrice'] = $item->Price->ConvertedPriceWithoutSign; //Переделать
 
-					foreach($configs_promo as $promo){
-						foreach($promo->ConfiguredItems->Item as $promo_item){
-							if($promo_item->Id === $item->Id && $promo_item->Price->Quantity > 0){
-								$output['promoPrice'] = $promo_item->Price->ConvertedPriceWithoutSign;
-							}
-						}
-					}
+                    if(is_array($configs_promo)){
+                        foreach($configs_promo as $promo){
+                            foreach($promo->ConfiguredItems->Item as $promo_item){
+                                if($promo_item->Id === $item->Id && $promo_item->Price->Quantity > 0){
+                                    $output['promoPrice'] = $promo_item->Price->ConvertedPriceWithoutSign;
+                                }
+                            }
+                        }
+                    }else{
+                        if($configs_promo->Id === $item->Id && $configs_promo->Price->Quantity > 0){
+                            $output['promoPrice'] = $configs_promo->Price->ConvertedPriceWithoutSign;
+                        }
+                    }
 
 					if($output['Quantity'] > 0){
 						return response()->json(['status' => 'Update', 'data' => $output]);
@@ -326,7 +330,7 @@ class Otapi extends Controller
 			'Popularity:Desc' => ['name' => 'Популярные']
 		];
 
-		$body['sort_active'] = 'Price:Asc';
+		$body['sort_active'] = 'Default';
 		foreach($body['sorters'] as $sort_key => $sort){
 			if($request->get('sort', '') === $sort_key){
 				$body['sorters'][$sort_key]['active'] = 1;
@@ -347,22 +351,24 @@ class Otapi extends Controller
 
         //http://docs.otapi.net/ru/Documentations/Type?name=OtapiSearchItemsParameters
         $framePosition = ($request->get('page', $page)-1)*60;
-        if($framePosition >= 4000){
-            $framePosition = 3999;
-        }
+        //dd($framePosition);
 
         //dd($request->query());
 		$body['data'] = $otapiItem->BatchSearchItemsFrame(
 			$request->get('search', 'iPhone'),
 			$search_params,
 			$request->get('sort'),
-			$request->get('framePosition', $framePosition));
+			$request->get('framePosition', $framePosition),
+            60);
 
 		if($body['data']->Items->Items->TotalCount > 0){
+            $total = $body['data']->Items->Items->TotalCount;
+            if($total > 65*60){
+                $total = 65*60;
+            }
 			$body['paginator'] = new Paginator(
 				$body['data']->Items->Items->Content->Item,
-				//$body['data']->Items->Items->TotalCount,
-				400*60,
+				$total,
 				$limit = 60,
 				$page = $request->get('page', $page), [
 				'path'  => $request->url(),
@@ -387,7 +393,7 @@ class Otapi extends Controller
 			$tree->level2 = collect();
 			$tree->level3 = collect();
 			$saved_parent_id = '';
-			foreach ($body->CategoryInfoList->Content->Item as $key => $value){
+			foreach ($body as $key => $value){
 				$item = collect();
 				foreach($value as $value_key => $value_value){
 					$item->$value_key = $value_value;

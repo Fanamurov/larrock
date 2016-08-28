@@ -40,8 +40,8 @@ $(document).ready(function(){
         }
     );
     
-    $('.button_bg-disabled').click(function () {
-        //$('.attributes-config').addClass('please-select');
+    $('.button_bg-disabled').hover(function () {
+        $('.attributes-config').addClass('please-select');
         //alert('2');
     });
     
@@ -88,6 +88,7 @@ $(document).ready(function(){
                         $('.price-item').html(res.data.Price);
                         $('.quantity-item').html(res.data.Quantity);
                         update_ToCartButton();
+                        $('.btn-add-to-cart').attr('data-price', res.data.Price);
                     }
                 }
             });

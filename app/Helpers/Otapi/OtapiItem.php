@@ -9,7 +9,7 @@ class OtapiItem
 	/** Установка флага на игнорирование ошибок api от конкретного запроса @var  bool */
 	protected $allow_safe_mode = FALSE;
 
-	public function get($itemId, $load_description = NULL, $blockList = 'Promotions,RootPath')
+	public function get($itemId, $load_description = NULL, $blockList = 'Promotions,RootPath,Vendor')
 	{
 		if($load_description){
 			$blockList .= ',Description';
@@ -110,8 +110,23 @@ class OtapiItem
 		if(isset($data->Item->Promotions->OtapiItemPromotion)){
 			$data = $this->relationPromotions($data);
 		}
+        if(isset($data->Vendor->Id)){
+            $data = $this->relationVendor($data);
+        }
 		return $data->Item;
 	}
+
+    /**
+     * Путь от товара до категории первого уровня
+     * @param $data
+     *
+     * @return mixed
+     */
+    protected function relationVendor($data)
+    {
+        $data->Item->Vendor = $data->Vendor;
+        return $data;
+    }
 
 	/**
 	 * Путь от товара до категории первого уровня

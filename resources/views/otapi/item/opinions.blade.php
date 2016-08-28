@@ -1,5 +1,5 @@
 <div class="block-otapi-review">
-    @if($opinions->TotalCount > 0)
+    @if(isset($opinions->TotalCount) && $opinions->TotalCount > 0)
         @foreach($opinions->Content->Item as $item)
             <div class="row row-review">
                 <div class="col-xs-24 col-md-4">

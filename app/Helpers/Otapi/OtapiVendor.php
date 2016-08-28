@@ -9,15 +9,15 @@ class OtapiVendor
 
 	/**
 	 * Получение информации о бренде по его Id
-	 * @param $brandId
+	 * @param $vendorId
 	 *
 	 * @return mixed
 	 */
-	public function get($brandId)
+	public function get($vendorId)
 	{
 		$otapiConnection = new OtapiConnection;
-		$data = $otapiConnection->create_request('GetBrandInfo', ['brandId' => $brandId], $this->allow_safe_mode);
-		return $data;
+		$data = $otapiConnection->create_request('GetVendorInfo', ['vendorId' => $vendorId], $this->allow_safe_mode);
+		return $data->VendorInfo;
 	}
 
 	/**

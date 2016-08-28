@@ -7,14 +7,12 @@
 
 @section('content')
     <div class="page-catalog-item">
-        <div class="col-xs-24 col-sm-12 col-md-7 block-gallery">
+        <div class="col-xs-24 col-sm-12 col-md-9 block-gallery">
         @if(isset($data->Pictures))
-            <?$count_picture = 0?>
             @if(count($data->Pictures->ItemPicture) > 0)
                 @foreach($data->Pictures->ItemPicture as $picture)
-                    <?++$count_picture?>
-                    <a class="fancybox @if($count_picture === 1) bigImageItem @endif" href="{{ $picture->Large }}" rel="fancybox-thumb">
-                        @if($count_picture === 1)
+                    <a class="fancybox @if($picture->IsMain === 'true') bigImageItem @endif" href="{{ $picture->Large }}" rel="fancybox-thumb">
+                        @if($picture->IsMain === 'true')
                             <img src="{{ $picture->Large }}" class="all-width fancybox LargeImg" alt="{{ $data->Title }}">
                         @else
                             <img src="{{ $picture->Small }}" class="fancybox SmallImg" alt="{{ $data->Title }}">
@@ -28,15 +26,15 @@
             @endif
         @endif
         </div>
-        <div class="col-xs-24 @if( !isset($vendor->Credit->Level)) col-sm-12 col-md-16 col-md-offset-1 @else col-sm-12 col-md-10 col-md-offset-1 @endif">
+        <div class="col-content-item col-xs-24 @if( !isset($data->Vendor->Credit->Level)) col-sm-12 col-md-16 col-md-offset-1 @else col-sm-12 col-md-11 @endif">
             <div>
-                <h1>{{ mb_strimwidth($data->Title, 0, 130, '...') }}</h1>
+                <h1>{{ mb_strimwidth($data->Title, 0, 99, '...') }}</h1>
                 <p><a target="_blank" href="{{ $data->TaobaoItemUrl }}">[этот товар на таобао]</a></p>
                 <br/>
             </div>
             <div class="clearfix"></div>
             @if($data->MasterQuantity > 0)
-                @if(isset($data->Promotions[0]->Price->Quantity))
+                @if(is_array($data->Promotions) && isset($data->Promotions[0]->Price->Quantity))
                     <p class="cost priceOld" style="text-decoration: line-through">
                         <span class="strong-heavy price-item">{{ $data->Price->ConvertedPriceWithoutSign }}</span>
                         <small>{{ $data->Price->CurrencySign }}</small>
@@ -147,8 +145,8 @@
             @endif
             <div class="clearfix"></div>
         </div>
-        @if(isset($vendor->Credit->Level))
-            <div class="col-xs-24 col-md-5 col-md-offset-1">
+        @if(isset($data->Vendor->Credit->Level))
+            <div class="col-xs-24 col-md-4">
                 <div class="vendor">
                     <p class="h4 row">Продавец:</p>
                     <ul class="list-unstyled row list-vendor">
@@ -156,7 +154,7 @@
                             <p class="col-xs-24">
                                 <a href="/otapi/vendor/{{ $data->VendorId }}">{{ $data->VendorName }}</a>
                                 <br/>
-                                @php($count_it = ceil($vendor->Credit->Level/5))
+                                @php($count_it = ceil($data->Vendor->Credit->Level/5))
                                 @for($i=0; $i < $count_it; $i++)
                                     <i class="fa fa-star"></i>
                                 @endfor
@@ -167,10 +165,10 @@
                                 ({{ $data->Location->State }})</p>
                         </li>
                         <li class="row">
-                            <p class="col-xs-24">{{ $vendor->VendorInfo->Credit->TotalFeedbacks }} отзывов
+                            <p class="col-xs-24">{{ $data->Vendor->Credit->TotalFeedbacks }} отзывов
                                 <i class="glyphicon glyphicon-heart"></i>
-                                @if($vendor->VendorInfo->Credit->TotalFeedbacks > 0)
-                                    {{ mb_strimwidth(($vendor->VendorInfo->Credit->PositiveFeedbacks * 100) / $vendor->VendorInfo->Credit->TotalFeedbacks, 0, 5, '') }}%
+                                @if($data->Vendor->Credit->TotalFeedbacks > 0)
+                                    {{ mb_strimwidth(($data->Vendor->Credit->PositiveFeedbacks * 100) / $data->Vendor->Credit->TotalFeedbacks, 0, 5, '') }}%
                                 @endif
                             </p>
                         </li>
@@ -183,14 +181,14 @@
                         @foreach($vendorTovars->Content->Item as $tovar)
                             @if(isset($tovar->Pictures->ItemPicture[0]->Small))
                             <a href="/otapi/{{ $tovar->CategoryId }}/tovar/{{ $tovar->Id }}">
-                                <img src="{{ $tovar->Pictures->ItemPicture[0]->Small }}" class="col-xs-12" alt="Фото товара">
+                                <img src="{{ $tovar->Pictures->ItemPicture[0]->Medium }}" class="col-xs-12" alt="Фото товара">
                             </a>
                             @endif
                         @endforeach
-                        @if($vendorTovars->TotalCount - 6 > 0)
+                        @if($vendorTovars->TotalCount - 10 > 0)
                             <p class="text-right"><i>
                                     И еще <a href="/otapi/vendor/{{ $data->VendorId }}">
-                                        {{ $vendorTovars->TotalCount-6 }} товаров...</a></i>
+                                        {{ $vendorTovars->TotalCount-10 }} товаров...</a></i>
                             </p>
                         @endif
                     </div>

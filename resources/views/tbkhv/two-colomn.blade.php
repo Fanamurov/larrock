@@ -39,9 +39,7 @@
         <div class="col-xs-24 col-md-18">
             @if(Route::current()->getName() !== 'otapi.index')
                 @if(Route::current()->getName() !== 'mainpage')
-                    <section class="block-breadcrumbs">
-                        @yield('breadcrumbs')
-                    </section>
+                    @yield('breadcrumbs')
                 @endif
             @endif
 

@@ -2,9 +2,11 @@
 @section('title') {{ $category->Name }} @endsection
 
 @section('breadcrumbs')
-    <div class="hidden-xs hidden-sm">
-        {!! Breadcrumbs::render('otapi.category', $category->Id) !!}
-    </div>
+    <section class="block-breadcrumbs">
+        <div class="hidden-xs hidden-sm">
+            {!! Breadcrumbs::render('otapi.category', $category->Id) !!}
+        </div>
+    </section>
 @endsection
 
 @section('filters')

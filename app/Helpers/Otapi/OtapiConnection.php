@@ -47,37 +47,34 @@ class OtapiConnection
 			$param_request .= '&'. $param_key .'='. $param_value;
 		}
 
-		//echo $method .'_'.$param_request .'<br/>';
 		$cacheKey = sha1($method .'_'.$param_request);
-		if($method === 'FindCategoryItemInfoListFrame'){
-			//dd($this->service_url . $method .'?'. $this->instanceKey .'&'. $this->lang . $param_request);
-			//Cache::forget($cacheKey);
-		}
-		//Cache::forget($cacheKey);
-
 		$body = Cache::remember($cacheKey, $this->cacheTime, function() use ($method, $param_request)
 		{
-			echo $method .' not cached<br/>';
+			//echo $method .' not cached<br/>';
 			$client = new Client();
-			//dd($this->service_url . $method .'?'. $this->instanceKey .'&'. $this->lang . $param_request);
 			$data = $client->request('GET', $this->service_url . $method .'?'. $this->instanceKey .'&'. $this->lang . $param_request);
 			if($this->checkErrorConnection($data)){
-				return $this->checkErrorOtapi($this->encodeResult($data->getBody()));
+				return $this->checkErrorOtapi($this->encodeResult($data->getBody(), $method));
 			}
 			return FALSE;
 		});
 		return $body;
 	}
 
-	/**
-	 * Преобразование результата запроса из xml
-	 * @param $data
-	 *
-	 * @return mixed
-	 */
-	protected function encodeResult(Stream $data)
+    /**
+     * Преобразование результата запроса из xml
+     * @param Stream $data
+     *
+     * @param string $method
+     * @return mixed
+     */
+	protected function encodeResult(Stream $data, $method = '')
 	{
-		$body = simplexml_load_string($data);
+        if($method === 'GetTradeRateInfoListFrame'){
+            $body = simplexml_load_string(str_replace('&#x2;', '2', $data));
+        }else{
+            $body = simplexml_load_string($data);
+        }
 		$body = json_encode($body);
 		return json_decode($body);
 	}

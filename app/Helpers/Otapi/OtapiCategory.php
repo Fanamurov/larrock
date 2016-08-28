@@ -28,7 +28,7 @@ class OtapiCategory
 	{
 		$otapiConnection = new OtapiConnection;
 		$data = $otapiConnection->create_request('GetThreeLevelRootCategoryInfoList', [], $this->allow_safe_mode);
-		return $data->OtapiCategory;
+		return $data->CategoryInfoList->Content->Item;
 	}
 
 	/**

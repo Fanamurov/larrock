@@ -21,27 +21,27 @@
             <td style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;">
                 <p>
                 @if(isset($item->options['img']) && !empty($item->options['img']))
-                    <a href="http://tbkhv.ru/otapi/{{ (string)$tao_items[$item->id]->OtapiItemFullInfo->CategoryId }}/tovar/{{ (string)$tao_items[$item->id]->OtapiItemFullInfo->Id }}">
+                    <a href="http://tbkhv.ru/otapi/{{ $tao_items[$item->id]->CategoryId }}/tovar/{{ $tao_items[$item->id]->Id }}">
                         <img width="150" src="{{ $item->options['img'] }}" class="all-width" alt="Фото товара">
                     </a>
                 @else
-                    <a href="http://tbkhv.ru/otapi/{{ (string)$tao_items[$item->id]->OtapiItemFullInfo->CategoryId }}/tovar/{{ (string)$tao_items[$item->id]->OtapiItemFullInfo->Id }}">
-                        <img width="150" src="{{ (string)$tao_items[$item->id]->OtapiItemFullInfo->MainPictureUrl }}" class="all-width" alt="Фото товара">
+                    <a href="http://tbkhv.ru/otapi/{{ $tao_items[$item->id]->CategoryId }}/tovar/{{ $tao_items[$item->id]->Id }}">
+                        <img width="150" src="{{ $tao_items[$item->id]->MainPictureUrl }}" class="all-width" alt="Фото товара">
                     </a>
                 @endif
                 </p>
             </td>
             <td style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;">
                 <p>
-                <a href="http://tbkhv.ru/otapi/{{ (string)$tao_items[$item->id]->OtapiItemFullInfo->CategoryId }}/tovar/{{ (string)$tao_items[$item->id]->OtapiItemFullInfo->Id }}">
+                <a href="http://tbkhv.ru/otapi/{{ $tao_items[$item->id]->CategoryId }}/tovar/{{ $tao_items[$item->id]->Id }}">
                     {{ $item->name }}
                 </a>
                 </p>
-                <p>{{ (string)$tao_items[$item->id]->OtapiItemFullInfo->Title }}</p>
+                <p>{{ $tao_items[$item->id]->Title }}</p>
                 @if(isset($item->options['config']))
                     <br/>{{ $item->options['config'] }}
                 @endif
-                <p><i><a href="{{ (string)$tao_items[$item->id]->OtapiItemFullInfo->TaobaoItemUrl }}">[Этот товар на таобао]</a></i></p>
+                <p><i><a href="{{ $tao_items[$item->id]->TaobaoItemUrl }}">[Этот товар на таобао]</a></i></p>
             </td>
             <td style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;">{{ $item->qty }}</td>
             <td style="border: #bcbcbc 1px solid;font:14px/16px Calibri,Helvetica,Arial,sans-serif;">{{ $item->price }}</td>

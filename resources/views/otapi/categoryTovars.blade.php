@@ -3,10 +3,38 @@
 
 @section('breadcrumbs')
     <section class="block-breadcrumbs">
-        <div class="hidden-xs hidden-sm">
+        <div class="hidden-xs">
             {!! Breadcrumbs::render('otapi.category', $category->Id) !!}
         </div>
     </section>
+@endsection
+
+@section('sub-categories')
+    <ul class="list-group">
+        @foreach($sub_categories as $sub_category_count => $sub_category)
+            @if($sub_category_count < 3)
+                <li class="list-group-item @if($sub_category->Id === $category->Id) list-group-item-success @endif">
+                    <a href="/otapi/{{ $sub_category->Id }}">{{ $sub_category->Name }}</a>
+                </li>
+            @endif
+        @endforeach
+        <li class="list-group-item">
+            <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#collapse-sub-categories" aria-expanded="false" aria-controls="collapse-sub-categories">
+                <i class="glyphicon glyphicon-th-list"></i> Загрузить подразделы
+            </button>
+        </li>
+    </ul>
+    <div class="collapse" id="collapse-sub-categories">
+        <ul class="list-group">
+            @foreach($sub_categories as $sub_category_count => $sub_category)
+                @if($sub_category_count >  3)
+                    <li class="list-group-item @if($sub_category->Id === $category->Id) list-group-item-success @endif">
+                        <a href="/otapi/{{ $sub_category->Id }}">{{ $sub_category->Name }}</a>
+                    </li>
+                @endif
+            @endforeach
+        </ul>
+    </div>
 @endsection
 
 @section('filters')
@@ -90,7 +118,7 @@
         </div>
         <div class="row">
             @foreach($data->Content->Item as $data_value)
-                <div class="col-xs-12 col-sm-6 item-catalog link_block_this" data-href='/otapi/{{ $data_value->CategoryId }}/tovar/{{ $data_value->Id }}'>
+                <div class="col-xs-12 col-sm-8 col-md-6 item-catalog link_block_this" data-href='/otapi/{{ $data_value->CategoryId }}/tovar/{{ $data_value->Id }}'>
                     <div class="div-img">
                     @if(isset($data_value->Pictures))
                         @if(is_array($data_value->Pictures->ItemPicture))
@@ -100,7 +128,11 @@
                         @endif
                         @endif
                     </div>
-                    <p class="cost">{{ $data_value->Price->ConvertedPrice }}</p>
+                    @if(isset($data_value->PromotionPrice->ConvertedPriceList->Internal) && $data_value->PromotionPrice->Quantity > 0)
+                        <p class="cost">{{ $data_value->PromotionPrice->ConvertedPriceList->Internal }}</p>
+                    @else
+                        <p class="cost">{{ $data_value->Price->ConvertedPrice }}</p>
+                    @endif
                     <p><a class="title-tovar" href="/otapi/{{ $data_value->CategoryId }}/tovar/{{ $data_value->Id }}">
                             {{ mb_strimwidth($data_value->Title, 0, 70, '...') }}
                         </a></p>

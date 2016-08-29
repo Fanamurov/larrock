@@ -3,7 +3,7 @@
 
 @section('content')
     <div class="catalog-frontpage">
-        <div class="col-sm-24 catalog-frontpage-content">
+        <div class="col-md-24 catalog-frontpage-content">
             @include('tbkhv.modules.catalog.popular', ['data' => $modulePopular])
             <div class="clearfix"></div><br/><br/>
 

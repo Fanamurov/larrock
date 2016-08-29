@@ -1,6 +1,6 @@
 <div class="header_line">
     <div class="container">
-        <div class="col-xs-24 col-sm-18">
+        <div class="col-xs-24 col-md-18 hidden-xs">
             <ul class="nav nav-pills nav-menu">
                 <li>
                     <a href="#">Доставка</a>
@@ -22,7 +22,7 @@
                 </li>
             </ul>
         </div>
-        <div class="block-headerCart col-xs-24 col-sm-6">
+        <div class="block-headerCart col-xs-24 col-md-6">
             @include('tbkhv.modules.cart.moduleSplash')
         </div>
     </div>

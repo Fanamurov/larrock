@@ -126,3 +126,18 @@
 .soputka-page-item{
   padding-top: 30px;
 }
+
+@media (max-width: 550px) {
+  #photo-description{
+	img{
+	  max-width: 100%;
+	  width: 100%;
+	}
+  }
+  .nav-tabs>li{
+	display: block;
+	float: none;
+	border-bottom: 1px solid #dadada;
+	text-align: center;
+  }
+}

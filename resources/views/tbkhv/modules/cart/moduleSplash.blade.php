@@ -4,7 +4,7 @@
     @else
         <p><a href="/cart">
                 <i class="fa fa-shopping-cart"></i>
-                Товаров на сумму <span class="total_cart">{!! Cart::total() !!}</span> руб. ({!! Cart::count() !!} шт.)</a></p>
+                Корзина: <span class="total_cart">{!! Cart::total() !!}</span> руб. ({!! Cart::count() !!} шт.)</a></p>
     @endif
 </div>
 @include('tbkhv.modals.addToCart')

@@ -124,6 +124,7 @@ $(document).ready(function(){
     $('.show_menu').click(
         function(){
             $('.menu_hidden').toggleClass('hidden');
+            $('.close_menu').toggleClass('hidden')
         }
     );
 

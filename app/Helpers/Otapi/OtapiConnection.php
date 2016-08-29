@@ -50,7 +50,7 @@ class OtapiConnection
 		$cacheKey = sha1($method .'_'.$param_request);
 		$body = Cache::remember($cacheKey, $this->cacheTime, function() use ($method, $param_request)
 		{
-			//echo $method .' not cached<br/>';
+			echo $method .' not cached<br/>';
 			$client = new Client();
 			$data = $client->request('GET', $this->service_url . $method .'?'. $this->instanceKey .'&'. $this->lang . $param_request);
 			if($this->checkErrorConnection($data)){
@@ -91,10 +91,6 @@ class OtapiConnection
 	 */
 	protected function checkErrorConnection(GuzzleResponse $data)
 	{
-		if($this->method === 'GetTradeRateInfoListFrame'){
-			//dd($data);
-		}
-
 		if($data->getStatusCode() === 200){
 			return TRUE;
 		}else{

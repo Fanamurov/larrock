@@ -11,20 +11,24 @@ class OtapiItem
 
 	public function get($itemId, $load_description = NULL, $blockList = 'Promotions,RootPath,Vendor')
 	{
-		if($load_description){
-			$blockList .= ',Description';
-		}
-		$otapiConnection = new OtapiConnection;
-		$data = $otapiConnection->create_request('BatchGetItemFullInfo',
-			['itemId' => $itemId, 'blockList' => $blockList, 'sessionId' => mt_rand(100000,99999999)],
-			$this->allow_safe_mode);
-		$data = $this->find_relations($data->Result);
-		if(isset($data->ConfiguredItems->OtapiConfiguredItem)){
-			$data->ConfiguredItems = collect($data->ConfiguredItems->OtapiConfiguredItem);
-		}
-		if( !isset($data->Promotions)){
-			$data->Promotions = collect();
-		}
+		$key_cache = sha1('item-'. $itemId . $load_description . $blockList);
+		$data = Cache::remember($key_cache, 1440, function() use ($itemId, $load_description, $blockList) {
+			if($load_description){
+				$blockList .= ',Description';
+			}
+			$otapiConnection = new OtapiConnection;
+			$data = $otapiConnection->create_request('BatchGetItemFullInfo',
+				['itemId' => $itemId, 'blockList' => $blockList, 'sessionId' => mt_rand(100000,99999999)],
+				$this->allow_safe_mode);
+			$data = $this->find_relations($data->Result);
+			if(isset($data->ConfiguredItems->OtapiConfiguredItem)){
+				$data->ConfiguredItems = collect($data->ConfiguredItems->OtapiConfiguredItem);
+			}
+			if( !isset($data->Promotions)){
+				$data->Promotions = collect();
+			}
+			return $data;
+		});
 		return $data;
 	}
 

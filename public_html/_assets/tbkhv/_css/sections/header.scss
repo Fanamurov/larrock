@@ -73,6 +73,16 @@ header{
       border-bottom: 1px dotted #FB8A58;
       padding-bottom: 4px;
     }
+	.close_menu{
+	  position: absolute;
+	  right: 10px;
+	  top: 8px;
+	  line-height: 18px;
+	  border-bottom: none;
+	  i{
+		font-size: 20px;
+	  }
+	}
   }
 
   .block-search{
@@ -122,6 +132,9 @@ header{
 .form-search-block{
   padding-left: 20px;
   padding-right: 13px;
+  @media (max-width: 768px) {
+	padding-bottom: 15px;
+  }
 }
 
 .row .nav-menu{
@@ -132,8 +145,11 @@ header{
 @media (max-width: 600px) {
   .block-headerCart{
 	text-align: center;
-	margin-top: 10px;
-	margin-bottom: 15px;
+	margin-top: 8px;
+	margin-bottom: 0;
+	.moduleCart{
+	  float: none !important;
+	}
   }
   header{
 	text-align: center;

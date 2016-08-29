@@ -9,8 +9,6 @@ use App\Helpers\Otapi\OtapiItem;
 use App\Helpers\Otapi\OtapiReview;
 use Breadcrumbs;
 use Cart;
-//use Request;
-use GuzzleHttp\Client;
 use Cache;
 use Illuminate\Http\Request;
 use Mail;
@@ -20,45 +18,12 @@ use App\Helpers\Otapi\OtapiVendor;
 
 class Otapi extends Controller
 {
-    protected $instanceKey = 'instanceKey=531ed6b5-8ebb-4100-9f19-1077ad3b7ff2';
-    protected $lang = 'language=ru';
-    protected $service_url = 'http://otapi.net/OtapiWebService2.asmx/';
-
     public function __construct(OtapiCategory $otapiCategory)
     {
         Breadcrumbs::register('otapi.index', function($breadcrumbs){
             $breadcrumbs->push('Каталог', route('otapi.index'));
         });
         View::share('menu', $this->getMenu($otapiCategory));
-    }
-
-    public function create_request($method, $params = [])
-    {
-        $param_request = '';
-        foreach($params as $param_key => $param_value){
-            $param_request .= '&'. $param_key .'='. $param_value;
-        }
-
-        //echo $method .'_'.$param_request .'<br/>';
-        $cacheKey = md5($method .'_'.$param_request);
-        if($method === 'FindCategoryItemInfoListFrame'){
-			//dd($this->service_url . $method .'?'. $this->instanceKey .'&'. $this->lang . $param_request);
-            //Cache::forget($cacheKey);
-        }
-        //Cache::forget($cacheKey);
-
-        $body = Cache::remember($cacheKey, 1440, function() use ($method, $param_request)
-        {
-            $client = new Client();
-            //dd($this->service_url . $method .'?'. $this->instanceKey .'&'. $this->lang . $param_request);
-            $data = $client->request('GET', $this->service_url . $method .'?'. $this->instanceKey .'&'. $this->lang . $param_request);
-            $body = simplexml_load_string($data->getBody());
-            $body = json_encode($body);
-            $body = json_decode($body);
-            //dd($body->CategoryInfoList->Content->Item);
-            return $body;
-        });
-        return $body;
     }
 
     public function get_index()
@@ -90,12 +55,13 @@ class Otapi extends Controller
 
     public function get_subCategoryList(Request $request, $parentCategoryId)
     {
+    	$otapiCategory = new OtapiCategory();
         if ($request->exists('_token')){
             return $this->get_tovarsCategoryFilter($request, $parentCategoryId);
         }
-        $body['data'] = $this->create_request('GetCategorySubcategoryInfoList', ['parentCategoryId' => $parentCategoryId]);
-        $body['category'] = $this->create_request('GetCategoryInfo', ['categoryId' => $parentCategoryId]);
-        if(isset($body['data']->CategoryInfoList->Content->Item) && count($body['data']->CategoryInfoList->Content->Item) > 0){
+        $body['data'] = $otapiCategory->GetCategorySubcategoryInfoList($parentCategoryId);
+        if(count($body['data'])> 0){
+			$body['category'] = $otapiCategory->get($parentCategoryId);
             return view('otapi.categoryList', $body);
         }else{
             return $this->get_tovarsCategoryFilter($request, $parentCategoryId);
@@ -106,7 +72,6 @@ class Otapi extends Controller
 	 * Получение частичного списка товаров категории
 	 *
 	 * @param string        $categoryId
-	 *
 	 * @param Request       $request
 	 *
 	 * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -161,17 +126,17 @@ class Otapi extends Controller
         $search_params .= '</SearchParameters>';
 
 		$body['data'] = $otapiItem->categoryTovars($categoryId, $search_params, $framePosition, $frameSize);
+		$body['sub_categories'] = $otapiCategory->GetCategorySubcategoryInfoList($body['category']->ParentId);
 
         if($body['data']->TotalCount > 0){
-            Breadcrumbs::register('otapi.category', function($breadcrumbs, $categoryId)
+            Breadcrumbs::register('otapi.category', function($breadcrumbs, $categoryId) use ($otapiCategory)
             {
                 $breadcrumbs->parent('otapi.index');
 
-                $GetCategoryRootPath = $this->create_request('GetCategoryRootPath', ['categoryId' => $categoryId]);
-                $categorys = (array)$GetCategoryRootPath->CategoryInfoList->Content;
-                $categorys = array_reverse($categorys['Item']);
+				$GetCategoryRootPath = $otapiCategory->GetCategoryRootPath($categoryId);
+                $categorys = array_reverse($GetCategoryRootPath);
                 foreach($categorys as $item){
-                    $breadcrumbs->push((string)$item->Name, route('otapi.category', ['categoryId' => (string)$item->Id]));
+                    $breadcrumbs->push($item->Name, route('otapi.category', ['categoryId' => $item->Id]));
                 }
             });
 
@@ -187,8 +152,7 @@ class Otapi extends Controller
                 $limit = 60,
                 $page = $request->get('page'), [
                 'path'  => $request->url(),
-                'query' => $request->query(),
-            ]);
+                'query' => $request->query()]);
             }
 
             return view('otapi.categoryTovars', $body);
@@ -215,9 +179,25 @@ class Otapi extends Controller
             $body['data'] = $otapiItem->get($itemId, TRUE);
             $body['opinions'] = $otapiReview->get($itemId, 0, 10);
             $body['vendorTovars'] = $otapiVendor->tovars($body['data']->VendorId, 0, 6);
-			//$body['vendor'] = $otapiVendor->get($body['data']->VendorId);
+			$body['vendor'] = $otapiVendor->get($body['data']->VendorId);
             return $body;
         });
+
+		//Ищем минимальную и максимальную сумму для товара
+		$body['price_average'] = $body['data']->Price->ConvertedPriceWithoutSign;
+		$body['price_min'] = $body['data']->Price->ConvertedPriceWithoutSign;
+		$body['price_max'] = $body['data']->Price->ConvertedPriceWithoutSign;
+		foreach($body['data']->ConfiguredItems as $config_price){
+			if($config_price->Price->ConvertedPriceWithoutSign < $body['price_min']){
+				$body['price_min'] = $config_price->Price->ConvertedPriceWithoutSign;
+			}
+			if($config_price->Price->ConvertedPriceWithoutSign > $body['price_max']){
+				$body['price_max'] = $config_price->Price->ConvertedPriceWithoutSign;
+			}
+		}
+		if($body['price_min'] !== $body['price_max']){
+			$body['price_average'] = $body['price_min'] .'-'. $body['price_max'];
+		}
 
 		Breadcrumbs::register('otapi.tovar', function($breadcrumbs, $rootPath)
 		{
@@ -256,7 +236,7 @@ class Otapi extends Controller
 					$output = [];
 					$output['Id'] = $item->Id;
 					$output['Quantity'] = $item->Quantity;
-					$output['Price'] = $output['promoPrice'] = $item->Price->ConvertedPriceWithoutSign; //Переделать
+					$output['Price'] = $output['promoPrice'] = $item->Price->ConvertedPriceWithoutSign;
 
                     if(is_array($configs_promo)){
                         foreach($configs_promo as $promo){
@@ -271,6 +251,21 @@ class Otapi extends Controller
                             $output['promoPrice'] = $configs_promo->Price->ConvertedPriceWithoutSign;
                         }
                     }
+
+					if($output['Quantity'] > 0){
+						return response()->json(['status' => 'Update', 'data' => $output]);
+					}else{
+						return response()->json(['status' => 'QuantityZero']);
+					}
+				}
+			}else{
+				$Pid = $item->Configurators->ValuedConfigurator->$attrKey->Pid;
+				$Vid = $item->Configurators->ValuedConfigurator->$attrKey->Vid;
+				if(array_key_exists($Pid, $params) && $params[$Pid] === $Vid){
+					$output = [];
+					$output['Id'] = $item->Id;
+					$output['Quantity'] = $item->Quantity;
+					$output['Price'] = $output['promoPrice'] = $item->Price->ConvertedPriceWithoutSign;
 
 					if($output['Quantity'] > 0){
 						return response()->json(['status' => 'Update', 'data' => $output]);
@@ -424,22 +419,22 @@ class Otapi extends Controller
     {
         $options['config'] = $request->get('config');
         $options['img'] = $request->get('img');
-        \Cart::add($request->get('id'), $request->get('name'), 1, $request->get('price'), $options);
+		$id = $request->get('id') .'-'. $request->get('price');
+        \Cart::add($id, $request->get('name'), 1, $request->get('price'), $options);
         return response(\Cart::total());
     }
 
     public function get_cart(OtapiItem $otapiItem)
     {
         $cart = Cart::content();
-        if(count($cart) === 0){
+        if(Cart::total() === 0){
             return redirect()->route('mainpage');
         }
         $tao_items = [];
         foreach($cart as $item){
             $tao_items[$item->id] = $otapiItem->get($item->id);
         }
-        $seo = ['title' => 'Cart page'];
-        return view('tbkhv.cart.table', compact('cart', 'seo', 'tao_items', ['cart', 'seo', 'tao_items']));
+        return view('tbkhv.cart.table', compact('cart', 'tao_items', ['cart', 'tao_items']));
     }
 
 	/**

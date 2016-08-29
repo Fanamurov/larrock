@@ -1,7 +1,7 @@
 <div class="modulePopular">
     <p class="h1 container-fluid">Популярные товары</p><hr/>
     @foreach($data as $data_value)
-        <div class="col-xs-12 col-sm-6 item-catalog">
+        <div class="col-xs-12 col-sm-8 col-md-6 item-catalog">
             <div class="div-img">
             @if(isset($data_value->Pictures))
                 <a href="/otapi/{{ $data_value->CategoryId }}/tovar/{{ $data_value->Id }}">

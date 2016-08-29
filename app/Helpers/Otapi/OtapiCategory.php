@@ -46,4 +46,24 @@ class OtapiCategory
 		}
 		return collect();
 	}
+
+	public function GetCategorySubcategoryInfoList($parentCategoryId)
+	{
+		$otapiConnection = new OtapiConnection;
+		$data = $otapiConnection->create_request('GetCategorySubcategoryInfoList', ['parentCategoryId' => $parentCategoryId], $this->allow_safe_mode);
+		if(isset($data->CategoryInfoList->Content->Item)){
+			return $data->CategoryInfoList->Content->Item;
+		}
+		return collect();
+	}
+
+	public function GetCategoryRootPath($categoryId)
+	{
+		$otapiConnection = new OtapiConnection;
+		$data = $otapiConnection->create_request('GetCategoryRootPath', ['categoryId' => $categoryId], TRUE);
+		if(isset($data->CategoryInfoList->Content->Item)){
+			return $data->CategoryInfoList->Content->Item;
+		}
+		return collect();
+	}
 }

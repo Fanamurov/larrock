@@ -2,6 +2,22 @@ body{
   font-family: 'Open Sans', sans-serif;
 }
 
+@media (max-width: 1024px){
+  .container {
+	width: 100%;
+	padding-right: 0;
+	padding-left: 0;
+  }
+  .container-body > .row{
+	margin-left: 0;
+	margin-right: 0;
+  }
+  .mainpage-menus{
+	padding-right: 0;
+	padding-left: 0;
+  }
+}
+
 .body-two-colomn{
   #content {
 	margin-left: 0;

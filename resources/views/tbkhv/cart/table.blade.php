@@ -10,27 +10,27 @@
                 <tr data-rowid="{{ $row->rowid }}">
                     <td width="150px">
                         @if(isset($row->options['img']) && !empty($row->options['img']))
-                            <a href="/otapi/{{ (string)$tao_items[$row->id]->OtapiItemFullInfo->CategoryId }}/tovar/{{ (string)$tao_items[$row->id]->OtapiItemFullInfo->Id }}">
+                            <a href="/otapi/{{ $tao_items[$row->id]->CategoryId }}/tovar/{{ $tao_items[$row->id]->Id }}">
                                 <img src="{{ $row->options['img'] }}" class="all-width" alt="Фото товара">
                             </a>
                         @else
-                            <a href="/otapi/{{ (string)$tao_items[$row->id]->OtapiItemFullInfo->CategoryId }}/tovar/{{ (string)$tao_items[$row->id]->OtapiItemFullInfo->Id }}">
-                                <img src="{{ (string)$tao_items[$row->id]->OtapiItemFullInfo->MainPictureUrl }}" class="all-width" alt="Фото товара">
+                            <a href="/otapi/{{ $tao_items[$row->id]->CategoryId }}/tovar/{{ $tao_items[$row->id]->Id }}">
+                                <img src="{{ $tao_items[$row->id]->MainPictureUrl }}" class="all-width" alt="Фото товара">
                             </a>
                         @endif
                         <br/><br/>
                     </td>
                     <td>
                         <p>
-                            <a href="/otapi/{{ (string)$tao_items[$row->id]->OtapiItemFullInfo->CategoryId }}/tovar/{{ (string)$tao_items[$row->id]->OtapiItemFullInfo->Id }}">
+                            <a href="/otapi/{{ $tao_items[$row->id]->CategoryId }}/tovar/{{ $tao_items[$row->id]->Id }}">
                                 {{ $row->name }}
                             </a>
                             @if(isset($row->options['config']))
                                 <br/><strong>{{ $row->options['config'] }}</strong>
                             @endif
                         </p>
-                        <p>{{ (string)$tao_items[$row->id]->OtapiItemFullInfo->Title }}</p>
-                        <p><i><a href="{{ (string)$tao_items[$row->id]->OtapiItemFullInfo->TaobaoItemUrl }}">[Этот товар на таобао]</a></i></p>
+                        <p>{{ $tao_items[$row->id]->Title }}</p>
+                        <p><i><a href="{{ $tao_items[$row->id]->TaobaoItemUrl }}">[Этот товар на таобао]</a></i></p>
                     </td>
                     <td width="160px"><span class="strong">{{ $row->price }}</span> <i>руб./шт.</i></td>
                     <td width="135px" class="Qty-col">
@@ -52,10 +52,7 @@
 
         <br/><br/>
 
-        <div class="alert alert-warning">Заказы через онлайн-отправку отключен, для совершения заказа свяжитесь с нами по телефону 
-        8 914 190-00-02 или отправляйте ссылки на товары на почту: <a href="mailto:tbkhv@mail.ru">tbkhv@mail.ru</a></div>
-
-        <div class="form-order hidden">
+        <div class="form-order">
             <h2 class="text-center">Ваши контактные данные для заказа</h2><br/>
             <form action="/form/order" method="post" class="row" id="form-zakaz">
                 <div class="col-sm-8 col-sm-offset-1">

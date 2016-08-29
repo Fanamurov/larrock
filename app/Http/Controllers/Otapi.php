@@ -447,7 +447,8 @@ class Otapi extends Controller
         }
         $tao_items = [];
         foreach($cart as $item){
-            $tao_items[$item->id] = $otapiItem->get($item->id);
+            $id = str_replace('-'. $item->price, '', $item->id);
+            $tao_items[$item->id] = $otapiItem->get($id);
         }
         return view('tbkhv.cart.table', compact('cart', 'tao_items', ['cart', 'tao_items']));
     }

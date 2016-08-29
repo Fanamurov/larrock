@@ -188,12 +188,21 @@ class Otapi extends Controller
 		$body['price_min'] = $body['data']->Price->ConvertedPriceWithoutSign;
 		$body['price_max'] = $body['data']->Price->ConvertedPriceWithoutSign;
 		foreach($body['data']->ConfiguredItems as $config_price){
-			if($config_price->Price->ConvertedPriceWithoutSign < $body['price_min']){
-				$body['price_min'] = $config_price->Price->ConvertedPriceWithoutSign;
-			}
-			if($config_price->Price->ConvertedPriceWithoutSign > $body['price_max']){
-				$body['price_max'] = $config_price->Price->ConvertedPriceWithoutSign;
-			}
+		    if(isset($config_price->Price->ConvertedPriceWithoutSign)){
+                if($config_price->Price->ConvertedPriceWithoutSign < $body['price_min']){
+                    $body['price_min'] = $config_price->Price->ConvertedPriceWithoutSign;
+                }
+                if($config_price->Price->ConvertedPriceWithoutSign > $body['price_max']){
+                    $body['price_max'] = $config_price->Price->ConvertedPriceWithoutSign;
+                }
+            }else{
+                if($body['data']->ConfiguredItems['Price']->ConvertedPriceWithoutSign < $body['price_min']){
+                    $body['price_min'] = $body['data']->ConfiguredItems['Price']->ConvertedPriceWithoutSign;
+                }
+                if($body['data']->ConfiguredItems['Price']->ConvertedPriceWithoutSign > $body['price_max']){
+                    $body['price_max'] = $body['data']->ConfiguredItems['Price']->ConvertedPriceWithoutSign;
+                }
+            }
 		}
 		if($body['price_min'] !== $body['price_max']){
 			$body['price_average'] = $body['price_min'] .'-'. $body['price_max'];
@@ -220,7 +229,13 @@ class Otapi extends Controller
 		$count_params = count($params);
 		$attrKey = '@attributes';
 
-		foreach($configs as $item){
+        if(is_object($configs)){
+            $configs_array = [0 => $configs];
+        }else{
+            $configs_array = $configs;
+        }
+
+		foreach($configs_array as $item){
 			if(is_array($item->Configurators->ValuedConfigurator)){
 				$count_find = 0;
 				foreach($item->Configurators->ValuedConfigurator as $value){

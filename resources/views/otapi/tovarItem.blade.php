@@ -10,7 +10,7 @@
         <div class="col-xs-24 col-sm-10 col-md-9 block-gallery">
         @php($default_picture = '')
         @if(isset($data->Pictures))
-            @if(count($data->Pictures->ItemPicture) > 0)
+            @if(count($data->Pictures->ItemPicture) > 0 && ( !is_object($data->Pictures->ItemPicture)))
                 @foreach($data->Pictures->ItemPicture as $picture)
                     <a class="fancybox @if($picture->IsMain === 'true') bigImageItem @endif" href="{{ $picture->Large }}" rel="fancybox-thumb">
                         @if($picture->IsMain === 'true')

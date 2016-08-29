@@ -93,6 +93,7 @@
 
                     @foreach($data->Attributes->ItemAttribute as $attr_key => $attr_value)
                         @if($attr_value->IsConfigurator === 'true')
+                            @php($itsConfiguration = TRUE)
                             @if($current_line_attribute !== $attr_value->PropertyName)
                                 @php($current_line_attribute = $attr_value->PropertyName)
                                 <p>{{ $attr_value->PropertyName }}:</p>
@@ -136,15 +137,15 @@
             <br/>
             <input type="hidden" name="configurationId" value="">
             @if($data->MasterQuantity > 0)
-                <p class="text-center button_bg @if(isset($data->Attributes->ItemAttribute)) button_bg-disabled @endif">
-                    <button class="btn btn-danger btn-lg btn-add-to-cart" @if(isset($data->Attributes->ItemAttribute)) disabled @endif
+                <p class="text-center button_bg @if(isset($itsConfiguration)) button_bg-disabled @endif">
+                    <button class="btn btn-danger btn-lg btn-add-to-cart" @if(isset($itsConfiguration)) disabled @endif
                         data-id="{{ $data->Id }}"
                         data-name="{{ $data->OriginalTitle }}"
                         data-price="{{ $default_cost }}"
                         data-config=""
                         data-src="{{ $default_picture }}">
                     <i class="fa fa-cart-plus"></i> Добавить в корзину</button>
-                    <button class="btn btn-info btn-lg btn-add-to-cart" @if(isset($data->Attributes->ItemAttribute)) disabled @endif
+                    <button class="btn btn-info btn-lg btn-add-to-cart" @if(isset($itsConfiguration)) disabled @endif
                             data-id="{{ $data->Id }}"
                             data-name="{{ $data->OriginalTitle }}"
                             data-price="{{ $default_cost }}"

@@ -88,3 +88,15 @@
     padding-top: 7px;
   }
 }
+
+.btn-show-filters{
+  padding: 0 7px 9px 9px;
+}
+@media (min-width: 550px) {
+  #collapse-other-fiters{
+	display: block !important;
+  }
+  .btn-show-filters{
+	display: none !important;
+  }
+}

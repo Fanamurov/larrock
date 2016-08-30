@@ -17,10 +17,13 @@
     }
   }
   .cost{
+	color: #fd4e00;
+	font-weight: 600;
+	padding: 4px 5px;
 	text-align: center;
 	font-size: 19px;
-	line-height: 18px;
-	padding-bottom: 3px;
+	margin-top: 5px;
+	margin-bottom: 0;
   }
   .vendor{
     font-style: italic;
@@ -77,14 +80,15 @@
   }
 
   li.first-level{
+	position: relative;
 	&.current{
-	  a{
+	  > a{
 		color: white;
 		font-weight: 600;
 		background: #FD4E00;
 	  }
 	}
-	a{
+	> a{
 	  color: black;
 	  font-size: 16px;
 	  border-bottom: 1px dashed #f1f1f1;
@@ -97,11 +101,25 @@
 		color: white;
 	  }
 	}
-	&:hover,
-	&:focus{
-	  .list-parent{
-		display: block;
-		z-index: 2;
+	&.show_menu-please{
+	  > a{
+		background: #F37137;
+		color: white;
+	  }
+	  &:after{
+		content: '';
+		height: 80px;
+		width: 30%;
+		position: absolute;
+		top: 25px;
+		right: 0;
+		z-index: 10;
+	  }
+	  @media (min-width: 550px) {
+		> .list-parent{
+		  display: block;
+		  z-index: 2;
+		}
 	  }
 	}
   }
@@ -137,15 +155,13 @@
   .list-parent{
 	position: absolute;
 	left: 290px;
+	top: 42px;
 	background: #F37137;
 	width: 854px;
 	z-index: 1;
 	margin-top: -42px;
 	padding: 15px 20px;
 	display: none;
-	&:first-of-type{
-	  //display: block;
-	}
   }
 
   .list-parent2{

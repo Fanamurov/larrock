@@ -8,7 +8,7 @@
 
     <section class="row" id="content">
         <div class="col-xs-24">
-            @include('front.errors')
+            @include('tbkhv.errors')
             <div class="col-xs-24">
                 @yield('content')
             </div>

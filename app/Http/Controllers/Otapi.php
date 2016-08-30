@@ -41,7 +41,7 @@ class Otapi extends Controller
 			$data['data'][$key]['items'] = $otapiItem->GetCategoryItemInfoListFrame($key, 0, 12);
 			$data['data'][$key]['category'] = $value;
 		}
-        return view('otapi.frontpage', $data);
+        return view('tbkhv.otapi.frontpage', $data);
     }
 
     public function get_category($categoryId = 'otc-3035', Request $request)
@@ -62,7 +62,7 @@ class Otapi extends Controller
         $body['data'] = $otapiCategory->GetCategorySubcategoryInfoList($parentCategoryId);
         if(count($body['data'])> 0){
 			$body['category'] = $otapiCategory->get($parentCategoryId);
-            return view('otapi.categoryList', $body);
+            return view('tbkhv.otapi.categoryList', $body);
         }else{
             return $this->get_tovarsCategoryFilter($request, $parentCategoryId);
         }
@@ -155,7 +155,7 @@ class Otapi extends Controller
                 'query' => $request->query()]);
             }
 
-            return view('otapi.categoryTovars', $body);
+            return view('tbkhv.otapi.categoryTovars', $body);
         }else{
             \Alert::add('error', 'Товаров по данным параметрам не найдено');
             return back();
@@ -218,7 +218,7 @@ class Otapi extends Controller
 			$breadcrumbs->push('Товар');
 		});
 		$body['moduleLast'] = $otapiItem->getSearchByCategory($body['data']->RootPath->first()->Id, 0, 12, '');
-		return view('otapi.tovarItem', $body);
+		return view('tbkhv.otapi.tovarItem', $body);
     }
 
 	public function getConfigItem(Request $request)
@@ -317,7 +317,7 @@ class Otapi extends Controller
             'query' => $request->query(),
         ]);
 
-        return view('otapi.vendorTovars', $body);
+        return view('tbkhv.otapi.vendorTovars', $body);
     }
 
     public function get_brand($brandId)
@@ -325,7 +325,7 @@ class Otapi extends Controller
 		$otapiBrand = new OtapiBrand();
         $body['brand'] = $brandId;
 		$body['data'] = $otapiBrand->tovars($brandId);
-		return view('otapi.brand', $body);
+		return view('tbkhv.otapi.brand', $body);
     }
 
     public function SearchItemsFrame(Request $request, $page = 1)
@@ -385,7 +385,7 @@ class Otapi extends Controller
 				'query' => $request->query(),
 			]);
 		}
-		return view('otapi.search', $body);
+		return view('tbkhv.otapi.search', $body);
     }
 
 	/**

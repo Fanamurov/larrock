@@ -98,9 +98,9 @@ h1{
 }
 
 .block-breadcrumbs{
-  padding: 10px 12px;
+  padding: 10px 12px 0 12px;
+  margin-bottom: 0;
   background-color: transparent;
-  height: 39px;
 
   .breadcrumb{
     display: inline-block;
@@ -139,6 +139,9 @@ h1{
   width: 290px;
   padding-left: 9px;
   background: white;
+  @media (max-width: 550px) {
+	width: 100%;
+  }
 }
 
 .menu-catalog{
@@ -200,6 +203,11 @@ h1{
       padding-top: 19px;
     }
   }
+}
+
+.div-img {
+  max-height: 171px;
+  overflow: hidden;
 }
 
 .nav>li>a{

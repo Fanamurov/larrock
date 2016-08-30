@@ -3,6 +3,7 @@
         <div class="col-xs-24 col-md-22 col-md-offset-0">
             <a href="/" class="logo">
                 <img src="/_assets/tbkhv/_images/logo.png" width="225" height="49" alt="tbkhv.ru">
+                <span class="logo-description">Товары из Китая в Хабаровске</span>
             </a>
         </div>
     </div>

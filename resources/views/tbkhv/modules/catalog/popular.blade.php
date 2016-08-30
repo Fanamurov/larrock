@@ -13,10 +13,6 @@
                 </a>
                 @endif
             </div>
-            <p><a href="/otapi/{{ $data_value->CategoryId }}/tovar/{{ $data_value->Id }}">
-                    {{ mb_strimwidth($data_value->OriginalTitle, 0, 15, '...') }}
-                </a>
-            </p>
 
             @if(isset($data_value->PromotionPrice->OriginalPrice))
                 <p class="cost">{{ $data_value->PromotionPrice->ConvertedPriceList->DisplayedMoneys->Money }} <small>{{ $data_value->Price->CurrencySign }}</small></p>
@@ -25,12 +21,12 @@
             @endif
             <p>{{ mb_strimwidth($data_value->Title, 0, 45, '...') }}</p>
 
-            <p class="vendor">
-                @php($score_delim = ceil($data_value->VendorScore/5))
-                @for($i=0; $i < $score_delim; $i++)
+            <p class="vendor">{{ $data_value->VendorName }}<br/>
+                @php($vendor_score = ceil($data_value->VendorScore/5))
+                @for($i=0; $i < $vendor_score; $i++)
                     <i class="fa fa-star"></i>
                 @endfor
-                </p>
+            </p>
         </div>
     @endforeach
 </div>

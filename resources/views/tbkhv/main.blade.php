@@ -23,7 +23,7 @@
 
             <section class="row" id="content">
                 <div class="col-xs-24">
-                    @include('front.errors')
+                    @include('tbkhv.errors')
                     @yield('content')
                 </div>
             </section>

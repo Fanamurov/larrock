@@ -8,7 +8,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-xs-8">
-                        <img src="/_assets/_front/_images/empty_big.png" alt="Фото товара" class="item-photo all-width">
+                        <img src="/_assets/tbkhv/_images/empty_big.png" alt="Фото товара" class="item-photo all-width">
                     </div>
                     <div class="col-xs-16">
                         <div class="item-description"></div>

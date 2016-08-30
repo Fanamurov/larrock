@@ -33,7 +33,7 @@ gulp.task('watch', function () {
     gulp.watch('./public_html/_assets/_admin/_css/**/*.scss', ['sass_admin']);
     gulp.watch('./public_html/_assets/tbkhv/_css/**/**/*.scss', ['sass_tbkhv']);
     gulp.watch(['./resources/assets/admin/_js/**/*.js', '!./resources/assets/admin/_js/min/*'], ['javascript_admin']);
-    gulp.watch(['./resources/assets/front/_js/**/*.js', '!./resources/assets/front/_js/min/*'], ['javascript_front']);
+    gulp.watch(['./resources/assets/tbkhv/_js/**/*.js', '!./resources/assets/tbkhv/_js/min/*'], ['javascript_front']);
 });
 
 gulp.task('sass_tbkhv', function () {
@@ -102,13 +102,13 @@ gulp.task('javascript_admin', function() {
 
 gulp.task('javascript_front', function() {
     return gulp.src([
-            './public_html/_assets/bower_components/pickadate/lib/compressed/picker.js',
-            './public_html/_assets/bower_components/pickadate/lib/compressed/picker.date.js',
-            './public_html/_assets/bower_components/chosen/chosen.jquery.min.js',
+            //'./public_html/_assets/bower_components/pickadate/lib/compressed/picker.js',
+            //'./public_html/_assets/bower_components/pickadate/lib/compressed/picker.date.js',
+            //'./public_html/_assets/bower_components/chosen/chosen.jquery.min.js',
             './public_html/_assets/bower_components/noty/js/noty/packaged/jquery.noty.packaged.min.js',
-            './public_html/_assets/bower_components/bootstrap3-typeahead/bootstrap3-typeahead.min.js',
+            //'./public_html/_assets/bower_components/bootstrap3-typeahead/bootstrap3-typeahead.min.js',
             './public_html/_assets/bower_components/jquery.cookie/jquery.cookie.js',
-            './resources/assets/front/_js/frontend.js'
+            './resources/assets/tbkhv/_js/frontend.js'
         ])
         //.pipe(uglify())
         //.pipe(sourcemaps.init())
@@ -117,6 +117,6 @@ gulp.task('javascript_front', function() {
         .pipe(removeLogs())
         .pipe(notify("Js reload: <%= file.relative %>! "+ project))
         .pipe(size({showFiles : true}))
-        .pipe(gulp.dest('./public_html/_assets/_front/_js'));
+        .pipe(gulp.dest('./public_html/_assets/tbkhv/_js'));
     //.pipe(livereload());
 });

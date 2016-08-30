@@ -44,6 +44,7 @@
                 <div class="form-group">
                     <input type="hidden" name="_token" value="{{csrf_token()}}">
                     <input type="hidden" name="sort" value="{{ $sort_active }}">
+                    <input type="hidden" name="search" value="{{ Request::get('search') }}">
                     <button type="submit" class="btn btn-lg btn-success btn-block" name="filter"><i class="fa fa-sort"></i> Применить фильтры</button>
                 </div>
                 <div class="clearfix"></div>
@@ -139,5 +140,7 @@
         </div>
     </div>
 
-    <div class="Pagination catalogPagination">{!! $paginator->render() !!}</div>
+    @if(isset($paginator))
+        <div class="Pagination catalogPagination">{!! $paginator->render() !!}</div>
+    @endif
 @endsection

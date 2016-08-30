@@ -70,7 +70,7 @@ class OtapiItem
 	public function BatchSearchItemsFrame($itemTitle, $search_params, $OrderBy = 'Default', $framePosition = 0, $frameSize = 16, $blockList = 'SearchProperties,AvailableSearchMethods')
 	{
 		$xmlParameters = '<SearchItemsParameters><IsClearItemTitles>false</IsClearItemTitles><ItemTitle>'.
-			$itemTitle .'</ItemTitle><Configurators>'. $search_params .'</Configurators><OrderBy>'.
+			$itemTitle .'</ItemTitle>'. $search_params .'<OrderBy>'.
 			$OrderBy .'</OrderBy></SearchItemsParameters>';
 		$otapiConnection = new OtapiConnection;
 		$data = $otapiConnection->create_request('BatchSearchItemsFrame', ['xmlParameters' => $xmlParameters, 'blockList' => $blockList,

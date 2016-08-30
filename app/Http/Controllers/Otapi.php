@@ -351,13 +351,22 @@ class Otapi extends Controller
         $search_params = '<Configurators>';
         $body['selected_filters'] = ['0' => 'test'];
         foreach ($request->all() as $key => $filter){
-            if ($key !== '_token' && $key !== 'search' && $key !== 'page' && $key !== 'sort' && !empty($filter)){
+            if ($key !== '_token' && $key !== 'search' && $key !== 'page' && $key !== 'sort' && $key !== 'MinPrice' && $key !== 'MaxPrice' && !empty($filter)){
                 $key = str_replace('TTT', '', $key);
                 $search_params .= '<Configurator Pid="'. $key .'" Vid="'. $filter .'"/>';
                 $body['selected_filters'][] = $filter;
             }
         }
 		$search_params .= '</Configurators>';
+
+        if($request->get('MinPrice') > 0){
+            $search_params .= '<MinPrice>'. $request->get('MinPrice') .'</MinPrice>';
+        }
+        if($request->get('MaxPrice') > 0){
+            $search_params .= '<MaxPrice>'. $request->get('MaxPrice') .'</MaxPrice>';
+        }
+
+        //dd($search_params);
 
         //http://docs.otapi.net/ru/Documentations/Type?name=OtapiSearchItemsParameters
         $framePosition = ($request->get('page', $page)-1)*60;
@@ -465,7 +474,8 @@ class Otapi extends Controller
 		$cart = Cart::content();
 		$tao_items = [];
 		foreach($cart as $item){
-			$tao_items[$item->id] = $otapiItem->get($item->id);
+            $id = str_replace('-'. $item->price, '', $item->id);
+			$tao_items[$item->id] = $otapiItem->get($id);
 		}
 
 		//TODO:Отправка на несколько имейлов (админы, покупатель)
@@ -492,6 +502,6 @@ class Otapi extends Controller
 		}else{
 			Alert::add('danger', 'Форма не отправлена')->flash();
 		}
-		return back();
+		return redirect()->to('/');
 	}
 }

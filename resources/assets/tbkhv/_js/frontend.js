@@ -135,7 +135,7 @@ $(document).ready(function(){
             success: function(res) {
                 //TODO: Обновление модуля при "Корзина пуста"
                 $('.total_cart').html(res);
-                alert($(this).attr('data-action'));
+                //alert($(this).attr('data-action'));
                 if($(this).attr('data-action') === 'to_cart'){
                     window.location.href = '/cart';
                 }

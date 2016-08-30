@@ -3,8 +3,12 @@
         @foreach($opinions->Content->Item as $item)
             <div class="row row-review">
                 <div class="col-xs-24 col-md-4">
-                    <div class="review-date text-muted">{{ $item->CreatedDate }}</div>
-                    <div class="review-nick text-muted">{{ $item->UserNick }}</div>
+                    @if(isset($item->CreatedDate))
+                        <div class="review-date text-muted">{{ $item->CreatedDate }}</div>
+                    @endif
+                    @if(isset($item->UserNick))
+                     <div class="review-nick text-muted">{{ $item->UserNick }}</div>
+                    @endif
                 </div>
                 <div class="col-xs-24 col-md-20">
                     <div class="review-content">{{ $item->Content }}</div>

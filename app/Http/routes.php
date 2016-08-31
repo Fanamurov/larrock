@@ -123,6 +123,10 @@ Route::get('/test', [
     'as' => 'otapi.test', 'uses' => 'Otapi@test'
 ]);
 
+Route::get('/thankyou', [
+	'as' => 'thankyou', 'uses' => 'Otapi@thankyou'
+]);
+
 
 Route::get('admin/auth', 'Admin\AdminAuthController@getLogin');
 Route::get('admin/auth/login', 'Admin\AdminAuthController@getLogin');

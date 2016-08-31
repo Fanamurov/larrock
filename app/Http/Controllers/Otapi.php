@@ -502,6 +502,11 @@ class Otapi extends Controller
 		}else{
 			Alert::add('danger', 'Форма не отправлена')->flash();
 		}
-		return redirect()->to('/');
+		return redirect()->to('/thankyou');
+	}
+
+	public function thankyou()
+	{
+		return view('tbkhv.cart.thankyou');
 	}
 }

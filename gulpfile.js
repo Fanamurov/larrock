@@ -108,6 +108,7 @@ gulp.task('javascript_front', function() {
             './public_html/_assets/bower_components/noty/js/noty/packaged/jquery.noty.packaged.min.js',
             //'./public_html/_assets/bower_components/bootstrap3-typeahead/bootstrap3-typeahead.min.js',
             './public_html/_assets/bower_components/jquery.cookie/jquery.cookie.js',
+            './public_html/_assets/bower_components/jquery.spinner/dist/js/jquery.spinner.min.js',
             './resources/assets/tbkhv/_js/frontend.js'
         ])
         //.pipe(uglify())

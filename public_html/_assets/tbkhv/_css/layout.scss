@@ -74,6 +74,10 @@ a{
 h1{
   font-family: 'Comfortaa', 'Open Sans', sans-serif;
   line-height: 1.2;
+  .btn{
+	font-family: 'Open Sans', sans-serif;
+	line-height: 1.1;
+  }
 }
 
 .please-select{
@@ -95,6 +99,12 @@ h1{
 }
 .pagination>li>a, .pagination>li>span {
   color: #fd362d;
+}
+
+.input-group-qty{
+  span{
+	cursor: pointer;
+  }
 }
 
 .block-breadcrumbs{

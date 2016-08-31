@@ -50,7 +50,9 @@ class OtapiConnection
 		$cacheKey = sha1($method .'_'.$param_request);
 		$body = Cache::remember($cacheKey, $this->cacheTime, function() use ($method, $param_request)
 		{
-			echo $method .' not cached<br/>';
+			if(\App::environment() !== 'local'){
+				echo $method . ' not cached<br/>';
+			}
 			$client = new Client();
 			$data = $client->request('GET', $this->service_url . $method .'?'. $this->instanceKey .'&'. $this->lang . $param_request);
 			if($this->checkErrorConnection($data)){

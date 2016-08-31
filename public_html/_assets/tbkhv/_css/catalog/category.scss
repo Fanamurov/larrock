@@ -24,10 +24,13 @@
     color: grey;
     font-size: 13px;
   }
-  .link_block_this:hover,
-  .link_block_this:focus{
-    opacity: .7;
-    transition: .3s linear all;
+  .link_block_this-blank,
+  .link_block_this{
+	cursor: pointer;
+	&:hover, &:focus{
+	  opacity: .7;
+	  transition: .3s linear all;
+	}
   }
 
   h1{

@@ -178,6 +178,7 @@ $(document).ready(function(){
      */
     $('.link_block').click(function(){window.location = $(this).find('a').attr('href');});
     $('.link_block_this').click(function(){window.location = $(this).attr('data-href');});
+    $('.link_block_this-blank').click(function(){window.open($(this).attr('data-href'), '_blank');});
 
     $('.show-please').click(function(){
         var target = $(this).attr('data-target');
@@ -331,4 +332,69 @@ $(document).ready(function(){
             }
         }
     }
+
+    $('#ModalToCart-form').find('.input-group-qty').spinner('changing', function(e, newVal, oldVal) {
+        var rowid = $(this).attr('data-rowid');
+        var qty = newVal;
+        if(qty > 0){
+            $.ajax({
+                url: '/ajax/cartQty',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    rowid: rowid,
+                    qty: qty
+                },
+                error: function() {
+                    noty_show('alert', 'Кол-во не изменено');
+                },
+                success: function(res) {
+                    $('.total').html(res.total);
+                    $('tr[data-rowid='+ rowid +']').find('.subtotal span').html(res.subtotal);
+                    noty_show('success', 'Кол-во изменено');
+                }
+            });
+        }
+    });
 });
+
+function rebuild_cost() {
+    $("#modal-spinner")
+        .spinner('changing', function(e, newVal, oldVal) {
+            var cost = parseFloat($('#ModalToCart-form').find('.cost').attr('data-cost'));
+            $('#ModalToCart-form').find('.cost').html(cost*newVal);
+        });
+
+    $(".spinner-qty")
+        .spinner('changing', function(e, newVal, oldVal) {
+            var qty = newVal;
+            var cost = parseFloat($(this).attr('data-cost'));
+            var rowid = $(this).attr('data-rowid');
+            if(qty > 0){
+                $.ajax({
+                    url: '/ajax/cartQty',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        rowid: rowid,
+                        qty: qty
+                    },
+                    error: function() {
+                        noty_show('alert', 'Кол-во не изменено');
+                    },
+                    success: function(res) {
+                        $('.total').html(res.total);
+                        $('.total_cart').html(res.total);
+                        $('tr[data-rowid='+ rowid +']').find('.subtotal span').html(res.subtotal);
+                        //noty_show('success', 'Кол-во изменено');
+                    }
+                });
+            }
+        });
+
+    $('#ModalToCart-form').find('input[name=kolvo]').keyup(function () {
+        var cost = parseFloat($('#ModalToCart-form').find('.cost').attr('data-cost'));
+        var kolvo = parseInt($(this).val());
+        $('#ModalToCart-form').find('.cost').html(cost*kolvo);
+    })
+}

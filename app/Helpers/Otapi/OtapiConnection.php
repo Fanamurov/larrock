@@ -50,7 +50,7 @@ class OtapiConnection
 		$cacheKey = sha1($method .'_'.$param_request);
 		$body = Cache::remember($cacheKey, $this->cacheTime, function() use ($method, $param_request)
 		{
-			if(\App::environment() !== 'local'){
+			if(\App::environment() === 'local'){
 				echo $method . ' not cached<br/>';
 			}
 			$client = new Client();

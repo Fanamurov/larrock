@@ -173,7 +173,7 @@ class Otapi extends Controller
 		$otapiItem = new OtapiItem();
 		$otapiVendor = new OtapiVendor();
 		$otapiReview = new OtapiReview();
-		//Cache::forget('catalog'.$categoryId.$itemId);
+		Cache::forget('catalog'.$categoryId.$itemId);
         $body = Cache::remember('catalog'.$categoryId.$itemId, 1440, function() use($categoryId, $itemId, $otapiVendor, $otapiCategory, $otapiItem, $otapiReview){
             $body['category'] = $otapiCategory->get($categoryId);
             $body['data'] = $otapiItem->get($itemId, TRUE);
@@ -213,7 +213,9 @@ class Otapi extends Controller
 			$breadcrumbs->parent('otapi.index');
 			$rootPath = $rootPath->reverse();
 			foreach($rootPath as $item){
-				$breadcrumbs->push($item->Name, route('otapi.category', ['categoryId' => $item->Id]));
+				if(isset($item->Name)){
+					$breadcrumbs->push($item->Name, route('otapi.category', ['categoryId' => $item->Id]));
+				}
 			}
 			$breadcrumbs->push('Товар');
 		});

@@ -5,7 +5,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>@yield('title')</title>
     <meta name="description" content="@yield('description')">
-    <meta name="author" content="MartDS">
+    <meta name="author" content="Fanamurov">
+    <meta name="yandex-verification" content="3ea803e5ef412ca6" />
 
     <link href="{{asset('ico.png?6v')}}" rel="shortcut icon" />
     <link rel="stylesheet" href="/_assets/tbkhv/_css/min/bootstrap.min.css"/>

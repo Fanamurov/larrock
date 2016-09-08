@@ -8,7 +8,7 @@
             @endif
         @endif
     </div>
-    @if(isset($data_value->PromotionPrice->ConvertedPriceList->Internal) && $data_value->PromotionPrice->Quantity > 0)
+    @if(isset($data_value->PromotionPrice->ConvertedPriceList->Internal))
         <p class="cost">{{ $data_value->PromotionPrice->ConvertedPriceList->Internal }}</p>
     @else
         <p class="cost">{{ $data_value->Price->ConvertedPrice }}</p>

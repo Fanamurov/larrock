@@ -295,7 +295,7 @@ class Otapi extends Controller
 		return response()->json(['status' => 'NotFound']);
 	}
 
-    public function get_vendor($vendorId, $page = 1, Request $request)
+    public function get_vendor(Request $request, $vendorId, $page = 1)
     {
 		$otapiVendor = new OtapiVendor();
 		$framePosition = ($request->get('page', $page)-1)*60;

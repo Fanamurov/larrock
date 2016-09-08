@@ -11,9 +11,9 @@
         @php($default_picture = '')
         @if(isset($data->Pictures))
             @if(count($data->Pictures->ItemPicture) > 0 && ( !is_object($data->Pictures->ItemPicture)))
-                @foreach($data->Pictures->ItemPicture as $picture)
+                @foreach($data->Pictures->ItemPicture as $picture_key => $picture)
                     <a class="fancybox @if($picture->IsMain === 'true') bigImageItem @endif" href="{{ $picture->Large }}" rel="fancybox-thumb">
-                        @if($picture->IsMain === 'true')
+                        @if($picture_key === 0)
                             @php($default_picture = $picture->Large)
                             <img src="{{ $picture->Large }}" class="all-width fancybox LargeImg" alt="{{ $data->Title }}">
                         @else

@@ -28,6 +28,7 @@ class Otapi extends Controller
 
     public function get_index()
     {
+    	//Cache::flush();
 		$otapiItem = new OtapiItem();
         View::share('modulePopular', $otapiItem->popularTovars('Popular', 12));
         View::share('moduleLast', $otapiItem->popularTovars('Last', 12));
@@ -35,7 +36,7 @@ class Otapi extends Controller
 		$load_categories = ['otc-2' => 'Женская одежда', 'otc-46' => 'Мужская одежда', 'otc-66' => 'Детская одежда и обувь',
 			'otc-139' => 'Белье и домашняя одежда', 'otc-165' => 'Верхняя одежда',
 			'otc-213' => 'Женская обувь', 'otc-221' => 'Мужская обувь', 'otc-3723' => 'Планшеты',
-			'otc-3858' => 'Мобильные телефоны', 'otc-4003' => 'Цифровые зеркальные фотоаппараты'];
+			'otc-4003' => 'Цифровые зеркальные фотоаппараты'];
 		$data['data'] = [];
 		foreach($load_categories as $key => $value){
 			$data['data'][$key]['items'] = $otapiItem->GetCategoryItemInfoListFrame($key, 0, 12);
@@ -126,7 +127,10 @@ class Otapi extends Controller
         $search_params .= '</SearchParameters>';
 
 		$body['data'] = $otapiItem->categoryTovars($categoryId, $search_params, $framePosition, $frameSize);
-		$body['sub_categories'] = $otapiCategory->GetCategorySubcategoryInfoList($body['category']->ParentId);
+		$body['sub_categories'] = [];
+		if(isset($body['category']->ParentId)){
+			$body['sub_categories'] = $otapiCategory->GetCategorySubcategoryInfoList($body['category']->ParentId);
+		}
 
         if($body['data']->TotalCount > 0){
             Breadcrumbs::register('otapi.category', function($breadcrumbs, $categoryId) use ($otapiCategory)
@@ -134,10 +138,14 @@ class Otapi extends Controller
                 $breadcrumbs->parent('otapi.index');
 
 				$GetCategoryRootPath = $otapiCategory->GetCategoryRootPath($categoryId);
-                $categorys = array_reverse($GetCategoryRootPath);
-                foreach($categorys as $item){
-                    $breadcrumbs->push($item->Name, route('otapi.category', ['categoryId' => $item->Id]));
-                }
+				if(isset($GetCategoryRootPath->Id)){
+					$breadcrumbs->push($GetCategoryRootPath->Name, route('otapi.category', ['categoryId' => $GetCategoryRootPath->Id]));
+				}else{
+					$categorys = array_reverse($GetCategoryRootPath);
+					foreach($categorys as $item){
+						$breadcrumbs->push($item->Name, route('otapi.category', ['categoryId' => $item->Id]));
+					}
+				}
             });
 
 			$total = $body['data']->TotalCount;
@@ -211,15 +219,24 @@ class Otapi extends Controller
 		Breadcrumbs::register('otapi.tovar', function($breadcrumbs, $rootPath)
 		{
 			$breadcrumbs->parent('otapi.index');
-			$rootPath = $rootPath->reverse();
-			foreach($rootPath as $item){
-				if(isset($item->Name)){
-					$breadcrumbs->push($item->Name, route('otapi.category', ['categoryId' => $item->Id]));
+			if(isset($rootPath['Id'])){
+				$breadcrumbs->push($rootPath['Name'], route('otapi.category', ['categoryId' => $rootPath['Id']]));
+			}else{
+				$rootPath = $rootPath->reverse();
+				foreach($rootPath as $item){
+					if(isset($item->Name)){
+						$breadcrumbs->push($item->Name, route('otapi.category', ['categoryId' => $item->Id]));
+					}
 				}
 			}
+
 			$breadcrumbs->push('Товар');
 		});
-		$body['moduleLast'] = $otapiItem->getSearchByCategory($body['data']->RootPath->first()->Id, 0, 12, '');
+		if(isset($body['data']->RootPath['Id'])){
+			$body['moduleLast'] = $otapiItem->getSearchByCategory($body['data']->RootPath['Id'], 0, 12, '');
+		}else{
+			$body['moduleLast'] = $otapiItem->getSearchByCategory($body['data']->RootPath->first()->Id, 0, 12, '');
+		}
 		return view('tbkhv.otapi.tovarItem', $body);
     }
 
@@ -480,6 +497,8 @@ class Otapi extends Controller
 			$tao_items[$item->id] = $otapiItem->get($id);
 		}
 
+		$mails = collect(array_map('trim', explode(',', env('MAIL_TO_ADMIN', 'robot@martds.ru'))));
+
 		//TODO:Отправка на несколько имейлов (админы, покупатель)
 		/** @noinspection PhpVoidFunctionResultUsedInspection */
 		$send = Mail::send('emails.order',
@@ -491,9 +510,11 @@ class Otapi extends Controller
 				'cart' => $cart,
 				'tao_items' => $tao_items,
 				'comment' => $request->get('comment')],
-			function($message){
-				$message->from(env('MAIL_TO_ADMIN', 'robot@martds.ru'), env('MAIL_TO_ADMIN_NAME', 'TEST'));
-				$message->to(env('MAIL_TO_ADMIN', 'robot@martds.ru'), env('MAIL_TO_ADMIN_NAME', 'TEST'));
+			function($message) use ($mails){
+				$message->from(env('MAIL_MAIN', 'robot@martds.ru'), env('SITE_NAME', 'TEST'));
+				foreach($mails as $value){
+					$message->to($value);
+				}
 				$message->subject('Отправлена форма заявки '. array_get($_SERVER, 'SERVER_NAME')
 				);
 			});

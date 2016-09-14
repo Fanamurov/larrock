@@ -39,6 +39,18 @@
                     <input class="form-control" id="form-sletatOrderFull-birthday" type="date" name="birthday[]" value="">
                 </div>
             </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label class="control-label" for="form-sletatOrderFull-name">Дата выдачи:</label>
+                    <input class="form-control" id="form-sletatOrderFull-name" type="date" name="dateZagran[]" value="">
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label class="control-label" for="form-sletatOrderFull-srokZagran">Срок действия:</label>
+                    <input class="form-control" id="form-sletatOrderFull-srokZagran" type="date" name="srokZagran[]" value="">
+                </div>
+            </div>
             <div class="col-sm-9">
                 <div class="form-group">
                     <label class="control-label" for="form-sletatOrderFull-seriaZagran">Серия и номер загранпаспорта:</label>
@@ -50,18 +62,6 @@
                             <input class="form-control" id="form-sletatOrderFull-numberZagran" type="text" name="numberZagran[]" value="" placeholder="123456">
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-sm-3">
-                <div class="form-group">
-                    <label class="control-label" for="form-sletatOrderFull-name">Дата выдачи:</label>
-                    <input class="form-control" id="form-sletatOrderFull-name" type="date" name="dateZagran[]" value="">
-                </div>
-            </div>
-            <div class="col-sm-3">
-                <div class="form-group">
-                    <label class="control-label" for="form-sletatOrderFull-srokZagran">Срок действия:</label>
-                    <input class="form-control" id="form-sletatOrderFull-srokZagran" type="date" name="srokZagran[]" value="">
                 </div>
             </div>
         </div>

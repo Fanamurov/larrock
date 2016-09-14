@@ -25,7 +25,6 @@
                             <th>{{ $rows_name['title'] }}</th>
                         @endif
                     @endforeach
-                    <td>На всю ширину</td>
                     <th width="141">Изменено</th>
                     <th width="90">Порядок</th>
                     <th width="93">Активность</th>
@@ -48,7 +47,6 @@
                                 </td>
                             @endif
                         @endforeach
-                        <td>@if($data_value->view === 1) Да @endif</td>
                         <td class="row-updated_at">{{ $data_value->updated_at }}</td>
                         <td class="row-position">
                             <input type="text" name="position" value="{{ $data_value->position }}" class="ajax_edit_row form-control"

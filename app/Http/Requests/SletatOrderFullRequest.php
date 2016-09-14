@@ -28,7 +28,7 @@ class SletatOrderFullRequest extends Request
 			'address' => 'required',
 			'tel' => 'required|max:255',
 			'email' => 'required|max:255|email',
-			'passport' => 'required|max:255',
+			'passport' => 'required',
 			'passportDate' => 'required',
 			'oferta' => 'required'
 		];

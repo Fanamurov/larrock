@@ -7,6 +7,7 @@ use Breadcrumbs;
 use Illuminate\Http\Request;
 use GuzzleHttp;
 use App\Helpers\Sletat;
+use URL;
 
 class SletatController extends Controller
 {
@@ -39,6 +40,7 @@ class SletatController extends Controller
 		$data['paginator']['all'] = $data['GetTours']['iTotalDisplayRecords'];
 		$data['paginator']['pages'] = ceil($data['GetTours']['iTotalDisplayRecords']/30);
 		$data['paginator']['current'] = $request->get('pageNumber', 1);
+		$data['paginator']['link'] = URL::route('sletat.form', $request->except(['pageNumber']));
 		$data['siteSearch'] = '';
 
 		$countryId = $request->get('countryId');
@@ -75,6 +77,7 @@ class SletatController extends Controller
 		$data['paginator']['all'] = $data['GetTours']['iTotalDisplayRecords'];
 		$data['paginator']['pages'] = ceil($data['GetTours']['iTotalDisplayRecords']/30);
 		$data['paginator']['current'] = $request->get('pageNumber', 1);
+		$data['paginator']['link'] = URL::route('sletat.form', $request->except(['pageNumber']));
 		return view('santa.sletat.searchResult', $data);
 	}
 

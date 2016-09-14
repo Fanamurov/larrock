@@ -30,16 +30,6 @@ class ToursController extends Controller
 		{
 			$breadcrumbs->push('Каталог туров');
 		});
-
-		/*$data = Category::whereParent(308)->get();
-		foreach($data as $value){
-			echo 'Туры в '. $value->title .';http://santa-avia.ru'. $value->full_url .'<br/>';
-
-			$resort = Category::whereParent($value->id)->get();
-			foreach($resort as $resort_value){
-				echo 'Туры в '. $resort_value->title .';http://santa-avia.ru'. $resort_value->full_url .'<br/>';
-			}
-		}*/
 	}
 	
 	public function getStrany()

@@ -29,7 +29,7 @@ class BlogController extends Controller
 		$page = $request->get('page', 1);
 		$data = Cache::remember('blog_index'.$page, 1440, function() use ($page) {
 			$data['category'] = Category::whereType('blog')->whereActive(1)->whereLevel(1)->orderBy('created_at', 'desc')->with(['get_blogActive'])->get();
-			$data['data'] = Blog::whereActive(1)->with('get_category')->orderBy('created_at', 'desc')->skip(($page-1)*8)->paginate(8);
+			$data['data'] = Blog::whereActive(1)->with('get_category')->orderBy('date', 'desc')->skip(($page-1)*8)->paginate(8);
 			return $data;
 		});
 
@@ -45,7 +45,7 @@ class BlogController extends Controller
 			if( !$data['category']){
 				abort('404', 'Такого раздела в блоге нет');
 			}
-			$data['data'] = Blog::whereActive(1)->whereCategory($data['category']->id)->orderBy('created_at', 'desc')->skip(($page-1)*8)->paginate(8);
+			$data['data'] = Blog::whereActive(1)->whereCategory($data['category']->id)->orderBy('date', 'desc')->skip(($page-1)*8)->paginate(8);
 			return $data;
 		});
 

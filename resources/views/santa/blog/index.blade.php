@@ -3,9 +3,6 @@
 
 @section('content')
     <div class="pageBlogCategory">
-        <div class="col-xs-24">
-            {!! Breadcrumbs::render('blog.index', $data) !!}
-        </div>
         <div class="blog-categorys">
             <ul class="list-unstyled list-inline hidden-xs hidden-sm">
                 @foreach($category as $category_value)
@@ -29,6 +26,9 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="col-xs-24 row">
+            {!! Breadcrumbs::render('blog.index', $data) !!}
         </div>
         <div class="clearfix"></div><br/>
         @foreach($data as $item)

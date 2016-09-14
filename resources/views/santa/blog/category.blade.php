@@ -3,9 +3,6 @@
 
 @section('content')
     <div class="pageBlogCategory">
-        <div class="col-xs-24">
-            {!! Breadcrumbs::render('blog.category', $data) !!}
-        </div>
         <div class="blog-categorys">
             <ul class="list-unstyled list-inline hidden-xs hidden-sm">
                 @foreach($categorys as $category_value)
@@ -30,12 +27,15 @@
                 </div>
             </div>
         </div>
+        <div class="col-xs-24 row">
+            {!! Breadcrumbs::render('blog.category', $data) !!}
+        </div>
         <div class="clearfix"></div><br/>
         @foreach($data as $item)
             <div class="pageBlogCategory-item row">
                 <div class="hidden-xs col-sm-6 col-md-8">
                     @if($item->getFirstMediaUrl('images', '250x250'))
-                        <img class="all-width" src="{{ $item->getFirstMediaUrl('images', '250x250') }}" alt="{{ $item->title }}">
+                        <img class="all-width" src="{{ $item->getFirstMediaUrl('images', '250x130') }}" alt="{{ $item->title }}">
                     @endif
                 </div>
                 <div class="col-xs-24 col-sm-18 col-md-16">

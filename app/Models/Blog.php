@@ -66,7 +66,7 @@ class Blog extends Model implements HasMediaConversions
             ->setManipulations(['w' => 250, 'h' => 250, 'fit' => 'crop'])
             ->performOnCollections('images');
 		
-		$this->addMediaConversion('250x130crop')
+		$this->addMediaConversion('250x130')
 			->setManipulations(['w' => 250, 'h' => 130, 'fit' => 'crop'])
 			->performOnCollections('images');
     }
@@ -89,6 +89,15 @@ class Blog extends Model implements HasMediaConversions
 	protected $appends = [
 		'first_image',
 	];
+
+	public function getFirstImageAttribute()
+	{
+		if($get_image = $this->getMedia('images')->sortByDesc('order_column')->first()){
+			return $get_image->getUrl();
+		}else{
+			return FALSE;
+		}
+	}
 
 	public function scopeCategoryInfo()
 	{

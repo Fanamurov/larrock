@@ -1,16 +1,12 @@
 #content{
   padding: 10px 0 60px;
   @media (max-width: 500px) {
-	padding: 0 0 20px;
+	padding: 10px 0 20px;
   }
   > div{
 	background: #fff;
 	padding: 10px 5px;
 	border-radius: 5px;
-    @media (max-width: 500px) {
-      border-radius: 0;
-      padding: 20px 5px;
-    }
   }
   .content_bottom-sharing{
 	margin-top: 40px;

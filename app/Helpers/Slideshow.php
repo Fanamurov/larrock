@@ -10,14 +10,10 @@ class Slideshow{
     public function render()
 	{
 
-		$data = Cache::remember('slideshow_mainpage', 60, function() {
-			$data['big'] = Model_Slideshow::whereActive(1)->whereView(1)->get();
-			foreach($data['big'] as $key => $value){
-				$data['big'][$key]['images'] = $value->getMedia('images')->sortByDesc('order_column');
-			}
-			$data['small'] = Model_Slideshow::whereActive(1)->whereView(0)->take(3)->get();
-			foreach($data['small'] as $key => $value){
-				$data['small'][$key]['images'] = $value->getMedia('images')->sortByDesc('order_column');
+		$data = Cache::remember('slideshow_mainpage', 1440, function() {
+			$data = Model_Slideshow::whereActive(1)->orderBy('position', 'desc')->get();
+			foreach($data as $key => $value){
+				$data[$key]['images'] = $value->getFirstMediaUrl('images', '755x255');
 			}
 		    return $data;
 		});

@@ -51,8 +51,8 @@ class Slideshow extends Model implements HasMediaConversions
 			->setManipulations(['w' => 230, 'h' => 140])
 			->performOnCollections('images');
 
-		$this->addMediaConversion('695x250')
-			->setManipulations(['w' => 695, 'h' => 250])
+		$this->addMediaConversion('755x255')
+			->setManipulations(['w' => 755, 'h' => 255, 'fit' => 'crop'])
 			->performOnCollections('images');
     }
 

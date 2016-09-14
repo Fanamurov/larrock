@@ -26,14 +26,6 @@ return [
 			'valid' => 'max:255|required',
 			'in_table_admin' => 'TRUE'
 		],
-		'view' => [
-			'title' => 'Развернуть слайд на всю ширину',
-			'type' => 'checkbox',
-			'checked' => 'TRUE',
-			'tab' => ['main' => 'Заголовок, описание'],
-			'valid' => 'integer|max:1',
-			'default' => 1
-		],
 		'url' => [
 			'title' => 'URL материала',
 			'type' => 'text',

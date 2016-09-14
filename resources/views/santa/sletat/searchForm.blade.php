@@ -157,6 +157,7 @@
             <div class="clearfix"></div>
 
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="pageNumber" value="{{ $paginator['current'] }}">
             <button type="submit" class="btn btn-default btn-block">Найти</button>
             <div class="clearfix"></div>
         </form>

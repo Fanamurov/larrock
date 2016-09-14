@@ -10,7 +10,5 @@
     width: 100%;
     max-width: 100%;
   }
-  ul{
-	@include list-mart()
-  }
+  @include list-mart()
 }

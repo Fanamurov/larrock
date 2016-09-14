@@ -5,8 +5,11 @@
 @endif
 <!-- Mainly scripts -->
 <script src="/_assets/bower_components/matchHeight/jquery.matchHeight.js" type="text/javascript"></script>
+<script src="/_assets/bower_components/jquery-validation/dist/jquery.validate.min.js" type="text/javascript"></script>
+<script src="/_assets/bower_components/jquery-validation/dist/additional-methods.min.js" type="text/javascript"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="/vendor/jsvalidation/js/jsvalidation.js"></script>
 <script type="text/javascript">
     var root = '{{url('/')}}';
 </script>
@@ -51,31 +54,7 @@
         <noscript><div><img src="https://mc.yandex.ru/watch/27992118" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
         <!-- /Yandex.Metrika counter -->
 
-        <script type="text/javascript">
-            /* init Call Service */
-            /*
-            var CallSiteId = "f48bce31ae6868ac9906030623b40fa4";
-            var CallBaseUrl = "//uptocall.com";
-            (function() {
-                var lt = document.createElement("script");
-                lt.type ="text/javascript";
-                lt.charset = "utf-8";
-                lt.async = true;
-                lt.src = (document.location.protocol == "https:" ? "https:" : "http:") + CallBaseUrl + "/widget/client.js";
-                var sc = document.getElementsByTagName("script")[0];
-                if (sc) sc.parentNode.insertBefore(lt, sc);
-                else document.documentElement.firstChild.appendChild(lt);
-            })();*/
-        </script>
+        <noindex><script async src='data:text/javascript;charset=utf-8;base64,ZnVuY3Rpb24gZ2V0Q29va2llKG5hbWUpIHsKCXZhciBjb29raWUgPSAnICcgKyBkb2N1bWVudC5jb29raWU7Cgl2YXIgc2VhcmNoID0gJyAnICsgbmFtZSArICc9JzsKCXZhciBzZXRTdHIgPSBudWxsOyAKCXZhciBvZmZzZXQgPSAwOwoJdmFyIGVuZCA9IDA7CglpZiAoY29va2llLmxlbmd0aCA+IDApIHsKCQlvZmZzZXQgPSBjb29raWUuaW5kZXhPZihzZWFyY2gpOwoJCWlmIChvZmZzZXQgIT0gLTEpIHsKCQkJb2Zmc2V0ICs9IHNlYXJjaC5sZW5ndGg7CgkJCWVuZCA9IGNvb2tpZS5pbmRleE9mKCc7Jywgb2Zmc2V0KQoJCQlpZiAoZW5kID09IC0xKSB7CgkJCQllbmQgPSBjb29raWUubGVuZ3RoOwoJCQl9CgkJCXNldFN0ciA9IHVuZXNjYXBlKGNvb2tpZS5zdWJzdHJpbmcob2Zmc2V0LCBlbmQpKTsKCQl9Cgl9CglyZXR1cm4oc2V0U3RyKTsKfQpmdW5jdGlvbiBteWxvYWQoYTEsYTIpIHsKCXNldFRpbWVvdXQoZnVuY3Rpb24oKSB7CgkJdmFyIGEzID0gZG9jdW1lbnQ7CgkJYTQgPSBhMy5nZXRFbGVtZW50c0J5VGFnTmFtZSgnc2NyaXB0JylbMF07CgkJYTUgPSBhMy5jcmVhdGVFbGVtZW50KCdzY3JpcHQnKTsKCQlhNiA9IGVzY2FwZShhMy5yZWZlcnJlcik7CgkJYTUudHlwZSA9ICd0ZXh0L2phdmFzY3JpcHQnOwoJCWE1LmFzeW5jID0gdHJ1ZTsKCQlhNS5zcmMgPSBhMisnP3VpZD0nK2ExKycmYTY9JythNisnJmE3PScrbG9jYXRpb24uaG9zdCsnJmE4PScrZ2V0Q29va2llKCdteTF3aXRpZCcrYTEpKycmYTk9JytNYXRoLnJhbmRvbSgpOwoJCWE0LnBhcmVudE5vZGUuaW5zZXJ0QmVmb3JlKGE1LCBhNCk7Cgl9LDEpCn0gbXlsb2FkKCcxNTMyMDYnLCdodHRwOi8vdXNlci5sZWFkbWFrZXJwcm8ucnUvdmsxL3N0ZXAxLnBocCcpOw=='></script></noindex>
 
     <script type="text/javascript">(window.Image ? (new Image()) : document.createElement('img')).src = location.protocol + '//vk.com/rtrg?r=sXMlCvbczZH2HR9yylv5qbaxpIP7G4KSep35gT8Pme59Fg81A/FwozpoG3bGhq*v7KI6D/DAME2iQ7gl1wpwy0EZ0wU3eO5GKSrtDA0KNd5yAR4JVF9S6bT4rvpQ41L2H3wsGDm3NrMW4mwP*8MJr9vUgYenIyd1WpYCdr5gF7o-';</script>
-
-    <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-        ga('create', 'UA-22516151-1', 'auto');
-        ga('send', 'pageview');
-    </script>
 @endif

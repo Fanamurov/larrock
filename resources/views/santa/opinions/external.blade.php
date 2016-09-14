@@ -1,5 +1,5 @@
 @extends('santa.main')
-@section('title') Отзывы @endsection
+@section('title') Отзывы о турфирме "Санта-Авиа" Хабаровск. Мнения путешественников о туркомпании @endsection
 
 @section('content')
     <div class="pageOpinions">

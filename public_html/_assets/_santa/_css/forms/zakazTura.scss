@@ -8,9 +8,7 @@
   }
 }
 .row-zakazSert{
-  ul{
-	@include list-mart()
-  }
+  @include list-mart()
 }
 
 .list-profits{

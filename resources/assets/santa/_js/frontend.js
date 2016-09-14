@@ -139,7 +139,7 @@ $(document).ready(function(){
         clear: 'Очистить',
         close: 'Закрыть',
         min: [1935,1,1],
-        max: [2020,12,31],
+        max: [2030,12,31],
     });
 
     var today = new Date();
@@ -159,7 +159,7 @@ $(document).ready(function(){
         clear: 'Очистить',
         close: 'Закрыть',
         min: [1935,1,1],
-        max: [2020,12,31],
+        max: [2030,12,31],
     });
 
     $('.chosen-select').chosen();

@@ -37,7 +37,7 @@
                             <input class="form-control position-image ajax_edit_media" type="text" value="{{ $image_value->order_column or '0' }}"
                                    data-model_type="{!! class_basename($image_value->model_type) !!}"
                                    data-id="{{ $image_value->id }}" data-row="position"
-                                   placeholder="Вес" style="width: 50px">
+                                   placeholder="Вес" style="width: 80px">
                         </div>
                     </div>
                 </div>

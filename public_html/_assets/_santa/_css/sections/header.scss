@@ -85,7 +85,7 @@ header{
 
     li.dropdown:first-of-type{
       ul{
-        width: 845px;
+        width: 826px;
         li{
           width: 200px;
           display: inline-block;
@@ -164,11 +164,6 @@ body{
 	.btn.btn-default.show-mobile-menu{
 	  display: none;
 	}
-  }
-  @media (max-width: 500px) {
-    .show-mobile-menu{
-      margin-bottom: 8px;
-    }
   }
   .menu_mobile{
 	display: none;

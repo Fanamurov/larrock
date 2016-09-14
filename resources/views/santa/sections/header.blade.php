@@ -7,7 +7,7 @@
     </div>
     <div class="col-xs-16 col-sm-10 col-md-8 header-address">
         <p><span class="city">г.Хабаровск</span>, ул.&nbsp;Шеронова,&nbsp;115<br/>
-            <a href="tel:84212454546#uptocall" class="phone">(4212) 45-45-46</a>
+            <a href="tel:84212454546" class="phone">(4212) 45-45-46</a>
     </div>
     <div class="col-xs-24 hidden-md hidden-lg">
         <button type="button" class="btn btn-default btn-block show-mobile-menu hidden-md hidden-lg">Показать меню</button>

@@ -1,6 +1,7 @@
 @extends('santa.main')
 @section('title') {{ $data->title }} @endsection
 @section('description') {!! strip_tags($data->short) !!} @endsection
+@section('share_image')http://santa-avia.ru{{ $data->first_image }}@endsection
 
 @section('content')
     <div class="pageBlogItem">

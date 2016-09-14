@@ -87,7 +87,7 @@
     <nav>
         <ul class="pagination pagination-lg">
             @for($i=1; $i <= $paginator['pages']; $i++)
-                <li @if($i === $paginator['current']) class="active" @endif><a href="{{ URL::route('sletat.form') }}">{{ $i }}</a></li>
+                <li @if($i == $paginator['current']) class="active" @endif><a href="{{ $paginator['link'] }}&pageNumber={{ $i }}">{{ $i }}</a></li>
             @endfor
         </ul>
     </nav>

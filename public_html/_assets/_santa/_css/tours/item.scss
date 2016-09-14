@@ -16,23 +16,7 @@
 	}
   }
   .toursFull{
-	table{
-	  width: 100%;
-	  tr:nth-child(even) {
-		background: #FF819D;
-	  }
-	  tr:nth-child(odd) {
-		background: #FFC4D1;
-	  }
-	  tr:first-child {
-		background: #DF1442;
-		color: #fff;
-		text-align: center;
-	  }
-	  td{
-		padding: 5px;
-	  }
-	}
+	@include tableColored;
   }
   .row-btn-group .btn-group{
 	width: 100%;

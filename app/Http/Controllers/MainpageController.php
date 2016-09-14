@@ -26,23 +26,23 @@ class MainpageController extends Controller
     public function index(Request $request, Sletat $sletat)
 	{
         $list_news = Cache::remember('list_news_mainpage', 1440, function() {
-            $data = News::whereActive(1)->with(['get_category'])->orderBy('updated_at', 'desc')->take(6)->get();
+            $data = News::whereActive(1)->with(['get_category'])->orderBy('created_at', 'desc')->take(6)->get();
 			foreach($data as $key => $value){
-				$data[$key]['image'] = $value->getFirstMediaUrl('images', '250x130crop');
+				$data[$key]['image'] = $value->getFirstMediaUrl('images', '250x130');
 			}
 			return $data;
         });
         $list_blog = Cache::remember('list_blog_mainpage', 1440, function() {
-			$data = Blog::whereActive(1)->with(['get_category'])->orderBy('updated_at', 'desc')->take(6)->get();
+			$data = Blog::whereActive(1)->with(['get_category'])->orderBy('created_at', 'desc')->take(6)->get();
 			foreach($data as $key => $value){
-				$data[$key]['image'] = $value->getFirstMediaUrl('images', '250x130crop');
+				$data[$key]['image'] = $value->getFirstMediaUrl('images', '250x130');
 			}
 			return $data;
         });
 		$list_tours = Cache::remember('list_tours_mainpage', 1440, function() {
-			$data = Tours::whereActive(1)->with(['get_category'])->orderBy('updated_at', 'desc')->take(6)->get();
+			$data = Tours::whereActive(1)->with(['get_category'])->orderBy('created_at', 'desc')->take(6)->get();
 			foreach($data as $key => $value){
-				$data[$key]['image'] = $value->getFirstMediaUrl('images', '250x130crop');
+				$data[$key]['image'] = $value->getFirstMediaUrl('images', '250x130');
 			}
 			return $data;
 		});

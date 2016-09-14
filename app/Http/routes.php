@@ -40,6 +40,9 @@ Route::get('/goryashchie-tury', [
 Route::get('/o-kompanii/novosti', [
 	'as' => 'redirect.news', 'uses' => 'OldSiteController@redirectNews'
 ]);
+Route::get('/hot_tours', [
+	'as' => 'redirect.hot.tours', 'uses' => 'OldSiteController@redirectHotTours'
+]);
 //END REDIRECTS OLD SITE
 
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->middleware('level:2');
@@ -138,6 +141,10 @@ Route::post('/sletat/GetToursUpdatedShort/{requestId}/{count?}', [
 ]);
 Route::get('/sletat/ActualizePrice', [
     'as' => 'sletat.ActualizePrice', 'uses' => 'SletatController@getActualizePrice'
+]);
+
+Route::get('/flight', [
+	'as' => 'flight.index', 'uses' => 'Flightstatus@index'
 ]);
 
 

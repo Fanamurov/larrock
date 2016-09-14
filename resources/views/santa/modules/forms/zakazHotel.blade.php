@@ -1,4 +1,5 @@
-<div class="row row-zakazTura col-xs-24" id="row-zakazHotel" onsubmit="yaCounter27992118.reachGoal('ZakazHotel'); return true;">
+<div class="row row-zakazTura col-xs-24" id="row-zakazHotel" onsubmit="yaCounter27992118.reachGoal('ZakazHotel');
+ga('send', 'event', 'Форма','Отправка', 'Заказ отеля'); return true;">
     <div class="col-sm-12">
         <form id="form-zakaz" class="form-zakazHotel" method="post" action="/forms/zakazHotel">
             <p class="h1">Проверка наличия номеров</p>

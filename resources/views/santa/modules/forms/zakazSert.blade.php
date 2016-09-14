@@ -1,6 +1,7 @@
 <div class="row row-zakazTura row-zakazSert" id="row-zakazSert">
     <div class="col-xs-24 col-sm-12">
-        <form id="form-zakazSert" class="form-zakaz" method="post" action="/forms/zakazSert">
+        <form id="form-zakazSert" class="form-zakaz" method="post" action="/forms/zakazSert" onsubmit="yaCounter27992118.reachGoal('ZakazSert');
+      ga('send', 'event', 'Форма','Отправка', 'Заказ подарочного сертификата');return true;">
             <h2 class="h1">Заказ подарочного сертификата</h2>
             <div class="form-group">
                 <label for="form-contact-tel" class="control-label">Ваш телефон<sup>*</sup>:</label>

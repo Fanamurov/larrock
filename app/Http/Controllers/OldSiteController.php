@@ -57,4 +57,9 @@ class OldSiteController extends Controller
 	{
 		return redirect('/news', 301);
 	}
+
+	public function redirectHotTours()
+	{
+		return redirect('/page/hot_tours', 301);
+	}
 }

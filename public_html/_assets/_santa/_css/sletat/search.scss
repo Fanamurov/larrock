@@ -15,23 +15,11 @@
   h4{
     display: inline-block;
     margin-bottom: 20px;
-	@media (max-width: 500px) {
-	  margin-top: 0;
-	}
-  }
-  .h4{
-	@media (max-width: 500px) {
-	  margin-top: 0;
-	}
   }
   .cost{
     font-size: 24px;
     font-weight: 700;
     text-align: center;
-	@media (max-width: 500px) {
-	  padding-top: 9px;
-	  font-weight: 500;
-	}
   }
   .muted{
     color: grey;
@@ -42,9 +30,6 @@
   }
   .hotel-description{
     margin-top: 20px;
-  }
-  .row-cost{
-	padding-top: 7px;
   }
 }
 

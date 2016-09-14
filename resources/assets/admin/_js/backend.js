@@ -34,6 +34,14 @@ $(document).ready(function(){
         })
     }
 
+    var table_tour = '<table class="notColored tourExpand"><tbody><tr><td><img src="../../../media/Blog/Blog-103-gkg-333jpg/250x130.jpg" alt="Фото тура" ' +
+        'width="250" height="130" /></td><td><p><a class="h4" href="#">Четыре жемчужины Японии</a><br/>Вы летите транзитом через ' +
+        'международный аэропорт Гонконга, стыковка составляет несколько часов или Ваш рейс вылетает аж на следующий день.</p>' +
+        '<p><a class="btn btn-default" href="#">Подобрать тур!</a></p></td></tr></tbody></table>';
+
+    var links_template = '<p class="h4">Другие статьи:</p><p><ul class="other_links"><li><a href="#">Ссылка на материал</a></li>' +
+        '<li><a href="#">Ссылка на материал</a></li></ul></p>';
+
     var editor_height = 300;
     tinymce.init({
         selector: "textarea:not(.not-editor)",
@@ -41,24 +49,24 @@ $(document).ready(function(){
         plugins: [
             "advlist link image imagetools lists charmap print hr anchor pagebreak",
             "searchreplace visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
-            "save table contextmenu directionality template paste textcolor importcss wordcount"
+            "save table contextmenu directionality template paste textcolor importcss wordcount nonbreaking"
         ],
         paste_preprocess : function(pl, o) {
             //o.content = strip_tags(o.content, '<p><br><a><h1><h2><h3><h4><h5><h6><table><tr><td><th><span><blockquote><strong><b><i>');
         },
-        extended_valid_elements : "table[cellpadding|cellspacing],td[class],tr[class]",
+        extended_valid_elements : "table[cellpadding|cellspacing|class],td[class|colspan|rowspan],tr[class]",
         paste_remove_styles: true,
         paste_remove_spans: true,
         paste_auto_cleanup_on_paste: true,
         theme: 'modern',
         image_advtab: true,
         content_css: "/_assets/_admin/_css/min/bootstrap.min.css",
+        content_style: "table {width: 100%}",
         importcss_append: true,
         language : 'ru',
         toolbar_items_size: 'small',
-        //content_css: "/application/views/admin_rocket/_css/admin.css",
         toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright | bullist numlist outdent " +
-        "indent | link image media | fullpage | forecolor backcolor | template | code | defis",
+        "indent | link image media | fullpage | forecolor backcolor | template | code | defis nonbreaking | photonews tourTable linksStaff",
         imagetools_toolbar: "rotateleft rotateright | flipv fliph | editimage imageoptions",
         fontsize_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt',
         style_formats: [
@@ -87,24 +95,35 @@ $(document).ready(function(){
         ],
         setup: function(editor) {
             editor.addButton('defis', {
-                text: 'Дефис',
+                text: '—',
+                title: 'Дефис',
                 icon: false,
                 onclick: function() {
                     editor.insertContent('—');
                 }
             });
-            editor.addButton('photo-news', {
-                text: 'Галерея фото',
+            editor.addButton('photonews', {
+                text: 'Галерея',
+                title: 'Вставка шортката для галереи',
                 icon: false,
                 onclick: function() {
                     editor.insertContent('{Фото[news]=}');
                 }
             });
-            editor.addButton('insert-tour', {
-                text: 'Блок тура',
+            editor.addButton('tourTable', {
+                text: 'Тур',
+                title: 'Вставка шаблона блока с туром',
                 icon: false,
                 onclick: function() {
-                    editor.insertContent('{Тур[item]=}');
+                    editor.insertContent(table_tour);
+                }
+            });
+            editor.addButton('linksStaff', {
+                text: 'Перелинковка',
+                title: 'Вставка шаблона для перелинковки',
+                icon: false,
+                onclick: function() {
+                    editor.insertContent(links_template);
                 }
             });
         },

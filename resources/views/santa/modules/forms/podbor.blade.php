@@ -1,4 +1,5 @@
-<div class="row row-podbor" id="row-podbor" onsubmit="yaCounter27992118.reachGoal('PodborTura'); return true;">
+<div class="row row-podbor" id="row-podbor" onsubmit="yaCounter27992118.reachGoal('PodborTura');
+ga('send', 'event', 'Форма','Отправка', 'Заявка на подбор тура'); return true;">
     <div class="col-xs-24 col-md-12">
         <form id="form-podbor" class="form-podbor" method="post" action="/forms/podbor">
             <p class="h1">Подбор тура</p>

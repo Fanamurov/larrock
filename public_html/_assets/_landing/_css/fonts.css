@@ -1,0 +1,33 @@
+@font-face {
+    font-family: 'Exo';
+    src: url('fonts/exo-boldd41d.eot@') format('eot'),
+    url('fonts/exo-bold.woff') format('woff'),
+    url('fonts/exo-bold.otf')  format('opentype'),
+    url('fonts/exo-bold.ttf')  format('truetype'),
+    url('fonts/exo-bold.svg#exo-bold') format('svg');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Exo';
+    src: url('fonts/exo-regulard41d.eot@') format('eot'),
+    url('fonts/exo-regular.woff') format('woff'),
+    url('fonts/exo-regular.otf')  format('opentype'),
+    url('fonts/exo-regular.ttf')  format('truetype'),
+    url('fonts/exo-regular.svg#exo-regular') format('svg');
+    font-weight: 400;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'Exo';
+    src: url('fonts/exo-lightd41d.eot@') format('eot'),
+    url('fonts/exo-light.woff') format('woff'),
+    url('fonts/exo-light.otf')  format('opentype'),
+    url('fonts/exo-light.ttf')  format('truetype'),
+    url('fonts/exo-light.svg#exo-light') format('svg');
+    font-weight: 300;
+    font-style: normal;
+}

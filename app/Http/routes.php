@@ -143,10 +143,11 @@ Route::get('/sletat/ActualizePrice', [
     'as' => 'sletat.ActualizePrice', 'uses' => 'SletatController@getActualizePrice'
 ]);
 
-Route::get('/flight', [
-	'as' => 'flight.index', 'uses' => 'Flightstatus@index'
-]);
-
+Route::group(['middleware'=>'level:2'], function(){
+	Route::get('/landing', [
+		'as' => 'landing.index', 'uses' => 'Landing@index'
+	]);
+});
 
 //Forms
 Route::post('/forms/contact', [
